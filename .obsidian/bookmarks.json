@@ -1,0 +1,44 @@
+{
+  "items": [
+    {
+      "type": "group",
+      "ctime": 1752497921644,
+      "items": [
+        {
+          "type": "file",
+          "ctime": 1752497974158,
+          "path": "网络/项目服务器/基本思想.md",
+          "title": "基础"
+        },
+        {
+          "type": "group",
+          "ctime": 1752497923610,
+          "items": [],
+          "title": "未命名组"
+        }
+      ],
+      "title": "未命名组"
+    },
+    {
+      "type": "folder",
+      "ctime": 1765549706760,
+      "path": "经济学/术语"
+    },
+    {
+      "type": "folder",
+      "ctime": 1769174800984,
+      "path": "assets/新求精德语配音"
+    },
+    {
+      "type": "file",
+      "ctime": 1771944876454,
+      "path": "语言学习/德语/新求精分等级笔记/德语语法结构Canvas.md",
+      "title": "德语语法结构Canvas"
+    },
+    {
+      "type": "file",
+      "ctime": 1773586455357,
+      "path": "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md"
+    }
+  ]
+}

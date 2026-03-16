@@ -1,0 +1,21 @@
+{
+  "version": "2.0",
+  "lastModified": 1773550749026,
+  "highlights": {
+    "highlight-1475070381-23816": {
+      "text": "schlecht",
+      "position": 23819,
+      "created": 1773550670073,
+      "updated": 1773550670073,
+      "backgroundColor": "#ffeb3b",
+      "comments": [
+        {
+          "id": "comment-1773550670073-z3gu6cwrj",
+          "content": "nicht 是副词，意思是“不”，它的功能是否定（相当于英语的 not）。\nschlecht 是形容词/副词，意思是“糟糕的/坏的”，它的功能是描述状态（相当于英语的 bad/badly）。\n\n直观类比：电灯开关 vs. 电量指示灯\n你可以把 nicht 想象成房间里的“电源开关”。它只有开和关两种状态。如果你说 \"Heute geht es nicht.\"，意思是“今天不行”（电源没接通）。比如你朋友约你今天喝咖啡，你回答这句话，意思是“我今天没空/安排不开”。它没有描述你心情好不好，只是客观否定了“能行”这件事。\n\n而 schlecht 就像是手机屏幕上的“红色低电量指示灯”。它是一种具体的状态。当你说 \"Heute geht es schlecht.\"，意思是机器虽然开着，但状态极差，也就是“今天进展得很糟”或者“今天我感觉很不好”。",
+          "created": 1773550670073,
+          "updated": 1773550670073
+        }
+      ]
+    }
+  }
+}

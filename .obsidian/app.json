@@ -1,0 +1,21 @@
+{
+  "showLineNumber": true,
+  "pdfExportSettings": {
+    "includeName": true,
+    "pageSize": "Letter",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  },
+  "attachmentFolderPath": "/assets",
+  "alwaysUpdateLinks": true,
+  "promptDelete": false,
+  "strictLineBreaks": true,
+  "readableLineLength": false,
+  "propertiesInDocument": "visible",
+  "useTab": true,
+  "rightToLeft": false,
+  "tabSize": 4,
+  "openBehavior": "new",
+  "showUnsupportedFiles": true
+}

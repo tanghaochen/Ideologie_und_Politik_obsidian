@@ -1,0 +1,17 @@
+{
+  "frames": [
+    {
+      "url": "![人民币兑美元现货汇率（DEXCHUS） |弗雷德 |圣路易斯联储 --- Chinese Yuan Renminbi to U.S. Dollar Spot Exchange Rate (DEXCHUS) | FRED | St. Louis Fed](https://fred.stlouisfed.org/series/DEXCHUS)",
+      "displayName": "New Frame",
+      "icon": "",
+      "hideOnMobile": true,
+      "addRibbonIcon": false,
+      "openInCenter": false,
+      "zoomLevel": 1,
+      "forceIframe": false,
+      "customCss": "",
+      "customJs": ""
+    }
+  ],
+  "padding": 5
+}

@@ -1,0 +1,9 @@
+{
+  "baseFontSizeAction": false,
+  "nativeMenus": false,
+  "cssTheme": "Minimal",
+  "showRibbon": true,
+  "baseFontSize": 20,
+  "theme": "obsidian",
+  "enabledCssSnippets": []
+}

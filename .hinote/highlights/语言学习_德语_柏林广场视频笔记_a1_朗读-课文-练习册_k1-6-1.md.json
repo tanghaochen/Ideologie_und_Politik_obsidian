@@ -1,0 +1,66 @@
+{
+  "version": "2.0",
+  "lastModified": 1772971443162,
+  "highlights": {
+    "highlight-513033136-19501": {
+      "text": "现了 \"Um die",
+      "position": 19501,
+      "created": 1771148304271,
+      "updated": 1771148488253,
+      "backgroundColor": "#ffeb3b",
+      "comments": [
+        {
+          "id": "comment-1771148304271-emqxx9mvz",
+          "content": "fafdsfas",
+          "created": 1771148304271,
+          "updated": 1771148488253
+        }
+      ]
+    },
+    "highlight-223917139-25131": {
+      "text": "isst",
+      "position": 25377,
+      "created": 1771262709861,
+      "updated": 1771263397340,
+      "backgroundColor": "#ffeb3b",
+      "comments": [
+        {
+          "id": "comment-1771262709861-fxebmmw97",
+          "content": "为什么是 isst 而不是 essen？在你的句子 Sie isst Brötchen 中，主语是 sie（她，单数）。对于“他/她/它”这个组合，德语动词通常要加个 -t 的小尾巴。更特殊的是，essen 是一个强变化动词。这类动词在变位时，不仅尾巴会变，连身体里的“心”（元音）都会变。e 变成了 i。所以：essen $\\rightarrow$ isst。",
+          "created": 1771262709861,
+          "updated": 1771263397340
+        }
+      ]
+    },
+    "highlight-174820424-25176": {
+      "text": "liest",
+      "position": 25422,
+      "created": 1771263992826,
+      "updated": 1771264006618,
+      "backgroundColor": "#ffeb3b",
+      "comments": [
+        {
+          "id": "comment-1771263992826-iu3yt4xer",
+          "content": "essen 的突变是：e $\\rightarrow$ i （所以变成了 isst）lesen 的突变是：e $\\rightarrow$ ie （所以变成了 liest）",
+          "created": 1771263992826,
+          "updated": 1771264006618
+        }
+      ]
+    },
+    "highlight-876461071-46032": {
+      "text": "Nimm einfach die doppelte Menge von allem",
+      "position": 46137,
+      "created": 1772969891781,
+      "updated": 1772971249275,
+      "backgroundColor": "#ffeb3b",
+      "comments": [
+        {
+          "id": "comment-1772969891780-a4nygephi",
+          "content": "nimm\n\n原形： nehmen（拿、取）\n\n分析： 这是 nehmen 对第二人称单数（du）的祈使变位。\n\n语法重点： 强变化动词在变位时，词干元音会发生“变音”或“换音”。这里 e 变成了 i，并且为了发音短促，后面双写了 m。\n\n💡 类比记忆： 祈使句就像是**“动作指挥棒”**。在德语里，当你对亲近的朋友下指令时，主语 du 就像是被指挥棒变没了，只剩下变了形的动词站在排头领队。\n\neinfach\n\n词性： 副词/形容词\n\n分析： 在这里作为副词，表示“简单地、索性、就”。它像是一个**“情绪调节阀”**，让命令听起来不像军令，更像是一个轻松的建议。\n\ndie doppelte\n\n词性： 定冠词 + 形容词\n\n性数格： 阴性、单数、第四格 (Akkusativ)。\n\n分析： 修饰后面的 Menge。因为 Menge 是阴性名词，且在句中作直接宾语（第四格），所以形容词词尾加 -e。\n\nMenge\n\n词性： 名词 (die Menge, -n)\n\n性数格： 阴性、单数、第四格。\n\n含义： 量、分量。\n\nvon\n\n词性： 介词\n\n分析： 固定搭配 von + Dat.（第三格）。它在这里引导一个所属关系。\n\nallem\n\n词性： 代词 (alles 的变格)\n\n性数格： 中性、单数、第三格。\n\n分析： 受到介词 von 的支配，从 alles 变为 allem。",
+          "created": 1772969891780,
+          "updated": 1772971249275
+        }
+      ]
+    }
+  }
+}

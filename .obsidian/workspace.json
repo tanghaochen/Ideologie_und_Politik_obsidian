@@ -1,0 +1,467 @@
+{
+  "main": {
+    "id": "f5de525c029043e4",
+    "type": "split",
+    "children": [
+      {
+        "id": "afad75680372aa9c",
+        "type": "tabs",
+        "dimension": 45.607961921246215,
+        "children": [
+          {
+            "id": "9cc84feeaa6ce640",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/短文学习逻辑.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "短文学习逻辑"
+            }
+          },
+          {
+            "id": "86b27dfd2c2b0627",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/柏林广场视频笔记/A1/朗读-课文-练习册/k1-7.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "pinned": true,
+              "icon": "lucide-file",
+              "title": "k1-7"
+            }
+          }
+        ],
+        "currentTab": 1
+      },
+      {
+        "id": "dd4130c5419b5527",
+        "type": "tabs",
+        "dimension": 54.39203807875379,
+        "children": [
+          {
+            "id": "55f6f407a316eb33",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
+                "page": 85,
+                "left": -10,
+                "top": 160,
+                "zoom": 1.5222783388462193
+              },
+              "pinned": true,
+              "icon": "lucide-file-text",
+              "title": "柏林广场  1  学生用书  新版"
+            }
+          },
+          {
+            "id": "2923ca194061fcec",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
+                "page": 1,
+                "left": -9,
+                "top": 722,
+                "zoom": 1.7603264853460836
+              },
+              "icon": "lucide-file-text",
+              "title": "德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library)"
+            }
+          },
+          {
+            "id": "81aa35e2dece0fc7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/四个格.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "四个格"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "dde9718a6f30ff5d",
+    "type": "split",
+    "children": [
+      {
+        "id": "69b90f7608974d6b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "56aec1574e68adfb",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": true
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "abbd6433f71b711a",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          },
+          {
+            "id": "fa32035546bb2f1f",
+            "type": "leaf",
+            "state": {
+              "type": "file-tree-view",
+              "state": {},
+              "icon": "sheets-in-box",
+              "title": "File Tree"
+            }
+          },
+          {
+            "id": "2bdbb354e1190468",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#没钱可以移民吗",
+                "matchingCase": true,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "32264a9c229b4bb6",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "目录.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "pinned": true,
+              "icon": "lucide-file",
+              "title": "目录"
+            }
+          },
+          {
+            "id": "4c1fec15dab3e41d",
+            "type": "leaf",
+            "state": {
+              "type": "recent-files",
+              "state": {},
+              "icon": "clock",
+              "title": "Recent Files"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 594.5041885375977
+  },
+  "right": {
+    "id": "b2bf97bc0c7f8080",
+    "type": "split",
+    "children": [
+      {
+        "id": "0ed9c27411998641",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a49850edf51b35c5",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "语言学习/德语/柏林广场视频笔记/A1/朗读-课文-练习册/k1-6-1.md",
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": false
+              },
+              "icon": "links-coming-in",
+              "title": "k1-6-1 的反向链接列表"
+            }
+          },
+          {
+            "id": "ecbd8a769d2b5ffc",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "语言学习/德语/柏林广场视频笔记/A1/53 师太时态 二分词.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "53 师太时态 二分词 的出链列表"
+            }
+          },
+          {
+            "id": "77d72b1a27fea44a",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "语言学习/德语/柏林广场视频笔记/A1/53 师太时态 二分词.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "53 师太时态 二分词 的大纲"
+            }
+          },
+          {
+            "id": "dd8c0de9236cf3b8",
+            "type": "leaf",
+            "state": {
+              "type": "quiet-outline",
+              "state": {},
+              "icon": "lines-of-text",
+              "title": "Quiet Outline"
+            }
+          },
+          {
+            "id": "1b5799ed43a6fae4",
+            "type": "leaf",
+            "state": {
+              "type": "footnotes",
+              "state": {
+                "file": "语言学习/德语/柏林广场视频笔记/A1/53 师太时态 二分词.md"
+              },
+              "icon": "lucide-file-signature",
+              "title": "脚注"
+            }
+          },
+          {
+            "id": "abd51c23f2e5aceb",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "9e1e7782182668b8",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
+          },
+          {
+            "id": "7a05e5cddab85b28",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "80277af3735ca63b",
+            "type": "leaf",
+            "state": {
+              "type": "highlights-sidebar",
+              "state": {},
+              "icon": "highlighter",
+              "title": "Highlights"
+            }
+          },
+          {
+            "id": "14d0006259a2f607",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "hinote-view",
+              "state": {},
+              "pinned": true,
+              "icon": "highlighter",
+              "title": "HiNote"
+            }
+          },
+          {
+            "id": "9af148a7898c8f5b",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 511.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "sidebar-highlights:Open highlights": false,
+      "obsidian-to-anki-plugin:Obsidian_to_Anki - Scan Vault": false,
+      "templates:插入模板": false,
+      "bases:新建数据库": false,
+      "mermaid-tools:Open Mermaid Toolbar": false,
+      "switcher:打开快速切换": true,
+      "canvas:新建白板": true,
+      "graph:查看关系图谱": false,
+      "daily-notes:打开/创建今天的日记": true,
+      "command-palette:打开命令面板": true,
+      "zk-prefixer:创建时间戳笔记": true,
+      "omnisearch:Omnisearch": false,
+      "webpage-html-export:导出为HTML": false,
+      "obsidian-excalidraw-plugin:新建绘图文件": false,
+      "pdf-plus:PDF++: Toggle auto-copy": false,
+      "pdf-plus:PDF++: Toggle auto-focus": false,
+      "pdf-plus:PDF++: Toggle auto-paste": false,
+      "workspaces:管理工作区布局": false,
+      "templater-obsidian:Templater": false,
+      "file-tree-alternative:File Tree Alternative Plugin": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "mxmind:Mxmind": false,
+      "audio-recorder:开始/结束录音": false,
+      "copilot:Open Copilot Chat": true,
+      "obsidian-local-images-plus:Local Images Plus  0.16.4\r\nLocalize attachments (plugin folder)": false,
+      "markdown-importer:打开 Markdown 格式转换器": false,
+      "hi-note:HiNote": false,
+      "media-extended:Open external media": false,
+      "obsidian-git:Open Git source control": false
+    }
+  },
+  "active": "2923ca194061fcec",
+  "lastOpenFiles": [
+    "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
+    "语言学习/德语/公共知识语法/四个格.md",
+    "语言学习/德语/柏林广场视频笔记/A1/朗读-课文-练习册/k1-7.md",
+    "未命名 3.md",
+    "assets.zip",
+    "assets/3天搞定德语语法_0.pdf",
+    "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md",
+    "assets/3天搞定德语语法.pdf",
+    "assets/Pasted Image 20260315234807_064.png",
+    "assets/Pasted Image 20260315234742_054.png",
+    "assets/3天搞定德语语法_1.pdf",
+    "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
+    "语言学习/德语/德语学习规划.md",
+    "语言学习/德语/柏林广场视频笔记/000 A1知识点 学习路线.md",
+    "语言学习/德语/新求精分等级笔记/德语语法结构Canvas.md",
+    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
+    "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
+    "语言学习/德语/教材/其他/标准德语语法：精解与练习 (（德）Hilke Dreyer，（德）Richard Schmitt编著；王芳译) (Z-Library).pdf",
+    "语言学习/德语/教材/其他/德语语法表解 (华宗德) (Z-Library).pdf",
+    "电脑、软件、系统/obsidian plugin/Anki.md",
+    "语言学习/德语/学习记录日记/2026.canvas",
+    "国家/出国/德国/具体申请可视化Canvas.md",
+    "语言学习/德语/单词/疑问.md",
+    "语言学习/短文学习逻辑.md",
+    "未命名 2.md",
+    "语言学习/德语/柏林广场视频笔记/A1/76 命令式 和 祈使句.md",
+    "语言学习/德语/公共知识语法/句型/倒装句.md",
+    "语言学习/德语/教材/柏林广场/A1 听力材料&课后练习答案/听力原文&MP3/教材听力MP3/bl-audio7+/BL-unten-056.mp3",
+    "Ja, mit den Taschen ist ein Taxi besser!.md",
+    "语言学习/德语/教材/柏林广场/A1 听力材料&课后练习答案/听力原文&MP3/教材听力MP3/bl-audio7+/BL-unten-055.mp3",
+    "语言学习/德语/教材/柏林广场/A1 听力材料&课后练习答案/听力原文&MP3/教材听力原文/BP1_Neu_Transkript_LB_Kap1-6.pdf",
+    "语言学习/Engilish/语法.md",
+    "语言学习/德语/公共知识语法/动词/Würden und Könnten.md",
+    "语言学习/德语/公共知识语法/语法流程化梳理.md",
+    "assets/image-341.png",
+    "未命名 1.md",
+    "未命名.md",
+    "assets/image-340.png",
+    "语言学习/德语/柏林广场视频笔记/A1/知识点解答/动词；vi;vt.md",
+    "语言学习/德语/柏林广场视频笔记/A1/知识点解答/动词不规则变位：历史演化由来.md",
+    "assets/image-339.png",
+    "Untitled Diagram.svg"
+  ]
+}

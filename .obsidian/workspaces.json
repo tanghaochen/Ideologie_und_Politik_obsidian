@@ -1,0 +1,1443 @@
+{
+  "workspaces": {
+    "1": {
+      "main": {
+        "id": "f5de525c029043e4",
+        "type": "split",
+        "children": [
+          {
+            "id": "afad75680372aa9c",
+            "type": "tabs",
+            "dimension": 49.829205807002566,
+            "children": [
+              {
+                "id": "9cc84feeaa6ce640",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/柏林广场视频笔记/A1/40 第四格补足语及定冠词的变化.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "40 第四格补足语及定冠词的变化"
+                }
+              },
+              {
+                "id": "5e2bd3330096d751",
+                "type": "leaf",
+                "state": {
+                  "type": "excalidraw",
+                  "state": {
+                    "file": "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md"
+                  },
+                  "icon": "excalidraw-icon",
+                  "title": "语法快查必背语法，表格canvas"
+                }
+              },
+              {
+                "id": "48936e43b1076449",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "51 介词：静三动四"
+                }
+              },
+              {
+                "id": "aa7376763dcc5144",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/柏林广场视频笔记/A1/朗读-课文-练习册/k1-6.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "pinned": true,
+                  "icon": "lucide-file",
+                  "title": "k1-6"
+                }
+              },
+              {
+                "id": "0af666a5322db9a9",
+                "type": "leaf",
+                "state": {
+                  "type": "canvas",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记/2026.canvas",
+                    "viewState": {
+                      "x": 911.3726691822535,
+                      "y": 340.7901874000297,
+                      "zoom": -1.558564810656549
+                    }
+                  },
+                  "icon": "lucide-layout-dashboard",
+                  "title": "2026"
+                }
+              }
+            ],
+            "currentTab": 1
+          },
+          {
+            "id": "4fc7c77586a698e7",
+            "type": "tabs",
+            "dimension": 50.170794192997434,
+            "children": [
+              {
+                "id": "7b0531648ec036d8",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "pdf",
+                  "state": {
+                    "file": "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
+                    "page": 87,
+                    "left": -11,
+                    "top": 410,
+                    "zoom": 1.4457023252702605
+                  },
+                  "pinned": true,
+                  "icon": "lucide-file-text",
+                  "title": "柏林广场  1  学生用书  新版"
+                }
+              },
+              {
+                "id": "776f5e66760719c1",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "pdf",
+                  "state": {
+                    "file": "语言学习/德语/教材/柏林广场/A1 听力材料&课后练习答案/听力原文&MP3/教材听力原文/BP1_Neu_Transkript_LB_Kap1-6.pdf",
+                    "page": 13,
+                    "left": -11,
+                    "top": 610,
+                    "zoom": 1.3784819058499378
+                  },
+                  "pinned": true,
+                  "icon": "lucide-file-text",
+                  "title": "BP1_Neu_Transkript_LB_Kap1-6"
+                }
+              },
+              {
+                "id": "ee5f44ab3c0f1060",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "pdf",
+                  "state": {
+                    "file": "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
+                    "page": 26,
+                    "left": -24,
+                    "top": 346,
+                    "zoom": 1.25
+                  },
+                  "pinned": true,
+                  "icon": "lucide-file-text",
+                  "title": "柏林广场  1  学生用书  新版"
+                }
+              },
+              {
+                "id": "269441a9245c5f19",
+                "type": "leaf",
+                "state": {
+                  "type": "pdf",
+                  "state": {
+                    "file": "语言学习/德语/教材/其他/德语语法表解 (华宗德) (Z-Library).pdf",
+                    "page": 119,
+                    "left": -7,
+                    "top": 428,
+                    "zoom": 2.2390886796089404
+                  },
+                  "icon": "lucide-file-text",
+                  "title": "德语语法表解 (华宗德) (Z-Library)"
+                }
+              }
+            ],
+            "currentTab": 3
+          }
+        ],
+        "direction": "vertical"
+      },
+      "left": {
+        "id": "dde9718a6f30ff5d",
+        "type": "split",
+        "children": [
+          {
+            "id": "69b90f7608974d6b",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "56aec1574e68adfb",
+                "type": "leaf",
+                "state": {
+                  "type": "file-explorer",
+                  "state": {
+                    "sortOrder": "alphabetical",
+                    "autoReveal": true
+                  },
+                  "icon": "lucide-folder-closed",
+                  "title": "文件列表"
+                }
+              },
+              {
+                "id": "abbd6433f71b711a",
+                "type": "leaf",
+                "state": {
+                  "type": "bookmarks",
+                  "state": {},
+                  "icon": "lucide-bookmark",
+                  "title": "书签"
+                }
+              },
+              {
+                "id": "fa32035546bb2f1f",
+                "type": "leaf",
+                "state": {
+                  "type": "file-tree-view",
+                  "state": {},
+                  "icon": "sheets-in-box",
+                  "title": "File Tree"
+                }
+              },
+              {
+                "id": "2bdbb354e1190468",
+                "type": "leaf",
+                "state": {
+                  "type": "search",
+                  "state": {
+                    "query": "tag:#没钱可以移民吗",
+                    "matchingCase": true,
+                    "explainSearch": false,
+                    "collapseAll": false,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical"
+                  },
+                  "icon": "lucide-search",
+                  "title": "搜索"
+                }
+              },
+              {
+                "id": "32264a9c229b4bb6",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "目录.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "pinned": true,
+                  "icon": "lucide-file",
+                  "title": "目录"
+                }
+              },
+              {
+                "id": "4c1fec15dab3e41d",
+                "type": "leaf",
+                "state": {
+                  "type": "recent-files",
+                  "state": {},
+                  "icon": "clock",
+                  "title": "Recent Files"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "horizontal",
+        "width": 503.50418853759766
+      },
+      "right": {
+        "id": "b2bf97bc0c7f8080",
+        "type": "split",
+        "children": [
+          {
+            "id": "0ed9c27411998641",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "a49850edf51b35c5",
+                "type": "leaf",
+                "state": {
+                  "type": "backlink",
+                  "state": {
+                    "file": "语言学习/德语/柏林广场视频笔记/A1/朗读-课文-练习册/k1-6-1.md",
+                    "collapseAll": true,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical",
+                    "showSearch": false,
+                    "searchQuery": "",
+                    "backlinkCollapsed": false,
+                    "unlinkedCollapsed": false
+                  },
+                  "icon": "links-coming-in",
+                  "title": "k1-6-1 的反向链接列表"
+                }
+              },
+              {
+                "id": "ecbd8a769d2b5ffc",
+                "type": "leaf",
+                "state": {
+                  "type": "outgoing-link",
+                  "state": {
+                    "file": "语言学习/德语/柏林广场视频笔记/A1/53 师太时态 二分词.md",
+                    "linksCollapsed": false,
+                    "unlinkedCollapsed": true
+                  },
+                  "icon": "links-going-out",
+                  "title": "53 师太时态 二分词 的出链列表"
+                }
+              },
+              {
+                "id": "77d72b1a27fea44a",
+                "type": "leaf",
+                "state": {
+                  "type": "outline",
+                  "state": {
+                    "file": "语言学习/德语/柏林广场视频笔记/A1/53 师太时态 二分词.md",
+                    "followCursor": false,
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-list",
+                  "title": "53 师太时态 二分词 的大纲"
+                }
+              },
+              {
+                "id": "dd8c0de9236cf3b8",
+                "type": "leaf",
+                "state": {
+                  "type": "quiet-outline",
+                  "state": {},
+                  "icon": "lines-of-text",
+                  "title": "Quiet Outline"
+                }
+              },
+              {
+                "id": "1b5799ed43a6fae4",
+                "type": "leaf",
+                "state": {
+                  "type": "footnotes",
+                  "state": {
+                    "file": "语言学习/德语/柏林广场视频笔记/A1/53 师太时态 二分词.md"
+                  },
+                  "icon": "lucide-file-signature",
+                  "title": "脚注"
+                }
+              },
+              {
+                "id": "abd51c23f2e5aceb",
+                "type": "leaf",
+                "state": {
+                  "type": "all-properties",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-archive",
+                  "title": "添加笔记属性"
+                }
+              },
+              {
+                "id": "9e1e7782182668b8",
+                "type": "leaf",
+                "state": {
+                  "type": "calendar",
+                  "state": {},
+                  "icon": "calendar-with-checkmark",
+                  "title": "Calendar"
+                }
+              },
+              {
+                "id": "7a05e5cddab85b28",
+                "type": "leaf",
+                "state": {
+                  "type": "tag",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "useHierarchy": true,
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-tags",
+                  "title": "标签"
+                }
+              }
+            ],
+            "currentTab": 3
+          }
+        ],
+        "direction": "horizontal",
+        "width": 475.5
+      },
+      "left-ribbon": {
+        "hiddenItems": {
+          "obsidian-to-anki-plugin:Obsidian_to_Anki - Scan Vault": false,
+          "templates:插入模板": false,
+          "bases:新建数据库": false,
+          "mermaid-tools:Open Mermaid Toolbar": false,
+          "switcher:打开快速切换": false,
+          "canvas:新建白板": false,
+          "graph:查看关系图谱": false,
+          "daily-notes:打开/创建今天的日记": false,
+          "command-palette:打开命令面板": false,
+          "zk-prefixer:创建时间戳笔记": false,
+          "omnisearch:Omnisearch": false,
+          "webpage-html-export:导出为HTML": false,
+          "obsidian-excalidraw-plugin:新建绘图文件": false,
+          "pdf-plus:PDF++: Toggle auto-copy": false,
+          "pdf-plus:PDF++: Toggle auto-focus": false,
+          "pdf-plus:PDF++: Toggle auto-paste": false,
+          "workspaces:管理工作区布局": false,
+          "templater-obsidian:Templater": false,
+          "file-tree-alternative:File Tree Alternative Plugin": false,
+          "table-editor-obsidian:Advanced Tables Toolbar": false,
+          "mxmind:Mxmind": false,
+          "audio-recorder:开始/结束录音": false,
+          "copilot:Open Copilot Chat": false,
+          "obsidian-local-images-plus:Local Images Plus  0.16.4\r\nLocalize attachments (plugin folder)": false,
+          "markdown-importer:打开 Markdown 格式转换器": false,
+          "hi-note:HiNote": false
+        }
+      },
+      "floating": {
+        "id": "cb95a92520aaff45",
+        "type": "floating",
+        "children": [
+          {
+            "id": "771cd709e27b56b6",
+            "type": "window",
+            "children": [
+              {
+                "id": "8219d8f9a7141874",
+                "type": "tabs",
+                "dimension": 14.413075780089155,
+                "children": [
+                  {
+                    "id": "fc57f8cb652b0072",
+                    "type": "leaf",
+                    "state": {
+                      "type": "excalidraw-sidepanel",
+                      "state": {},
+                      "icon": "excalidraw-icon",
+                      "title": "Excalidraw 侧边面板"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "e210d85d2846c117",
+                "type": "tabs",
+                "dimension": 85.58692421991083,
+                "children": [
+                  {
+                    "id": "f8b8c84f43a1b54b",
+                    "type": "leaf",
+                    "state": {
+                      "type": "excalidraw",
+                      "state": {
+                        "file": "语言学习/德语/新求精分等级笔记/德语语法结构Canvas.md"
+                      },
+                      "icon": "excalidraw-icon",
+                      "title": "德语语法结构Canvas"
+                    }
+                  }
+                ]
+              }
+            ],
+            "direction": "vertical",
+            "x": 2788,
+            "y": 394,
+            "width": 1872,
+            "height": 1741,
+            "maximize": true,
+            "zoom": -1.5
+          }
+        ]
+      },
+      "active": "5e2bd3330096d751",
+      "mtime": "2026-03-01T22:01:43+08:00"
+    },
+    "PDF": {
+      "main": {
+        "id": "f5de525c029043e4",
+        "type": "split",
+        "children": [
+          {
+            "id": "b20ab8e2a289523a",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "a96a76816c727989",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "excalidraw",
+                  "state": {
+                    "file": "中国/中国经济逻辑.excalidraw.md"
+                  },
+                  "pinned": true,
+                  "icon": "excalidraw-icon",
+                  "title": "中国经济逻辑.excalidraw"
+                }
+              },
+              {
+                "id": "8cbbffc4997f968e",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "经济学/投资方式/漫步华尔街.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "漫步华尔街"
+                }
+              }
+            ],
+            "currentTab": 1
+          },
+          {
+            "id": "899e4d661bd4d6c7",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "af9836400979312d",
+                "type": "leaf",
+                "state": {
+                  "type": "pdf",
+                  "state": {
+                    "file": "assets/pdf/漫步华尔街（原书第13版）.pdf",
+                    "page": 13,
+                    "left": -10,
+                    "top": 27,
+                    "zoom": 1.520270372480192
+                  },
+                  "icon": "lucide-file-text",
+                  "title": "漫步华尔街（原书第13版）"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "vertical"
+      },
+      "left": {
+        "id": "dde9718a6f30ff5d",
+        "type": "split",
+        "children": [
+          {
+            "id": "69b90f7608974d6b",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "56aec1574e68adfb",
+                "type": "leaf",
+                "state": {
+                  "type": "file-explorer",
+                  "state": {
+                    "sortOrder": "byModifiedTime",
+                    "autoReveal": false
+                  },
+                  "icon": "lucide-folder-closed",
+                  "title": "文件列表"
+                }
+              },
+              {
+                "id": "2bdbb354e1190468",
+                "type": "leaf",
+                "state": {
+                  "type": "search",
+                  "state": {
+                    "query": "",
+                    "matchingCase": false,
+                    "explainSearch": false,
+                    "collapseAll": false,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical"
+                  },
+                  "icon": "lucide-search",
+                  "title": "搜索"
+                }
+              },
+              {
+                "id": "abbd6433f71b711a",
+                "type": "leaf",
+                "state": {
+                  "type": "bookmarks",
+                  "state": {},
+                  "icon": "lucide-bookmark",
+                  "title": "书签"
+                }
+              },
+              {
+                "id": "32264a9c229b4bb6",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "目录.md",
+                    "mode": "source",
+                    "source": false
+                  },
+                  "pinned": true,
+                  "icon": "lucide-file",
+                  "title": "目录"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "horizontal",
+        "width": 300,
+        "collapsed": true
+      },
+      "right": {
+        "id": "b2bf97bc0c7f8080",
+        "type": "split",
+        "children": [
+          {
+            "id": "0ed9c27411998641",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "a49850edf51b35c5",
+                "type": "leaf",
+                "state": {
+                  "type": "backlink",
+                  "state": {
+                    "file": "经济学/投资方式/漫步华尔街.md",
+                    "collapseAll": true,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical",
+                    "showSearch": false,
+                    "searchQuery": "",
+                    "backlinkCollapsed": false,
+                    "unlinkedCollapsed": true
+                  },
+                  "icon": "links-coming-in",
+                  "title": "漫步华尔街 的反向链接列表"
+                }
+              },
+              {
+                "id": "ecbd8a769d2b5ffc",
+                "type": "leaf",
+                "state": {
+                  "type": "outgoing-link",
+                  "state": {
+                    "file": "经济学/投资方式/漫步华尔街.md",
+                    "linksCollapsed": false,
+                    "unlinkedCollapsed": true
+                  },
+                  "icon": "links-going-out",
+                  "title": "漫步华尔街 的出链列表"
+                }
+              },
+              {
+                "id": "3b5a1e9c28b5d61b",
+                "type": "leaf",
+                "state": {
+                  "type": "all-properties",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-archive",
+                  "title": "添加笔记属性"
+                }
+              },
+              {
+                "id": "7e79f6ae4932e6ce",
+                "type": "leaf",
+                "state": {
+                  "type": "quiet-outline",
+                  "state": {},
+                  "icon": "lines-of-text",
+                  "title": "Quiet Outline"
+                }
+              },
+              {
+                "id": "4d95b01a3344ae17",
+                "type": "leaf",
+                "state": {
+                  "type": "tag",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "useHierarchy": true,
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-tags",
+                  "title": "标签"
+                }
+              },
+              {
+                "id": "77d72b1a27fea44a",
+                "type": "leaf",
+                "state": {
+                  "type": "outline",
+                  "state": {
+                    "file": "assets/pdf/漫步华尔街（原书第13版）.pdf",
+                    "followCursor": false,
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-list",
+                  "title": "漫步华尔街（原书第13版） 的大纲"
+                }
+              }
+            ],
+            "currentTab": 2
+          }
+        ],
+        "direction": "horizontal",
+        "width": 400.5,
+        "collapsed": true
+      },
+      "left-ribbon": {
+        "hiddenItems": {
+          "switcher:打开快速切换": false,
+          "canvas:新建白板": false,
+          "graph:查看关系图谱": false,
+          "daily-notes:打开/创建今天的日记": false,
+          "templates:插入模板": false,
+          "command-palette:打开命令面板": false,
+          "audio-recorder:开始/结束录音": false,
+          "bases:创建新数据库": false,
+          "zk-prefixer:创建时间戳笔记": false,
+          "omnisearch:Omnisearch": false,
+          "obsidian-local-images-plus:Local Images Plus  0.16.4\r\nLocalize attachments (plugin folder)": false,
+          "webpage-html-export:导出为HTML": false,
+          "obsidian-excalidraw-plugin:新建绘图文件": false,
+          "pdf-plus:PDF++: Toggle auto-copy": false,
+          "pdf-plus:PDF++: Toggle auto-focus": false,
+          "pdf-plus:PDF++: Toggle auto-paste": false,
+          "workspaces:管理工作区布局": false
+        }
+      },
+      "active": "8cbbffc4997f968e",
+      "mtime": "2025-12-04T16:46:06+08:00"
+    },
+    "economic": {
+      "main": {
+        "id": "f5de525c029043e4",
+        "type": "split",
+        "children": [
+          {
+            "id": "b20ab8e2a289523a",
+            "type": "tabs",
+            "dimension": 50,
+            "children": [
+              {
+                "id": "a96a76816c727989",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "empty",
+                  "state": {},
+                  "pinned": true,
+                  "icon": "lucide-file",
+                  "title": "新标签页"
+                }
+              },
+              {
+                "id": "9806243c367f66da",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "经济学/投资方式/漫步华尔街.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "pinned": true,
+                  "icon": "lucide-file",
+                  "title": "漫步华尔街"
+                }
+              },
+              {
+                "id": "0a6a202637bfceab",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "国家/日本经济发展和转型繁荣与停泻.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "pinned": true,
+                  "icon": "lucide-file",
+                  "title": "日本经济发展和转型繁荣与停泻"
+                }
+              }
+            ],
+            "currentTab": 2
+          },
+          {
+            "id": "305992521a1973ed",
+            "type": "tabs",
+            "dimension": 50,
+            "children": [
+              {
+                "id": "8b33a4173bd45dc7",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "pdf",
+                  "state": {
+                    "file": "assets/pdf/漫步华尔街（原书第13版）.pdf",
+                    "page": 73,
+                    "left": -11,
+                    "top": 173,
+                    "zoom": 1.3311820176940983
+                  },
+                  "pinned": true,
+                  "icon": "lucide-file-text",
+                  "title": "漫步华尔街（原书第13版）"
+                }
+              },
+              {
+                "id": "2b788aa287efe233",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "pdf",
+                  "state": {
+                    "file": "assets/pdf/繁荣与停滞：日本经济发展和转型（有关于日本经济发展以及政策出台更翔实的一手资料。全景式剖析二战后日本经济的兴衰史） (伊藤隆敏  星岳雄) (Z-Library).pdf",
+                    "page": 78,
+                    "left": -12,
+                    "top": 548,
+                    "zoom": 1.2941176470588236
+                  },
+                  "pinned": true,
+                  "icon": "lucide-file-text",
+                  "title": "繁荣与停滞：日本经济发展和转型（有关于日本经济发展以及政策出台更翔实的一手资料。全景式剖析二战后日本经济的兴衰史） (伊藤隆敏  星岳雄) (Z-Library)"
+                }
+              }
+            ],
+            "currentTab": 1
+          }
+        ],
+        "direction": "vertical"
+      },
+      "left": {
+        "id": "dde9718a6f30ff5d",
+        "type": "split",
+        "children": [
+          {
+            "id": "69b90f7608974d6b",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "56aec1574e68adfb",
+                "type": "leaf",
+                "state": {
+                  "type": "file-explorer",
+                  "state": {
+                    "sortOrder": "byModifiedTime",
+                    "autoReveal": false
+                  },
+                  "icon": "lucide-folder-closed",
+                  "title": "文件列表"
+                }
+              },
+              {
+                "id": "2bdbb354e1190468",
+                "type": "leaf",
+                "state": {
+                  "type": "search",
+                  "state": {
+                    "query": "",
+                    "matchingCase": false,
+                    "explainSearch": false,
+                    "collapseAll": false,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical"
+                  },
+                  "icon": "lucide-search",
+                  "title": "搜索"
+                }
+              },
+              {
+                "id": "abbd6433f71b711a",
+                "type": "leaf",
+                "state": {
+                  "type": "bookmarks",
+                  "state": {},
+                  "icon": "lucide-bookmark",
+                  "title": "书签"
+                }
+              },
+              {
+                "id": "32264a9c229b4bb6",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "目录.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "pinned": true,
+                  "icon": "lucide-file",
+                  "title": "目录"
+                }
+              },
+              {
+                "id": "93346b56582cde41",
+                "type": "leaf",
+                "state": {
+                  "type": "recent-files",
+                  "state": {},
+                  "icon": "clock",
+                  "title": "Recent Files"
+                }
+              },
+              {
+                "id": "fa32035546bb2f1f",
+                "type": "leaf",
+                "state": {
+                  "type": "file-tree-view",
+                  "state": {},
+                  "icon": "sheets-in-box",
+                  "title": "File Tree"
+                }
+              }
+            ],
+            "currentTab": 5
+          }
+        ],
+        "direction": "horizontal",
+        "width": 300.5
+      },
+      "right": {
+        "id": "b2bf97bc0c7f8080",
+        "type": "split",
+        "children": [
+          {
+            "id": "0ed9c27411998641",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "a49850edf51b35c5",
+                "type": "leaf",
+                "state": {
+                  "type": "backlink",
+                  "state": {
+                    "file": "经济学/投资方式/漫步华尔街.md",
+                    "collapseAll": true,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical",
+                    "showSearch": false,
+                    "searchQuery": "",
+                    "backlinkCollapsed": false,
+                    "unlinkedCollapsed": true
+                  },
+                  "icon": "links-coming-in",
+                  "title": "漫步华尔街 的反向链接列表"
+                }
+              },
+              {
+                "id": "ecbd8a769d2b5ffc",
+                "type": "leaf",
+                "state": {
+                  "type": "outgoing-link",
+                  "state": {
+                    "file": "经济学/投资方式/漫步华尔街.md",
+                    "linksCollapsed": false,
+                    "unlinkedCollapsed": true
+                  },
+                  "icon": "links-going-out",
+                  "title": "漫步华尔街 的出链列表"
+                }
+              },
+              {
+                "id": "3b5a1e9c28b5d61b",
+                "type": "leaf",
+                "state": {
+                  "type": "all-properties",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-archive",
+                  "title": "添加笔记属性"
+                }
+              },
+              {
+                "id": "7e79f6ae4932e6ce",
+                "type": "leaf",
+                "state": {
+                  "type": "quiet-outline",
+                  "state": {},
+                  "icon": "lines-of-text",
+                  "title": "Quiet Outline"
+                }
+              },
+              {
+                "id": "4d95b01a3344ae17",
+                "type": "leaf",
+                "state": {
+                  "type": "tag",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "useHierarchy": true,
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-tags",
+                  "title": "标签"
+                }
+              },
+              {
+                "id": "77d72b1a27fea44a",
+                "type": "leaf",
+                "state": {
+                  "type": "outline",
+                  "state": {
+                    "file": "国家/日本经济发展和转型繁荣与停泻.md",
+                    "followCursor": false,
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-list",
+                  "title": "日本经济发展和转型繁荣与停泻 的大纲"
+                }
+              },
+              {
+                "id": "624f2782d94fd2cb",
+                "type": "leaf",
+                "state": {
+                  "type": "mermaid-toolbar-view",
+                  "state": {},
+                  "icon": "trident-custom",
+                  "title": "Mermaid Toolbar"
+                }
+              }
+            ],
+            "currentTab": 6
+          }
+        ],
+        "direction": "horizontal",
+        "width": 400.5,
+        "collapsed": true
+      },
+      "left-ribbon": {
+        "hiddenItems": {
+          "mermaid-tools:Open Mermaid Toolbar": false,
+          "switcher:打开快速切换": false,
+          "canvas:新建白板": false,
+          "graph:查看关系图谱": false,
+          "daily-notes:打开/创建今天的日记": false,
+          "templates:插入模板": false,
+          "command-palette:打开命令面板": false,
+          "audio-recorder:开始/结束录音": false,
+          "bases:创建新数据库": false,
+          "zk-prefixer:创建时间戳笔记": false,
+          "omnisearch:Omnisearch": false,
+          "obsidian-local-images-plus:Local Images Plus  0.16.4\r\nLocalize attachments (plugin folder)": false,
+          "webpage-html-export:导出为HTML": false,
+          "obsidian-excalidraw-plugin:新建绘图文件": false,
+          "pdf-plus:PDF++: Toggle auto-copy": false,
+          "pdf-plus:PDF++: Toggle auto-focus": false,
+          "pdf-plus:PDF++: Toggle auto-paste": false,
+          "workspaces:管理工作区布局": false,
+          "templater-obsidian:Templater": false,
+          "file-tree-alternative:File Tree Alternative Plugin": false
+        }
+      },
+      "active": "0a6a202637bfceab",
+      "mtime": "2025-12-10T18:30:11+08:00"
+    },
+    "en1": {
+      "main": {
+        "id": "f5de525c029043e4",
+        "type": "split",
+        "children": [
+          {
+            "id": "c78c70a8cdc87477",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "4873ec5da53b302f",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "Engilish/语法.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "icon": "lucide-file",
+                  "title": "语法"
+                }
+              },
+              {
+                "id": "97c05cee687a2545",
+                "type": "leaf",
+                "state": {
+                  "type": "excalidraw",
+                  "state": {
+                    "file": "Engilish/被讨厌的勇气/reading note.md"
+                  },
+                  "icon": "excalidraw-icon",
+                  "title": "reading note"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "vertical"
+      },
+      "left": {
+        "id": "dde9718a6f30ff5d",
+        "type": "split",
+        "children": [
+          {
+            "id": "69b90f7608974d6b",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "56aec1574e68adfb",
+                "type": "leaf",
+                "state": {
+                  "type": "file-explorer",
+                  "state": {
+                    "sortOrder": "byModifiedTime",
+                    "autoReveal": false
+                  },
+                  "icon": "lucide-folder-closed",
+                  "title": "文件列表"
+                }
+              },
+              {
+                "id": "2bdbb354e1190468",
+                "type": "leaf",
+                "state": {
+                  "type": "search",
+                  "state": {
+                    "query": "",
+                    "matchingCase": false,
+                    "explainSearch": false,
+                    "collapseAll": false,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical"
+                  },
+                  "icon": "lucide-search",
+                  "title": "搜索"
+                }
+              },
+              {
+                "id": "abbd6433f71b711a",
+                "type": "leaf",
+                "state": {
+                  "type": "bookmarks",
+                  "state": {},
+                  "icon": "lucide-bookmark",
+                  "title": "书签"
+                }
+              },
+              {
+                "id": "32264a9c229b4bb6",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "目录.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": true,
+                    "backlinkOpts": {
+                      "collapseAll": false,
+                      "extraContext": false,
+                      "sortOrder": "alphabetical",
+                      "showSearch": false,
+                      "searchQuery": "",
+                      "backlinkCollapsed": false,
+                      "unlinkedCollapsed": true
+                    }
+                  },
+                  "pinned": true,
+                  "icon": "lucide-file",
+                  "title": "目录"
+                }
+              },
+              {
+                "id": "93346b56582cde41",
+                "type": "leaf",
+                "state": {
+                  "type": "recent-files",
+                  "state": {},
+                  "icon": "clock",
+                  "title": "Recent Files"
+                }
+              },
+              {
+                "id": "fa32035546bb2f1f",
+                "type": "leaf",
+                "state": {
+                  "type": "file-tree-view",
+                  "state": {},
+                  "icon": "sheets-in-box",
+                  "title": "File Tree"
+                }
+              }
+            ],
+            "currentTab": 5
+          }
+        ],
+        "direction": "horizontal",
+        "width": 300.5
+      },
+      "right": {
+        "id": "b2bf97bc0c7f8080",
+        "type": "split",
+        "children": [
+          {
+            "id": "0ed9c27411998641",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "a49850edf51b35c5",
+                "type": "leaf",
+                "state": {
+                  "type": "backlink",
+                  "state": {
+                    "file": "经济学/投资方式/漫步华尔街.md",
+                    "collapseAll": true,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical",
+                    "showSearch": false,
+                    "searchQuery": "",
+                    "backlinkCollapsed": false,
+                    "unlinkedCollapsed": true
+                  },
+                  "icon": "links-coming-in",
+                  "title": "漫步华尔街 的反向链接列表"
+                }
+              },
+              {
+                "id": "ecbd8a769d2b5ffc",
+                "type": "leaf",
+                "state": {
+                  "type": "outgoing-link",
+                  "state": {
+                    "file": "经济学/投资方式/漫步华尔街.md",
+                    "linksCollapsed": false,
+                    "unlinkedCollapsed": true
+                  },
+                  "icon": "links-going-out",
+                  "title": "漫步华尔街 的出链列表"
+                }
+              },
+              {
+                "id": "3b5a1e9c28b5d61b",
+                "type": "leaf",
+                "state": {
+                  "type": "all-properties",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-archive",
+                  "title": "添加笔记属性"
+                }
+              },
+              {
+                "id": "7e79f6ae4932e6ce",
+                "type": "leaf",
+                "state": {
+                  "type": "quiet-outline",
+                  "state": {},
+                  "icon": "lines-of-text",
+                  "title": "Quiet Outline"
+                }
+              },
+              {
+                "id": "4d95b01a3344ae17",
+                "type": "leaf",
+                "state": {
+                  "type": "tag",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "useHierarchy": true,
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-tags",
+                  "title": "标签"
+                }
+              },
+              {
+                "id": "77d72b1a27fea44a",
+                "type": "leaf",
+                "state": {
+                  "type": "outline",
+                  "state": {
+                    "file": "国家/日本经济发展和转型繁荣与停泻.md",
+                    "followCursor": false,
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-list",
+                  "title": "日本经济发展和转型繁荣与停泻 的大纲"
+                }
+              },
+              {
+                "id": "624f2782d94fd2cb",
+                "type": "leaf",
+                "state": {
+                  "type": "mermaid-toolbar-view",
+                  "state": {},
+                  "icon": "trident-custom",
+                  "title": "Mermaid Toolbar"
+                }
+              }
+            ],
+            "currentTab": 6
+          }
+        ],
+        "direction": "horizontal",
+        "width": 400.5,
+        "collapsed": true
+      },
+      "left-ribbon": {
+        "hiddenItems": {
+          "mermaid-tools:Open Mermaid Toolbar": false,
+          "switcher:打开快速切换": false,
+          "canvas:新建白板": false,
+          "graph:查看关系图谱": false,
+          "daily-notes:打开/创建今天的日记": false,
+          "templates:插入模板": false,
+          "command-palette:打开命令面板": false,
+          "audio-recorder:开始/结束录音": false,
+          "bases:创建新数据库": false,
+          "zk-prefixer:创建时间戳笔记": false,
+          "omnisearch:Omnisearch": false,
+          "obsidian-local-images-plus:Local Images Plus  0.16.4\r\nLocalize attachments (plugin folder)": false,
+          "webpage-html-export:导出为HTML": false,
+          "obsidian-excalidraw-plugin:新建绘图文件": false,
+          "pdf-plus:PDF++: Toggle auto-copy": false,
+          "pdf-plus:PDF++: Toggle auto-focus": false,
+          "pdf-plus:PDF++: Toggle auto-paste": false,
+          "workspaces:管理工作区布局": false,
+          "templater-obsidian:Templater": false,
+          "file-tree-alternative:File Tree Alternative Plugin": false
+        }
+      },
+      "active": "4873ec5da53b302f",
+      "mtime": "2025-12-11T10:57:47+08:00"
+    }
+  },
+  "active": "1"
+}

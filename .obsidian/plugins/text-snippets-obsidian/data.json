@@ -1,0 +1,15 @@
+{
+  "snippets_file": "ar : {1$end$|rgba(255,255,255,0.1)|diagonal}\narr : {1}",
+  "snippets": [
+    "ar : {1$end$|rgba(255,255,255,0.1)|diagonal}",
+    "arr : {1}"
+  ],
+  "endSymbol": "$end$",
+  "newlineSymbol": "$nl$",
+  "stopSymbol": "$tb$",
+  "pasteSymbol": "$pst$",
+  "useTab": true,
+  "useSpace": false,
+  "wordDelimiters": "$()[]{}<>,.!?;:'\"\\/",
+  "isWYSIWYG": true
+}

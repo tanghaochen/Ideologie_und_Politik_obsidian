@@ -1,0 +1,10 @@
+{
+  "minimal-style@@pdf-page-style": "pdf-seamless-on",
+  "minimal-style@@pdf-invert-dark": false,
+  "minimal-style@@pdf-blend-light": true,
+  "minimal-style@@image-grid-fit": "contain",
+  "minimal-style@@h4-l": true,
+  "minimal-style@@heading-spacing": "4em",
+  "highlight-comment-settings@@highlight-text-font-size": 18,
+  "highlight-comment-settings@@hi-note-font-size": 18
+}
