@@ -88,16 +88,24 @@
             "id": "2923ca194061fcec",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
-                "page": 1,
-                "left": -9,
-                "top": 722,
-                "zoom": 1.7603264853460836
+                "file": "未命名 4.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "lucide-file-text",
-              "title": "德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library)"
+              "icon": "lucide-file",
+              "title": "未命名 4"
             }
           },
           {
@@ -224,7 +232,8 @@
               "title": "Recent Files"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
@@ -421,6 +430,8 @@
   },
   "active": "2923ca194061fcec",
   "lastOpenFiles": [
+    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
+    "未命名 4.md",
     "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
     "语言学习/德语/公共知识语法/四个格.md",
     "语言学习/德语/柏林广场视频笔记/A1/朗读-课文-练习册/k1-7.md",
@@ -460,7 +471,6 @@
     "未命名.md",
     "assets/image-340.png",
     "语言学习/德语/柏林广场视频笔记/A1/知识点解答/动词；vi;vt.md",
-    "语言学习/德语/柏林广场视频笔记/A1/知识点解答/动词不规则变位：历史演化由来.md",
     "assets/image-339.png",
     "Untitled Diagram.svg"
   ]
