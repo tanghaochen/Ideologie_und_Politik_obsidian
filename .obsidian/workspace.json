@@ -6,32 +6,8 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 43.319314137819475,
+        "dimension": 50.44352454169131,
         "children": [
-          {
-            "id": "41aecc59d7718b78",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "未命名 5.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "未命名 5"
-            }
-          },
           {
             "id": "86b27dfd2c2b0627",
             "type": "leaf",
@@ -39,7 +15,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/朗读-课文-练习册/k1-7.md",
+                "file": "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -55,16 +31,63 @@
               },
               "pinned": true,
               "icon": "lucide-file",
-              "title": "k1-7"
+              "title": "定冠词 性 der, das, die 记忆技巧归类"
+            }
+          },
+          {
+            "id": "490f3aa6c20ee1de",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "未命名 8.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "未命名 8"
+            }
+          },
+          {
+            "id": "b20cdf5d6fed23ed",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/四个格.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "四个格"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 56.68068586218052,
+        "dimension": 49.55647545830869,
         "children": [
           {
             "id": "55f6f407a316eb33",
@@ -75,9 +98,9 @@
               "state": {
                 "file": "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
                 "page": 85,
-                "left": -10,
+                "left": -14,
                 "top": 160,
-                "zoom": 1.5222783388462195
+                "zoom": -0.052811043845488966
               },
               "pinned": true,
               "icon": "lucide-file-text",
@@ -92,18 +115,30 @@
               "type": "pdf",
               "state": {
                 "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
-                "page": 52,
-                "left": -8,
-                "top": 305,
-                "zoom": 1.838190015920802
+                "page": 43,
+                "left": -28,
+                "top": 120,
+                "zoom": 1.3
               },
               "pinned": true,
               "icon": "lucide-file-text",
               "title": "德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library)"
             }
+          },
+          {
+            "id": "1382e333b48a5b9e",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "语法快查必背语法，表格canvas"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -202,12 +237,11 @@
               "title": "Recent Files"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 594.5041885375977
+    "width": 389.50418853759766
   },
   "right": {
     "id": "b2bf97bc0c7f8080",
@@ -276,31 +310,6 @@
             }
           },
           {
-            "id": "9e1e7782182668b8",
-            "type": "leaf",
-            "state": {
-              "type": "calendar",
-              "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Calendar"
-            }
-          },
-          {
-            "id": "7a05e5cddab85b28",
-            "type": "leaf",
-            "state": {
-              "type": "tag",
-              "state": {
-                "sortOrder": "frequency",
-                "useHierarchy": true,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-tags",
-              "title": "标签"
-            }
-          },
-          {
             "id": "80277af3735ca63b",
             "type": "leaf",
             "state": {
@@ -333,7 +342,32 @@
             }
           },
           {
-            "id": "068565552994eba8",
+            "id": "d4fbc79ac2fb46bb",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw-sidepanel",
+              "state": {},
+              "icon": "excalidraw-icon",
+              "title": "Excalidraw 侧边面板"
+            }
+          },
+          {
+            "id": "a75b8cb28fd93b85",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "f56917529a7ac89c",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -345,9 +379,19 @@
               "icon": "lucide-archive",
               "title": "添加笔记属性"
             }
+          },
+          {
+            "id": "7f930464006a0f36",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
           }
         ],
-        "currentTab": 8
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
@@ -399,23 +443,23 @@
             "type": "tabs",
             "children": [
               {
-                "id": "a5942b578aaafa73",
+                "id": "d6c0d37541a0e0dd",
                 "type": "leaf",
                 "state": {
                   "type": "excalidraw",
                   "state": {
-                    "file": "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md"
+                    "file": "语言学习/德语/新求精分等级笔记/德语语法结构Canvas.md"
                   },
                   "icon": "excalidraw-icon",
-                  "title": "语法快查必背语法，表格canvas"
+                  "title": "德语语法结构Canvas"
                 }
               }
             ]
           }
         ],
         "direction": "vertical",
-        "x": 2807,
-        "y": 230,
+        "x": 2705,
+        "y": 1,
         "width": 960,
         "height": 1393,
         "maximize": true,
@@ -425,26 +469,39 @@
   },
   "active": "86b27dfd2c2b0627",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md",
-    "语言学习/德语/柏林广场视频笔记/A1/朗读-课文-练习册/k1-7.md",
-    "未命名 7.md",
     "语言学习/德语/新求精分等级笔记/德语语法结构Canvas.md",
-    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
+    "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md",
+    "语言学习/德语/柏林广场视频笔记/B1/弱变化名词.md",
+    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
+    "语言学习/德语/公共知识语法/Drawing 2026-03-17 00.55.12.excalidraw.md",
+    "assets/Pasted Image 20260317005410_928.png",
+    "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
+    "未命名 10.md",
+    "语言学习/德语/柏林广场视频笔记/A1/54 超市购物相关 与 量词和名词复数.md",
+    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
+    "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
+    "语言学习/德语/公共知识语法/物主代词和动词才有区分一三四格对吗？.md",
+    "语言学习/德语/公共知识语法/四个格.md",
+    "未命名 5.md",
+    "语言学习/德语/柏林广场视频笔记/A1/40 第四格补足语及定冠词的变化.md",
+    "未命名 8.md",
+    "语言学习/德语/柏林广场视频笔记/A2/10 第三格 Dativ.md",
+    "语言学习/德语/柏林广场视频笔记/A1/24 物主代词.md",
+    "未命名 9.md",
+    "assets/Pasted Image 20260316214058_000.png",
+    "语言学习/德语/柏林广场视频笔记/A1/朗读-课文-练习册/k1-7.md",
+    "assets/Pasted Image 20260316224158_355.png",
+    "assets/Pasted Image 20260316214038_416.png",
+    "未命名 7.md",
     "assets/Pasted Image 20260316203220_189.png",
     "未命名 6.md",
-    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/1 字母表 发音.md",
     "语言学习/德语/教材/其他/Drawing 2026-03-16 20.50.55.excalidraw.md",
     "Excalidraw/Scripts/Downloaded/Mindmap Builder.svg",
     "Excalidraw/Scripts/Downloaded/Create new markdown file and embed into active drawing.svg",
     "Excalidraw/Scripts/Downloaded/Create DrawIO file.svg",
     "Excalidraw/Scripts/Downloaded/Mindmap format.svg",
-    "未命名 5.md",
-    "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
-    "语言学习/德语/柏林广场视频笔记/A1/40 第四格补足语及定冠词的变化.md",
-    "语言学习/德语/柏林广场视频笔记/A2/10 第三格 Dativ.md",
-    "语言学习/德语/公共知识语法/四个格.md",
     "语言学习/短文学习逻辑.md",
     "未命名 4.md",
     "未命名 3.md",
@@ -452,25 +509,12 @@
     "assets/3天搞定德语语法_0.pdf",
     "assets/3天搞定德语语法.pdf",
     "assets/Pasted Image 20260315234807_064.png",
-    "assets/Pasted Image 20260315234742_054.png",
     "assets/3天搞定德语语法_1.pdf",
     "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
-    "语言学习/德语/德语学习规划.md",
-    "语言学习/德语/柏林广场视频笔记/000 A1知识点 学习路线.md",
     "语言学习/德语/教材/其他/标准德语语法：精解与练习 (（德）Hilke Dreyer，（德）Richard Schmitt编著；王芳译) (Z-Library).pdf",
     "语言学习/德语/教材/其他/德语语法表解 (华宗德) (Z-Library).pdf",
-    "电脑、软件、系统/obsidian plugin/Anki.md",
     "语言学习/德语/学习记录日记/2026.canvas",
-    "国家/出国/德国/具体申请可视化Canvas.md",
-    "语言学习/德语/单词/疑问.md",
-    "未命名 2.md",
-    "语言学习/德语/柏林广场视频笔记/A1/76 命令式 和 祈使句.md",
-    "语言学习/德语/公共知识语法/句型/倒装句.md",
     "语言学习/德语/教材/柏林广场/A1 听力材料&课后练习答案/听力原文&MP3/教材听力MP3/bl-audio7+/BL-unten-056.mp3",
-    "Ja, mit den Taschen ist ein Taxi besser!.md",
-    "语言学习/德语/教材/柏林广场/A1 听力材料&课后练习答案/听力原文&MP3/教材听力MP3/bl-audio7+/BL-unten-055.mp3",
-    "assets/image-341.png",
-    "assets/image-340.png",
-    "assets/image-339.png"
+    "语言学习/德语/教材/柏林广场/A1 听力材料&课后练习答案/听力原文&MP3/教材听力MP3/bl-audio7+/BL-unten-055.mp3"
   ]
 }
