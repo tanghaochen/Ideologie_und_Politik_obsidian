@@ -6,15 +6,15 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 45.607961921246215,
+        "dimension": 43.319314137819475,
         "children": [
           {
-            "id": "9cc84feeaa6ce640",
+            "id": "41aecc59d7718b78",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/短文学习逻辑.md",
+                "file": "未命名 5.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -29,7 +29,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "短文学习逻辑"
+              "title": "未命名 5"
             }
           },
           {
@@ -64,7 +64,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 54.39203807875379,
+        "dimension": 56.68068586218052,
         "children": [
           {
             "id": "55f6f407a316eb33",
@@ -77,7 +77,7 @@
                 "page": 85,
                 "left": -10,
                 "top": 160,
-                "zoom": 1.5222783388462193
+                "zoom": 1.5222783388462195
               },
               "pinned": true,
               "icon": "lucide-file-text",
@@ -85,51 +85,21 @@
             }
           },
           {
-            "id": "2923ca194061fcec",
+            "id": "9cc84feeaa6ce640",
             "type": "leaf",
+            "pinned": true,
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "未命名 4.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
+                "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
+                "page": 52,
+                "left": -8,
+                "top": 305,
+                "zoom": 1.838190015920802
               },
-              "icon": "lucide-file",
-              "title": "未命名 4"
-            }
-          },
-          {
-            "id": "81aa35e2dece0fc7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/四个格.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "四个格"
+              "pinned": true,
+              "icon": "lucide-file-text",
+              "title": "德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library)"
             }
           }
         ],
@@ -233,7 +203,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -306,32 +276,6 @@
             }
           },
           {
-            "id": "1b5799ed43a6fae4",
-            "type": "leaf",
-            "state": {
-              "type": "footnotes",
-              "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/53 师太时态 二分词.md"
-              },
-              "icon": "lucide-file-signature",
-              "title": "脚注"
-            }
-          },
-          {
-            "id": "abd51c23f2e5aceb",
-            "type": "leaf",
-            "state": {
-              "type": "all-properties",
-              "state": {
-                "sortOrder": "frequency",
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-archive",
-              "title": "添加笔记属性"
-            }
-          },
-          {
             "id": "9e1e7782182668b8",
             "type": "leaf",
             "state": {
@@ -387,9 +331,23 @@
               "icon": "git-pull-request",
               "title": "Source Control"
             }
+          },
+          {
+            "id": "068565552994eba8",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 8
       }
     ],
     "direction": "horizontal",
@@ -428,17 +386,70 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "2923ca194061fcec",
+  "floating": {
+    "id": "97d4f90cb842a0f1",
+    "type": "floating",
+    "children": [
+      {
+        "id": "544eed2d913dfe04",
+        "type": "window",
+        "children": [
+          {
+            "id": "d41a0eeb1371b6f7",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "a5942b578aaafa73",
+                "type": "leaf",
+                "state": {
+                  "type": "excalidraw",
+                  "state": {
+                    "file": "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md"
+                  },
+                  "icon": "excalidraw-icon",
+                  "title": "语法快查必背语法，表格canvas"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "vertical",
+        "x": 2807,
+        "y": 230,
+        "width": 960,
+        "height": 1393,
+        "maximize": true,
+        "zoom": -1.5
+      }
+    ]
+  },
+  "active": "86b27dfd2c2b0627",
   "lastOpenFiles": [
-    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
-    "未命名 4.md",
-    "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
-    "语言学习/德语/公共知识语法/四个格.md",
+    "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md",
+    "未命名 7.md",
+    "语言学习/德语/新求精分等级笔记/德语语法结构Canvas.md",
+    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
+    "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
+    "assets/Pasted Image 20260316203220_189.png",
     "语言学习/德语/柏林广场视频笔记/A1/朗读-课文-练习册/k1-7.md",
+    "未命名 6.md",
+    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
+    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/1 字母表 发音.md",
+    "语言学习/德语/教材/其他/Drawing 2026-03-16 20.50.55.excalidraw.md",
+    "Excalidraw/Scripts/Downloaded/Mindmap Builder.svg",
+    "Excalidraw/Scripts/Downloaded/Create new markdown file and embed into active drawing.svg",
+    "Excalidraw/Scripts/Downloaded/Create DrawIO file.svg",
+    "Excalidraw/Scripts/Downloaded/Mindmap format.svg",
+    "未命名 5.md",
+    "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
+    "语言学习/德语/柏林广场视频笔记/A1/40 第四格补足语及定冠词的变化.md",
+    "语言学习/德语/柏林广场视频笔记/A2/10 第三格 Dativ.md",
+    "语言学习/德语/公共知识语法/四个格.md",
+    "语言学习/短文学习逻辑.md",
+    "未命名 4.md",
     "未命名 3.md",
     "assets.zip",
     "assets/3天搞定德语语法_0.pdf",
-    "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md",
     "assets/3天搞定德语语法.pdf",
     "assets/Pasted Image 20260315234807_064.png",
     "assets/Pasted Image 20260315234742_054.png",
@@ -446,32 +457,20 @@
     "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
     "语言学习/德语/德语学习规划.md",
     "语言学习/德语/柏林广场视频笔记/000 A1知识点 学习路线.md",
-    "语言学习/德语/新求精分等级笔记/德语语法结构Canvas.md",
-    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
-    "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
     "语言学习/德语/教材/其他/标准德语语法：精解与练习 (（德）Hilke Dreyer，（德）Richard Schmitt编著；王芳译) (Z-Library).pdf",
     "语言学习/德语/教材/其他/德语语法表解 (华宗德) (Z-Library).pdf",
     "电脑、软件、系统/obsidian plugin/Anki.md",
     "语言学习/德语/学习记录日记/2026.canvas",
     "国家/出国/德国/具体申请可视化Canvas.md",
     "语言学习/德语/单词/疑问.md",
-    "语言学习/短文学习逻辑.md",
     "未命名 2.md",
     "语言学习/德语/柏林广场视频笔记/A1/76 命令式 和 祈使句.md",
     "语言学习/德语/公共知识语法/句型/倒装句.md",
     "语言学习/德语/教材/柏林广场/A1 听力材料&课后练习答案/听力原文&MP3/教材听力MP3/bl-audio7+/BL-unten-056.mp3",
     "Ja, mit den Taschen ist ein Taxi besser!.md",
     "语言学习/德语/教材/柏林广场/A1 听力材料&课后练习答案/听力原文&MP3/教材听力MP3/bl-audio7+/BL-unten-055.mp3",
-    "语言学习/德语/教材/柏林广场/A1 听力材料&课后练习答案/听力原文&MP3/教材听力原文/BP1_Neu_Transkript_LB_Kap1-6.pdf",
-    "语言学习/Engilish/语法.md",
-    "语言学习/德语/公共知识语法/动词/Würden und Könnten.md",
-    "语言学习/德语/公共知识语法/语法流程化梳理.md",
     "assets/image-341.png",
-    "未命名 1.md",
-    "未命名.md",
     "assets/image-340.png",
-    "语言学习/德语/柏林广场视频笔记/A1/知识点解答/动词；vi;vt.md",
-    "assets/image-339.png",
-    "Untitled Diagram.svg"
+    "assets/image-339.png"
   ]
 }

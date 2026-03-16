@@ -1,10 +1,10 @@
 /*
 
-![[assets/7c3494c75f147da245e57eab81682b24_MD5.jpg]]
+![](https://raw.githubusercontent.com/zsviczian/obsidian-excalidraw-plugin/master/images/scripts-download-raw.jpg)
 
 Download this file and save to your Obsidian Vault including the first line, or open it in "Raw" and copy the entire contents to Obsidian.
 
-![[assets/7d9b086ef4bcc036a1b2e23bc1f4d991_MD5.jpg]]
+![](https://raw.githubusercontent.com/zsviczian/obsidian-excalidraw-plugin/master/images/scripts-create-and-embed-new-markdown-file.jpg)
 
 The script will prompt you for a filename, then create a new markdown document with the file name provided, open the new markdown document in an adjacent pane, and embed the markdown document into the active Excalidraw drawing.
 
