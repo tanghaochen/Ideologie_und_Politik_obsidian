@@ -94,7 +94,7 @@ tags: [excalidraw]
 
 shaft ^4XzLs11w
 
-![[德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf#page=44&rect=26,674,374,718&color=yellow|📖]] ^pMrjjqmD
+[](德语语法%20活学活用%20A1-B1%20([德]%20弗里德里克·金%20[德]%20乌特·福斯)%20(Z-Library).pdf#page=44&rect=26,674,374,718&color=yellow) ^pMrjjqmD
 
 === ^hSVjSyly
 
@@ -110,7 +110,7 @@ shaft ^4XzLs11w
 三格全都变，我们你们与四格一样。 ^qGMRtooN
 
 ## Element Links
-T28Y932w: [[德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf#page=52&rect=144,275,337,437|📖]]
+T28Y932w: [](德语语法%20活学活用%20A1-B1%20([德]%20弗里德里克·金%20[德]%20乌特·福斯)%20(Z-Library).pdf#page=52&rect=144,275,337,437)
 
 ## Embedded Files
 a4f04a99870d67af4c3e77da9301c54c1932738f: [[Pasted Image 20260316214058_000.png]]
