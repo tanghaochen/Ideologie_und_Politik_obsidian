@@ -8911,12 +8911,12 @@
     "scroll": 2.022796445200004,
     "cursor": {
       "from": {
-        "line": 21,
-        "ch": 8
+        "line": 24,
+        "ch": 7
       },
       "to": {
-        "line": 21,
-        "ch": 8
+        "line": 24,
+        "ch": 7
       }
     },
     "expandedKeys": []
