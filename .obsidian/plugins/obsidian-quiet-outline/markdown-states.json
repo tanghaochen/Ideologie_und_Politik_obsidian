@@ -5301,12 +5301,12 @@
     "scroll": 139.50367544775438,
     "cursor": {
       "from": {
-        "line": 157,
-        "ch": 20
+        "line": 145,
+        "ch": 0
       },
       "to": {
-        "line": 157,
-        "ch": 20
+        "line": 145,
+        "ch": 0
       }
     },
     "expandedKeys": [
