@@ -730,6 +730,50 @@
         "isNativeComment": false,
         "type": "highlight"
       }
+    ],
+    "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md": [
+      {
+        "id": "so3le9qz0",
+        "text": "der",
+        "tags": [],
+        "line": 5,
+        "startOffset": 55,
+        "endOffset": 62,
+        "filePath": "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1773728984041,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "yuoi9ed1j",
+        "text": "die",
+        "tags": [],
+        "line": 67,
+        "startOffset": 3766,
+        "endOffset": 3773,
+        "filePath": "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1773728984160,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "gez9b3ee3",
+        "text": "das",
+        "tags": [],
+        "line": 112,
+        "startOffset": 6570,
+        "endOffset": 6577,
+        "filePath": "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1773728984221,
+        "isNativeComment": false,
+        "type": "highlight"
+      }
     ]
   },
   "collections": {},
