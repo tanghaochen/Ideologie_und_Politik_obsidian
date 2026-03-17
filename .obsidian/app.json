@@ -17,5 +17,6 @@
   "rightToLeft": false,
   "tabSize": 4,
   "openBehavior": "new",
-  "showUnsupportedFiles": true
+  "showUnsupportedFiles": true,
+  "focusNewTab": false
 }

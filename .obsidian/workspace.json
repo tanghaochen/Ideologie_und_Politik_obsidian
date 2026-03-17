@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 50.44352454169131,
+        "dimension": 56.074380165289256,
         "children": [
           {
             "id": "86b27dfd2c2b0627",
@@ -35,12 +35,12 @@
             }
           },
           {
-            "id": "490f3aa6c20ee1de",
+            "id": "a1a3edfa2501aef7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "未命名 8.md",
+                "file": "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -55,39 +55,38 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "未命名 8"
+              "title": "名词：不背词性，一眼识别词性"
             }
           },
           {
-            "id": "b20cdf5d6fed23ed",
+            "id": "d7b40ea72dc0ede4",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/四个格.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
+                "file": "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md"
               },
+              "icon": "excalidraw-icon",
+              "title": "语法快查必背语法，表格canvas"
+            }
+          },
+          {
+            "id": "9630ab3b6470b01c",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "四个格"
+              "title": "新标签页"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 49.55647545830869,
+        "dimension": 43.92561983471074,
         "children": [
           {
             "id": "55f6f407a316eb33",
@@ -98,9 +97,9 @@
               "state": {
                 "file": "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
                 "page": 85,
-                "left": -14,
+                "left": -7,
                 "top": 160,
-                "zoom": -0.052811043845488966
+                "zoom": 1.530199995423043
               },
               "pinned": true,
               "icon": "lucide-file-text",
@@ -116,7 +115,7 @@
               "state": {
                 "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
                 "page": 43,
-                "left": -28,
+                "left": -98,
                 "top": 120,
                 "zoom": 1.3
               },
@@ -128,17 +127,55 @@
           {
             "id": "1382e333b48a5b9e",
             "type": "leaf",
+            "pinned": true,
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md"
+                "file": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "语法快查必背语法，表格canvas"
+              "pinned": true,
+              "icon": "lucide-file",
+              "title": "⭐必背所有知识点整理考察整理"
+            }
+          },
+          {
+            "id": "d914d4dd608e2fdc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "未命名 12.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "未命名 12"
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -391,7 +428,7 @@
             }
           }
         ],
-        "currentTab": 6
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -430,87 +467,49 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "floating": {
-    "id": "97d4f90cb842a0f1",
-    "type": "floating",
-    "children": [
-      {
-        "id": "544eed2d913dfe04",
-        "type": "window",
-        "children": [
-          {
-            "id": "d41a0eeb1371b6f7",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "d6c0d37541a0e0dd",
-                "type": "leaf",
-                "state": {
-                  "type": "excalidraw",
-                  "state": {
-                    "file": "语言学习/德语/新求精分等级笔记/德语语法结构Canvas.md"
-                  },
-                  "icon": "excalidraw-icon",
-                  "title": "德语语法结构Canvas"
-                }
-              }
-            ]
-          }
-        ],
-        "direction": "vertical",
-        "x": 2705,
-        "y": 1,
-        "width": 960,
-        "height": 1393,
-        "maximize": true,
-        "zoom": -1.5
-      }
-    ]
-  },
-  "active": "86b27dfd2c2b0627",
+  "active": "d914d4dd608e2fdc",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
     "语言学习/德语/新求精分等级笔记/德语语法结构Canvas.md",
+    "Excalidraw/Scripts/Downloaded/Mindmap Builder.svg",
+    "未命名 12.md",
+    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "assets/image-2.png",
     "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
     "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md",
-    "语言学习/德语/柏林广场视频笔记/B1/弱变化名词.md",
+    "未命名 11.md",
+    "assets/Pasted Image 20260316224158_355.png",
+    "assets/image-1.png",
+    "语言学习/德语/公共知识语法/四个格.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
+    "未命名 8.md",
+    "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
+    "语言学习/德语/德语学习规划.md",
+    "语言学习/德语/德语学习工具和平台.md",
+    "语言学习/德语/德语等级规划与标准.md",
+    "语言学习/德语/柏林广场视频笔记/B1/弱变化名词.md",
     "语言学习/德语/公共知识语法/Drawing 2026-03-17 00.55.12.excalidraw.md",
     "assets/Pasted Image 20260317005410_928.png",
-    "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
     "未命名 10.md",
     "语言学习/德语/柏林广场视频笔记/A1/54 超市购物相关 与 量词和名词复数.md",
-    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
     "语言学习/德语/公共知识语法/物主代词和动词才有区分一三四格对吗？.md",
-    "语言学习/德语/公共知识语法/四个格.md",
     "未命名 5.md",
     "语言学习/德语/柏林广场视频笔记/A1/40 第四格补足语及定冠词的变化.md",
-    "未命名 8.md",
     "语言学习/德语/柏林广场视频笔记/A2/10 第三格 Dativ.md",
     "语言学习/德语/柏林广场视频笔记/A1/24 物主代词.md",
     "未命名 9.md",
     "assets/Pasted Image 20260316214058_000.png",
     "语言学习/德语/柏林广场视频笔记/A1/朗读-课文-练习册/k1-7.md",
-    "assets/Pasted Image 20260316224158_355.png",
     "assets/Pasted Image 20260316214038_416.png",
-    "未命名 7.md",
     "assets/Pasted Image 20260316203220_189.png",
-    "未命名 6.md",
-    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/1 字母表 发音.md",
-    "语言学习/德语/教材/其他/Drawing 2026-03-16 20.50.55.excalidraw.md",
-    "Excalidraw/Scripts/Downloaded/Mindmap Builder.svg",
     "Excalidraw/Scripts/Downloaded/Create new markdown file and embed into active drawing.svg",
     "Excalidraw/Scripts/Downloaded/Create DrawIO file.svg",
-    "Excalidraw/Scripts/Downloaded/Mindmap format.svg",
-    "语言学习/短文学习逻辑.md",
-    "未命名 4.md",
-    "未命名 3.md",
     "assets.zip",
     "assets/3天搞定德语语法_0.pdf",
     "assets/3天搞定德语语法.pdf",
-    "assets/Pasted Image 20260315234807_064.png",
     "assets/3天搞定德语语法_1.pdf",
-    "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
     "语言学习/德语/教材/其他/标准德语语法：精解与练习 (（德）Hilke Dreyer，（德）Richard Schmitt编著；王芳译) (Z-Library).pdf",
     "语言学习/德语/教材/其他/德语语法表解 (华宗德) (Z-Library).pdf",
     "语言学习/德语/学习记录日记/2026.canvas",

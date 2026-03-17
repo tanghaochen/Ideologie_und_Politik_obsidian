@@ -45,7 +45,6 @@
   "obsidian-local-images-plus",
   "obsidian-hover-editor",
   "note-refactor-obsidian",
-  "obsidian-footnotes",
   "pretty-properties",
   "hi-note",
   "obsidian-tidy-footnotes",
@@ -57,6 +56,6 @@
   "hover-reveal",
   "media-extended",
   "obsidian-audio-player",
-  "oz-clear-unused-images",
-  "obsidian-git"
+  "obsidian-git",
+  "open-tab-settings"
 ]

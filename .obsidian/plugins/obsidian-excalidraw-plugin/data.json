@@ -1,6 +1,6 @@
 {
   "copyLinkToElemenetAnchorTo100": true,
-  "copyFrameLinkByName": false,
+  "copyFrameLinkByName": true,
   "disableDoubleClickTextEditing": false,
   "folder": "Excalidraw",
   "cropFolder": "",
@@ -97,7 +97,7 @@
   "embedMarkdownCommentLinks": true,
   "embedWikiLink": true,
   "syncExcalidraw": false,
-  "experimentalFileType": false,
+  "experimentalFileType": true,
   "experimentalFileTag": "✏️",
   "experimentalLivePreview": true,
   "fadeOutExcalidrawMarkup": false,
