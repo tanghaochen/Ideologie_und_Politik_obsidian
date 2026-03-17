@@ -86,17 +86,15 @@
           {
             "id": "9cc84feeaa6ce640",
             "type": "leaf",
-            "pinned": true,
             "state": {
               "type": "pdf",
               "state": {
                 "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
-                "page": 24,
+                "page": 23,
                 "left": -7,
-                "top": 663,
+                "top": 160,
                 "zoom": 2.000024020644726
               },
-              "pinned": true,
               "icon": "lucide-file-text",
               "title": "德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library)"
             }
@@ -126,7 +124,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -245,7 +243,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
+                "file": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -255,7 +253,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library) 的反向链接列表"
+              "title": "⭐必背所有知识点整理考察整理 的反向链接列表"
             }
           },
           {
@@ -467,15 +465,15 @@
       }
     ]
   },
-  "active": "9cc84feeaa6ce640",
+  "active": "1382e333b48a5b9e",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md",
-    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
     "语言学习/德语/柏林广场视频笔记/A1/13 判断疑问句与动词核心框架.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
+    "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md",
     "语言学习/德语/公共知识语法/德语语法结构Canvas.md",
     "Excalidraw/Scripts/Downloaded/Excalidraw Writing Machine.svg",
     "Excalidraw/Scripts/Downloaded/Excalidraw Writing Machine.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/1 字母表 发音.md",
     "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
