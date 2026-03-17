@@ -57,28 +57,6 @@
               "icon": "lucide-file",
               "title": "名词：不背词性，一眼识别词性"
             }
-          },
-          {
-            "id": "d7b40ea72dc0ede4",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "语法快查必背语法，表格canvas"
-            }
-          },
-          {
-            "id": "9630ab3b6470b01c",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "新标签页"
-            }
           }
         ],
         "currentTab": 1
@@ -149,33 +127,9 @@
               "icon": "lucide-file",
               "title": "⭐必背所有知识点整理考察整理"
             }
-          },
-          {
-            "id": "d914d4dd608e2fdc",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "未命名 12.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "未命名 12"
-            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -467,17 +421,58 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "d914d4dd608e2fdc",
+  "floating": {
+    "id": "97d4f90cb842a0f1",
+    "type": "floating",
+    "children": [
+      {
+        "id": "a1007ed9ac5a2ab5",
+        "type": "window",
+        "children": [
+          {
+            "id": "7cc2c0a5f055e98d",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "a271f4d2331e5a6f",
+                "type": "leaf",
+                "state": {
+                  "type": "excalidraw",
+                  "state": {
+                    "file": "语言学习/德语/新求精分等级笔记/德语语法结构Canvas.md"
+                  },
+                  "icon": "excalidraw-icon",
+                  "title": "德语语法结构Canvas"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "vertical",
+        "x": 768,
+        "y": 296,
+        "width": 1024,
+        "height": 800,
+        "maximize": true,
+        "zoom": -1.5
+      }
+    ]
+  },
+  "active": "1382e333b48a5b9e",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
-    "语言学习/德语/新求精分等级笔记/德语语法结构Canvas.md",
-    "Excalidraw/Scripts/Downloaded/Mindmap Builder.svg",
+    "未命名.md",
     "未命名 12.md",
-    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "assets/image-2.png",
+    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
+    "语言学习/德语/新求精分等级笔记/德语语法结构Canvas.md",
+    "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md",
+    "Excalidraw/Scripts/Downloaded/Create DrawIO file.md",
+    "Excalidraw/Scripts/Downloaded/Create DrawIO file.svg",
+    "Excalidraw/Scripts/Downloaded/Mindmap format.svg",
+    "Excalidraw/Scripts/Downloaded/Mindmap Builder.svg",
+    "assets/image-2.png",
     "未命名 11.md",
     "assets/Pasted Image 20260316224158_355.png",
     "assets/image-1.png",
@@ -501,11 +496,8 @@
     "语言学习/德语/柏林广场视频笔记/A1/24 物主代词.md",
     "未命名 9.md",
     "assets/Pasted Image 20260316214058_000.png",
-    "语言学习/德语/柏林广场视频笔记/A1/朗读-课文-练习册/k1-7.md",
     "assets/Pasted Image 20260316214038_416.png",
     "assets/Pasted Image 20260316203220_189.png",
-    "Excalidraw/Scripts/Downloaded/Create new markdown file and embed into active drawing.svg",
-    "Excalidraw/Scripts/Downloaded/Create DrawIO file.svg",
     "assets.zip",
     "assets/3天搞定德语语法_0.pdf",
     "assets/3天搞定德语语法.pdf",
