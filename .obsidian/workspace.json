@@ -91,9 +91,9 @@
               "type": "pdf",
               "state": {
                 "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
-                "page": 23,
+                "page": 24,
                 "left": -7,
-                "top": 160,
+                "top": 663,
                 "zoom": 2.000024020644726
               },
               "pinned": true,
@@ -245,7 +245,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/朗读-课文-练习册/k1-6-1.md",
+                "file": "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -255,7 +255,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "k1-6-1 的反向链接列表"
+              "title": "语法快查必背语法，表格canvas 的反向链接列表"
             }
           },
           {
@@ -378,8 +378,7 @@
               "title": "Calendar"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "horizontal",
@@ -454,7 +453,8 @@
                   "title": "语法快查必背语法，表格canvas"
                 }
               }
-            ]
+            ],
+            "currentTab": 1
           }
         ],
         "direction": "vertical",
@@ -467,18 +467,18 @@
       }
     ]
   },
-  "active": "a271f4d2331e5a6f",
+  "active": "a49850edf51b35c5",
   "lastOpenFiles": [
+    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
+    "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md",
     "语言学习/德语/柏林广场视频笔记/A1/13 判断疑问句与动词核心框架.md",
     "语言学习/德语/公共知识语法/德语语法结构Canvas.md",
     "Excalidraw/Scripts/Downloaded/Excalidraw Writing Machine.svg",
     "Excalidraw/Scripts/Downloaded/Excalidraw Writing Machine.md",
-    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/1 字母表 发音.md",
     "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
-    "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md",
     "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
     "未命名.md",
     "未命名 12.md",
