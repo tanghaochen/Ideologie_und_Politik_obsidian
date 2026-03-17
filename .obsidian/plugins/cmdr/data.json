@@ -32,7 +32,10 @@
   "explorer": [],
   "hide": {
     "statusbar": [],
-    "leftRibbon": []
+    "leftRibbon": [
+      "创建时间戳笔记",
+      "打开/创建今天的日记"
+    ]
   },
   "spacing": "6",
   "advancedToolbar": {

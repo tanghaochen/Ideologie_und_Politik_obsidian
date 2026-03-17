@@ -245,7 +245,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md",
+                "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -255,7 +255,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "语法快查必背语法，表格canvas 的反向链接列表"
+              "title": "德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library) 的反向链接列表"
             }
           },
           {
@@ -389,7 +389,7 @@
       "sidebar-highlights:Open highlights": false,
       "obsidian-to-anki-plugin:Obsidian_to_Anki - Scan Vault": false,
       "templates:插入模板": false,
-      "bases:新建数据库": false,
+      "bases:新建数据库": true,
       "mermaid-tools:Open Mermaid Toolbar": false,
       "switcher:打开快速切换": true,
       "canvas:新建白板": true,
@@ -398,8 +398,8 @@
       "command-palette:打开命令面板": true,
       "zk-prefixer:创建时间戳笔记": true,
       "omnisearch:Omnisearch": false,
-      "webpage-html-export:导出为HTML": false,
-      "obsidian-excalidraw-plugin:新建绘图文件": false,
+      "webpage-html-export:导出为HTML": true,
+      "obsidian-excalidraw-plugin:新建绘图文件": true,
       "pdf-plus:PDF++: Toggle auto-copy": false,
       "pdf-plus:PDF++: Toggle auto-focus": false,
       "pdf-plus:PDF++: Toggle auto-paste": false,
@@ -467,10 +467,10 @@
       }
     ]
   },
-  "active": "a49850edf51b35c5",
+  "active": "9cc84feeaa6ce640",
   "lastOpenFiles": [
-    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
     "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md",
+    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
     "语言学习/德语/柏林广场视频笔记/A1/13 判断疑问句与动词核心框架.md",
     "语言学习/德语/公共知识语法/德语语法结构Canvas.md",
     "Excalidraw/Scripts/Downloaded/Excalidraw Writing Machine.svg",
