@@ -8912,11 +8912,11 @@
     "cursor": {
       "from": {
         "line": 21,
-        "ch": 20
+        "ch": 8
       },
       "to": {
         "line": 21,
-        "ch": 20
+        "ch": 8
       }
     },
     "expandedKeys": []
