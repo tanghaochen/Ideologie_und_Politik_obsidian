@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/13 判断疑问句与动词核心框架.md",
+                "file": "语言学习/德语/柏林广场视频笔记/A1/38可分动词的句子架构.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -29,7 +29,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "13 判断疑问句与动词核心框架"
+              "title": "38可分动词的句子架构"
             }
           },
           {
@@ -90,9 +90,9 @@
               "type": "pdf",
               "state": {
                 "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
-                "page": 25,
+                "page": 27,
                 "left": -7,
-                "top": 194,
+                "top": 13,
                 "zoom": 2.000024020644726
               },
               "icon": "lucide-file-text",
@@ -243,7 +243,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/13 判断疑问句与动词核心框架.md",
+                "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -253,7 +253,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "13 判断疑问句与动词核心框架 的反向链接列表"
+              "title": "德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library) 的反向链接列表"
             }
           },
           {
@@ -452,8 +452,7 @@
                   "title": "语法快查必背语法，表格canvas"
                 }
               }
-            ],
-            "currentTab": 1
+            ]
           }
         ],
         "direction": "vertical",
@@ -466,13 +465,14 @@
       }
     ]
   },
-  "active": "a1a3edfa2501aef7",
+  "active": "9cc84feeaa6ce640",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/德语语法结构Canvas.md",
+    "语言学习/德语/柏林广场视频笔记/A1/38可分动词的句子架构.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1 ([德] 弗里德里克·金  [德] 乌特·福斯) (Z-Library).pdf",
+    "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md",
     "语言学习/德语/柏林广场视频笔记/A1/13 判断疑问句与动词核心框架.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "语言学习/德语/公共知识语法/语法快查必背语法，表格canvas.md",
-    "语言学习/德语/公共知识语法/德语语法结构Canvas.md",
     "Excalidraw/Scripts/Downloaded/Excalidraw Writing Machine.svg",
     "Excalidraw/Scripts/Downloaded/Excalidraw Writing Machine.md",
     "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
@@ -502,7 +502,6 @@
     "未命名 10.md",
     "语言学习/德语/柏林广场视频笔记/A1/54 超市购物相关 与 量词和名词复数.md",
     "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
-    "语言学习/德语/公共知识语法/物主代词和动词才有区分一三四格对吗？.md",
     "assets/Pasted Image 20260316214058_000.png",
     "assets/Pasted Image 20260316214038_416.png",
     "assets.zip",
