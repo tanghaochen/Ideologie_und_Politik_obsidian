@@ -33,11 +33,11 @@ tags: [excalidraw]
 
 [[38可分动词的句子架构#38可分动词的句子架构]] ^QaFR9WxY
 
-！[[语言学习/德语/新求精分等级笔记/德语语法结构Canvas.md#^SjsNxxxG|动词现在时变位]] ^yBtjE6fL
+！[[德语语法结构Canvas#^SjsNxxxG|动词现在时变位]] ^yBtjE6fL
 
 句尾 ^y8TgwDcc
 
-[[语言学习/德语/新求精分等级笔记/德语语法结构Canvas.md#^FLF24K7D|物主代词]] ^aPd8kOyV
+[[德语语法结构Canvas#^FLF24K7D|物主代词]] ^aPd8kOyV
 
 变格时刻
 双宾：人三物四
@@ -47,7 +47,7 @@ tags: [excalidraw]
 
 形容词 ^NIrrFx2V
 
-![[语言学习/德语/新求精分等级笔记/德语语法结构Canvas.md#^DhHpD9FF|adj]] ^o2lP5pTw
+![[德语语法结构Canvas#^DhHpD9FF|adj]] ^o2lP5pTw
 
 格的变化记忆 ^rzXnl42b
 
@@ -74,7 +74,7 @@ tags: [excalidraw]
 
 === ^ANSbdaED
 
-[[语言学习/德语/新求精分等级笔记/德语语法结构Canvas.md#^zmA4R1yi|名词]] ^Ve75WwUs
+[[德语语法结构Canvas#^zmA4R1yi|名词]] ^Ve75WwUs
 
 格： ^9K8PYKk4
 
