@@ -244,6 +244,44 @@ flowchart TD
     * ***Ohne** einen gültigen Reisepass* (Akk.) *können Sie kein Konto eröffnen.* (**没有**有效护照，您无法开户。)
 * **【日常沟通】** * *Ich trinke meinen Kaffee immer **ohne** Zucker* (零冠词).* (我喝咖啡总是**不加**糖。)
 
+##### 1. B1进阶版：“隐身行动”的 `ohne ... zu + Infinitiv` (做某事，而没有做...)
+
+**大师类比：** 想象你在执行一项“隐身任务”。你做了一个动作A，但你**神奇地跳过了**大家预期你会做的动作B。 **最核心的规矩是：做动作A和跳过动作B的，必须是同一个人（同一个主语）。**
+
+**语法公式：** `主句, ohne ... (第四格宾语/其他成分) ... zu + 动词原形.`
+
+**移民生活场景实战：**
+
+- **【签合同 - 租房/工作】**（非常危险的行为，但经常发生）
+    - _Er hat den Arbeitsvertrag unterschrieben, **ohne** ihn vorher **zu** lesen._
+    - (他签了工作合同，**却没有**事先阅读它。)
+    - _大师解析：_ 签合同的是他（Er），没看合同的也是他（Er）。主语一致，所以用 `ohne...zu`。
+- **【外管局延签 / 医生诊所】**
+    - _Ich habe drei Stunden gewartet, **ohne** etwas **zu** trinken._
+    - (我等了三个小时，**一口水都没**喝。)
+- **【职场礼仪】**
+    - _Der Kollege ist nach Hause gegangen, **ohne** sich **zu** verabschieden._
+    - (那个同事回家了，**都没有**道别。)
+    - _大师提示：_ 如果遇到反身动词（sich verabschieden），反身代词要保留，并跟主语保持一致。
+
+---
+
+##### 2. B2终极版：“隔山打牛”的 `ohne dass ...` (做某事，而某人/某物没有...)
+
+**大师类比：** 这招叫“平行宇宙”。你（主语1）在你的宇宙里做了一件事，但并没有引发另一个宇宙里（主语2）预期的反应。 **最核心的规矩是：主句的主语 和 从句的主语 绝对不能是同一个人！** **语法公式：** `主句, ohne dass + 主语2 + ... + 变位动词(放句末).`
+
+**移民生活场景实战：**
+
+- **【租房纠纷】**（B2书信写作经典题材）
+    - _Der Vermieter hat die Miete erhöht, **ohne dass** er mich vorher informiert hat._
+    - (房东涨了房租，**却没有**事先通知我。)
+    - _大师解析：_ 主句主语是“房东”（Der Vermieter），本来从句主语也应该是房东，但这里为了强调，有时即使主语相同也可以用ohne dass，不过更规范的例子是下面这种主语完全不同的：
+    - _Ich musste die Reparatur selbst bezahlen, **ohne dass** der Vermieter mir geholfen hat._
+    - (我必须自己付修理费，**而房东完全没有**帮我。) -> 主句主语是 Ich，从句主语是 der Vermieter，主语不同，**必须**用 `ohne dass`！
+- **【生病请假】**
+    - _Ich war eine Woche krank, **ohne dass** mein Chef sich beschwert hat._
+    - (我病了一个星期，**而我的老板却没有**抱怨。) -> 主语1是 Ich，主语2是 mein Chef。
+
 ---
 
 ### 5. 补充拓展：空间盲区 `nirgendwo` / `nirgends` (哪儿都不)
