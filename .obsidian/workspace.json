@@ -6,26 +6,15 @@
       {
         "id": "a614c6c7f96bdebf",
         "type": "tabs",
+        "dimension": 50.347523892267596,
         "children": [
           {
-            "id": "09a8e26327563e94",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "assets/Pasted Image 20260316224158_355.png"
-              },
-              "icon": "lucide-image",
-              "title": "Pasted Image 20260316224158_355"
-            }
-          },
-          {
-            "id": "db353d5b6354ea87",
+            "id": "eb957eb7c93dc025",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/句型/全面讲解否定，nein,kein,nicht等.md",
+                "file": "语言学习/德语/柏林广场视频笔记/A2/112 动介搭配.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -40,7 +29,79 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "全面讲解否定，nein,kein,nicht等"
+              "title": "112 动介搭配"
+            }
+          },
+          {
+            "id": "46d50ada72b0139e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/柏林广场视频笔记/A2/123 要求第三格介词的总结.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "123 要求第三格介词的总结"
+            }
+          },
+          {
+            "id": "09a8e26327563e94",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/柏林广场视频笔记/B1/6 第四格介词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "6 第四格介词"
+            }
+          },
+          {
+            "id": "db353d5b6354ea87",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/柏林广场视频笔记/A1/124 方位介词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "124 方位介词"
             }
           },
           {
@@ -118,11 +179,12 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       },
       {
         "id": "fa078bae46a1b504",
         "type": "tabs",
+        "dimension": 49.652476107732404,
         "children": [
           {
             "id": "f6b37f54dbe009f8",
@@ -222,7 +284,8 @@
               "title": "51 介词：静三动四"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -338,13 +401,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+                "file": "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "⭐必背所有知识点整理考察整理 的大纲"
+              "title": "⭐✍️语法快查必背语法，表格canvas 的大纲"
             }
           },
           {
@@ -380,42 +443,13 @@
             }
           },
           {
-            "id": "a75b8cb28fd93b85",
+            "id": "600d5fc0823c30bf",
             "type": "leaf",
             "state": {
-              "type": "tag",
-              "state": {
-                "sortOrder": "frequency",
-                "useHierarchy": true,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-tags",
-              "title": "标签"
-            }
-          },
-          {
-            "id": "f56917529a7ac89c",
-            "type": "leaf",
-            "state": {
-              "type": "all-properties",
-              "state": {
-                "sortOrder": "frequency",
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-archive",
-              "title": "添加笔记属性"
-            }
-          },
-          {
-            "id": "7f930464006a0f36",
-            "type": "leaf",
-            "state": {
-              "type": "calendar",
+              "type": "excalidraw-sidepanel",
               "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Calendar"
+              "icon": "excalidraw-icon",
+              "title": "Excalidraw 侧边面板"
             }
           }
         ],
@@ -458,36 +492,39 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "f6b37f54dbe009f8",
+  "active": "b9a547df7816f47a",
   "lastOpenFiles": [
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
-    "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
-    "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
     "语言学习/德语/柏林广场视频笔记/A1/40 第四格补足语及定冠词的变化.md",
     "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
-    "assets/Pasted Image 20260316224158_355.png",
+    "语言学习/德语/柏林广场视频笔记/A2/112 动介搭配.md",
     "语言学习/德语/公共知识语法/⭐✍️德语语法结构Canvas.md",
+    "语言学习/德语/柏林广场视频笔记/A1/124 方位介词.md",
+    "语言学习/德语/柏林广场视频笔记/B1/6 第四格介词.md",
+    "语言学习/德语/柏林广场视频笔记/A2/123 要求第三格介词的总结.md",
+    "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
+    "assets/Pasted Image 20260318210916_520.png",
+    "语言学习/德语/柏林广场视频笔记/A1/知识点解答/所有介词的变格dem,der,den.md",
+    "语言学习/德语/柏林广场视频笔记/A2/10 第三格 Dativ.md",
+    "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
+    "语言学习/德语/柏林广场视频笔记/B1/95 k30 第三格冠词从句；与介词联通的关系代词.md",
     "语言学习/德语/公共知识语法/句型/全面讲解否定，nein,kein,nicht等.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "assets/Pasted Image 20260316224158_355.png",
+    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
+    "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
+    "语言学习/德语/公共知识语法/助动词.md",
+    "assets/Pasted Image 20260318205946_992.png",
+    "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
+    "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
     "语言学习/德语/单词/疑问.md",
     "语言学习/德语/柏林广场视频笔记/A2/83 反身代词 Reflexivpronomen；形容词变名词.md",
     "未命名 5.md",
-    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
-    "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
     "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
     "语言学习/德语/柏林广场视频笔记/A1/13 判断疑问句与动词核心框架.md",
-    "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
-    "语言学习/德语/公共知识语法/助动词.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/1 字母表 发音.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/柏林广场视频笔记/A1/38可分动词的句子架构.md",
-    "语言学习/德语/柏林广场视频笔记/A1/53 时态 二分词 （P.II）.md",
-    "未命名 4.md",
     "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
-    "语言学习/德语/柏林广场视频笔记/A1/24 物主代词.md",
-    "语言学习/德语/柏林广场视频笔记/A1/知识点解答/所有介词的变格dem,der,den.md",
-    "语言学习/德语/柏林广场视频笔记/A1/86 情态动词用法.md",
-    "语言学习/德语/柏林广场视频笔记/A2/112 动介搭配.md",
     "语言学习/德语/教材/笔记资料/德语名词前缀后缀及性(自用).pdf",
     "assets/德语语法 活学活用 A1-B1.webp",
     "语言学习/德语/教材/其他/标准德语语法：精解与练习B2-C1.pdf",
@@ -497,8 +534,6 @@
     "Excalidraw/Scripts/Downloaded/Mindmap format.svg",
     "Excalidraw/Scripts/Downloaded/Mindmap Builder.svg",
     "assets/image-2.png",
-    "assets/image-1.png",
-    "assets/Pasted Image 20260317005410_928.png",
     "assets.zip",
     "assets/3天搞定德语语法_0.pdf",
     "assets/3天搞定德语语法.pdf",
