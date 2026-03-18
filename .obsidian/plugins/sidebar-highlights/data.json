@@ -483,9 +483,9 @@
         "id": "309g3rpvp",
         "text": "彻底",
         "tags": [],
-        "line": 185,
-        "startOffset": 5295,
-        "endOffset": 5301,
+        "line": 187,
+        "startOffset": 5251,
+        "endOffset": 5257,
         "filePath": "语言学习/德语/柏林广场视频笔记/A1/13 判断疑问句与动词核心框架.md",
         "footnoteCount": 0,
         "footnoteContents": [],
@@ -720,9 +720,9 @@
         "id": "36aeh7xt0",
         "text": "不加主语",
         "tags": [],
-        "line": 62,
-        "startOffset": 1130,
-        "endOffset": 1138,
+        "line": 61,
+        "startOffset": 1083,
+        "endOffset": 1091,
         "filePath": "语言学习/德语/柏林广场视频笔记/A1/76 命令式 和 祈使句.md",
         "footnoteCount": 0,
         "footnoteContents": [],
@@ -773,6 +773,23 @@
         "createdAt": 1773728984221,
         "isNativeComment": false,
         "type": "highlight"
+      }
+    ],
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md": [
+      {
+        "id": "1xaszjw6c",
+        "text": "核心语法",
+        "tags": [],
+        "line": 0,
+        "startOffset": 8,
+        "endOffset": 41,
+        "filePath": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1773757966297,
+        "isNativeComment": false,
+        "color": "#ff0000",
+        "type": "html"
       }
     ]
   },

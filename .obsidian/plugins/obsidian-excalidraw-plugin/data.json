@@ -8765,23 +8765,23 @@
           },
           {
             "shift": false,
-            "ctrl_cmd": true,
-            "alt_opt": true,
+            "ctrl_cmd": false,
+            "alt_opt": false,
             "meta_ctrl": false,
             "result": "new-pane"
           },
           {
-            "shift": true,
-            "ctrl_cmd": true,
-            "alt_opt": true,
+            "shift": false,
+            "ctrl_cmd": false,
+            "alt_opt": false,
             "meta_ctrl": false,
             "result": "popout-window"
           },
           {
-            "shift": false,
+            "shift": true,
             "ctrl_cmd": true,
             "alt_opt": false,
-            "meta_ctrl": true,
+            "meta_ctrl": false,
             "result": "md-properties"
           }
         ]

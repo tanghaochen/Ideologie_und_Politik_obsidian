@@ -51,6 +51,14 @@
       "plugin-any-block;1": {
         "position": 12,
         "visible": true
+      },
+      "plugin-obsidian-git;1": {
+        "position": 13,
+        "visible": true
+      },
+      "plugin-obsidian-git;2": {
+        "position": 14,
+        "visible": true
       }
     },
     "New Preset 1": {
