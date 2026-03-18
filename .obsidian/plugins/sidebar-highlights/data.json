@@ -633,6 +633,34 @@
         "isNativeComment": false,
         "color": "#ff0000",
         "type": "html"
+      },
+      {
+        "id": "kq1b8p90f",
+        "text": "全句否定",
+        "tags": [],
+        "line": 71,
+        "startOffset": 2199,
+        "endOffset": 2207,
+        "filePath": "语言学习/德语/公共知识语法/句型/全面讲解否定，nein,kein,nicht等.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1773811892644,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "mkcyonk4j",
+        "text": "否定某个特定成分",
+        "tags": [],
+        "line": 77,
+        "startOffset": 2340,
+        "endOffset": 2352,
+        "filePath": "语言学习/德语/公共知识语法/句型/全面讲解否定，nein,kein,nicht等.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1772795615949,
+        "isNativeComment": false,
+        "type": "highlight"
       }
     ],
     "语言学习/德语/公共知识语法/句型/句子解析学习/句型语法解析.md": [
