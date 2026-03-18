@@ -125,6 +125,30 @@
         "type": "tabs",
         "children": [
           {
+            "id": "f6b37f54dbe009f8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "名词：不背词性，一眼识别词性"
+            }
+          },
+          {
             "id": "13d259f5773c3e75",
             "type": "leaf",
             "state": {
@@ -198,8 +222,7 @@
               "title": "51 介词：静三动四"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -437,20 +460,20 @@
   },
   "active": "f82260588538eab8",
   "lastOpenFiles": [
-    "语言学习/德语/柏林广场视频笔记/A1/40 第四格补足语及定冠词的变化.md",
+    "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
+    "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
+    "语言学习/德语/柏林广场视频笔记/A1/40 第四格补足语及定冠词的变化.md",
     "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "assets/Pasted Image 20260316224158_355.png",
     "语言学习/德语/公共知识语法/⭐✍️德语语法结构Canvas.md",
     "语言学习/德语/公共知识语法/句型/全面讲解否定，nein,kein,nicht等.md",
     "语言学习/德语/单词/疑问.md",
-    "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
     "语言学习/德语/柏林广场视频笔记/A2/83 反身代词 Reflexivpronomen；形容词变名词.md",
     "未命名 5.md",
-    "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
-    "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
     "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
     "语言学习/德语/柏林广场视频笔记/A1/13 判断疑问句与动词核心框架.md",
     "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
