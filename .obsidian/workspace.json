@@ -15,7 +15,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
+                "file": "语言学习/德语/柏林广场视频笔记/A1/40 第四格补足语及定冠词的变化.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -31,23 +31,17 @@
               },
               "pinned": true,
               "icon": "lucide-file",
-              "title": "定冠词 性 der, das, die 记忆技巧归类"
+              "title": "40 第四格补足语及定冠词的变化"
             }
-          }
-        ]
-      },
-      {
-        "id": "dd4130c5419b5527",
-        "type": "tabs",
-        "dimension": 49.65341116380883,
-        "children": [
+          },
           {
             "id": "0640ecd2bd24a3bd",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
+                "file": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -61,10 +55,18 @@
                   "unlinkedCollapsed": true
                 }
               },
+              "pinned": true,
               "icon": "lucide-file",
-              "title": "22 冠词"
+              "title": "⭐必背所有知识点整理考察整理"
             }
-          },
+          }
+        ]
+      },
+      {
+        "id": "dd4130c5419b5527",
+        "type": "tabs",
+        "dimension": 49.65341116380883,
+        "children": [
           {
             "id": "55f6f407a316eb33",
             "type": "leaf",
@@ -74,9 +76,9 @@
               "state": {
                 "file": "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
                 "page": 85,
-                "left": -11,
+                "left": -10,
                 "top": 160,
-                "zoom": 1.4404212208857117
+                "zoom": 1.6516653962676675
               },
               "pinned": true,
               "icon": "lucide-file-text",
@@ -91,15 +93,40 @@
               "state": {
                 "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
                 "page": 32,
-                "left": -10,
+                "left": -46,
                 "top": 285,
                 "zoom": 1.6656688599415241
               },
               "icon": "lucide-file-text",
               "title": "德语语法 活学活用 A1-B1"
             }
+          },
+          {
+            "id": "5359541883c54a2d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "格 与 介词 动词的固定搭配"
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -161,9 +188,18 @@
               "icon": "lucide-search",
               "title": "搜索"
             }
+          },
+          {
+            "id": "232e94f80ffd93ce",
+            "type": "leaf",
+            "state": {
+              "type": "recent-files",
+              "state": {},
+              "icon": "clock",
+              "title": "Recent Files"
+            }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "horizontal",
@@ -258,42 +294,13 @@
             }
           },
           {
-            "id": "a75b8cb28fd93b85",
+            "id": "adea512e898ad314",
             "type": "leaf",
             "state": {
-              "type": "tag",
-              "state": {
-                "sortOrder": "frequency",
-                "useHierarchy": true,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-tags",
-              "title": "标签"
-            }
-          },
-          {
-            "id": "f56917529a7ac89c",
-            "type": "leaf",
-            "state": {
-              "type": "all-properties",
-              "state": {
-                "sortOrder": "frequency",
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-archive",
-              "title": "添加笔记属性"
-            }
-          },
-          {
-            "id": "7f930464006a0f36",
-            "type": "leaf",
-            "state": {
-              "type": "calendar",
+              "type": "excalidraw-sidepanel",
               "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Calendar"
+              "icon": "excalidraw-icon",
+              "title": "Excalidraw 侧边面板"
             }
           }
         ],
@@ -388,24 +395,26 @@
       }
     ]
   },
-  "active": "0640ecd2bd24a3bd",
+  "active": "5359541883c54a2d",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
-    "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
     "语言学习/德语/公共知识语法/⭐✍️德语语法结构Canvas.md",
-    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
-    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/柏林广场视频笔记/A1/40 第四格补足语及定冠词的变化.md",
+    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
+    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/所有词性三四格变位总结.md",
+    "语言学习/德语/公共知识语法/四个格.md",
+    "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
+    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
+    "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
+    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
+    "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
     "语言学习/德语/柏林广场视频笔记/A1/76 命令式 和 祈使句.md",
     "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
     "未命名 1.md",
     "未命名 6.md",
-    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "语言学习/德语/公共知识语法/助动词.md",
-    "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
     "语言学习/德语/柏林广场视频笔记/A1/24 物主代词.md",
-    "语言学习/德语/公共知识语法/所有词性三四格变位总结.md",
     "assets/image-8.png",
     "assets/德语词性变换总结.xlsx",
     "语言学习/德语/柏林广场视频笔记/A2/83 反身代词 Reflexivpronomen；形容词变名词.md",
@@ -421,8 +430,6 @@
     "语言学习/德语/公共知识语法/句型/全面讲解否定，nein,kein,nicht等.md",
     "assets/Pasted Image 20260316224158_355.png",
     "assets/Pasted Image 20260318205946_992.png",
-    "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
-    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/教材/笔记资料/德语名词前缀后缀及性(自用).pdf",
     "assets/德语语法 活学活用 A1-B1.webp",
     "语言学习/德语/教材/其他/标准德语语法：精解与练习B2-C1.pdf",
