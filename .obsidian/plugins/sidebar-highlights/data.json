@@ -833,6 +833,36 @@
         "color": "#ff0000",
         "type": "html"
       }
+    ],
+    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md": [
+      {
+        "id": "f7ovjac0c",
+        "text": "而是“朝着”某个对象的",
+        "tags": [],
+        "line": 266,
+        "startOffset": 9943,
+        "endOffset": 9958,
+        "filePath": "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1774009374150,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "j3hcii4gy",
+        "text": "你喜欢一个东西，你爱一个人",
+        "tags": [],
+        "line": 267,
+        "startOffset": 10093,
+        "endOffset": 10110,
+        "filePath": "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1774009383616,
+        "isNativeComment": false,
+        "type": "highlight"
+      }
     ]
   },
   "collections": {},
