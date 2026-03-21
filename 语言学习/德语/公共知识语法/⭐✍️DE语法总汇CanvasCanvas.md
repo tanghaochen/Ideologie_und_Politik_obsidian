@@ -240,7 +240,7 @@ in/aus区别 [[13 判断疑问句与动词核心框架#^jfgiq3]] ^3kHsqbO6
 
 [[22 冠词#定冠词的使用]] ^HZwsnSIJ
 
-[[⭐✍️德语语法结构Canvas#^area=cwVTxMep|记忆技巧]] ^7da4WJL7
+[[⭐✍️DE语法总汇CanvasCanvas#^area=cwVTxMep|记忆技巧]] ^7da4WJL7
 
 代词 ^ewVHqLeg
 
