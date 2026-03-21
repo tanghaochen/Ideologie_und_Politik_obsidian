@@ -891,6 +891,50 @@
         "isNativeComment": false,
         "type": "highlight"
       }
+    ],
+    "语言学习/德语/人称代词与指示代词.md": [
+      {
+        "id": "ns0f9onvi",
+        "text": "已经有了一个特定的范围",
+        "tags": [],
+        "line": 7,
+        "startOffset": 185,
+        "endOffset": 200,
+        "filePath": "语言学习/德语/人称代词与指示代词.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1774107428435,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "a3e6k3awv",
+        "text": "了解某个事物",
+        "tags": [],
+        "line": 25,
+        "startOffset": 1053,
+        "endOffset": 1063,
+        "filePath": "语言学习/德语/人称代词与指示代词.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1774107565790,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "l1uiv407t",
+        "text": "茫茫大海中提要求",
+        "tags": [],
+        "line": 25,
+        "startOffset": 1080,
+        "endOffset": 1092,
+        "filePath": "语言学习/德语/人称代词与指示代词.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1774107573843,
+        "isNativeComment": false,
+        "type": "highlight"
+      }
     ]
   },
   "collections": {},
