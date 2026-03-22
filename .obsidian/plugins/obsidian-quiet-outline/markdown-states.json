@@ -8930,12 +8930,12 @@
     "scroll": 53.52817754864585,
     "cursor": {
       "from": {
-        "line": 93,
-        "ch": 33
+        "line": 88,
+        "ch": 14
       },
       "to": {
-        "line": 93,
-        "ch": 33
+        "line": 88,
+        "ch": 14
       }
     },
     "expandedKeys": []
