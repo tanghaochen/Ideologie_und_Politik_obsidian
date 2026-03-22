@@ -5906,12 +5906,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 25,
-        "ch": 60
+        "line": 26,
+        "ch": 17
       },
       "to": {
-        "line": 25,
-        "ch": 60
+        "line": 26,
+        "ch": 17
       }
     },
     "expandedKeys": [
