@@ -936,7 +936,78 @@
         "type": "highlight"
       }
     ],
-    "语言学习/德语/公共知识语法/时态介绍总结.md": []
+    "语言学习/德语/公共知识语法/时态介绍总结.md": [
+      {
+        "id": "5hblylibb",
+        "text": "口语",
+        "tags": [],
+        "line": 23,
+        "startOffset": 1829,
+        "endOffset": 1835,
+        "filePath": "语言学习/德语/公共知识语法/时态介绍总结.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1774278099181,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "laiofttrv",
+        "text": "都是",
+        "tags": [],
+        "line": 273,
+        "startOffset": 8660,
+        "endOffset": 8666,
+        "filePath": "语言学习/德语/公共知识语法/时态介绍总结.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1774274485620,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "pz29lw2n3",
+        "text": "休闲",
+        "tags": [],
+        "line": 275,
+        "startOffset": 8721,
+        "endOffset": 8727,
+        "filePath": "语言学习/德语/公共知识语法/时态介绍总结.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1774275848824,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "t9nl4prcb",
+        "text": "**口语**",
+        "tags": [],
+        "line": 275,
+        "startOffset": 8743,
+        "endOffset": 8753,
+        "filePath": "语言学习/德语/公共知识语法/时态介绍总结.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1774275842229,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "qs1kjd3n7",
+        "text": "正装",
+        "tags": [],
+        "line": 277,
+        "startOffset": 9006,
+        "endOffset": 9012,
+        "filePath": "语言学习/德语/公共知识语法/时态介绍总结.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1774275876081,
+        "isNativeComment": false,
+        "type": "highlight"
+      }
+    ]
   },
   "collections": {},
   "groupingMode": "none",
