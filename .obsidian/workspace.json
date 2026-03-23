@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 50.346588836191174,
+        "dimension": 48.305821025195485,
         "children": [
           {
             "id": "84e58dc376ee82c1",
@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/❌错题/未命名.md",
+                "file": "语言学习/德语/公共知识语法/❌错题/时态.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -29,7 +29,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "未命名"
+              "title": "时态"
             }
           },
           {
@@ -39,10 +39,10 @@
               "type": "pdf",
               "state": {
                 "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
-                "page": 66,
-                "left": -8,
-                "top": 672,
-                "zoom": 1.9374278490062273
+                "page": 81,
+                "left": 16,
+                "top": 207,
+                "zoom": 1.9
               },
               "icon": "lucide-file-text",
               "title": "德语语法 活学活用 A1-B1"
@@ -123,61 +123,13 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       },
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 49.65341116380883,
+        "dimension": 51.694178974804515,
         "children": [
-          {
-            "id": "bb2011fc87b12e52",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/时态介绍总结.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "时态介绍总结"
-            }
-          },
-          {
-            "id": "354c5b016883e833",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/知识点解答/动词不规则变位：历史演化由来.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "动词不规则变位：历史演化由来"
-            }
-          },
           {
             "id": "ce2d20bf409daeb3",
             "type": "leaf",
@@ -468,19 +420,19 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "bb2011fc87b12e52",
+  "active": "ce2d20bf409daeb3",
   "lastOpenFiles": [
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/❌错题/时态.md",
+    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
+    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/公共知识语法/时态介绍总结.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
     "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
-    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
-    "语言学习/德语/公共知识语法/❌错题/未命名.md",
     "assets/6c08f0d1-c5c2-4d8b-9aa1-ec253dfb4dce.jpg",
     "语言学习/德语/柏林广场视频笔记/A1/53 时态 二分词 （P.II）.md",
     "语言学习/德语/公共知识语法/❌错题",
-    "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
-    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "语言学习/德语/柏林广场视频笔记/A1/知识点解答/动词不规则变位：历史演化由来.md",
@@ -503,7 +455,6 @@
     "语言学习/德语/公共知识语法/所有词性三四格变位总结.md",
     "assets/Pasted Image 20260316224158_355.png",
     "语言学习/德语/柏林广场视频笔记/B1/30 形容词比较级和最高级.md",
-    "语言学习/德语/柏林广场视频笔记/A1/82 形容词 副词用法总结.md",
     "assets/image-8.png",
     "assets/德语词性变换总结.xlsx",
     "assets/Pasted Image 20260318210916_520.png",
