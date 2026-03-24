@@ -11,5 +11,14 @@
   "file-tree-alternative-plugin@@oz-fta-folder-font-size": 18,
   "file-tree-alternative-plugin@@oz-fta-file-pane-active-file-background-color": "#3A9FFC",
   "file-tree-alternative-plugin@@oz-fta-all-panes-active-text-color": "#0984F3",
-  "file-tree-alternative-plugin@@oz-fta-header-icon-colors": "#FFFFFF"
+  "file-tree-alternative-plugin@@oz-fta-header-icon-colors": "#FFFFFF",
+  "minimal-style@@h1-l": true,
+  "minimal-style@@h2-l": true,
+  "minimal-style@@h3-l": true,
+  "minimal-style@@h5-l": true,
+  "minimal-style@@h6-l": true,
+  "minimal-style@@metadata-heading-off": true,
+  "minimal-style@@h6-color@@dark": "#FFFFFF",
+  "minimal-style@@h5-color@@dark": "#FFF8C5",
+  "minimal-style@@h4-color@@dark": "#FFEB51"
 }
