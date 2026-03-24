@@ -6,5 +6,10 @@
   "minimal-style@@h4-l": true,
   "minimal-style@@heading-spacing": "4em",
   "highlight-comment-settings@@highlight-text-font-size": 18,
-  "highlight-comment-settings@@hi-note-font-size": 18
+  "highlight-comment-settings@@hi-note-font-size": 18,
+  "file-tree-alternative-plugin@@oz-fta-file-font-size": 18,
+  "file-tree-alternative-plugin@@oz-fta-folder-font-size": 18,
+  "file-tree-alternative-plugin@@oz-fta-file-pane-active-file-background-color": "#3A9FFC",
+  "file-tree-alternative-plugin@@oz-fta-all-panes-active-text-color": "#0984F3",
+  "file-tree-alternative-plugin@@oz-fta-header-icon-colors": "#FFFFFF"
 }
