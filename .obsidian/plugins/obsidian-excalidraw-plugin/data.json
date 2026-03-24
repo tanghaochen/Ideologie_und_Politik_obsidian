@@ -1,5 +1,5 @@
 {
-  "copyLinkToElemenetAnchorTo100": true,
+  "copyLinkToElemenetAnchorTo100": false,
   "copyFrameLinkByName": true,
   "disableDoubleClickTextEditing": false,
   "folder": "Excalidraw",
@@ -41,8 +41,8 @@
   "dynamicStyling": "colorful",
   "isLeftHanded": true,
   "desktopUIMode": "full",
-  "tabletUIMode": "compact",
-  "phoneUIMode": "mobile",
+  "tabletUIMode": "full",
+  "phoneUIMode": "full",
   "iframeMatchExcalidrawTheme": true,
   "matchTheme": false,
   "matchThemeAlways": false,
@@ -8127,6 +8127,28 @@
         "value": true,
         "hidden": false
       }
+    },
+    "Downloaded/Excalidraw Writing Machine": {
+      "Template path": {
+        "value": "语言学习/德语/柏林广场视频笔记/B1/56 过去式 现在时 完成时 与从句引导词搭配.md",
+        "description": "The template file path that will receive the concatenated text. If the file includes <<<REPLACE ME>>> then it will be replaced with the generated text, if <<<REPLACE ME>>> is not present in the file the hierarchical markdown generated from the diagram will be added to the end of the template."
+      },
+      "ZK '# Summary' section": {
+        "value": "Summary",
+        "description": "The section in your visual zettelkasten file that contains the short written summary of the idea. This is the text that will be included in the hierarchical markdown file if visual ZK cards are included in your flow"
+      },
+      "ZK '# Source' section": {
+        "value": "Source",
+        "description": "The section in your visual zettelkasten file that contains the reference to your source. If present in the file, this text will be included in the output file as a reference"
+      },
+      "Embed image links": {
+        "value": true,
+        "description": "Should the resulting markdown document include the ![[embedded images]]?"
+      },
+      "Generate ![markdown](links)": {
+        "value": true,
+        "description": "If you turn this off the script will generate ![[wikilinks]] for images"
+      }
     }
   },
   "previousRelease": "2.21.2",
@@ -8138,7 +8160,8 @@
   "taskboneEnabled": true,
   "taskboneAPIkey": "8a6257e0-59ef-4b0f-8124-aa3a3f7e1ff8",
   "pinnedScripts": [
-    "Excalidraw/Scripts/Downloaded/Mindmap format.md"
+    "Excalidraw/Scripts/Downloaded/Mindmap format.md",
+    "Excalidraw/Scripts/Downloaded/Excalidraw Writing Machine.md"
   ],
   "sidepanelTabs": [
     "{\"script\":\"Downloaded/Mindmap Builder\",\"title\":\"MindMap Builder\"}"

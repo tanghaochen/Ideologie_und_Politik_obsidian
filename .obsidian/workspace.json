@@ -106,7 +106,8 @@
               "title": "时态介绍总结"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       },
       {
         "id": "dd4130c5419b5527",
@@ -119,7 +120,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/38可分动词的句子架构.md",
+                "file": "语言学习/德语/公共知识语法/过去分词 Partizip Perfekt.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -134,7 +135,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "38可分动词的句子架构"
+              "title": "过去分词 Partizip Perfekt"
             }
           },
           {
@@ -156,6 +157,20 @@
             }
           },
           {
+            "id": "ce2d20bf409daeb3",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md"
+              },
+              "pinned": true,
+              "icon": "excalidraw-icon",
+              "title": "⭐✍️语法快查必背语法，表格canvas"
+            }
+          },
+          {
             "id": "9cc84feeaa6ce640",
             "type": "leaf",
             "state": {
@@ -166,21 +181,9 @@
               "icon": "excalidraw-icon",
               "title": "⭐✍️DE语法总汇CanvasCanvas"
             }
-          },
-          {
-            "id": "ce2d20bf409daeb3",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "⭐✍️语法快查必背语法，表格canvas"
-            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -397,7 +400,7 @@
             }
           }
         ],
-        "currentTab": 9
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -438,17 +441,20 @@
   },
   "active": "ce2d20bf409daeb3",
   "lastOpenFiles": [
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
-    "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
-    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
-    "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
-    "语言学习/德语/柏林广场视频笔记/A1/38可分动词的句子架构.md",
+    "语言学习/德语/公共知识语法/过去分词 Partizip Perfekt.md",
+    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
-    "语言学习/德语/公共知识语法/时态介绍总结.md",
-    "语言学习/德语/单词/动词.md",
+    "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
     "语言学习/德语/公共知识语法/❌错题/时态.md",
+    "assets/EWM - ⭐✍️语法快查必背语法，表格canvas.md.md",
+    "assets/⭐✍️语法快查必背语法，表格.md",
+    "语言学习/德语/柏林广场视频笔记/A1/38可分动词的句子架构.md",
+    "语言学习/德语/公共知识语法/时态介绍总结.md",
+    "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
+    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
+    "语言学习/德语/单词/动词.md",
     "assets/6c08f0d1-c5c2-4d8b-9aa1-ec253dfb4dce.jpg",
     "语言学习/德语/柏林广场视频笔记/A1/53 时态 二分词 （P.II）.md",
     "语言学习/德语/公共知识语法/❌错题",
@@ -465,11 +471,8 @@
     "assets/Pasted Image 20260322204105_167.png",
     "语言学习/德语/公共知识语法/四个格.md",
     "语言学习/德语/公共知识语法/第二格.md",
-    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/学习记录日记/2026.canvas",
-    "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
     "assets/Pasted Image 20260321003023_291.png",
-    "语言学习/德语/公共知识语法/所有词性三四格变位总结.md",
     "assets/Pasted Image 20260316224158_355.png",
     "assets/image-8.png",
     "assets/德语词性变换总结.xlsx",
