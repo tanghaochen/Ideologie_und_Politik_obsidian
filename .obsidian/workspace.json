@@ -115,6 +115,18 @@
         "dimension": 51.694178974804515,
         "children": [
           {
+            "id": "52e157ece5cdf75f",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.12.7"
+              },
+              "icon": "lucide-book-up",
+              "title": "版本说明 1.12.7"
+            }
+          },
+          {
             "id": "55f6f407a316eb33",
             "type": "leaf",
             "pinned": true,
@@ -158,8 +170,7 @@
               "title": "⭐✍️DE语法总汇CanvasCanvas"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -232,7 +243,8 @@
               "title": "Recent Files"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
@@ -405,7 +417,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "a6a1f52d627cfc7e",
+  "active": "568dbf1a0a1003d9",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "语言学习/德语/公共知识语法/时态介绍总结.md",
