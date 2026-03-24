@@ -281,8 +281,7 @@
               "title": "Recent Files"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "horizontal",
@@ -424,9 +423,19 @@
               "icon": "lucide-list",
               "title": "76 命令式 和 祈使句 的大纲"
             }
+          },
+          {
+            "id": "fc8efd10765ae511",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 10
       }
     ],
     "direction": "horizontal",
@@ -469,6 +478,10 @@
   "lastOpenFiles": [
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/1 德语语序.md",
+    "语言学习/德语/公共知识语法/句子成分 结构.md",
+    "语言学习/德语/德语学习工具和平台.md",
+    "assets/image-42.png",
+    "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
     "语言学习/德语/柏林广场视频笔记/A2/83 反身代词 Reflexivpronomen；形容词变名词.md",
     "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
     "语言学习/德语/公共知识语法/过去分词 Partizip Perfekt.md",
@@ -496,10 +509,6 @@
     "语言学习/德语/公共知识语法/❌错题",
     "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
-    "语言学习/德语/柏林广场视频笔记/A1/知识点解答/动词不规则变位：历史演化由来.md",
-    "语言学习/德语/柏林广场视频笔记/A1/4 动词sein和陈述句.md",
-    "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
-    "语言学习/德语/柏林广场视频笔记/B1/阳性弱变化动词.md",
     "assets/Pasted Image 20260322204105_167.png",
     "语言学习/德语/学习记录日记/2026.canvas",
     "assets/Pasted Image 20260321003023_291.png",
@@ -507,7 +516,6 @@
     "assets/image-8.png",
     "assets/德语词性变换总结.xlsx",
     "assets/Pasted Image 20260318210916_520.png",
-    "assets/Pasted Image 20260318205946_992.png",
     "语言学习/德语/教材/笔记资料/德语名词前缀后缀及性(自用).pdf",
     "语言学习/德语/教材/其他/标准德语语法：精解与练习B2-C1.pdf",
     "assets.zip",
