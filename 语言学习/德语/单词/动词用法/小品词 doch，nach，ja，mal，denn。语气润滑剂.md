@@ -2,6 +2,9 @@
 aliases:
   - doch
   - ja
+  - mal
+  - denn
+  - nach
 ---
 
 #

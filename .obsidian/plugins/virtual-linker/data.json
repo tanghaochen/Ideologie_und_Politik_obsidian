@@ -1,7 +1,7 @@
 {
   "advancedSettings": true,
   "linkerActivated": true,
-  "matchAnyPartsOfWords": true,
+  "matchAnyPartsOfWords": false,
   "matchEndOfWords": true,
   "matchBeginningOfWords": true,
   "suppressSuffixForSubWords": false,

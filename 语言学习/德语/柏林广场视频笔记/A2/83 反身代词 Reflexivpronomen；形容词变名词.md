@@ -1,3 +1,14 @@
+---
+aliases:
+  - mich
+  - dish
+  - sich
+  - uns
+  - euch
+  - mir
+  - dir
+---
+
 # AI 反身代词
 
 ### 第一部分：什么是反身代词？——“回旋镖效应”

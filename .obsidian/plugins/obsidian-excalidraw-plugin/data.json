@@ -77,7 +77,7 @@
   "openInMainWorkspace": true,
   "showLinkBrackets": true,
   "syncElementLinkWithText": false,
-  "allowCtrlClick": false,
+  "allowCtrlClick": true,
   "forceWrap": false,
   "pageTransclusionCharLimit": 200,
   "wordWrappingDefault": 0,
