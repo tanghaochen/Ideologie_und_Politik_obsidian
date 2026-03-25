@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 47.33883058470765,
+        "dimension": 51.25609298837646,
         "children": [
           {
             "id": "83b1cc89204ce197",
@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/❌错题/合集.md",
+                "file": "语言学习/德语/公共知识语法/❌错题/介词.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -29,7 +29,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "合集"
+              "title": "介词"
             }
           },
           {
@@ -135,7 +135,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 52.66116941529235,
+        "dimension": 48.74390701162355,
         "children": [
           {
             "id": "91a6c9f421ef8132",
@@ -160,37 +160,8 @@
               "icon": "lucide-file",
               "title": "1 德语语序"
             }
-          },
-          {
-            "id": "ce2d20bf409daeb3",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md"
-              },
-              "pinned": true,
-              "icon": "excalidraw-icon",
-              "title": "⭐✍️语法快查必背语法，表格canvas"
-            }
-          },
-          {
-            "id": "5445e79cf64efc1a",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md"
-              },
-              "pinned": true,
-              "icon": "excalidraw-icon",
-              "title": "⭐✍️DE语法总汇CanvasCanvas"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -456,11 +427,54 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "83b1cc89204ce197",
+  "floating": {
+    "id": "e32bf25a116e928b",
+    "type": "floating",
+    "children": [
+      {
+        "id": "de607033d6835759",
+        "type": "window",
+        "children": [
+          {
+            "id": "d76e2b730c76a9e6",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "ce2d20bf409daeb3",
+                "type": "leaf",
+                "state": {
+                  "type": "excalidraw",
+                  "state": {
+                    "file": "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md"
+                  },
+                  "icon": "excalidraw-icon",
+                  "title": "⭐✍️语法快查必背语法，表格canvas"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "vertical",
+        "x": 2722,
+        "y": 116,
+        "width": 601,
+        "height": 1392,
+        "maximize": true,
+        "zoom": -2
+      }
+    ]
+  },
+  "active": "ce2d20bf409daeb3",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/❌错题/介词.md",
     "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
-    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/公共知识语法/1 德语语序.md",
+    "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
+    "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
+    "assets/image-74.png",
+    "assets/image-44.png",
+    "语言学习/德语/公共知识语法/❌错题/合集.md",
+    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/句子成分 结构.md",
     "语言学习/德语/德语学习工具和平台.md",
@@ -471,12 +485,9 @@
     "语言学习/德语/公共知识语法/过去分词 Partizip Perfekt.md",
     "语言学习/德语/柏林广场视频笔记/A1/10 用德语打招呼_笔记.md",
     "assets/Pasted Image 20260324222840_306.png",
-    "语言学习/德语/公共知识语法/❌错题/合集.md",
     "assets/image-36.png",
     "语言学习/德语/柏林广场视频笔记/A1/76 命令式 和 祈使句.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
-    "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
-    "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
     "语言学习/德语/公共知识语法/时态介绍总结.md",
     "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
     "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
@@ -490,14 +501,11 @@
     "语言学习/德语/柏林广场视频笔记/A1/53 时态 二分词 （P.II）.md",
     "语言学习/德语/公共知识语法/❌错题",
     "电脑、软件、系统/ps-tang.md",
-    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "assets/Pasted Image 20260322204105_167.png",
     "语言学习/德语/学习记录日记/2026.canvas",
     "assets/Pasted Image 20260321003023_291.png",
     "assets/Pasted Image 20260316224158_355.png",
-    "assets/image-8.png",
     "assets/德语词性变换总结.xlsx",
-    "assets/Pasted Image 20260318210916_520.png",
     "语言学习/德语/教材/笔记资料/德语名词前缀后缀及性(自用).pdf",
     "语言学习/德语/教材/其他/标准德语语法：精解与练习B2-C1.pdf",
     "assets.zip",
