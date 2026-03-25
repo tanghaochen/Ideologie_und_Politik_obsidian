@@ -9,12 +9,108 @@
         "dimension": 51.25609298837646,
         "children": [
           {
+            "id": "b13de78c3ae14f55",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/柏林广场视频笔记/A2/112 动介搭配.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "112 动介搭配"
+            }
+          },
+          {
+            "id": "57feb4ca61e7c5fd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/柏林广场视频笔记/A1/124 方位介词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "124 方位介词"
+            }
+          },
+          {
+            "id": "503c94c7d448c255",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "51 介词：静三动四"
+            }
+          },
+          {
+            "id": "a6a1f52d627cfc7e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/时态介绍总结.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "时态介绍总结"
+            }
+          },
+          {
             "id": "83b1cc89204ce197",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/❌错题/介词.md",
+                "file": "语言学习/德语/公共知识语法/❌错题/介词错题.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -29,55 +125,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "介词"
-            }
-          },
-          {
-            "id": "55cc40098fbe3bf9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A2/83 反身代词 Reflexivpronomen；形容词变名词.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "83 反身代词 Reflexivpronomen；形容词变名词"
-            }
-          },
-          {
-            "id": "84e58dc376ee82c1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "小品词 doch，nach，ja，mal，denn。语气润滑剂"
+              "title": "介词错题"
             }
           },
           {
@@ -104,30 +152,6 @@
               "pinned": true,
               "icon": "lucide-file",
               "title": "⭐必背所有知识点整理考察整理"
-            }
-          },
-          {
-            "id": "a6a1f52d627cfc7e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/时态介绍总结.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "时态介绍总结"
             }
           }
         ]
@@ -160,8 +184,21 @@
               "icon": "lucide-file",
               "title": "1 德语语序"
             }
+          },
+          {
+            "id": "ec19150ef8b60c3d",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "⭐✍️DE语法总汇CanvasCanvas"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -234,7 +271,8 @@
               "title": "Recent Files"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
@@ -464,18 +502,22 @@
       }
     ]
   },
-  "active": "ce2d20bf409daeb3",
+  "active": "b13de78c3ae14f55",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/❌错题/介词.md",
-    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
-    "语言学习/德语/公共知识语法/1 德语语序.md",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
+    "语言学习/德语/柏林广场视频笔记/A1/124 方位介词.md",
+    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
+    "语言学习/德语/公共知识语法/时态介绍总结.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
+    "语言学习/德语/公共知识语法/1 德语语序.md",
+    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
+    "语言学习/德语/公共知识语法/❌错题/介词错题.md",
     "assets/image-74.png",
     "assets/image-44.png",
     "语言学习/德语/公共知识语法/❌错题/合集.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/句子成分 结构.md",
     "语言学习/德语/德语学习工具和平台.md",
     "assets/image-42.png",
@@ -487,8 +529,6 @@
     "assets/Pasted Image 20260324222840_306.png",
     "assets/image-36.png",
     "语言学习/德语/柏林广场视频笔记/A1/76 命令式 和 祈使句.md",
-    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
-    "语言学习/德语/公共知识语法/时态介绍总结.md",
     "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
     "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
     "语言学习/德语/公共知识语法/❌错题/时态.md",
@@ -500,7 +540,6 @@
     "assets/6c08f0d1-c5c2-4d8b-9aa1-ec253dfb4dce.jpg",
     "语言学习/德语/柏林广场视频笔记/A1/53 时态 二分词 （P.II）.md",
     "语言学习/德语/公共知识语法/❌错题",
-    "电脑、软件、系统/ps-tang.md",
     "assets/Pasted Image 20260322204105_167.png",
     "语言学习/德语/学习记录日记/2026.canvas",
     "assets/Pasted Image 20260321003023_291.png",
