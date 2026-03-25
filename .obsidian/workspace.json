@@ -9,6 +9,22 @@
         "dimension": 47.33883058470765,
         "children": [
           {
+            "id": "561aff3cc6467164",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
+                "page": 85,
+                "left": -117,
+                "top": 423,
+                "zoom": 1.3
+              },
+              "icon": "lucide-file-text",
+              "title": "德语语法 活学活用 A1-B1"
+            }
+          },
+          {
             "id": "83b1cc89204ce197",
             "type": "leaf",
             "state": {
@@ -130,8 +146,7 @@
               "title": "时态介绍总结"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       },
       {
         "id": "dd4130c5419b5527",
@@ -163,24 +178,6 @@
             }
           },
           {
-            "id": "55f6f407a316eb33",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "pdf",
-              "state": {
-                "file": "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
-                "page": 86,
-                "left": -9,
-                "top": 79,
-                "zoom": -0.05281104384548897
-              },
-              "pinned": true,
-              "icon": "lucide-file-text",
-              "title": "柏林广场  1  学生用书  新版"
-            }
-          },
-          {
             "id": "ce2d20bf409daeb3",
             "type": "leaf",
             "pinned": true,
@@ -208,7 +205,8 @@
               "title": "⭐✍️DE语法总汇CanvasCanvas"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -474,10 +472,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "91a6c9f421ef8132",
+  "active": "ce2d20bf409daeb3",
   "lastOpenFiles": [
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
+    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "语言学习/德语/公共知识语法/1 德语语序.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/句子成分 结构.md",
     "语言学习/德语/德语学习工具和平台.md",
     "assets/image-42.png",
@@ -485,13 +485,11 @@
     "语言学习/德语/柏林广场视频笔记/A2/83 反身代词 Reflexivpronomen；形容词变名词.md",
     "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
     "语言学习/德语/公共知识语法/过去分词 Partizip Perfekt.md",
-    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "语言学习/德语/柏林广场视频笔记/A1/10 用德语打招呼_笔记.md",
     "assets/Pasted Image 20260324222840_306.png",
     "语言学习/德语/公共知识语法/❌错题/合集.md",
     "assets/image-36.png",
     "语言学习/德语/柏林广场视频笔记/A1/76 命令式 和 祈使句.md",
-    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
