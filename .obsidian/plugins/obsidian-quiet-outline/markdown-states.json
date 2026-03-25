@@ -9239,12 +9239,12 @@
     "scroll": 49.72739997455272,
     "cursor": {
       "from": {
-        "line": 79,
-        "ch": 42
+        "line": 89,
+        "ch": 15
       },
       "to": {
-        "line": 79,
-        "ch": 42
+        "line": 89,
+        "ch": 15
       }
     },
     "expandedKeys": [
