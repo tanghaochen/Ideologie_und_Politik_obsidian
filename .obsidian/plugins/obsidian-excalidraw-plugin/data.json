@@ -8149,6 +8149,53 @@
         "value": true,
         "description": "If you turn this off the script will generate ![[wikilinks]] for images"
       }
+    },
+    "Downloaded/Box Each Selected Groups": {
+      "Prompt for padding?": true,
+      "Default padding": {
+        "value": 10,
+        "description": "Padding between the bounding box of the selected elements, and the box the script creates"
+      },
+      "Remember last padding?": false
+    },
+    "Downloaded/Box Selected Elements": {
+      "Prompt for padding?": true,
+      "Default padding": {
+        "value": 10,
+        "description": "Padding between the bounding box of the selected elements, and the box the script creates"
+      }
+    },
+    "Downloaded/Convert selected text elements to sticky notes": {
+      "Border color": {
+        "value": "#000000",
+        "description": "Any legal HTML color (#000000, rgb, color-name, etc.). Set to 'transparent' for transparent color."
+      },
+      "Background color": {
+        "value": "transparent",
+        "description": "Background color of the sticky note. Set to 'transparent' for transparent color."
+      },
+      "Background fill style": {
+        "value": "solid",
+        "description": "Fill style of the sticky note",
+        "valueset": [
+          "hachure",
+          "cross-hatch",
+          "solid"
+        ]
+      },
+      "Max sticky note width": {
+        "value": "600",
+        "description": "Maximum width of new sticky note. If text is longer, it will be wrapped",
+        "valueset": [
+          "400",
+          "600",
+          "800",
+          "1000",
+          "1200",
+          "1400",
+          "2000"
+        ]
+      }
     }
   },
   "previousRelease": "2.21.2",
