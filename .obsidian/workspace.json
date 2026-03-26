@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 38.47019122609674,
+        "dimension": 11.58605174353206,
         "children": [
           {
             "id": "8faade4096e4a8de",
@@ -112,7 +112,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 61.52980877390326,
+        "dimension": 88.41394825646793,
         "children": [
           {
             "id": "91a6c9f421ef8132",
@@ -250,7 +250,8 @@
               "title": "Recent Files"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
@@ -445,9 +446,9 @@
   },
   "active": "ce2d20bf409daeb3",
   "lastOpenFiles": [
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/❌错题/介词错题.md",
     "语言学习/德语/柏林广场视频笔记/B1/6 第四格介词.md",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
