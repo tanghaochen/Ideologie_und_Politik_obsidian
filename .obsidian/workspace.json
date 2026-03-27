@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "电脑、软件、系统/obsidian plugin/Anki.md",
+                "file": "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -29,7 +29,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Anki"
+              "title": "小品词 doch，nach，ja，mal，denn。语气润滑剂"
             }
           },
           {
@@ -106,7 +106,8 @@
               "title": "⭐必背所有知识点整理考察整理"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       },
       {
         "id": "dd4130c5419b5527",
@@ -246,13 +247,23 @@
               "icon": "clock",
               "title": "Recent Files"
             }
+          },
+          {
+            "id": "c8deff94cab1d544",
+            "type": "leaf",
+            "state": {
+              "type": "notebook-navigator",
+              "state": {},
+              "icon": "notebook-navigator",
+              "title": "笔记本导航器"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 463.5124969482422
+    "width": 651.5124969482422
   },
   "right": {
     "id": "b2bf97bc0c7f8080",
@@ -438,20 +449,25 @@
       "markdown-importer:打开 Markdown 格式转换器": false,
       "hi-note:HiNote": false,
       "media-extended:Open external media": false,
-      "obsidian-git:Open Git source control": false
+      "obsidian-git:Open Git source control": false,
+      "pexels-banner:🚩 Pixel Banner Menu": false,
+      "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "8faade4096e4a8de",
+  "active": "0640ecd2bd24a3bd",
   "lastOpenFiles": [
-    "语言学习/德语/柏林广场视频笔记/A1/124 方位介词.md",
+    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/❌错题/介词错题.md",
+    "语言学习/德语/柏林广场视频笔记/A1/124 方位介词.md",
+    "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
+    "语言学习/德语/德语学习工具和平台.md",
     "电脑、软件、系统/obsidian plugin/Anki.md",
+    "assets/party.png",
     "语言学习/德语/柏林广场视频笔记/B1/6 第四格介词.md",
     "语言学习/德语/柏林广场视频笔记/A1/6 补充疑问句及句子的语序.md",
-    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
@@ -474,12 +490,9 @@
     "assets/image-76.png",
     "语言学习/德语/柏林广场视频笔记/A2/112 动介搭配.md",
     "assets/image-74.png",
-    "assets/image-44.png",
     "语言学习/德语/公共知识语法/❌错题/合集.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/公共知识语法/句子成分 结构.md",
-    "语言学习/德语/德语学习工具和平台.md",
-    "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
     "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
     "语言学习/德语/公共知识语法/❌错题",
     "语言学习/德语/学习记录日记/2026.canvas",
