@@ -8852,18 +8852,22 @@
     "expandedKeys": []
   },
   "电脑、软件、系统/obsidian plugin/Anki.md": {
-    "scroll": 7.414210670810724,
+    "scroll": 0,
     "cursor": {
       "from": {
-        "line": 14,
-        "ch": 174
+        "line": 8,
+        "ch": 6
       },
       "to": {
-        "line": 14,
-        "ch": 174
+        "line": 8,
+        "ch": 6
       }
     },
-    "expandedKeys": []
+    "expandedKeys": [
+      "item-1-4",
+      "item-2-7",
+      "item-3-9"
+    ]
   },
   "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md": {
     "scroll": 0,
@@ -8938,12 +8942,12 @@
     "scroll": 98.15378508509922,
     "cursor": {
       "from": {
-        "line": 0,
-        "ch": 0
+        "line": 142,
+        "ch": 5
       },
       "to": {
-        "line": 0,
-        "ch": 0
+        "line": 142,
+        "ch": 5
       }
     },
     "expandedKeys": []
@@ -9086,12 +9090,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 2,
-        "ch": 13
+        "line": 4,
+        "ch": 17
       },
       "to": {
-        "line": 2,
-        "ch": 13
+        "line": 4,
+        "ch": 17
       }
     },
     "expandedKeys": [

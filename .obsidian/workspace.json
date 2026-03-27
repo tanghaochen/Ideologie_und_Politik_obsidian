@@ -163,7 +163,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -197,16 +197,6 @@
               "state": {},
               "icon": "lucide-bookmark",
               "title": "书签"
-            }
-          },
-          {
-            "id": "fa32035546bb2f1f",
-            "type": "leaf",
-            "state": {
-              "type": "file-tree-view",
-              "state": {},
-              "icon": "sheets-in-box",
-              "title": "File Tree"
             }
           },
           {
@@ -247,7 +237,7 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -428,7 +418,6 @@
       "pdf-plus:PDF++: Toggle auto-paste": false,
       "workspaces:管理工作区布局": false,
       "templater-obsidian:Templater": false,
-      "file-tree-alternative:File Tree Alternative Plugin": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
       "mxmind:Mxmind": false,
       "audio-recorder:开始/结束录音": false,
@@ -442,8 +431,9 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "ce2d20bf409daeb3",
+  "active": "dd8c0de9236cf3b8",
   "lastOpenFiles": [
+    "电脑、软件、系统/obsidian plugin/Anki.md",
     "assets/image-170.png",
     "assets/image-141.png",
     "assets/image-137.png",
@@ -454,7 +444,6 @@
     "语言学习/德语/柏林广场视频笔记/A1/124 方位介词.md",
     "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
     "语言学习/德语/德语学习工具和平台.md",
-    "电脑、软件、系统/obsidian plugin/Anki.md",
     "assets/party.png",
     "语言学习/德语/柏林广场视频笔记/B1/6 第四格介词.md",
     "语言学习/德语/柏林广场视频笔记/A1/6 补充疑问句及句子的语序.md",
@@ -478,7 +467,6 @@
     "语言学习/德语/公共知识语法/时态介绍总结.md",
     "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
     "思想思维心理哲学/个人问题处理/爱情.md",
-    "assets/image-91.png",
     "语言学习/德语/柏林广场视频笔记/A2/112 动介搭配.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
