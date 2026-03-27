@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 34.53318335208099,
+        "dimension": 43.6330718165359,
         "children": [
           {
             "id": "8faade4096e4a8de",
@@ -88,7 +88,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 65.46681664791902,
+        "dimension": 56.3669281834641,
         "children": [
           {
             "id": "91a6c9f421ef8132",
@@ -96,7 +96,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/德语学习规划.md",
+                "file": "2026/20260212.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -111,7 +111,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "德语学习规划"
+              "title": "20260212"
             }
           },
           {
@@ -188,13 +188,23 @@
               "icon": "clock",
               "title": "Recent Files"
             }
+          },
+          {
+            "id": "ff36fbbbf55f4934",
+            "type": "leaf",
+            "state": {
+              "type": "notebook-navigator",
+              "state": {},
+              "icon": "notebook-navigator",
+              "title": "笔记本导航器"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 651.5124969482422
+    "width": 501.5124969482422
   },
   "right": {
     "id": "b2bf97bc0c7f8080",
@@ -381,21 +391,25 @@
       "media-extended:Open external media": false,
       "obsidian-git:Open Git source control": false,
       "pexels-banner:🚩 Pixel Banner Menu": false,
-      "obsidian-spaced-repetition:复习卡片": false
+      "obsidian-spaced-repetition:复习卡片": false,
+      "notebook-navigator:笔记本导航器": false
     }
   },
   "active": "0640ecd2bd24a3bd",
   "lastOpenFiles": [
+    "2026/20260212.md",
+    "2026/20260327.md",
+    "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
+    "2026",
     "语言学习/德语/德语学习规划.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/3 名词轻读和重读.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/1 德语语序.md",
     "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "未命名 3.md",
     "电脑、软件、系统/obsidian plugin/Anki.md",
     "fasdf.md",
-    "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "assets/image-170.png",
     "assets/image-141.png",
     "assets/image-137.png",
@@ -420,8 +434,6 @@
     "Excalidraw/Scripts/Downloaded/Box Each Selected Groups.md",
     "assets/image-112.png",
     "assets/clipboard_2026-03-26_13-27.png",
-    "语言学习/德语/柏林广场视频笔记/A2/123 要求第三格介词的总结.md",
-    "语言学习/德语/公共知识语法/时态介绍总结.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
     "语言学习/德语/公共知识语法/❌错题",
@@ -431,7 +443,6 @@
     "语言学习/德语/教材/其他/标准德语语法：精解与练习B2-C1.pdf",
     "assets.zip",
     "assets/3天搞定德语语法_0.pdf",
-    "assets/3天搞定德语语法.pdf",
-    "assets/3天搞定德语语法_1.pdf"
+    "assets/3天搞定德语语法.pdf"
   ]
 }

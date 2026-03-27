@@ -86,7 +86,6 @@ community:
 /* @settings
 
 name: Minimal
-id: minimal-style
 settings:
 	-
 		id: instructions
@@ -2128,7 +2127,6 @@ settings:
 
 /* @settings
 name: Minimal Cards
-id: minimal-cards-style
 settings:
 	-
 		id: cards-min-width
@@ -2180,7 +2178,6 @@ settings:
 
 /* @settings
 name: Minimal Advanced Settings
-id: minimal-advanced
 settings:
 	-
 		id: hide-markdown

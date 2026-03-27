@@ -3,12 +3,10 @@
 # Mind Map Builder
 
 ![](https://youtu.be/5G9QF-u9w0Q)
-ID: 1774612233534
 
 
 ## Overview
 **Mind Map Builder** transforms the Obsidian-Excalidraw canvas into a rapid brainstorming environment, allowing users to build complex, structured, and visually organized mind maps using primarily keyboard shortcuts.
-ID: 1774612233538
 
 
 The script balances **automation** (auto-layout, recursive grouping, and contrast-aware coloring) with **explicit flexibility** (node pinning and redirection logic), ensuring that the mind map stays organized even as it grows to hundreds of nodes. It leverages the Excalidraw Sidepanel API to provide a persistent control interface utilizing the Obsidian sidepanel, that can also be undocked into a floating modal.
@@ -23,13 +21,11 @@ The script balances **automation** (auto-layout, recursive grouping, and contras
 ## Show Your Love!
 
 💖 **If you love MindMap Builder** say thank you, and [Buy me a Coffee](https://ko-fi.com/zsolt) 🍵
-ID: 1774612233542
 
 
 ## The Script
 
 ```js*/
-ID: 1774612233546
 
 
 const VERSION = "v26.03.25";

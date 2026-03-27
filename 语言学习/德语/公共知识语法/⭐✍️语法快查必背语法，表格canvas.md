@@ -11,13 +11,11 @@ tags: [excalidraw]
 # test
 # dfs
 - ? sdafa 
-ID: 1774612227784
 
 # Excalidraw Data
 
 ## Text Elements
 代词 ^AljYT5ds
-ID: 1774612227788
 
 
 介词 ^t54GGucD
@@ -339,7 +337,6 @@ ein bequemes Sofa ^bY1Zr63j
 
 ## Element Links
 KZmTVxG9: [[德语语法 活学活用 A1-B1.pdf#page=30&rect=27,136,476,453]]
-ID: 1774612227792
 
 
 lXSQnBV5: [[德语语法 活学活用 A1-B1.pdf#page=34&rect=37,248,480,654]]
@@ -408,7 +405,6 @@ cZA4mEr0: [[83 反身代词 Reflexivpronomen；形容词变名词#AI 反身代�
 
 ## Embedded Files
 a4f04a99870d67af4c3e77da9301c54c1932738f: [[Pasted Image 20260316214058_000.png]]
-ID: 1774612227795
 
 
 189623b06396396ab223d5717ee1726068fdc356: [[Pasted Image 20260316224158_355.png]]
@@ -485,7 +481,6 @@ f4114428b19a0eeb902bb5cbc0b0ae3edec17079: [[德语语法 活学活用 A1-B1.pdf#
 ## Drawing
 ```compressed-json
 N4KAkARALgngDgUwgLgAQQQDwMYEMA2AlgCYBOuA7hADTgQBuCpAzoQPYB2KqATLZMzYBXUtiRoIACyhQ4zZAHoFAc0JRJQgEYA6bGwC2CgF7N6hbEcK4OCtptbErHALRY8RMpWdx8Q1TdIEfARcZgRmBShcZQUebR4ARniaOiCEfQQOKGZuAG1wMFAwYogSbggAZg56ADEARQAGABUABRTiyFhEcsDsKI5lYPaSzG4EgBZxiu0ADgBWAE45ucme
-ID: 1774612227798
 
 
 HgA2Hgrx/hKYbnGFgHZpmaOZmZ4ZioWFqZ2CyAoSdTGFhviT8bmeI7mzmbvda7SCSBCEZTSA4NEEQayDcSoGGPCDMKCkNgAawQAGE2Pg2KRygBiBANCoJCnDSCaXDYTHKDFCDjEPEEokSYkAMy52AWfOpEC5hHw+AAyrAhhJJHSNIFBWiMdiAOovSRjWGKrEICUwKXoQQeQVMyEccI5NAJWFsOB0tT7S0NZEdCBMllm5gW1AcISizUIBDEbgXdbk

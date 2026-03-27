@@ -1,7 +1,6 @@
 ## Effects warrior / Grammar
 
 [](https://github.com/any-block/any-block?tab=readme-ov-file#effects-warrior--grammar)
-ID: 1774612231166
 
 
 `multiWay table`/`multiCross table`/`Cross table`
@@ -67,7 +66,6 @@ The above only shows **a few of** the processors of the plugin. In fact, it *
 ## Visual editing - AnyMenu
 
 [](https://github.com/any-block/any-block?tab=readme-ov-file#visual-editing---anymenu)
-ID: 1774612231170
 
 
 It is recommended to use together with another plugin [AnyMenu](https://github.com/any-menu/any-menu/) developed by the author of AnyBlock, which can reduce the learning cost and quickly generate templates.
@@ -77,7 +75,6 @@ It is recommended to use together with another plugin [AnyMenu](https://github.
 ## Effects warrior - old
 
 [](https://github.com/any-block/any-block?tab=readme-ov-file#effects-warrior---old)
-ID: 1774612231174
 
 
 Here are some of the more common processors:
