@@ -243,7 +243,7 @@
       "Add Context": false,
       "CurlyCloze": true,
       "CurlyCloze - Highlights to Clozes": true,
-      "ID Comments": false,
+      "ID Comments": true,
       "Add Obsidian Tags": true
     },
     "IGNORED_FILE_GLOBS": [
@@ -1040,7 +1040,7 @@
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/1 字母表 发音.md": "c830697e04b47efb24d0c6ab5b5f9d89",
     "语言学习/德语/教材/未命名.md": "d41d8cd98f00b204e9800998ecf8427e",
     "语言学习/德语/德语等级规划与标准.md": "5a95488cb023aa872eb235d458d6f708",
-    "语言学习/德语/德语学习规划.md": "d98dc530a6b187e9105c0ae2707e3c33",
+    "语言学习/德语/德语学习规划.md": "bf8446515b4323dd0731d812b573c64a",
     "语言学习/德语/德语学习工具和平台.md": "6a787da381d339a0911b7df5c2d26e6a",
     "语言学习/德语/单词/短语/1.md": "8e5946a0e0cd6d3e2d286ba2223ffa0c",
     "语言学习/德语/单词/疑问.md": "8c30792b78ccf062ff53041a8c3ffcf0",
@@ -1081,7 +1081,7 @@
     "语言学习/德语/公共知识语法/❌错题/介词错题.md": "3fbadb14853e3f5003a80aa099b701e3",
     "语言学习/德语/公共知识语法/1 德语语序.md": "2a60d05ca5bff04166fd79f905022bbb",
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md": "b06ebc787f38680e6d1f7440cfae3480",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md": "9db21fe9bd20a8a7bd38218a5fe231a5",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md": "48c0292e3b32522bfa405515b07e4756",
     "语言学习/Engilish/语法.md": "d41d8cd98f00b204e9800998ecf8427e",
     "语言学习/Engilish/英语学习逻辑Canvas.md": "0587793dca92f5065a637518ac743fd4",
     "语言学习/Engilish/英语学习逻辑.md": "6dfe222ab2c5c8efebd200b9d514c58e",
