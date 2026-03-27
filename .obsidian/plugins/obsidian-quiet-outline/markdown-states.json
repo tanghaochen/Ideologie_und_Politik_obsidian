@@ -8852,15 +8852,15 @@
     "expandedKeys": []
   },
   "电脑、软件、系统/obsidian plugin/Anki.md": {
-    "scroll": 0,
+    "scroll": 7.414210670810724,
     "cursor": {
       "from": {
-        "line": 0,
-        "ch": 0
+        "line": 14,
+        "ch": 174
       },
       "to": {
-        "line": 0,
-        "ch": 0
+        "line": 14,
+        "ch": 174
       }
     },
     "expandedKeys": []
@@ -8938,12 +8938,12 @@
     "scroll": 98.15378508509922,
     "cursor": {
       "from": {
-        "line": 122,
-        "ch": 14
+        "line": 0,
+        "ch": 0
       },
       "to": {
-        "line": 122,
-        "ch": 14
+        "line": 0,
+        "ch": 0
       }
     },
     "expandedKeys": []
@@ -9285,12 +9285,12 @@
     "scroll": 133.57322189194338,
     "cursor": {
       "from": {
-        "line": 144,
-        "ch": 0
+        "line": 151,
+        "ch": 28
       },
       "to": {
-        "line": 144,
-        "ch": 0
+        "line": 151,
+        "ch": 28
       }
     },
     "expandedKeys": [
@@ -9308,6 +9308,20 @@
       },
       "to": {
         "line": 3,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "语言学习/德语/公共知识语法/❌错题/填空.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
         "ch": 0
       }
     },
