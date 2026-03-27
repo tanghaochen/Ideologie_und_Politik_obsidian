@@ -16,6 +16,10 @@
         {
           "type": "folder",
           "path": "语言学习/德语"
+        },
+        {
+          "type": "note",
+          "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
         }
       ],
       "navRainbow": {
@@ -192,26 +196,26 @@
   "inheritPropertyColors": true,
   "propertySortOrder": "alpha-asc",
   "showAllPropertiesFolder": true,
-  "defaultListMode": "standard",
-  "includeDescendantNotes": true,
+  "defaultListMode": "compact",
+  "includeDescendantNotes": false,
   "defaultFolderSort": "modified-desc",
   "propertySortKey": "",
   "propertySortSecondary": "title",
   "revealFileOnListChanges": true,
   "listPaneTitle": "header",
   "noteGrouping": "date",
-  "filterPinnedByFolder": false,
+  "filterPinnedByFolder": true,
   "showPinnedGroupHeader": true,
   "showPinnedIcon": true,
   "optimizeNoteHeight": true,
   "compactItemHeight": 28,
   "compactItemHeightScaleText": true,
   "showQuickActions": true,
-  "quickActionRevealInFolder": false,
+  "quickActionRevealInFolder": true,
   "quickActionAddTag": true,
   "quickActionAddToShortcuts": true,
   "quickActionPinNote": true,
-  "quickActionOpenInNewTab": false,
+  "quickActionOpenInNewTab": true,
   "useFrontmatterMetadata": false,
   "frontmatterIconField": "icon",
   "frontmatterColorField": "color",
@@ -442,7 +446,9 @@
   },
   "customVaultName": "",
   "pinnedNotes": {},
-  "fileIcons": {},
+  "fileIcons": {
+    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md": "excalidraw-icon"
+  },
   "fileColors": {},
   "fileBackgroundColors": {},
   "folderIcons": {

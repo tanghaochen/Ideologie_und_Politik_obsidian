@@ -8941,12 +8941,12 @@
     "scroll": 37.50685941983112,
     "cursor": {
       "from": {
-        "line": 54,
-        "ch": 6
+        "line": 66,
+        "ch": 10
       },
       "to": {
-        "line": 54,
-        "ch": 6
+        "line": 66,
+        "ch": 10
       }
     },
     "expandedKeys": []

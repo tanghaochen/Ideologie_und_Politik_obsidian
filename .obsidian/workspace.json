@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 43.6330718165359,
+        "dimension": 39.06369915579432,
         "children": [
           {
             "id": "8faade4096e4a8de",
@@ -88,32 +88,8 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 56.3669281834641,
+        "dimension": 60.93630084420568,
         "children": [
-          {
-            "id": "91a6c9f421ef8132",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2026/20260212.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "20260212"
-            }
-          },
           {
             "id": "ce2d20bf409daeb3",
             "type": "leaf",
@@ -395,18 +371,18 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "0640ecd2bd24a3bd",
+  "active": "ce2d20bf409daeb3",
   "lastOpenFiles": [
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "2026/20260212.md",
     "2026/20260327.md",
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "2026",
     "语言学习/德语/德语学习规划.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/3 名词轻读和重读.md",
     "语言学习/德语/公共知识语法/1 德语语序.md",
-    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "未命名 3.md",
     "电脑、软件、系统/obsidian plugin/Anki.md",
     "fasdf.md",
