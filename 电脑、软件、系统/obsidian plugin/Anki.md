@@ -1,6 +1,3 @@
-TARGET DECK
-
-chin
 
 [配置·ObsidianToAnki/Obsidian_to_Anki 维基 --- Config · ObsidianToAnki/Obsidian_to_Anki Wiki](https://github.com/ObsidianToAnki/Obsidian_to_Anki/wiki/Config)
 
@@ -9,9 +6,22 @@ chin
 ### 填空
 
 ![[image-137.png|1288x1004]]
+  
+Q: Can the question
+run over multiple lines?
+A: Yes, and
+So can the answer
 
+Q: Does the answer need to be immediately after the question?
+
+
+A: No, and preceding whitespace will be ignored.
+
+Q: How is this possible?
+A: The 'magic' of regular expressions!
 ## 注释
-
+Q: How do you use this styl 111e?
+A: Just like this.
 START
 
 Basic
@@ -25,7 +35,9 @@ Back: Test successful!
 ![[image-170.png|1048x951]]
 
 asdfasd
-
+START
+Tags:
+END{fasdfa}
 ## 单行
 
 [Inline notes · ObsidianToAnki/Obsidian_to_Anki Wiki](https://github.com/ObsidianToAnki/Obsidian_to_Anki/wiki/Inline-notes)

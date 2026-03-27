@@ -40,7 +40,6 @@
   "obsidian-markmind",
   "obsidian-path-title",
   "copilot",
-  "obsidian-to-anki-plugin",
   "obsidian-local-images-plus",
   "note-refactor-obsidian",
   "pretty-properties",
@@ -58,5 +57,5 @@
   "obsidian-git",
   "open-tab-settings",
   "pexels-banner",
-  "notebook-navigator"
+  "obsidian-to-anki-plugin"
 ]
