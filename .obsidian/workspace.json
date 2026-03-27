@@ -6,8 +6,32 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 39.06369915579432,
+        "dimension": 44.16730621642363,
         "children": [
+          {
+            "id": "dab9f1574cdc0dfe",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/❌错题/形容词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "形容词"
+            }
+          },
           {
             "id": "8faade4096e4a8de",
             "type": "leaf",
@@ -82,22 +106,23 @@
               "title": "⭐必背所有知识点整理考察整理"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       },
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 60.93630084420568,
+        "dimension": 55.83269378357636,
         "children": [
           {
             "id": "ce2d20bf409daeb3",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "excalidraw",
               "state": {
                 "file": "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md"
               },
+              "pinned": true,
               "icon": "excalidraw-icon",
               "title": "⭐✍️语法快查必背语法，表格canvas"
             }
@@ -371,10 +396,20 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "ce2d20bf409daeb3",
+  "active": "dab9f1574cdc0dfe",
   "lastOpenFiles": [
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
+    "语言学习/德语/公共知识语法/❌错题/形容词.md",
+    "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
+    "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
+    "电脑、软件、系统/obsidian plugin/Anki.md",
+    "assets/image-180.png",
+    "assets/image-176.png",
+    "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
+    "语言学习/德语/公共知识语法/❌错题/介词错题.md",
+    "assets/image-173.png",
+    "assets/image-171.png",
     "2026/20260212.md",
     "2026/20260327.md",
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
@@ -384,15 +419,12 @@
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/3 名词轻读和重读.md",
     "语言学习/德语/公共知识语法/1 德语语序.md",
     "未命名 3.md",
-    "电脑、软件、系统/obsidian plugin/Anki.md",
     "fasdf.md",
     "assets/image-170.png",
     "assets/image-141.png",
     "assets/image-137.png",
     "语言学习/德语/公共知识语法/❌错题/填空.md",
-    "语言学习/德语/公共知识语法/❌错题/介词错题.md",
     "语言学习/德语/柏林广场视频笔记/A1/124 方位介词.md",
-    "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
     "语言学习/德语/德语学习工具和平台.md",
     "assets/party.png",
     "语言学习/德语/柏林广场视频笔记/B1/6 第四格介词.md",
@@ -403,13 +435,6 @@
     "Excalidraw/Scripts/Downloaded/Zoom to Fit Selected Elements.svg",
     "Excalidraw/Scripts/Downloaded/Zoom to Fit Selected Elements.md",
     "Excalidraw/Scripts/Downloaded/Convert selected text elements to sticky notes.svg",
-    "Excalidraw/Scripts/Downloaded/Convert selected text elements to sticky notes.md",
-    "Excalidraw/Scripts/Downloaded/Box Selected Elements.svg",
-    "Excalidraw/Scripts/Downloaded/Box Selected Elements.md",
-    "Excalidraw/Scripts/Downloaded/Box Each Selected Groups.svg",
-    "Excalidraw/Scripts/Downloaded/Box Each Selected Groups.md",
-    "assets/image-112.png",
-    "assets/clipboard_2026-03-26_13-27.png",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
     "语言学习/德语/公共知识语法/❌错题",

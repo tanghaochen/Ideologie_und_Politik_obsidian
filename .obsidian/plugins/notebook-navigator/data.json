@@ -20,6 +20,10 @@
         {
           "type": "note",
           "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
+        },
+        {
+          "type": "folder",
+          "path": "语言学习/德语/公共知识语法/❌错题"
         }
       ],
       "navRainbow": {
@@ -452,7 +456,8 @@
   "fileColors": {},
   "fileBackgroundColors": {},
   "folderIcons": {
-    "语言学习": "emoji:🇩🇪"
+    "语言学习": "emoji:🇩🇪",
+    "语言学习/德语/公共知识语法/❌错题": "notebook-pen"
   },
   "folderColors": {},
   "folderBackgroundColors": {
