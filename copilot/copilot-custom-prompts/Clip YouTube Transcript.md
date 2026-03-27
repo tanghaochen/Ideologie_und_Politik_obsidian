@@ -34,10 +34,14 @@ watched:
 ## Summary
 
 <Brief 2-3 paragraph summary of the video content>
+ID: 1774612233569
+
 
 ## Key Takeaways
 
 <List 5-8 key takeaways as bullet points>
+ID: 1774612233575
+
 
 ## Mindmap
 
@@ -48,6 +52,8 @@ CRITICAL Mermaid mindmap syntax rules - MUST follow exactly:
 - Do NOT use icons or emojis
 - Keep all node text short and simple - max 3-4 words per node
 - Use only letters, numbers, and spaces
+ID: 1774612233579
+
 
 Example of CORRECT syntax:
 ```mermaid
@@ -65,5 +71,7 @@ mindmap
 
 <List 5-10 notable quotes from the transcript. Format each as:>
 - [<timestamp>: <quote text>](<video_url>&t=<seconds>s)
+ID: 1774612233582
+
 
 Return only the markdown content without any explanations or comments.

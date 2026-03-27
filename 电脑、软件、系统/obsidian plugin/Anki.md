@@ -7,16 +7,24 @@
 
 ![[image-137.png|1288x1004]]
   
+ID: 1774612231178
+
 ## 注释
 
 [笔记格式 ·ObsidianToAnki/Obsidian_to_Anki 维基 --- Note formatting · ObsidianToAnki/Obsidian_to_Anki Wiki](https://github.com/ObsidianToAnki/Obsidian_to_Anki/wiki/Note-formatting)
+ID: 1774612231181
+
 
 ![[image-170.png|1048x951]]
 
 ## 单行
 
 [Inline notes · ObsidianToAnki/Obsidian_to_Anki Wiki](https://github.com/ObsidianToAnki/Obsidian_to_Anki/wiki/Inline-notes)
+ID: 1774612231184
+
 
 ## 更新
 
 ![[image-141.png|911x447]]
+ID: 1774612231188
+
