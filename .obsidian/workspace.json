@@ -117,12 +117,24 @@
             "id": "ce2d20bf409daeb3",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md"
+                "file": "语言学习/德语/公共知识语法/形容词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "⭐✍️语法快查必背语法，表格canvas"
+              "icon": "lucide-file",
+              "title": "形容词"
             }
           },
           {
@@ -354,12 +366,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
+                "file": "语言学习/德语/公共知识语法/形容词.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "✍️形容词 的出链列表"
+              "title": "形容词 的出链列表"
             }
           },
           {
@@ -416,10 +428,13 @@
       "smart-connections:Smart Connections: Open random connection": false
     }
   },
-  "active": "dab9f1574cdc0dfe",
+  "active": "ce2d20bf409daeb3",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
+    "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
+    "assets/image-182.png",
+    "assets/image-181.png",
     "assets/Pasted Image 20260328193503_443.png",
     "assets/Pasted Image 20260317005410_928.png",
     "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
@@ -446,10 +461,8 @@
     "fasdf.md",
     "assets/image-170.png",
     "assets/image-141.png",
-    "assets/image-137.png",
     "语言学习/德语/公共知识语法/❌错题/填空.md",
     "语言学习/德语/德语学习工具和平台.md",
-    "assets/party.png",
     "语言学习/德语/柏林广场视频笔记/B1/6 第四格介词.md",
     "语言学习/德语/柏林广场视频笔记/A1/6 补充疑问句及句子的语序.md",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",

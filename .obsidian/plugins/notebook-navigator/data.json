@@ -201,7 +201,7 @@
   "propertySortOrder": "alpha-asc",
   "showAllPropertiesFolder": true,
   "defaultListMode": "compact",
-  "includeDescendantNotes": false,
+  "includeDescendantNotes": true,
   "defaultFolderSort": "modified-desc",
   "propertySortKey": "",
   "propertySortSecondary": "title",
