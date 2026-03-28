@@ -106,7 +106,8 @@
               "title": "⭐必背所有知识点整理考察整理"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       },
       {
         "id": "dd4130c5419b5527",
@@ -201,7 +202,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -355,7 +356,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 8
       }
     ],
     "direction": "horizontal",
@@ -395,19 +396,20 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "dab9f1574cdc0dfe",
+  "active": "ce2d20bf409daeb3",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
+    "语言学习/德语/柏林广场视频笔记/A1/124 方位介词.md",
     "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
+    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "语言学习/德语/单词/动词.md",
     "语言学习/德语/公共知识语法/❌错题/介词错题.md",
     "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/名词：不背词性，一眼识别词性.md",
     "电脑、软件、系统/obsidian plugin/Anki.md",
     "assets/image-180.png",
     "assets/image-176.png",
-    "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
     "assets/image-173.png",
     "assets/image-171.png",
     "2026/20260212.md",
@@ -424,7 +426,6 @@
     "assets/image-141.png",
     "assets/image-137.png",
     "语言学习/德语/公共知识语法/❌错题/填空.md",
-    "语言学习/德语/柏林广场视频笔记/A1/124 方位介词.md",
     "语言学习/德语/德语学习工具和平台.md",
     "assets/party.png",
     "语言学习/德语/柏林广场视频笔记/B1/6 第四格介词.md",
