@@ -6,19 +6,8 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
+        "dimension": 38.411358403683806,
         "children": [
-          {
-            "id": "94ccba174261aeea",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "assets/Pasted Image 20260317005410_928.png"
-              },
-              "icon": "lucide-image",
-              "title": "Pasted Image 20260317005410_928"
-            }
-          },
           {
             "id": "dab9f1574cdc0dfe",
             "type": "leaf",
@@ -122,6 +111,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
+        "dimension": 61.588641596316194,
         "children": [
           {
             "id": "ce2d20bf409daeb3",
@@ -354,12 +344,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
+                "file": "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "⭐✍️语法快查必背语法，表格canvas 的出链列表"
+              "title": "✍️形容词 的出链列表"
             }
           },
           {
@@ -373,7 +363,7 @@
             }
           }
         ],
-        "currentTab": 11
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
@@ -416,11 +406,11 @@
       "smart-connections:Smart Connections: Open random connection": false
     }
   },
-  "active": "ce2d20bf409daeb3",
+  "active": "dab9f1574cdc0dfe",
   "lastOpenFiles": [
-    "assets/Pasted Image 20260317005410_928.png",
     "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
+    "assets/Pasted Image 20260317005410_928.png",
     "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
     "语言学习/德语/柏林广场视频笔记/A1/124 方位介词.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",

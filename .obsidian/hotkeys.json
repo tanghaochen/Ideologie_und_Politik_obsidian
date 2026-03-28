@@ -175,12 +175,24 @@
         "Alt"
       ],
       "key": "ArrowLeft"
+    },
+    {
+      "modifiers": [
+        "Shift"
+      ],
+      "key": "ArrowLeft"
     }
   ],
   "cursor-position-history:cursor-position-forward": [
     {
       "modifiers": [
         "Alt"
+      ],
+      "key": "ArrowRight"
+    },
+    {
+      "modifiers": [
+        "Shift"
       ],
       "key": "ArrowRight"
     }
@@ -193,5 +205,14 @@
       ],
       "key": "K"
     }
-  ]
+  ],
+  "obsidian-excalidraw-plugin:excalidraw-open-sidepanel": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "E"
+    }
+  ],
+  "markdown:toggle-preview": []
 }
