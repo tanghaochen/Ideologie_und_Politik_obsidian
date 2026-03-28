@@ -9401,11 +9401,11 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 43,
-        "ch": 3
+        "line": 38,
+        "ch": 0
       },
       "to": {
-        "line": 43,
+        "line": 38,
         "ch": 0
       }
     },
