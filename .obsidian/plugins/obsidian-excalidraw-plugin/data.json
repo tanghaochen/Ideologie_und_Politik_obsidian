@@ -8116,7 +8116,7 @@
         "hidden": true
       },
       "Is Undocked": {
-        "value": true,
+        "value": false,
         "hidden": false
       },
       "Base Stroke Width": {
@@ -8235,15 +8235,15 @@
           },
           {
             "action": "Toggle Submap Root",
-            "code": "KeyJ",
+            "code": "KeyG",
             "modifiers": [
-              "Alt"
+              "Shift"
             ],
             "scope": 2
           },
           {
             "action": "Group/Ungroup Single Branch",
-            "code": "KeyG",
+            "code": "KeyT",
             "modifiers": [
               "Alt"
             ],
