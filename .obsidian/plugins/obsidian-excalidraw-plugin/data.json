@@ -8047,7 +8047,7 @@
         "value": true
       },
       "Growth Mode": {
-        "value": "Up-Down",
+        "value": "Down-facing",
         "valueset": [
           "Radial",
           "Right-facing",
@@ -8120,7 +8120,7 @@
         "hidden": false
       },
       "Base Stroke Width": {
-        "value": 4.9,
+        "value": 3.2,
         "hidden": false
       },
       "Rounded Corners": {
@@ -8239,7 +8239,7 @@
             "modifiers": [
               "Alt"
             ],
-            "scope": 3
+            "scope": 2
           },
           {
             "action": "Group/Ungroup Single Branch",
@@ -8271,7 +8271,7 @@
             "modifiers": [
               "Alt"
             ],
-            "scope": 3
+            "scope": 2
           },
           {
             "action": "Paste",
@@ -8279,7 +8279,7 @@
             "modifiers": [
               "Alt"
             ],
-            "scope": 3
+            "scope": 2
           },
           {
             "action": "Import Outline from Linked File",
@@ -8295,7 +8295,7 @@
             "modifiers": [
               "Alt"
             ],
-            "scope": 3
+            "scope": 2
           },
           {
             "action": "Cycle Zoom",
@@ -8345,7 +8345,7 @@
             "modifiers": [
               "Mod"
             ],
-            "scope": 3
+            "scope": 2
           },
           {
             "action": "Fold/Unfold Branch",
@@ -8398,6 +8398,10 @@
           }
         ],
         "hidden": true
+      },
+      "Branch Scale Style": {
+        "value": "Hierarchical",
+        "hidden": false
       }
     },
     "Downloaded/Excalidraw Writing Machine": {
