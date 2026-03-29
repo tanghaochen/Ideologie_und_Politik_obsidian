@@ -8211,18 +8211,22 @@
     ]
   },
   "语言学习/德语/柏林广场视频笔记/B1/30 形容词比较级和最高级.md": {
-    "scroll": 0,
+    "scroll": 6.8491745508766835,
     "cursor": {
       "from": {
-        "line": 1,
-        "ch": 12
+        "line": 12,
+        "ch": 7
       },
       "to": {
-        "line": 1,
-        "ch": 12
+        "line": 12,
+        "ch": 2
       }
     },
-    "expandedKeys": []
+    "expandedKeys": [
+      "item-1-1",
+      "item-3-3",
+      "item-2-10"
+    ]
   },
   "语言学习/德语/公共知识语法/不定式.md": {
     "scroll": 9.303820424885528,
@@ -9420,12 +9424,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 6,
-        "ch": 0
+        "line": 33,
+        "ch": 27
       },
       "to": {
-        "line": 6,
-        "ch": 0
+        "line": 33,
+        "ch": 27
       }
     },
     "expandedKeys": [

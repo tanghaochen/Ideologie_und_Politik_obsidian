@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/系动词.md",
+                "file": "语言学习/德语/柏林广场视频笔记/B1/30 形容词比较级和最高级.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -29,7 +29,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "系动词"
+              "title": "30 形容词比较级和最高级"
             }
           },
           {
@@ -141,7 +141,8 @@
               "title": "⭐✍️DE语法总汇CanvasCanvas"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -367,16 +368,6 @@
               "icon": "links-going-out",
               "title": "81 形容词和比较级 最高级 与 第一格 的出链列表"
             }
-          },
-          {
-            "id": "715fca93152e0431",
-            "type": "leaf",
-            "state": {
-              "type": "smart-connections-view",
-              "state": {},
-              "icon": "smart-connections",
-              "title": "Connections"
-            }
           }
         ],
         "currentTab": 2
@@ -422,10 +413,12 @@
       "smart-connections:Smart Connections: Open random connection": false
     }
   },
-  "active": "51aa4c53b7c06262",
+  "active": "b61839aaa220e73b",
   "lastOpenFiles": [
-    "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
+    "语言学习/德语/柏林广场视频笔记/B1/30 形容词比较级和最高级.md",
+    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "语言学习/德语/公共知识语法/系动词.md",
+    "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
     "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
@@ -433,7 +426,6 @@
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
-    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
     "assets/clipboard_2026-03-29_20-34.png",
     "assets/image-182.png",
@@ -460,7 +452,6 @@
     "未命名 3.md",
     "fasdf.md",
     "assets/image-170.png",
-    "语言学习/德语/公共知识语法/❌错题/填空.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
     "语言学习/德语/公共知识语法/❌错题",
