@@ -106,7 +106,8 @@
               "title": "⭐必背所有知识点整理考察整理"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       },
       {
         "id": "dd4130c5419b5527",
@@ -140,14 +141,19 @@
           {
             "id": "b61839aaa220e73b",
             "type": "leaf",
+            "pinned": true,
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "新标签页"
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md"
+              },
+              "pinned": true,
+              "icon": "excalidraw-icon",
+              "title": "⭐✍️语法快查必背语法，表格canvas"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -366,12 +372,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/形容词.md",
+                "file": "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "形容词 的出链列表"
+              "title": "⭐✍️语法快查必背语法，表格canvas 的出链列表"
             }
           },
           {
@@ -428,10 +434,11 @@
       "smart-connections:Smart Connections: Open random connection": false
     }
   },
-  "active": "ce2d20bf409daeb3",
+  "active": "b61839aaa220e73b",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "语言学习/德语/公共知识语法/形容词.md",
+    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
     "assets/image-182.png",
     "assets/image-181.png",
@@ -439,7 +446,6 @@
     "assets/Pasted Image 20260317005410_928.png",
     "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
     "语言学习/德语/柏林广场视频笔记/A1/124 方位介词.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/单词/动词.md",
     "语言学习/德语/公共知识语法/❌错题/介词错题.md",
     "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
