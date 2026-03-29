@@ -9401,12 +9401,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 0,
-        "ch": 6
+        "line": 34,
+        "ch": 62
       },
       "to": {
-        "line": 0,
-        "ch": 6
+        "line": 3,
+        "ch": 0
       }
     },
     "expandedKeys": [
