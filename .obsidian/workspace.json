@@ -407,13 +407,10 @@
       "media-extended:Open external media": false,
       "obsidian-git:Open Git source control": false,
       "pexels-banner:🚩 Pixel Banner Menu": false,
-      "notebook-navigator:笔记本导航器": false,
-      "smart-connections:Smart Connections: Open connections view": false,
-      "smart-connections:Smart Lookup: Open lookup view": false,
-      "smart-connections:Smart Connections: Open random connection": false
+      "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "b61839aaa220e73b",
+  "active": "c67c16f2d945c2a1",
   "lastOpenFiles": [
     "语言学习/德语/柏林广场视频笔记/B1/30 形容词比较级和最高级.md",
     "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
