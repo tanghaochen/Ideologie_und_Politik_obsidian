@@ -45,6 +45,14 @@ mermaid flow
 
 [![[5c8e84621bb7833a7bbb75b835cc26a5_MD5.png]]](https://github.com/any-block/any-block/blob/main/docs/assets/list2mermaid3.png)
 
+[list2mermaid]
+- 1
+	- dsfa
+	- sdfsf
+- sdafsd
+	- sdfasd
+
+
 plantuml mindmap
 
 [![[3db96393e70e41e58ea8f84a7c77ed6d_MD5.png]]](https://github.com/any-block/any-block/blob/main/docs/assets/list2pumlMindmap3.png)

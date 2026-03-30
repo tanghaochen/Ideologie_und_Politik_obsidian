@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 37.14504988488104,
+        "dimension": 59.98893193137798,
         "children": [
           {
             "id": "54fe4612c60d8cf1",
@@ -112,7 +112,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 62.85495011511896,
+        "dimension": 40.01106806862202,
         "children": [
           {
             "id": "fc4694f5c03bbe1d",
@@ -120,7 +120,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "电脑、软件、系统/obsidian plugin/无序列表 样式.md",
+                "file": "电脑、软件、系统/obsidian plugin/anyblock.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -135,7 +135,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "无序列表 样式"
+              "title": "anyblock"
             }
           },
           {
@@ -457,10 +457,11 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "fc4694f5c03bbe1d",
+  "active": "dd8c0de9236cf3b8",
   "lastOpenFiles": [
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "电脑、软件、系统/obsidian plugin/anyblock.md",
     "电脑、软件、系统/obsidian plugin/无序列表 样式.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "语言学习/德语/公共知识语法/形容词/形容词位置细节.md",
     "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
@@ -496,7 +497,6 @@
     "2026/20260327.md",
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "2026",
-    "语言学习/德语/德语学习规划.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
     "语言学习/德语/公共知识语法/❌错题",
