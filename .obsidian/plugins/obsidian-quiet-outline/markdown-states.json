@@ -8214,12 +8214,12 @@
     "scroll": 23.119780947264918,
     "cursor": {
       "from": {
-        "line": 33,
-        "ch": 14
+        "line": 37,
+        "ch": 23
       },
       "to": {
-        "line": 33,
-        "ch": 14
+        "line": 37,
+        "ch": 23
       }
     },
     "expandedKeys": [
@@ -9437,5 +9437,19 @@
       "item-3-1",
       "item-3-5"
     ]
+  },
+  "电脑、软件、系统/淘宝详情页工作流程.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 5,
+        "ch": 14
+      },
+      "to": {
+        "line": 5,
+        "ch": 14
+      }
+    },
+    "expandedKeys": []
   }
 }
