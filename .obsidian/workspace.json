@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 70.62223733424005,
+        "dimension": 30.295817749064945,
         "children": [
           {
             "id": "54fe4612c60d8cf1",
@@ -105,12 +105,12 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       },
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 29.377762665759942,
+        "dimension": 69.70418225093505,
         "children": [
           {
             "id": "fc4694f5c03bbe1d",
@@ -188,7 +188,8 @@
               "title": "⭐✍️DE语法总汇CanvasCanvas"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -265,7 +266,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 501.5124969482422
+    "width": 419.5124969482422
   },
   "right": {
     "id": "b2bf97bc0c7f8080",
@@ -419,7 +420,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 507.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -455,13 +456,13 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "0640ecd2bd24a3bd",
+  "active": "b61839aaa220e73b",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
+    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "电脑、软件、系统/obsidian plugin/anyblock.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
     "电脑、软件、系统/obsidian plugin/无序列表 样式.md",
-    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "语言学习/德语/公共知识语法/形容词/形容词位置细节.md",
     "语言学习/德语/公共知识语法/形容词/形容词.md",
     "语言学习/德语/柏林广场视频笔记/B1/30 形容词比较级和最高级.md",
