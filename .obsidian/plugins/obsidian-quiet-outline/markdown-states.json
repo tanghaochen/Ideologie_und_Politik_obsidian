@@ -9385,12 +9385,12 @@
     "scroll": 420.084970252201,
     "cursor": {
       "from": {
-        "line": 451,
-        "ch": 0
+        "line": 448,
+        "ch": 62
       },
       "to": {
-        "line": 451,
-        "ch": 0
+        "line": 448,
+        "ch": 62
       }
     },
     "expandedKeys": [
