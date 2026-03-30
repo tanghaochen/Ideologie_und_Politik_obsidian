@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 35.4182655410591,
+        "dimension": 37.14504988488104,
         "children": [
           {
             "id": "54fe4612c60d8cf1",
@@ -38,7 +38,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/形容词/形容词.md",
+                "file": "语言学习/德语/公共知识语法/形容词/形容词位置细节.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -53,7 +53,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "形容词"
+              "title": "形容词位置细节"
             }
           },
           {
@@ -107,13 +107,37 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       },
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 64.58173445894091,
+        "dimension": 62.85495011511896,
         "children": [
+          {
+            "id": "fc4694f5c03bbe1d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "电脑、软件、系统/obsidian plugin/无序列表 样式.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "无序列表 样式"
+            }
+          },
           {
             "id": "ce2d20bf409daeb3",
             "type": "leaf",
@@ -166,8 +190,7 @@
               "title": "⭐✍️DE语法总汇CanvasCanvas"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -434,21 +457,23 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "56aec1574e68adfb",
+  "active": "fc4694f5c03bbe1d",
   "lastOpenFiles": [
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "电脑、软件、系统/obsidian plugin/无序列表 样式.md",
+    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
+    "语言学习/德语/公共知识语法/形容词/形容词位置细节.md",
+    "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
+    "语言学习/德语/公共知识语法/形容词/形容词.md",
     "语言学习/德语/柏林广场视频笔记/B1/30 形容词比较级和最高级.md",
     "语言学习/德语/公共知识语法/形容词",
-    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
     "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "语言学习/德语/柏林广场视频笔记/A2/92 形容词在定冠词后的形容词词尾变化.md",
     "电脑、软件、系统/淘宝详情页工作流程.md",
     "assets/image-184.png",
     "assets/image-183.png",
     "语言学习/德语/公共知识语法/系动词.md",
-    "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
-    "语言学习/德语/公共知识语法/形容词/形容词.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
@@ -472,7 +497,6 @@
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "2026",
     "语言学习/德语/德语学习规划.md",
-    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/3 名词轻读和重读.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
     "语言学习/德语/公共知识语法/❌错题",
