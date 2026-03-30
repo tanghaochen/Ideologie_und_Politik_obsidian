@@ -7,7 +7,7 @@ aliases:
   - nach
 ---
 
-#
+# 小品词 doch，nach，ja，mal，denn。语气润滑 ^ktxmh4剂
 
 # “nach” (GPS 导航仪) 去哪；X 后面
 
