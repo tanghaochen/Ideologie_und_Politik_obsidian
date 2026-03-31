@@ -81,6 +81,30 @@
               "icon": "lucide-file",
               "title": "复合动词"
             }
+          },
+          {
+            "id": "e91c64bbd608b09f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/名词：性的规律, 不背词性，一眼识别词性.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "名词：性的规律, 不背词性，一眼识别词性"
+            }
           }
         ],
         "currentTab": 2
@@ -397,12 +421,14 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "0640ecd2bd24a3bd",
+  "active": "b61839aaa220e73b",
   "lastOpenFiles": [
-    "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
     "语言学习/德语/公共知识语法/动词/复合动词.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
+    "语言学习/德语/公共知识语法/名词：性的规律, 不背词性，一眼识别词性.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
+    "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
     "语言学习/德语/公共知识语法/句子/小品词示例学习.md",
     "语言学习/德语/学习记录日记/2026.canvas",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
@@ -410,7 +436,6 @@
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
     "语言学习/德语/公共知识语法/构词法/复合词 1+1.md",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
-    "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
     "电脑、软件、系统/obsidian plugin/anyblock.md",
     "语言学习/德语/公共知识语法/构词法",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
@@ -435,7 +460,6 @@
     "assets/image-184.png",
     "assets/image-183.png",
     "语言学习/德语/公共知识语法/系动词.md",
-    "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
     "assets/clipboard_2026-03-29_20-34.png",
     "assets/image-182.png",
     "assets/image-181.png",
