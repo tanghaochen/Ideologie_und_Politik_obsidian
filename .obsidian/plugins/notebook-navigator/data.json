@@ -14,6 +14,10 @@
       "periodicNotesFolder": "",
       "shortcuts": [
         {
+          "type": "note",
+          "path": "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md"
+        },
+        {
           "type": "folder",
           "path": "语言学习/德语"
         },
@@ -459,7 +463,8 @@
     }
   },
   "fileIcons": {
-    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md": "excalidraw-icon"
+    "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md": "excalidraw-icon",
+    "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md": "obsidian-new"
   },
   "fileColors": {},
   "fileBackgroundColors": {},
