@@ -192,6 +192,7 @@
   "showTagIcons": true,
   "showAllTagsFolder": true,
   "showUntagged": true,
+  "scopeTagsToCurrentContext": false,
   "tagSortOrder": "alpha-asc",
   "inheritTagColors": true,
   "keepEmptyTagsProperty": false,
@@ -200,6 +201,7 @@
   "inheritPropertyColors": true,
   "propertySortOrder": "alpha-asc",
   "showAllPropertiesFolder": true,
+  "scopePropertiesToCurrentContext": false,
   "defaultListMode": "compact",
   "includeDescendantNotes": true,
   "defaultFolderSort": "modified-desc",
@@ -515,7 +517,7 @@
     "#404040",
     "#404040"
   ],
-  "lastShownVersion": "2.5.3",
+  "lastShownVersion": "2.5.4",
   "rootFolderOrder": [],
   "rootTagOrder": [],
   "rootPropertyOrder": []
