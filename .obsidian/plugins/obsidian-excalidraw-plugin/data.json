@@ -8047,7 +8047,7 @@
         "value": true
       },
       "Growth Mode": {
-        "value": "Down-facing",
+        "value": "Right-facing",
         "valueset": [
           "Radial",
           "Right-facing",
