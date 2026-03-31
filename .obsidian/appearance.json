@@ -3,7 +3,7 @@
   "nativeMenus": false,
   "cssTheme": "Minimal",
   "showRibbon": true,
-  "baseFontSize": 16,
+  "baseFontSize": 18,
   "theme": "obsidian",
   "enabledCssSnippets": []
 }

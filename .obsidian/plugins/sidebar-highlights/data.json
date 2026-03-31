@@ -1065,6 +1065,36 @@
         "isNativeComment": false,
         "type": "highlight"
       }
+    ],
+    "语言学习/德语/公共知识语法/构词法/复合词 1+1.md": [
+      {
+        "id": "5tsvknhao",
+        "text": "自己“发明”词汇",
+        "tags": [],
+        "line": 18,
+        "startOffset": 513,
+        "endOffset": 525,
+        "filePath": "语言学习/德语/公共知识语法/构词法/复合词 1+1.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1774943837578,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "4vgkmcqjo",
+        "text": "即使不是这些后缀，一些阴性名词也会加 -s-",
+        "tags": [],
+        "line": 65,
+        "startOffset": 1996,
+        "endOffset": 2022,
+        "filePath": "语言学习/德语/公共知识语法/构词法/复合词 1+1.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1774944326098,
+        "isNativeComment": false,
+        "type": "highlight"
+      }
     ]
   },
   "collections": {},
