@@ -22,7 +22,14 @@
       "mode": "any"
     }
   ],
-  "fileMenu": [],
+  "fileMenu": [
+    {
+      "id": "notebook-navigator:reveal-file",
+      "icon": "lucide-locate",
+      "name": "Notebook Navigator: 定位文件",
+      "mode": "any"
+    }
+  ],
   "leftRibbon": [],
   "rightRibbon": [],
   "titleBar": [],
