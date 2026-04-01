@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A2/83 反身代词 Reflexivpronomen；形容词变名词.md",
+                "file": "语言学习/德语/公共知识语法/动词/❌反身动词代词错题.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -29,7 +29,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "83 反身代词 Reflexivpronomen；形容词变名词"
+              "title": "❌反身动词代词错题"
             }
           },
           {
@@ -114,6 +114,30 @@
         "dimension": 65.13254786450663,
         "children": [
           {
+            "id": "6e6379229f5e17ba",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/动词/83 反身代词 Reflexivpronomen；形容词变名词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "83 反身代词 Reflexivpronomen；形容词变名词"
+            }
+          },
+          {
             "id": "fc4694f5c03bbe1d",
             "type": "leaf",
             "state": {
@@ -151,8 +175,7 @@
               "title": "⭐✍️语法快查必背语法，表格canvas"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -422,15 +445,19 @@
   },
   "active": "21f0d986a34b71cc",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/动词/83 反身代词 Reflexivpronomen；形容词变名词.md",
+    "语言学习/德语/公共知识语法/动词/❌反身动词代词错题.md",
+    "语言学习/德语/公共知识语法/句子/wenn, wann区别.md",
+    "assets/image-207.png",
+    "assets/image-206.png",
+    "assets/image-205.png",
     "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
-    "语言学习/德语/柏林广场视频笔记/A2/83 反身代词 Reflexivpronomen；形容词变名词.md",
     "语言学习/德语/柏林广场视频笔记/A1/58 名词做第四格宾语补足语时.md",
     "语言学习/德语/公共知识语法/时态/过去分词变化.md",
     "语言学习/德语/学习记录日记/2026.canvas",
     "语言学习/德语/公共知识语法/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/时态/时态介绍总结.md",
     "语言学习/德语/公共知识语法/时态/动词的过去时.md",
-    "语言学习/德语/公共知识语法/句子/wenn, wann区别.md",
     "语言学习/德语/公共知识语法/句子/从句weil,dass,wenn.md",
     "语言学习/德语/公共知识语法/构词法/复合词 1+1.md",
     "语言学习/德语/公共知识语法/❌错题/填空.md",
@@ -451,8 +478,6 @@
     "语言学习/德语/公共知识语法/构词法",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "assets/Pasted Image 20260316224158_355.png",
-    "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
-    "语言学习/德语/德语学习规划.md",
     "Untitled Diagram.svg",
     "assets/clipboard_2026-03-31_12-47.png",
     "语言学习/德语/公共知识语法/副词",
@@ -462,9 +487,6 @@
     "assets/image-183.png",
     "assets/clipboard_2026-03-29_20-34.png",
     "assets/image-182.png",
-    "assets/image-181.png",
-    "assets/Pasted Image 20260328193503_443.png",
-    "assets/Pasted Image 20260317005410_928.png",
     "2026",
     "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
     "语言学习/德语/公共知识语法/❌错题",
