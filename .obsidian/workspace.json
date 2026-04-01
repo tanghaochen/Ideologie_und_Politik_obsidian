@@ -106,7 +106,8 @@
               "title": "58 名词做第四格宾语补足语时"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "dd4130c5419b5527",
@@ -378,7 +379,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -418,13 +419,13 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "21f0d986a34b71cc",
+  "active": "dd8c0de9236cf3b8",
   "lastOpenFiles": [
-    "assets/image-215.png",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
     "语言学习/德语/公共知识语法/动词/❌反身动词代词错题.md",
     "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md",
+    "assets/image-215.png",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/单词/动词.md",
@@ -462,7 +463,6 @@
     "assets/image-184.png",
     "assets/image-183.png",
     "assets/clipboard_2026-03-29_20-34.png",
-    "assets/image-182.png",
     "2026",
     "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
     "语言学习/德语/公共知识语法/❌错题",
