@@ -1095,6 +1095,51 @@
         "isNativeComment": false,
         "type": "highlight"
       }
+    ],
+    "语言学习/德语/公共知识语法/动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md": [
+      {
+        "id": "0ztlrkfp7",
+        "text": "这个动词本身是一个**<font color=\"#ff0000\">普通的及物动词（带第四格宾语）</font>**。只有当“动作发出者（主语）”和“动作承受者（宾语）”刚好是**同一个人**的时候，它才穿上了反身代词（sich/mich/dich）的马甲",
+        "tags": [],
+        "line": 168,
+        "startOffset": 5250,
+        "endOffset": 5381,
+        "filePath": "语言学习/德语/公共知识语法/动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775031574980,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "vy11a1u9b",
+        "text": "普通的及物动词（带第四格宾语）",
+        "tags": [],
+        "line": 168,
+        "startOffset": 5263,
+        "endOffset": 5307,
+        "filePath": "语言学习/德语/公共知识语法/动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775031574993,
+        "isNativeComment": false,
+        "color": "#ff0000",
+        "type": "html"
+      },
+      {
+        "id": "64dmp1ycl",
+        "text": "和动词（乌龟）死死地长在了一起",
+        "tags": [],
+        "line": 193,
+        "startOffset": 6010,
+        "endOffset": 6029,
+        "filePath": "语言学习/德语/公共知识语法/动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775031580795,
+        "isNativeComment": false,
+        "type": "highlight"
+      }
     ]
   },
   "collections": {},

@@ -414,7 +414,7 @@ Nominativ 第一格 ^GdFNxPu9
 
 [[20-k15 从句#语序问题]] ^s2y4BOUZ
 
-[[83 反身代词 Reflexivpronomen；形容词变名词#AI|| 反身代词]] ^4lbRXAgV
+[[83 反身代词和动词 Reflexivpronomen；形容词变名词#AI|| 反身代词]] ^4lbRXAgV
 
 [[87 指代名词 Pronomen; 不定代词#指代名词 Pronomen 不定代词]] ^0mm6kBBe
 
