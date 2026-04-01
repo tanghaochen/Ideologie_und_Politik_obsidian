@@ -4,6 +4,17 @@
 		{"id":"9de341ff89e7469d","type":"group","x":-413,"y":-194,"width":560,"height":2761,"label":"1"},
 		{"id":"3802ad74e1007387","type":"group","x":251,"y":-208,"width":560,"height":2761,"label":"2"},
 		{"id":"3f241a14b5577efb","type":"group","x":920,"y":-205,"width":560,"height":2761,"label":"3"},
+		{"id":"a95adef13ed5c24b","type":"group","x":1560,"y":-196,"width":560,"height":2761,"label":"3"},
+		{
+			"id":"47eea9c83722f142",
+			"type":"text",
+			"text":"# 1\n\n学到 53, 支配介词宾语动词 p 1 48",
+			"styleAttributes":{},
+			"x":1620,
+			"y":-148,
+			"width":420,
+			"height":340
+		},
 		{
 			"id":"a2c03b1dd574dfd9",
 			"type":"text",
@@ -140,8 +151,8 @@
 			"type":"text",
 			"text":"# 31\n- [x] 44 小品词\n- [x] 45 复合词\n- [ ] 46 派生词和转换\n- [ ] 学到了第 51 课，p 144",
 			"styleAttributes":{},
-			"x":980,
-			"y":986,
+			"x":993,
+			"y":984,
 			"width":420,
 			"height":340
 		}
