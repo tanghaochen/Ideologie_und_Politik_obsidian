@@ -1,7 +1,7 @@
 {
   "userAdmonitions": {
-    "Example": {
-      "type": "Example",
+    "example": {
+      "type": "example",
       "color": "255, 136, 26",
       "icon": {
         "name": "ankh",
@@ -15,19 +15,13 @@
   },
   "syntaxHighlight": false,
   "copyButton": false,
-  "version": "10.3.2",
+  "version": "11.0.3",
   "autoCollapse": false,
   "defaultCollapseType": "open",
   "injectColor": true,
   "parseTitles": true,
   "dropShadow": true,
   "hideEmpty": false,
-  "open": {
-    "admonitions": true,
-    "icons": true,
-    "other": true,
-    "advanced": false
-  },
   "icons": [
     "octicons",
     "rpg"
@@ -36,5 +30,11 @@
   "rpgDownloadedOnce": false,
   "msDocConverted": false,
   "useSnippet": false,
-  "snippetPath": "custom-admonitions.329510"
+  "snippetPath": "custom-admonitions.329510",
+  "open": {
+    "admonitions": true,
+    "icons": true,
+    "other": true,
+    "advanced": false
+  }
 }

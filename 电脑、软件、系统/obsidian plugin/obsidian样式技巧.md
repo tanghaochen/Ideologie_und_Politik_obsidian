@@ -10,7 +10,7 @@
 - [!] 重要 / 警告 (Important)
 - [*] 星标 / 关注 (Star)
 - ["] 引用 (Quote)
-- [l] 地点 / 坐标 (Location)
+- [l] 地点 / 坐标 (Location):  用于举例
 - [b] 书签 (Bookmark)
 - [i] 信息 / 提示 (Info)
 - [S] 金额 / 赞助 (Amount)
