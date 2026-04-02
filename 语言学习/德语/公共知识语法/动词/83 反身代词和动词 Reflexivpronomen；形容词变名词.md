@@ -2,7 +2,6 @@
 aliases:
   - mich
   - dish
-  - sich
   - uns
   - euch
   - mir

@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 29.528718703976438,
+        "dimension": 32.253313696612665,
         "children": [
           {
             "id": "2ef25f42862fc5a0",
@@ -30,7 +30,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/副词/代副词.md",
+                "file": "语言学习/德语/公共知识语法/句子/第二虚拟式.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -45,55 +45,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "代副词"
-            }
-          },
-          {
-            "id": "21f0d986a34b71cc",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/动词/支配介词宾语的动词.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "支配介词宾语的动词"
-            }
-          },
-          {
-            "id": "6e6379229f5e17ba",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/单词/短语/dy1.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "dy1"
+              "title": "第二虚拟式"
             }
           },
           {
@@ -152,7 +104,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 70.47128129602356,
+        "dimension": 67.74668630338734,
         "children": [
           {
             "id": "fc4694f5c03bbe1d",
@@ -160,7 +112,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
+                "file": "电脑、软件、系统/obsidian plugin/anyblock.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -175,7 +127,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "obsidian样式技巧"
+              "title": "anyblock"
             }
           },
           {
@@ -215,9 +167,33 @@
               "icon": "lucide-file",
               "title": "常用动词单词合集---支配介词宾语的动词"
             }
+          },
+          {
+            "id": "21f0d986a34b71cc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/副词/❌/❌1.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "❌1"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -290,8 +266,7 @@
               "title": "笔记本导航器"
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "horizontal",
@@ -485,24 +460,31 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "b61839aaa220e73b",
+  "active": "21f0d986a34b71cc",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
+    "语言学习/德语/公共知识语法/副词/❌/❌1.md",
+    "语言学习/德语/公共知识语法/术语词典语库/sich.md",
+    "语言学习/德语/公共知识语法/句子/第二虚拟式.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/单词/短语/dy1.md",
+    "assets/image-218.png",
+    "电脑、软件、系统/obsidian plugin/anyblock.md",
+    "语言学习/德语/公共知识语法/动词/常用动词单词合集---支配介词宾语的动词.md",
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+    "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
+    "assets/image-217.png",
+    "语言学习/德语/公共知识语法/副词/未命名.md",
+    "语言学习/德语/公共知识语法/副词/❌",
     "语言学习/德语/公共知识语法/副词/代副词.md",
     "语言学习/德语/公共知识语法/动词/支配介词宾语的动词.md",
-    "语言学习/德语/公共知识语法/动词/❌反身动词代词错题.md",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/动词/❌反身动词代词错题.md",
     "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
-    "语言学习/德语/单词/短语/dy1.md",
-    "语言学习/德语/公共知识语法/动词/常用动词单词合集---支配介词宾语的动词.md",
     "语言学习/德语/柏林广场视频笔记/A1/58 名词做第四格宾语补足语时.md",
     "assets/image-216.png",
     "语言学习/德语/学习记录日记/2026.canvas",
-    "语言学习/德语/公共知识语法/术语词典语库/sich.md",
-    "语言学习/德语/公共知识语法/动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
     "语言学习/德语/公共知识语法/术语词典语库",
-    "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
     "assets/clipboard_2026-04-01_21-52.png",
     "assets/image-215.png",
     "语言学习/德语/单词/动词.md",
@@ -517,21 +499,14 @@
     "语言学习/德语/公共知识语法/句子/从句weil,dass,wenn.md",
     "语言学习/德语/公共知识语法/构词法/复合词 1+1.md",
     "语言学习/德语/公共知识语法/❌错题/填空.md",
-    "语言学习/德语/公共知识语法/❌错题/时态.md",
     "语言学习/德语/公共知识语法/时态",
-    "语言学习/德语/柏林广场视频笔记/A1/53 时态 二分词 （P.II）.md",
-    "语言学习/德语/柏林广场视频笔记/A2/116 过去式 时态.md",
-    "语言学习/德语/公共知识语法/动词/复合动词.md",
     "语言学习/德语/公共知识语法/构词法",
     "assets/Pasted Image 20260316224158_355.png",
     "Untitled Diagram.svg",
-    "assets/clipboard_2026-03-31_12-47.png",
     "语言学习/德语/公共知识语法/副词",
     "语言学习/德语/公共知识语法/句子",
     "语言学习/德语/公共知识语法/形容词",
-    "assets/image-184.png",
     "2026",
-    "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
-    "语言学习/德语/公共知识语法/❌错题"
+    "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf"
   ]
 }
