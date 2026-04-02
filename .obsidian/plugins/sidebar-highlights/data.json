@@ -1271,6 +1271,22 @@
         "isNativeComment": false,
         "type": "highlight"
       }
+    ],
+    "语言学习/德语/公共知识语法/副词/❌/❌1.md": [
+      {
+        "id": "oi6aebyib",
+        "text": "因从句语序被置于句末",
+        "tags": [],
+        "line": 248,
+        "startOffset": 8725,
+        "endOffset": 8739,
+        "filePath": "语言学习/德语/公共知识语法/副词/❌/❌1.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775127028169,
+        "isNativeComment": false,
+        "type": "highlight"
+      }
     ]
   },
   "collections": {},
