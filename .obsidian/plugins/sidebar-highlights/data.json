@@ -1287,6 +1287,36 @@
         "isNativeComment": false,
         "type": "highlight"
       }
+    ],
+    "语言学习/德语/公共知识语法/动词/系动词.md": [
+      {
+        "id": "lznh1muys",
+        "text": "动词原形",
+        "tags": [],
+        "line": 180,
+        "startOffset": 5531,
+        "endOffset": 5539,
+        "filePath": "语言学习/德语/公共知识语法/动词/系动词.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775219357235,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "mszvgs5vv",
+        "text": "**第二分词**",
+        "tags": [],
+        "line": 181,
+        "startOffset": 5728,
+        "endOffset": 5740,
+        "filePath": "语言学习/德语/公共知识语法/动词/系动词.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775219355807,
+        "isNativeComment": false,
+        "type": "highlight"
+      }
     ]
   },
   "collections": {},
