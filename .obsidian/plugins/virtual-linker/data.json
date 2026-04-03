@@ -3,7 +3,7 @@
   "linkerActivated": true,
   "matchAnyPartsOfWords": false,
   "matchEndOfWords": true,
-  "matchBeginningOfWords": true,
+  "matchBeginningOfWords": false,
   "suppressSuffixForSubWords": false,
   "includeAllFiles": true,
   "linkerDirectories": [
@@ -31,7 +31,7 @@
   "tagToIncludeFile": "linker-include",
   "excludeLinksToOwnNote": true,
   "fixIMEProblem": false,
-  "excludeLinksInCurrentLine": false,
+  "excludeLinksInCurrentLine": true,
   "onlyLinkOnce": false,
   "excludeLinksToRealLinkedFiles": true,
   "includeAliases": true,

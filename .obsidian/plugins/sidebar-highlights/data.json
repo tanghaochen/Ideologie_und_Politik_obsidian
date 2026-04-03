@@ -1317,6 +1317,23 @@
         "isNativeComment": false,
         "type": "highlight"
       }
+    ],
+    "语言学习/德语/公共知识语法/动词/❌/lassen错误.md": [
+      {
+        "id": "iujzv33u6",
+        "text": "动词原形",
+        "tags": [],
+        "line": 160,
+        "startOffset": 5616,
+        "endOffset": 5649,
+        "filePath": "语言学习/德语/公共知识语法/动词/❌/lassen错误.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775227173264,
+        "isNativeComment": false,
+        "color": "#ff0000",
+        "type": "html"
+      }
     ]
   },
   "collections": {},
