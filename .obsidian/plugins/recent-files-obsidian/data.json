@@ -1,28 +1,44 @@
 {
   "recentFiles": [
     {
-      "basename": "助动词",
-      "path": "语言学习/德语/公共知识语法/助动词.md"
+      "basename": "系动词",
+      "path": "语言学习/德语/公共知识语法/动词/系动词.md"
+    },
+    {
+      "basename": "过去分词变化",
+      "path": "语言学习/德语/公共知识语法/时态/过去分词变化.md"
+    },
+    {
+      "basename": "58 名词做第四格宾语补足语时",
+      "path": "语言学习/德语/柏林广场视频笔记/A1/58 名词做第四格宾语补足语时.md"
+    },
+    {
+      "basename": "动词专题canvas",
+      "path": "语言学习/德语/公共知识语法/动词/动词专题canvas.md"
     },
     {
       "basename": "语法快查必背语法canvas",
       "path": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
     },
     {
-      "basename": "德语语法 活学活用 A1-B1",
-      "path": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf"
+      "basename": "anyblock",
+      "path": "电脑、软件、系统/obsidian plugin/anyblock.md"
     },
     {
       "basename": "⭐必背所有知识点整理考察整理",
       "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
     },
     {
-      "basename": "被动态",
-      "path": "语言学习/德语/公共知识语法/句型/被动态.md"
+      "basename": "助动词",
+      "path": "语言学习/德语/公共知识语法/助动词.md"
     },
     {
-      "basename": "过去分词变化",
-      "path": "语言学习/德语/公共知识语法/时态/过去分词变化.md"
+      "basename": "德语语法 活学活用 A1-B1",
+      "path": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf"
+    },
+    {
+      "basename": "被动态",
+      "path": "语言学习/德语/公共知识语法/句型/被动态.md"
     },
     {
       "basename": "5 规则动词的现在时变位",
@@ -35,10 +51,6 @@
     {
       "basename": "第二虚拟式",
       "path": "语言学习/德语/公共知识语法/句子/第二虚拟式.md"
-    },
-    {
-      "basename": "anyblock",
-      "path": "电脑、软件、系统/obsidian plugin/anyblock.md"
     },
     {
       "basename": "4 动词sein和陈述句",
@@ -91,10 +103,6 @@
     {
       "basename": "句子结构：术语，形容词，副词，表语，定语，状语",
       "path": "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md"
-    },
-    {
-      "basename": "58 名词做第四格宾语补足语时",
-      "path": "语言学习/德语/柏林广场视频笔记/A1/58 名词做第四格宾语补足语时.md"
     },
     {
       "basename": "动词",
@@ -191,14 +199,6 @@
     {
       "basename": "Untitled Diagram",
       "path": "Untitled Diagram.svg"
-    },
-    {
-      "basename": "✍️形容词",
-      "path": "语言学习/德语/公共知识语法/❌错题/✍️形容词.md"
-    },
-    {
-      "basename": "形容词",
-      "path": "语言学习/德语/公共知识语法/形容词/形容词.md"
     }
   ],
   "omittedPaths": [],
