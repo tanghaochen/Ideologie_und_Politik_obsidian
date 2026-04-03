@@ -1,12 +1,8 @@
 {
   "recentFiles": [
     {
-      "basename": "动词专题canvas",
-      "path": "语言学习/德语/公共知识语法/动词/动词专题canvas.md"
-    },
-    {
-      "basename": "⭐必背所有知识点整理考察整理",
-      "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
+      "basename": "lassen",
+      "path": "语言学习/德语/公共知识语法/动词/lassen.md"
     },
     {
       "basename": "系动词",
@@ -15,6 +11,14 @@
     {
       "basename": "语法快查必背语法canvas",
       "path": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
+    },
+    {
+      "basename": "⭐必背所有知识点整理考察整理",
+      "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
+    },
+    {
+      "basename": "动词专题canvas",
+      "path": "语言学习/德语/公共知识语法/动词/动词专题canvas.md"
     },
     {
       "basename": "过去分词变化",
@@ -195,10 +199,6 @@
     {
       "basename": "方位副词",
       "path": "语言学习/德语/公共知识语法/副词/方位副词.md"
-    },
-    {
-      "basename": "Untitled Diagram",
-      "path": "Untitled Diagram.svg"
     }
   ],
   "omittedPaths": [],
