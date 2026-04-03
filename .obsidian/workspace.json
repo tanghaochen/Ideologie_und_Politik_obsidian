@@ -81,8 +81,33 @@
               "icon": "lucide-file",
               "title": "58 名词做第四格宾语补足语时"
             }
+          },
+          {
+            "id": "162669c7adaa039d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/时态/过去分词变化.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "过去分词变化"
+            }
           }
-        ]
+        ],
+        "currentTab": 3
       },
       {
         "id": "dd4130c5419b5527",
@@ -420,15 +445,16 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "b61839aaa220e73b",
+  "active": "162669c7adaa039d",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/句型/被动态.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+    "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
+    "语言学习/德语/公共知识语法/时态/过去分词变化.md",
+    "语言学习/德语/公共知识语法/句型/被动态.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/学习记录日记/2026.canvas",
     "语言学习/德语/公共知识语法/句子/第二虚拟式.md",
     "assets/Pasted Image 20260402224651_188.png",
-    "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
     "电脑、软件、系统/obsidian plugin/anyblock.md",
     "语言学习/德语/柏林广场视频笔记/A1/4 动词sein和陈述句.md",
     "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
@@ -457,7 +483,6 @@
     "assets/image-207.png",
     "assets/image-206.png",
     "assets/image-205.png",
-    "语言学习/德语/公共知识语法/时态/过去分词变化.md",
     "语言学习/德语/公共知识语法/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/时态/时态介绍总结.md",
     "语言学习/德语/公共知识语法/时态",
