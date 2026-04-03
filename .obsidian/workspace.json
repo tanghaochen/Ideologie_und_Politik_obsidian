@@ -52,7 +52,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/动词/❌/lassen错误.md",
+                "file": "语言学习/德语/公共知识语法/格/第二格.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -67,7 +67,31 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "lassen错误"
+              "title": "第二格"
+            }
+          },
+          {
+            "id": "869690b9e385c5e0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/第二格.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "第二格"
             }
           }
         ],
@@ -411,10 +435,13 @@
   },
   "active": "162669c7adaa039d",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+    "语言学习/德语/公共知识语法/第二格.md",
+    "语言学习/德语/公共知识语法/格/第二格.md",
+    "语言学习/德语/公共知识语法/格",
+    "语言学习/德语/公共知识语法/动词/❌/lassen错误.md",
     "assets/image-229.png",
     "语言学习/德语/公共知识语法/动词/lassen.md",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
-    "语言学习/德语/公共知识语法/动词/❌/lassen错误.md",
     "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
     "assets/image-220.png",
     "assets/PixPin_2026-04-03_22-01-49.png",
@@ -447,16 +474,13 @@
     "语言学习/德语/公共知识语法/副词/未命名.md",
     "语言学习/德语/公共知识语法/副词/❌",
     "语言学习/德语/公共知识语法/副词/代副词.md",
-    "语言学习/德语/公共知识语法/动词/支配介词宾语的动词.md",
     "assets/image-216.png",
     "语言学习/德语/公共知识语法/术语词典语库",
     "assets/clipboard_2026-04-01_21-52.png",
-    "assets/image-215.png",
     "语言学习/德语/公共知识语法/时态",
     "语言学习/德语/公共知识语法/构词法",
     "语言学习/德语/公共知识语法/副词",
     "语言学习/德语/公共知识语法/句子",
-    "语言学习/德语/公共知识语法/形容词",
-    "2026"
+    "语言学习/德语/公共知识语法/形容词"
   ]
 }
