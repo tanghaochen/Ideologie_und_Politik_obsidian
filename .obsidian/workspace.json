@@ -151,9 +151,19 @@
               "icon": "excalidraw-icon",
               "title": "个人人生思想架构"
             }
+          },
+          {
+            "id": "96a78377f99c4179",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -246,7 +256,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "思想思维心理哲学/个人人生思想架构.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -256,7 +265,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "个人人生思想架构 的反向链接列表"
+              "title": "反向链接"
             }
           },
           {
@@ -384,11 +393,9 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {
-                "file": "思想思维心理哲学/个人人生思想架构.md"
-              },
+              "state": {},
               "icon": "lucide-info",
-              "title": "个人人生思想架构的笔记属性"
+              "title": "笔记属性"
             }
           }
         ],
@@ -434,8 +441,11 @@
       "html-server:Turn Http Server Off": false
     }
   },
-  "active": "70dceb7159c5e291",
+  "active": "96a78377f99c4179",
   "lastOpenFiles": [
+    "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
+    "思想思维心理哲学/个人人生思想架构.md",
+    "思想思维心理哲学/个人问题处理/欧美和中国不婚的对比.md",
     "思想思维心理哲学/test.html",
     "语言学习/德语/公共知识语法/名词/阳性弱变化名词.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
@@ -445,7 +455,6 @@
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/公共知识语法/动词/阳性弱变化动词.md",
     "语言学习/德语/公共知识语法/名词",
-    "思想思维心理哲学/个人人生思想架构.md",
     "语言学习/德语/学习记录日记/2026.canvas",
     "思想思维心理哲学/决策梳理/孤独失败化作能量; 不要陷于过去的成功或失败.md",
     "思想思维心理哲学/决策梳理",
@@ -454,7 +463,6 @@
     "语言学习/德语/公共知识语法/动词/❌/lassen错误.md",
     "assets/image-229.png",
     "语言学习/德语/公共知识语法/动词/lassen.md",
-    "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
     "assets/image-220.png",
     "assets/PixPin_2026-04-03_22-01-49.png",
     "语言学习/德语/公共知识语法/动词/❌",
@@ -481,7 +489,6 @@
     "语言学习/德语/公共知识语法/术语词典语库",
     "assets/clipboard_2026-04-01_21-52.png",
     "语言学习/德语/公共知识语法/句型/时态",
-    "语言学习/德语/公共知识语法/构词法",
-    "语言学习/德语/公共知识语法/副词"
+    "语言学习/德语/公共知识语法/构词法"
   ]
 }
