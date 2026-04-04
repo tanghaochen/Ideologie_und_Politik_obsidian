@@ -475,8 +475,9 @@
   "folderIcons": {
     "语言学习": "emoji:🇩🇪",
     "语言学习/德语/公共知识语法/❌错题": "notebook-pen",
-    "语言学习/德语/公共知识语法/时态": "calendar-clock",
-    "语言学习/德语/公共知识语法/格": "table-config"
+    "语言学习/德语/公共知识语法/格": "table-config",
+    "语言学习/德语/公共知识语法/名词": "globe",
+    "语言学习/德语/公共知识语法/句型/时态": "calendar-clock"
   },
   "folderColors": {},
   "folderBackgroundColors": {
