@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 23.5640648011782,
+        "dimension": 34.13107511045656,
         "children": [
           {
             "id": "5a70dd417c4445e4",
@@ -82,13 +82,38 @@
               "title": "形容词名词化"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 76.4359351988218,
+        "dimension": 65.86892488954345,
         "children": [
+          {
+            "id": "f7f753f4d1807902",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/学习记录日记/b2所有的考点和预备的能力.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "b2所有的考点和预备的能力"
+            }
+          },
           {
             "id": "b61839aaa220e73b",
             "type": "leaf",
@@ -221,7 +246,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
+                "file": "语言学习/德语/学习记录日记/b2所有的考点和预备的能力.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -231,7 +256,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "✍️形容词 的反向链接列表"
+              "title": "b2所有的考点和预备的能力 的反向链接列表"
             }
           },
           {
@@ -360,10 +385,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "语言学习/德语/公共知识语法/❌错题/✍️形容词.md"
+                "file": "语言学习/德语/学习记录日记/b2所有的考点和预备的能力.md"
               },
               "icon": "lucide-info",
-              "title": "✍️形容词的笔记属性"
+              "title": "b2所有的考点和预备的能力的笔记属性"
             }
           }
         ],
@@ -409,15 +434,18 @@
       "html-server:Turn Http Server Off": false
     }
   },
-  "active": "5a70dd417c4445e4",
+  "active": "f7f753f4d1807902",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/句型/疑问句/间接疑问句.md",
+    "语言学习/德语/学习记录日记/b2所有的考点和预备的能力.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/句型/疑问句",
+    "语言学习/德语/公共知识语法/形容词/形容词名词化.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
-    "语言学习/德语/公共知识语法/形容词/形容词名词化.md",
     "思想思维心理哲学/爱情/欧美审美差异和正确审美.md",
     "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
     "思想思维心理哲学/个人人生思想架构.md",
@@ -448,15 +476,12 @@
     "语言学习/德语/公共知识语法/动词/系动词.md",
     "assets/image-219.png",
     "assets/Pasted Image 20260403203252_266.png",
-    "语言学习/德语/公共知识语法/句型/时态/过去分词变化.md",
-    "语言学习/德语/柏林广场视频笔记/A1/58 名词做第四格宾语补足语时.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "assets/Pasted Image 20260402224651_188.png",
     "assets/image-218.png",
     "assets/image-217.png",
     "语言学习/德语/公共知识语法/副词/❌",
     "assets/image-216.png",
-    "语言学习/德语/公共知识语法/术语词典语库",
-    "语言学习/德语/公共知识语法/句型/时态"
+    "语言学习/德语/公共知识语法/术语词典语库"
   ]
 }
