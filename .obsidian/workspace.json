@@ -69,21 +69,9 @@
               "icon": "lucide-file",
               "title": "⭐必背所有知识点整理考察整理"
             }
-          },
-          {
-            "id": "a3795f11933adee3",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "思想思维心理哲学/个人人生思想架构.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "个人人生思想架构"
-            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       },
       {
         "id": "dd4130c5419b5527",
@@ -151,9 +139,21 @@
               "icon": "lucide-file",
               "title": "5 规则动词的现在时变位"
             }
+          },
+          {
+            "id": "a3795f11933adee3",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "思想思维心理哲学/个人人生思想架构.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "个人人生思想架构"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -392,7 +392,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -434,7 +434,7 @@
       "html-server:Turn Http Server Off": false
     }
   },
-  "active": "56aec1574e68adfb",
+  "active": "70dceb7159c5e291",
   "lastOpenFiles": [
     "思想思维心理哲学/test.html",
     "语言学习/德语/公共知识语法/名词/阳性弱变化名词.md",
