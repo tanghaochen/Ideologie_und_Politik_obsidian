@@ -6,8 +6,32 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 35.456553755522826,
+        "dimension": 36.41384388807069,
         "children": [
+          {
+            "id": "082547a7f9c4dc26",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/格/第二格.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "第二格"
+            }
+          },
           {
             "id": "2d2129b0b2a5c975",
             "type": "leaf",
@@ -45,55 +69,13 @@
               "icon": "lucide-file",
               "title": "⭐必背所有知识点整理考察整理"
             }
-          },
-          {
-            "id": "162669c7adaa039d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/格/第二格.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "第二格"
-            }
-          },
-          {
-            "id": "869690b9e385c5e0",
-            "type": "leaf",
-            "state": {
-              "type": "canvas",
-              "state": {
-                "file": "语言学习/德语/学习记录日记/2026.canvas",
-                "viewState": {
-                  "x": 1519.6540838814817,
-                  "y": 1053.2949344298684,
-                  "zoom": -0.9099676890601051
-                }
-              },
-              "icon": "lucide-layout-dashboard",
-              "title": "2026"
-            }
           }
-        ],
-        "currentTab": 2
+        ]
       },
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 64.54344624447718,
+        "dimension": 63.586156111929306,
         "children": [
           {
             "id": "fc4694f5c03bbe1d",
@@ -384,9 +366,21 @@
               "icon": "links-going-out",
               "title": "81 形容词和比较级 最高级 与 第一格 的出链列表"
             }
+          },
+          {
+            "id": "c3592eded90586bf",
+            "type": "leaf",
+            "state": {
+              "type": "file-properties",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
+              },
+              "icon": "lucide-info",
+              "title": "语法快查必背语法canvas的笔记属性"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 11
       }
     ],
     "direction": "horizontal",
@@ -429,9 +423,14 @@
   "active": "b61839aaa220e73b",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/格/第二格.md",
-    "语言学习/德语/学习记录日记/2026.canvas",
-    "语言学习/德语/公共知识语法/第二格.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/学习记录日记/2026.canvas",
+    "思想思维心理哲学/个人人生思想架构.md",
+    "思想思维心理哲学/决策梳理/孤独失败化作能量; 不要陷于过去的成功或失败.md",
+    "语言学习/德语/公共知识语法/动词/动词专题canvas.md",
+    "思想思维心理哲学/决策梳理",
+    "语言学习/德语/公共知识语法/第二格.md",
     "语言学习/德语/公共知识语法/格",
     "语言学习/德语/公共知识语法/动词/❌/lassen错误.md",
     "assets/image-229.png",
@@ -443,8 +442,6 @@
     "语言学习/德语/公共知识语法/❌错题/未命名.md",
     "语言学习/德语/公共知识语法/动词/系动词.md",
     "assets/image-219.png",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "语言学习/德语/公共知识语法/动词/动词专题canvas.md",
     "assets/Pasted Image 20260403203252_266.png",
     "语言学习/德语/公共知识语法/时态/过去分词变化.md",
     "语言学习/德语/柏林广场视频笔记/A1/58 名词做第四格宾语补足语时.md",
@@ -461,10 +458,8 @@
     "语言学习/德语/公共知识语法/动词/常用动词单词合集---支配介词宾语的动词.md",
     "语言学习/德语/公共知识语法/动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
     "语言学习/德语/公共知识语法/术语词典语库/sich.md",
-    "语言学习/德语/单词/短语/dy1.md",
     "assets/image-218.png",
     "assets/image-217.png",
-    "语言学习/德语/公共知识语法/副词/未命名.md",
     "语言学习/德语/公共知识语法/副词/❌",
     "assets/image-216.png",
     "语言学习/德语/公共知识语法/术语词典语库",
@@ -472,7 +467,6 @@
     "语言学习/德语/公共知识语法/时态",
     "语言学习/德语/公共知识语法/构词法",
     "语言学习/德语/公共知识语法/副词",
-    "语言学习/德语/公共知识语法/句子",
-    "语言学习/德语/公共知识语法/形容词"
+    "语言学习/德语/公共知识语法/句子"
   ]
 }
