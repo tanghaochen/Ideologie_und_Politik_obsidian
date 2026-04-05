@@ -33,30 +33,6 @@
               "icon": "lucide-file",
               "title": "⭐必背所有知识点整理考察整理"
             }
-          },
-          {
-            "id": "1e8cad42c38894cd",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/形容词/形容词名词化.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "形容词名词化"
-            }
           }
         ]
       },
@@ -174,8 +150,21 @@
               "icon": "lucide-file",
               "title": "b2所有的考点和预备的能力"
             }
+          },
+          {
+            "id": "1e8cad42c38894cd",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "思想思维心理哲学/个人人生思想架构.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "个人人生思想架构"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -455,10 +444,14 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "f68843f963437781",
+  "active": "1e8cad42c38894cd",
   "lastOpenFiles": [
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "assets/PixPin_2026-04-05_16-08-14.png",
+    "语言学习/德语/公共知识语法/形容词/形容词名词化.md",
     "语言学习/德语/公共知识语法/句型/带zu的不定式.md",
+    "语言学习/德语/公共知识语法/句型/❌zu的不定式.md",
+    "assets/image-237.png",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/学习记录日记/2026.canvas",
     "语言学习/德语/公共知识语法/句型/疑问句/间接疑问句.md",
@@ -467,7 +460,6 @@
     "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/公共知识语法/句型/疑问句",
-    "语言学习/德语/公共知识语法/形容词/形容词名词化.md",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
@@ -491,7 +483,6 @@
     "语言学习/德语/公共知识语法/格",
     "语言学习/德语/公共知识语法/动词/❌/lassen错误.md",
     "assets/image-229.png",
-    "语言学习/德语/公共知识语法/动词/lassen.md",
     "assets/image-220.png",
     "assets/PixPin_2026-04-03_22-01-49.png",
     "语言学习/德语/公共知识语法/动词/❌",
@@ -501,7 +492,6 @@
     "assets/image-218.png",
     "assets/image-217.png",
     "语言学习/德语/公共知识语法/副词/❌",
-    "assets/image-216.png",
     "语言学习/德语/公共知识语法/术语词典语库"
   ]
 }
