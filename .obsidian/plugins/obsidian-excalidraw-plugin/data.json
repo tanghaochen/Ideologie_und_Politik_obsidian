@@ -8484,7 +8484,8 @@
   "taskboneAPIkey": "8a6257e0-59ef-4b0f-8124-aa3a3f7e1ff8",
   "pinnedScripts": [
     "Excalidraw/Scripts/Downloaded/Mindmap format.md",
-    "Excalidraw/Scripts/Downloaded/Excalidraw Writing Machine.md"
+    "Excalidraw/Scripts/Downloaded/Excalidraw Writing Machine.md",
+    "Excalidraw/Scripts/Downloaded/Mindmap Builder.md"
   ],
   "sidepanelTabs": [
     "{\"script\":\"Downloaded/Mindmap Builder\",\"title\":\"MindMap Builder\"}"

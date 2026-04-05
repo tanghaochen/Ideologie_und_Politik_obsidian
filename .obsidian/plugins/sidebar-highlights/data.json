@@ -1415,6 +1415,23 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "语言学习/德语/公共知识语法/句型/句子/关系从句.md": [
+      {
+        "id": "giithlcjp",
+        "text": "先行词",
+        "tags": [],
+        "line": 8,
+        "startOffset": 222,
+        "endOffset": 254,
+        "filePath": "语言学习/德语/公共知识语法/句型/句子/关系从句.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775384847937,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},

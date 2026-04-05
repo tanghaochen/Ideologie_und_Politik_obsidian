@@ -9,6 +9,22 @@
         "dimension": 27.40331491712707,
         "children": [
           {
+            "id": "a03ae9955cc7ed26",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
+                "page": 167,
+                "left": -14,
+                "top": 33,
+                "zoom": 1.0580279742799965
+              },
+              "icon": "lucide-file-text",
+              "title": "德语语法 活学活用 A1-B1"
+            }
+          },
+          {
             "id": "51aa4c53b7c06262",
             "type": "leaf",
             "pinned": true,
@@ -34,13 +50,38 @@
               "title": "⭐必背所有知识点整理考察整理"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
         "dimension": 72.59668508287292,
         "children": [
+          {
+            "id": "a308b6b3c6060018",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/句型/句子/关系从句.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "关系从句"
+            }
+          },
           {
             "id": "f68843f963437781",
             "type": "leaf",
@@ -359,10 +400,13 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "f68843f963437781",
+  "active": "a308b6b3c6060018",
   "lastOpenFiles": [
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/句型/句子/关系从句.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/公共知识语法/句型/zu的不定式.md",
+    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/公共知识语法/句型/疑问句/间接疑问句.md",
     "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
     "语言学习/德语/学习记录日记/b2所有的考点和预备的能力.md",
@@ -371,10 +415,8 @@
     "语言学习/德语/公共知识语法/形容词/形容词名词化.md",
     "语言学习/德语/公共知识语法/句型/❌zu的不定式.md",
     "assets/image-237.png",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/学习记录日记/2026.canvas",
     "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
-    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/公共知识语法/句型/疑问句",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
