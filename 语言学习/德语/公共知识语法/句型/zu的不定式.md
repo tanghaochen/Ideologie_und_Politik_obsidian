@@ -339,9 +339,7 @@ graph LR
 如果不掌握 `zu` 不定式，你所有的表达就只能依赖 `dass` 从句，这会让你听起来像个啰嗦的机器人：
 
 - **不使用 zu (啰嗦的绿皮火车)：** Ich versuche, **dass ich** mehr Sport **mache**. (我尝试，我做更多运动。—— _重复了 ich，拖沓！_)
-    
 - **使用 zu (丝滑的高铁)：** Ich versuche, mehr Sport **zu machen**. (我尝试多做运动。—— _干脆利落！_)
-    
 
 **实际作用：** 替你省去了重复主语和从句引导词（dass）的麻烦，让交流效率大幅提升。
 
@@ -352,9 +350,7 @@ graph LR
 比如你想表达：“每天学德语很重要。”
 
 - **使用 zu (自然地道)：** Es ist wichtig, jeden Tag Deutsch **zu lernen**.
-    
 - **不用 zu (强行拼凑)：** 如果你偏不用，你就得硬生生编一个主语出来 ➡️ Es ist wichtig, **dass man** jeden Tag Deutsch **lernt**.
-    
 
 **实际作用：** 虽然第二句语法也没错，但在日常口语中，老编造一个 `man` (人们/有人) 出来显得非常官僚和生硬。`zu` 不定式提供了一种直接就事论事的优雅途径。
 
@@ -369,3 +365,128 @@ graph LR
 不要把它看作是为了应付考试而硬加的“高级滤镜”。`zu` 不定式的本质，是**帮你把两个臃肿的短句，无缝焊接到一起，变成一句符合人类自然说话习惯的流利表达**。在六个月冲刺 B 2 的路上，它不是选修课，而是你融入德国社会的必修课！
 
 既然你已经看透了它“提升句子高级感”的属性，那么在日常生活中，你觉得自己在哪些场景下（比如写求职信、给房东发消息、或者去超市买东西），最容易写出那种“啰嗦重复的短句”，急需用 `zu` 不定式来改造一下呢？
+
+# 不带 zu 的不定式
+
+既然我们上一节课已经彻底搞懂了 `zu` 是如何作为“挂钩”把主句和后面的动词车厢连起来的，那么今天，我们来看看德语里的**“VIP 磁悬浮列车”——不带 `zu` 的不定式 (Infinitiv ohne zu)**。
+
+**大师的生动类比：**
+
+如果说普通的动词是老式绿皮火车，必须用 `zu`（挂钩）才能拉动后面的动词；那么今天我们要学的这几类动词，就是**自带磁吸功能的“VIP 引擎”**。它们气场极其强大，不需要任何中间人，直接“啪”的一声，就能把后面的动词原形吸附在句子的最末尾！
+
+在德语中，拥有这种“VIP 磁吸特权”的动词主要分为**四大门派**。我为你整理了一份高维度的武功秘籍：
+
+```mermaid
+graph TD
+    A[不带 zu 的不定式<br>VIP 磁悬浮列车] --> B(第一大门派：情态动词)
+    A --> C(第二大门派：感觉动词)
+    A --> D(第三大门派：运动动词)
+    A --> E(第四大门派：特殊四大金刚)
+
+    B -.-> B1("können, müssen, dürfen, <br>sollen, wollen, mögen")
+    C -.-> C1("sehen (看), hören (听), <br>spüren (感觉)")
+    D -.-> D1("gehen (走), fahren (乘车), <br>kommen (来)")
+    E -.-> E1("lassen (让), bleiben (停留), <br>helfen (帮助), lernen (学习)")
+
+    classDef main fill:#fce4ec,stroke:#d81b60,stroke-width:2px;
+    classDef sub fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+    class A main;
+    class B,C,D,E sub;
+```
+
+接下来，我们把这四大门派放到你在德国的真实生活场景中，挨个拆解！
+
+---
+
+### 👑 第一大门派：情态动词 (Modalverben) —— 绝对的权力中心
+
+这是大家最熟悉的 VIP。情态动词天生就是为主干动作增添“色彩”（能力、义务、意愿）的，它们绝对不需要 `zu`。
+
+- **【外管局延签 / 找工作实战】**
+    - _Ich **muss** morgen meinen Pass bei der Ausländerbehörde **abholen**._ (我明天**必须**去外管局**取**我的护照。➡️ _muss 磁吸 abholen，绝对不能加 zu！_)
+    - _Ich **möchte** in Zukunft als Softwareentwickler in Berlin **arbeiten**._ (我未来**想**在柏林作为软件开发者**工作**。)
+
+---
+
+### 👁️ 第二大门派：感官动词 (Wahrnehmungsverben) —— 所见即所得
+
+当你用眼睛看 (sehen)、耳朵听 (hören)、身体感觉 (spüren/fühlen) 时，你感知到的那个动作，直接用动词原形放在句尾。因为你的感官和动作之间是没有距离的，所以不需要 `zu`。
+
+- **【租房纠纷 / 邻里生活实战】**
+    - _Ich **höre** meinen Nachbarn jeden Abend laut Klavier **spielen**._ (我每天晚上都**听到**我的邻居大声地**弹**钢琴。)
+    - _Ich **sehe** den Bus gerade **abfahren**._ (我正**看着**公交车**开走**。➡️ _迟到了跑向车站的绝望感！_)
+
+---
+
+### 🏃 第三大门派：运动动词 (Bewegungsverben) —— 行动派的干脆
+
+当你“去”(gehen)、“开车去”(fahren)、“来”(kommen) 做某事时，运动本身和目的动作是一气呵成的。
+
+- **【日常生活 / 消费实战】**
+    - _Ich **gehe** heute Nachmittag im Supermarkt **einkaufen**._ (我今天下午**去**超市**购物**。➡️ _注意，不是 gehe zu einkaufen！_)
+    - _Wir **fahren** am Wochenende ans Meer **schwimmen**._ (我们周末**开车去**海边**游泳**。)
+
+---
+
+### 🌟 第四大门派：特殊四大金刚 (lassen, bleiben, helfen, lernen) —— B 2 考点大本营
+
+这四个动词极其特殊，尤其是 **lassen (让)**，它是 B 2 级别使用频率最高、最能体现你德语地道程度的神级词汇！
+
+#### 1. lassen (让/使) —— 代替被动语态的高级武器！
+
+`lassen` 有两个超级实用的意思：
+
+- **表允许 (erlauben)：**
+    - _Der Vermieter **lässt** mich keine Haustiere in der Wohnung **halten**._ (房东不**允许/让**我在公寓里**养**宠物。)
+- **表委托别人做事 (代替被动)：自己不亲自动手，让别人做！**
+    - _Ich **lasse** mein kaputtes Auto in der Werkstatt **reparieren**._ (我**把**我坏掉的车**交到**修理厂**修**。➡️ _潜台词：我自己不会修，修理工修的。这是地道德国人最爱用的句型！_)
+    - _Ich **lasse** mir vom Arzt Blut **abnehmen**._ (我**让**医生给我**抽**血。)
+
+#### 2. bleiben (保持/停留)
+
+- _Bei diesem Regen **bleibe** ich lieber zu Hause **sitzen**._ (下这么大雨，我宁愿**坐**在家里**呆着**。)
+
+#### 3. helfen (帮助) & lernen (学习) —— 墙头草（大师避坑提示）
+
+这两个词在现代德语中有点“骑墙”：
+
+- 如果句子**很短**，后面的动词车厢只有一个词，**不加 zu**：
+    - _Er **hilft** mir **kochen**._ (他帮我做饭。)
+- 如果句子**变长了**，后面跟了一大堆宾语和状语，为了句子结构清晰，德国人习惯**加上 zu**：
+    - _Er **hilft** mir dabei, das schwere Sofa in den dritten Stock **zu tragen**._ (他帮我把沉重的沙发抬到三楼。)
+
+---
+
+### ⚠️ 大师的 B 2 终极防坑警告：完成时里的“双不定式” (Ersatzinfinitiv)
+
+既然你定下了 B 2 的目标，我就必须把这个顶级陷阱提前揭秘给你！
+
+当我们在**完成时（Perfekt）**中遇到这些“VIP 引擎”（特别是**情态动词**和 **lassen**），并且它们后面跟着另一个动词原形时，一个神奇的语法现象发生了：
+
+**大 Boss 拒绝变成 `ge-` 开头的第二分词，而是傲娇地保持动词原形！** 这就是大名鼎鼎的“双不定式”。
+
+- **【普通动词完成时】：** Ich habe das Auto **gekauft**. (我买了车。 ➡️ _gekauft 是第二分词_)
+- **【遇到 lassen / 情态动词】：** * 我（让人）修了车。
+    - ❌ 错误：Ich habe das Auto reparieren _gelassen_.
+    - ✅ **正确：Ich habe das Auto reparieren lassen.** (连着两个动词原形在句尾！)
+    - 我昨天本必须工作的。
+        - ❌ 错误：Ich habe gestern arbeiten _gemusst_.
+        - ✅ **正确：Ich habe gestern arbeiten müssen.**
+
+这就是 VIP 引擎的特权，它们连完成时都不屑于变身，直接用原形压阵！
+
+---
+
+### 📝 你的实战验收 (Hausaufgabe)
+
+现在，趁着热乎劲儿，请你用今天学的“不带 zu”的句型，结合真实生活场景，把这两句话翻译出来（注意句尾铁律）：
+
+1. **(生活 / 运动动词)：** 今天晚上我不做饭，我去外面（im Restaurant）吃。
+
+    _(提示：去外面吃 = essen gehen)_
+
+2. **(职场 / lassen 的委托用法)：** 这份德语合同太难了，我让我的德国同事翻译（它）。
+
+    _(提示：让...翻译 = übersetzen lassen)_
+
+大胆翻译出来交给我批改！除了这四大门派，你在平时做题或生活中，还有没有遇到过其他让你拿不准到底加不加 `zu` 的动词呢？
