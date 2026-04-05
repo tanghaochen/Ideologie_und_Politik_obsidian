@@ -1368,6 +1368,36 @@
         "isNativeComment": false,
         "type": "highlight"
       }
+    ],
+    "语言学习/德语/公共知识语法/句型/带zu的不定式.md": [
+      {
+        "id": "9i8pdp7bt",
+        "text": "第二个动词",
+        "tags": [],
+        "line": 8,
+        "startOffset": 210,
+        "endOffset": 219,
+        "filePath": "语言学习/德语/公共知识语法/句型/带zu的不定式.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775318238157,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "4wwdo04uz",
+        "text": "二个动词不能穿正装（不能变位",
+        "tags": [],
+        "line": 8,
+        "startOffset": 228,
+        "endOffset": 246,
+        "filePath": "语言学习/德语/公共知识语法/句型/带zu的不定式.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775362850146,
+        "isNativeComment": false,
+        "type": "highlight"
+      }
     ]
   },
   "collections": {},
