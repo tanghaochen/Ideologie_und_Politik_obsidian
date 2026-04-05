@@ -1431,6 +1431,21 @@
         "isNativeComment": false,
         "color": "#d83931",
         "type": "html"
+      },
+      {
+        "id": "b7cigbch8",
+        "text": "不管前面主句的内部结构长什么样，从句紧紧贴在谁（哪个名词）后面，谁就是先行词",
+        "tags": [],
+        "line": 175,
+        "startOffset": 5046,
+        "endOffset": 5113,
+        "filePath": "语言学习/德语/公共知识语法/句型/句子/关系从句.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775386515745,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
       }
     ]
   },
