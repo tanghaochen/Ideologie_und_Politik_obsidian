@@ -5,6 +5,7 @@
 为了最快地记住它们的区别，我们把这两个词想象成不同的“视觉媒体”。
 
 #### 1. Als：拍立得老照片 (Das Polaroid-Foto)
+
 ```mermaid
 flowchart TD
     Start((开始构思句子)) --> Time{事情发生在什么时候?}
@@ -26,6 +27,7 @@ flowchart TD
     style Live fill:#e1f5fe,stroke:#01579b,stroke-dasharray: 5 5,color:#000
     style GIF fill:#e1f5fe,stroke:#01579b,stroke-dasharray: 5 5,color:#000
 ```
+
 - **语法规则**：**只**用于**过去**发生的、且**仅发生了一次**的事件或状态。
 - **大师解析**：把它想象成一张拍立得照片。它定格了过去某一特定的瞬间、某一段特定的历史或人生阶段。拍完就结束了，那一刻永远不会再发生第二次。
 - **移民生活实战场景**：
@@ -148,3 +150,82 @@ flowchart LR
 - **第 5-6 个月（场景模拟与冲刺）**：完全沉浸在真实的德国社会场景中（例如模拟与外管局官员的对话、写投诉信给房东）。使用 _wenn_ 和 _als_ 流畅地描述你过去的经历和未来的诉求。
 
 语法是帮助你更好地在德国生活的工具，而不是死记硬背的负担。当你下次去超市、去坐地铁时，试着在脑海里用 _wenn_ 或 _als_ 造个句子，把生活变成你的德语训练场。Viel Erfolg! (祝你成功！)
+
+# ❌
+## 1
+
+![[image-255.png|1120x312]]
+
+Guten Tag！别慌，看到你在图片上密密麻麻标出的蓝红数字，还有那句直击灵魂的“为何提前？”，我非常能理解你的困惑。这也恰恰证明了你正在经历突破 B 1/B 2 语法的必经阵痛期。
+
+你觉得“不常规”，是因为**这道题给你的并不是排好序的半成品，而是原始的“原材料”**。书本把词汇按照最基础的主谓宾（SVO）顺序列出来，是需要你自己像拼乐高一样，用从句规则把它们重新组装起来。
+
+来，大师带你破解这道拼图题里你最疑惑的两个点。
+
+### 核心解惑一：“为何提前？”（主句动词位置）
+
+你在第 1 题和第 5 题都敏锐地察觉到，主句的动词（`können`, `hat`）好像跑到前面去了。我们在上一课讲过的**“动词贴贴” (Verb-Verb-Kollision)** 规则，现在就派上用场了！
+
+在德语的陈述句中，有一个铁打不动的规矩：**变位动词永远坐在句子的第二把交椅（Position 2）上。** 当你把 `Wenn` 或 `Als` 引导的从句放在句首时，**这整个长长的从句，就变成了一个巨大的“胖子”，一屁股坐满了第一把交椅（Position 1）。** 既然第一把椅子被占了，主句的动词就别无选择，只能紧贴着从句的逗号，坐到第二把椅子上。
+
+我们来看你的第 1 题：
+
+- **原始素材**：`Wenn` | `du heute Abend kommen` / `wir können gleich ins Kino gehen`
+- **组装第一步（从句动词踢到最后）**：[Wenn du heute Abend **kommst**], ...
+- <font color="#d83931">**组装第二步（主句动词抢占第二位置）**：整个 `Wenn` 从句占据了 Position 1，所以主句的主语 `wir` 必须给动词 `können` 让路！</font>
+- **最终成品**：[Wenn du heute Abend **kommst**] (占位 1), **können** (占位 2) wir gleich ins Kino gehen.
+
+为了让你有更直观的“占位”概念，我们来看这个座位分配图：
+
+代码段
+
+```mermaid
+flowchart LR
+    subgraph 第一占位_巨型从句
+        direction LR
+        A["[Wenn du heute Abend kommst],"]
+    end
+    subgraph 第二占位_动词专属专座
+        B(("können"))
+    end
+    subgraph 第三占位_主语退居二线
+        C["wir"]
+    end
+    subgraph 剩余句子成分
+        D["gleich ins Kino gehen."]
+    end
+    
+    第一占位_巨型从句 --> 第二占位_动词专属专座 --> 第三占位_主语退居二线 --> 剩余句子成分
+    
+    style A fill:#fce5cd,stroke:#e69138,stroke-width:2px
+    style B fill:#f4cccc,stroke:#cc0000,stroke-width:3px
+    style C fill:#d0e0e3,stroke:#3d85c6,stroke-width:2px
+```
+
+### 核心解惑二：“从句主动词位置”（完成时的尾语序）
+
+你在第 5 题写下了“从句主动词位置”的疑问：
+
+`Als: er • gekommen • ist / sie • hat • sofort • den Raum • verlassen`
+
+这里你需要记住从句的第二个黄金法则：**从句连词（Wenn/Als）是一个无情的“踢人机器”，它不仅要把动词踢到句末，而且如果有两个动词，它只踢那个“变位动词”（即跟着主语变化形态的那个词）到绝对的最后面。**
+
+- 在 `er ist gekommen` (现在完成时) 中：
+    - `gekommen` 是过去分词，它是不变的。
+    - `ist` 是变位动词，它是跟着 `er` 变化的。
+- **组装从句**：`Als` 一脚把变位动词 `ist` 踢到了句号前，分词 `gekommen` 只能委屈地排在倒数第二。
+    - 正确顺序：**Als** er **gekommen** **ist**, ...
+- **组装主句**：遇到逗号，主句动词 `hat` 立刻贴上来抢占 Position 2。
+    - 正确顺序：..., **hat** sie sofort den Raum verlassen.
+- **最终成品**：Als er gekommen ist, hat sie sofort den Raum verlassen.
+
+---
+
+### 大师的避坑小贴士
+
+注意看第 3 题和第 4 题的原始素材，书本故意给了原形动词，你要记得根据主语变位哦！
+
+- 第 3 题：alles • fertig **sein** -> Wenn alles fertig **ist**, ...
+- 第 4 题：这里书本已经仁慈地帮你变好位了 (kaputt **ist**)，直接用即可。
+
+现在，你已经完全掌握了从句拼接的内在逻辑。光听不练假把式，**要不要试着运用我教你的“动词踢到最后”和“主句动词贴贴”规则，把图片里看似最混乱的第 6 题或第 8 题的最终正确语序写出来，让我帮你检查一下？**

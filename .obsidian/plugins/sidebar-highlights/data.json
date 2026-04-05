@@ -1447,6 +1447,23 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "语言学习/德语/公共知识语法/句型/句子/wenn或als引导的时间状语从句.md": [
+      {
+        "id": "huiwddyne",
+        "text": "**组装第二步（主句动词抢占第二位置）**：整个 `Wenn` 从句占据了 Position 1，所以主句的主语 `wir` 必须给动词 `können` 让路！",
+        "tags": [],
+        "line": 174,
+        "startOffset": 5135,
+        "endOffset": 5245,
+        "filePath": "语言学习/德语/公共知识语法/句型/句子/wenn或als引导的时间状语从句.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775406831593,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},
