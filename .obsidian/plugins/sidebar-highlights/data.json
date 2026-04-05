@@ -1397,6 +1397,51 @@
         "createdAt": 1775362850146,
         "isNativeComment": false,
         "type": "highlight"
+      },
+      {
+        "id": "tt04b7o5t",
+        "text": "如果你不用带 `zu` 的不定式，你就必须依赖 `dass`（连词“因为/所以/那”）来引导一个完整的从句。这意味着你必须再造一个主语，再变位一次动词。",
+        "tags": [],
+        "line": 173,
+        "startOffset": 4895,
+        "endOffset": 5000,
+        "filePath": "语言学习/德语/公共知识语法/句型/带zu的不定式.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775373047082,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "hkr7vetut",
+        "text": "强调了**动作（Handlung）和事件本身**，弱化了做动作的人。",
+        "tags": [],
+        "line": 198,
+        "startOffset": 5669,
+        "endOffset": 5732,
+        "filePath": "语言学习/德语/公共知识语法/句型/带zu的不定式.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775373131374,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "58vxly00w",
+        "text": "带 `zu` 的不定式无处不在。它是很多高级表达的“地基”",
+        "tags": [],
+        "line": 204,
+        "startOffset": 5875,
+        "endOffset": 5933,
+        "filePath": "语言学习/德语/公共知识语法/句型/带zu的不定式.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775373235771,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
       }
     ]
   },

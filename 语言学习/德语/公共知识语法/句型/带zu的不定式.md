@@ -61,7 +61,6 @@ flowchart TD
     _⚠️ 核心考点：_ 如果希望别人做某事（主语不一致），则**绝对不能**用 `zu`，必须用 `dass` 从句！
 
     _对：Ich hoffe, dass **du** den Job bekommst. (我希望你能得到这份工作。)_
-
     _错：Ich hoffe dich den Job zu bekommen._ (德语里没有英文 "I hope you to..." 的句型！)
 
 #### 场景 B：无人称句型 "Es ist + 形容词" (评价某事)
@@ -69,11 +68,9 @@ flowchart TD
 在德国办手续，你每天都会听到别人对你做评价或者提要求。
 
 - **租房场景：** Es ist momentan sehr schwer, eine günstige Wohnung im Zentrum **zu mieten**.
-
     _(目前在市中心租一套便宜的公寓非常困难。)_
 
 - **医疗场景：** Es ist wichtig, die Medikamente nach dem Essen **einzunehmen**.
-
     _(饭后服用这些药物很重要。)_
 
 #### 场景 C：B 1/B 2 必备魔法三兄弟（目的、伴随、替代）
@@ -81,15 +78,12 @@ flowchart TD
 这是 B 2 写作和口语拿高分的杀手锏，不仅能把句子拉长，还能展现你的逻辑能力：
 
 1. **um ... zu ... (为了...... / 目的)**
-    
     - **生活场景：** Ich lerne fleißig Deutsch, **um** mich besser in die Gesellschaft **zu integrieren**. _(我努力学习德语，是为了更好地融入社会。)_
         
 2. **ohne ... zu ... (却没有...... / 伴随状语)**
-    
     - **职场/法律场景：** Unterschreiben Sie niemals einen Arbeitsvertrag, **ohne** ihn vorher genau **durchzulesen**. _(绝对不要在没有事先仔细通读的情况下就签署劳动合同！)_ -> 注意 _durchzulesen_ 的夹心结构！
         
 3. **anstatt ... zu ... (本该...却... / 替代)**
-    
     - **日常场景：** Er surft den ganzen Tag auf Instagram, **anstatt** Deutsch **zu üben**. _(他整天刷 Ins，而不是练习德语。)_
 
 ---
@@ -171,13 +165,13 @@ graph LR
 
 ---
 
-### 🌟 存在意义一：语言的“断舍离”与高效性 (Die Sprachökonomie)
+### 🌟 在连词句中少一个主语和变位
 
 德国人以严谨和追求效率著称，这在他们的语言中体现得淋漓尽致。
 
 **区别与效果：**
 
-如果你不用带 `zu` 的不定式，你就必须依赖 `dass`（连词“因为/所以/那”）来引导一个完整的从句。这意味着你必须**再造一个主语，再变位一次动词**。
+<font color="#d83931">如果你不用带 `zu` 的不定式，你就必须依赖 `dass`（连词“因为/所以/那”）来引导一个完整的从句。这意味着你必须再造一个主语，再变位一次动词。</font>
 
 - **不用 zu（啰嗦版）：** Es ist wichtig, **dass man** die Mietkaution pünktlich **überweist**. (重要的是，**人们**要把租房押金按时**汇过去**。)
 - **用 zu（精简版）：** Es ist wichtig, die Mietkaution pünktlich **zu überweisen**. (按时**汇**租房押金很重要。)
@@ -188,29 +182,27 @@ graph LR
 
 ---
 
-### 🌟 存在意义二：聚光灯效应 —— 让“动作”本身成为绝对主角
+### 聚焦于表达核心
 
 当你使用带 `zu` 的不定式时，你实际上在引导听众的注意力。
 
 **区别与效果：**
 
 - **找工作场景（不用 zu）：** Ich hoffe, _dass ich_ den Arbeitsvertrag bald unterschreibe.
-
     _听者的注意力被分散了：我希望..._我_...很快签合同。_
 
 - **找工作场景（用 zu）：** Ich hoffe, den Arbeitsvertrag bald **zu unterschreiben**.
-
     _听者的注意力瞬间聚焦：我希望...**签合同**！_
 
 **强调了什么？**
 
-它强烈地强调了**动作（Handlung）和事件本身**，弱化了做动作的人。在德国的职场、租房谈判、与外管局（Ausländerbehörde）的交涉中，往往“事情办成”比“谁去办”更重要。这种表达方式显得更加**客观、专业、有礼貌**。
+它强烈地<font color="#d83931">强调了**动作（Handlung）和事件本身**，弱化了做动作的人。</font>在德国的职场、租房谈判、与外管局（Ausländerbehörde）的交涉中，往往“事情办成”比“谁去办”更重要。这种表达方式显得更加**客观、专业、有礼貌**。
 
 ---
 
 ### 🌟 存在意义三：B 2/C 1 高阶语法的基石
 
-如果你仔细观察德国的官方文件、信件和新闻，你会发现带 `zu` 的不定式无处不在。它是很多高级表达的“地基”。如果不用它，很多更高级的、充满逻辑感的修辞你根本无法使用。
+如果你仔细观察德国的官方文件、信件和新闻，你会发现<font color="#d83931">带 `zu` 的不定式无处不在。它是很多高级表达的“地基”</font>。如果不用它，很多更高级的、充满逻辑感的修辞你根本无法使用。
 
 **比如我们上节课提到的“魔法三兄弟”：**
 
