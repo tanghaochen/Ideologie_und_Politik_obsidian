@@ -1496,6 +1496,38 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "语言学习/德语/公共知识语法/句型/句子/比较从句.md": [
+      {
+        "id": "wsf7feu0c",
+        "text": "主句动词紧跟从句逗号开头第一位",
+        "tags": [],
+        "line": 45,
+        "startOffset": 1221,
+        "endOffset": 1265,
+        "filePath": "语言学习/德语/公共知识语法/句型/句子/比较从句.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775467136638,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "dtekmx34j",
+        "text": "动词",
+        "tags": [],
+        "line": 46,
+        "startOffset": 1295,
+        "endOffset": 1326,
+        "filePath": "语言学习/德语/公共知识语法/句型/句子/比较从句.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775467128533,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},
