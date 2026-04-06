@@ -1,10 +1,10 @@
 {
 	"nodes":[
-		{"id":"0c5f0b29575e1701","type":"group","ratio":1.7777777777777777,"x":-480,"y":-280,"width":3200,"height":2920,"label":"2026"},
+		{"id":"0c5f0b29575e1701","type":"group","ratio":1.7777777777777777,"x":-480,"y":-280,"width":7893,"height":4440,"label":"2026"},
+		{"id":"a95adef13ed5c24b","type":"group","x":1560,"y":-196,"width":560,"height":4196,"label":"3"},
 		{"id":"9de341ff89e7469d","type":"group","x":-413,"y":-194,"width":560,"height":2761,"label":"1"},
 		{"id":"3802ad74e1007387","type":"group","x":251,"y":-208,"width":560,"height":2761,"label":"2"},
 		{"id":"3f241a14b5577efb","type":"group","x":920,"y":-205,"width":560,"height":2761,"label":"3"},
-		{"id":"a95adef13ed5c24b","type":"group","x":1560,"y":-196,"width":560,"height":2761,"label":"3"},
 		{
 			"id":"1bc603eedd728dbd",
 			"type":"text",
@@ -55,6 +55,16 @@
 			"y":195,
 			"width":420,
 			"height":280
+		},
+		{
+			"id":"da483d6ae53a3246",
+			"type":"text",
+			"text":"# 4\n前几天里面花了两天去通宵照顾脑出血的三爹守夜\n然后最近两天又重感冒，耽误了一点学习和赚钱\n今天鼻子还有点堵，但是却感觉最近两天还有两天的时间感冒就快要痊愈了\n\n✈昨天破了\n",
+			"styleAttributes":{},
+			"x":328,
+			"y":-196,
+			"width":420,
+			"height":340
 		},
 		{
 			"id":"af8633bc660fba07",
@@ -127,26 +137,6 @@
 			"height":1260
 		},
 		{
-			"id":"5300a6a08440f6cc",
-			"type":"text",
-			"text":"# 2\n\n学到 58, 被动语态 2,  p 1 58",
-			"styleAttributes":{},
-			"x":1620,
-			"y":220,
-			"width":420,
-			"height":340
-		},
-		{
-			"id":"da483d6ae53a3246",
-			"type":"text",
-			"text":"# 4\n前几天里面花了两天去通宵照顾脑出血的三爹守夜\n然后最近两天又重感冒，耽误了一点学习和赚钱\n今天鼻子还有点堵，但是却感觉最近两天还有两天的时间感冒就快要痊愈了\n\n✈昨天破了\n",
-			"styleAttributes":{},
-			"x":328,
-			"y":-196,
-			"width":420,
-			"height":340
-		},
-		{
 			"id":"4738d58c5b66ff01",
 			"type":"text",
 			"text":"# 12\n昨天和今天都破戒了\n\n明天要去参加过年\n\n英语学习进度，目前这几天平均每天背单词八十个，背了三百多个单词\n正在练习听力合作单元练习，在视频教程上遇到了瓶颈，先消化之前的知识然后再继续看视频\n",
@@ -177,6 +167,16 @@
 			"height":340
 		},
 		{
+			"id":"5300a6a08440f6cc",
+			"type":"text",
+			"text":"# 2\n\n学到 58, 被动语态 2,  p 1 58",
+			"styleAttributes":{},
+			"x":1620,
+			"y":220,
+			"width":420,
+			"height":340
+		},
+		{
 			"id":"7b76e0f55c3e11ea",
 			"type":"text",
 			"text":"# 3\n\n学到 63, 第二格,  p 1 58",
@@ -193,6 +193,16 @@
 			"styleAttributes":{},
 			"x":1630,
 			"y":2180,
+			"width":420,
+			"height":240
+		},
+		{
+			"id":"064ac25a9dc40726",
+			"type":"text",
+			"text":"# 6\n\n学到 79, 明天的任务",
+			"styleAttributes":{},
+			"x":1630,
+			"y":2480,
 			"width":420,
 			"height":240
 		}
