@@ -86,14 +86,27 @@
             "id": "77be9245d0f5effb",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/句型/被动态.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "被动态"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       },
       {
         "id": "dd4130c5419b5527",
@@ -457,11 +470,12 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "77be9245d0f5effb",
+  "active": "82156cbedb94a525",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/格/第二格.md",
+    "语言学习/德语/公共知识语法/句型/被动态.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/公共知识语法/介词/支配第二格介词.md",
-    "语言学习/德语/公共知识语法/格/第二格.md",
     "语言学习/德语/公共知识语法/形容词/格的变化和比较级最高级变化是否重合.md",
     "语言学习/德语/公共知识语法/未命名.md",
     "语言学习/德语/公共知识语法/介词",
@@ -494,7 +508,6 @@
     "语言学习/德语/公共知识语法/句型/疑问句",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
-    "语言学习/德语/公共知识语法/定冠词 性 der, das, die 记忆技巧归类.md",
     "assets/PixPin_2026-04-04_21-03-52.png",
     "思想思维心理哲学/爱情",
     "思想思维心理哲学/test.html",

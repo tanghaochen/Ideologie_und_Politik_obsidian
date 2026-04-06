@@ -1528,6 +1528,23 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "语言学习/德语/公共知识语法/介词/支配第二格介词.md": [
+      {
+        "id": "zba0nmkwp",
+        "text": "介词短语打头阵，动词紧跟当王霸，主语委屈退第三。",
+        "tags": [],
+        "line": 183,
+        "startOffset": 5236,
+        "endOffset": 5289,
+        "filePath": "语言学习/德语/公共知识语法/介词/支配第二格介词.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775490210355,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},
