@@ -1464,6 +1464,38 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "语言学习/德语/公共知识语法/句型/句子/时间状语从句.md": [
+      {
+        "id": "db2bcduqu",
+        "text": "如果主句在现在时 Präsens)：从句必须是现在完成时 (Perfekt)。",
+        "tags": [],
+        "line": 59,
+        "startOffset": 1914,
+        "endOffset": 1982,
+        "filePath": "语言学习/德语/公共知识语法/句型/句子/时间状语从句.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775449870363,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "8qbyaw0ob",
+        "text": "如果主句在过去 Präteritum/Perfekt)：从句必须是过去完成时 (Plusquamperfekt = hatte/war + 动词第 II 分词)",
+        "tags": [],
+        "line": 62,
+        "startOffset": 2135,
+        "endOffset": 2244,
+        "filePath": "语言学习/德语/公共知识语法/句型/句子/时间状语从句.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775449890266,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},

@@ -9,19 +9,27 @@
         "dimension": 27.40331491712707,
         "children": [
           {
-            "id": "a03ae9955cc7ed26",
+            "id": "c05efbbf3926324c",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
-                "page": 167,
-                "left": -14,
-                "top": 33,
-                "zoom": 1.0580279742799965
+                "file": "语言学习/德语/公共知识语法/句型/时态/时态介绍总结.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "lucide-file-text",
-              "title": "德语语法 活学活用 A1-B1"
+              "icon": "lucide-file",
+              "title": "时态介绍总结"
             }
           },
           {
@@ -112,7 +120,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/句型/zu的不定式.md",
+                "file": "语言学习/德语/公共知识语法/句型/句子/目的从句.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -127,7 +135,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "zu的不定式"
+              "title": "目的从句"
             }
           },
           {
@@ -144,7 +152,8 @@
               "title": "语法快查必背语法canvas"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -424,15 +433,17 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "c310604d0191598a",
+  "active": "f68843f963437781",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/句型/句子/wenn或als引导的时间状语从句.md",
+    "语言学习/德语/公共知识语法/句型/zu的不定式.md",
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/公共知识语法/句型/句子/时间状语从句.md",
+    "语言学习/德语/公共知识语法/句型/时态/时态介绍总结.md",
+    "语言学习/德语/公共知识语法/句型/句子/目的从句.md",
+    "语言学习/德语/公共知识语法/句型/句子/wenn或als引导的时间状语从句.md",
     "assets/image-255.png",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
-    "语言学习/德语/公共知识语法/句型/zu的不定式.md",
     "语言学习/德语/公共知识语法/句型/句子/关系从句.md",
     "assets/image-246.png",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
@@ -460,8 +471,6 @@
     "思想思维心理哲学/个人问题处理/什么也不想吃,不想做,不想玩,又穷又忙的感觉.md",
     "思想思维心理哲学/个人问题处理/欧美和中国不婚的对比.md",
     "思想思维心理哲学/test.html",
-    "语言学习/德语/公共知识语法/名词/阳性弱变化名词.md",
-    "语言学习/德语/公共知识语法/动词/阳性弱变化动词.md",
     "语言学习/德语/公共知识语法/名词",
     "思想思维心理哲学/决策梳理",
     "语言学习/德语/公共知识语法/格",
