@@ -1576,6 +1576,36 @@
         "isNativeComment": false,
         "color": "#d83931",
         "type": "html"
+      },
+      {
+        "id": "cjpwt3cfu",
+        "text": "**只能**表示主动进行的动作。如果是被动（比如被烤熟的蛋糕），那是第二分词（Partizip II）的活儿",
+        "tags": [],
+        "line": 252,
+        "startOffset": 6380,
+        "endOffset": 6463,
+        "filePath": "语言学习/德语/公共知识语法/句型/第一分词作定语.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775573127025,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "o7ofg6d52",
+        "text": "分词放在了名词前面，它就彻底沦为了一个“形容词”，必须老老实实按照**形容词词尾变化规则**（Adjektivdeklination）来穿衣服（加 -e, -en, -er, -es）。",
+        "tags": [],
+        "line": 253,
+        "startOffset": 6490,
+        "endOffset": 6612,
+        "filePath": "语言学习/德语/公共知识语法/句型/第一分词作定语.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775572518838,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
       }
     ]
   },
