@@ -1545,6 +1545,38 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "语言学习/德语/公共知识语法/句型/第一分词作定语.md": [
+      {
+        "id": "6tlwfkscz",
+        "text": "或英语里的“-ing”形式。",
+        "tags": [],
+        "line": 17,
+        "startOffset": 377,
+        "endOffset": 420,
+        "filePath": "语言学习/德语/公共知识语法/句型/第一分词作定语.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775548570603,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "m53mzr2yp",
+        "text": "压缩成一个巨大的“定语汉堡包”，塞在冠词和名词之间。",
+        "tags": [],
+        "line": 57,
+        "startOffset": 1198,
+        "endOffset": 1253,
+        "filePath": "语言学习/德语/公共知识语法/句型/第一分词作定语.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775549357970,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},
