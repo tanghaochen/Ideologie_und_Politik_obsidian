@@ -9,6 +9,30 @@
         "dimension": 36.68508287292818,
         "children": [
           {
+            "id": "a8ce8efe64e3b17b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "人称代词; 疑问代词; 指示代词"
+            }
+          },
+          {
             "id": "d7038969969f3524",
             "type": "leaf",
             "state": {
@@ -82,8 +106,7 @@
               "title": "形容词名词化"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "dd4130c5419b5527",
@@ -495,8 +518,9 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "51aa4c53b7c06262",
+  "active": "b61839aaa220e73b",
   "lastOpenFiles": [
+    "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
@@ -523,7 +547,6 @@
     "语言学习/德语/公共知识语法/副词/方位副词.md",
     "语言学习/德语/公共知识语法/副词/代副词.md",
     "语言学习/德语/公共知识语法/副词/未命名.md",
-    "语言学习/德语/公共知识语法/句型/从句合集/wenn或als引导的时间状语从句.md",
     "语言学习/德语/学习记录日记-技巧/2026.canvas",
     "assets/image-328.png",
     "assets/PixPin_2026-04-07_22-23-04.png",
