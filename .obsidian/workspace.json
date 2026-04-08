@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 49.613259668508285,
+        "dimension": 36.68508287292818,
         "children": [
           {
             "id": "d7038969969f3524",
@@ -88,8 +88,56 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 50.38674033149171,
+        "dimension": 63.31491712707182,
         "children": [
+          {
+            "id": "76d695f523ed8c28",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/动词/第二分词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "第二分词"
+            }
+          },
+          {
+            "id": "bea8df95aeb1ea79",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/动词/动词变名词化.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "动词变名词化"
+            }
+          },
           {
             "id": "6f88355bf8d92d8d",
             "type": "leaf",
@@ -176,8 +224,7 @@
               "title": "语法快查必背语法canvas"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -449,8 +496,10 @@
   },
   "active": "51aa4c53b7c06262",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+    "语言学习/德语/公共知识语法/动词/第二分词.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+    "语言学习/德语/公共知识语法/动词/动词变名词化.md",
     "语言学习/德语/公共知识语法/形容词/形容词名词化.md",
     "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
     "语言学习/德语/公共知识语法/格/第二格.md",
@@ -474,8 +523,6 @@
     "语言学习/德语/公共知识语法/副词/未命名.md",
     "语言学习/德语/公共知识语法/句型/从句合集/wenn或als引导的时间状语从句.md",
     "语言学习/德语/公共知识语法/句型/从句合集/时间状语从句.md",
-    "语言学习/德语/公共知识语法/句型/从句合集/目的从句.md",
-    "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
     "语言学习/德语/学习记录日记-技巧/2026.canvas",
     "assets/image-328.png",
     "assets/PixPin_2026-04-07_22-23-04.png",
