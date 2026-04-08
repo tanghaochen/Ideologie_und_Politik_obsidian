@@ -1637,6 +1637,68 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "语言学习/德语/学习记录日记/学习计划.md": [
+      {
+        "id": "0xq2gloz1",
+        "text": "1-2 个月",
+        "tags": [],
+        "line": 4,
+        "startOffset": 273,
+        "endOffset": 308,
+        "filePath": "语言学习/德语/学习记录日记/学习计划.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775614422734,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "v71dsyo2n",
+        "text": "语法复习与学习",
+        "tags": [],
+        "line": 9,
+        "startOffset": 422,
+        "endOffset": 458,
+        "filePath": "语言学习/德语/学习记录日记/学习计划.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775614336091,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "x86ct0et2",
+        "text": "听力精听",
+        "tags": [],
+        "line": 16,
+        "startOffset": 870,
+        "endOffset": 903,
+        "filePath": "语言学习/德语/学习记录日记/学习计划.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775614380619,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "8umlk4tov",
+        "text": "写作练习",
+        "tags": [],
+        "line": 20,
+        "startOffset": 1262,
+        "endOffset": 1295,
+        "filePath": "语言学习/德语/学习记录日记/学习计划.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775614419650,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},
