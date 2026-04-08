@@ -693,38 +693,6 @@
         "type": "highlight"
       }
     ],
-    "语言学习/短文学习逻辑.md": [
-      {
-        "id": "23rcgydp5",
-        "text": "用德语逻辑",
-        "tags": [],
-        "line": 4,
-        "startOffset": 90,
-        "endOffset": 124,
-        "filePath": "语言学习/短文学习逻辑.md",
-        "footnoteCount": 0,
-        "footnoteContents": [],
-        "createdAt": 1773048068761,
-        "isNativeComment": false,
-        "color": "#ff0000",
-        "type": "html"
-      },
-      {
-        "id": "zj9ozkeu0",
-        "text": "听一句就读一句",
-        "tags": [],
-        "line": 7,
-        "startOffset": 211,
-        "endOffset": 247,
-        "filePath": "语言学习/短文学习逻辑.md",
-        "footnoteCount": 0,
-        "footnoteContents": [],
-        "createdAt": 1773047999896,
-        "isNativeComment": false,
-        "color": "#ff0000",
-        "type": "html"
-      }
-    ],
     "语言学习/德语/柏林广场视频笔记/A1/朗读-课文-练习册/k1-7.md": [
       {
         "id": "i6kuoxo7r",
@@ -1638,7 +1606,7 @@
         "type": "html"
       }
     ],
-    "语言学习/德语/学习记录日记/学习计划.md": [
+    "语言学习/德语/学习记录日记-技巧/学习计划.md": [
       {
         "id": "0xq2gloz1",
         "text": "1-2 个月",
@@ -1646,7 +1614,7 @@
         "line": 4,
         "startOffset": 273,
         "endOffset": 308,
-        "filePath": "语言学习/德语/学习记录日记/学习计划.md",
+        "filePath": "语言学习/德语/学习记录日记-技巧/学习计划.md",
         "footnoteCount": 0,
         "footnoteContents": [],
         "createdAt": 1775614422734,
@@ -1661,7 +1629,7 @@
         "line": 9,
         "startOffset": 422,
         "endOffset": 458,
-        "filePath": "语言学习/德语/学习记录日记/学习计划.md",
+        "filePath": "语言学习/德语/学习记录日记-技巧/学习计划.md",
         "footnoteCount": 0,
         "footnoteContents": [],
         "createdAt": 1775614336091,
@@ -1676,7 +1644,7 @@
         "line": 16,
         "startOffset": 870,
         "endOffset": 903,
-        "filePath": "语言学习/德语/学习记录日记/学习计划.md",
+        "filePath": "语言学习/德语/学习记录日记-技巧/学习计划.md",
         "footnoteCount": 0,
         "footnoteContents": [],
         "createdAt": 1775614380619,
@@ -1691,12 +1659,44 @@
         "line": 20,
         "startOffset": 1262,
         "endOffset": 1295,
-        "filePath": "语言学习/德语/学习记录日记/学习计划.md",
+        "filePath": "语言学习/德语/学习记录日记-技巧/学习计划.md",
         "footnoteCount": 0,
         "footnoteContents": [],
         "createdAt": 1775614419650,
         "isNativeComment": false,
         "color": "#d83931",
+        "type": "html"
+      }
+    ],
+    "语言学习/德语/学习记录日记-技巧/短文学习逻辑.md": [
+      {
+        "id": "23rcgydp5",
+        "text": "用德语逻辑",
+        "tags": [],
+        "line": 4,
+        "startOffset": 90,
+        "endOffset": 124,
+        "filePath": "语言学习/德语/学习记录日记-技巧/短文学习逻辑.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1773048068761,
+        "isNativeComment": false,
+        "color": "#ff0000",
+        "type": "html"
+      },
+      {
+        "id": "zj9ozkeu0",
+        "text": "听一句就读一句",
+        "tags": [],
+        "line": 7,
+        "startOffset": 211,
+        "endOffset": 247,
+        "filePath": "语言学习/德语/学习记录日记-技巧/短文学习逻辑.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1773047999896,
+        "isNativeComment": false,
+        "color": "#ff0000",
         "type": "html"
       }
     ]

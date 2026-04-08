@@ -14,7 +14,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/学习记录日记/学习计划.md",
+                "file": "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -29,7 +29,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "学习计划"
+              "title": "德语学习规划"
             }
           },
           {
@@ -89,6 +89,30 @@
         "type": "tabs",
         "dimension": 63.425414364640886,
         "children": [
+          {
+            "id": "d6483e459dabd603",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/学习记录日记-技巧/短文学习逻辑.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "短文学习逻辑"
+            }
+          },
           {
             "id": "c310604d0191598a",
             "type": "leaf",
@@ -175,8 +199,7 @@
               "title": "语法快查必背语法canvas"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -446,14 +469,18 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "371263857dc7d719",
+  "active": "ff36fbbbf55f4934",
   "lastOpenFiles": [
-    "语言学习/德语/德语等级规划与标准.md",
-    "语言学习/德语/学习记录日记/学习计划.md",
-    "语言学习/德语/德语学习规划.md",
+    "语言学习/德语/学习记录日记-技巧/德语等级规划与标准.md",
+    "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
+    "语言学习/德语/学习记录日记-技巧/德语学习工具和平台.md",
+    "语言学习/德语/学习记录日记-技巧/短文学习逻辑.md",
+    "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/学习记录日记-技巧/2026.canvas",
+    "语言学习/德语/学习记录日记-技巧/学习计划.md",
     "语言学习/德语/公共知识语法/句型/第一分词作定语.md",
     "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
-    "语言学习/德语/学习记录日记/2026.canvas",
     "assets/image-328.png",
     "assets/PixPin_2026-04-07_22-23-04.png",
     "assets/image-321.png",
@@ -468,7 +495,6 @@
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "思想思维心理哲学/个人问题处理/爱情.md",
     "思想思维心理哲学/个人人生思想架构.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/句型/时态/时态介绍总结.md",
     "语言学习/德语/公共知识语法/句型/句子/比较从句.md",
     "语言学习/德语/公共知识语法/句型/句子/连词成对.md",
@@ -480,10 +506,7 @@
     "语言学习/德语/公共知识语法/句型/句子/时间状语从句.md",
     "语言学习/德语/公共知识语法/句型/句子/wenn或als引导的时间状语从句.md",
     "assets/image-255.png",
-    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "assets/image-246.png",
-    "语言学习/德语/公共知识语法/句型/疑问句/间接疑问句.md",
-    "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
     "assets/PixPin_2026-04-05_16-08-14.png",
     "assets/image-237.png",
     "语言学习/德语/公共知识语法/句型/疑问句",
