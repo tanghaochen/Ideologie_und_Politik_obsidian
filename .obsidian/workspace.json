@@ -64,7 +64,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
+                "file": "语言学习/德语/公共知识语法/形容词/形容词名词化.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -79,16 +79,65 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "句子结构：术语，形容词，副词，表语，定语，状语"
+              "title": "形容词名词化"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
         "dimension": 50.38674033149171,
         "children": [
+          {
+            "id": "6f88355bf8d92d8d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/格/第二格.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "第二格"
+            }
+          },
+          {
+            "id": "62f1f92323500af3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/语法流程化梳理.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "语法流程化梳理"
+            }
+          },
           {
             "id": "0424d809092515c6",
             "type": "leaf",
@@ -128,7 +177,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -398,19 +447,28 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "d7038969969f3524",
+  "active": "51aa4c53b7c06262",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/句型/第一分词作定语.md",
-    "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/形容词/形容词名词化.md",
+    "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
+    "语言学习/德语/公共知识语法/格/第二格.md",
+    "语言学习/德语/公共知识语法/介词/支配第二格介词.md",
+    "语言学习/德语/公共知识语法/语法流程化梳理.md",
+    "语言学习/德语/公共知识语法/名词/不定式.md",
+    "语言学习/德语/公共知识语法/句型/时态/过去分词 Partizip Perfekt.md",
+    "语言学习/德语/公共知识语法/未命名.md",
+    "语言学习/德语/公共知识语法/未命名 1.md",
+    "语言学习/德语/公共知识语法/动词/助动词.md",
+    "语言学习/德语/公共知识语法/第二格.md",
     "语言学习/德语/公共知识语法/句型/从句合集/关系从句.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/编写一篇文章，里面包含了A1到b1阶段所有的语法变格等等时态从句等等将所有的语法应用到这篇文章.md",
+    "语言学习/德语/公共知识语法/句型/第一分词作定语.md",
     "语言学习/德语/公共知识语法/句型/zu的不定式.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/学习记录日记-技巧/未命名.md",
     "语言学习/德语/公共知识语法/语法场景联线.md",
-    "语言学习/德语/公共知识语法/未命名 1.md",
     "语言学习/德语/公共知识语法/副词/方位副词.md",
     "语言学习/德语/公共知识语法/副词/代副词.md",
     "语言学习/德语/公共知识语法/副词/未命名.md",
@@ -418,19 +476,10 @@
     "语言学习/德语/公共知识语法/句型/从句合集/时间状语从句.md",
     "语言学习/德语/公共知识语法/句型/从句合集/目的从句.md",
     "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
-    "语言学习/德语/学习记录日记-技巧/短文学习逻辑.md",
-    "语言学习/德语/学习记录日记-技巧/德语等级规划与标准.md",
-    "语言学习/德语/学习记录日记-技巧/德语学习工具和平台.md",
-    "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "语言学习/德语/学习记录日记-技巧/2026.canvas",
-    "语言学习/德语/学习记录日记-技巧/学习计划.md",
     "assets/image-328.png",
     "assets/PixPin_2026-04-07_22-23-04.png",
     "assets/image-321.png",
-    "语言学习/德语/公共知识语法/❌错题/✍️形容词.md",
-    "语言学习/德语/公共知识语法/句型/被动态.md",
-    "语言学习/德语/公共知识语法/介词/支配第二格介词.md",
-    "语言学习/德语/公共知识语法/格/第二格.md",
     "语言学习/德语/公共知识语法/介词",
     "assets/clipboard_2026-04-06_14-33.png",
     "assets/image-290.png",
