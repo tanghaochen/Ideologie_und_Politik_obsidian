@@ -32,6 +32,10 @@
         {
           "type": "folder",
           "path": "语言学习/德语/公共知识语法/❌错题"
+        },
+        {
+          "type": "folder",
+          "path": "语言学习/德语/公共知识语法"
         }
       ],
       "navRainbow": {
@@ -511,7 +515,8 @@
   "virtualFolderColors": {},
   "virtualFolderBackgroundColors": {},
   "navigationSeparators": {
-    "folder:语言学习/德语": true
+    "folder:语言学习/德语": true,
+    "folder:语言学习/德语/公共知识语法": true
   },
   "userColors": [
     "#ffffff",
