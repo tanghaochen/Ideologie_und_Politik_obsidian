@@ -77,10 +77,8 @@ graph TD
 
 1. **普通动词**最简单，直接放在动词前。
 2. **可分动词**是重灾区！一定要记住“汉堡包”法则：`zu` 就像汉堡里的肉饼，必须夹在**前缀**和**基础动词**中间，而且要**连写成一个词**！
-    
     - _(错误)_ Ich versuche, zu ausfüllen das Formular. ❌
     - _(正确)_ Ich versuche, das Formular **auszufüllen**. ✅
-        
 3. **情态动词**的用法是 B 2 口语和写作的加分项。比如图中的 _Es ist schön, viel Urlaub machen zu können._（能度很多假是件美好的事）。在德语中，能力(können)、意愿(wollen)本身也可以变成不定式。
 
 ---
