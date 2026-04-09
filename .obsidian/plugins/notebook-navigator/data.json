@@ -217,7 +217,7 @@
   "showAllPropertiesFolder": true,
   "scopePropertiesToCurrentContext": false,
   "defaultListMode": "compact",
-  "includeDescendantNotes": false,
+  "includeDescendantNotes": true,
   "defaultFolderSort": "modified-desc",
   "propertySortKey": "",
   "propertySortSecondary": "title",
@@ -476,7 +476,8 @@
     "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md": "obsidian-new",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/动词/动词专题canvas.md": "excalidraw-icon",
-    "思想思维心理哲学/个人人生思想架构.md": "excalidraw-icon"
+    "思想思维心理哲学/个人人生思想架构.md": "excalidraw-icon",
+    "经济学/投资方式/投资方法/经济数据.md": "excalidraw-icon"
   },
   "fileColors": {},
   "fileBackgroundColors": {},
