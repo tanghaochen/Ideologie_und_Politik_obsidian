@@ -176,15 +176,27 @@
             }
           },
           {
-            "id": "084e1a1b24bf9497",
+            "id": "72db413a39be41e2",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "经济学/投资方式/投资方法/汇率逻辑Canvas.md"
+                "file": "电脑、软件、系统/ps-tang.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "汇率逻辑Canvas"
+              "icon": "lucide-file",
+              "title": "ps-tang"
             }
           }
         ],
@@ -458,7 +470,7 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "084e1a1b24bf9497",
+  "active": "72db413a39be41e2",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "经济学/投资方式/投资方法/汇率逻辑Canvas.md",
