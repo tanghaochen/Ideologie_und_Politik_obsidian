@@ -164,7 +164,7 @@ origin: org-7 SfYkp 7 rz 3 GwolLwaWwxbEL 7
 ## 0.6 娱乐
 ### 0.6.1 steam
 `fdghsghe`
-	`t1774189597!@#`
+`t1774189597!@#`
 
 ### chatGPT
 1. felix.scott.g58r9@rambler.ru----PDLHwn45B7xC
