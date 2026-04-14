@@ -9,36 +9,12 @@
         "dimension": 65.23020257826889,
         "children": [
           {
-            "id": "a8ce8efe64e3b17b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Own/电商仅退款.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "电商仅退款"
-            }
-          },
-          {
             "id": "d7038969969f3524",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/句型/从句合集/小品词示例学习.md",
+                "file": "语言学习/德语/学习记录日记-技巧/学习计划.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -53,7 +29,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "小品词示例学习"
+              "title": "学习计划"
             }
           },
           {
@@ -106,8 +82,7 @@
               "title": "形容词名词化"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "dd4130c5419b5527",
@@ -274,7 +249,8 @@
               "title": "笔记本导航器"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -482,9 +458,9 @@
   },
   "active": "d7038969969f3524",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/句型/从句合集/小品词示例学习.md",
     "Own/电商仅退款.md",
     "assets/PixPin_2026-04-14_15-09-59.png",
-    "语言学习/德语/公共知识语法/句型/从句合集/小品词示例学习.md",
     "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/编写一篇文章，里面包含了A1到b1阶段所有的语法变格等等时态从句等等将所有的语法应用到这篇文章.md",
     "语言学习/德语/学习记录日记-技巧/德语学习工具和平台.md",

@@ -92,6 +92,7 @@
   "vaultTitle": "navigation",
   "syncModes": {
     "vaultProfile": "synced",
+    "homepage": "synced",
     "folderSortOrder": "synced",
     "tagSortOrder": "synced",
     "propertySortOrder": "synced",
@@ -127,9 +128,10 @@
   "mouseBackForwardAction": "history",
   "startView": "files",
   "showInfoButtons": true,
-  "homepage": null,
-  "mobileHomepage": null,
-  "useMobileHomepage": false,
+  "homepage": {
+    "source": "none",
+    "file": null
+  },
   "dualPane": true,
   "dualPaneOrientation": "vertical",
   "showTooltips": true,
@@ -224,6 +226,7 @@
   "revealFileOnListChanges": true,
   "listPaneTitle": "header",
   "noteGrouping": "date",
+  "showSelectedNavigationPills": false,
   "filterPinnedByFolder": true,
   "showPinnedGroupHeader": true,
   "showPinnedIcon": true,
@@ -541,7 +544,7 @@
     "#404040",
     "#404040"
   ],
-  "lastShownVersion": "2.5.5",
+  "lastShownVersion": "2.5.7",
   "rootFolderOrder": [],
   "rootTagOrder": [],
   "rootPropertyOrder": []
