@@ -6,15 +6,15 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 65.23020257826889,
+        "dimension": 31.896869244935544,
         "children": [
           {
-            "id": "d7038969969f3524",
+            "id": "d6ca31ddf7375f75",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/学习计划.md",
+                "file": "语言学习/德语/公共知识语法/❌错题/从句练习.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -29,7 +29,31 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "学习计划"
+              "title": "从句练习"
+            }
+          },
+          {
+            "id": "d7038969969f3524",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2026/20260414.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "20260414"
             }
           },
           {
@@ -82,61 +106,14 @@
               "title": "形容词名词化"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       },
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 34.76979742173112,
+        "dimension": 68.10313075506446,
         "children": [
-          {
-            "id": "7b9e6dfc3e0720a6",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/名词/不定式.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "不定式"
-            }
-          },
-          {
-            "id": "76d695f523ed8c28",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/句型/zu的不定式.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "zu的不定式"
-            }
-          },
           {
             "id": "b61839aaa220e73b",
             "type": "leaf",
@@ -157,7 +134,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "电脑、软件、系统/ps-tang.md",
+                "file": "语言学习/德语/公共知识语法/句型/从句合集/汇总对比从句.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -172,11 +149,11 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "ps-tang"
+              "title": "汇总对比从句"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -456,8 +433,21 @@
       "notebook-navigator:笔记本导航器": false
     }
   },
-  "active": "d7038969969f3524",
+  "active": "72db413a39be41e2",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/句型/从句合集/关系从句.md",
+    "语言学习/德语/公共知识语法/句型/从句合集/汇总对比从句.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+    "语言学习/德语/公共知识语法/❌错题/从句练习.md",
+    "语言学习/德语/公共知识语法/副词/方位副词.md",
+    "2026/20260414.md",
+    "语言学习/德语/公共知识语法/形容词/形容词名词化.md",
+    "语言学习/德语/公共知识语法/句型/zu的不定式.md",
+    "语言学习/德语/公共知识语法/名词/不定式.md",
+    "2026/20260408.md",
+    "语言学习/德语/柏林广场视频笔记/A1/5 规则动词的现在时变位.md",
+    "语言学习/德语/学习记录日记-技巧/学习计划.md",
     "语言学习/德语/公共知识语法/句型/从句合集/小品词示例学习.md",
     "Own/电商仅退款.md",
     "assets/PixPin_2026-04-14_15-09-59.png",
@@ -465,7 +455,6 @@
     "语言学习/德语/公共知识语法/句型/句子解析学习/编写一篇文章，里面包含了A1到b1阶段所有的语法变格等等时态从句等等将所有的语法应用到这篇文章.md",
     "语言学习/德语/学习记录日记-技巧/德语学习工具和平台.md",
     "语言学习/德语/学习记录日记-技巧/b2所有的考点和预备的能力.md",
-    "语言学习/德语/学习记录日记-技巧/学习计划.md",
     "语言学习/德语/学习记录日记-技巧/2026.canvas",
     "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
     "语言学习/德语/学习记录日记-技巧/短文学习逻辑.md",
@@ -478,18 +467,7 @@
     "assets/PixPin_2026-04-12_15-27-33.png",
     "语言学习/德语/学习记录日记-技巧/未命名.md",
     "语言学习/德语/柏林广场视频笔记/A1/16 数字.md",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "经济学/投资方式/投资方法/汇率逻辑Canvas.md",
-    "经济学/投资方式/黄金.md",
-    "经济学/投资方式/投资方法/经济数据.md",
-    "经济学/投资方式/投资方法/汇率、人民币与多种因素关系图.md",
-    "语言学习/德语/公共知识语法/句型/zu的不定式.md",
-    "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
-    "语言学习/德语/公共知识语法/名词/不定式.md",
-    "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
-    "语言学习/德语/公共知识语法/句型/从句合集/关系从句.md",
-    "语言学习/德语/公共知识语法/语法流程化梳理.md",
-    "语言学习/德语/公共知识语法/格/第二格.md",
     "assets/PixPin_2026-04-08_23-34-11.png",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "assets/image-328.png",
