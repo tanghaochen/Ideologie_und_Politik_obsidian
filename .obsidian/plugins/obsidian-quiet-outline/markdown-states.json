@@ -8953,12 +8953,12 @@
     "scroll": 164.6741331134513,
     "cursor": {
       "from": {
-        "line": 203,
-        "ch": 56
+        "line": 213,
+        "ch": 27
       },
       "to": {
-        "line": 203,
-        "ch": 56
+        "line": 213,
+        "ch": 27
       }
     },
     "expandedKeys": [
@@ -11191,15 +11191,15 @@
     ]
   },
   "2026/20260415.md": {
-    "scroll": 31.109472916493996,
+    "scroll": 0,
     "cursor": {
       "from": {
-        "line": 7,
-        "ch": 0
+        "line": 2,
+        "ch": 544
       },
       "to": {
-        "line": 7,
-        "ch": 0
+        "line": 2,
+        "ch": 544
       }
     },
     "expandedKeys": []
