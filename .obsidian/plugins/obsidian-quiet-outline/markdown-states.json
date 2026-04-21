@@ -11287,12 +11287,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 3,
-        "ch": 72
+        "line": 20,
+        "ch": 0
       },
       "to": {
-        "line": 3,
-        "ch": 72
+        "line": 20,
+        "ch": 0
       }
     },
     "expandedKeys": [
@@ -11314,15 +11314,31 @@
     "expandedKeys": []
   },
   "2026/20260421 煎熬生活中时常想起甜美爱情生活.md": {
-    "scroll": 65.83666682514142,
+    "scroll": 0,
     "cursor": {
       "from": {
-        "line": 117,
-        "ch": 95
+        "line": 5,
+        "ch": 37
       },
       "to": {
-        "line": 117,
-        "ch": 95
+        "line": 5,
+        "ch": 37
+      }
+    },
+    "expandedKeys": [
+      "item-1-1"
+    ]
+  },
+  "2026/20260421 煎熬生活中时常想起甜美爱情生活 与 现实困难思考.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 8,
+        "ch": 0
+      },
+      "to": {
+        "line": 8,
+        "ch": 0
       }
     },
     "expandedKeys": [
