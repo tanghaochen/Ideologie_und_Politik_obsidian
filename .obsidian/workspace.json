@@ -105,12 +105,24 @@
             "id": "9d3c700b90ea8853",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "经济学/投资方式/投资方法/汇率逻辑Canvas.md"
+                "file": "2026/20260421 煎熬生活中时常想起甜美爱情生活.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "汇率逻辑Canvas"
+              "icon": "lucide-file",
+              "title": "20260421 煎熬生活中时常想起甜美爱情生活"
             }
           },
           {
@@ -434,6 +446,7 @@
   "active": "9d3c700b90ea8853",
   "lastOpenFiles": [
     "语言学习/德语/学习记录日记-技巧/Autobiogragie und Tagebuch/Meine Familienzusammensetzung.md",
+    "2026/20260421 煎熬生活中时常想起甜美爱情生活.md",
     "经济学/投资方式/投资方法/汇率逻辑Canvas.md",
     "经济学/数据分析搜集/Drawing 2025-12-12 16.14.51.excalidraw.md",
     "经济学/数据分析搜集/搜索频率.md",
@@ -461,7 +474,6 @@
     "思想思维心理哲学/个人人生思想架构.md",
     "语言学习/德语/公共知识语法/句型/从句合集/关系从句.md",
     "语言学习/德语/公共知识语法/副词/方位副词.md",
-    "语言学习/德语/公共知识语法/形容词/形容词名词化.md",
     "assets/PixPin_2026-04-14_15-09-59.png",
     "语言学习/德语/学习记录日记-技巧/2026.canvas",
     "assets/Pasted Image 20260412220746_069.png",
