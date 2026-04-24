@@ -2650,11 +2650,11 @@
     "cursor": {
       "from": {
         "line": 0,
-        "ch": 0
+        "ch": 9
       },
       "to": {
         "line": 0,
-        "ch": 0
+        "ch": 9
       }
     },
     "expandedKeys": []
@@ -11412,6 +11412,24 @@
     },
     "expandedKeys": [
       "item-1-0"
+    ]
+  },
+  "思想思维心理哲学/阅读/被讨厌的勇气/解读.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 120,
+        "ch": 0
+      },
+      "to": {
+        "line": 120,
+        "ch": 0
+      }
+    },
+    "expandedKeys": [
+      "item-1-0",
+      "item-1-5",
+      "item-1-9"
     ]
   }
 }
