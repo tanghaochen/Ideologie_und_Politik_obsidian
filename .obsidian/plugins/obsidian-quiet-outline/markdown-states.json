@@ -2566,12 +2566,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 38,
-        "ch": 60
+        "line": 0,
+        "ch": 0
       },
       "to": {
-        "line": 38,
-        "ch": 60
+        "line": 0,
+        "ch": 0
       }
     },
     "expandedKeys": []
@@ -11418,12 +11418,12 @@
     "scroll": 108.5289481988752,
     "cursor": {
       "from": {
-        "line": 119,
-        "ch": 0
+        "line": 125,
+        "ch": 26
       },
       "to": {
-        "line": 119,
-        "ch": 0
+        "line": 125,
+        "ch": 26
       }
     },
     "expandedKeys": [
@@ -11441,6 +11441,22 @@
       "item-1-50",
       "item-2-55",
       "item-2-60"
+    ]
+  },
+  "思想思维心理哲学/个人问题处理/沟通 愤怒沟通问题.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 8,
+        "ch": 3
+      },
+      "to": {
+        "line": 8,
+        "ch": 3
+      }
+    },
+    "expandedKeys": [
+      "item-1-0"
     ]
   }
 }
