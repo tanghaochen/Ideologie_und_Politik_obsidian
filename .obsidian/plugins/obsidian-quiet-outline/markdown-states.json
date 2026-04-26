@@ -2566,15 +2566,17 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 0,
-        "ch": 0
+        "line": 6,
+        "ch": 112
       },
       "to": {
-        "line": 0,
-        "ch": 0
+        "line": 6,
+        "ch": 112
       }
     },
-    "expandedKeys": []
+    "expandedKeys": [
+      "item-1-0"
+    ]
   },
   "思想思维心理哲学/个人问题处理/是否要回家.md": {
     "scroll": 37.828787978232334,
@@ -9319,15 +9321,15 @@
     ]
   },
   "思想思维心理哲学/个人问题处理/爱情.md": {
-    "scroll": 87.66117632853287,
+    "scroll": 80.91852389792692,
     "cursor": {
       "from": {
-        "line": 101,
-        "ch": 75
+        "line": 104,
+        "ch": 0
       },
       "to": {
-        "line": 101,
-        "ch": 75
+        "line": 104,
+        "ch": 0
       }
     },
     "expandedKeys": [
