@@ -9,6 +9,16 @@
         "dimension": 42.50460405156537,
         "children": [
           {
+            "id": "1784ec5834392cf1",
+            "type": "leaf",
+            "state": {
+              "type": "p2p-replicator",
+              "state": {},
+              "icon": "waypoints",
+              "title": "Peer-to-Peer Replicator"
+            }
+          },
+          {
             "id": "5283c0b03466eaed",
             "type": "leaf",
             "state": {
@@ -70,8 +80,7 @@
               "title": "形容词名词化"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "dd4130c5419b5527",
@@ -84,7 +93,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/短文学习逻辑.md",
+                "file": "中外楼房对比.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -99,7 +108,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "短文学习逻辑"
+              "title": "中外楼房对比"
             }
           },
           {
@@ -223,8 +232,7 @@
               "title": "笔记本导航器"
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "horizontal",
@@ -390,7 +398,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 8
       }
     ],
     "direction": "horizontal",
@@ -398,6 +406,9 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "obsidian-livesync:P2P Replicator": false,
+      "obsidian-livesync:Replicate": false,
+      "obsidian-livesync:Show Log": false,
       "sidebar-highlights:Open highlights": false,
       "obsidian-to-anki-plugin:Obsidian_to_Anki - Scan Vault": false,
       "templates:插入模板": false,
@@ -427,11 +438,19 @@
       "media-extended:Open external media": false,
       "obsidian-git:Open Git source control": false,
       "pexels-banner:🚩 Pixel Banner Menu": false,
-      "notebook-navigator:笔记本导航器": false
+      "notebook-navigator:笔记本导航器": false,
+      "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "9d3c700b90ea8853",
+  "active": "1784ec5834392cf1",
   "lastOpenFiles": [
+    "Excalidraw/Drawing 2026-04-06 01.46.14.excalidraw.md",
+    "未命名.canvas",
+    "未命名 1.base",
+    "未命名.base",
+    "Excalidraw/Drawing 2026-04-06 01.48.01.excalidraw.md",
+    "未命名.md",
+    "语言学习/德语/学习记录日记-技巧/短文学习逻辑.md",
     "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
     "语言学习/德语/公共知识语法/词/短语/短语.md",
     "思想思维心理哲学/个人问题处理/爱情.md",
@@ -455,11 +474,6 @@
     "2026/20260422.md",
     "2026/20260415.md",
     "语言学习/德语/公共知识语法/句型/第一分词作定语.md",
-    "2026/20260421 煎熬生活中时常想起甜美爱情生活 与 现实困难思考.md",
-    "未命名 7.md",
-    "语言学习/德语/公共知识语法/句型/被动态.md",
-    "语言学习/德语/从句canvas.md",
-    "语言学习/德语/学习记录日记-技巧/Autobiogragie und Tagebuch/Meine Familienzusammensetzung.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch",
     "语言学习/德语/学习记录日记-技巧/Autobiogragie und Tagebuch",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
@@ -476,8 +490,6 @@
     "assets/image-321.png",
     "语言学习/德语/公共知识语法/介词",
     "语言学习/德语/公共知识语法/句型/疑问句",
-    "思想思维心理哲学/爱情",
-    "思想思维心理哲学/test.html",
-    "语言学习/德语/公共知识语法/名词"
+    "思想思维心理哲学/爱情"
   ]
 }

@@ -1280,12 +1280,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 8,
-        "ch": 80
+        "line": 0,
+        "ch": 4
       },
       "to": {
-        "line": 8,
-        "ch": 80
+        "line": 0,
+        "ch": 4
       }
     },
     "expandedKeys": []
@@ -10723,15 +10723,15 @@
     ]
   },
   "语言学习/德语/学习记录日记-技巧/短文学习逻辑.md": {
-    "scroll": 0,
+    "scroll": 28.2490277930997,
     "cursor": {
       "from": {
-        "line": 33,
-        "ch": 16
+        "line": 55,
+        "ch": 10
       },
       "to": {
-        "line": 33,
-        "ch": 16
+        "line": 55,
+        "ch": 10
       }
     },
     "expandedKeys": [
