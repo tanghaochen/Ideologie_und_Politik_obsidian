@@ -80,7 +80,8 @@
               "title": "形容词名词化"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       },
       {
         "id": "dd4130c5419b5527",
@@ -98,8 +99,19 @@
               "icon": "excalidraw-icon",
               "title": "个人人生思想架构"
             }
+          },
+          {
+            "id": "9c44bce0122b382f",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -382,8 +394,10 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "ce3f5d9bdf83124f",
+  "active": "9c44bce0122b382f",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/形容词/形容词名词化.md",
+    "思想思维心理哲学/个人人生思想架构.md",
     "电脑、软件、系统/ps-tang.md",
     "Excalidraw/Drawing 2026-04-28 00.51.11.excalidraw.md",
     "assets/953b9baf403cdbf7e82d68a35609d9b8_MD5.png",
@@ -414,8 +428,6 @@
     "思想思维心理哲学/个人问题处理/能做什么.md",
     "思想思维心理哲学/个人问题处理/沟通 愤怒沟通问题.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "思想思维心理哲学/阅读/被讨厌的勇气/解读.md",
-    "思想思维心理哲学/个人人生思想架构.md",
     "语言学习/德语/公共知识语法/词/短语",
     "语言学习/德语/公共知识语法/词",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch",
