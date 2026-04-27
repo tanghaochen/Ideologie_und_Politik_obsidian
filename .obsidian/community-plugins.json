@@ -60,5 +60,6 @@
   "obsidian-to-anki-plugin",
   "notebook-navigator",
   "file-explorer-plus",
-  "cursor-position-history"
+  "cursor-position-history",
+  "obsidian-livesync"
 ]
