@@ -1231,15 +1231,15 @@
     ]
   },
   "目录.md": {
-    "scroll": 0.7593582887700535,
+    "scroll": 0,
     "cursor": {
       "from": {
-        "line": 0,
-        "ch": 0
+        "line": 22,
+        "ch": 2
       },
       "to": {
-        "line": 0,
-        "ch": 0
+        "line": 22,
+        "ch": 2
       }
     },
     "expandedKeys": []
@@ -1280,12 +1280,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 0,
-        "ch": 4
+        "line": 1,
+        "ch": 11
       },
       "to": {
-        "line": 0,
-        "ch": 4
+        "line": 1,
+        "ch": 11
       }
     },
     "expandedKeys": []
@@ -2816,22 +2816,15 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 22,
-        "ch": 66
+        "line": 0,
+        "ch": 0
       },
       "to": {
-        "line": 22,
-        "ch": 66
+        "line": 0,
+        "ch": 0
       }
     },
-    "expandedKeys": [
-      "item-1-0",
-      "item-2-1",
-      "item-2-5",
-      "item-2-8",
-      "item-2-10",
-      "item-2-12"
-    ]
+    "expandedKeys": []
   },
   "未命名 2.md": {
     "scroll": 0,
@@ -9321,7 +9314,7 @@
     ]
   },
   "思想思维心理哲学/个人问题处理/爱情.md": {
-    "scroll": 80.91871961060156,
+    "scroll": 74.44060184698998,
     "cursor": {
       "from": {
         "line": 107,
