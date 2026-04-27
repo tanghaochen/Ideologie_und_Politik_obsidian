@@ -232,3 +232,14 @@ tanghaochen
 1774189597Asd!@#
 
 pin 177418
+
+
+# 局域网
+![[assets/953b9baf403cdbf7e82d68a35609d9b8_MD5.png]]
+coockie: `1C141BCB82D19EC484C28FAB2DBAC097`
+数据库地址" [http://127.0.0.1:5984/_utils](http://127.0.0.1:5984/_utils)
+
+tang
+147258369 Asd!@#
+
+  
