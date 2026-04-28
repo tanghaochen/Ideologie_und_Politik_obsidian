@@ -1685,18 +1685,20 @@
     "expandedKeys": []
   },
   "网络/项目服务器/节点搭建相关.md": {
-    "scroll": 8.666666666666666,
+    "scroll": 0,
     "cursor": {
       "from": {
-        "line": 21,
-        "ch": 194
+        "line": 5,
+        "ch": 0
       },
       "to": {
-        "line": 21,
-        "ch": 194
+        "line": 5,
+        "ch": 0
       }
     },
-    "expandedKeys": []
+    "expandedKeys": [
+      "item-1-0"
+    ]
   },
   "国家/中国/近代中国政治/大事件记录/大跃进.md": {
     "scroll": 2.592657215557979,
@@ -6154,15 +6156,15 @@
     ]
   },
   "电脑、软件、系统/ps-tang.md": {
-    "scroll": 232.38525322538345,
+    "scroll": 137.13079593194752,
     "cursor": {
       "from": {
-        "line": 245,
-        "ch": 0
+        "line": 166,
+        "ch": 15
       },
       "to": {
-        "line": 245,
-        "ch": 0
+        "line": 166,
+        "ch": 1
       }
     },
     "expandedKeys": [
@@ -11467,5 +11469,21 @@
       }
     },
     "expandedKeys": []
+  },
+  "网络/项目服务器/CF节点搭建相关.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 5,
+        "ch": 4
+      },
+      "to": {
+        "line": 5,
+        "ch": 4
+      }
+    },
+    "expandedKeys": [
+      "item-1-0"
+    ]
   }
 }

@@ -3,8 +3,6 @@
 
 不要使用关键字容易被平台检测封号：proxy，VPN等等
 
-
-
 免费域名
 [DigitalPlat Domain Dashboard](https://dash.domain.digitalplat.org/panel/main?page=%2Fpanel%2Foverview)
 
@@ -23,7 +21,7 @@ cloudflare worker 部署代码：
 
 已部署实例： [概览 – Compute Engine – My First Project – Google Cloud 控制台](https://console.cloud.google.com/compute/overview?walkthrough_id=connecting_to_gce_instances&project=abstract-banner-474913-d9)
 # rustdesk
-阿里[[assets/083f86bf7bad3fdcef22613e185581f9_MD5.jpg|Open: Pasted image 20251109232627.png]]
-![[assets/083f86bf7bad3fdcef22613e185581f9_MD5.jpg]]
+阿里[[083f86bf7bad3fdcef22613e185581f9_MD5.jpg|Open: Pasted image 20251109232627.png]]
+![[083f86bf7bad3fdcef22613e185581f9_MD5.jpg]]
 v4eCwYljgrsBxsxMP1oqh6FfUm2vNnV7Kefp2hyLr7c
 http://47.97.29.82/21116

@@ -104,10 +104,24 @@
             "id": "9c44bce0122b382f",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "电脑、软件、系统/ps-tang.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "ps-tang"
             }
           }
         ],
@@ -396,6 +410,8 @@
   },
   "active": "9c44bce0122b382f",
   "lastOpenFiles": [
+    "网络/项目服务器/CF节点搭建相关.md",
+    "网络/项目服务器/节点.md",
     "语言学习/德语/公共知识语法/形容词/形容词名词化.md",
     "思想思维心理哲学/个人人生思想架构.md",
     "电脑、软件、系统/ps-tang.md",
@@ -426,8 +442,6 @@
     "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
     "语言学习/德语/公共知识语法/词/短语/短语.md",
     "思想思维心理哲学/个人问题处理/能做什么.md",
-    "思想思维心理哲学/个人问题处理/沟通 愤怒沟通问题.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/词/短语",
     "语言学习/德语/公共知识语法/词",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch",
