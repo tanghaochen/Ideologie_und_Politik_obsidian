@@ -59,7 +59,7 @@ graph TD
 - **大师解析：** 这里 `lassen` 充当了类似 `dürfen` (允许) 的角色，句子里出现了第二个动词 `fernsehen`（看电视）。
 - **移民生活场景：** 你在德国租房，房东立了规矩，不允许在阳台烧烤（很常见的德国生活痛点）：
     - _Der Vermieter **lässt** uns nicht auf dem Balkon **grillen**._ (房东不让我们在阳台烧烤。)
-- **语法重点（现在完成时）：** **注意！前方高能！** 图片里标了红色的 ⚠️ 警告符号。当 `lassen` 后面跟着另一个动词时，它的完成时**绝对不能**用 gelassen，而是要用**动词原形 + lassen 的原形**（这叫 Ersatzinfinitiv 替代不定式，B 1/B 2 必考）。
+- **语法重点（现在完成时）：** **注意！前方高能！** 图片里标了红色的 ⚠️ 警告符号。当 `lassen` 后面跟着另一个动词时，它的<font color="#d83931">完成时**绝对不能**用 gelassen</font>，而是要用**动词原形 + lassen 的原形**（这叫 Ersatzinfinitiv 替代不定式，B 1/B 2 必考）。
     - _Ich habe mein Kind nicht **fernsehen lassen**._ (不是 fernsehen gelassen!)
 
 #### 第三层境界：不自己做 (Nicht selbst machen) —— “花钱消灾 / 找人代劳”

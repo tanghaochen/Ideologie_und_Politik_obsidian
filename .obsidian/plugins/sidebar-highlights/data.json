@@ -1715,7 +1715,24 @@
         "type": "highlight"
       }
     ],
-    "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md": []
+    "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md": [],
+    "语言学习/德语/公共知识语法/动词/lassen.md": [
+      {
+        "id": "2coueakab",
+        "text": "完成时**绝对不能**用 gelassen",
+        "tags": [],
+        "line": 61,
+        "startOffset": 2388,
+        "endOffset": 2438,
+        "filePath": "语言学习/德语/公共知识语法/动词/lassen.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1775227457723,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
+    ]
   },
   "collections": {},
   "groupingMode": "none",
