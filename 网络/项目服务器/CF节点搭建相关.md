@@ -20,6 +20,14 @@ cloudflare worker 部署代码：
 
 
 已部署实例： [概览 – Compute Engine – My First Project – Google Cloud 控制台](https://console.cloud.google.com/compute/overview?walkthrough_id=connecting_to_gce_instances&project=abstract-banner-474913-d9)
+
+
+补充 
+- 可能需要设置权限：[IAM – IAM 和管理 – My First Project – Google Cloud 控制台](https://console.cloud.google.com/iam-admin/iam?referrer=search&orgonly=true&authuser=1&project=abstract-banner-474913-d9&supportedpurview=organizationId,folder,project)
+- 设置 ssh 密钥[元数据 – Compute Engine – Default Gemini Proj… – Google Cloud 控制台](https://console.cloud.google.com/compute/metadata?chat=true&project=gen-lang-client-0573676752&scopeTab=projectMetadata&resourceTab=sshkeys): ![[PixPin_2026-05-02_16-44-34.png|1923x1061]]
+	- 需要现在本地生成: ![[PixPin_2026-05-02_16-45-02.png|566x182]]
+	- 然后才能通过 gcloud 连接，并且 ssh 私钥可能是无法连接成功 ![[PixPin_2026-05-02_16-46-05.png|1746x667]]
+	- 通过浏览器 SSH 连接成功的本质是因为本地有了正确的 SSH 私钥，需要通过命令行生成，否则是无法连接成功的，如果更换了账号需要清除本地 SSH 再进行连接
 # rustdesk
 阿里[[083f86bf7bad3fdcef22613e185581f9_MD5.jpg|Open: Pasted image 20251109232627.png]]
 ![[083f86bf7bad3fdcef22613e185581f9_MD5.jpg]]

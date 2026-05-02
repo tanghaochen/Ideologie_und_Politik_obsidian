@@ -1671,15 +1671,15 @@
     ]
   },
   "网络/项目服务器/节点.md": {
-    "scroll": 27.30066840386878,
+    "scroll": 0,
     "cursor": {
       "from": {
-        "line": 13,
-        "ch": 296
+        "line": 1,
+        "ch": 4
       },
       "to": {
-        "line": 13,
-        "ch": 296
+        "line": 1,
+        "ch": 4
       }
     },
     "expandedKeys": []
@@ -1998,11 +1998,11 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 15,
+        "line": 14,
         "ch": 0
       },
       "to": {
-        "line": 15,
+        "line": 14,
         "ch": 0
       }
     },
@@ -6156,15 +6156,15 @@
     ]
   },
   "电脑、软件、系统/ps-tang.md": {
-    "scroll": 135.21339444019722,
+    "scroll": 127.13411956998232,
     "cursor": {
       "from": {
-        "line": 155,
-        "ch": 15
+        "line": 141,
+        "ch": 27
       },
       "to": {
-        "line": 155,
-        "ch": 2
+        "line": 141,
+        "ch": 27
       }
     },
     "expandedKeys": [
@@ -11471,15 +11471,15 @@
     "expandedKeys": []
   },
   "网络/项目服务器/CF节点搭建相关.md": {
-    "scroll": 9.66302952299088,
+    "scroll": 26.818988673895443,
     "cursor": {
       "from": {
-        "line": 22,
-        "ch": 10
+        "line": 29,
+        "ch": 82
       },
       "to": {
-        "line": 22,
-        "ch": 10
+        "line": 29,
+        "ch": 82
       }
     },
     "expandedKeys": [
@@ -11584,6 +11584,20 @@
       "to": {
         "line": 0,
         "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "网络/项目服务器/基本思想.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 1,
+        "ch": 4
+      },
+      "to": {
+        "line": 1,
+        "ch": 4
       }
     },
     "expandedKeys": []

@@ -1,6 +1,26 @@
 {
   "recentFiles": [
     {
+      "basename": "CF节点搭建相关",
+      "path": "网络/项目服务器/CF节点搭建相关.md"
+    },
+    {
+      "basename": "个人网站服务器",
+      "path": "网络/项目服务器/个人网站服务器.md"
+    },
+    {
+      "basename": "网络术语",
+      "path": "网络/网络术语.md"
+    },
+    {
+      "basename": "基本思想",
+      "path": "网络/项目服务器/基本思想.md"
+    },
+    {
+      "basename": "googlecloud已有节点",
+      "path": "网络/项目服务器/googlecloud已有节点.md"
+    },
+    {
       "basename": "ps-tang",
       "path": "电脑、软件、系统/ps-tang.md"
     },
@@ -25,24 +45,12 @@
       "path": "网络/项目服务器/openlist网盘.md"
     },
     {
-      "basename": "节点",
-      "path": "网络/项目服务器/节点.md"
-    },
-    {
       "basename": "自己联通光猫路由信息",
       "path": "网络/自己联通光猫路由信息.md"
     },
     {
       "basename": "广告流量",
       "path": "网络/项目服务器/广告流量.md"
-    },
-    {
-      "basename": "个人网站服务器",
-      "path": "网络/项目服务器/个人网站服务器.md"
-    },
-    {
-      "basename": "CF节点搭建相关",
-      "path": "网络/项目服务器/CF节点搭建相关.md"
     },
     {
       "basename": "时态介绍总结",
@@ -191,14 +199,6 @@
     {
       "basename": "Meine Familienzusammensetzung",
       "path": "语言学习/德语/学习记录日记-技巧/Autobiogragie und Tagebuch/Meine Familienzusammensetzung.md"
-    },
-    {
-      "basename": "汇率逻辑Canvas",
-      "path": "经济学/投资方式/投资方法/汇率逻辑Canvas.md"
-    },
-    {
-      "basename": "Drawing 2025-12-12 16.14.51.excalidraw",
-      "path": "经济学/数据分析搜集/Drawing 2025-12-12 16.14.51.excalidraw.md"
     }
   ],
   "omittedPaths": [],

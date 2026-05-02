@@ -107,6 +107,30 @@
             "state": {
               "type": "markdown",
               "state": {
+                "file": "网络/项目服务器/CF节点搭建相关.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "CF节点搭建相关"
+            }
+          },
+          {
+            "id": "4ce7a18e7d490422",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
                 "file": "电脑、软件、系统/ps-tang.md",
                 "mode": "source",
                 "source": false,
@@ -411,19 +435,25 @@
   },
   "active": "55363b837a5bcbcd",
   "lastOpenFiles": [
+    "assets/PixPin_2026-05-02_16-46-05.png",
+    "assets/PixPin_2026-05-02_16-45-02.png",
+    "assets/PixPin_2026-05-02_16-44-34.png",
+    "网络/项目服务器/个人网站服务器.md",
+    "网络/网络术语.md",
+    "网络/项目服务器/基本思想.md",
+    "网络/项目服务器/googlecloud已有节点.md",
+    "电脑、软件、系统/ps-tang.md",
+    "assets/PixPin_2026-05-02_16-38-58.png",
+    "网络/项目服务器/CF节点搭建相关.md",
     "网络/项目服务器/虚拟机与docker冲突问题.md",
     "网络/项目服务器/软路由.md",
     "网络/工具记录/obsidian plugin.md",
     "网络/简述软路由网络逻辑.canvas",
     "网络/项目服务器/openlist网盘.md",
-    "网络/项目服务器/节点.md",
     "网络/自己联通光猫路由信息.md",
     "网络/项目服务器/广告流量.md",
-    "网络/项目服务器/个人网站服务器.md",
-    "网络/项目服务器/CF节点搭建相关.md",
     "语言学习/德语/公共知识语法/句型/时态/时态介绍总结.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
-    "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/动词/lassen.md",
     "2026/20260430 两天的放纵.md",
@@ -437,10 +467,7 @@
     "目录.md",
     "思想思维心理哲学/阅读/被讨厌的勇气/被讨厌的勇气全书逻辑.md",
     "excalibrain.md",
-    "Ja, mit den Taschen ist ein Taxi besser!.md",
     "Untitled Diagram.svg",
-    "思想思维心理哲学/个人问题处理/爱情.md",
-    "未命名.md",
     "未命名.canvas",
     "未命名.base",
     "未命名 1.base",
@@ -454,9 +481,6 @@
     "assets/Pasted Image 20260412220746_069.png",
     "assets/PixPin_2026-04-12_15-38-53.png",
     "assets/PixPin_2026-04-12_15-38-51_1.png",
-    "assets/PixPin_2026-04-12_15-27-37.png",
-    "assets/PixPin_2026-04-12_15-27-33.png",
-    "assets/PixPin_2026-04-08_23-34-11.png",
     "语言学习/德语/公共知识语法/介词",
     "语言学习/德语/公共知识语法/句型/疑问句",
     "思想思维心理哲学/爱情"

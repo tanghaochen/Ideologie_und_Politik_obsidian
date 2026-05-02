@@ -158,7 +158,7 @@ hc@51888.onmicrosoft.com
 
 - 同 GPT
 	- zncz701@gmail.com
-	- hu 701701 A
+	- 1774189597 Asd
 	- api-key: `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`
 origin: org-7 SfYkp 7 rz 3 GwolLwaWwxbEL 7
 ## 0.6 娱乐
