@@ -1,16 +1,52 @@
 {
   "recentFiles": [
     {
+      "basename": "虚拟机与docker冲突问题",
+      "path": "网络/项目服务器/虚拟机与docker冲突问题.md"
+    },
+    {
+      "basename": "软路由",
+      "path": "网络/项目服务器/软路由.md"
+    },
+    {
+      "basename": "obsidian plugin",
+      "path": "网络/工具记录/obsidian plugin.md"
+    },
+    {
+      "basename": "简述软路由网络逻辑",
+      "path": "网络/简述软路由网络逻辑.canvas"
+    },
+    {
+      "basename": "openlist网盘",
+      "path": "网络/项目服务器/openlist网盘.md"
+    },
+    {
+      "basename": "节点",
+      "path": "网络/项目服务器/节点.md"
+    },
+    {
+      "basename": "自己联通光猫路由信息",
+      "path": "网络/自己联通光猫路由信息.md"
+    },
+    {
+      "basename": "广告流量",
+      "path": "网络/项目服务器/广告流量.md"
+    },
+    {
+      "basename": "个人网站服务器",
+      "path": "网络/项目服务器/个人网站服务器.md"
+    },
+    {
+      "basename": "CF节点搭建相关",
+      "path": "网络/项目服务器/CF节点搭建相关.md"
+    },
+    {
       "basename": "时态介绍总结",
       "path": "语言学习/德语/公共知识语法/句型/时态/时态介绍总结.md"
     },
     {
       "basename": "语法快查必背语法canvas",
       "path": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
-    },
-    {
-      "basename": "CF节点搭建相关",
-      "path": "网络/项目服务器/CF节点搭建相关.md"
     },
     {
       "basename": "ps-tang",
@@ -39,10 +75,6 @@
     {
       "basename": "人称代词; 疑问代词; 指示代词",
       "path": "语言学习/德语/人称代词; 疑问代词; 指示代词.md"
-    },
-    {
-      "basename": "节点",
-      "path": "网络/项目服务器/节点.md"
     },
     {
       "basename": "windows obsidian联动marginote",
@@ -167,38 +199,6 @@
     {
       "basename": "Drawing 2025-12-12 16.14.51.excalidraw",
       "path": "经济学/数据分析搜集/Drawing 2025-12-12 16.14.51.excalidraw.md"
-    },
-    {
-      "basename": "搜索频率",
-      "path": "经济学/数据分析搜集/搜索频率.md"
-    },
-    {
-      "basename": "20260414",
-      "path": "2026/20260414.md"
-    },
-    {
-      "basename": "第二虚拟式",
-      "path": "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md"
-    },
-    {
-      "basename": "未命名",
-      "path": "语言学习/德语/未命名.md"
-    },
-    {
-      "basename": "从句练习",
-      "path": "语言学习/德语/公共知识语法/❌错题/从句练习.md"
-    },
-    {
-      "basename": "✍️形容词",
-      "path": "语言学习/德语/公共知识语法/❌错题/✍️形容词.md"
-    },
-    {
-      "basename": "德语语法 活学活用 A1-B1",
-      "path": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf"
-    },
-    {
-      "basename": "❌1",
-      "path": "语言学习/德语/公共知识语法/副词/❌/❌1.md"
     }
   ],
   "omittedPaths": [],
