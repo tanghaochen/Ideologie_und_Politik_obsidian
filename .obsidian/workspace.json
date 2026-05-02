@@ -100,8 +100,33 @@
               "icon": "excalidraw-icon",
               "title": "语法快查必背语法canvas"
             }
+          },
+          {
+            "id": "55363b837a5bcbcd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "电脑、软件、系统/ps-tang.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "ps-tang"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -384,14 +409,14 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "c7ebbf70da898581",
+  "active": "55363b837a5bcbcd",
   "lastOpenFiles": [
+    "网络/项目服务器/虚拟机与docker冲突问题.md",
     "网络/项目服务器/软路由.md",
     "网络/工具记录/obsidian plugin.md",
     "网络/简述软路由网络逻辑.canvas",
     "网络/项目服务器/openlist网盘.md",
     "网络/项目服务器/节点.md",
-    "网络/项目服务器/虚拟机与docker冲突问题.md",
     "网络/自己联通光猫路由信息.md",
     "网络/项目服务器/广告流量.md",
     "网络/项目服务器/个人网站服务器.md",
