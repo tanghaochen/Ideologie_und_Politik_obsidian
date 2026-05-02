@@ -124,9 +124,33 @@
               "icon": "lucide-file",
               "title": "解读"
             }
+          },
+          {
+            "id": "8d2f4ac0e5474a50",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "思想思维心理哲学/阅读/被讨厌的勇气/被讨厌的勇气全书逻辑.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "被讨厌的勇气全书逻辑"
+            }
+          },
+          {
+            "id": "4565de5df11863ed",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "思想思维心理哲学/阅读/被讨厌的勇气/Drawing 2026-05-02 23.53.26.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2026-05-02 23.53.26.excalidraw"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -353,16 +377,6 @@
               "icon": "lucide-info",
               "title": "带zu的不定式的笔记属性"
             }
-          },
-          {
-            "id": "e5108ed809bdc481",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw-sidepanel",
-              "state": {},
-              "icon": "excalidraw-icon",
-              "title": "Excalidraw 侧边面板"
-            }
           }
         ],
         "currentTab": 1
@@ -409,11 +423,13 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "55363b837a5bcbcd",
+  "active": "8d2f4ac0e5474a50",
   "lastOpenFiles": [
+    "思想思维心理哲学/阅读/被讨厌的勇气/Drawing 2026-05-02 23.53.26.excalidraw.md",
     "思想思维心理哲学/阅读/被讨厌的勇气/被讨厌的勇气全书逻辑.md",
-    "网络/项目服务器/虚拟机与docker冲突问题.md",
     "思想思维心理哲学/阅读/被讨厌的勇气/解读.md",
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+    "网络/项目服务器/虚拟机与docker冲突问题.md",
     "思想思维心理哲学/个人人生思想架构.md",
     "语言学习/德语/费用估算.md",
     "assets/PixPin_2026-05-02_19-59-47.png",
@@ -435,7 +451,6 @@
     "网络/自己联通光猫路由信息.md",
     "网络/项目服务器/广告流量.md",
     "语言学习/德语/公共知识语法/句型/时态/时态介绍总结.md",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/动词/lassen.md",
     "2026/20260430 两天的放纵.md",
@@ -445,7 +460,6 @@
     "assets/953b9baf403cdbf7e82d68a35609d9b8_MD5.png",
     "电脑、软件、系统/windows obsidian联动marginote.md",
     "assets/PixPin_2026-04-28_00-43-33.png",
-    "目录.md",
     "Untitled Diagram.svg",
     "未命名.canvas",
     "未命名.base",
