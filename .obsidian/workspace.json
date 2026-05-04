@@ -82,7 +82,8 @@
               "title": "⭐必背所有知识点整理考察整理"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       },
       {
         "id": "dd4130c5419b5527",
@@ -93,12 +94,24 @@
             "id": "9c44bce0122b382f",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
+                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/句型语法解析.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "语法快查必背语法canvas"
+              "icon": "lucide-file",
+              "title": "句型语法解析"
             }
           },
           {
@@ -149,8 +162,7 @@
               "title": "Drawing 2026-05-02 23.53.26.excalidraw"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -423,13 +435,15 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "c7ebbf70da898581",
+  "active": "9c44bce0122b382f",
   "lastOpenFiles": [
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+    "网络/项目服务器/虚拟机与docker冲突问题.md",
+    "德语语法 活学活用 A1-B1.pdf.md",
     "思想思维心理哲学/阅读/被讨厌的勇气/被讨厌的勇气全书逻辑.md",
     "思想思维心理哲学/阅读/被讨厌的勇气/Drawing 2026-05-02 23.53.26.excalidraw.md",
     "思想思维心理哲学/阅读/被讨厌的勇气/解读.md",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
-    "网络/项目服务器/虚拟机与docker冲突问题.md",
     "思想思维心理哲学/个人人生思想架构.md",
     "语言学习/德语/费用估算.md",
     "assets/PixPin_2026-05-02_19-59-47.png",
@@ -451,14 +465,12 @@
     "网络/自己联通光猫路由信息.md",
     "网络/项目服务器/广告流量.md",
     "语言学习/德语/公共知识语法/句型/时态/时态介绍总结.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/动词/lassen.md",
     "2026/20260430 两天的放纵.md",
     "语言学习/德语/公共知识语法/形容词/形容词名词化.md",
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "Excalidraw/Drawing 2026-04-28 00.51.11.excalidraw.md",
     "assets/953b9baf403cdbf7e82d68a35609d9b8_MD5.png",
-    "电脑、软件、系统/windows obsidian联动marginote.md",
     "assets/PixPin_2026-04-28_00-43-33.png",
     "Untitled Diagram.svg",
     "未命名.canvas",
