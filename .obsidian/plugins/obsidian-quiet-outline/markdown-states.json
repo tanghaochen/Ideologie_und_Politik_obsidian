@@ -8442,12 +8442,12 @@
     "scroll": 275.268805966857,
     "cursor": {
       "from": {
-        "line": 329,
-        "ch": 0
+        "line": 331,
+        "ch": 35
       },
       "to": {
-        "line": 329,
-        "ch": 0
+        "line": 331,
+        "ch": 35
       }
     },
     "expandedKeys": [
