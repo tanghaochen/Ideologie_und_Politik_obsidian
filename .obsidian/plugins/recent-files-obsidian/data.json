@@ -5,12 +5,8 @@
       "path": "2026/20260506.md"
     },
     {
-      "basename": "obsidian样式技巧",
-      "path": "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md"
-    },
-    {
-      "basename": "系动词",
-      "path": "语言学习/德语/公共知识语法/动词/系动词.md"
+      "basename": "第二虚拟式",
+      "path": "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md"
     },
     {
       "basename": "语法快查必背语法canvas",
@@ -19,6 +15,14 @@
     {
       "basename": "⭐必背所有知识点整理考察整理",
       "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
+    },
+    {
+      "basename": "obsidian样式技巧",
+      "path": "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md"
+    },
+    {
+      "basename": "系动词",
+      "path": "语言学习/德语/公共知识语法/动词/系动词.md"
     },
     {
       "basename": "汇总对比从句",
@@ -195,10 +199,6 @@
     {
       "basename": "沟通 愤怒沟通问题",
       "path": "思想思维心理哲学/个人问题处理/沟通 愤怒沟通问题.md"
-    },
-    {
-      "basename": "reading note",
-      "path": "思想思维心理哲学/阅读/被讨厌的勇气/reading note.md"
     }
   ],
   "omittedPaths": [],
