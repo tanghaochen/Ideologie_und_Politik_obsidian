@@ -1,9 +1,11 @@
 {
-  "snippets_file": "ar : {1$end$|rgba(255,255,255,0.1)|diagonal}\narr : {1}\nct : ```chat$nl$$end$$nl$```",
+  "snippets_file": "ar : {1$end$|rgba(255,255,255,0.1)|diagonal}\narr : {1}\nct : ```chat$nl$$end$$nl$```\nja : - ✅\nfa : - ❌",
   "snippets": [
     "ar : {1$end$|rgba(255,255,255,0.1)|diagonal}",
     "arr : {1}",
-    "ct : ```chat$nl$$end$$nl$```"
+    "ct : ```chat$nl$$end$$nl$```",
+    "ja : - ✅",
+    "fa : - ❌"
   ],
   "endSymbol": "$end$",
   "newlineSymbol": "$nl$",
