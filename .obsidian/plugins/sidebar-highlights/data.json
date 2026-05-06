@@ -1152,6 +1152,21 @@
         "createdAt": 1775219355807,
         "isNativeComment": false,
         "type": "highlight"
+      },
+      {
+        "id": "3t6gbmqq6",
+        "text": "动作有一个直接承受对象",
+        "tags": [],
+        "line": 489,
+        "startOffset": 15434,
+        "endOffset": 15474,
+        "filePath": "语言学习/德语/公共知识语法/动词/系动词.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1778080251217,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
       }
     ],
     "语言学习/德语/公共知识语法/动词/❌/lassen错误.md": [

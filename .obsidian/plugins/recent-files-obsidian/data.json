@@ -5,20 +5,36 @@
       "path": "2026/20260506.md"
     },
     {
-      "basename": "⭐必背所有知识点整理考察整理",
-      "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
+      "basename": "系动词",
+      "path": "语言学习/德语/公共知识语法/动词/系动词.md"
+    },
+    {
+      "basename": "解读",
+      "path": "思想思维心理哲学/阅读/被讨厌的勇气/解读.md"
     },
     {
       "basename": "语法快查必背语法canvas",
       "path": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
     },
     {
-      "basename": "倒装句",
-      "path": "语言学习/德语/公共知识语法/句型/倒装句.md"
+      "basename": "⭐必背所有知识点整理考察整理",
+      "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
+    },
+    {
+      "basename": "被动态",
+      "path": "语言学习/德语/公共知识语法/句型/被动态.md"
+    },
+    {
+      "basename": "汇总对比从句",
+      "path": "语言学习/德语/公共知识语法/句型/从句合集/汇总对比从句.md"
     },
     {
       "basename": "句型语法解析",
       "path": "语言学习/德语/公共知识语法/句型/句子解析学习/句型语法解析.md"
+    },
+    {
+      "basename": "倒装句",
+      "path": "语言学习/德语/公共知识语法/句型/倒装句.md"
     },
     {
       "basename": "PixPin_2026-05-02_16-46-05",
@@ -37,10 +53,6 @@
       "path": "assets/PixPin_2026-05-02_16-38-58.png"
     },
     {
-      "basename": "汇总对比从句",
-      "path": "语言学习/德语/公共知识语法/句型/从句合集/汇总对比从句.md"
-    },
-    {
       "basename": "从句canvas",
       "path": "语言学习/德语/从句canvas.md"
     },
@@ -55,10 +67,6 @@
     {
       "basename": "Drawing 2026-05-02 23.53.26.excalidraw",
       "path": "思想思维心理哲学/阅读/被讨厌的勇气/Drawing 2026-05-02 23.53.26.excalidraw.md"
-    },
-    {
-      "basename": "解读",
-      "path": "思想思维心理哲学/阅读/被讨厌的勇气/解读.md"
     },
     {
       "basename": "个人人生思想架构",
@@ -191,14 +199,6 @@
     {
       "basename": "obsidian样式技巧",
       "path": "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md"
-    },
-    {
-      "basename": "定冠词 性 der, das, die",
-      "path": "定冠词 性 der, das, die.md"
-    },
-    {
-      "basename": "德语学习工具和平台",
-      "path": "语言学习/德语/学习记录日记-技巧/德语学习工具和平台.md"
     }
   ],
   "omittedPaths": [],
