@@ -338,12 +338,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+                "file": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "语法快查必背语法canvas 的出链列表"
+              "title": "⭐必背所有知识点整理考察整理 的出链列表"
             }
           },
           {
@@ -352,10 +352,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
+                "file": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
               },
               "icon": "lucide-info",
-              "title": "语法快查必背语法canvas的笔记属性"
+              "title": "⭐必背所有知识点整理考察整理的笔记属性"
             }
           },
           {
@@ -413,8 +413,9 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "9c44bce0122b382f",
+  "active": "51aa4c53b7c06262",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/句型/倒装句.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/句型语法解析.md",
@@ -423,7 +424,6 @@
     "assets/PixPin_2026-05-02_16-44-34.png",
     "assets/PixPin_2026-05-02_16-38-58.png",
     "语言学习/德语/公共知识语法/句型/从句合集/汇总对比从句.md",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/从句canvas.md",
     "网络/项目服务器/虚拟机与docker冲突问题.md",
     "德语语法 活学活用 A1-B1.pdf.md",
