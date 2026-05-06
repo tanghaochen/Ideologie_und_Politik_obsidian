@@ -8949,12 +8949,12 @@
     "scroll": 212.55098542621343,
     "cursor": {
       "from": {
-        "line": 245,
-        "ch": 4
+        "line": 242,
+        "ch": 3
       },
       "to": {
-        "line": 245,
-        "ch": 4
+        "line": 242,
+        "ch": 3
       }
     },
     "expandedKeys": [
@@ -11645,5 +11645,19 @@
     "expandedKeys": [
       "item-1-0"
     ]
+  },
+  "2026/20260506.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 2,
+        "ch": 3
+      },
+      "to": {
+        "line": 2,
+        "ch": 3
+      }
+    },
+    "expandedKeys": []
   }
 }

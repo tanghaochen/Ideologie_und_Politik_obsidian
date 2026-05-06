@@ -1,8 +1,9 @@
 {
-  "snippets_file": "ar : {1$end$|rgba(255,255,255,0.1)|diagonal}\narr : {1}",
+  "snippets_file": "ar : {1$end$|rgba(255,255,255,0.1)|diagonal}\narr : {1}\nct : {```33$nl$```}",
   "snippets": [
     "ar : {1$end$|rgba(255,255,255,0.1)|diagonal}",
-    "arr : {1}"
+    "arr : {1}",
+    "ct : {```33$nl$```}"
   ],
   "endSymbol": "$end$",
   "newlineSymbol": "$nl$",
