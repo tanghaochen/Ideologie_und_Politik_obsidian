@@ -158,7 +158,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
+                "file": "语言学习/德语/公共知识语法/句型/时态/过去分词 Partizip Perfekt.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -173,7 +173,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "obsidian样式技巧"
+              "title": "过去分词 Partizip Perfekt"
             }
           }
         ],
@@ -392,8 +392,7 @@
               "title": "History"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -441,6 +440,9 @@
   "lastOpenFiles": [
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+    "语言学习/德语/公共知识语法/句型/时态/过去分词 Partizip Perfekt.md",
+    "语言学习/德语/公共知识语法/格/第二格.md",
+    "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
     "语言学习/德语/公共知识语法/名词/名词复数变化.md",
     "语言学习/德语/公共知识语法/动词/系动词.md",
     "语言学习/德语/公共知识语法/句型/从句合集/汇总对比从句.md",
@@ -448,7 +450,6 @@
     "2026/20260506.md",
     "2026-05-07.md",
     "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md",
-    "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
     "语言学习/德语/公共知识语法/句型/被动态.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/句型语法解析.md",
     "语言学习/德语/公共知识语法/句型/倒装句.md",
@@ -469,8 +470,6 @@
     "网络/项目服务器/个人网站服务器.md",
     "网络/网络术语.md",
     "网络/项目服务器/基本思想.md",
-    "网络/项目服务器/googlecloud已有节点.md",
-    "电脑、软件、系统/ps-tang.md",
     "网络/简述软路由网络逻辑.canvas",
     "assets/953b9baf403cdbf7e82d68a35609d9b8_MD5.png",
     "assets/PixPin_2026-04-28_00-43-33.png",
