@@ -134,7 +134,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/名词/名词复数变化.md",
+                "file": "语言学习/德语/公共知识语法/名词/名词格的变化.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -149,7 +149,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "名词复数变化"
+              "title": "名词格的变化"
             }
           },
           {
@@ -177,7 +177,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -362,12 +362,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+                "file": "语言学习/德语/公共知识语法/名词/名词格的变化.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "语法快查必背语法canvas 的出链列表"
+              "title": "名词格的变化 的出链列表"
             }
           },
           {
@@ -376,10 +376,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
+                "file": "语言学习/德语/公共知识语法/名词/名词格的变化.md"
               },
               "icon": "lucide-info",
-              "title": "语法快查必背语法canvas的笔记属性"
+              "title": "名词格的变化的笔记属性"
             }
           },
           {
@@ -392,7 +392,8 @@
               "title": "History"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -436,14 +437,16 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "9c44bce0122b382f",
+  "active": "48a29eb6ec05aefb",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/名词/阳性弱变化名词.md",
+    "语言学习/德语/公共知识语法/名词/名词格的变化.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/名词/名词复数变化.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/公共知识语法/句型/时态/过去分词 Partizip Perfekt.md",
     "语言学习/德语/公共知识语法/格/第二格.md",
     "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
-    "语言学习/德语/公共知识语法/名词/名词复数变化.md",
     "语言学习/德语/公共知识语法/动词/系动词.md",
     "语言学习/德语/公共知识语法/句型/从句合集/汇总对比从句.md",
     "思想思维心理哲学/阅读/被讨厌的勇气/解读.md",
@@ -468,8 +471,6 @@
     "assets/PixPin_2026-05-02_19-57-26.png",
     "网络/项目服务器/CF节点搭建相关.md",
     "网络/项目服务器/个人网站服务器.md",
-    "网络/网络术语.md",
-    "网络/项目服务器/基本思想.md",
     "网络/简述软路由网络逻辑.canvas",
     "assets/953b9baf403cdbf7e82d68a35609d9b8_MD5.png",
     "assets/PixPin_2026-04-28_00-43-33.png",
