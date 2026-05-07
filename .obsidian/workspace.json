@@ -391,6 +391,31 @@
               "icon": "history",
               "title": "History"
             }
+          },
+          {
+            "id": "480fa03e285dbef8",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/名词/名词格的变化.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "名词格的变化 的大纲"
+            }
+          },
+          {
+            "id": "015a089f7b54e88e",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
           }
         ],
         "currentTab": 1
