@@ -91,6 +91,30 @@
         "dimension": 57.49539594843463,
         "children": [
           {
+            "id": "2cc390061d865847",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "22 冠词"
+            }
+          },
+          {
             "id": "50402bab91079631",
             "type": "leaf",
             "state": {
@@ -134,7 +158,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/形容词/形容词.md",
+                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/句型语法解析.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -149,11 +173,35 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "形容词"
+              "title": "句型语法解析"
+            }
+          },
+          {
+            "id": "055cfc016e255fa7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "定冠词 性 der, das, die.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "定冠词 性 der, das, die"
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -374,13 +422,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "语言学习/德语/公共知识语法/形容词/形容词.md",
+                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/句型语法解析.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "形容词 的大纲"
+              "title": "句型语法解析 的大纲"
             }
           },
           {
@@ -440,15 +488,20 @@
   },
   "active": "6f3552f61606c479",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+    "语言学习/德语/公共知识语法/句型/句子解析学习/句型语法解析.md",
+    "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
+    "定冠词 性 der, das, die.md",
+    "语言学习/德语/公共知识语法/形容词/形容词.md",
     "语言学习/德语/公共知识语法/句型/时态/过去分词 Partizip Perfekt.md",
     "Clippings/‎Google Gemini.md",
     "Clippings/Obsidian Web Clipper 深度使用笔记：Deepseek 智能加持，微信公众号等素材高效管理.md",
     "语言学习/德语/公共知识语法/名词/名词格的变化.md",
     "Clippings",
     "语言学习/德语/公共知识语法/名词/阳性弱变化名词.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/名词/名词复数变化.md",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/公共知识语法/格/第二格.md",
     "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
     "语言学习/德语/公共知识语法/动词/系动词.md",
@@ -458,7 +511,6 @@
     "2026-05-07.md",
     "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md",
     "语言学习/德语/公共知识语法/句型/被动态.md",
-    "语言学习/德语/公共知识语法/句型/句子解析学习/句型语法解析.md",
     "语言学习/德语/公共知识语法/句型/倒装句.md",
     "assets/PixPin_2026-05-02_16-46-05.png",
     "assets/PixPin_2026-05-02_16-45-02.png",
@@ -467,10 +519,6 @@
     "语言学习/德语/从句canvas.md",
     "网络/项目服务器/虚拟机与docker冲突问题.md",
     "德语语法 活学活用 A1-B1.pdf.md",
-    "思想思维心理哲学/阅读/被讨厌的勇气/被讨厌的勇气全书逻辑.md",
-    "思想思维心理哲学/阅读/被讨厌的勇气/Drawing 2026-05-02 23.53.26.excalidraw.md",
-    "思想思维心理哲学/个人人生思想架构.md",
-    "语言学习/德语/费用估算.md",
     "assets/PixPin_2026-05-02_19-59-47.png",
     "assets/PixPin_2026-05-02_19-57-26.png",
     "网络/简述软路由网络逻辑.canvas",

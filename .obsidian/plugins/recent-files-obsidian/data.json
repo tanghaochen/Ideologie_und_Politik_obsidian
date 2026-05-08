@@ -1,6 +1,30 @@
 {
   "recentFiles": [
     {
+      "basename": "句型语法解析",
+      "path": "语言学习/德语/公共知识语法/句型/句子解析学习/句型语法解析.md"
+    },
+    {
+      "basename": "语法快查必背语法canvas",
+      "path": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
+    },
+    {
+      "basename": "22 冠词",
+      "path": "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md"
+    },
+    {
+      "basename": "⭐必背所有知识点整理考察整理",
+      "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
+    },
+    {
+      "basename": "人称代词; 疑问代词; 指示代词",
+      "path": "语言学习/德语/人称代词; 疑问代词; 指示代词.md"
+    },
+    {
+      "basename": "定冠词 性 der, das, die",
+      "path": "定冠词 性 der, das, die.md"
+    },
+    {
       "basename": "形容词",
       "path": "语言学习/德语/公共知识语法/形容词/形容词.md"
     },
@@ -25,16 +49,8 @@
       "path": "语言学习/德语/公共知识语法/名词/阳性弱变化名词.md"
     },
     {
-      "basename": "⭐必背所有知识点整理考察整理",
-      "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
-    },
-    {
       "basename": "名词复数变化",
       "path": "语言学习/德语/公共知识语法/名词/名词复数变化.md"
-    },
-    {
-      "basename": "语法快查必背语法canvas",
-      "path": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
     },
     {
       "basename": "第二格",
@@ -67,10 +83,6 @@
     {
       "basename": "被动态",
       "path": "语言学习/德语/公共知识语法/句型/被动态.md"
-    },
-    {
-      "basename": "句型语法解析",
-      "path": "语言学习/德语/公共知识语法/句型/句子解析学习/句型语法解析.md"
     },
     {
       "basename": "倒装句",
@@ -181,24 +193,12 @@
       "path": "语言学习/德语/公共知识语法/形容词/形容词名词化.md"
     },
     {
-      "basename": "人称代词; 疑问代词; 指示代词",
-      "path": "语言学习/德语/人称代词; 疑问代词; 指示代词.md"
-    },
-    {
       "basename": "windows obsidian联动marginote",
       "path": "电脑、软件、系统/windows obsidian联动marginote.md"
     },
     {
       "basename": "目录",
       "path": "目录.md"
-    },
-    {
-      "basename": "Ja, mit den Taschen ist ein Taxi besser!",
-      "path": "Ja, mit den Taschen ist ein Taxi besser!.md"
-    },
-    {
-      "basename": "爱情",
-      "path": "思想思维心理哲学/个人问题处理/爱情.md"
     }
   ],
   "omittedPaths": [],
