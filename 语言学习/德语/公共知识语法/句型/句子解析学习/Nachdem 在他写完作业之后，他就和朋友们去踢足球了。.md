@@ -8,7 +8,7 @@ Nachdem er die Hausaufgaben geschrieben hatte, ging er mit seinen Freunden Fußb
 
 ## 句子精细拆解与错误分析
 
-原句：`Er hat den Hausaufgabe gescheiben, dass es mit die Fraunde Fußball gehen.`
+原句：Er hat den Hausaufgabe gescheiben, dass es mit die Fraunde Fußball gehen.
 
 ### 1. `den Hausaufgabe` $\rightarrow$ `die Hausaufgaben` (或 `die Hausaufgabe`)
 

@@ -1762,6 +1762,53 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "语言学习/德语/公共知识语法/句型/句子解析学习/有介词的定语从句： 这就是那个我昨天跟你谈论过的女同事.md": [
+      {
+        "id": "eimblgoxq",
+        "text": "“这就是……”应该使用固定句型 “Das ist...”。",
+        "tags": [],
+        "line": 16,
+        "startOffset": 368,
+        "endOffset": 426,
+        "filePath": "语言学习/德语/公共知识语法/句型/句子解析学习/有介词的定语从句： 这就是那个我昨天跟你谈论过的女同事.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1778255782291,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "qp35awq03",
+        "text": "动词短语“谈论某人”在德语中是 _sich unterhalten über jemanden (Akkusativ)_。",
+        "tags": [],
+        "line": 22,
+        "startOffset": 608,
+        "endOffset": 698,
+        "filePath": "语言学习/德语/公共知识语法/句型/句子解析学习/有介词的定语从句： 这就是那个我昨天跟你谈论过的女同事.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1778255829957,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "isjs0yqn1",
+        "text": "交谈/谈论”时是反身动词",
+        "tags": [],
+        "line": 28,
+        "startOffset": 925,
+        "endOffset": 966,
+        "filePath": "语言学习/德语/公共知识语法/句型/句子解析学习/有介词的定语从句： 这就是那个我昨天跟你谈论过的女同事.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1778255877687,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},
