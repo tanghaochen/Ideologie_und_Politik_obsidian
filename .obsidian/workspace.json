@@ -96,7 +96,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/词/mein.md",
+                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/句型语法解析.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -111,7 +111,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "mein"
+              "title": "句型语法解析"
             }
           },
           {
@@ -469,13 +469,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/句型语法解析.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "⭐必背所有知识点整理考察整理 的大纲"
+              "title": "句型语法解析 的大纲"
             }
           },
           {
@@ -533,10 +533,15 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "51aa4c53b7c06262",
+  "active": "a79c8f7141afb2f0",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/词/mein.md",
+    "assets/Screenshot_20260507_215111_com_eusoft_dehelper_ReciteLearningActivity.jpg",
+    "assets/Screenshot_20260507_202522_com_eusoft_dehelper_ReciteLearningActivity.jpg",
+    "assets/Screenshot_20260507_191717_com_eusoft_dehelper_ReciteLearningActivity.jpg",
+    "assets/Screenshot_20260507_161011_com_eusoft_dehelper_ReciteLearningActivity.jpg",
+    "assets/Screenshot_20260507_142642_com_eusoft_dehelper_ReciteLearningActivity.jpg",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/词/mein.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/公共知识语法/动词/系动词.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/有介词的定语从句： 这就是那个我昨天跟你谈论过的女同事.md",
@@ -561,7 +566,6 @@
     "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
     "语言学习/德语/公共知识语法/句型/从句合集/汇总对比从句.md",
     "思想思维心理哲学/阅读/被讨厌的勇气/解读.md",
-    "2026/20260506.md",
     "assets/PixPin_2026-05-02_16-46-05.png",
     "assets/PixPin_2026-05-02_16-45-02.png",
     "assets/PixPin_2026-05-02_16-44-34.png",
@@ -569,9 +573,6 @@
     "assets/PixPin_2026-05-02_19-59-47.png",
     "assets/PixPin_2026-05-02_19-57-26.png",
     "网络/简述软路由网络逻辑.canvas",
-    "assets/953b9baf403cdbf7e82d68a35609d9b8_MD5.png",
-    "assets/PixPin_2026-04-28_00-43-33.png",
-    "Untitled Diagram.svg",
     "未命名.canvas",
     "未命名.base",
     "未命名 1.base",
@@ -580,7 +581,6 @@
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch",
     "语言学习/德语/学习记录日记-技巧/Autobiogragie und Tagebuch",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
-    "assets/PixPin_2026-04-14_15-09-59.png",
     "语言学习/德语/学习记录日记-技巧/2026.canvas",
     "语言学习/德语/公共知识语法/介词",
     "语言学习/德语/公共知识语法/句型/疑问句"
