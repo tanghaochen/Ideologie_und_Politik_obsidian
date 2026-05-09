@@ -91,6 +91,30 @@
         "dimension": 57.49539594843463,
         "children": [
           {
+            "id": "a79c8f7141afb2f0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/词/mein.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "mein"
+            }
+          },
+          {
             "id": "2cc390061d865847",
             "type": "leaf",
             "state": {
@@ -224,8 +248,7 @@
               "title": "系动词"
             }
           }
-        ],
-        "currentTab": 5
+        ]
       }
     ],
     "direction": "vertical"
@@ -446,13 +469,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "语言学习/德语/公共知识语法/动词/系动词.md",
+                "file": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "系动词 的大纲"
+              "title": "⭐必背所有知识点整理考察整理 的大纲"
             }
           },
           {
@@ -510,15 +533,17 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "e0b6b1ddb3c9ce7a",
+  "active": "51aa4c53b7c06262",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/词/mein.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+    "语言学习/德语/公共知识语法/动词/系动词.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/有介词的定语从句： 这就是那个我昨天跟你谈论过的女同事.md",
     "Clippings/你说 以前流行一种说法，假如今天是你活着的最后一天，假如明天你就会死去，或者有一句话叫我们活在当下，.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/je ... desto ... 你学习德语越努力，你通过考试的速度就越快。.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nachdem 在他写完作业之后，他就和朋友们去踢足球了。.md",
     "语言学习/德语/公共知识语法/句型/从句合集/时间状语从句.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/A1到b1阶段所有的语法变格等等时态从句等等将所有的语法应用到这篇文章.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/句型语法解析.md",
@@ -534,11 +559,9 @@
     "语言学习/德语/公共知识语法/名词/名词复数变化.md",
     "语言学习/德语/公共知识语法/格/第二格.md",
     "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
-    "语言学习/德语/公共知识语法/动词/系动词.md",
     "语言学习/德语/公共知识语法/句型/从句合集/汇总对比从句.md",
     "思想思维心理哲学/阅读/被讨厌的勇气/解读.md",
     "2026/20260506.md",
-    "2026-05-07.md",
     "assets/PixPin_2026-05-02_16-46-05.png",
     "assets/PixPin_2026-05-02_16-45-02.png",
     "assets/PixPin_2026-05-02_16-44-34.png",
