@@ -153,54 +153,6 @@
             }
           },
           {
-            "id": "6f3552f61606c479",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/句型/全面讲解否定，nein,kein,nicht等.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "全面讲解否定，nein,kein,nicht等"
-            }
-          },
-          {
-            "id": "055cfc016e255fa7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "定冠词 性 der, das, die.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "定冠词 性 der, das, die"
-            }
-          },
-          {
             "id": "e0b6b1ddb3c9ce7a",
             "type": "leaf",
             "state": {
@@ -225,7 +177,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -446,13 +398,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/zu 的不定式从句  他整天都在玩手机，而不是为了他的期末考试复习。.md",
+                "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "zu 的不定式从句  他整天都在玩手机，而不是为了他的期末考试复习。 的大纲"
+              "title": "语法快查必背语法canvas 的大纲"
             }
           },
           {
@@ -510,15 +462,16 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "a79c8f7141afb2f0",
+  "active": "9c44bce0122b382f",
   "lastOpenFiles": [
-    "语言学习/德语/柏林广场视频笔记/A1/13 判断疑问句与动词核心框架.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/动词/系动词.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/zu 的不定式从句  他整天都在玩手机，而不是为了他的期末考试复习。.md",
+    "语言学习/德语/柏林广场视频笔记/A1/13 判断疑问句与动词核心框架.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/第二虚拟式的过去时 如果我咋天有时间，我就会去参加那个聚会了。.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/公共知识语法/句型/全面讲解否定，nein,kein,nicht等.md",
     "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nachdem 在他写完作业之后，他就和朋友们去踢足球了。.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/je ... desto ... 你学习德语越努力，你通过考试的速度就越快。.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/有介词的定语从句： 这就是那个我昨天跟你谈论过的女同事.md",
@@ -530,7 +483,6 @@
     "assets/Screenshot_20260507_161011_com_eusoft_dehelper_ReciteLearningActivity.jpg",
     "assets/Screenshot_20260507_142642_com_eusoft_dehelper_ReciteLearningActivity.jpg",
     "语言学习/德语/公共知识语法/词/mein.md",
-    "语言学习/德语/公共知识语法/动词/系动词.md",
     "Clippings/你说 以前流行一种说法，假如今天是你活着的最后一天，假如明天你就会死去，或者有一句话叫我们活在当下，.md",
     "语言学习/德语/公共知识语法/句型/从句合集/时间状语从句.md",
     "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
