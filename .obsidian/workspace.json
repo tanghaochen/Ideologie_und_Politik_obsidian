@@ -91,6 +91,54 @@
         "dimension": 57.49539594843463,
         "children": [
           {
+            "id": "31d499b6d84d2949",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/句型/从句合集/关系从句.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "关系从句"
+            }
+          },
+          {
+            "id": "72c497929a1b4a09",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "人称代词; 疑问代词; 指示代词"
+            }
+          },
+          {
             "id": "a48e2a794b2942ee",
             "type": "leaf",
             "state": {
@@ -115,102 +163,6 @@
             }
           },
           {
-            "id": "ff891423b7ba5ddd",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/Nachdem 在他写完作业之后，他就和朋友们去踢足球了。.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Nachdem 在他写完作业之后，他就和朋友们去踢足球了。"
-            }
-          },
-          {
-            "id": "7d49e883befd32c2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "人称代词; 疑问代词; 指示代词"
-            }
-          },
-          {
-            "id": "972cb62f456a057c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/13 判断疑问句与动词核心框架.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "13 判断疑问句与动词核心框架"
-            }
-          },
-          {
-            "id": "a79c8f7141afb2f0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/zu 的不定式从句  他整天都在玩手机，而不是为了他的期末考试复习。.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "zu 的不定式从句  他整天都在玩手机，而不是为了他的期末考试复习。"
-            }
-          },
-          {
             "id": "9c44bce0122b382f",
             "type": "leaf",
             "pinned": true,
@@ -223,32 +175,9 @@
               "icon": "excalidraw-icon",
               "title": "语法快查必背语法canvas"
             }
-          },
-          {
-            "id": "e0b6b1ddb3c9ce7a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/词/mein.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "mein"
-            }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -469,13 +398,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md",
+                "file": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "第二虚拟式 的大纲"
+              "title": "⭐必背所有知识点整理考察整理 的大纲"
             }
           },
           {
@@ -533,17 +462,18 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "a48e2a794b2942ee",
+  "active": "51aa4c53b7c06262",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/句型/句子解析学习/Nachdem 在他写完作业之后，他就和朋友们去踢足球了。.md",
-    "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/句型/从句合集/关系从句.md",
+    "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
+    "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md",
+    "语言学习/德语/公共知识语法/句型/句子解析学习/Nachdem 在他写完作业之后，他就和朋友们去踢足球了。.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/je ... desto ... 你学习德语越努力，你通过考试的速度就越快。.md",
     "语言学习/德语/柏林广场视频笔记/A1/38可分动词的句子架构.md",
     "语言学习/德语/公共知识语法/动词/lassen.md",
     "网络/项目服务器/虚拟机与docker冲突问题.md",
-    "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "语言学习/德语/公共知识语法/动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
     "语言学习/德语/公共知识语法/词/mein.md",
     "语言学习/德语/公共知识语法/动词/系动词.md",
@@ -565,7 +495,6 @@
     "语言学习/德语/公共知识语法/句型/句子解析学习/A1到b1阶段所有的语法变格等等时态从句等等将所有的语法应用到这篇文章.md",
     "定冠词 性 der, das, die.md",
     "语言学习/德语/公共知识语法/形容词/形容词.md",
-    "语言学习/德语/公共知识语法/句型/时态/过去分词 Partizip Perfekt.md",
     "Clippings",
     "assets/PixPin_2026-05-02_16-46-05.png",
     "assets/PixPin_2026-05-02_16-45-02.png",
