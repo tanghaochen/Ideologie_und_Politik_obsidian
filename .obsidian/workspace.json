@@ -91,6 +91,78 @@
         "dimension": 57.49539594843463,
         "children": [
           {
+            "id": "38144c596fc37ff3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/句型/被动态.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "被动态"
+            }
+          },
+          {
+            "id": "c2adac71959c2bfe",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/柏林广场视频笔记/A1/40 第四格补足语及定冠词的变化.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "40 第四格补足语及定冠词的变化"
+            }
+          },
+          {
+            "id": "a62a11e9c375ab13",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/格/第二格.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "第二格"
+            }
+          },
+          {
             "id": "61cb39c05fc9c88d",
             "type": "leaf",
             "state": {
@@ -168,7 +240,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md",
+                "file": "语言学习/德语/公共知识语法/动词/阳性弱变化动词.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -183,7 +255,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "第二虚拟式"
+              "title": "阳性弱变化动词"
             }
           },
           {
@@ -201,7 +273,7 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -422,13 +494,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+                "file": "语言学习/德语/公共知识语法/动词/阳性弱变化动词.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "语法快查必背语法canvas 的大纲"
+              "title": "阳性弱变化动词 的大纲"
             }
           },
           {
@@ -486,12 +558,18 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "9c44bce0122b382f",
+  "active": "dd8c0de9236cf3b8",
   "lastOpenFiles": [
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/动词/阳性弱变化动词.md",
     "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md",
+    "语言学习/德语/公共知识语法/句型/被动态.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
+    "语言学习/德语/柏林广场视频笔记/A1/40 第四格补足语及定冠词的变化.md",
+    "语言学习/德语/公共知识语法/格/第二格.md",
+    "语言学习/德语/公共知识语法/介词/支配第二格介词.md",
+    "语言学习/德语/公共知识语法/句型/第一分词作定语.md",
     "语言学习/德语/公共知识语法/句型/从句合集/关系从句.md",
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nachdem 在他写完作业之后，他就和朋友们去踢足球了。.md",
@@ -513,12 +591,6 @@
     "assets/Screenshot_20260507_191717_com_eusoft_dehelper_ReciteLearningActivity.jpg",
     "assets/Screenshot_20260507_161011_com_eusoft_dehelper_ReciteLearningActivity.jpg",
     "assets/Screenshot_20260507_142642_com_eusoft_dehelper_ReciteLearningActivity.jpg",
-    "Clippings/你说 以前流行一种说法，假如今天是你活着的最后一天，假如明天你就会死去，或者有一句话叫我们活在当下，.md",
-    "语言学习/德语/公共知识语法/句型/从句合集/时间状语从句.md",
-    "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
-    "语言学习/德语/公共知识语法/句型/句子解析学习/A1到b1阶段所有的语法变格等等时态从句等等将所有的语法应用到这篇文章.md",
-    "定冠词 性 der, das, die.md",
-    "语言学习/德语/公共知识语法/形容词/形容词.md",
     "Clippings",
     "assets/PixPin_2026-05-02_16-46-05.png",
     "assets/PixPin_2026-05-02_16-45-02.png",
