@@ -8950,12 +8950,12 @@
     "scroll": 229.28481345931382,
     "cursor": {
       "from": {
-        "line": 267,
-        "ch": 60
+        "line": 272,
+        "ch": 69
       },
       "to": {
-        "line": 267,
-        "ch": 60
+        "line": 272,
+        "ch": 69
       }
     },
     "expandedKeys": [
@@ -11948,5 +11948,33 @@
     "expandedKeys": [
       "item-1-0"
     ]
+  },
+  "思想思维心理哲学/个人问题处理/泡学/未命名.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 2,
+        "ch": 20
+      },
+      "to": {
+        "line": 2,
+        "ch": 20
+      }
+    },
+    "expandedKeys": []
+  },
+  "思想思维心理哲学/个人问题处理/泡学/泡学视频.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 5,
+        "ch": 44
+      },
+      "to": {
+        "line": 5,
+        "ch": 44
+      }
+    },
+    "expandedKeys": []
   }
 }
