@@ -1,6 +1,11 @@
-Nachdem er die Hausaufgaben geschrieben hatte, ging er mit seinen Freunden Fußball spielen.
+# Nachdem 在他写完作业之后，他就和朋友们去踢足球了。
+
+Nachdem er die Hausaufgaben geschrieben hatte, ging er mit ^zej1ea seinen Freunden Fußball spielen.
+
 ## 修正后的完整句子
+
 [[⭐必背所有知识点整理考察整理#^lzgp5g]]
+
 - Nachdem er die Hausaufgaben geschrieben hatte, ging er mit seinen Freunden Fußball spielen.
     - 在他写完作业之后，他就和朋友们去踢足球了。
 

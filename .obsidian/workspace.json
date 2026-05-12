@@ -33,21 +33,14 @@
               "icon": "lucide-file",
               "title": "⭐必背所有知识点整理考察整理"
             }
-          }
-        ]
-      },
-      {
-        "id": "dd4130c5419b5527",
-        "type": "tabs",
-        "dimension": 57.49539594843463,
-        "children": [
+          },
           {
-            "id": "073f57a9c1b5ddbe",
+            "id": "73ed44402aeb667a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md",
+                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/独立的句子合并为一个带有关系从句的句子.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -62,7 +55,62 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "第二虚拟式"
+              "title": "独立的句子合并为一个带有关系从句的句子"
+            }
+          }
+        ]
+      },
+      {
+        "id": "dd4130c5419b5527",
+        "type": "tabs",
+        "dimension": 57.49539594843463,
+        "children": [
+          {
+            "id": "6834b04b310bd35e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/句型/从句合集/时间状语从句.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "时间状语从句"
+            }
+          },
+          {
+            "id": "073f57a9c1b5ddbe",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/Nachdem 在他写完作业之后，他就和朋友们去踢足球了。.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "Nachdem 在他写完作业之后，他就和朋友们去踢足球了。"
             }
           },
           {
@@ -127,8 +175,7 @@
               "title": "语法快查必背语法canvas"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -349,13 +396,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+                "file": "语言学习/德语/公共知识语法/句型/从句合集/时间状语从句.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "⭐必背所有知识点整理考察整理 的大纲"
+              "title": "时间状语从句 的大纲"
             }
           },
           {
@@ -412,17 +459,22 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "51aa4c53b7c06262",
+  "active": "6834b04b310bd35e",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/句型/句子解析学习/Nachdem 在他写完作业之后，他就和朋友们去踢足球了。.md",
+    "语言学习/德语/公共知识语法/句型/从句合集/时间状语从句.md",
+    "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md",
+    "语言学习/德语/公共知识语法/句型/从句合集/带介词的关系从句中关系代词的性、数、格.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/句型/句子解析学习/独立的句子合并为一个带有关系从句的句子.md",
+    "语言学习/德语/公共知识语法/句型/从句合集/比较从句.md",
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "思想思维心理哲学/个人问题处理/泡学/泡学视频.md",
     "assets/PixPin_2026-05-12_20-46-06.png",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "思想思维心理哲学/个人问题处理/泡学",
     "语言学习/德语/公共知识语法/句型/❌zu的不定式.md",
     "语言学习/德语/公共知识语法/名词/不定式.md",
     "语言学习/德语/公共知识语法/句型/被动态.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "语言学习/德语/柏林广场视频笔记/A2/112 动介搭配.md",
     "语言学习/德语/公共知识语法/动词/阳性弱变化动词.md",
@@ -433,14 +485,10 @@
     "语言学习/德语/公共知识语法/句型/第一分词作定语.md",
     "语言学习/德语/公共知识语法/句型/从句合集/关系从句.md",
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
-    "语言学习/德语/公共知识语法/句型/句子解析学习/Nachdem 在他写完作业之后，他就和朋友们去踢足球了。.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/je ... desto ... 你学习德语越努力，你通过考试的速度就越快。.md",
     "语言学习/德语/柏林广场视频笔记/A1/38可分动词的句子架构.md",
     "语言学习/德语/公共知识语法/动词/lassen.md",
     "网络/项目服务器/虚拟机与docker冲突问题.md",
-    "语言学习/德语/公共知识语法/动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
-    "语言学习/德语/公共知识语法/词/mein.md",
-    "语言学习/德语/公共知识语法/动词/系动词.md",
     "assets/Screenshot_20260507_215111_com_eusoft_dehelper_ReciteLearningActivity.jpg",
     "assets/Screenshot_20260507_202522_com_eusoft_dehelper_ReciteLearningActivity.jpg",
     "assets/Screenshot_20260507_191717_com_eusoft_dehelper_ReciteLearningActivity.jpg",
