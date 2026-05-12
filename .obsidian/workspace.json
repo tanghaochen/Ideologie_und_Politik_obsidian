@@ -71,6 +71,30 @@
             "state": {
               "type": "markdown",
               "state": {
+                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/时间从句 nachdem 与 过去完成时.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "时间从句 nachdem 与 过去完成时"
+            }
+          },
+          {
+            "id": "073f57a9c1b5ddbe",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
                 "file": "语言学习/德语/公共知识语法/句型/从句合集/时间状语从句.md",
                 "mode": "source",
                 "source": false,
@@ -87,30 +111,6 @@
               },
               "icon": "lucide-file",
               "title": "时间状语从句"
-            }
-          },
-          {
-            "id": "073f57a9c1b5ddbe",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/Nachdem 在他写完作业之后，他就和朋友们去踢足球了。.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "Nachdem 在他写完作业之后，他就和朋友们去踢足球了。"
             }
           },
           {
@@ -175,7 +175,8 @@
               "title": "语法快查必背语法canvas"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -459,13 +460,15 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "6834b04b310bd35e",
+  "active": "073f57a9c1b5ddbe",
   "lastOpenFiles": [
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nachdem 在他写完作业之后，他就和朋友们去踢足球了。.md",
+    "语言学习/德语/公共知识语法/句型/句子解析学习/时间从句 nachdem 与 过去完成时.md",
+    "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
     "语言学习/德语/公共知识语法/句型/从句合集/时间状语从句.md",
     "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md",
     "语言学习/德语/公共知识语法/句型/从句合集/带介词的关系从句中关系代词的性、数、格.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/独立的句子合并为一个带有关系从句的句子.md",
     "语言学习/德语/公共知识语法/句型/从句合集/比较从句.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
@@ -487,8 +490,6 @@
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/je ... desto ... 你学习德语越努力，你通过考试的速度就越快。.md",
     "语言学习/德语/柏林广场视频笔记/A1/38可分动词的句子架构.md",
-    "语言学习/德语/公共知识语法/动词/lassen.md",
-    "网络/项目服务器/虚拟机与docker冲突问题.md",
     "assets/Screenshot_20260507_215111_com_eusoft_dehelper_ReciteLearningActivity.jpg",
     "assets/Screenshot_20260507_202522_com_eusoft_dehelper_ReciteLearningActivity.jpg",
     "assets/Screenshot_20260507_191717_com_eusoft_dehelper_ReciteLearningActivity.jpg",
