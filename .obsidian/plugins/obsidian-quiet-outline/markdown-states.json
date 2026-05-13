@@ -12051,12 +12051,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 33,
-        "ch": 48
+        "line": 0,
+        "ch": 37
       },
       "to": {
-        "line": 33,
-        "ch": 48
+        "line": 0,
+        "ch": 37
       }
     },
     "expandedKeys": [
