@@ -79,7 +79,8 @@
               "title": "语法快查必背语法canvas"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -363,8 +364,10 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "38144c596fc37ff3",
+  "active": "9c44bce0122b382f",
   "lastOpenFiles": [
+    "营养学以及养生/平均每天的生活成本.md",
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "2026/20260506.md",
     "国家/出国/德国/学习和证书材料计划.md",
     "assets/PixPin_2026-05-14_16-30-27.png",
@@ -375,7 +378,6 @@
     "zotero/Welcome to Better Notes.md",
     "语言学习/德语/公共知识语法/句型/❌zu的不定式.md",
     "zotero",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "思想思维心理哲学/个人问题处理/泡学/Drawing 2026-05-14 12.13.09.excalidraw.md",
     "assets/Pasted Image 20260514121420_494.png",
     "assets/PixPin_2026-05-14_12-13-57.png",
