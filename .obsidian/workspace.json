@@ -45,12 +45,24 @@
             "id": "38144c596fc37ff3",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "国家/出国/德国/具体申请可视化Canvas.md"
+                "file": "国家/出国/德国/学习和证书材料计划.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "具体申请可视化Canvas"
+              "icon": "lucide-file",
+              "title": "学习和证书材料计划"
             }
           },
           {
@@ -353,6 +365,11 @@
   },
   "active": "38144c596fc37ff3",
   "lastOpenFiles": [
+    "assets/PixPin_2026-05-14_16-30-27.png",
+    "语言学习/德语/学习记录日记-技巧/学习计划.md",
+    "国家/出国/德国/学习和证书材料计划.md",
+    "国家/出国/德国/双元制申请网站对比区别.md",
+    "国家/出国/德国/具体申请可视化Canvas.md",
     "国家/出国/德国/德国双元制.md",
     "zotero/Welcome to Better Notes.md",
     "语言学习/德语/公共知识语法/句型/❌zu的不定式.md",
@@ -383,13 +400,8 @@
     "语言学习/德语/公共知识语法/句型/从句合集/时间状语从句.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nachdem 在他写完作业之后，他就和朋友们去踢足球了。.md",
     "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
-    "语言学习/德语/公共知识语法/句型/从句合集/第二虚拟式.md",
-    "语言学习/德语/公共知识语法/句型/从句合集/带介词的关系从句中关系代词的性、数、格.md",
-    "语言学习/德语/公共知识语法/句型/从句合集/比较从句.md",
-    "思想思维心理哲学/个人问题处理/泡学/泡学视频.md",
     "assets/PixPin_2026-05-12_20-46-06.png",
     "思想思维心理哲学/个人问题处理/泡学",
-    "语言学习/德语/公共知识语法/名词/不定式.md",
     "assets/Screenshot_20260507_215111_com_eusoft_dehelper_ReciteLearningActivity.jpg",
     "Clippings",
     "网络/简述软路由网络逻辑.canvas",

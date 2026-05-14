@@ -206,19 +206,19 @@
     }
   ],
   "markdown:toggle-preview": [],
-  "obsidian-copy-block-link:copy-link-to-block": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "C"
-    }
-  ],
   "workspace:copy-url": [
     {
       "modifiers": [
         "Mod",
         "Shift"
+      ],
+      "key": "C"
+    }
+  ],
+  "obsidian-copy-block-link:copy-link-to-block": [
+    {
+      "modifiers": [
+        "Alt"
       ],
       "key": "C"
     }
