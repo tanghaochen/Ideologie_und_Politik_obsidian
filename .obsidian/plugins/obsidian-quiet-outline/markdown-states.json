@@ -3997,15 +3997,17 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 12,
-        "ch": 8
+        "line": 14,
+        "ch": 6
       },
       "to": {
-        "line": 12,
-        "ch": 8
+        "line": 14,
+        "ch": 6
       }
     },
-    "expandedKeys": []
+    "expandedKeys": [
+      "item-1-0"
+    ]
   },
   "语言学习/德语/德语学习规划.md": {
     "scroll": 0,
@@ -12068,12 +12070,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 10,
-        "ch": 33
+        "line": 20,
+        "ch": 0
       },
       "to": {
-        "line": 10,
-        "ch": 33
+        "line": 20,
+        "ch": 0
       }
     },
     "expandedKeys": [
