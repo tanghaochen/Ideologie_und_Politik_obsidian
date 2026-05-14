@@ -1,5 +1,5 @@
 {
-  "confirmDeletion": true,
+  "confirmDeletion": false,
   "showAddCommand": true,
   "debug": false,
   "editorMenu": [
@@ -19,6 +19,18 @@
       "id": "insert-template",
       "icon": "lucide-copy",
       "name": "模板: 插入模板",
+      "mode": "any"
+    },
+    {
+      "id": "obsidian-copy-block-link:copy-link-to-block",
+      "icon": "lucide-copy",
+      "name": "Copy Block Link: Copy link to current block or heading",
+      "mode": "any"
+    },
+    {
+      "id": "obsidian-advanced-uri:copy-uri-block",
+      "icon": "lucide-copy",
+      "name": "Advanced URI: Copy URI for current block",
       "mode": "any"
     }
   ],
