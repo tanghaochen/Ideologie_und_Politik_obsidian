@@ -1,6 +1,10 @@
 {
   "recentFiles": [
     {
+      "basename": "对话模式",
+      "path": "语言学习/AI提示吃/对话模式.md"
+    },
+    {
       "basename": "语法快查必背语法canvas",
       "path": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
     },
@@ -195,10 +199,6 @@
     {
       "basename": "lassen",
       "path": "语言学习/德语/公共知识语法/动词/lassen.md"
-    },
-    {
-      "basename": "虚拟机与docker冲突问题",
-      "path": "网络/项目服务器/虚拟机与docker冲突问题.md"
     }
   ],
   "omittedPaths": [],

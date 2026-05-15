@@ -127,9 +127,33 @@
               "icon": "excalidraw-icon",
               "title": "语法快查必背语法canvas"
             }
+          },
+          {
+            "id": "317eb4cc1eba3ebd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/AI提示吃/对话模式.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "对话模式"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -350,7 +374,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+                "file": "语言学习/AI提示吃/对话模式.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -360,7 +384,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "语法快查必背语法canvas 的反向链接列表"
+              "title": "对话模式 的反向链接列表"
             }
           },
           {
@@ -420,11 +444,13 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "9c44bce0122b382f",
+  "active": "317eb4cc1eba3ebd",
   "lastOpenFiles": [
+    "语言学习/AI提示吃/对话模式.md",
+    "语言学习/AI提示吃",
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/柏林广场视频笔记/A1/74 情态动词的使用与结构.md",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "assets/PixPin_2026-05-15_20-38-14.png",
     "assets/PixPin_2026-05-15_20-37-36.png",
     "assets/PixPin_2026-05-15_20-37-02.png",
@@ -468,7 +494,6 @@
     "语言学习/德语/公共知识语法/词/短语",
     "语言学习/德语/公共知识语法/词",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch",
-    "语言学习/德语/学习记录日记-技巧/Autobiogragie und Tagebuch",
     "语言学习/德语/学习记录日记-技巧/2026.canvas"
   ]
 }
