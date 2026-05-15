@@ -9,20 +9,6 @@
         "dimension": 42.50460405156537,
         "children": [
           {
-            "id": "bff868f4e1dda155",
-            "type": "leaf",
-            "state": {
-              "type": "split-diff-view",
-              "state": {
-                "aFile": "2026/20260506.md",
-                "bFile": "2026/20260506.md",
-                "aRef": ""
-              },
-              "icon": "diff",
-              "title": "Diff: 20260506  (Working Tree)"
-            }
-          },
-          {
             "id": "15dcc3dfb2ec2c8d",
             "type": "leaf",
             "state": {
@@ -141,8 +127,7 @@
               "title": "语法快查必背语法canvas"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -350,8 +335,7 @@
               "title": "Calendar"
             }
           }
-        ],
-        "currentTab": 5
+        ]
       },
       {
         "id": "28e75bfc7e894da7",
@@ -364,6 +348,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "语言学习/德语/公共知识语法/句型/被动态.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -373,7 +358,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "反向链接"
+              "title": "被动态 的反向链接列表"
             }
           },
           {
@@ -382,11 +367,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "语言学习/德语/公共知识语法/句型/被动态.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "出链"
+              "title": "被动态 的出链列表"
             }
           }
         ]
@@ -433,15 +419,17 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "bff868f4e1dda155",
+  "active": "2430568c7f65a75e",
   "lastOpenFiles": [
-    "2026/20260506.md",
-    "思想思维心理哲学/个人问题处理/什么也不想吃,不想做,不想玩,又穷又忙的感觉.md",
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/公共知识语法/句型/被动态.md",
+    "思想思维心理哲学/个人问题处理/什么也不想吃,不想做,不想玩,又穷又忙的感觉.md",
+    "Pasted image 20260515162836.png",
+    "Pasted image 20260515162858.png",
+    "2026/20260506.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "assets/PixPin_2026-05-15_01-48-25-1.png",
     "语言学习/德语/公共知识语法/句型/❌zu的不定式.md",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/公共知识语法/句型/zu的不定式.md",
     "assets/PixPin_2026-05-15_01-48-25.png",
     "语言学习/德语/公共知识语法/名词/不定式.md",
@@ -463,8 +451,6 @@
     "assets/image-343.png",
     "assets/image-342.png",
     "assets/image-341.png",
-    "assets/image-339.png",
-    "assets/image-338.png",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/公共知识语法/名词/定冠词 性 der, das, die 记忆技巧归类.md",
