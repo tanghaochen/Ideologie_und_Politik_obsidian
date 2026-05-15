@@ -9,6 +9,20 @@
         "dimension": 42.50460405156537,
         "children": [
           {
+            "id": "bff868f4e1dda155",
+            "type": "leaf",
+            "state": {
+              "type": "split-diff-view",
+              "state": {
+                "aFile": "2026/20260506.md",
+                "bFile": "2026/20260506.md",
+                "aRef": ""
+              },
+              "icon": "diff",
+              "title": "Diff: 20260506  (Working Tree)"
+            }
+          },
+          {
             "id": "15dcc3dfb2ec2c8d",
             "type": "leaf",
             "state": {
@@ -58,8 +72,7 @@
               "title": "⭐必背所有知识点整理考察整理"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "dd4130c5419b5527",
@@ -128,7 +141,8 @@
               "title": "语法快查必背语法canvas"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -336,7 +350,8 @@
               "title": "Calendar"
             }
           }
-        ]
+        ],
+        "currentTab": 5
       },
       {
         "id": "28e75bfc7e894da7",
@@ -349,7 +364,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/公共知识语法/句型/被动态.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -359,7 +373,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "被动态 的反向链接列表"
+              "title": "反向链接"
             }
           },
           {
@@ -368,12 +382,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/句型/被动态.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "被动态 的出链列表"
+              "title": "出链"
             }
           }
         ]
@@ -420,10 +433,12 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "2430568c7f65a75e",
+  "active": "bff868f4e1dda155",
   "lastOpenFiles": [
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "2026/20260506.md",
+    "思想思维心理哲学/个人问题处理/什么也不想吃,不想做,不想玩,又穷又忙的感觉.md",
     "语言学习/德语/公共知识语法/句型/被动态.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "assets/PixPin_2026-05-15_01-48-25-1.png",
     "语言学习/德语/公共知识语法/句型/❌zu的不定式.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
@@ -432,9 +447,7 @@
     "语言学习/德语/公共知识语法/名词/不定式.md",
     "语言学习/德语/公共知识语法/句型/从句合集/时间状语从句.md",
     "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
-    "思想思维心理哲学/个人问题处理/什么也不想吃,不想做,不想玩,又穷又忙的感觉.md",
     "营养学以及养生/平均每天的生活成本.md",
-    "2026/20260506.md",
     "国家/出国/德国/学习和证书材料计划.md",
     "assets/PixPin_2026-05-14_16-30-27.png",
     "语言学习/德语/学习记录日记-技巧/学习计划.md",

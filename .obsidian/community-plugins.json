@@ -28,7 +28,6 @@
   "obsidian-style-settings",
   "keyboard-analyzer",
   "obsidian-outliner",
-  "drawio-obsidian",
   "obsidian-copy-block-link",
   "obsidian-custom-frames",
   "obsidian-icon-folder",
@@ -57,12 +56,10 @@
   "obsidian-git",
   "open-tab-settings",
   "pexels-banner",
-  "obsidian-to-anki-plugin",
   "notebook-navigator",
   "file-explorer-plus",
   "cursor-position-history",
   "obsidian-livesync",
   "obsidian-chat-view",
-  "zotlit",
   "obsidian-advanced-uri"
 ]
