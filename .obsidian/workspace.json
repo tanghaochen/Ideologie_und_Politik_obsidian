@@ -96,7 +96,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "电脑、软件、系统/未命名.md",
+                "file": "电脑、软件、系统/pdf 处理.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -111,7 +111,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "未命名"
+              "title": "pdf 处理"
             }
           },
           {
@@ -153,7 +153,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -374,7 +374,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "电脑、软件、系统/未命名.md",
+                "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -384,7 +384,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "未命名 的反向链接列表"
+              "title": "语法快查必背语法canvas 的反向链接列表"
             }
           },
           {
@@ -444,11 +444,11 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "38144c596fc37ff3",
+  "active": "9c44bce0122b382f",
   "lastOpenFiles": [
-    "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
-    "电脑、软件、系统/未命名.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "电脑、软件、系统/pdf 处理.md",
+    "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
     "思想思维心理哲学/个人问题处理/什么也不想吃,不想做,不想玩,又穷又忙的感觉.md",
     "语言学习/AI提示吃/对话模式.md",
     "语言学习/AI提示吃",
