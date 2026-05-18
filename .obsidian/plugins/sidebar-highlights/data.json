@@ -2148,6 +2148,23 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "语言学习/德语/公共知识语法/句型/句子解析学习/wegen-我昨天因为肚子疼 (Bauchschmerzen) 去看医生了。.md": [
+      {
+        "id": "192pq51ng",
+        "text": "主观",
+        "tags": [],
+        "line": 59,
+        "startOffset": 1313,
+        "endOffset": 1355,
+        "filePath": "语言学习/德语/公共知识语法/句型/句子解析学习/wegen-我昨天因为肚子疼 (Bauchschmerzen) 去看医生了。.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1779124495153,
+        "isNativeComment": false,
+        "color": "#ffff00",
+        "type": "html"
+      }
     ]
   },
   "collections": {},
