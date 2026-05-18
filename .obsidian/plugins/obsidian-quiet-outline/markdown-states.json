@@ -11978,12 +11978,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 2,
-        "ch": 20
+        "line": 0,
+        "ch": 0
       },
       "to": {
-        "line": 2,
-        "ch": 20
+        "line": 0,
+        "ch": 0
       }
     },
     "expandedKeys": []
@@ -11992,12 +11992,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 5,
-        "ch": 44
+        "line": 3,
+        "ch": 5
       },
       "to": {
-        "line": 5,
-        "ch": 44
+        "line": 3,
+        "ch": 5
       }
     },
     "expandedKeys": []
@@ -12145,5 +12145,57 @@
       }
     },
     "expandedKeys": []
+  },
+  "思想思维心理哲学/个人问题处理/泡学/知识.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 4,
+        "ch": 0
+      },
+      "to": {
+        "line": 4,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "思想思维心理哲学/个人问题处理/泡学/理论.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 2,
+        "ch": 0
+      },
+      "to": {
+        "line": 2,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "电脑、软件、系统/pdf 处理.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": [
+      "item-1-0",
+      "item-1-3",
+      "item-2-5",
+      "item-1-9",
+      "item-2-11",
+      "item-1-14",
+      "item-1-16",
+      "item-1-19",
+      "item-2-23"
+    ]
   }
 }

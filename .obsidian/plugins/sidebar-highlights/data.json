@@ -2131,6 +2131,23 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "思想思维心理哲学/个人问题处理/泡学/理论.md": [
+      {
+        "id": "rqmto89g8",
+        "text": "本质",
+        "tags": [],
+        "line": 1,
+        "startOffset": 3,
+        "endOffset": 34,
+        "filePath": "思想思维心理哲学/个人问题处理/泡学/理论.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1779117904202,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},
