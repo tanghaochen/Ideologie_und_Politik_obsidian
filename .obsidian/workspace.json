@@ -119,7 +119,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
+                "file": "语言学习/德语/公共知识语法/动词/系动词.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -134,7 +134,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "22 冠词"
+              "title": "系动词"
             }
           },
           {
@@ -143,7 +143,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/名词/名词：性的规律, 不背词性，一眼识别词性.md",
+                "file": "语言学习/德语/单词/动词.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -158,7 +158,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "名词：性的规律, 不背词性，一眼识别词性"
+              "title": "动词"
             }
           },
           {
@@ -285,7 +285,7 @@
       {
         "id": "0ed9c27411998641",
         "type": "tabs",
-        "dimension": 82.79329608938546,
+        "dimension": 85.8659217877095,
         "children": [
           {
             "id": "dd8c0de9236cf3b8",
@@ -412,7 +412,7 @@
       {
         "id": "28e75bfc7e894da7",
         "type": "tabs",
-        "dimension": 17.20670391061453,
+        "dimension": 14.134078212290502,
         "children": [
           {
             "id": "a49850edf51b35c5",
@@ -439,12 +439,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/wegen-我昨天因为肚子疼 (Bauchschmerzen) 去看医生了。.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "语法快查必背语法canvas 的出链列表"
+              "title": "wegen-我昨天因为肚子疼 (Bauchschmerzen) 去看医生了。 的出链列表"
             }
           }
         ]
@@ -490,14 +490,17 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "aa43bc4e3e0432ff",
+  "active": "ff36fbbbf55f4934",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/句型/句子解析学习/不用系动词吗.md",
+    "语言学习/德语/公共知识语法/动词/系动词.md",
+    "语言学习/德语/单词/动词.md",
     "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
+    "语言学习/德语/公共知识语法/名词/名词：性的规律, 不背词性，一眼识别词性.md",
+    "语言学习/德语/公共知识语法/句型/句子解析学习/wegen-我昨天因为肚子疼 (Bauchschmerzen) 去看医生了。.md",
     "思想思维心理哲学/个人问题处理/泡学/知识.md",
     "思想思维心理哲学/个人问题处理/泡学/理论.md",
-    "语言学习/德语/公共知识语法/名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
-    "语言学习/德语/公共知识语法/句型/句子解析学习/wegen-我昨天因为肚子疼 (Bauchschmerzen) 去看医生了。.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "电脑、软件、系统/pdf 处理.md",
     "思想思维心理哲学/个人问题处理/泡学/泡学视频.md",
@@ -526,9 +529,6 @@
     "语言学习/德语/公共知识语法/句型/zu的不定式.md",
     "assets/PixPin_2026-05-15_01-48-25.png",
     "语言学习/德语/公共知识语法/名词/不定式.md",
-    "语言学习/德语/公共知识语法/句型/从句合集/时间状语从句.md",
-    "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
-    "营养学以及养生/平均每天的生活成本.md",
     "assets/PixPin_2026-05-14_16-30-27.png",
     "zotero",
     "思想思维心理哲学/个人问题处理/泡学",
