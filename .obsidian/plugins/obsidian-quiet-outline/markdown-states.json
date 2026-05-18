@@ -12137,11 +12137,11 @@
     "cursor": {
       "from": {
         "line": 10,
-        "ch": 58
+        "ch": 11
       },
       "to": {
-        "line": 7,
-        "ch": 0
+        "line": 10,
+        "ch": 24
       }
     },
     "expandedKeys": []
