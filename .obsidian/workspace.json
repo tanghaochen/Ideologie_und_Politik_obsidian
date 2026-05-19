@@ -9,18 +9,6 @@
         "dimension": 42.50460405156537,
         "children": [
           {
-            "id": "aa43bc4e3e0432ff",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/动词专题.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "动词专题"
-            }
-          },
-          {
             "id": "15dcc3dfb2ec2c8d",
             "type": "leaf",
             "state": {
@@ -409,7 +397,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/单词/动词.md",
+                "file": "语言学习/德语/公共知识语法/动词专题.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -419,7 +407,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "动词 的反向链接列表"
+              "title": "动词专题 的反向链接列表"
             }
           },
           {
@@ -428,12 +416,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/单词/动词.md",
+                "file": "语言学习/德语/公共知识语法/动词专题.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "动词 的出链列表"
+              "title": "动词专题 的出链列表"
             }
           }
         ]
@@ -479,8 +467,50 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "cce2cdbfc2d2dfe3",
+  "floating": {
+    "id": "614e4c409a2d86b4",
+    "type": "floating",
+    "children": [
+      {
+        "id": "48bd0a89179f2551",
+        "type": "window",
+        "children": [
+          {
+            "id": "32b7bb72d211ecc5",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "aa43bc4e3e0432ff",
+                "type": "leaf",
+                "state": {
+                  "type": "excalidraw",
+                  "state": {
+                    "file": "语言学习/德语/公共知识语法/动词专题.md"
+                  },
+                  "icon": "excalidraw-icon",
+                  "title": "动词专题"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "vertical",
+        "x": 790,
+        "y": 0,
+        "width": 980,
+        "height": 1392,
+        "maximize": true,
+        "zoom": -1.5
+      }
+    ]
+  },
+  "active": "aa43bc4e3e0432ff",
   "lastOpenFiles": [
+    "assets/PixPin_2026-05-19_21-04-13.png",
+    "assets/PixPin_2026-05-19_21-03-05.png",
+    "assets/PixPin_2026-05-19_20-56-22.png",
+    "assets/PixPin_2026-05-19_20-52-18.png",
+    "语言学习/德语/单词/动词.md",
     "语言学习/德语/公共知识语法/动词专题.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/公共知识语法/从句专题.md",
@@ -493,15 +523,11 @@
     "assets/PixPin_2026-05-19_19-29-52.png",
     "assets/PixPin_2026-05-19_19-28-55.png",
     "assets/PixPin_2026-05-19_19-27-30.png",
-    "assets/PixPin_2026-05-19_19-27-09.png",
-    "assets/PixPin_2026-05-19_19-04-25.png",
-    "assets/PixPin_2026-05-19_19-02-48.png",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "语言学习/德语/公共知识语法/未命名 1.md",
     "语言学习/德语/公共知识语法/未命名.md",
     "语言学习/德语/公共知识语法/动词/系动词.md",
-    "语言学习/德语/单词/动词.md",
     "语言学习/德语/公共知识语法/句型/时态/时态介绍总结.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/wegen-我昨天因为肚子疼 (Bauchschmerzen) 去看医生了。.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/不用系动词吗.md",
