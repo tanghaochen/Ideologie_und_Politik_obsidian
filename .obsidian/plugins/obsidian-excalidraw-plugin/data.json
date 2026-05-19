@@ -32,7 +32,7 @@
   "annotatePreserveSize": false,
   "displaySVGInPreview": false,
   "previewImageType": "PNG",
-  "renderingConcurrency": 2,
+  "renderingConcurrency": 4,
   "imageCacheRetentionDays": 30,
   "allowImageCache": true,
   "allowImageCacheInScene": true,
@@ -9280,14 +9280,14 @@
         "defaultAction": "new-tab",
         "rules": [
           {
-            "shift": false,
+            "shift": true,
             "ctrl_cmd": true,
-            "alt_opt": false,
+            "alt_opt": true,
             "meta_ctrl": false,
             "result": "active-pane"
           },
           {
-            "shift": false,
+            "shift": true,
             "ctrl_cmd": true,
             "alt_opt": false,
             "meta_ctrl": false,
