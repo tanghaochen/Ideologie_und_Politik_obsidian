@@ -106,8 +106,7 @@
               "title": "人称代词; 疑问代词; 指示代词"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       },
       {
         "id": "dd4130c5419b5527",
@@ -434,7 +433,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/公共知识语法/动词专题.md",
+                "file": "语言学习/德语/公共知识语法/介词.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -444,7 +443,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "动词专题 的反向链接列表"
+              "title": "介词 的反向链接列表"
             }
           },
           {
@@ -453,12 +452,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/动词专题.md",
+                "file": "语言学习/德语/公共知识语法/介词.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "动词专题 的出链列表"
+              "title": "介词 的出链列表"
             }
           }
         ]
@@ -504,12 +503,54 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "ad56795e41dd46cb",
+  "floating": {
+    "id": "614e4c409a2d86b4",
+    "type": "floating",
+    "children": [
+      {
+        "id": "7d8c11f13e1d28cc",
+        "type": "window",
+        "children": [
+          {
+            "id": "d5b727f469f864c8",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "8e0684f63c5d7d4b",
+                "type": "leaf",
+                "state": {
+                  "type": "excalidraw",
+                  "state": {
+                    "file": "语言学习/德语/公共知识语法/介词.md"
+                  },
+                  "icon": "excalidraw-icon",
+                  "title": "介词"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "vertical",
+        "x": 617,
+        "y": 0,
+        "width": 1326,
+        "height": 1392,
+        "maximize": true,
+        "zoom": -1.5
+      }
+    ]
+  },
+  "active": "8e0684f63c5d7d4b",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/动词专题.md",
+    "assets/PixPin_2026-05-19_19-04-25.png",
+    "assets/PixPin_2026-05-19_19-02-48.png",
+    "assets/PixPin_2026-05-19_19-01-32.png",
+    "assets/PixPin_2026-05-19_18-58-04.png",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
-    "思想思维心理哲学/个人问题处理/泡学/知识.md",
+    "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/动词专题.md",
+    "思想思维心理哲学/个人问题处理/泡学/知识.md",
     "assets/Pasted Image 20260519161945_276.png",
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "语言学习/德语/公共知识语法/从句专题.md",
@@ -532,7 +573,6 @@
     "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
     "思想思维心理哲学/个人问题处理/什么也不想吃,不想做,不想玩,又穷又忙的感觉.md",
     "语言学习/AI提示吃",
-    "语言学习/德语/柏林广场视频笔记/A1/74 情态动词的使用与结构.md",
     "assets/PixPin_2026-05-15_20-38-14.png",
     "assets/PixPin_2026-05-15_20-37-36.png",
     "assets/PixPin_2026-05-15_20-37-02.png",
@@ -540,9 +580,6 @@
     "assets/PixPin_2026-05-15_20-34-02.png",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "Pasted image 20260515162836.png",
-    "Pasted image 20260515162858.png",
-    "assets/PixPin_2026-05-15_01-48-25-1.png",
-    "assets/PixPin_2026-05-15_01-48-25.png",
     "zotero",
     "思想思维心理哲学/个人问题处理/泡学",
     "Clippings",
