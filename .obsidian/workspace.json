@@ -309,7 +309,7 @@
       {
         "id": "0ed9c27411998641",
         "type": "tabs",
-        "dimension": 85.8659217877095,
+        "dimension": 85.86592178770951,
         "children": [
           {
             "id": "dd8c0de9236cf3b8",
@@ -443,12 +443,13 @@
               "title": "Calendar"
             }
           }
-        ]
+        ],
+        "currentTab": 6
       },
       {
         "id": "28e75bfc7e894da7",
         "type": "tabs",
-        "dimension": 14.134078212290499,
+        "dimension": 14.134078212290497,
         "children": [
           {
             "id": "a49850edf51b35c5",
@@ -456,7 +457,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
+                "file": "语言学习/德语/公共知识语法/形容词.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -466,7 +467,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "81 形容词和比较级 最高级 与 第一格 的反向链接列表"
+              "title": "形容词 的反向链接列表"
             }
           },
           {
@@ -491,6 +492,8 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "media-extended:打开媒体库": false,
+      "media-extended:打开媒体快速切换器": false,
       "obsidian-livesync:Replicate": false,
       "obsidian-livesync:Show Log": false,
       "sidebar-highlights:Open highlights": false,
@@ -525,10 +528,30 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "16b55a90ebe0cd58",
+  "active": "fc8efd10765ae511",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
+    "语言学习/德语/公共知识语法/形容词.md",
+    "语言学习/德语/Zotero/zotero.sqlite.bak",
+    "语言学习/德语/Zotero/translators/ZoteroBib.js",
+    "语言学习/德语/Zotero/translators/zotero.org.js",
+    "语言学习/德语/Zotero/zotero.sqlite.1.bak",
+    "语言学习/德语/Zotero/translators/Zotero RDF.js",
+    "语言学习/德语/Zotero/zotero.sqlite",
+    "语言学习/德语/Zotero/translators/ZOBODAT.js",
+    "语言学习/德语/Zotero/translators/ZIPonline.js",
+    "语言学习/德语/Zotero/translators/Zhizhen.js",
+    "语言学习/德语/Zotero/translators_CN.json",
+    "语言学习/德语/Zotero/storage/QXK72QBR/image.png",
+    "语言学习/德语/Zotero/storage/6DLVYVQ6/image.png",
+    "语言学习/德语/Zotero/storage/2GXJL8ZI/image.png",
+    "语言学习/德语/Zotero/cache/library/RHV5TQIT.png",
+    "语言学习/德语/Zotero/cache/library/LMX7Y7ZQ.png",
+    "语言学习/德语/Zotero/cache/library/L768GWKJ.png",
+    "语言学习/德语/Zotero/cache/library/HW5IYG3X.png",
+    "语言学习/德语/Zotero/cache/library/GBEAC7G9.png",
+    "语言学习/德语/Zotero/cache/library/BG92AU4B.png",
+    "语言学习/德语/Zotero/cache/library/IYTPVQUG.png",
     "语言学习/德语/公共知识语法/形容词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
     "语言学习/德语/公共知识语法/形容词/形容词.md",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
@@ -542,10 +565,6 @@
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "思想思维心理哲学/个人问题处理/泡学/知识.md",
-    "assets/PixPin_2026-05-20_00-25-06.png",
-    "assets/PixPin_2026-05-20_00-24-22.png",
-    "assets/PixPin_2026-05-20_00-23-15.png",
-    "assets/PixPin_2026-05-20_00-18-28.png",
     "语言学习/德语/公共知识语法/句型/第一分词作定语.md",
     "语言学习/德语/公共知识语法/动词/动词变名词化.md",
     "语言学习/德语/公共知识语法/动词专题.md",
@@ -553,28 +572,11 @@
     "语言学习/德语/公共知识语法/词/支配第二格宾语的动词.md",
     "语言学习/德语/公共知识语法/词/动词、形容词、名词与支配第四格宾语的 介词的固定搭配.md",
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
-    "assets/image-345.png",
-    "assets/image-344.png",
     "语言学习/德语/柏林广场视频笔记/A1/74 情态动词的使用与结构.md",
     "语言学习/德语/单词/动词.md",
-    "assets/PixPin_2026-05-19_21-35-55.png",
-    "assets/PixPin_2026-05-19_21-04-13.png",
-    "assets/PixPin_2026-05-19_21-03-05.png",
-    "assets/PixPin_2026-05-19_20-56-22.png",
     "语言学习/德语/公共知识语法/从句专题.md",
-    "语言学习/德语/公共知识语法/介词.md",
-    "语言学习/AI提示吃",
-    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
-    "zotero",
-    "思想思维心理哲学/个人问题处理/泡学",
-    "Clippings",
     "网络/简述软路由网络逻辑.canvas",
     "未命名.canvas",
-    "未命名.base",
-    "未命名 1.base",
-    "语言学习/德语/公共知识语法/词/短语",
-    "语言学习/德语/公共知识语法/词",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch",
     "语言学习/德语/学习记录日记-技巧/2026.canvas"
   ]
 }
