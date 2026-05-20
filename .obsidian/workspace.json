@@ -223,7 +223,8 @@
               "title": "形容词"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -457,7 +458,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/公共知识语法/形容词.md",
+                "file": "语言学习/德语/公共知识语法/动词/动词变名词化.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -467,7 +468,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "形容词 的反向链接列表"
+              "title": "动词变名词化 的反向链接列表"
             }
           },
           {
@@ -528,7 +529,7 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "fc8efd10765ae511",
+  "active": "30375d68bded95b5",
   "lastOpenFiles": [
     "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
     "语言学习/德语/公共知识语法/形容词.md",
