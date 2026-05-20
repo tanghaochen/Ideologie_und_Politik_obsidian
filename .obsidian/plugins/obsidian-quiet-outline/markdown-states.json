@@ -12379,12 +12379,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 1,
-        "ch": 32
+        "line": 3,
+        "ch": 0
       },
       "to": {
-        "line": 1,
-        "ch": 42
+        "line": 3,
+        "ch": 0
       }
     },
     "expandedKeys": []
