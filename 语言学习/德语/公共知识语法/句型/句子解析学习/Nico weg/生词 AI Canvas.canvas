@@ -1,0 +1,20 @@
+{
+	"nodes":[
+		{"id":"cb93265930018f61","type":"group","x":-70,"y":-333,"width":780,"height":666,"color":"4","label":"raffiniert"},
+		{"id":"a1b2c3d4e5f67890","type":"text","text":"# raffiniert\n\n**核心概念**: 精致，巧妙，有品位。\n\n> [!quote] Context\n> Es darf ruhig ein bisschen **raffiniert** sein.\n> 应该精致一点点。","x":0,"y":-60,"width":280,"height":120},
+		{"id":"b2c3d4e5f6789012","type":"text","text":"## 德语语境\n- **含义**: 精致的，巧妙的，老练的。\n- **语气**: 正面，带有欣赏意味。\n- **用法**: 常形容设计、策略或品味。","x":420,"y":-121,"width":220,"height":100},
+		{"id":"c3d4e5f678901234","type":"text","text":"## 中文对应\n- **翻译**: 精致，精巧，圆滑。\n- **例句**: \"应该精致一点点\"。\n- **情感色彩**: 追求细节与美感。","x":420,"y":163,"width":220,"height":100},
+		{"id":"d4e5f67890123456","type":"text","text":"## 应用场景\n- **设计**: 简约而富有细节。\n- **行为**: 处事得体，不粗鲁。\n- **风格**: 低调的奢华 (Quiet Luxury)。","x":420,"y":-263,"width":220,"height":100},
+		{"id":"e5f6789012345678","type":"text","text":"## 相关词汇\n- **fein**: 精细的\n- **elegant**: 优雅的\n- **anspruchslos**: 无要求的 (反义对比)","x":420,"y":21,"width":220,"height":119}
+	],
+	"edges":[
+		{"id":"f678901234567890","fromNode":"a1b2c3d4e5f67890","fromSide":"right","toNode":"b2c3d4e5f6789012","toSide":"left"},
+		{"id":"0123456789abcdef","fromNode":"a1b2c3d4e5f67890","fromSide":"bottom","toNode":"c3d4e5f678901234","toSide":"top"},
+		{"id":"1234567890abcdef","fromNode":"a1b2c3d4e5f67890","fromSide":"top","toNode":"d4e5f67890123456","toSide":"bottom"},
+		{"id":"2345678901abcdef","fromNode":"a1b2c3d4e5f67890","fromSide":"right","toNode":"e5f6789012345678","toSide":"left"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

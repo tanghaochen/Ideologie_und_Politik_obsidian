@@ -16,14 +16,14 @@
   "openRouterAiApiKey": "",
   "xaiApiKey": "",
   "mistralApiKey": "",
-  "deepseekApiKey": "",
+  "deepseekApiKey": "sk-ef42c839f36a42ffa7ef3161e2c01d85",
   "amazonBedrockApiKey": "",
   "amazonBedrockRegion": "",
   "siliconflowApiKey": "",
   "githubCopilotAccessToken": "",
   "githubCopilotToken": "",
   "githubCopilotTokenExpiresAt": 0,
-  "defaultChainType": "llm_chain",
+  "defaultChainType": "copilot_plus",
   "defaultModelKey": "google/gemini-2.5-flash|openrouterai",
   "embeddingModelKey": "text-embedding-3-small|openai",
   "temperature": 0.1,
@@ -38,7 +38,7 @@
   "autosaveChat": true,
   "generateAIChatTitleOnSave": true,
   "autoAddActiveContentToContext": true,
-  "defaultOpenArea": "view",
+  "defaultOpenArea": "editor",
   "defaultSendShortcut": "enter",
   "customPromptsFolder": "copilot/copilot-custom-prompts",
   "indexVaultToVectorStore": "ON MODE SWITCH",
@@ -209,8 +209,8 @@
       "enabled": true,
       "isBuiltIn": true,
       "capabilities": [
-        "vision",
-        "reasoning"
+        "reasoning",
+        "vision"
       ]
     },
     {
@@ -280,6 +280,16 @@
       "capabilities": [
         "reasoning"
       ]
+    },
+    {
+      "name": "deepseek-v4-flash",
+      "provider": "deepseek",
+      "enabled": true
+    },
+    {
+      "name": "deepseek-v4-pro",
+      "provider": "deepseek",
+      "enabled": true
     }
   ],
   "activeEmbeddingModels": [
@@ -436,7 +446,7 @@
   "enableSavedMemory": true,
   "quickCommandIncludeNoteContext": true,
   "autoIncludeTextSelection": false,
-  "autoAddSelectionToContext": false,
+  "autoAddSelectionToContext": true,
   "autoAcceptEdits": false,
   "diffViewMode": "split",
   "userSystemPromptsFolder": "copilot/system-prompts",

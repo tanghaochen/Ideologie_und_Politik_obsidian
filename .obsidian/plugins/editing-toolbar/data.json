@@ -431,7 +431,7 @@
     "onboardingShown": true,
     "providerMode": "pkmer-first",
     "enableInlineCompletion": true,
-    "inlineCompletionHintLearned": false,
+    "inlineCompletionHintLearned": true,
     "completionTrigger": "manual",
     "completionDelay": 500,
     "enableRewrite": true,
@@ -447,30 +447,32 @@
       "artifact": "03-agent"
     },
     "pkmer": {
-      "tokenExpiresAt": 1779204211630,
+      "tokenExpiresAt": 1779299329541,
       "userInfo": {
         "sub": "e2090030-e955-43d0-85bd-be789294ed52",
         "name": "17678929134",
         "ai_quota": {
-          "quota": 50000000,
-          "usedQuota": 0,
-          "remainingQuota": 50000000,
-          "remainingTokens": 100,
-          "requestCount": 0
+          "quota": 47850000,
+          "usedQuota": 2150000,
+          "remainingQuota": 47850000,
+          "remainingTokens": 95,
+          "requestCount": 7
         },
         "thino": false,
         "supporter": false
       }
     },
-    "enableCustomModel": false,
+    "enableCustomModel": true,
     "customModel": {
-      "apiFormat": "openai-compatible",
+      "apiFormat": "ollama",
       "baseUrl": "",
       "apiKey": "",
       "model": "",
       "temperature": 0.2
     },
-    "customPromptHistory": [],
+    "customPromptHistory": [
+      "翻译"
+    ],
     "customPromptTemplates": [
       {
         "id": "template-demo-variables",
