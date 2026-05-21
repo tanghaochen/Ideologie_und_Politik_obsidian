@@ -1,3 +1,18 @@
+---
+aliases:
+  - ohne
+  - nicht
+  - niemand
+  - keiner
+  - nirgends
+  - nigendwo
+  - nigendwohin
+  - nichts
+  - niemals
+  - noch nie
+  - noch nicht
+---
+
 # 全面讲解否定，nein,kein,nicht等
 
 [[语言学习/德语/公共知识语法/从句专题.md#^gGRzJf6m|100%]]
@@ -396,11 +411,8 @@ flowchart LR
 ---
 
 ### 4. 德语大师的纠错小雷区 ⚡
-
 很多冲刺 B 2 的同学在写邮件时，会犯这样一个错误：
-
 ❌ *Ich weiß nicht.* (德语里很少这么单独说，除非上下文极其明确。)
-
 ✅ 纯正地道的表达应该是：**Ich weiß nichts.** (我什么都不知道。) 或者 **Das weiß ich nicht.** (这件事我不知道。—— 这里的 nicht 否定的是知道 "Das" 这个动作)。
 
 ---
@@ -476,22 +488,22 @@ flowchart TD
 
 ### 📋 补充备注：图片内容完整提取表格
 
-|**表否定的词和词缀**|**官方例句对比 (肯定 vs 否定)**|**大师精讲与实战备注 (原图备注 + 大师解析)**|
-|---|---|---|
-|**nicht**|**肯定**: _Ich kann weiterfahren._<br><br>  <br><br>**否定**: _Ich kann nicht weiterfahren._|**原图备注**：否定整个句子或者一个句子成分。<br><br>  <br><br>🎓 **大师精讲**：它是**“狙击手”**！指哪打哪。放句尾否定整个动作，放特定词前就专门否定那个词。**实战（看病）**：_Das ist nicht mein Magen._ (疼的不是我的胃。)|
-|**kein ...**|**肯定**: _Ich habe eine Karte._<br><br>  <br><br>positiv: _Ich habe Geld._<br><br>  <br><br>**否定**: _Ich habe keine Karte._<br><br>  <br><br>negativ: _Ich habe kein Geld._|**原图备注**：对有不定冠词和无冠词名词的否定，需变格。<br><br>  <br><br>🎓 **大师精讲**：它是**“大盖毯”**！专门捂住带 ein/eine 或光秃秃的名词。记得它要像变色龙一样跟着名词变格！**实战（面试）**：_Ich habe keine Erfahrung._ (我没有经验。)|
-|**ohne**|**肯定**: _mit einer Fahrkarte_<br><br>  <br><br>**否定**: _ohne Fahrkarte_|**原图备注**：ohne + 第四格，通常名词前无冠词。<br><br>  <br><br>🎓 **大师精讲**：介词版的“没有”。在德国办事最怕听到这个词。**实战（外管局）**：_Ohne Termin, keine Anmeldung!_ (没预约，不给办登记！)|
-|**niemand / keiner**|**肯定**: _Jeder kann die Karte kaufen. Alle können sie kaufen._<br><br>  <br><br>**否定**: _Niemand / keiner kann die Karte kaufen._|**原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：对应 Jeder/Alle（每个人/所有人）。指代“绝对没人”。**实战（租房求助）**：_Niemand hilft mir beim Umzug._ (没人帮我搬家。)|
-|**niemand**|**肯定**: _Ich kenne jemand(en) mit Karte._<br><br>  <br><br>**否定**: _Ich kenne niemand(en) mit Karte._|**原图备注**：可变格，非必须。<br><br>  <br><br>🎓 **大师精讲**：对应 jemand（某人）。它是第三格/第四格时可以加 -em/-en，但在现代口语里，德国人常常偷懒不变格，直接说 niemand。|
-|**nirgends / nirgendwo**|**肯定**: _Man findet sie überall._<br><br>  <br><br>**否定**: _Man findet sie nirgends / nirgendwo._|**原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：对应 überall（到处）。表示静态的“哪儿都不在”。**实战（找钥匙）**：_Mein Pass ist nirgendwo!_ (我的护照哪儿都找不到！)|
-|**nirgendwohin**|**肯定**: _Ich kann überallhin fahren._<br><br>  <br><br>**否定**: _Ich kann nirgendwohin fahren._|**原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：带有方向性！hin 表示远离说话者，意思是“不往任何地方去”。疫情封城时的常用语。|
-|**nichts**|**肯定**: _Man bezahlt viel / alles._<br><br>  <br><br>**否定**: _Man bezahlt nichts._|**原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：对应 viel/alles/etwas。万能的“啥也没有”。**实战（听不懂合同时）**：_Ich verstehe nichts._ (我啥也没看懂。)|
-|**nie / niemals**|**肯定**: _Ich kaufe immer eine Karte._<br><br>  <br><br>**否定**: _Ich kaufe nie / niemals eine Karte._|**原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：对应 immer/oft。时间线上的绝对封杀：“从来不”。**实战（表忠心）**：_Ich werde niemals aufgeben!_ (我绝不放弃！)|
-|**noch kein ...**|**肯定**: _Ich habe schon eine Karte gekauft._<br><br>  <br><br>**否定**: _Ich habe noch keine Karte gekauft._|**原图备注**：需变格。<br><br>  <br><br>🎓 **大师精讲**：对应 schon ein... 意思是“目前还没（有）”，但暗示**未来会有**，充满希望！**实战（找工作）**：_Ich habe noch keinen Job._ (我还没工作——但马上就有了。)|
-|**noch nie**|**肯定**: _Ich habe schon immer eine Karte gehabt._<br><br>  <br><br>**否定**: _Ich habe noch nie eine Karte gehabt._|**原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：对应 schon immer。意思是“以前一直都没有过”。表示一种持续到现在的空白状态。|
-|**noch nie / noch nicht**|**肯定**: _Ich war schon (oft) im Ausland._<br><br>  <br><br>**否定**: _Ich war noch nie / noch nicht im Ausland._|**原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：对应 schon (oft)。意思是“至今还没...过”。**实战（聊天破冰）**：_Ich war noch nie in München._ (我从没去过慕尼黑。)|
-|**nicht mehr**|**肯定**: _Fährst du noch los?_<br><br>  <br><br>**否定**: _Ich fahre nicht mehr los._|**原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：对应 noch。意思是动作或状态的**终止**：“不再...”。**实战（辞职/搬家）**：_Ich arbeite nicht mehr hier._ (我不在这儿干了。)|
-|**kein ... mehr**|**肯定**: _Ich habe noch eine Karte._<br><br>  <br><br>**否定**: _Ich habe keine (Karte) mehr._|**原图备注**：需变格。<br><br>  <br><br>🎓 **大师精讲**：对应 noch ein... 意思是物品的**耗尽**：“不再有...”。**实战（月底哭穷）**：_Ich habe kein Geld mehr._ (我一分钱都没了。)|
-|**un-**|**肯定**: _Meine Karte ist gültig._<br><br>  <br><br>**否定**: _Meine Karte ist ungültig._|**原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：最接地气的否定前缀！直接粘在形容词前面。_wichtig_ (重要) 变成 _unwichtig_ (不重要)。|
-|**in-**|**肯定**: _Er ist tolerant._<br><br>  <br><br>**否定**: _Er ist intolerant._|**原图备注**：仅适用于外来词。<br><br>  <br><br>🎓 **大师精讲**：专治英语或拉丁语借词。遇到长得像英语的词，用 in- 否定通常没错。|
-|**-los**|**肯定**: _Ich habe Fantasie._<br><br>  <br><br>**否定**: _Ich bin fantasielos._|**原图备注**：-los 含贬义。中性的表达是：_Ich habe keine Fantasie._<br><br>  <br><br>🎓 **大师精讲**：相当于英语的 -less，意思是“失去...的，毫无...的”。**实战（非常重要）**：_arbeitslos_ (失业的), _obdachlos_ (无家可归的)。自带一点消极或缺乏的色彩。|
+| **表否定的词和词缀**              | **官方例句对比 (肯定 vs 否定)**                                                                                                                                                      | **大师精讲与实战备注 (原图备注 + 大师解析)**                                                                                                                                                         |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **nicht**                 | **肯定**: _Ich kann weiterfahren._<br><br>  <br><br>**否定**: _Ich kann nicht weiterfahren._                                                                                   | **原图备注**：否定整个句子或者一个句子成分。<br><br>  <br><br>🎓 **大师精讲**：它是**“狙击手”**！指哪打哪。放句尾否定整个动作，放特定词前就专门否定那个词。**实战（看病）**：_Das ist nicht mein Magen._ (疼的不是我的胃。)                                    |
+| **kein ...**              | **肯定**: _Ich habe eine Karte._<br><br>  <br><br>positiv: _Ich habe Geld._<br><br>  <br><br>**否定**: _Ich habe keine Karte._<br><br>  <br><br>negativ: _Ich habe kein Geld._ | **原图备注**：对有不定冠词和无冠词名词的否定，需变格。<br><br>  <br><br>🎓 **大师精讲**：它是**“大盖毯”**！专门捂住带 ein/eine 或光秃秃的名词。记得它要像变色龙一样跟着名词变格！**实战（面试）**：_Ich habe keine Erfahrung._ (我没有经验。)                      |
+| **ohne**                  | **肯定**: _mit einer Fahrkarte_<br><br>  <br><br>**否定**: _ohne Fahrkarte_                                                                                                    | **原图备注**：ohne + 第四格，通常名词前无冠词。<br><br>  <br><br>🎓 **大师精讲**：<font color="#d83931">介词版的“没有”</font>。在德国办事最怕听到这个词。**实战（外管局）**：_Ohne Termin, keine Anmeldung!_ (没预约，不给办登记！)              |
+| **niemand / keiner**      | **肯定**: _Jeder kann die Karte kaufen. Alle können sie kaufen._<br><br>  <br><br>**否定**: _Niemand / keiner kann die Karte kaufen._                                          | **原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：<font color="#d83931">对应 Jeder/Alle</font>（每个人/所有人）。指代“绝对没人”。**实战（租房求助）**：_Niemand hilft mir beim Umzug._ (没人帮我搬家。)                       |
+| **niemand**               | **肯定**: _Ich kenne jemand(en) mit Karte._<br><br>  <br><br>**否定**: _Ich kenne niemand(en) mit Karte._                                                                      | **原图备注**：可变格，非必须。<br><br>  <br><br>🎓 **大师精讲**：<font color="#d83931">对应 jemand（某人）</font>。它是第三格/第四格时可以加 -em/-en，但在现代口语里，德国人常常偷懒不变格，直接说 niemand。                                     |
+| **nirgends / nirgendwo**  | **肯定**: _Man findet sie überall._<br><br>  <br><br>**否定**: _Man findet sie nirgends / nirgendwo._                                                                          | **原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：<font color="#d83931">对应 überall（到处）</font>。表示静态的“哪儿都不在”。**实战（找钥匙）**：_Mein Pass ist nirgendwo!_ (我的护照哪儿都找不到！)                             |
+| **nirgendwohin**          | **肯定**: _Ich kann überallhin fahren._<br><br>**否定**: _Ich kann nirgendwohin fahren._不往任何地方去                                                                                | **原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：带有方向性！hin 表示远离说话者，意思是“不往任何地方去”。疫情封城时的常用语。                                                                                                 |
+| **nichts**                | **肯定**: _Man bezahlt viel / alles._<br><br>  <br><br>**否定**: _Man bezahlt nichts._                                                                                         | **原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：对应 viel/alles/etwas。万能的“啥也没有”。**实战（听不懂合同时）**：_Ich verstehe nichts._ (我啥也没看懂。)                                                             |
+| **nie / niemals**         | **肯定**: _Ich kaufe immer eine Karte._<br><br>  <br><br>**否定**: _Ich kaufe nie / niemals eine Karte._                                                                       | **原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：<font color="#d83931">对应 immer/oft。时间线上的绝对封杀：“从来不”</font>。**实战（表忠心）**：_Ich werde niemals aufgeben!_ (我绝不放弃！)                              |
+| **noch kein ...**         | **肯定**: _Ich habe schon eine Karte gekauft._<br><br>  <br><br>**否定**: _Ich habe noch keine Karte gekauft._                                                                 | **原图备注**：需变格。<br><br>  <br><br>🎓 **大师精讲**：对应<font color="#d83931"> schon ein... 意思是“目前还没（有）”，但暗示**未来会有**</font>，充满希望！**实战（找工作）**：_Ich habe noch keinen Job._ (我还没工作——但马上就有了。)      |
+| **noch nie**              | **肯定**: _Ich habe schon immer eine Karte gehabt._<br><br>  <br><br>**否定**: _Ich habe noch nie eine Karte gehabt._                                                          | **原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：对应 schon immer。意思是“<font color="#d83931">以前一直都没有过”。表示一种持续到现在的空白状态。</font>                                                                 |
+| **noch nie / noch nicht** | **肯定**: _Ich war schon (oft) im Ausland._<br><br>  <br><br>**否定**: _Ich war noch nie / noch nicht im Ausland._                                                             | **原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：对应 schon (oft)。意思是“至今还没...过”。**实战（聊天破冰）**：_Ich war noch nie in München._ (我从没去过慕尼黑。)                                                      |
+| **nicht mehr**            | **肯定**: _Fährst du noch los?_<br><br> <br><br>**否定**: _Ich fahre nicht mehr los._<br><br><br><br>                                                                          | **原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：对应 noch。意思<font color="#d83931">是动作或状态的**终止**：“不再...”。</font>**实战（辞职/搬家）**：_Ich arbeite nicht mehr hier._ (我不在这儿干了。)                      |
+| **kein ... mehr**         | **肯定**: _Ich habe noch eine Karte._<br><br>  <br><br>**否定**: _Ich habe keine (Karte) mehr._                                                                                | **原图备注**：需变格。<br><br>  <br><br>🎓 **大师精讲**：对应 noch ein... 意思是<font color="#d83931">物品的**耗尽**：“不再有...”。</font>**实战（月底哭穷）**：_Ich habe kein Geld mehr._ (我一分钱都没了。)                     |
+| **un-**                   | **肯定**: _Meine Karte ist gültig._<br><br>  <br><br>**否定**: _Meine Karte ist ungültig._                                                                                     | **原图备注**：(无)<br><br>  <br><br>🎓 **大师精讲**：最接地气的否定前缀！直接<font color="#d83931">粘在形容词前面</font>。_wichtig_ (重要) 变成 _unwichtig_ (不重要)。                                                     |
+| **in-**                   | **肯定**: _Er ist tolerant._<br><br>  <br><br>**否定**: _Er ist intolerant._                                                                                                   | **原图备注**：仅适用于==外来词==。<br><br>  <br><br>🎓 **大师精讲**：专治英语或拉丁语借词。遇到<font color="#d83931">长得像英语的词，用 in- </font>否定通常没错。                                                                  |
+| **-los**                  | **肯定**: _Ich habe Fantasie._<br><br>  <br><br>**否定**: _Ich bin fantasielos._                                                                                               | **原图备注**：-los 含贬义。中性的表达是：_Ich habe keine Fantasie._<br><br>  <br><br>🎓 **大师精讲**：相当于英语的 -less，意思是“失去...的，毫无...的”。**实战（非常重要）**：_arbeitslos_ (失业的), _obdachlos_ (无家可归的)。自带一点消极或缺乏的色彩。 |

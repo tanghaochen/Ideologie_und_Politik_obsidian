@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 34.59037711313394,
+        "dimension": 51.40096618357488,
         "children": [
           {
             "id": "3b0a475c8502e84b",
@@ -88,7 +88,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 65.40962288686606,
+        "dimension": 48.59903381642513,
         "children": [
           {
             "id": "16b55a90ebe0cd58",
@@ -144,7 +144,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/句型/全面讲解否定，nein,kein,nicht等.md",
+                "file": "语言学习/德语/公共知识语法/句型/Irgend.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -159,10 +159,11 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "全面讲解否定，nein,kein,nicht等"
+              "title": "Irgend"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -386,10 +387,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md"
+                "file": "语言学习/德语/公共知识语法/从句专题.md"
               },
               "icon": "lucide-info",
-              "title": "81 形容词和比较级 最高级 与 第一格的笔记属性"
+              "title": "从句专题的笔记属性"
             }
           }
         ]
@@ -405,7 +406,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
+                "file": "语言学习/德语/公共知识语法/从句专题.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -415,7 +416,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "81 形容词和比较级 最高级 与 第一格 的反向链接列表"
+              "title": "从句专题 的反向链接列表"
             }
           },
           {
@@ -424,12 +425,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
+                "file": "语言学习/德语/公共知识语法/从句专题.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "81 形容词和比较级 最高级 与 第一格 的出链列表"
+              "title": "从句专题 的出链列表"
             }
           },
           {
@@ -491,13 +492,17 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "16b55a90ebe0cd58",
+  "active": "317eb4cc1eba3ebd",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/动词.md",
+    "语言学习/德语/公共知识语法/句型/Irgend.md",
     "语言学习/德语/公共知识语法/从句专题.md",
+    "语言学习/德语/公共知识语法/动词.md",
+    "assets/PixPin_2026-05-21_17-09-26.png",
     "语言学习/德语/公共知识语法/句型/全面讲解否定，nein,kein,nicht等.md",
-    "Clippings/‎Google Gemini 1.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "assets/PixPin_2026-05-21_17-06-59.png",
+    "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
+    "Clippings/‎Google Gemini 1.md",
     "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
     "assets/PixPin_2026-05-21_20-22-08.png",
     "语言学习/德语/公共知识语法/形容词/形容词.md",
@@ -514,8 +519,6 @@
     "语言学习/德语/柏林广场视频笔记/A2/112 动介搭配.md",
     "语言学习/德语/公共知识语法/名词/定冠词 性 der, das, die 记忆技巧归类.md",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
-    "assets/PixPin_2026-05-21_19-19-19.png",
-    "assets/PixPin_2026-05-21_19-19-10.png",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/公共知识语法/1 德语语序.md",
@@ -526,9 +529,6 @@
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/公共知识语法/名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/Drawing 2026-05-21 15.50.17.excalidraw.md",
-    "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/生词.md",
-    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
-    "语言学习/德语/公共知识语法/未命名 1.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/未命名.base",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg",
