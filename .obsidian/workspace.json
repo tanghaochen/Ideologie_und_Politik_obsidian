@@ -137,9 +137,32 @@
               "icon": "excalidraw-icon",
               "title": "从句专题"
             }
+          },
+          {
+            "id": "aeb7270ae38f30ad",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/句型/全面讲解否定，nein,kein,nicht等.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "全面讲解否定，nein,kein,nicht等"
+            }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -363,14 +386,13 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "语言学习/德语/公共知识语法/从句专题.md"
+                "file": "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md"
               },
               "icon": "lucide-info",
-              "title": "从句专题的笔记属性"
+              "title": "81 形容词和比较级 最高级 与 第一格的笔记属性"
             }
           }
-        ],
-        "currentTab": 11
+        ]
       },
       {
         "id": "28e75bfc7e894da7",
@@ -383,7 +405,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/公共知识语法/从句专题.md",
+                "file": "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -393,7 +415,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "从句专题 的反向链接列表"
+              "title": "81 形容词和比较级 最高级 与 第一格 的反向链接列表"
             }
           },
           {
@@ -402,12 +424,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/词/动词、形容词、名词与介词的固定搭配.md",
+                "file": "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "动词、形容词、名词与介词的固定搭配 的出链列表"
+              "title": "81 形容词和比较级 最高级 与 第一格 的出链列表"
             }
           },
           {
@@ -425,7 +447,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -469,10 +491,12 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "317eb4cc1eba3ebd",
+  "active": "16b55a90ebe0cd58",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/公共知识语法/从句专题.md",
+    "语言学习/德语/公共知识语法/句型/全面讲解否定，nein,kein,nicht等.md",
+    "Clippings/‎Google Gemini 1.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
     "assets/PixPin_2026-05-21_20-22-08.png",
@@ -505,8 +529,6 @@
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/生词.md",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "语言学习/德语/公共知识语法/未命名 1.md",
-    "语言学习/德语/公共知识语法/未命名 2.md",
-    "Excalidraw/Drawing 2026-05-21 15.24.26.excalidraw.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/未命名.base",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg",

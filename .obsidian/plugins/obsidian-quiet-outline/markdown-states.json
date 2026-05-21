@@ -6930,15 +6930,15 @@
     "expandedKeys": []
   },
   "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md": {
-    "scroll": 0,
+    "scroll": 336.4154948723405,
     "cursor": {
       "from": {
-        "line": 7,
-        "ch": 0
+        "line": 369,
+        "ch": 171
       },
       "to": {
-        "line": 7,
-        "ch": 0
+        "line": 369,
+        "ch": 171
       }
     },
     "expandedKeys": [
@@ -8556,15 +8556,15 @@
     "expandedKeys": []
   },
   "语言学习/德语/公共知识语法/句型/全面讲解否定，nein,kein,nicht等.md": {
-    "scroll": 170.9062449945027,
+    "scroll": 0,
     "cursor": {
       "from": {
-        "line": 199,
-        "ch": 0
+        "line": 4,
+        "ch": 116
       },
       "to": {
-        "line": 199,
-        "ch": 0
+        "line": 4,
+        "ch": 116
       }
     },
     "expandedKeys": [
@@ -8572,7 +8572,9 @@
       "item-2-5",
       "item-3-9",
       "item-1-15",
-      "item-2-16"
+      "item-2-16",
+      "item-1-22",
+      "item-3-23"
     ]
   },
   "语言学习/德语/公共知识语法/句型/倒装句.md": {
@@ -8970,11 +8972,11 @@
     "scroll": 218.10133733152196,
     "cursor": {
       "from": {
-        "line": 196,
-        "ch": 6
+        "line": 248,
+        "ch": 44
       },
       "to": {
-        "line": 196,
+        "line": 248,
         "ch": 6
       }
     },
@@ -12455,6 +12457,20 @@
       "to": {
         "line": 6,
         "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "Clippings/‎Google Gemini 1.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 11,
+        "ch": 0
+      },
+      "to": {
+        "line": 30,
+        "ch": 250
       }
     },
     "expandedKeys": []
