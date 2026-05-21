@@ -9,17 +9,15 @@
         "dimension": 47.594278283485046,
         "children": [
           {
-            "id": "2f6a2ab55f8e1db8",
+            "id": "d5f4f95b76541456",
             "type": "leaf",
-            "pinned": true,
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/形容词.md"
+                "file": "语言学习/德语/公共知识语法/名词专题.md"
               },
-              "pinned": true,
               "icon": "excalidraw-icon",
-              "title": "形容词"
+              "title": "名词专题"
             }
           },
           {
@@ -152,51 +150,15 @@
             }
           },
           {
-            "id": "cce2cdbfc2d2dfe3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/词/支配第二格宾语的动词.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "支配第二格宾语的动词"
-            }
-          },
-          {
             "id": "30375d68bded95b5",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/生词.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
+                "file": "语言学习/德语/公共知识语法/格;代词.md"
               },
-              "icon": "lucide-file",
-              "title": "生词"
+              "icon": "excalidraw-icon",
+              "title": "格;代词"
             }
           },
           {
@@ -224,7 +186,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -454,8 +416,7 @@
               "title": "Advanced Tables"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       },
       {
         "id": "28e75bfc7e894da7",
@@ -468,7 +429,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/生词.md",
+                "file": "语言学习/德语/公共知识语法/格;代词.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -478,7 +439,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "生词 的反向链接列表"
+              "title": "格;代词 的反向链接列表"
             }
           },
           {
@@ -541,16 +502,38 @@
   },
   "active": "30375d68bded95b5",
   "lastOpenFiles": [
-    "copilot/copilot-conversations/raffiniert注释翻译失败@20260521_005049.md",
+    "assets/PixPin_2026-05-21_15-57-57.png",
+    "语言学习/德语/公共知识语法/名词专题.md",
+    "assets/PixPin_2026-05-21_15-57-12.png",
+    "语言学习/德语/公共知识语法/格;代词.md",
+    "assets/PixPin_2026-05-21_15-53-30.png",
+    "语言学习/德语/公共知识语法/形容词/形容词.md",
+    "assets/PixPin_2026-05-21_15-51-23.png",
+    "语言学习/德语/公共知识语法/未命名.md",
+    "语言学习/德语/公共知识语法/Drawing 2026-05-21 15.50.17.excalidraw.md",
+    "语言学习/德语/公共知识语法/语法流程化梳理.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/生词.md",
-    "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
+    "语言学习/德语/公共知识语法/名词/名词：性的规律, 不背词性，一眼识别词性.md",
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "assets/PixPin_2026-05-21_15-46-22.png",
+    "assets/PixPin_2026-05-21_15-33-47.png",
+    "语言学习/德语/公共知识语法/形容词.md",
+    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
+    "语言学习/德语/公共知识语法/未命名 1.md",
+    "语言学习/德语/公共知识语法/未命名 2.md",
+    "语言学习/德语/公共知识语法/名词.md",
+    "语言学习/德语/柏林广场视频笔记/A2/112 动介搭配.md",
+    "Excalidraw/Drawing 2026-05-21 15.24.26.excalidraw.md",
     "语言学习/德语/公共知识语法/词/支配第二格宾语的动词.md",
+    "语言学习/德语/公共知识语法/介词.md",
+    "copilot/copilot-conversations/raffiniert注释翻译失败@20260521_005049.md",
+    "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/未命名.base",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/1.md",
     "语言学习/德语/公共知识语法/动词/动词变名词化.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg",
     "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
-    "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/Zotero/zotero.sqlite.bak",
     "语言学习/德语/Zotero/translators/ZoteroBib.js",
     "语言学习/德语/Zotero/translators/zotero.org.js",
@@ -564,30 +547,8 @@
     "语言学习/德语/Zotero/storage/2GXJL8ZI/image.png",
     "语言学习/德语/Zotero/cache/library/RHV5TQIT.png",
     "语言学习/德语/Zotero/cache/library/LMX7Y7ZQ.png",
-    "语言学习/德语/Zotero/cache/library/L768GWKJ.png",
-    "语言学习/德语/Zotero/cache/library/HW5IYG3X.png",
-    "语言学习/德语/Zotero/cache/library/GBEAC7G9.png",
-    "语言学习/德语/Zotero/cache/library/BG92AU4B.png",
-    "语言学习/德语/Zotero/cache/library/IYTPVQUG.png",
     "语言学习/德语/公共知识语法/形容词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
-    "语言学习/德语/公共知识语法/形容词/形容词.md",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
-    "语言学习/德语/柏林广场视频笔记/A2/112 动介搭配.md",
-    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
-    "语言学习/德语/公共知识语法/名词/定冠词 性 der, das, die 记忆技巧归类.md",
-    "语言学习/德语/柏林广场视频笔记/A1/124 方位介词.md",
-    "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
-    "语言学习/德语/公共知识语法/名词/阳性弱变化名词.md",
-    "语言学习/德语/柏林广场视频笔记/A1/82 形容词 副词用法总结.md",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "思想思维心理哲学/个人问题处理/泡学/知识.md",
-    "语言学习/德语/公共知识语法/句型/第一分词作定语.md",
-    "语言学习/德语/公共知识语法/动词专题.md",
-    "语言学习/德语/公共知识语法/动词/系动词.md",
-    "语言学习/德语/公共知识语法/词/动词、形容词、名词与支配第四格宾语的 介词的固定搭配.md",
-    "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
-    "语言学习/德语/柏林广场视频笔记/A1/74 情态动词的使用与结构.md",
     "网络/简述软路由网络逻辑.canvas",
     "未命名.canvas",
     "语言学习/德语/学习记录日记-技巧/2026.canvas"

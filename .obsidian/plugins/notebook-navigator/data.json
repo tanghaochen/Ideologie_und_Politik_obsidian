@@ -40,6 +40,10 @@
         {
           "type": "folder",
           "path": "语言学习/德语/公共知识语法/句型/句子解析学习"
+        },
+        {
+          "type": "note",
+          "path": "语言学习/德语/公共知识语法/语法流程化梳理.md"
         }
       ],
       "navRainbow": {
@@ -524,7 +528,12 @@
     "思想思维心理哲学/个人人生思想架构.md": "excalidraw-icon",
     "经济学/投资方式/投资方法/经济数据.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/动词专题.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/从句专题.md": "excalidraw-icon"
+    "语言学习/德语/公共知识语法/从句专题.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/形容词.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/介词.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/名词专题.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/语法流程化梳理.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/格;代词.md": "excalidraw-icon"
   },
   "fileColors": {},
   "fileBackgroundColors": {},
@@ -538,7 +547,8 @@
   },
   "folderColors": {},
   "folderBackgroundColors": {
-    "国家": "#00000000"
+    "国家": "#00000000",
+    "语言学习/德语/公共知识语法": "#22c55e30"
   },
   "folderSortOverrides": {
     "语言学习/德语/柏林广场视频笔记/A1": "title-asc"
@@ -547,6 +557,12 @@
   "folderAppearances": {
     "2026": {
       "previewRows": 1
+    },
+    "语言学习/德语/公共知识语法": {
+      "groupBy": "custom"
+    },
+    "语言学习/德语": {
+      "groupBy": "custom"
     }
   },
   "tagIcons": {},
