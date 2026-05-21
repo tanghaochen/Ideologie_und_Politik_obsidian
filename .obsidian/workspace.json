@@ -143,10 +143,10 @@
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/从句专题.md"
+                "file": "语言学习/德语/公共知识语法/动词.md"
               },
               "icon": "excalidraw-icon",
-              "title": "从句专题"
+              "title": "动词"
             }
           },
           {
@@ -398,10 +398,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "语言学习/德语/公共知识语法/从句专题.md"
+                "file": "语言学习/德语/公共知识语法/动词.md"
               },
               "icon": "lucide-info",
-              "title": "从句专题的笔记属性"
+              "title": "动词的笔记属性"
             }
           }
         ],
@@ -418,7 +418,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/公共知识语法/从句专题.md",
+                "file": "语言学习/德语/公共知识语法/动词.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -428,7 +428,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "从句专题 的反向链接列表"
+              "title": "动词 的反向链接列表"
             }
           },
           {
@@ -506,9 +506,13 @@
   },
   "active": "30375d68bded95b5",
   "lastOpenFiles": [
+    "assets/PixPin_2026-05-21_20-12-34.png",
+    "assets/PixPin_2026-05-21_20-12-25.png",
+    "assets/PixPin_2026-05-21_20-12-07.png",
+    "assets/PixPin_2026-05-21_20-10-29.png",
+    "语言学习/德语/公共知识语法/从句专题.md",
     "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/公共知识语法/名词.md",
-    "语言学习/德语/公共知识语法/从句专题.md",
     "语言学习/德语/公共知识语法/时态.md",
     "语言学习/德语/公共知识语法/其他句式.md",
     "语言学习/德语/公共知识语法/形容词/形容词.md",
@@ -522,9 +526,6 @@
     "assets/PixPin_2026-05-21_19-18-41.png",
     "assets/PixPin_2026-05-21_19-18-24.png",
     "assets/PixPin_2026-05-21_19-18-16.png",
-    "assets/PixPin_2026-05-21_19-18-06.png",
-    "assets/PixPin_2026-05-21_19-17-55.png",
-    "assets/PixPin_2026-05-21_19-17-28.png",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/公共知识语法/1 德语语序.md",
