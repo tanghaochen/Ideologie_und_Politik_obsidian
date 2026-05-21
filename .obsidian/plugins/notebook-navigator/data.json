@@ -489,32 +489,12 @@
   },
   "customVaultName": "",
   "pinnedNotes": {
-    "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md": {
-      "folder": true,
-      "tag": false,
-      "property": false
-    },
     "经济学/投资方式/投资方法/汇率逻辑Canvas.md": {
       "folder": true,
       "tag": false,
       "property": false
     },
     "语言学习/德语/⭐必背所有知识点整理考察整理.md": {
-      "folder": true,
-      "tag": false,
-      "property": false
-    },
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md": {
-      "folder": true,
-      "tag": false,
-      "property": false
-    },
-    "语言学习/德语/公共知识语法/动词专题.md": {
-      "folder": true,
-      "tag": false,
-      "property": false
-    },
-    "语言学习/德语/公共知识语法/从句专题.md": {
       "folder": true,
       "tag": false,
       "property": false
@@ -527,14 +507,16 @@
     "语言学习/德语/公共知识语法/动词/动词专题canvas.md": "excalidraw-icon",
     "思想思维心理哲学/个人人生思想架构.md": "excalidraw-icon",
     "经济学/投资方式/投资方法/经济数据.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/动词专题.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/从句专题.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/形容词.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/介词.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/语法流程化梳理.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/格;代词.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/名词.md": "excalidraw-icon"
+    "语言学习/德语/公共知识语法/名词.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/时态.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/动词.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/其他句式.md": "excalidraw-icon"
   },
   "fileColors": {},
   "fileBackgroundColors": {},
