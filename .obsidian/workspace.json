@@ -12,12 +12,24 @@
             "id": "d5f4f95b76541456",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/名词专题.md"
+                "file": "语言学习/德语/公共知识语法/语法流程化梳理.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "excalidraw-icon",
-              "title": "名词专题"
+              "icon": "lucide-file",
+              "title": "语法流程化梳理"
             }
           },
           {
@@ -118,7 +130,8 @@
               "title": "人称代词; 疑问代词; 指示代词"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       },
       {
         "id": "dd4130c5419b5527",
@@ -155,10 +168,10 @@
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格;代词.md"
+                "file": "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md"
               },
               "icon": "excalidraw-icon",
-              "title": "格;代词"
+              "title": "⭐✍️DE语法总汇CanvasCanvas"
             }
           },
           {
@@ -238,7 +251,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "[\"aliases\"]",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -360,18 +373,6 @@
             }
           },
           {
-            "id": "c3592eded90586bf",
-            "type": "leaf",
-            "state": {
-              "type": "file-properties",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/时间从句 nachdem 与 过去完成时.md"
-              },
-              "icon": "lucide-info",
-              "title": "时间从句 nachdem 与 过去完成时的笔记属性"
-            }
-          },
-          {
             "id": "2cc3d386c974b5b6",
             "type": "leaf",
             "state": {
@@ -415,8 +416,21 @@
               "icon": "spreadsheet",
               "title": "Advanced Tables"
             }
+          },
+          {
+            "id": "cf2b910cbf6b6677",
+            "type": "leaf",
+            "state": {
+              "type": "file-properties",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md"
+              },
+              "icon": "lucide-info",
+              "title": "⭐✍️DE语法总汇CanvasCanvas的笔记属性"
+            }
           }
-        ]
+        ],
+        "currentTab": 11
       },
       {
         "id": "28e75bfc7e894da7",
@@ -429,7 +443,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格;代词.md",
+                "file": "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -439,7 +453,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "格;代词 的反向链接列表"
+              "title": "⭐✍️DE语法总汇CanvasCanvas 的反向链接列表"
             }
           },
           {
@@ -455,8 +469,23 @@
               "icon": "links-going-out",
               "title": "动词、形容词、名词与介词的固定搭配 的出链列表"
             }
+          },
+          {
+            "id": "c3592eded90586bf",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "file-properties",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
+              },
+              "pinned": true,
+              "icon": "lucide-info",
+              "title": "语法快查必背语法canvas的笔记属性"
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
@@ -500,24 +529,33 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "30375d68bded95b5",
+  "active": "cf2b910cbf6b6677",
   "lastOpenFiles": [
-    "assets/PixPin_2026-05-21_15-57-57.png",
-    "语言学习/德语/公共知识语法/名词专题.md",
-    "assets/PixPin_2026-05-21_15-57-12.png",
+    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
+    "语言学习/德语/公共知识语法/名词/定冠词 性 der, das, die 记忆技巧归类.md",
+    "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
+    "语言学习/德语/公共知识语法/动词专题.md",
+    "语言学习/德语/公共知识语法/名词/名词：性的规律, 不背词性，一眼识别词性.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/公共知识语法/格;代词.md",
-    "assets/PixPin_2026-05-21_15-53-30.png",
+    "语言学习/德语/公共知识语法/从句专题.md",
+    "assets/PixPin_2026-05-21_16-26-33.png",
+    "assets/PixPin_2026-05-21_16-25-57.png",
+    "assets/PixPin_2026-05-21_16-25-03.png",
+    "assets/PixPin_2026-05-21_16-24-41.png",
+    "语言学习/德语/公共知识语法/语法流程化梳理.md",
+    "语言学习/德语/公共知识语法/名词专题.md",
+    "assets/PixPin_2026-05-21_16-21-37.png",
+    "assets/PixPin_2026-05-21_16-21-09.png",
+    "assets/PixPin_2026-05-21_16-20-25.png",
+    "assets/PixPin_2026-05-21_16-18-55.png",
+    "assets/PixPin_2026-05-21_16-17-10.png",
+    "assets/PixPin_2026-05-21_16-07-37.png",
     "语言学习/德语/公共知识语法/形容词/形容词.md",
-    "assets/PixPin_2026-05-21_15-51-23.png",
     "语言学习/德语/公共知识语法/未命名.md",
     "语言学习/德语/公共知识语法/Drawing 2026-05-21 15.50.17.excalidraw.md",
-    "语言学习/德语/公共知识语法/语法流程化梳理.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/生词.md",
-    "语言学习/德语/公共知识语法/名词/名词：性的规律, 不背词性，一眼识别词性.md",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "assets/PixPin_2026-05-21_15-46-22.png",
-    "assets/PixPin_2026-05-21_15-33-47.png",
     "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "语言学习/德语/公共知识语法/未命名 1.md",
@@ -531,9 +569,7 @@
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/未命名.base",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/1.md",
-    "语言学习/德语/公共知识语法/动词/动词变名词化.md",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg",
-    "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
     "语言学习/德语/Zotero/zotero.sqlite.bak",
     "语言学习/德语/Zotero/translators/ZoteroBib.js",
     "语言学习/德语/Zotero/translators/zotero.org.js",
@@ -542,13 +578,6 @@
     "语言学习/德语/Zotero/zotero.sqlite",
     "语言学习/德语/Zotero/translators/ZOBODAT.js",
     "语言学习/德语/Zotero/translators/ZIPonline.js",
-    "语言学习/德语/Zotero/storage/QXK72QBR/image.png",
-    "语言学习/德语/Zotero/storage/6DLVYVQ6/image.png",
-    "语言学习/德语/Zotero/storage/2GXJL8ZI/image.png",
-    "语言学习/德语/Zotero/cache/library/RHV5TQIT.png",
-    "语言学习/德语/Zotero/cache/library/LMX7Y7ZQ.png",
-    "语言学习/德语/公共知识语法/形容词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
-    "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
     "网络/简述软路由网络逻辑.canvas",
     "未命名.canvas",
     "语言学习/德语/学习记录日记-技巧/2026.canvas"

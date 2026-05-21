@@ -551,15 +551,16 @@
     "语言学习/德语/公共知识语法": "#22c55e30"
   },
   "folderSortOverrides": {
-    "语言学习/德语/柏林广场视频笔记/A1": "title-asc"
+    "语言学习/德语/柏林广场视频笔记/A1": "title-asc",
+    "语言学习/德语/公共知识语法": {
+      "option": "property-asc",
+      "propertyKey": "sort_index"
+    }
   },
   "folderTreeSortOverrides": {},
   "folderAppearances": {
     "2026": {
       "previewRows": 1
-    },
-    "语言学习/德语/公共知识语法": {
-      "groupBy": "custom"
     },
     "语言学习/德语": {
       "groupBy": "custom"

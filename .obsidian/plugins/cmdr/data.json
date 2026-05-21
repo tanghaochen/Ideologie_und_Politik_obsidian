@@ -40,6 +40,12 @@
       "icon": "lucide-locate",
       "name": "Notebook Navigator: 定位文件",
       "mode": "any"
+    },
+    {
+      "id": "properties:open-local",
+      "icon": "lucide-info",
+      "name": "属性列表: 显示当前笔记的属性列表",
+      "mode": "any"
     }
   ],
   "leftRibbon": [],
