@@ -151,7 +151,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -375,13 +375,24 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "语言学习/德语/公共知识语法/句子成分逻辑展示.md"
+                "file": "语言学习/德语/公共知识语法/形容词.md"
               },
               "icon": "lucide-info",
-              "title": "句子成分逻辑展示的笔记属性"
+              "title": "形容词的笔记属性"
+            }
+          },
+          {
+            "id": "e99d3e8154fc6781",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw-sidepanel",
+              "state": {},
+              "icon": "excalidraw-icon",
+              "title": "Excalidraw 侧边面板"
             }
           }
-        ]
+        ],
+        "currentTab": 12
       },
       {
         "id": "28e75bfc7e894da7",
@@ -394,7 +405,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
+                "file": "语言学习/德语/公共知识语法/形容词.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -404,7 +415,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "句子成分逻辑展示 的反向链接列表"
+              "title": "形容词 的反向链接列表"
             }
           },
           {
@@ -413,12 +424,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
+                "file": "语言学习/德语/公共知识语法/形容词.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "句子成分逻辑展示 的出链列表"
+              "title": "形容词 的出链列表"
             }
           },
           {
@@ -480,10 +491,11 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "ff36fbbbf55f4934",
+  "active": "aeb7270ae38f30ad",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/句子成分 结构.md",
     "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
+    "语言学习/德语/公共知识语法/形容词.md",
+    "语言学习/德语/公共知识语法/句子成分 结构.md",
     "语言学习/德语/公共知识语法/未命名.md",
     "语言学习/德语/公共知识语法/从句canvas.md",
     "语言学习/德语/公共知识语法/语法流程化梳理.md",
@@ -491,7 +503,6 @@
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/Und für mich ist ein gutes Essen ein Essen, das wirklich lecker ist..md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
-    "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/公共知识语法/从句.md",
     "电脑、软件、系统/ps-tang.md",
