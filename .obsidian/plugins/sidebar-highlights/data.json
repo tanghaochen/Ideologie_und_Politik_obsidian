@@ -2408,6 +2408,23 @@
         "isNativeComment": false,
         "type": "highlight"
       }
+    ],
+    "语言学习/德语/公共知识语法/3形容词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md": [
+      {
+        "id": "lgkvdeo18",
+        "text": "如果这位客人光着身子来（零冠词），会显得很没礼貌；所以我们通常会给他们穿上“衣服”——这就是**冠词（der/die/das/ein/eine）**。 然而，有时候普通的衣服不够用，我们需要给这些客人贴上更明确的**“VIP 标签”**或**“特殊身份牌”**，比如“**这个**客人”、“**所有**客人”、“**某一个**客人”。这些代替了普通冠词，直接贴在名词前面的词，就是**限定词（Determinativ）。",
+        "tags": [],
+        "line": 43,
+        "startOffset": 553,
+        "endOffset": 792,
+        "filePath": "语言学习/德语/公共知识语法/3形容词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1779456142141,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},

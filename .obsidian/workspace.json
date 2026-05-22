@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 46.72735153879497,
+        "dimension": 42.46100519930676,
         "children": [
           {
             "id": "3b0a475c8502e84b",
@@ -59,6 +59,30 @@
             }
           },
           {
+            "id": "f34676f18fc87066",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/3形容词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "冠词类限定词（Artikelwörter）及其形容词词尾变化"
+            }
+          },
+          {
             "id": "9fd835ccee44e4c2",
             "type": "leaf",
             "state": {
@@ -88,7 +112,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 53.27264846120503,
+        "dimension": 57.538994800693246,
         "children": [
           {
             "id": "16b55a90ebe0cd58",
@@ -527,13 +551,15 @@
   },
   "active": "16b55a90ebe0cd58",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/动词.md",
-    "语言学习/德语/公共知识语法/形容词.md",
-    "语言学习/德语/公共知识语法/3形容词/形容词.md",
-    "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "assets/PixPin_2026-05-21_17-06-59.png",
+    "语言学习/德语/公共知识语法/3形容词/形容词.md",
     "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
+    "语言学习/德语/公共知识语法/3形容词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
+    "语言学习/德语/公共知识语法/形容词.md",
+    "assets/PixPin_2026-05-20_00-23-15.png",
+    "语言学习/德语/公共知识语法/动词.md",
+    "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
+    "assets/PixPin_2026-05-21_17-06-59.png",
     "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
     "assets/PixPin_2026-05-22_19-13-55.png",
     "assets/PixPin_2026-05-22_19-16-09.png",
@@ -561,7 +587,6 @@
     "assets/PixPin_2026-05-21_20-22-30.png",
     "assets/PixPin_2026-05-21_20-21-54.png",
     "assets/PixPin_2026-05-21_20-21-39.png",
-    "assets/PixPin_2026-05-21_20-12-34.png",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/未命名.base",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg",
