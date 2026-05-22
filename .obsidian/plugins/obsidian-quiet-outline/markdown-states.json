@@ -8977,12 +8977,12 @@
     "scroll": 132.27094178894092,
     "cursor": {
       "from": {
-        "line": 151,
-        "ch": 38
+        "line": 149,
+        "ch": 9
       },
       "to": {
-        "line": 151,
-        "ch": 38
+        "line": 149,
+        "ch": 9
       }
     },
     "expandedKeys": [
