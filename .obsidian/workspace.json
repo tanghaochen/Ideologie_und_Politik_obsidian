@@ -161,9 +161,33 @@
               "icon": "lucide-file",
               "title": "全面讲解否定，nein,kein,nicht等"
             }
+          },
+          {
+            "id": "0c095af8f298db5c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "电脑、软件、系统/ps-tang.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "ps-tang"
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -387,10 +411,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md"
+                "file": "电脑、软件、系统/ps-tang.md"
               },
               "icon": "lucide-info",
-              "title": "全面讲解否定，nein,kein,nicht等的笔记属性"
+              "title": "ps-tang的笔记属性"
             }
           }
         ],
@@ -407,7 +431,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
+                "file": "电脑、软件、系统/ps-tang.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -417,7 +441,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "全面讲解否定，nein,kein,nicht等 的反向链接列表"
+              "title": "ps-tang 的反向链接列表"
             }
           },
           {
@@ -426,12 +450,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
+                "file": "电脑、软件、系统/ps-tang.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "全面讲解否定，nein,kein,nicht等 的出链列表"
+              "title": "ps-tang 的出链列表"
             }
           },
           {
@@ -493,10 +517,10 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "d3ec81ed4c00a968",
+  "active": "0c095af8f298db5c",
   "lastOpenFiles": [
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/从句canvas.md",
     "语言学习/德语/公共知识语法/10句型/Irgend.md",
