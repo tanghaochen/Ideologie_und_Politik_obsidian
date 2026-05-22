@@ -144,10 +144,10 @@
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格;代词.md"
+                "file": "语言学习/德语/公共知识语法/介词.md"
               },
               "icon": "excalidraw-icon",
-              "title": "格;代词"
+              "title": "介词"
             }
           },
           {
@@ -423,10 +423,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格;代词.md"
+                "file": "语言学习/德语/公共知识语法/介词.md"
               },
               "icon": "lucide-info",
-              "title": "格;代词的笔记属性"
+              "title": "介词的笔记属性"
             }
           },
           {
@@ -452,7 +452,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格;代词.md",
+                "file": "语言学习/德语/公共知识语法/介词.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -462,7 +462,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "格;代词 的反向链接列表"
+              "title": "介词 的反向链接列表"
             }
           },
           {
@@ -471,12 +471,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格;代词.md",
+                "file": "语言学习/德语/公共知识语法/介词.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "格;代词 的出链列表"
+              "title": "介词 的出链列表"
             }
           },
           {
@@ -541,6 +541,7 @@
   "active": "aeb7270ae38f30ad",
   "lastOpenFiles": [
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/公共知识语法/格;代词.md",
     "语言学习/德语/公共知识语法/名词.md",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
@@ -569,7 +570,6 @@
     "语言学习/德语/公共知识语法/其他句式.md",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/Und für mich ist ein gutes Essen ein Essen, das wirklich lecker ist..md",
     "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
-    "电脑、软件、系统/ps-tang.md",
     "assets/PixPin_2026-05-21_23-55-14.png",
     "assets/PixPin_2026-05-21_17-09-26.png",
     "assets/PixPin_2026-05-21_20-22-08.png",
