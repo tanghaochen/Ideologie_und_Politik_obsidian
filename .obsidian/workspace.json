@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 51.40096618357488,
+        "dimension": 41.30905938448201,
         "children": [
           {
             "id": "3b0a475c8502e84b",
@@ -88,7 +88,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 48.59903381642513,
+        "dimension": 58.69094061551798,
         "children": [
           {
             "id": "16b55a90ebe0cd58",
@@ -132,62 +132,26 @@
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md"
+                "file": "语言学习/德语/公共知识语法/形容词.md"
               },
               "icon": "excalidraw-icon",
-              "title": "从句"
+              "title": "形容词"
             }
           },
           {
             "id": "4b2582451e8be5f6",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
+                "file": "语言学习/德语/公共知识语法/句子成分逻辑展示.md"
               },
-              "icon": "lucide-file",
-              "title": "全面讲解否定，nein,kein,nicht等"
-            }
-          },
-          {
-            "id": "0c095af8f298db5c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "电脑、软件、系统/ps-tang.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "ps-tang"
+              "icon": "excalidraw-icon",
+              "title": "句子成分逻辑展示"
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -411,14 +375,13 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "电脑、软件、系统/ps-tang.md"
+                "file": "语言学习/德语/公共知识语法/句子成分逻辑展示.md"
               },
               "icon": "lucide-info",
-              "title": "ps-tang的笔记属性"
+              "title": "句子成分逻辑展示的笔记属性"
             }
           }
-        ],
-        "currentTab": 10
+        ]
       },
       {
         "id": "28e75bfc7e894da7",
@@ -431,7 +394,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "电脑、软件、系统/ps-tang.md",
+                "file": "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -441,7 +404,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "ps-tang 的反向链接列表"
+              "title": "句子成分逻辑展示 的反向链接列表"
             }
           },
           {
@@ -450,12 +413,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "电脑、软件、系统/ps-tang.md",
+                "file": "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "ps-tang 的出链列表"
+              "title": "句子成分逻辑展示 的出链列表"
             }
           },
           {
@@ -517,18 +480,25 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "0c095af8f298db5c",
+  "active": "ff36fbbbf55f4934",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/公共知识语法/句子成分 结构.md",
+    "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
+    "语言学习/德语/公共知识语法/未命名.md",
     "语言学习/德语/公共知识语法/从句canvas.md",
+    "语言学习/德语/公共知识语法/语法流程化梳理.md",
+    "语言学习/德语/公共知识语法/其他句式.md",
+    "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/Und für mich ist ein gutes Essen ein Essen, das wirklich lecker ist..md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
+    "语言学习/德语/公共知识语法/形容词.md",
+    "语言学习/德语/公共知识语法/动词.md",
+    "语言学习/德语/公共知识语法/从句.md",
+    "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/10句型/Irgend.md",
     "语言学习/德语/柏林广场视频笔记/A2/80 不定代词.md",
     "语言学习/德语/公共知识语法/格;代词.md",
-    "语言学习/德语/公共知识语法/其他句式.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/es.md",
-    "语言学习/德语/公共知识语法/动词.md",
     "assets/PixPin_2026-05-21_23-55-14.png",
     "assets/PixPin_2026-05-21_17-09-26.png",
     "assets/PixPin_2026-05-21_17-06-59.png",
@@ -548,13 +518,6 @@
     "语言学习/德语/柏林广场视频笔记/A2/112 动介搭配.md",
     "语言学习/德语/公共知识语法/构词法/名词/定冠词 性 der, das, die 记忆技巧归类.md",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
-    "语言学习/德语/公共知识语法/介词.md",
-    "语言学习/德语/公共知识语法/1 德语语序.md",
-    "语言学习/德语/公共知识语法/语法流程化梳理.md",
-    "语言学习/德语/公共知识语法/未命名.md",
-    "语言学习/德语/公共知识语法/形容词.md",
-    "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/未命名.base",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg",

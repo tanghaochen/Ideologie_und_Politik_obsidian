@@ -508,3 +508,5 @@ flowchart TD
 | **in-**                   | **肯定**: _Er ist tolerant._<br><br><br>**否定**: _Er ist intolerant._                                                                                                         | **原图备注**：仅适用于==外来词==。<br><br>  <br><br>🎓 **大师精讲**：专治英语或拉丁语借词。遇到<font color="#d83931">长得像英语的词，用 in- </font>否定通常没错。                                                                  |
 | **-los**                  | **肯定**: _Ich habe Fantasie._<br>我有想象力。<br>**否定**: _Ich bin fantasielos._<br>我 毫无想象力。                                                                                       | **原图备注**：-los 含贬义。中性的表达是：_Ich habe keine Fantasie._<br><br>  <br><br>🎓 **大师精讲**：相当于英语的 -less，意思是“失去...的，毫无...的”。**实战（非常重要）**：_arbeitslos_ (失业的), _obdachlos_ (无家可归的)。自带一点消极或缺乏的色彩。 |
 |                           |                                                                                                                                                                            |                                                                                                                                                                                     |
+
+^0tsw46
