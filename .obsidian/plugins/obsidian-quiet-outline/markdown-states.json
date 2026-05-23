@@ -12841,13 +12841,43 @@
     "cursor": {
       "from": {
         "line": 0,
-        "ch": 91
+        "ch": 40
       },
       "to": {
         "line": 0,
-        "ch": 91
+        "ch": 40
       }
     },
     "expandedKeys": []
+  },
+  "语言学习/德语/公共知识语法/10句型/第一虚拟式.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 40
+      },
+      "to": {
+        "line": 0,
+        "ch": 50
+      }
+    },
+    "expandedKeys": []
+  },
+  "语言学习/德语/公共知识语法/10句型/第一虚拟式转述对话、传闻和自述.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 17
+      },
+      "to": {
+        "line": 0,
+        "ch": 17
+      }
+    },
+    "expandedKeys": [
+      "item-1-0"
+    ]
   }
 }
