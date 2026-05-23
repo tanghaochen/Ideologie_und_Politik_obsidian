@@ -421,10 +421,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md"
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md"
               },
               "icon": "lucide-info",
-              "title": "从句的笔记属性"
+              "title": "目的从句的笔记属性"
             }
           },
           {
@@ -450,7 +450,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md",
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -460,7 +460,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "从句 的反向链接列表"
+              "title": "目的从句 的反向链接列表"
             }
           },
           {
@@ -469,12 +469,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md",
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "从句 的出链列表"
+              "title": "目的从句 的出链列表"
             }
           },
           {
@@ -536,10 +536,14 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "16b55a90ebe0cd58",
+  "active": "4c935155c7475d9b",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
+    "assets/Recording 20260221142357.m4a",
+    "media-lib/index.base",
+    "media-lib/Recording 20260221142357.md",
     "语言学习/德语/公共知识语法/从句.md",
+    "media-lib",
+    "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
     "语言学习/德语/公共知识语法/10句型/介词一副词一连词.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
@@ -565,8 +569,6 @@
     "assets/PixPin_2026-05-23_17-05-32.png",
     "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/第二虚拟式.md",
-    "语言学习/德语/公共知识语法/未命名.md",
-    "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
     "Excalidraw/Scripts/Downloaded/ExcalidrawMinimap.svg",
     "assets/PixPin_2026-05-19_19-27-09.png",
     "assets/PixPin_2026-05-20_00-23-15.png",
@@ -583,8 +585,6 @@
     "语言学习/德语/Zotero/zotero.sqlite.1.bak",
     "语言学习/德语/Zotero/translators/Zotero RDF.js",
     "语言学习/德语/Zotero/zotero.sqlite",
-    "语言学习/德语/Zotero/translators/ZOBODAT.js",
-    "语言学习/德语/Zotero/translators/ZIPonline.js",
     "网络/简述软路由网络逻辑.canvas",
     "未命名.canvas",
     "语言学习/德语/学习记录日记-技巧/2026.canvas"
