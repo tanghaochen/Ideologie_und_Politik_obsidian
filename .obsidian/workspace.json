@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 47.074122236671,
+        "dimension": 40.875596012136974,
         "children": [
           {
             "id": "51aa4c53b7c06262",
@@ -75,7 +75,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 52.925877763329,
+        "dimension": 59.124403987863026,
         "children": [
           {
             "id": "16b55a90ebe0cd58",
@@ -141,24 +141,12 @@
             "id": "21ff02cf5e48167e",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
+                "file": "语言学习/德语/公共知识语法/从句.md"
               },
-              "icon": "lucide-file",
-              "title": "第一将来时和第一虚拟式的区别"
+              "icon": "excalidraw-icon",
+              "title": "从句"
             }
           },
           {
@@ -186,7 +174,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -410,10 +398,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "语言学习/德语/公共知识语法/时态.md"
+                "file": "语言学习/德语/公共知识语法/10句型/第一，二 虚拟式.md"
               },
               "icon": "lucide-info",
-              "title": "时态的笔记属性"
+              "title": "第一，二 虚拟式的笔记属性"
             }
           },
           {
@@ -439,7 +427,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "语言学习/德语/公共知识语法/时态.md",
+                "file": "语言学习/德语/公共知识语法/10句型/第一，二 虚拟式.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -449,7 +437,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "时态 的反向链接列表"
+              "title": "第一，二 虚拟式 的反向链接列表"
             }
           },
           {
@@ -458,12 +446,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/时态.md",
+                "file": "语言学习/德语/公共知识语法/10句型/第一，二 虚拟式.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "时态 的出链列表"
+              "title": "第一，二 虚拟式 的出链列表"
             }
           },
           {
@@ -525,14 +513,15 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "7855fda5070d5375",
+  "active": "3cdacd0cd7e2d334",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/时态.md",
+    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
     "语言学习/德语/公共知识语法/10句型/第一，二 虚拟式.md",
     "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
     "语言学习/德语/柏林广场视频笔记/A2/k 17 虚拟式.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "语言学习/德语/公共知识语法/时态.md",
     "语言学习/德语/公共知识语法/10句型/被动态.md",
     "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
@@ -557,7 +546,6 @@
     "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/柏林广场视频笔记/A2/不定代词.md",
     "语言学习/德语/公共知识语法/3形容词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
-    "语言学习/德语/公共知识语法/3形容词/形容词.md",
     "assets/PixPin_2026-05-20_00-23-15.png",
     "assets/PixPin_2026-05-21_17-06-59.png",
     "assets/PixPin_2026-05-22_19-13-55.png",
