@@ -509,7 +509,6 @@
     "语言学习/德语/公共知识语法/形容词.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/介词.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/语法流程化梳理.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/格;代词.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/名词.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/时态.md": "excalidraw-icon",
@@ -517,17 +516,18 @@
     "语言学习/德语/公共知识语法/其他句式.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/2动词/动词专题canvas.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/从句.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/句子成分逻辑展示.md": "excalidraw-icon"
+    "语言学习/德语/公共知识语法/句子成分逻辑展示.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/格; 限定词.md": "excalidraw-icon"
   },
   "fileColors": {},
   "fileBackgroundColors": {},
   "folderIcons": {
     "语言学习": "emoji:🇩🇪",
     "语言学习/德语": "emoji:🇩🇪",
-    "语言学习/德语/公共知识语法/构词法/名词": "globe",
     "语言学习/德语/公共知识语法/10句型/时态": "calendar-clock",
     "语言学习/德语/公共知识语法/0格": "table-config",
-    "语言学习/德语/公共知识语法/100❌错题": "notebook-pen"
+    "语言学习/德语/公共知识语法/100❌错题": "notebook-pen",
+    "语言学习/德语/公共知识语法/名词": "globe"
   },
   "folderColors": {},
   "folderBackgroundColors": {

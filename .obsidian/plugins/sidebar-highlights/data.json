@@ -624,8 +624,8 @@
         "text": "不同",
         "tags": [],
         "line": 236,
-        "startOffset": 5615,
-        "endOffset": 5621,
+        "startOffset": 5551,
+        "endOffset": 5557,
         "filePath": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
         "footnoteCount": 0,
         "footnoteContents": [],
@@ -638,8 +638,8 @@
         "text": "相同",
         "tags": [],
         "line": 237,
-        "startOffset": 5654,
-        "endOffset": 5660,
+        "startOffset": 5590,
+        "endOffset": 5596,
         "filePath": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
         "footnoteCount": 0,
         "footnoteContents": [],
@@ -983,66 +983,6 @@
         "footnoteCount": 0,
         "footnoteContents": [],
         "createdAt": 1779126232886,
-        "isNativeComment": false,
-        "type": "highlight"
-      }
-    ],
-    "语言学习/德语/公共知识语法/构词法/名词/名词：性的规律, 不背词性，一眼识别词性.md": [
-      {
-        "id": "so3le9qz0",
-        "text": "der",
-        "tags": [],
-        "line": 5,
-        "startOffset": 55,
-        "endOffset": 62,
-        "filePath": "语言学习/德语/公共知识语法/构词法/名词/名词：性的规律, 不背词性，一眼识别词性.md",
-        "footnoteCount": 0,
-        "footnoteContents": [],
-        "createdAt": 1773728984041,
-        "isNativeComment": false,
-        "type": "highlight"
-      },
-      {
-        "id": "yuoi9ed1j",
-        "text": "die",
-        "tags": [],
-        "line": 72,
-        "startOffset": 3904,
-        "endOffset": 3911,
-        "filePath": "语言学习/德语/公共知识语法/构词法/名词/名词：性的规律, 不背词性，一眼识别词性.md",
-        "footnoteCount": 0,
-        "footnoteContents": [],
-        "createdAt": 1773728984160,
-        "isNativeComment": false,
-        "type": "highlight"
-      },
-      {
-        "id": "gez9b3ee3",
-        "text": "das",
-        "tags": [],
-        "line": 117,
-        "startOffset": 6749,
-        "endOffset": 6756,
-        "filePath": "语言学习/德语/公共知识语法/构词法/名词/名词：性的规律, 不背词性，一眼识别词性.md",
-        "footnoteCount": 0,
-        "footnoteContents": [],
-        "createdAt": 1773728984221,
-        "isNativeComment": false,
-        "type": "highlight"
-      }
-    ],
-    "语言学习/德语/公共知识语法/构词法/名词/定冠词 性 der, das, die 记忆技巧归类.md": [
-      {
-        "id": "s38u82ot2",
-        "text": "阴性词性最初用于表示抽象",
-        "tags": [],
-        "line": 107,
-        "startOffset": 2129,
-        "endOffset": 2145,
-        "filePath": "语言学习/德语/公共知识语法/构词法/名词/定冠词 性 der, das, die 记忆技巧归类.md",
-        "footnoteCount": 0,
-        "footnoteContents": [],
-        "createdAt": 1772431866974,
         "isNativeComment": false,
         "type": "highlight"
       }
@@ -2430,8 +2370,8 @@
         "text": "如果这位客人光着身子来（零冠词），会显得很没礼貌；所以我们通常会给他们穿上“衣服”——这就是**冠词（der/die/das/ein/eine）**。 然而，有时候普通的衣服不够用，我们需要给这些客人贴上更明确的**“VIP 标签”**或**“特殊身份牌”**，比如“**这个**客人”、“**所有**客人”、“**某一个**客人”。这些代替了普通冠词，直接贴在名词前面的词，就是**限定词（Determinativ）。",
         "tags": [],
         "line": 43,
-        "startOffset": 567,
-        "endOffset": 806,
+        "startOffset": 551,
+        "endOffset": 790,
         "filePath": "语言学习/德语/公共知识语法/3形容词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
         "footnoteCount": 0,
         "footnoteContents": [],
@@ -2439,6 +2379,66 @@
         "isNativeComment": false,
         "color": "#d83931",
         "type": "html"
+      }
+    ],
+    "语言学习/德语/公共知识语法/名词/名词：性的规律, 不背词性，一眼识别词性.md": [
+      {
+        "id": "so3le9qz0",
+        "text": "der",
+        "tags": [],
+        "line": 5,
+        "startOffset": 55,
+        "endOffset": 62,
+        "filePath": "语言学习/德语/公共知识语法/名词/名词：性的规律, 不背词性，一眼识别词性.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1773728984041,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "yuoi9ed1j",
+        "text": "die",
+        "tags": [],
+        "line": 72,
+        "startOffset": 3904,
+        "endOffset": 3911,
+        "filePath": "语言学习/德语/公共知识语法/名词/名词：性的规律, 不背词性，一眼识别词性.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1773728984160,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "gez9b3ee3",
+        "text": "das",
+        "tags": [],
+        "line": 117,
+        "startOffset": 6749,
+        "endOffset": 6756,
+        "filePath": "语言学习/德语/公共知识语法/名词/名词：性的规律, 不背词性，一眼识别词性.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1773728984221,
+        "isNativeComment": false,
+        "type": "highlight"
+      }
+    ],
+    "语言学习/德语/公共知识语法/名词/定冠词 性 der, das, die 记忆技巧归类.md": [
+      {
+        "id": "s38u82ot2",
+        "text": "阴性词性最初用于表示抽象",
+        "tags": [],
+        "line": 107,
+        "startOffset": 2129,
+        "endOffset": 2145,
+        "filePath": "语言学习/德语/公共知识语法/名词/定冠词 性 der, das, die 记忆技巧归类.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1772431866974,
+        "isNativeComment": false,
+        "type": "highlight"
       }
     ]
   },
