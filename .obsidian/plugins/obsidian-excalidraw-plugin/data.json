@@ -8476,6 +8476,19 @@
           "2000"
         ]
       }
+    },
+    "Downloaded/ExcalidrawMinimap": {
+      "ExcalidrawMinimapSettings": {
+        "width": 520,
+        "height": 400,
+        "adaptiveSize": false,
+        "elementClickAction": "zoom",
+        "side": "bottom-right",
+        "offset": "12",
+        "viewportAutoHideCoverage": 0.8,
+        "includeViewportInBounds": true,
+        "viewportInsetPadding": 48
+      }
     }
   },
   "previousRelease": "2.23.3",
