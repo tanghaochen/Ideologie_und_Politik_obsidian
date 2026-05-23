@@ -2439,6 +2439,51 @@
         "isNativeComment": false,
         "color": "#ffff00",
         "type": "html"
+      },
+      {
+        "id": "wiqo3mdou",
+        "text": "当第一虚拟式与直陈式形式相同时，**必须用第二虚拟式 (Konjunktiv II) 来替代**第一虚拟式！",
+        "tags": [],
+        "line": 116,
+        "startOffset": 3282,
+        "endOffset": 3365,
+        "filePath": "语言学习/德语/公共知识语法/10句型/第一，二 虚拟式.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1779547307879,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "61dyjix2s",
+        "text": "第一虚拟式",
+        "tags": [],
+        "line": 129,
+        "startOffset": 3897,
+        "endOffset": 3931,
+        "filePath": "语言学习/德语/公共知识语法/10句型/第一，二 虚拟式.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1779547812163,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "4d6e5bf5i",
+        "text": "改用第二虚拟式",
+        "tags": [],
+        "line": 291,
+        "startOffset": 6690,
+        "endOffset": 6726,
+        "filePath": "语言学习/德语/公共知识语法/10句型/第一，二 虚拟式.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1779547897403,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
       }
     ]
   },
