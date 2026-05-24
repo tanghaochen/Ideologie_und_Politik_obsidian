@@ -9,30 +9,6 @@
         "dimension": 40.485478977026446,
         "children": [
           {
-            "id": "4c935155c7475d9b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "目的从句"
-            }
-          },
-          {
             "id": "5fb49f56ee6015d5",
             "type": "leaf",
             "state": {
@@ -92,13 +68,29 @@
           {
             "id": "16b55a90ebe0cd58",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "excalidraw",
               "state": {
                 "file": "语言学习/德语/公共知识语法/从句.md"
               },
+              "pinned": true,
               "icon": "excalidraw-icon",
               "title": "从句"
+            }
+          },
+          {
+            "id": "4c935155c7475d9b",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/其他句式.md"
+              },
+              "pinned": true,
+              "icon": "excalidraw-icon",
+              "title": "其他句式"
             }
           },
           {
@@ -198,7 +190,7 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -470,12 +462,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/语法对应的场景.md",
+                "file": "语言学习/德语/公共知识语法/其他句式.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "语法对应的场景 的出链列表"
+              "title": "其他句式 的出链列表"
             }
           },
           {
@@ -537,9 +529,17 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "34544f21b37c711a",
+  "active": "4c935155c7475d9b",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
+    "语言学习/德语/公共知识语法/其他句式.md",
     "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/公共知识语法/10句型/Irgend.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/方式状语从句 indem, dadurch dass, wodurch...md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen..md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/结果状语从句 sodass,weshalb,dermafsen ..,dass.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/原因状语从句与让步从句 weil, da,obwohl,wobei....md",
+    "语言学习/德语/公共知识语法/语法对应的场景.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
     "assets/Recording 20260221142357.m4a",
     "media-lib/index.base",
@@ -547,29 +547,22 @@
     "media-lib",
     "语言学习/德语/公共知识语法/10句型/介词一副词一连词.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
     "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
-    "语言学习/德语/公共知识语法/语法对应的场景.md",
     "语言学习/德语/公共知识语法/10句型/第一虚拟式转述对话、传闻和自述.md",
     "语言学习/德语/公共知识语法/10句型/被动态.md",
     "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
     "语言学习/德语/公共知识语法/10句型/es指代句子成分.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/es.md",
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
-    "语言学习/德语/公共知识语法/其他句式.md",
     "语言学习/德语/公共知识语法/时态.md",
     "语言学习/德语/公共知识语法/10句型/第一，二 虚拟式.md",
     "语言学习/德语/公共知识语法/3形容词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
     "语言学习/德语/公共知识语法/语法场景联线.md",
     "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
     "语言学习/德语/柏林广场视频笔记/A2/k 17 虚拟式.md",
-    "语言学习/德语/公共知识语法/介词.md",
-    "语言学习/德语/公共知识语法/格; 限定词.md",
     "assets/PixPin_2026-05-23_17-17-47.png",
     "assets/PixPin_2026-05-23_17-16-47.png",
     "assets/PixPin_2026-05-23_17-05-32.png",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/第二虚拟式.md",
     "Excalidraw/Scripts/Downloaded/ExcalidrawMinimap.svg",
     "assets/PixPin_2026-05-19_19-27-09.png",
     "assets/PixPin_2026-05-20_00-23-15.png",

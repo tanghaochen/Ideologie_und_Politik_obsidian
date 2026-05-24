@@ -1,12 +1,40 @@
 {
   "recentFiles": [
     {
-      "basename": "语法对应的场景",
-      "path": "语言学习/德语/公共知识语法/语法对应的场景.md"
+      "basename": "其他句式",
+      "path": "语言学习/德语/公共知识语法/其他句式.md"
+    },
+    {
+      "basename": "关系从句",
+      "path": "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md"
     },
     {
       "basename": "从句",
       "path": "语言学习/德语/公共知识语法/从句.md"
+    },
+    {
+      "basename": "Irgend",
+      "path": "语言学习/德语/公共知识语法/10句型/Irgend.md"
+    },
+    {
+      "basename": "方式状语从句 indem, dadurch dass, wodurch..",
+      "path": "语言学习/德语/公共知识语法/10句型/从句合集/方式状语从句 indem, dadurch dass, wodurch...md"
+    },
+    {
+      "basename": "条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen.",
+      "path": "语言学习/德语/公共知识语法/10句型/从句合集/条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen..md"
+    },
+    {
+      "basename": "结果状语从句 sodass,weshalb,dermafsen ..,dass",
+      "path": "语言学习/德语/公共知识语法/10句型/从句合集/结果状语从句 sodass,weshalb,dermafsen ..,dass.md"
+    },
+    {
+      "basename": "原因状语从句与让步从句 weil, da,obwohl,wobei...",
+      "path": "语言学习/德语/公共知识语法/10句型/从句合集/原因状语从句与让步从句 weil, da,obwohl,wobei....md"
+    },
+    {
+      "basename": "语法对应的场景",
+      "path": "语言学习/德语/公共知识语法/语法对应的场景.md"
     },
     {
       "basename": "目的从句",
@@ -27,10 +55,6 @@
     {
       "basename": "⭐必背所有知识点整理考察整理",
       "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
-    },
-    {
-      "basename": "关系从句",
-      "path": "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md"
     },
     {
       "basename": "第一将来时和第一虚拟式的区别",
@@ -55,10 +79,6 @@
     {
       "basename": "人称代词; 疑问代词; 指示代词",
       "path": "语言学习/德语/人称代词; 疑问代词; 指示代词.md"
-    },
-    {
-      "basename": "其他句式",
-      "path": "语言学习/德语/公共知识语法/其他句式.md"
     },
     {
       "basename": "时态",
@@ -179,26 +199,6 @@
     {
       "basename": "全面讲解否定，nein,kein,nicht等",
       "path": "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md"
-    },
-    {
-      "basename": "ps-tang",
-      "path": "电脑、软件、系统/ps-tang.md"
-    },
-    {
-      "basename": "Irgend",
-      "path": "语言学习/德语/公共知识语法/10句型/Irgend.md"
-    },
-    {
-      "basename": "PixPin_2026-05-21_17-09-26",
-      "path": "assets/PixPin_2026-05-21_17-09-26.png"
-    },
-    {
-      "basename": "‎Google Gemini 1",
-      "path": "Clippings/‎Google Gemini 1.md"
-    },
-    {
-      "basename": "PixPin_2026-05-21_20-22-08",
-      "path": "assets/PixPin_2026-05-21_20-22-08.png"
     }
   ],
   "omittedPaths": [],
