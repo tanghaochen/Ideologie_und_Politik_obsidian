@@ -13081,5 +13081,65 @@
       "item-1-41",
       "item-3-42"
     ]
+  },
+  "语言学习/德语/公共知识语法/2动词/未命名.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 4,
+        "ch": 38
+      },
+      "to": {
+        "line": 4,
+        "ch": 38
+      }
+    },
+    "expandedKeys": []
+  },
+  "语言学习/德语/公共知识语法/2动词/werden.md": {
+    "scroll": 10.361169535825523,
+    "cursor": {
+      "from": {
+        "line": 28,
+        "ch": 100
+      },
+      "to": {
+        "line": 28,
+        "ch": 100
+      }
+    },
+    "expandedKeys": [
+      "item-1-0"
+    ]
+  },
+  "语言学习/德语/公共知识语法/2动词/系动词.md": {
+    "scroll": 532.7959757385127,
+    "cursor": {
+      "from": {
+        "line": 559,
+        "ch": 6
+      },
+      "to": {
+        "line": 559,
+        "ch": 6
+      }
+    },
+    "expandedKeys": [
+      "item-1-0",
+      "item-3-1",
+      "item-3-5",
+      "item-1-11",
+      "item-1-16",
+      "item-3-17",
+      "item-1-24",
+      "item-1-28",
+      "item-3-29",
+      "item-3-36",
+      "item-1-40",
+      "item-3-41",
+      "item-3-45",
+      "item-1-52",
+      "item-3-54"
+    ]
   }
 }
