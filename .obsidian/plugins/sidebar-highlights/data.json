@@ -2484,6 +2484,38 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "语言学习/德语/公共知识语法/10句型/第二虚拟式.md": [
+      {
+        "id": "h1exeo7mq",
+        "text": "现在/将来",
+        "tags": [],
+        "line": 495,
+        "startOffset": 14813,
+        "endOffset": 14847,
+        "filePath": "语言学习/德语/公共知识语法/10句型/第二虚拟式.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1779607188657,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "isls15di5",
+        "text": "当时...就好了",
+        "tags": [],
+        "line": 495,
+        "startOffset": 14931,
+        "endOffset": 14968,
+        "filePath": "语言学习/德语/公共知识语法/10句型/第二虚拟式.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1779607206416,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},

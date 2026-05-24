@@ -9,6 +9,30 @@
         "dimension": 40.485478977026446,
         "children": [
           {
+            "id": "1d6865ebba651243",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/第二虚拟式.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "第二虚拟式"
+            }
+          },
+          {
             "id": "5fb49f56ee6015d5",
             "type": "leaf",
             "state": {
@@ -462,12 +486,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/其他句式.md",
+                "file": "语言学习/德语/公共知识语法/10句型/第二虚拟式.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "其他句式 的出链列表"
+              "title": "第二虚拟式 的出链列表"
             }
           },
           {
@@ -529,10 +553,11 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "4c935155c7475d9b",
+  "active": "1d6865ebba651243",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
     "语言学习/德语/公共知识语法/其他句式.md",
+    "语言学习/德语/公共知识语法/10句型/第二虚拟式.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/10句型/Irgend.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/方式状语从句 indem, dadurch dass, wodurch...md",
@@ -559,7 +584,6 @@
     "语言学习/德语/公共知识语法/3形容词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
     "语言学习/德语/公共知识语法/语法场景联线.md",
     "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
-    "语言学习/德语/柏林广场视频笔记/A2/k 17 虚拟式.md",
     "assets/PixPin_2026-05-23_17-17-47.png",
     "assets/PixPin_2026-05-23_17-16-47.png",
     "assets/PixPin_2026-05-23_17-05-32.png",
