@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 40.48547897702644,
+        "dimension": 40.485478977026446,
         "children": [
           {
             "id": "4c935155c7475d9b",
@@ -87,7 +87,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 59.514521022973554,
+        "dimension": 59.51452102297356,
         "children": [
           {
             "id": "16b55a90ebe0cd58",
@@ -197,7 +197,8 @@
               "title": "语法对应的场景"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -469,12 +470,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
+                "file": "语言学习/德语/公共知识语法/语法对应的场景.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "目的从句 的出链列表"
+              "title": "语法对应的场景 的出链列表"
             }
           },
           {
@@ -536,14 +537,14 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "4c935155c7475d9b",
+  "active": "34544f21b37c711a",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
     "assets/Recording 20260221142357.m4a",
     "media-lib/index.base",
     "media-lib/Recording 20260221142357.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "media-lib",
-    "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
     "语言学习/德语/公共知识语法/10句型/介词一副词一连词.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
@@ -584,7 +585,6 @@
     "语言学习/德语/Zotero/translators/zotero.org.js",
     "语言学习/德语/Zotero/zotero.sqlite.1.bak",
     "语言学习/德语/Zotero/translators/Zotero RDF.js",
-    "语言学习/德语/Zotero/zotero.sqlite",
     "网络/简述软路由网络逻辑.canvas",
     "未命名.canvas",
     "语言学习/德语/学习记录日记-技巧/2026.canvas"
