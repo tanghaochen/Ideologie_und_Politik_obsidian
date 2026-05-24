@@ -9,6 +9,54 @@
         "dimension": 49.15474642392718,
         "children": [
           {
+            "id": "4806321a64b0acc1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Clippings/发起新对话.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "发起新对话"
+            }
+          },
+          {
+            "id": "6f45da37f421fb0b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "关系从句"
+            }
+          },
+          {
             "id": "5fb49f56ee6015d5",
             "type": "leaf",
             "state": {
@@ -82,8 +130,7 @@
               "title": "系动词"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       },
       {
         "id": "dd4130c5419b5527",
@@ -190,8 +237,7 @@
               "title": "语法对应的场景"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -264,7 +310,8 @@
               "title": "Recent files"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -463,12 +510,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/时态.md",
+                "file": "Clippings/发起新对话.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "时态 的出链列表"
+              "title": "发起新对话 的出链列表"
             }
           },
           {
@@ -567,14 +614,16 @@
       }
     ]
   },
-  "active": "2ec903722745f7d8",
+  "active": "4806321a64b0acc1",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/10句型/从句合集/es.md",
+    "Clippings/发起新对话.md",
+    "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
     "语言学习/德语/公共知识语法/2动词/系动词.md",
+    "语言学习/德语/公共知识语法/时态.md",
     "语言学习/德语/公共知识语法/2动词/werden.md",
     "语言学习/德语/公共知识语法/其他句式.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
-    "语言学习/德语/公共知识语法/时态.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/10句型/被动态.md",
     "语言学习/德语/公共知识语法/10句型/介词一副词一连词.md",
     "语言学习/德语/公共知识语法/10句型/第二虚拟式.md",
@@ -594,10 +643,8 @@
     "语言学习/德语/公共知识语法/10句型/第一虚拟式转述对话、传闻和自述.md",
     "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
     "语言学习/德语/公共知识语法/10句型/es指代句子成分.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/es.md",
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "语言学习/德语/公共知识语法/10句型/第一，二 虚拟式.md",
-    "语言学习/德语/公共知识语法/3形容词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
     "assets/PixPin_2026-05-23_17-17-47.png",
     "assets/PixPin_2026-05-23_17-16-47.png",
     "assets/PixPin_2026-05-23_17-05-32.png",
