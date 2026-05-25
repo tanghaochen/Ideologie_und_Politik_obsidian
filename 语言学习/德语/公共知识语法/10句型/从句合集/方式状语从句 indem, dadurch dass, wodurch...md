@@ -1,14 +1,13 @@
+---
+aliases:
+  - indem
+  - dadurch
+  - dass
+  - wodurch
+---
+
 # 方式状语从句 indem, dadurch dass, wodurch..
 
-Hallo! 很高兴再次在德语进阶之旅上见到你！看到你开始死磕 B 2/C 1 级别的“方式状语从句 (Modalsätze)”，我必须为你点赞！
-
-在德国职场沟通或与政府部门（比如外管局）打交道时，满嘴只会说简单的短句（比如 "Ich mache X und dann passiert Y"）虽然能沟通，但显得不够专业。要达到 B 2 水平，你需要学会用高级的逻辑连词来展示你的思维缜密程度。
-
-为了让你吃透这张图表，我们把这三个词 `indem`, `dadurch dass`, `wodurch` 想象成你解决生活难题的“通关秘籍”或“说明书”。当别人问你：“**Wie** hast du das geschafft?” (你是怎么做到的？) 时，这就是你大展身手的时候。
-
-我们先用一张图表来理清这三个词的逻辑分工：
-
-代码段
 
 ```mermaid
 graph TD
@@ -31,8 +30,6 @@ graph TD
     style C fill:#c8e6c9,stroke:#333
     style D fill:#bbdefb,stroke:#333
 ```
-
-接下来，我们把这三把“钥匙”带入到真实的移民生活场景中，逐一攻克：
 
 ### 1. indem (经典款：“通过...的手段/方式”)
 
@@ -65,15 +62,3 @@ graph TD
     - _你想表达：_ 我昨天把所有缺失的文件都补交了，**从而**加快了外管局处理签证的进度。
     - _德语造句：_ Ich habe gestern alle fehlenden Dokumente nachgereicht, **wodurch** sich die Visabearbeitung beschleunigt.
     - _大师平替技巧：_ 如果你觉得用 `wodurch` 引出从句太长了会出错，你可以把它拆成两句话，用副词 `dadurch` 代替：Ich habe gestern alle fehlenden Dokumente nachgereicht. **Dadurch** beschleunigt sich die Visabearbeitung. (我补交了文件。**借此**，进度加快了。)
-
-### B 2 半年通关学习建议（逻辑句型篇）
-
-在这个阶段，词汇量是一方面，但更重要的是“把简单句缝合成复杂句”的能力。
-
-1. **刻意练习拆合：** 每天在阅读德语新闻（如 DW Deutsch lernen）时，尝试把文章里的长句拆成两个简单的主句；反过来，试着用 `indem` 或 `dadurch dass` 把自己写的两个短句拼在一起。
-2. **自我纠错机制：** 每次写出 `indem` 引导的句子，用笔把结尾的变位动词圈出来，肌肉记忆就是这么练出来的。
-3. **场景化造句：** 不要背干巴巴的例句，把你明天要去做的事情（比如去银行开户、去超市买东西）用这些高级语法在脑海里预演一遍。
-
-德语语法的严谨之美就在于此，只要你掌握了它的拼接规则，你就能表达出极为精细的逻辑关系。
-
-为了检验一下你是否掌握了今天的“第一把钥匙”，你能否结合你目前的生活或学习状态，用 `indem` 来回答我这个问题：**Wie verbesserst du jeden Tag dein Deutsch? (你每天是如何提升你的德语的？)**

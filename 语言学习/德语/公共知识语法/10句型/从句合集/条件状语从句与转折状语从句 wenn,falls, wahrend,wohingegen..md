@@ -1,3 +1,18 @@
+---
+aliases:
+  - wenn
+  - falls
+  - nur wenn
+  - sogar wenn
+  - außer wenn
+  - sofern
+  - vorausgesetzt
+  - dass
+  - während
+  - wohingegen
+---
+
+
 # 条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen.
 
 ### 🧠 核心知识图谱：你的大脑导航
@@ -34,7 +49,7 @@ flowchart TD
 
 - ** `wenn` (如果 / 当)：** 这是德语里的万能膏药。它**既可以表示条件（如果），也可以表示时间（当...时候）**。
     - **移民场景（租房）：** **Wenn** Sie die Kaution bezahlen, bekommen Sie den Schlüssel. (如果您交了押金，就会拿到钥匙。)
-- ** `falls` (如果 / 万一)：** 这个词非常纯粹！它**只能表示条件，绝对不能表示时间**。当你想表达“万一”发生某种情况时，用 `falls` 会让你的德语听起来更精准。
+- ** `falls` (如果 / 万一)：** 这个词非常纯粹！它**只能表示条件，绝对不能表示时间**。当你想表达<font color="#d83931">“万一”发生某种情况</font>时，用 `falls` 会让你的德语听起来更精准。
     - **移民场景（医疗）：** **Falls** Sie heute Fieber haben, kommen Sie bitte nicht in die Praxis. (万一您今天发烧了，请不要来诊所。)
 
 #### 2. 情绪加强款：`nur wenn`, `sogar wenn`, `außer wenn` (只有、即使、除非)
@@ -77,19 +92,3 @@ flowchart TD
 
 - **错误：** Wohingegen ich in Berlin lebe, wohnt mein Bruder in München. (❌)
 - **移民场景（生活交流）：** Mein Mann lernt gerne mit Büchern, **wohingegen** ich lieber deutsche Podcasts höre. (我丈夫喜欢用书本学习，与此相反，我更喜欢听德语播客。 ✅)
-
-### ⏳ 大师的六个月 B 2 冲刺建议
-
-要在半年内达到 B 2 并应对移民生活，你的战略必须是“抓大放小，学以致用”：
-
-1. **词汇场景化 (1-2 个月)：** 不要背孤立的单词，去背“租房词汇包”、“看病词汇包”。
-2. **吃透三大从句 (3-4 个月)：** 德语的灵魂在从句（动词尾语序）。把条件句、原因句（weil/da）、关系从句（引导定语）练成肌肉记忆。
-3. **刻意练习“官话” (5-6 个月)：** B 2 考试的核心是“正式与非正式的转换”。就像我们今天学的，你要能随时把口语的 `Wenn ich Zeit habe...` 切换成写信用的 `Sollte ich Zeit haben...`。
-
-### 🛠️ 你的实战时间
-
-听懂了不等于掌握了。我们来做一个场景模拟：
-
-假设你要写一封邮件给房东（Vermieter），想告诉他：“如果（万一）下水道明天还堵着，我就不交下个月的房租了。**然而（对比来看）**，我一直都是个按时交租的好租客。”
-
-尝试用今天学的“无连词的条件句（动词放句首）”**和**“während”**或者**“wohingegen”来用德语把这句话表达出来，发给我帮你批改，怎么样？
