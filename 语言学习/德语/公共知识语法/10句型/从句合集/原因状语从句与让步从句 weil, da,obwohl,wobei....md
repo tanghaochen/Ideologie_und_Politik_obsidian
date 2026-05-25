@@ -6,6 +6,7 @@ aliases:
   - ungeachtet dessen dass
   - weil
   - da
+  - wobei
 ---
 
 # 原因状语从句与让步从句 weil, da,obwohl,wobei...
@@ -74,11 +75,3 @@ aliases:
 
 - **核心逻辑：** 相当于 _Regardless of the fact that..._。用于极其正式的辩论、新闻或学术写作中。它由介词 `ungeachtet` (+ 第二格) 演变而来。
 - **实战场景：** _**Ungeachtet dessen, dass** die Chefin meist freundlich reagiert, würde ich in nächster Zeit vorsichtiger sein._ (**尽管**女老板通常反应很友好，**但不管怎样**，我接下来还是会小心点。)
-
-理解了这两大门派的逻辑和那条“不能放句首”的铁律，你的德语语法框架就变得极其严密了。
-
-现在，德语大师要给你布置一个 C 1 级别的综合小测验，考察你对 `wobei`（找补）和 `zumal`（补充原因）的理解。
-
-**请用德语翻译下面这段非常符合职场情境的话（请将下划线部分分别用 `zumal` 和 `wobei` 翻译为从句，注意位置和语序）：**
-
-“这份新工作听起来很不错，**尤其因为它（zumal）**离我家很近。**不过话说回来（wobei）**，工资其实本可以再稍微高一点的。”

@@ -225,14 +225,6 @@
     }
   ],
   "editor:toggle-checklist-status": [],
-  "workspace:toggle-pin": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "L"
-    }
-  ],
   "workspace:open-in-new-window": [
     {
       "modifiers": [
@@ -241,5 +233,6 @@
       ],
       "key": "O"
     }
-  ]
+  ],
+  "editor:delete-paragraph": []
 }

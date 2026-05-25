@@ -2,7 +2,7 @@
   "advancedSettings": true,
   "linkerActivated": true,
   "matchAnyPartsOfWords": false,
-  "matchEndOfWords": true,
+  "matchEndOfWords": false,
   "matchBeginningOfWords": false,
   "suppressSuffixForSubWords": false,
   "includeAllFiles": true,
