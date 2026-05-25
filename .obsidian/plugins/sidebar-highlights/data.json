@@ -2564,6 +2564,21 @@
         "isNativeComment": false,
         "color": "#d83931",
         "type": "html"
+      },
+      {
+        "id": "whuylmuxs",
+        "text": "这就是为什么/正是由于这个原因",
+        "tags": [],
+        "line": 64,
+        "startOffset": 1908,
+        "endOffset": 1952,
+        "filePath": "语言学习/德语/公共知识语法/10句型/从句合集/结果状语从句 sodass,weshalb,dermafsen ..,dass.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1779699012295,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
       }
     ]
   },

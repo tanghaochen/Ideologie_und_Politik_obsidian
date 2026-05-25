@@ -60,11 +60,9 @@ flowchart TD
 
 - _Ich bin **so/dermaßen** gerannt, **dass** ich ganz außer Atem war._ (我**如此拼命地**跑，以至于我完全喘不上气了。—— 这里隐藏了 _schnell/stark_ 的含义。)
 
-### 🎤 第三层：麦克风转交 `weshalb / weswegen` (这就是为什么...)
+### 🎤 第三层：麦克风转交 weshalb / weswegen (这就是为什么...)
 
-我们又见面了！这和我们上一节课讲的 `wobei` 属于同一个家族：**递进从句 (Weiterführender Nebensatz)**。
-
-- **核心逻辑：** 它们的作用是指代**前面那一整句话的内容**。前面发生了那一连串的事情，**“这就是为什么/正是由于这个原因”**，导致了后面的结果。
+- **核心逻辑：** 它们的作用是指代**前面那一整句话的内容**。前面发生了那一连串的事情，**“<font color="#d83931">这就是为什么/正是由于这个原因</font>”**，导致了后面的结果。
 - **教材例句：** Ich war sehr spät, **weshalb / weswegen** ich auch den Bus verpasst habe.
 - **大师解析：** 在语法功能上，`weshalb` 引导的是从句（动词在句末）。如果你不想用从句，完全可以用主句连词 `deshalb / deswegen` 替换它（此时动词在第二位：_..., deshalb habe ich den Bus verpasst._）。两者的意思百分之百相同，仅仅是句法结构的区别。
 
