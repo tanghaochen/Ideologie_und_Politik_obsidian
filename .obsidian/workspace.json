@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 56.1525129982669,
+        "dimension": 63.821490467937615,
         "children": [
           {
             "id": "96a71e84b2d205db",
@@ -135,7 +135,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 43.84748700173311,
+        "dimension": 36.17850953206239,
         "children": [
           {
             "id": "3aac633a588a67d1",
@@ -143,7 +143,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/100❌错题/✍️形容词.md",
+                "file": "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -158,7 +158,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "✍️形容词"
+              "title": "格 与 介词 动词的固定搭配"
             }
           },
           {
@@ -257,7 +257,8 @@
               "title": "冠词类限定词（Artikelwörter）及其形容词词尾变化"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -519,12 +520,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/100❌错题/✍️形容词.md",
+                "file": "语言学习/德语/公共知识语法/形容词.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "✍️形容词 的出链列表"
+              "title": "形容词 的出链列表"
             }
           },
           {
@@ -587,10 +588,14 @@
       "vscode-editor:新建代码文件": false
     }
   },
-  "active": "3aac633a588a67d1",
+  "active": "96a71e84b2d205db",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/格; 限定词.md",
     "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
+    "语言学习/德语/公共知识语法/语法对应的场景.md",
+    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
+    "语言学习/德语/公共知识语法/100❌错题/✍️形容词.md",
     "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
     "语言学习/德语/公共知识语法/3形容词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
     "语言学习/德语/公共知识语法/10句型/第一虚拟式转述对话、传闻和自述.md",
@@ -611,10 +616,6 @@
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/es.md",
     "Clippings/发起新对话.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
-    "语言学习/德语/公共知识语法/2动词/系动词.md",
-    "语言学习/德语/公共知识语法/2动词/werden.md",
-    "语言学习/德语/公共知识语法/10句型/被动态.md",
     "assets/Recording 20260221142357.m4a",
     "media-lib/index.base",
     "media-lib",
