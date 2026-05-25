@@ -9,12 +9,12 @@
         "dimension": 49.15474642392718,
         "children": [
           {
-            "id": "4806321a64b0acc1",
+            "id": "f837127aada29165",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/es.md",
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/原因状语从句与让步从句 weil, da,obwohl,wobei....md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -29,55 +29,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "es"
-            }
-          },
-          {
-            "id": "6f45da37f421fb0b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "关系从句"
-            }
-          },
-          {
-            "id": "5fb49f56ee6015d5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/2动词/werden.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "werden"
+              "title": "原因状语从句与让步从句 weil, da,obwohl,wobei..."
             }
           },
           {
@@ -510,12 +462,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/es.md",
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/原因状语从句与让步从句 weil, da,obwohl,wobei....md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "es 的出链列表"
+              "title": "原因状语从句与让步从句 weil, da,obwohl,wobei... 的出链列表"
             }
           },
           {
@@ -609,14 +561,15 @@
         "y": 357,
         "width": 1024,
         "height": 800,
-        "maximize": true,
+        "maximize": false,
         "zoom": -1.5
       }
     ]
   },
-  "active": "4806321a64b0acc1",
+  "active": "f837127aada29165",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/原因状语从句与让步从句 weil, da,obwohl,wobei....md",
     "语言学习/德语/公共知识语法/10句型/从句合集/es.md",
     "Clippings/发起新对话.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
@@ -631,7 +584,6 @@
     "语言学习/德语/公共知识语法/10句型/从句合集/方式状语从句 indem, dadurch dass, wodurch...md",
     "语言学习/德语/公共知识语法/10句型/从句合集/条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen..md",
     "语言学习/德语/公共知识语法/10句型/从句合集/结果状语从句 sodass,weshalb,dermafsen ..,dass.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/原因状语从句与让步从句 weil, da,obwohl,wobei....md",
     "语言学习/德语/公共知识语法/语法对应的场景.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
     "assets/Recording 20260221142357.m4a",
