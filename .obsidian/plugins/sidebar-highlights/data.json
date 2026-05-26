@@ -2597,6 +2597,53 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "语言学习/德语/公共知识语法/3形容词/形容词.md": [
+      {
+        "id": "hnm3hoigw",
+        "text": " -e 和 -en 之间二选一",
+        "tags": [],
+        "line": 32,
+        "startOffset": 840,
+        "endOffset": 884,
+        "filePath": "语言学习/德语/公共知识语法/3形容词/形容词.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1779790692293,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "ty2h13vyp",
+        "text": "光秃秃",
+        "tags": [],
+        "line": 61,
+        "startOffset": 1800,
+        "endOffset": 1832,
+        "filePath": "语言学习/德语/公共知识语法/3形容词/形容词.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1779790735834,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "vx0x48fs0",
+        "text": "阳性补 -er（ein guter Mann），中性补 -es",
+        "tags": [],
+        "line": 61,
+        "startOffset": 1869,
+        "endOffset": 1929,
+        "filePath": "语言学习/德语/公共知识语法/3形容词/形容词.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1779790751482,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},
