@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 52.145643693107935,
+        "dimension": 52.14564369310793,
         "children": [
           {
             "id": "d3235032fd1720f3",
@@ -160,7 +160,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 47.854356306892065,
+        "dimension": 47.85435630689207,
         "children": [
           {
             "id": "4d4dcb216e7fb95d",
@@ -566,7 +566,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/形容词.md",
+                "file": "语言学习/德语/公共知识语法/3形容词/形容词.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -630,11 +630,11 @@
       "pexels-banner:🚩 Pixel Banner Menu": false,
       "notebook-navigator:笔记本导航器": false,
       "obsidian-livesync:P2P Status": false,
-      "obsidian-livesync:显示自定义同步": false,
-      "vscode-editor:新建代码文件": false
+      "vscode-editor:新建代码文件": false,
+      "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "96a71e84b2d205db",
+  "active": "4d4dcb216e7fb95d",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/3形容词/形容词.md",
     "语言学习/德语/公共知识语法/形容词.md",
