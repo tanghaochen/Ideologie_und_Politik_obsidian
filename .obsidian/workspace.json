@@ -45,24 +45,12 @@
             }
           },
           {
-            "id": "c7158c5eedb2b248",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/句子成分逻辑展示.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "句子成分逻辑展示"
-            }
-          },
-          {
             "id": "90d00b9b55ffef31",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen..md",
+                "file": "语言学习/德语/公共知识语法/3形容词/✍️形容词.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -77,7 +65,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen."
+              "title": "✍️形容词"
             }
           },
           {
@@ -155,7 +143,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       },
       {
         "id": "dd4130c5419b5527",
@@ -534,7 +522,8 @@
               "title": "Excalidraw 侧边面板"
             }
           }
-        ]
+        ],
+        "currentTab": 10
       },
       {
         "id": "28e75bfc7e894da7",
@@ -566,12 +555,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/形容词.md",
+                "file": "语言学习/德语/公共知识语法/3形容词/✍️形容词.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "形容词 的出链列表"
+              "title": "✍️形容词 的出链列表"
             }
           },
           {
@@ -634,20 +623,20 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "96a71e84b2d205db",
+  "active": "90d00b9b55ffef31",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/3形容词/形容词.md",
     "语言学习/德语/公共知识语法/形容词.md",
+    "语言学习/德语/公共知识语法/3形容词/✍️形容词.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen..md",
+    "语言学习/德语/公共知识语法/3形容词/形容词.md",
     "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
     "语言学习/德语/公共知识语法/名词.md",
     "语言学习/德语/公共知识语法/2动词/动词与单复数关系.md",
     "语言学习/德语/公共知识语法/名词/名词复数变化.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/递进从句合集.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen..md",
     "语言学习/德语/公共知识语法/2动词/Würden und Könnten.md",
     "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
-    "语言学习/德语/公共知识语法/100❌错题/✍️形容词.md",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "语言学习/德语/公共知识语法/3形容词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",

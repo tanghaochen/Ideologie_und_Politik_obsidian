@@ -97,14 +97,7 @@
       "key": "PageDown"
     }
   ],
-  "easy-typing-obsidian:easy-typing-goto-new-line-after-cur-line": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "Enter"
-    }
-  ],
+  "easy-typing-obsidian:easy-typing-goto-new-line-after-cur-line": [],
   "editor:open-link-in-new-leaf": [],
   "easy-typing-obsidian:easy-typing-insert-codeblock": [],
   "easy-typing-obsidian:easy-typing-delete-blank-line": [],
@@ -234,5 +227,6 @@
       "key": "O"
     }
   ],
-  "editor:delete-paragraph": []
+  "editor:delete-paragraph": [],
+  "obsidian-editor-shortcuts:insertLineBelow": []
 }
