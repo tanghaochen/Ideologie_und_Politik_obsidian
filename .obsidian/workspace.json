@@ -6,7 +6,7 @@
       {
         "id": "afad75680372aa9c",
         "type": "tabs",
-        "dimension": 52.14564369310793,
+        "dimension": 70.43779800606849,
         "children": [
           {
             "id": "d3235032fd1720f3",
@@ -143,12 +143,12 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       },
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 47.85435630689207,
+        "dimension": 29.562201993931513,
         "children": [
           {
             "id": "4d4dcb216e7fb95d",
@@ -522,8 +522,7 @@
               "title": "Excalidraw 侧边面板"
             }
           }
-        ],
-        "currentTab": 6
+        ]
       },
       {
         "id": "28e75bfc7e894da7",
@@ -555,12 +554,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/形容词.md",
+                "file": "语言学习/德语/公共知识语法/3形容词/✍️形容词.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "形容词 的出链列表"
+              "title": "✍️形容词 的出链列表"
             }
           },
           {
@@ -623,10 +622,12 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "fc8efd10765ae511",
+  "active": "90d00b9b55ffef31",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/3形容词/形容词.md",
     "语言学习/德语/公共知识语法/形容词.md",
+    "assets/PixPin_2026-05-27_20-56-12.png",
+    "assets/PixPin_2026-05-27_20-53-13.png",
     "assets/PixPin_2026-05-27_18-18-11.png",
     "assets/PixPin_2026-05-27_18-12-23.png",
     "assets/PixPin_2026-05-27_18-11-38.png",
@@ -661,8 +662,6 @@
     "assets/Recording 20260221142357.m4a",
     "media-lib/index.base",
     "media-lib",
-    "assets/PixPin_2026-05-23_17-17-47.png",
-    "assets/PixPin_2026-05-23_17-16-47.png",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/未命名.base",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg",
