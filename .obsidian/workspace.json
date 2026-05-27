@@ -143,7 +143,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       },
       {
         "id": "dd4130c5419b5527",
@@ -523,7 +523,7 @@
             }
           }
         ],
-        "currentTab": 10
+        "currentTab": 2
       },
       {
         "id": "28e75bfc7e894da7",
@@ -555,12 +555,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "语言学习/德语/公共知识语法/3形容词/✍️形容词.md",
+                "file": "语言学习/德语/公共知识语法/形容词.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "✍️形容词 的出链列表"
+              "title": "形容词 的出链列表"
             }
           },
           {
@@ -623,12 +623,19 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "90d00b9b55ffef31",
+  "active": "96a71e84b2d205db",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/形容词.md",
+    "assets/PixPin_2026-05-27_18-12-23.png",
+    "assets/PixPin_2026-05-27_18-11-38.png",
+    "assets/PixPin_2026-05-27_18-10-37.png",
+    "assets/PixPin_2026-05-27_18-06-24.png",
+    "assets/PixPin_2026-05-27_18-05-41.png",
+    "assets/PixPin_2026-05-27_18-04-40.png",
+    "assets/PixPin_2026-05-27_18-02-28.png",
     "语言学习/德语/公共知识语法/3形容词/✍️形容词.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen..md",
     "语言学习/德语/公共知识语法/3形容词/形容词.md",
+    "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
     "语言学习/德语/公共知识语法/名词.md",
     "语言学习/德语/公共知识语法/2动词/动词与单复数关系.md",
@@ -650,7 +657,6 @@
     "语言学习/德语/公共知识语法/10句型/介词一副词一连词.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/方式状语从句 indem, dadurch dass, wodurch...md",
     "Clippings/德国机电行业就业选择.md",
-    "语言学习/德语/公共知识语法/时态.md",
     "assets/Recording 20260221142357.m4a",
     "media-lib/index.base",
     "media-lib",
@@ -658,12 +664,6 @@
     "assets/PixPin_2026-05-23_17-16-47.png",
     "assets/PixPin_2026-05-23_17-05-32.png",
     "Excalidraw/Scripts/Downloaded/ExcalidrawMinimap.svg",
-    "assets/PixPin_2026-05-19_19-27-09.png",
-    "assets/PixPin_2026-05-20_00-23-15.png",
-    "assets/PixPin_2026-05-21_17-06-59.png",
-    "assets/PixPin_2026-05-22_19-13-55.png",
-    "assets/PixPin_2026-05-22_19-16-09.png",
-    "assets/PixPin_2026-05-21_23-55-14.png",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/未命名.base",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg",
