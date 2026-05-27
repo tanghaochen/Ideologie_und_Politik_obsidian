@@ -5,7 +5,7 @@
   "couchDB_USER": "",
   "couchDB_PASSWORD": "",
   "couchDB_DBNAME": "",
-  "liveSync": true,
+  "liveSync": false,
   "syncOnSave": false,
   "syncOnStart": false,
   "savingDelay": 200,
@@ -15,7 +15,7 @@
   "minimumChunkSize": 20,
   "longLineThreshold": 250,
   "showVerboseLog": false,
-  "suspendFileWatching": false,
+  "suspendFileWatching": true,
   "trashInsteadDelete": true,
   "periodicReplication": false,
   "periodicReplicationInterval": 60,
@@ -68,18 +68,19 @@
   "useDynamicIterationCount": false,
   "syncAfterMerge": false,
   "configPassphraseStore": "",
-  "encryptedPassphrase": "%$WpSo5mO/A0dqy3WU17eYOFQX65ZG+6ak8rnh+/bHpnAfDO+S0p4MwsrmgiH/He1xdyoxGArYRRk8Ih0wIJF7BBdEkHHlchnTn2tvU0ZeEiQoJRQISxyPudyUSvn8MvaaRickDJdjDIUsNl5/uRn0pbtsKKFzwXC4hX1zFw==",
-  "encryptedCouchDBConnection": "%$WpSo5mO/A0dqy3WU17eYOFQX65ZG+6ak8rnh+/bHpnA+jHrCR5u1bH/+SVpw75wW01XX+03yef5G+Z1XvwLXTKFpFK+uToMg9lUxSjO0g7xd+KDCR33jas2THUmM5R3DpHulqcFQqFLg0+eZFefZbEm7O7FE8PAsfkRnPffjVDDP23Fd9V3Tuc/PvM2l/yYy05XZad5rXssKok3PYskPOv7+NPAHIg1ktDcE9BQVkg0lSo4p9fqq1Ha2C/QIlHZT2WTB7DwKUQSkFThPdXxEjTTcrmzzFN/8uMs/VwoFRDuBrXTjVl+I81dAx+3GYLlwBT+xfkAwrSCXyqfIdtQBdtwJBENNWpo+1k2lkZuaW/MwFx81D4fVQbMcTBnV+bGB9h86rb/ET1kSmw+TQV26bjuMfNsmEUc4KBtbeEgOXgkbbiO5SLJw+2gOfURjRCk+uPHJyyBVx2/g/SQGsqN5MR3Fzf2WYF3bFRkZlfAtzafn+SdV3KnU10+J3vj5nkR6+HD40zd68RxKpTq4eXIZHQZETAW673WgKT+NLPLUoMzEfur2gfNgib7HsfbC2SqWVoC4OanNxMDkimypPsfvvXztKBloWZD9l0nMfm1QT7RZvgYO4imsxUrVitOZuJlI93m9wZVIVcMyrgGL+53nBz3UpTRk+yXLbG/4IcEE5opNSzAwYVVQIIKAfntj9Q==",
+  "encryptedPassphrase": "%$cjHnZbtQK/sbytO5RzxP5r+Sznl92kbI9WLwqf7cwlzy0KAIuiOZw0kYeAB0ynSNnZDDfzm6Ok2Rso1/omQN97hF+u8HibyNJipEVzrAWjnWzNfeW8UnFNGdhWc64lktUNb7kJicddPicUcY21/Gz52lu7n0JZqq7DA4YQ==",
+  "encryptedCouchDBConnection": "%$cjHnZbtQK/sbytO5RzxP5r+Sznl92kbI9WLwqf7cwlxhXMsHNN49dxBHOC5nx4Tu4YXWe1x1HOUbsTPAYALOa3rcKhnds99Jz2KvFpaGmp+MsGvWokZoG59HGWQRugVRQvrloXr27qDgIU/bN0wgdu+ip7w4nTe5KrFwIX8bL7g2uZegSLhkdhB+j5btKou6ptto6JJTILgtLjzhRk2pS+yxZY5DFaMjsfq2Ib5ZtJGEAX97GLif1ELyXEfWXY4HJh0+FsNnpPS9PRDSttzR+Ad0EfWGyyadN3+XQiNaBzwnBJ1jkWQdcdWgTF8VdhJOXpb2YEUZBNkebyspoGmQ+PiMco68OD04dibZlJuR7EE3AeOexOCdesz4Pg25N1jQ2tKmj8OUUelrKoH8VQvKnWOB9h1au7qN+gRTNlqQtSgX/+VIHLpZziNqAKQLlRLkf3LeyqnFckeTznS3UJdqlJhkLyCiXxJS7c52gQecXH96xLs+m96h5mtN7SHdc+BA86SzgQK7a7Wqfbx1hXyL8z4GsE8t5e27IfMatI0CSbUimCCw1VGkqjyHWXix4EwtjM+Au3ZhRsZ0sd9zvAHwDsOUnoY5gy6DcwIaGwDg/sa65qHeUza54UCDJADFe5zDX1BjNPorFhpJjlVEb6mdsn7rSXMqV25IZOPQ/VKwzorXtci5nkOdDeIhkpO3gQ==",
   "permitEmptyPassphrase": false,
   "remoteConfigurations": {
     "legacy-couchdb": {
       "id": "legacy-couchdb",
       "name": "CouchDB Remote",
-      "uri": "%$WpSo5mO/A0dqy3WU17eYOFQX65ZG+6ak8rnh+/bHpnB26dBY3F6aWkSA85WkZpPNDDwWq980u//4D0GABNYkPWwQBLM7t9KRNtQjWdd+LC+xBkdUOnA9Sdtuow2bm0yadvF1eYt8ABw8E1kZZSkYZVIyOmmx3Dc/g9pddDxDro6mSqiaqxYGi/TUXK5Lxw+wcyTUp38whcHRg+SD5A==",
+      "uri": "%$cjHnZbtQK/sbytO5RzxP5r+Sznl92kbI9WLwqf7cwlzJUJH3eNMm5IYAEdomw/o/Gd75SthBr7stQdpvCWby98C/m6cPbqXM2F3FeorSlI9JrtIWd5txnOFm/dk+1Hq/Xw30FtqvLiKT9F/vZ6ebovGEE+HCwf27IgadpCvkofXiDu7iDAJfrwVSG7Ma9dNuaSyJCp2qDCl3B3DBrQ==",
       "isEncrypted": true
     }
   },
   "activeConfigurationId": "legacy-couchdb",
+  "P2P_ActiveRemoteConfigurationId": "",
   "useIndexedDBAdapter": false,
   "useTimeouts": false,
   "writeLogToTheFile": false,
@@ -149,6 +150,7 @@
   "P2P_turnServers": "",
   "P2P_turnUsername": "",
   "P2P_turnCredential": "",
+  "P2P_useDiagRTC": false,
   "doctorProcessedVersion": "0.25.27",
   "bucketCustomHeaders": "",
   "couchDB_CustomHeaders": "",
@@ -166,5 +168,6 @@
   "forcePathStyle": true,
   "syncInternalFileOverwritePatterns": "",
   "useOnlyLocalChunk": false,
-  "maxMTimeForReflectEvents": 0
+  "maxMTimeForReflectEvents": 0,
+  "tweakModified": 1779885086863
 }
