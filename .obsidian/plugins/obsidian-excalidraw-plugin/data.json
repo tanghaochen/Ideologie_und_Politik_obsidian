@@ -64,7 +64,7 @@
   "zoomToFitOnOpen": true,
   "zoomToFitOnResize": false,
   "zoomToFitMaxLevel": 7.5,
-  "zoomStep": 0.05,
+  "zoomStep": 0.1,
   "zoomMin": 0.12,
   "zoomMax": 51,
   "linkPrefix": "📍",
@@ -121,6 +121,52 @@
     "version": 2,
     "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag2.23.7",
     "libraryItems": [
+      {
+        "status": "unpublished",
+        "elements": [
+          {
+            "id": "pyhn6Eh5",
+            "type": "text",
+            "x": -1357.3815117502372,
+            "y": -3048.8228541664,
+            "width": 300.827617615462,
+            "height": 1041.6479222995197,
+            "angle": 4.71238898038469,
+            "strokeColor": "#1e1e1e",
+            "backgroundColor": "transparent",
+            "fillStyle": "solid",
+            "strokeWidth": 2,
+            "strokeStyle": "solid",
+            "roughness": 1,
+            "opacity": 100,
+            "groupIds": [],
+            "frameId": "Tn_n_TOyonugANiXpsSo0",
+            "index": "b0Az",
+            "roundness": null,
+            "seed": 1275992788,
+            "version": 806,
+            "versionNonce": 301017836,
+            "isDeleted": false,
+            "boundElements": [],
+            "updated": 1780212410994,
+            "link": null,
+            "locked": false,
+            "text": "{",
+            "rawText": "{",
+            "fontSize": 833.3183378396153,
+            "fontFamily": 6,
+            "textAlign": "left",
+            "verticalAlign": "top",
+            "containerId": null,
+            "originalText": "{",
+            "autoResize": true,
+            "lineHeight": 1.25,
+            "hasTextLink": false
+          }
+        ],
+        "id": "4nHT-TmCOPZ-qTgxlA7ls",
+        "created": 1780212418642
+      },
       {
         "status": "unpublished",
         "elements": [
@@ -17678,7 +17724,7 @@
   },
   "laserSettings": {
     "DECAY_LENGTH": 50,
-    "DECAY_TIME": 1000,
+    "DECAY_TIME": 20000,
     "COLOR": "#ff0000"
   },
   "embeddableMarkdownDefaults": {

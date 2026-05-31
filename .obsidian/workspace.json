@@ -69,15 +69,19 @@
             "id": "a2478f1874c1208b",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/形容词.md"
+                "file": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "excalidraw-icon",
-              "title": "形容词"
+              "icon": "lucide-file",
+              "title": "⭐必背所有知识点整理考察整理"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       },
       {
         "id": "66514ff393b45104",
@@ -121,21 +125,22 @@
             }
           },
           {
-            "id": "0605b631e217ea4d",
+            "id": "33784117b9df092d",
             "type": "leaf",
             "state": {
-              "type": "split-diff-view",
+              "type": "markdown",
               "state": {
-                "aFile": "语言学习/德语/单词/发音/数字.md",
-                "bFile": "语言学习/德语/单词/发音/数字.md",
-                "aRef": ""
+                "file": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "diff",
-              "title": "Diff: 数字  (Working Tree)"
+              "icon": "lucide-file",
+              "title": "Vorwort"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -330,9 +335,11 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {},
+              "state": {
+                "file": "语言学习/德语/公共知识语法/从句.md"
+              },
               "icon": "lucide-info",
-              "title": "笔记属性"
+              "title": "从句的笔记属性"
             }
           },
           {
@@ -408,12 +415,14 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "ff36fbbbf55f4934",
+  "active": "77b9e9d51e1aff2c",
   "lastOpenFiles": [
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
+    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/公共知识语法/动词.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "assets/PixPin_2026-05-21_16-26-33.png",
     "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
     "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
@@ -432,7 +441,6 @@
     "语言学习/德语/公共知识语法/10句型/代词/es.md",
     "语言学习/德语/公共知识语法/10句型/代词",
     "assets/PixPin_2026-05-30_15-11-16.png",
-    "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "语言学习/德语/公共知识语法/名词.md",
     "语言学习/德语/公共知识语法/10句型/zu的所有用法.md",
