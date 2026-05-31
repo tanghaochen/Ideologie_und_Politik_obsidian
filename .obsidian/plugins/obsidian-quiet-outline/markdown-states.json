@@ -13975,13 +13975,15 @@
     "cursor": {
       "from": {
         "line": 5,
-        "ch": 21
+        "ch": 65
       },
       "to": {
-        "line": 5,
-        "ch": 21
+        "line": 0,
+        "ch": 0
       }
     },
-    "expandedKeys": []
+    "expandedKeys": [
+      "item-1-0"
+    ]
   }
 }

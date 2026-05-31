@@ -1,9 +1,11 @@
-
+# Boden Erdkultur, Hydrokultur, Halbbodenkultur
 Welcher methode ist  am besten? 
 
 ## Boden Erdkultur
 
-Es ist mein erst and 
+Es ist mein erstes und niedrigstes Haltungkosten im drei methode.
+
+
 
 
 

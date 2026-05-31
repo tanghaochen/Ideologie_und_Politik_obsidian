@@ -127,7 +127,8 @@
               "title": "Vorwort"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -323,10 +324,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md"
+                "file": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md"
               },
               "icon": "lucide-info",
-              "title": "81 形容词和比较级 最高级 与 第一格的笔记属性"
+              "title": "Boden  Erdkultur, Hydrokultur, Halbbodenkultur的笔记属性"
             }
           },
           {
@@ -401,12 +402,12 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "77b869862f2cc192",
+  "active": "66fc3a48aceb166d",
   "lastOpenFiles": [
+    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/动词.md",
-    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
     "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
     "Excalidraw/Scripts/Downloaded/Set Link Alias.md",
     "语言学习/德语/公共知识语法/形容词.md",
