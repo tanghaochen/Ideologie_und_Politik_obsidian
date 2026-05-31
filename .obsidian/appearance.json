@@ -1,7 +1,7 @@
 {
   "baseFontSizeAction": false,
   "nativeMenus": false,
-  "cssTheme": "",
+  "cssTheme": "Minimal",
   "showRibbon": true,
   "baseFontSize": 18,
   "theme": "obsidian",
