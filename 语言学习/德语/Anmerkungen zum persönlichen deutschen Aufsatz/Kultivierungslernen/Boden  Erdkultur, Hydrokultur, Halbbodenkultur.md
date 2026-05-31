@@ -22,6 +22,9 @@ Welche Methode ist am besten geeignet?
 	      - **应用技巧：** 表达强调的形容词作副词用 (Verstärkung)。"stolze" 在这里不是骄傲，而是用来形容价格或数量“令人咋舌的/足足有”，完美翻译出了中文里“才给这么点却要这么多钱”的潜在吐槽语气。
 - 经过我的调查，下面这套方案是成本最低的配土方案：
 	- Basierend auf meinen Nachforschungen stellt das folgende Konzept die kostengünstigste Methode zur Substratmischung dar:
+		- folgende 下列；
+		- Substratmischung 底材混合 / 
+		- `Basierend auf (+ Dat.)`（基于……/经过……）来替代简单的 `Nach` 或者从句
 - 直接使用椰砖泡发，可以得到大量空间，这一步记得确认确认椰砖是无盐的，或者可以泡发装盆然后用水大量冲洗。
 	- Durch das direkte Aufquellenlassen von Kokosziegeln lässt sich ein beträchtliches Volumen gewinnen. Bei diesem Schritt ist unbedingt darauf zu achten, dass die Kokosblöcke salzfrei sind. Alternativ können sie nach dem Aufquellen in Töpfe gefüllt und anschließend mit reichlich Wasser gründlich durchgespült werden.
 - 椰砖可是没有任何营养的，所以混合发酵完全的羊粪, 羊粪目的是提供基础的营养，既便宜又能提供全面的营养。
