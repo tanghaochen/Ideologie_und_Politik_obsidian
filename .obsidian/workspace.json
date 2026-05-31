@@ -167,7 +167,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "sowie",
+                "query": "jedoch",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -188,7 +188,8 @@
               "title": "Recent files"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
@@ -402,7 +403,7 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "66fc3a48aceb166d",
+  "active": "2bdbb354e1190468",
   "lastOpenFiles": [
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
