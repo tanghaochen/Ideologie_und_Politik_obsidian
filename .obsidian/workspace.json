@@ -113,18 +113,6 @@
             }
           },
           {
-            "id": "77b9e9d51e1aff2c",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "从句"
-            }
-          },
-          {
             "id": "33784117b9df092d",
             "type": "leaf",
             "state": {
@@ -138,9 +126,38 @@
               "icon": "lucide-file",
               "title": "Vorwort"
             }
+          },
+          {
+            "id": "77b9e9d51e1aff2c",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/从句.md"
+              },
+              "pinned": true,
+              "icon": "excalidraw-icon",
+              "title": "从句"
+            }
+          },
+          {
+            "id": "ae722dc51000584e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "句子结构：术语，形容词，副词，表语，定语，状语"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -352,8 +369,7 @@
               "title": "Excalidraw 侧边面板"
             }
           }
-        ],
-        "currentTab": 6
+        ]
       },
       {
         "id": "28e75bfc7e894da7",
@@ -417,10 +433,13 @@
   },
   "active": "77b9e9d51e1aff2c",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
+    "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/公共知识语法/句子成分 结构.md",
+    "语言学习/德语/公共知识语法/10句型/状语从句和普通从句区别.md",
+    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/形容词.md",
-    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/公共知识语法/动词.md",
     "assets/PixPin_2026-05-21_16-26-33.png",
@@ -446,9 +465,6 @@
     "语言学习/德语/公共知识语法/10句型/zu的所有用法.md",
     "语言学习/德语/公共知识语法/10句型/带zu不定式与不带zu不定式.md",
     "语言学习/德语/公共知识语法/10句型/带zu不定式从句的“三明治”句型与逗号法则.md",
-    "Excalidraw/ExcalidrawStartup.md",
-    "语言学习/德语/公共知识语法/3形容词/数字 序数词.md",
-    "Excalidraw/ExcalidrawStartup1.md",
     "Excalidraw/Scripts/Downloaded/Reverse arrows.svg",
     "Excalidraw/Scripts/Downloaded/Excalidraw Writing Machine.svg",
     "Excalidraw/Scripts/Downloaded/Box Each Selected Groups.svg",

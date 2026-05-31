@@ -64,7 +64,7 @@
   "zoomToFitOnOpen": true,
   "zoomToFitOnResize": false,
   "zoomToFitMaxLevel": 7.5,
-  "zoomStep": 0.1,
+  "zoomStep": 0.13,
   "zoomMin": 0.12,
   "zoomMax": 51,
   "linkPrefix": "📍",
@@ -18249,6 +18249,6 @@
     "alignment": "center",
     "margin": "normal"
   },
-  "disableContextMenu": false,
+  "disableContextMenu": true,
   "isDebugMode": false
 }

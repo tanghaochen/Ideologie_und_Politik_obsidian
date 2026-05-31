@@ -879,6 +879,21 @@
         "createdAt": 1779362557256,
         "isNativeComment": false,
         "type": "highlight"
+      },
+      {
+        "id": "69ximo1cv",
+        "text": "动词（核心动作）”或整个句子",
+        "tags": [],
+        "line": 78,
+        "startOffset": 2375,
+        "endOffset": 2418,
+        "filePath": "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1779362557310,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
       }
     ],
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md": [
