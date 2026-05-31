@@ -9,6 +9,21 @@
         "dimension": 41.39575205895102,
         "children": [
           {
+            "id": "5d8b1efbe41a445c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "连词成对"
+            }
+          },
+          {
             "id": "2acf190e7bdf844a",
             "type": "leaf",
             "state": {
@@ -80,8 +95,7 @@
               "title": "名词：性的规律, 不背词性，一眼识别词性"
             }
           }
-        ],
-        "currentTab": 4
+        ]
       },
       {
         "id": "66514ff393b45104",
@@ -101,42 +115,28 @@
             }
           },
           {
-            "id": "e07a1d70f3011b35",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/介词.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "介词"
-            }
-          },
-          {
             "id": "33784117b9df092d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
+                "file": "语言学习/德语/公共知识语法/5介词/auf, von, bei 都表示在某个事物之上，怎么区分它们？.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "Vorwort"
+              "title": "auf, von, bei 都表示在某个事物之上，怎么区分它们？"
             }
           },
           {
-            "id": "77b9e9d51e1aff2c",
+            "id": "e07a1d70f3011b35",
             "type": "leaf",
-            "pinned": true,
             "state": {
               "type": "excalidraw",
               "state": {
                 "file": "语言学习/德语/公共知识语法/从句.md"
               },
-              "pinned": true,
               "icon": "excalidraw-icon",
               "title": "从句"
             }
@@ -155,9 +155,38 @@
               "icon": "lucide-file",
               "title": "句子结构：术语，形容词，副词，表语，定语，状语"
             }
+          },
+          {
+            "id": "77b9e9d51e1aff2c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Excalidraw/Scripts/Downloaded/Set Link Alias.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "Set Link Alias"
+            }
+          },
+          {
+            "id": "66fc3a48aceb166d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "Vorwort"
+            }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -353,10 +382,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md"
+                "file": "语言学习/德语/公共知识语法/动词.md"
               },
               "icon": "lucide-info",
-              "title": "Vorwort的笔记属性"
+              "title": "动词的笔记属性"
             }
           },
           {
@@ -431,12 +460,23 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "33784117b9df092d",
+  "active": "277f4be22d9411aa",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/从句.md",
-    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
-    "语言学习/德语/公共知识语法/介词.md",
+    "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md",
+    "语言学习/德语/公共知识语法/介词.md",
+    "语言学习/德语/公共知识语法/5介词/auf, von, bei 都表示在某个事物之上，怎么区分它们？.md",
+    "Excalidraw/Scripts/Downloaded/Set Link Alias.md",
+    "Excalidraw/Scripts/Downloaded/Zoom to Fit Selected Elements.svg",
+    "Excalidraw/Scripts/Downloaded/Convert selected text elements to sticky notes.svg",
+    "Excalidraw/Scripts/Downloaded/Convert selected text elements to sticky notes.md",
+    "Excalidraw/Scripts/Downloaded/AddMermaidSvg.svg",
+    "Excalidraw/Scripts/Downloaded/AddMermaidSvg.md",
+    "Excalidraw/Scripts/Downloaded/Zoom to Fit Selected Elements.md",
+    "Excalidraw/Scripts/Downloaded/Set Link Alias.svg",
+    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
     "语言学习/德语/公共知识语法/名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
@@ -444,7 +484,6 @@
     "语言学习/德语/公共知识语法/句子成分 结构.md",
     "语言学习/德语/公共知识语法/10句型/状语从句和普通从句区别.md",
     "语言学习/德语/公共知识语法/形容词.md",
-    "语言学习/德语/公共知识语法/动词.md",
     "assets/PixPin_2026-05-21_16-26-33.png",
     "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
     "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
@@ -456,20 +495,9 @@
     "语言学习/德语/公共知识语法/时态.md",
     "assets/Pasted Image 20260530214651_355.svg",
     "assets/Pasted Image 20260530214613_101.svg",
-    "语言学习/德语/公共知识语法/10句型/zu的不定式.md",
-    "语言学习/德语/公共知识语法/其他句式.md",
-    "语言学习/德语/公共知识语法/格; 限定词.md",
-    "语言学习/德语/公共知识语法/10句型/代词/da-构成的代副词.md",
-    "语言学习/德语/公共知识语法/10句型/代词/es.md",
     "语言学习/德语/公共知识语法/10句型/代词",
     "assets/PixPin_2026-05-30_15-11-16.png",
-    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
-    "语言学习/德语/公共知识语法/名词.md",
     "Excalidraw/Scripts/Downloaded/Reverse arrows.svg",
-    "Excalidraw/Scripts/Downloaded/Excalidraw Writing Machine.svg",
-    "Excalidraw/Scripts/Downloaded/Box Each Selected Groups.svg",
-    "Excalidraw/Scripts/Downloaded/Box Selected Elements.svg",
-    "Excalidraw/Scripts/Downloaded/Set Dimensions.svg",
     "语言学习/德语/教材/其他/标准德语语法：精解与练习B2-C1.pdf",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg",

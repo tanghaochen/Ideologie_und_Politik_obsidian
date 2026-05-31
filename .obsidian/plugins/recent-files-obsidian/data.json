@@ -1,20 +1,40 @@
 {
   "recentFiles": [
     {
-      "basename": "Vorwort",
-      "path": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md"
+      "basename": "动词",
+      "path": "语言学习/德语/公共知识语法/动词.md"
     },
     {
       "basename": "从句",
       "path": "语言学习/德语/公共知识语法/从句.md"
     },
     {
+      "basename": "句子结构：术语，形容词，副词，表语，定语，状语",
+      "path": "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md"
+    },
+    {
+      "basename": "连词成对",
+      "path": "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md"
+    },
+    {
       "basename": "介词",
       "path": "语言学习/德语/公共知识语法/介词.md"
     },
     {
-      "basename": "句子结构：术语，形容词，副词，表语，定语，状语",
-      "path": "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md"
+      "basename": "auf, von, bei 都表示在某个事物之上，怎么区分它们？",
+      "path": "语言学习/德语/公共知识语法/5介词/auf, von, bei 都表示在某个事物之上，怎么区分它们？.md"
+    },
+    {
+      "basename": "Set Link Alias",
+      "path": "Excalidraw/Scripts/Downloaded/Set Link Alias.md"
+    },
+    {
+      "basename": "Set Link Alias",
+      "path": "Excalidraw/Scripts/Downloaded/Set Link Alias.svg"
+    },
+    {
+      "basename": "Vorwort",
+      "path": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md"
     },
     {
       "basename": "名词：性的规律, 不背词性，一眼识别词性",
@@ -43,10 +63,6 @@
     {
       "basename": "形容词",
       "path": "语言学习/德语/公共知识语法/形容词.md"
-    },
-    {
-      "basename": "动词",
-      "path": "语言学习/德语/公共知识语法/动词.md"
     },
     {
       "basename": "PixPin_2026-05-21_16-26-33",
@@ -133,14 +149,6 @@
       "path": "Excalidraw/ExcalidrawStartup1.md"
     },
     {
-      "basename": "Set Link Alias",
-      "path": "Excalidraw/Scripts/Downloaded/Set Link Alias.md"
-    },
-    {
-      "basename": "Set Link Alias",
-      "path": "Excalidraw/Scripts/Downloaded/Set Link Alias.svg"
-    },
-    {
       "basename": "原因状语从句与让步从句 weil, da,obwohl,wobei...",
       "path": "语言学习/德语/公共知识语法/10句型/从句合集/原因状语从句与让步从句 weil, da,obwohl,wobei....md"
     },
@@ -167,38 +175,6 @@
     {
       "basename": "ExcalidrawMinimap",
       "path": "Excalidraw/Scripts/Downloaded/ExcalidrawMinimap.svg"
-    },
-    {
-      "basename": "Zoom to Fit Selected Elements",
-      "path": "Excalidraw/Scripts/Downloaded/Zoom to Fit Selected Elements.md"
-    },
-    {
-      "basename": "Mindmap Builder",
-      "path": "Excalidraw/Scripts/Downloaded/Mindmap Builder.md"
-    },
-    {
-      "basename": "Mindmap Builder",
-      "path": "Excalidraw/Scripts/Downloaded/Mindmap Builder.svg"
-    },
-    {
-      "basename": "情态动词表可能性及其时态",
-      "path": "语言学习/德语/公共知识语法/2动词/情态动词表可能性及其时态.md"
-    },
-    {
-      "basename": "标准德语语法：精解与练习B2-C1",
-      "path": "语言学习/德语/教材/其他/标准德语语法：精解与练习B2-C1.pdf"
-    },
-    {
-      "basename": "句子成分逻辑展示",
-      "path": "语言学习/德语/公共知识语法/句子成分逻辑展示.md"
-    },
-    {
-      "basename": "PixPin_2026-05-21_20-12-34",
-      "path": "assets/PixPin_2026-05-21_20-12-34.png"
-    },
-    {
-      "basename": "PixPin_2026-05-21_20-12-25",
-      "path": "assets/PixPin_2026-05-21_20-12-25.png"
     }
   ],
   "omittedPaths": [],
