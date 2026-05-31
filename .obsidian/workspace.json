@@ -4,36 +4,69 @@
     "type": "split",
     "children": [
       {
-        "id": "afad75680372aa9c",
+        "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 56.566970091027315,
+        "dimension": 41.39575205895102,
         "children": [
           {
-            "id": "d3235032fd1720f3",
+            "id": "2acf190e7bdf844a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/名词/名词复数变化.md",
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
                 "mode": "source",
                 "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
+                "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "名词复数变化"
+              "title": "目的从句"
             }
           },
           {
-            "id": "96a71e84b2d205db",
+            "id": "a01fd864e67e0d33",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/代词/da-构成的代副词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "da-构成的代副词"
+            }
+          },
+          {
+            "id": "ef3a748fffb32a42",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/时态.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "时态"
+            }
+          },
+          {
+            "id": "782446cadc196feb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/带zu不定式从句的“三明治”句型与逗号法则.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "带zu不定式从句的“三明治”句型与逗号法则"
+            }
+          },
+          {
+            "id": "a2478f1874c1208b",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
@@ -43,223 +76,66 @@
               "icon": "excalidraw-icon",
               "title": "形容词"
             }
-          },
-          {
-            "id": "90d00b9b55ffef31",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/3形容词/✍️形容词.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "✍️形容词"
-            }
-          },
-          {
-            "id": "c145069efee7facd",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/递进从句合集.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "递进从句合集"
-            }
-          },
-          {
-            "id": "51aa4c53b7c06262",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "pinned": true,
-              "icon": "lucide-file",
-              "title": "⭐必背所有知识点整理考察整理"
-            }
-          },
-          {
-            "id": "e25f2b57bd51d2d7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/2动词/系动词.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "系动词"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
-        "id": "dd4130c5419b5527",
+        "id": "66514ff393b45104",
         "type": "tabs",
-        "dimension": 43.43302990897269,
+        "dimension": 58.60424794104898,
         "children": [
           {
-            "id": "4d4dcb216e7fb95d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/3形容词/形容词.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "形容词"
-            }
-          },
-          {
-            "id": "19a3af7402d9a8c0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/2动词/动词与单复数关系.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
-              "icon": "lucide-file",
-              "title": "动词与单复数关系"
-            }
-          },
-          {
-            "id": "dc45e64cd1bcbed0",
+            "id": "277f4be22d9411aa",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/名词.md"
+                "file": "语言学习/德语/公共知识语法/动词.md"
               },
               "icon": "excalidraw-icon",
-              "title": "名词"
+              "title": "动词"
             }
           },
           {
-            "id": "3cdacd0cd7e2d334",
+            "id": "e07a1d70f3011b35",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/第一虚拟式转述对话、传闻和自述.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
+                "file": "语言学习/德语/公共知识语法/介词.md"
               },
-              "icon": "lucide-file",
-              "title": "第一虚拟式转述对话、传闻和自述"
+              "icon": "excalidraw-icon",
+              "title": "介词"
             }
           },
           {
-            "id": "34544f21b37c711a",
+            "id": "77b9e9d51e1aff2c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/语法对应的场景.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
+                "file": "语言学习/德语/公共知识语法/从句.md"
               },
-              "icon": "lucide-file",
-              "title": "语法对应的场景"
+              "icon": "excalidraw-icon",
+              "title": "从句"
+            }
+          },
+          {
+            "id": "0605b631e217ea4d",
+            "type": "leaf",
+            "state": {
+              "type": "split-diff-view",
+              "state": {
+                "aFile": "语言学习/德语/单词/发音/数字.md",
+                "bFile": "语言学习/德语/单词/发音/数字.md",
+                "aRef": ""
+              },
+              "icon": "diff",
+              "title": "Diff: 数字  (Working Tree)"
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -283,19 +159,6 @@
             }
           },
           {
-            "id": "56aec1574e68adfb",
-            "type": "leaf",
-            "state": {
-              "type": "file-explorer",
-              "state": {
-                "sortOrder": "alphabetical",
-                "autoReveal": true
-              },
-              "icon": "lucide-folder-closed",
-              "title": "文件列表"
-            }
-          },
-          {
             "id": "abbd6433f71b711a",
             "type": "leaf",
             "state": {
@@ -311,7 +174,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "[\"aliases\"]",
+                "query": "sowie",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -443,21 +306,6 @@
             }
           },
           {
-            "id": "480fa03e285dbef8",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/句型/句子解析学习/时间从句 nachdem 与 过去完成时.md",
-                "followCursor": false,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-list",
-              "title": "时间从句 nachdem 与 过去完成时 的大纲"
-            }
-          },
-          {
             "id": "015a089f7b54e88e",
             "type": "leaf",
             "state": {
@@ -482,15 +330,13 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md"
-              },
+              "state": {},
               "icon": "lucide-info",
-              "title": "目的从句的笔记属性"
+              "title": "笔记属性"
             }
           },
           {
-            "id": "19a23ad17fa7f458",
+            "id": "4ee4fcda7e19a85a",
             "type": "leaf",
             "state": {
               "type": "excalidraw-sidepanel",
@@ -499,46 +345,14 @@
               "title": "Excalidraw 侧边面板"
             }
           }
-        ]
+        ],
+        "currentTab": 6
       },
       {
         "id": "28e75bfc7e894da7",
         "type": "tabs",
         "dimension": 14.134078212290497,
         "children": [
-          {
-            "id": "a49850edf51b35c5",
-            "type": "leaf",
-            "state": {
-              "type": "backlink",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
-                "collapseAll": true,
-                "extraContext": false,
-                "sortOrder": "alphabetical",
-                "showSearch": false,
-                "searchQuery": "",
-                "backlinkCollapsed": false,
-                "unlinkedCollapsed": false
-              },
-              "icon": "links-coming-in",
-              "title": "目的从句 的反向链接列表"
-            }
-          },
-          {
-            "id": "ecbd8a769d2b5ffc",
-            "type": "leaf",
-            "state": {
-              "type": "outgoing-link",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/形容词.md",
-                "linksCollapsed": false,
-                "unlinkedCollapsed": true
-              },
-              "icon": "links-going-out",
-              "title": "形容词 的出链列表"
-            }
-          },
           {
             "id": "c3592eded90586bf",
             "type": "leaf",
@@ -553,8 +367,7 @@
               "title": "语法快查必背语法canvas的笔记属性"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -568,14 +381,10 @@
       "obsidian-livesync:Show Log": false,
       "sidebar-highlights:Open highlights": false,
       "templates:插入模板": false,
-      "bases:新建数据库": true,
       "mermaid-tools:Open Mermaid Toolbar": false,
       "switcher:打开快速切换": true,
       "canvas:新建白板": true,
-      "graph:查看关系图谱": false,
-      "daily-notes:打开/创建今天的日记": true,
       "command-palette:打开命令面板": true,
-      "zk-prefixer:创建时间戳笔记": true,
       "omnisearch:Omnisearch": false,
       "webpage-html-export:导出为HTML": true,
       "obsidian-excalidraw-plugin:新建绘图文件": true,
@@ -599,55 +408,54 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "96a71e84b2d205db",
+  "active": "ff36fbbbf55f4934",
   "lastOpenFiles": [
-    "assets/PixPin_2026-05-27_23-26-27.png",
-    "assets/PixPin_2026-05-27_23-25-14.png",
-    "语言学习/德语/公共知识语法/语法对应的场景.md",
-    "语言学习/德语/公共知识语法/形容词.md",
-    "语言学习/德语/公共知识语法/格; 限定词.md",
-    "语言学习/德语/公共知识语法/3形容词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
-    "语言学习/德语/公共知识语法/名词/名词复数变化.md",
-    "语言学习/德语/公共知识语法/3形容词/✍️形容词.md",
-    "语言学习/德语/公共知识语法/3形容词/形容词.md",
-    "assets/PixPin_2026-05-27_20-56-12.png",
-    "assets/PixPin_2026-05-27_20-53-13.png",
-    "assets/PixPin_2026-05-27_18-18-11.png",
-    "assets/PixPin_2026-05-27_18-12-23.png",
-    "assets/PixPin_2026-05-27_18-11-38.png",
-    "assets/PixPin_2026-05-27_18-10-37.png",
-    "assets/PixPin_2026-05-27_18-06-24.png",
-    "assets/PixPin_2026-05-27_18-05-41.png",
-    "assets/PixPin_2026-05-27_18-04-40.png",
-    "语言学习/德语/公共知识语法/10句型/从句合集/条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen..md",
-    "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
-    "语言学习/德语/公共知识语法/名词.md",
-    "语言学习/德语/公共知识语法/2动词/动词与单复数关系.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/递进从句合集.md",
-    "语言学习/德语/公共知识语法/2动词/Würden und Könnten.md",
+    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
+    "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/公共知识语法/动词.md",
-    "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
-    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
-    "语言学习/德语/公共知识语法/10句型/第一虚拟式转述对话、传闻和自述.md",
-    "语言学习/德语/公共知识语法/其他句式.md",
     "语言学习/德语/公共知识语法/从句.md",
-    "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
-    "语言学习/德语/公共知识语法/名词/定冠词 性 der, das, die 记忆技巧归类.md",
+    "assets/PixPin_2026-05-21_16-26-33.png",
+    "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
+    "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
+    "语言学习/德语/公共知识语法/10句型/代词/Irgend 做代词.md",
+    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
+    "语言学习/德语/公共知识语法/10句型/代词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
+    "语言学习/德语/公共知识语法/2动词/功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）.md",
+    "assets/PixPin_2026-05-30_22-31-13.png",
+    "语言学习/德语/公共知识语法/时态.md",
+    "assets/Pasted Image 20260530214651_355.svg",
+    "assets/Pasted Image 20260530214613_101.svg",
+    "语言学习/德语/公共知识语法/10句型/zu的不定式.md",
+    "语言学习/德语/公共知识语法/其他句式.md",
+    "语言学习/德语/公共知识语法/格; 限定词.md",
+    "语言学习/德语/公共知识语法/10句型/代词/da-构成的代副词.md",
+    "语言学习/德语/公共知识语法/10句型/代词/es.md",
+    "语言学习/德语/公共知识语法/10句型/代词",
+    "assets/PixPin_2026-05-30_15-11-16.png",
+    "语言学习/德语/公共知识语法/形容词.md",
+    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
+    "语言学习/德语/公共知识语法/名词.md",
     "语言学习/德语/公共知识语法/10句型/zu的所有用法.md",
-    "语言学习/德语/公共知识语法/10句型/介词一副词一连词.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/方式状语从句 indem, dadurch dass, wodurch...md",
-    "Clippings/德国机电行业就业选择.md",
-    "assets/Recording 20260221142357.m4a",
-    "media-lib/index.base",
-    "media-lib",
+    "语言学习/德语/公共知识语法/10句型/带zu不定式与不带zu不定式.md",
+    "语言学习/德语/公共知识语法/10句型/带zu不定式从句的“三明治”句型与逗号法则.md",
+    "Excalidraw/ExcalidrawStartup.md",
+    "语言学习/德语/公共知识语法/3形容词/数字 序数词.md",
+    "Excalidraw/ExcalidrawStartup1.md",
+    "Excalidraw/Scripts/Downloaded/Reverse arrows.svg",
+    "Excalidraw/Scripts/Downloaded/Excalidraw Writing Machine.svg",
+    "Excalidraw/Scripts/Downloaded/Box Each Selected Groups.svg",
+    "Excalidraw/Scripts/Downloaded/Box Selected Elements.svg",
+    "Excalidraw/Scripts/Downloaded/Set Dimensions.svg",
+    "语言学习/德语/教材/其他/标准德语语法：精解与练习B2-C1.pdf",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
-    "语言学习/德语/公共知识语法/句型/句子解析学习/Nico weg/未命名.base",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg",
-    "语言学习/德语/Zotero/zotero.sqlite.bak",
-    "语言学习/德语/Zotero/translators/ZoteroBib.js",
-    "语言学习/德语/Zotero/translators/zotero.org.js",
-    "语言学习/德语/Zotero/zotero.sqlite.1.bak",
-    "语言学习/德语/Zotero/translators/Zotero RDF.js",
+    "语言学习/德语/公共知识语法/4副词/❌",
+    "语言学习/德语/公共知识语法/1词/短语",
+    "语言学习/德语/公共知识语法/2动词/❌",
+    "语言学习/德语/公共知识语法/10句型/疑问句",
+    "语言学习/德语/公共知识语法/10句型/句子解析学习",
+    "语言学习/德语/公共知识语法/10句型/从句合集",
+    "语言学习/德语/公共知识语法/构词法",
     "网络/简述软路由网络逻辑.canvas",
     "未命名.canvas",
     "语言学习/德语/学习记录日记-技巧/2026.canvas"

@@ -1,4 +1,5 @@
 # 带zu的不定式
+
 ## 目的
 
 使用带 zu 的不定式（Infinitiv mit zu），最大的目的就是为了“偷懒”——把从句里的主语省略掉！
@@ -138,7 +139,6 @@ graph TD
 
 # 这个柱的不定是存在的意义是什么为什么要用它，用它和不用它又有什么区别和效果强调一下
 
-
 ```mermaid
 graph LR
     A[核心意图：我打算申请这个职位] --> B(新手村表达法 - A2水平)
@@ -219,6 +219,7 @@ graph LR
 现在，感受到了这个小小的 `zu` 背后蕴含的巨大力量了吗？它是你从“能说德语”向“能把德语说得很漂亮”进阶的必经之路！
 
 # 多个动词zu 的位置怎么放？
+
 ## 1, 我是说系动词和其他动词同时出现, 谁放 zu 后面. 2. 是不是我想强调散步,也可以把 spazieren 放到最后,看我主观意愿
 
 哈哈，大师必须要给你热烈鼓掌！你能问出这两个问题，说明你的大脑已经不再满足于“死记硬背”，而是开始探索德语的底层架构了！拥有这种“寻找规则边界”的敏锐度，你离 B 2 的终点线已经非常近了。
@@ -477,3 +478,102 @@ graph TD
     _(提示：让...翻译 = übersetzen lassen)_
 
 大胆翻译出来交给我批改！除了这四大门派，你在平时做题或生活中，还有没有遇到过其他让你拿不准到底加不加 `zu` 的动词呢？
+
+# 带 zu 不定式与不带 zu 不定式
+
+
+```mermaid
+graph TD
+    A[句子里需要使用第二个动词] --> B{主句的核心动词是什么？}
+    B -->|情态动词, bleiben, lassen, gehen, hören, sehen, lernen| C[不带 zu 的不定式]
+    B -->|含有 haben 的固定短语, 特定形容词结构, 其他多数动词| D[带 zu 的不定式]
+
+    C --> E{如果要变成完成时态呢？}
+    E -->|情态动词, lassen, hören, sehen| F[替代不定式: 句末出现双不定式]
+    E -->|bleiben, gehen, lernen| G[常规操作: 变成过去分词 Partizip II]
+
+    D --> H{不定式的动作什么时候发生？}
+    H -->|跟主句动作同时发生| I[同时性: zu + 动词原形]
+    H -->|在主句动作之前就已经发生了| J[先时性: 过去分词 + zu haben/sein]
+```
+
+德语的句子就像一列火车，主句是“火车头”（提供核心动力和时态），后面的从句或不定式是“车厢”。有些火车头需要一根特殊的连接杆（也就是 `zu`）才能挂上后面的车厢，而有些火车头自带磁力，直接就能把车厢吸附过来（不需要 `zu`）。
+
+下面我们结合你未来的移民生活场景，把这一章的细节掰开揉碎了讲清楚。
+
+## 一、 需要“连接杆”的：带 zu 不定式
+
+教材指出，带 `zu` 的不定式本身并没有实际的独立意义，它承担的是一种纯粹的“语法功能”。
+
+### 1. 什么时候必须加 zu？
+
+当主句出现了以下四种结构时，后面跟的第二个动词前必须加 `zu`：
+
+|**触发结构**|**语法公式**|**移民生活实战例句**|
+|---|---|---|
+|**haben + 抽象名词**|_Wir haben Angst, ..._|**Wir haben Angst, die Wohnung nicht zu bekommen.** (我们很怕租不到这套公寓。)|
+|**es ist / ich finde es + 形容词**|_Es ist sehr schön, ..._ / _Ich finde es wunderbar, ..._|**Es ist wichtig, eine gute Krankenversicherung zu haben.** (拥有一份好的医疗保险是非常重要的。)|
+|**动词后接另一个动词**|_Wir hoffen, ..._|**Ich hoffe, den Arbeitsvertrag bald zu unterschreiben.** (我希望能尽快签下这份工作合同。)|
+|**带有固定介词搭配的动词**|_Ich freue mich darauf, ..._|**Ich freue mich darauf, meine Niederlassungserlaubnis zu erhalten.** (我很期待能拿到我的永久居留卡。)|
+
+**大师提醒（语法细节）：**
+
+- **位置：** `zu` 永远位于句末最后一个动词不定式之前（例如：_... pünktlich **zu** kommen_）。如果是可分动词，`zu` 要夹在中间（例如：_ab**zu**geben_）。
+- **标点：** 教材特别标注，带 `zu` 的不定式前面**非必须加逗号**。但我强烈建议你在 B 2 考试的写作中**加上逗号**，这会让你的句子结构看起来更清晰，考官批改时一目了然。
+
+### 2. 高阶难点：同时 (Gleichzeitigkeit) 与 先时 (Vorzeitigkeit)
+
+这是 B 2 迈向 C 1 的核心标志。你要判断：不定式里的动作，是和主句动作**同时**发生，还是在主句动作**之前**就已经发生了？
+
+**情景 A：动作同时发生（同时性）**
+
+无论主句是现在时还是过去时，只要两个动作发生在同一时间维度，不定式就保持原形。
+
+- **主动语态：** Wir haben Angst, **zu spät zu kommen**. (我们现在害怕，现在会迟到。)
+- **被动语态：** Wir haben Angst, vom Navi falsch **geführt zu werden**. (我们害怕被导航带错路。)
+- **实战演练：** Beim Arzt habe ich Angst, **falsch diagnostiziert zu werden**. (看医生时，我害怕被误诊。—— 医疗场景，同时发生，被动)
+
+**情景 B：不定式动作发生在主句之前（先时性）**
+
+这是一个难点！如果不定式的动作已经做完了，你需要用 **过去分词 (Partizip II) + zu haben / zu sein** 的结构。
+
+- **主动语态：** Wir hatten Angst, **zu spät gekommen zu sein**. (我们当时很害怕，怕我们已经迟到了。)
+- **被动语态：** Wir hatten Angst, vom Navi falsch **geführt worden zu sein**. (我们当时很害怕，怕我们已经被导航带错了路。)
+- **实战演练：** Ich ärgere mich darüber, **den Termin bei der Ausländerbehörde vergessen zu haben**. (我很懊恼，我把外管局的预约给忘了。—— 行政场景，忘记这件事发生在懊恼之前，先时主动)
+
+## 二、 磁力相吸：不带 zu 的不定式
+
+有些动词非常霸道，它们作为主句动词时，后面的动词**绝对不加 zu**。你需要把以下七个动词死死记住：
+
+|**触发动词**|**含义/用法**|**移民生活实战例句**|
+|---|---|---|
+|**情态动词** (können, müssen...)|表示意愿、能力、义务等|Ich **muss** morgen zum Bürgeramt **gehen**. (我明天必须去一趟市民中心。)|
+|**bleiben**|保持某种状态|Bei der Besichtigung **bleiben** wir ruhig **stehen**. (看房时我们安静地站着。)|
+|**lassen**|让、使、允许、委托|Ich **lasse** meinen Lebenslauf von einem Profi **korrigieren**. (我委托专业人士修改我的简历。—— 求职场景)|
+|**gehen**|去做某事|Wir **gehen** heute Abend im Supermarkt **einkaufen**. (我们今晚去超市购物。)|
+|**hören**|听见做某事|Ich **höre** den Vermieter gerade **kommen**. (我听见房东正走过来。)|
+|**sehen**|看见做某事|Ich **sehe** den Arzt meine Akte **lesen**. (我看见医生在看我的病历。)|
+|**lernen**|学习做某事|Ich **lerne** jetzt fließend Deutsch **sprechen**. (我现在正在学习流利地说德语。)|
+
+## 三、 C 1 级别挑战：不带 zu 不定式的完成时形式
+
+教材在下半部分给出了一个 C 1 级别的语法点，这也是很多中国学生在口语和写作中最容易犯错的地方。
+
+当我们要把第二部分讲的“不带 zu 的不定式”变成**现在完成时**时，德语有两套完全不同的规则！
+
+### 阵营 1：触发“替代不定式” (Ersatzinfinitiv)
+
+遇到 **情态动词** 以及 **lassen, hören, sehen** 这四个词类时，在完成时中，它们**不使用**过去分词（ge-结尾），而是直接用动词原形。这就导致了句末会出现**两个动词原形连在一起**的奇观。
+
+- **教材例句：** Ich habe das Auto vor der Oper **stehen lassen**. (而不是 gelassen)
+- **租房实战：** Ich habe den Mietvertrag von einem Anwalt **prüfen lassen**. (我找律师看过了这份租房合同。)
+- **求职实战：** Ich habe diese Stelle unbedingt **bekommen wollen**. (我之前非常想得到这份工作。)
+
+### 阵营 2：乖乖使用“过去分词” (Partizip II)
+
+遇到 **bleiben, gehen, lernen** 这三个词时，在完成时中，它们遵循常规规则，变成过去分词。
+
+- **教材例句：** Ich bin drei Stunden in der Oper sitzen **geblieben**.
+- **生活实战：** Nach dem Vorstellungsgespräch sind wir zusammen essen **gegangen**. (面试结束后我们一起去吃了饭。)
+
+_(注：教材脚注补充了 sein + zu, haben + zu 等结构表示“必须/可以被...”的含义，这也是 B 2 阅读常考点，后续我们会单独开辟一个章节进行专项突破。)_

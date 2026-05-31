@@ -22,28 +22,12 @@
           "path": "思想思维心理哲学/个人人生思想架构.md"
         },
         {
-          "type": "folder",
-          "path": "语言学习/德语"
-        },
-        {
           "type": "note",
           "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
         },
         {
           "type": "folder",
-          "path": "语言学习/德语/公共知识语法/100❌错题"
-        },
-        {
-          "type": "folder",
           "path": "语言学习/德语/公共知识语法"
-        },
-        {
-          "type": "folder",
-          "path": "语言学习/德语/公共知识语法/10句型/句子解析学习"
-        },
-        {
-          "type": "note",
-          "path": "语言学习/德语/公共知识语法/语法流程化梳理.md"
         }
       ],
       "navRainbow": {
@@ -298,8 +282,9 @@
   "showPropertiesOnSeparateRows": false,
   "enablePropertyInternalLinks": true,
   "enablePropertyExternalLinks": true,
-  "showWordCount": false,
-  "wordCountPlacement": "title",
+  "textCountDisplay": "none",
+  "textCountPlacement": "title",
+  "characterCountSpaces": "include",
   "wordCountTargetProperty": "word-goal",
   "showWordCountPercentage": false,
   "showFileDate": true,
@@ -503,31 +488,24 @@
   "collapsedPinnedContexts": {},
   "fileIcons": {
     "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md": "obsidian-new",
-    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md": "excalidraw-icon",
     "思想思维心理哲学/个人人生思想架构.md": "excalidraw-icon",
     "经济学/投资方式/投资方法/经济数据.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/形容词.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/介词.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/语法流程化梳理.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/名词.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/时态.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/动词.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/其他句式.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/2动词/动词专题canvas.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/从句.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/句子成分逻辑展示.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/格; 限定词.md": "excalidraw-icon"
+    "语言学习/德语/公共知识语法/形容词.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/名词.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/格; 限定词.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/时态.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/其他句式.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/动词.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/介词.md": "excalidraw-icon",
+    "语言学习/德语/公共知识语法/从句.md": "excalidraw-icon"
   },
   "fileColors": {},
   "fileBackgroundColors": {},
   "folderIcons": {
     "语言学习": "emoji:🇩🇪",
-    "语言学习/德语": "emoji:🇩🇪",
-    "语言学习/德语/公共知识语法/0格": "table-config",
-    "语言学习/德语/公共知识语法/100❌错题": "notebook-pen",
-    "语言学习/德语/公共知识语法/名词": "globe",
-    "语言学习/德语/公共知识语法/时态": "calendar-clock"
+    "语言学习/德语": "emoji:🇩🇪"
   },
   "folderColors": {},
   "folderBackgroundColors": {
@@ -565,8 +543,7 @@
   "virtualFolderColors": {},
   "virtualFolderBackgroundColors": {},
   "navigationSeparators": {
-    "folder:语言学习/德语": true,
-    "folder:语言学习/德语/公共知识语法": true
+    "folder:语言学习/德语": true
   },
   "userColors": [
     "#ffffff",
@@ -590,7 +567,7 @@
     "#404040",
     "#404040"
   ],
-  "lastShownVersion": "3.0.0",
+  "lastShownVersion": "3.0.2",
   "rootFolderOrder": [],
   "rootTagOrder": [],
   "rootPropertyOrder": []

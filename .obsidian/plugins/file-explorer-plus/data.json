@@ -17,13 +17,6 @@
         "type": "FILES_AND_DIRECTORIES",
         "pattern": "",
         "patternType": "WILDCARD"
-      },
-      {
-        "name": "",
-        "active": true,
-        "type": "FILES",
-        "pattern": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
-        "patternType": "STRICT"
       }
     ],
     "frontMatter": [
