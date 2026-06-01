@@ -2969,8 +2969,8 @@
         "text": "单纯的 `zu` + 动词",
         "tags": [],
         "line": 50,
-        "startOffset": 1373,
-        "endOffset": 1415,
+        "startOffset": 1405,
+        "endOffset": 1447,
         "filePath": "语言学习/德语/公共知识语法/10句型/逗号规则.md",
         "footnoteCount": 0,
         "footnoteContents": [],
@@ -2978,6 +2978,20 @@
         "isNativeComment": false,
         "color": "#d83931",
         "type": "html"
+      },
+      {
+        "id": "yv9sag3zv",
+        "text": "解释前面的某个名词",
+        "tags": [],
+        "line": 155,
+        "startOffset": 6302,
+        "endOffset": 6315,
+        "filePath": "语言学习/德语/公共知识语法/10句型/逗号规则.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1780300640851,
+        "isNativeComment": false,
+        "type": "highlight"
       }
     ]
   },

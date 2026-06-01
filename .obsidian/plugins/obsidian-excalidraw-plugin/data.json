@@ -49,7 +49,7 @@
   "iframeMatchExcalidrawTheme": true,
   "matchTheme": false,
   "matchThemeAlways": false,
-  "matchThemeTrigger": false,
+  "matchThemeTrigger": true,
   "defaultMode": "normal",
   "defaultPenMode": "never",
   "penModeDoubleTapEraser": true,

@@ -6,12 +6,16 @@ Welche Methode ist am besten geeignet?
 
 - 土壤栽培的突出特点是，在提及的三种选项中维护成本极低。
 	- Die Erdkultur **zeichnet sich durch** minimale Pflegekosten unter den drei genannten Optionen **aus**.
+		- genannten 提及；命名
 		- 表达“在...之中（三选一）”，不能用 `in`，而必须使用介词 `unter` 加上第三格（Dativ）。此外，`Methode` 的复数是 `Methoden`，在第三格复数时还要确保词尾有 -n。
 	- 原句
 		- Es ist mein erstes und niedrigstes Haltungkosten im drei methode.
 			- 错误修正：Sie ist die erste Methode, die ich ausprobiert habe, und weist unter den drei Optionen die geringsten Pflegekosten auf.
 - 我用过最顶级的营养土就是史丹利的土，缺点就是太贵了，30 块才 10 L 土。
 	- Die hochwertigste Nährerde, die ich je verwendet habe, ist die von Stanley. Der einzige Nachteil besteht jedoch in dem extrem hohen Preis, da 10 Liter Erde stolze 30 Yuan kosten.
+		- besteht
+			- (*) Ⅰ (vt) 经受得住,通过 Ⅱ (vi) ①存在② 由...组成③ 坚持④ (指人)经受考验;(指事物、原因)在于,是,以...为内容 Ⅲ bestehend (P.Ⅰ) →bestehenⅡ Ⅳ bestanden →bestehen
+			- Bestehen (n) unz. ①存在;成立②承受,经受③坚持
 		- verwendet 
 			- Ⅰ Vt.
 			- ① 用，使用，利用
