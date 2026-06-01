@@ -130,7 +130,7 @@
   "hideEmbeddedNoteBanners": false,
   "showBannerInPopoverPreviews": true,
   "showSelectImageIcon": true,
-  "selectImageIconOpacity": 40,
+  "selectImageIconOpacity": 80,
   "selectImageIconFlag": "red",
   "defaultSelectImagePath": "",
   "defaultSelectIconPath": "",
