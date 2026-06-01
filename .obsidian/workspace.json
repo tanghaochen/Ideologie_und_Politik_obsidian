@@ -36,13 +36,15 @@
             }
           },
           {
-            "id": "ba675b975d257ed6",
+            "id": "277f4be22d9411aa",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "新标签页"
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/动词.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "动词"
             }
           }
         ],
@@ -66,18 +68,6 @@
               },
               "icon": "lucide-file",
               "title": "81 形容词和比较级 最高级 与 第一格"
-            }
-          },
-          {
-            "id": "277f4be22d9411aa",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/动词.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "动词"
             }
           },
           {
@@ -138,7 +128,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -334,9 +324,11 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {},
+              "state": {
+                "file": "语言学习/德语/公共知识语法/2动词/功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）.md"
+              },
               "icon": "lucide-info",
-              "title": "笔记属性"
+              "title": "功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）的笔记属性"
             }
           },
           {
@@ -411,11 +403,13 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "ba675b975d257ed6",
+  "active": "a01f44202ac1e0c4",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/动词.md",
-    "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
     "语言学习/德语/公共知识语法/2动词/功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）.md",
+    "assets/image-346.png",
+    "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md",
+    "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
@@ -424,7 +418,6 @@
     "My code file.ts",
     "assets/Pasted Image 20260531203856_131.png",
     "语言学习/德语/公共知识语法/名词/名词：性的规律, 不背词性，一眼识别词性.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md",
     "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
     "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/公共知识语法/5介词/auf, von, bei 都表示在某个事物之上，怎么区分它们？.md",
@@ -449,7 +442,6 @@
     "assets/Pasted Image 20260530214651_355.svg",
     "assets/Pasted Image 20260530214613_101.svg",
     "语言学习/德语/公共知识语法/10句型/代词",
-    "assets/PixPin_2026-05-30_15-11-16.png",
     "语言学习/德语/教材/其他/标准德语语法：精解与练习B2-C1.pdf",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg",

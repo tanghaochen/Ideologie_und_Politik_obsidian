@@ -4,12 +4,6 @@
   "debug": false,
   "editorMenu": [
     {
-      "id": "obsidian-linter:lint-file",
-      "icon": "lint-file",
-      "name": "Linter: 格式化当前文件",
-      "mode": "any"
-    },
-    {
       "id": "obsidian-local-images-plus:download-images-def",
       "icon": "lucide-a-arrow-down",
       "name": "Local Images Plus: Localize attachments for the current note (Obsidian folder)",

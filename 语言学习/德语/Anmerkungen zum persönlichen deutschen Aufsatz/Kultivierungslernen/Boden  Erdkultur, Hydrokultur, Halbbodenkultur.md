@@ -23,7 +23,7 @@ Welche Methode ist am besten geeignet?
 - 经过我的调查，下面这套方案是成本最低的配土方案：
 	- Basierend auf meinen Nachforschungen stellt das folgende Konzept die kostengünstigste Methode zur Substratmischung dar:
 		- folgende 下列；
-		- Substratmischung 底材混合 / 
+		- Substratmischung 底材混合
 		- `Basierend auf (+ Dat.)`（基于……/经过……）来替代简单的 `Nach` 或者从句
 - 直接使用椰砖泡发，可以得到大量空间，这一步记得确认确认椰砖是无盐的，或者可以泡发装盆然后用水大量冲洗。
 	- Durch das direkte Aufquellenlassen von Kokosziegeln lässt sich ein beträchtliches Volumen gewinnen. Bei diesem Schritt ist unbedingt darauf zu achten, dass die Kokosblöcke salzfrei sind. Alternativ können sie nach dem Aufquellen in Töpfe gefüllt und anschließend mit reichlich Wasser gründlich durchgespült werden.
