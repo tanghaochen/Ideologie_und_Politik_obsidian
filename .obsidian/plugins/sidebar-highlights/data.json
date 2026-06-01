@@ -2962,6 +2962,23 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "语言学习/德语/公共知识语法/10句型/逗号规则.md": [
+      {
+        "id": "1keh6jln5",
+        "text": "单纯的 `zu` + 动词",
+        "tags": [],
+        "line": 50,
+        "startOffset": 1373,
+        "endOffset": 1415,
+        "filePath": "语言学习/德语/公共知识语法/10句型/逗号规则.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1780299704234,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},

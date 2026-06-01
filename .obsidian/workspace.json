@@ -88,13 +88,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
+                "file": "语言学习/德语/公共知识语法/10句型/逗号规则.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "Boden  Erdkultur, Hydrokultur, Halbbodenkultur"
+              "title": "逗号规则"
             }
           },
           {
@@ -128,7 +128,7 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -188,8 +188,7 @@
               "title": "Recent files"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "horizontal",
@@ -404,11 +403,14 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "a01f44202ac1e0c4",
+  "active": "e07a1d70f3011b35",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/10句型/逗号规则.md",
     "语言学习/德语/公共知识语法/动词.md",
-    "语言学习/德语/公共知识语法/2动词/功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）.md",
+    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
+    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
+    "语言学习/德语/公共知识语法/2动词/功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）.md",
     "dict/ECharts.toml",
     "dict/AdQuote.toml",
     "dict/AnyBlock.toml",
@@ -419,9 +421,7 @@
     "assets/image-346.png",
     "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md",
     "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/形容词.md",
-    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
     "Excalidraw/Scripts/Downloaded/Set Link Alias.md",
     "My code file.ts",
     "assets/Pasted Image 20260531203856_131.png",
