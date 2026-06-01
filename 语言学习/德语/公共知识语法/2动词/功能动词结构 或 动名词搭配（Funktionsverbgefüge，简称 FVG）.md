@@ -19,8 +19,6 @@
 
 为了让您更直观地理解它的层级关系，我参考了文件 "The Mermaid Guide to Text-Based Diagramming and Visualization_2" 中的文本图表逻辑，为您生成了下面这张句法结构图：
 
-代码段
-
 ```mermaid
 graph TD
     A[正式表达: 功能动词结构 FVG] --> B(核心意义提供者: 名词)
@@ -210,13 +208,13 @@ graph TD
 - **etwas zur Verfügung stellen (提供某物给某人使用)**
     - _例句 1 (职场):_ Der Arbeitgeber **stellt** mir einen Dienstwagen **zur Verfügung**. (雇主为我提供了一辆公司配车供我使用。)
     - _例句 2 (行政):_ Bitte **stellen** Sie der Ausländerbehörde alle erforderlichen Dokumente **zur Verfügung**. (请您将所有必要的文件提供给外管局。)
+        
 
 呼~ 大师这回可是把压箱底的功夫全盘托出了！看到这么多例句，您对功能动词的理解是不是瞬间立体起来了？
 
 为了检验您是否已经将这些知识融会贯通，并且能够应用在真实的移民生活中，大师给您布置一个挑战任务：
 
 **在找工作面试或者和房东沟通时，遇到不利条件，您会如何用今天学到的 `in Kauf nehmen` (接受不利条件) 和 `zur Verfügung stehen` (可供使用 - 动词用 stehen 哦) 各造一个完整的句子？** 请大胆写出来，大师在线为您精批细改！
-
 # 这么多单词我们怎么来记忆啊，不可能难道又要被那么多组合吗那这样背下去无穷无尽呢？
 
 ### 🧠 核心思维转换：把 FVG 当作“API 标准库”

@@ -6,7 +6,7 @@
     {
       "id": "obsidian-local-images-plus:download-images-def",
       "icon": "lucide-a-arrow-down",
-      "name": "Local Images Plus: Localize attachments for the current note (Obsidian folder)",
+      "name": "将当前笔记所有网络图片下载到本地",
       "mode": "any"
     },
     {
@@ -18,13 +18,25 @@
     {
       "id": "obsidian-copy-block-link:copy-link-to-block",
       "icon": "lucide-copy",
-      "name": "Copy Block Link: Copy link to current block or heading",
+      "name": "当前行的链接",
       "mode": "any"
     },
     {
       "id": "obsidian-advanced-uri:copy-uri-block",
       "icon": "lucide-copy",
-      "name": "Advanced URI: Copy URI for current block",
+      "name": "复制当前块的外部链接",
+      "mode": "any"
+    },
+    {
+      "id": "obsidian-admonition:insert-callout",
+      "icon": "lucide-badge-swiss-franc",
+      "name": "Admonition: Insert Callout",
+      "mode": "any"
+    },
+    {
+      "id": "obsidian-linter:lint-file",
+      "icon": "lint-file",
+      "name": "Linter: 格式化当前文件",
       "mode": "any"
     }
   ],

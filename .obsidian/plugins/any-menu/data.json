@@ -1,0 +1,48 @@
+{
+  "config": {
+    "language": "auto",
+    "pinyin_index": false,
+    "pinyin_first_index": false,
+    "search_engine": "reverse",
+    "search_limit": 500,
+    "server_port": 41667,
+    "dict_online_source": "github",
+    "dict_paths": "./dict/",
+    "note_paths": "./notes/",
+    "send_text_method": "clipboard",
+    "app_black_list": [
+      "- Obsidian "
+    ],
+    "app_ad_shortcut": true,
+    "plugins": [
+      {
+        "name": "AdQuote.toml",
+        "enabled": false
+      },
+      {
+        "name": "AnyBlock.toml",
+        "enabled": false
+      },
+      {
+        "name": "ECharts.toml",
+        "enabled": false
+      },
+      {
+        "name": "Markdown.toml",
+        "enabled": false
+      },
+      {
+        "name": "Mermaid_md.toml",
+        "enabled": false
+      },
+      {
+        "name": "ObMetaBind.toml",
+        "enabled": false
+      }
+    ],
+    "toolbar_list": [],
+    "context_menu_list": [],
+    "auto_show_toolbar_on_select": false
+  },
+  "isDebug": false
+}

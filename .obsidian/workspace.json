@@ -300,16 +300,6 @@
             }
           },
           {
-            "id": "015a089f7b54e88e",
-            "type": "leaf",
-            "state": {
-              "type": "calendar",
-              "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Calendar"
-            }
-          },
-          {
             "id": "d3ec81ed4c00a968",
             "type": "leaf",
             "state": {
@@ -340,8 +330,19 @@
               "icon": "excalidraw-icon",
               "title": "Excalidraw 侧边面板"
             }
+          },
+          {
+            "id": "7492b847e238b9e1",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
           }
-        ]
+        ],
+        "currentTab": 10
       },
       {
         "id": "28e75bfc7e894da7",
@@ -407,13 +408,20 @@
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/公共知识语法/2动词/功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）.md",
+    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
+    "dict/ECharts.toml",
+    "dict/AdQuote.toml",
+    "dict/AnyBlock.toml",
+    "dict/Mermaid_md.toml",
+    "dict/Markdown.toml",
+    "dict/ObMetaBind.toml",
+    "dict",
     "assets/image-346.png",
     "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md",
     "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
-    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
     "Excalidraw/Scripts/Downloaded/Set Link Alias.md",
     "My code file.ts",
     "assets/Pasted Image 20260531203856_131.png",
@@ -444,13 +452,6 @@
     "语言学习/德语/公共知识语法/10句型/代词",
     "语言学习/德语/教材/其他/标准德语语法：精解与练习B2-C1.pdf",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
-    "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg",
-    "语言学习/德语/公共知识语法/4副词/❌",
-    "语言学习/德语/公共知识语法/1词/短语",
-    "语言学习/德语/公共知识语法/2动词/❌",
-    "语言学习/德语/公共知识语法/10句型/疑问句",
-    "语言学习/德语/公共知识语法/10句型/句子解析学习",
-    "语言学习/德语/公共知识语法/10句型/从句合集",
     "网络/简述软路由网络逻辑.canvas",
     "未命名.canvas",
     "语言学习/德语/学习记录日记-技巧/2026.canvas"
