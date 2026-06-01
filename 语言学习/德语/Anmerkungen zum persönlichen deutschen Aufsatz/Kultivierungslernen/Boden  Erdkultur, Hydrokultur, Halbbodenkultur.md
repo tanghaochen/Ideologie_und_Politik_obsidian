@@ -43,5 +43,10 @@ Welche Methode ist am besten geeignet?
 		- durchgespült 冲刷
 - 椰砖可是没有任何营养的，所以混合发酵完全的羊粪, 羊粪目的是提供基础的营养，既便宜又能提供全面的营养。
 	- Da Kokosziegel jedoch keinerlei Nährstoffe enthalten, werden 25 % vollständig fermentierter Schafsdung untergemischt. Der Schafsdung dient dazu, eine grundlegende Nährstoffversorgung zu gewährleisten, da er sowohl kostengünstig ist als auch umfassende Nährstoffe liefert.
+		- vollständig (adj) ①完整的,完备的,无缺陷的②完全的,彻底的,充分的
+		- Schafsdung 羊粪
+		- Nährstoffversorgung 营养供应
+		- gewährleisten (vt) 保证,担保,保障
+		- 
 - 在一个很有必要的就是为了让根系得到氧气，配合火山石 3-6 mm 尺寸，或者更便宜，轻量的珍珠岩.
 - 以上三种材料就是一个最基础简单的组合，椰土：羊粪：支撑材料的配比范围一般是 2:1:1 或 1:1:1 都是合理的，前者是最通用的，根据植物最透气保水的需求可以调整支撑材料或填充材料的比例

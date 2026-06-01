@@ -61,14 +61,42 @@
               "icon": "excalidraw-icon",
               "title": "动词"
             }
+          },
+          {
+            "id": "daf977c0e503e7d7",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/名词.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "名词"
+            }
           }
-        ]
+        ],
+        "currentTab": 4
       },
       {
         "id": "66514ff393b45104",
         "type": "tabs",
         "dimension": 47.420892934547034,
         "children": [
+          {
+            "id": "29da0ce27893c492",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/构词法/复合词 1+1.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "复合词 1+1"
+            }
+          },
           {
             "id": "77b869862f2cc192",
             "type": "leaf",
@@ -142,7 +170,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -416,14 +444,17 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "814bf3e4edd62ad4",
+  "active": "b9083d461a4c336a",
   "lastOpenFiles": [
-    "电脑、软件、系统/ps-tang.md",
-    "语言学习/德语/公共知识语法/10句型/逗号规则.md",
+    "语言学习/德语/公共知识语法/构词法/复合词 1+1.md",
+    "语言学习/德语/公共知识语法/名词.md",
+    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
+    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien",
     "语言学习/德语/公共知识语法/10句型/介词一副词一连词.md",
     "语言学习/德语/公共知识语法/从句.md",
+    "电脑、软件、系统/ps-tang.md",
+    "语言学习/德语/公共知识语法/10句型/逗号规则.md",
     "assets/image-347.png",
-    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
     "语言学习/德语/公共知识语法/2动词/功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）.md",
     "语言学习/德语/公共知识语法/动词.md",
@@ -458,12 +489,9 @@
     "语言学习/德语/公共知识语法/句子成分 结构.md",
     "语言学习/德语/公共知识语法/10句型/状语从句和普通从句区别.md",
     "assets/PixPin_2026-05-21_16-26-33.png",
-    "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
-    "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
     "assets/PixPin_2026-05-30_22-31-13.png",
     "assets/Pasted Image 20260530214651_355.svg",
     "语言学习/德语/公共知识语法/10句型/代词",
-    "语言学习/德语/教材/其他/标准德语语法：精解与练习B2-C1.pdf",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "网络/简述软路由网络逻辑.canvas",
     "未命名.canvas",
