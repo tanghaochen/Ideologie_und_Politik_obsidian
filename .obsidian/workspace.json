@@ -34,9 +34,19 @@
               "icon": "excalidraw-icon",
               "title": "形容词"
             }
+          },
+          {
+            "id": "ba675b975d257ed6",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       },
       {
         "id": "66514ff393b45104",
@@ -324,11 +334,9 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/动词.md"
-              },
+              "state": {},
               "icon": "lucide-info",
-              "title": "动词的笔记属性"
+              "title": "笔记属性"
             }
           },
           {
@@ -403,15 +411,15 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "277f4be22d9411aa",
+  "active": "ba675b975d257ed6",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/动词.md",
+    "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
     "语言学习/德语/公共知识语法/2动词/功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）.md",
+    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
-    "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
     "Excalidraw/Scripts/Downloaded/Set Link Alias.md",
     "My code file.ts",
     "assets/Pasted Image 20260531203856_131.png",

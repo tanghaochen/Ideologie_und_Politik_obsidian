@@ -1,78 +1,63 @@
 # 功能动词结构 或 动名词搭配
 
-### 核心知识点讲解：功能动词结构 (Funktionsverbgefüge)
 
-我们先来理解一下，什么是“功能动词结构”？
+### 今日核心语法点：功能动词结构 (Funktionsverbgefüge)
 
-在德语中，有些动词（比如 _bringen, stellen, treffen_）和某些名词（通常带有介词）组合在一起后，动词本身原来的意思（比如“带来”、“放置”、“遇见”）被大大削弱了，甚至完全消失。**动词在这里沦为了一个只提供时态和人称变化的“空壳”，而真正表达核心意思的，是那个名词。**
+#### 1. 什么是功能动词结构？
 
-为了帮助您理解这个抽象的概念，我们可以用**调用 API (应用程序接口)** 或 **云服务架构** 来做个类比。
+这里我们打个比方：功能动词结构就像是“穿上正装的动词”。
 
-您可以把“功能动词”想象成一个云服务器的计算实例（比如一个没有部署任何代码的空载容器）。它本身只提供基础的运行环境（也就是语法上的时态、人称）。而“名词短语”就像是您部署上去的核心代码（Payload）。只有当容器（动词）和代码（名词短语）结合在一起时，才能对外提供完整的服务（表达出完整的句意）。
+在日常口语中，我们穿 T 恤（普通动词），比如用 _beantragen_（申请）。但在面对德国政府机关或正式职场时，我们需要穿上西装打好领带，这时就会把一个词拆解成“一个名词 + 一个空壳动词”，变成 _einen Antrag stellen_（提出申请）。
 
-为了让您更直观地理解它的内部运作机制，我们来看一张结构图：
+在这个结构里，**名词是真正的“老板”（携带核心意义），而动词变成了失去灵魂的“司机”（只提供时态和人称变化，失去原意）**。
+
+为了更直观地理解它的构成，请看下方的图解：
 
 代码段
 
 ```mermaid
-flowchart TD
-    A[Funktionsverbgefüge <br> 功能动词结构] --> B(Funktionsverb <br> 提供运行环境/语法功能)
-    A --> C(Nomen / Präpositionalphrase <br> 核心代码/提供实际含义)
-    B --> D[例如: bringen, stehen, stellen, treffen]
-    C --> E[例如: zur Verfügung, Entscheidung, einen Antrag]
-    D --> F((完美结合: <br> zur Verfügung stellen <br> 提供 / 供使用))
-    E --> F
+graph LR
+    A[核心名词<br>eine Entscheidung] --> C{功能动词结构<br>eine Entscheidung treffen}
+    B[空壳动词<br>treffen] --> C
+    C --> D[等同于普通动词<br>entscheiden]
+    
+    style C fill:#d4edda,stroke:#28a745,stroke-width:2px
+    style D fill:#f8d7da,stroke:#dc3545,stroke-width:2px
 ```
 
-#### 为什么要使用功能动词结构？
+#### 2. 常见的功能动词搭配形式
 
-如果您想表达“我决定了”，A 2/B 1 水平的学习者会说：_Ich entscheide._
+在德国的移民生活中，您会经常在公函或合同中看到它们。它们主要有以下两种构成方式：
 
-但一个 B 2 水平的专业人士会说：_Ich treffe eine Entscheidung._ (我做出了一个决定。)
+- **第四格名词 + 动词 (Akkusativ + Verb):**
+    - _einen Antrag stellen_ (提出申请 = beantragen)
+    - _eine Entscheidung treffen_ (做出决定 = entscheiden)
+    - _Hilfe leisten_ (提供帮助 = helfen)
+- **介词 + 名词 + 动词 (Präposition + Nomen + Verb):**
+    - _in Kauf nehmen_ (接受/容忍不利条件 = akzeptieren)
+    - _zur Verfügung stehen_ (可供使用 = verfügbar sein)
 
-使用 FVG 能让您的德语显得极其严谨、客观、专业，是您在德国找工作、处理移民局信件时的必备武器。
+#### 3. 动态与静态的视角转换
 
-### 实战场景与核心例句
+同一个名词搭配不同的“空壳动词”，可以精准表达事件是**主动造成**、**正在发生**还是**处于某种状态**。这在描述医疗紧急情况或职场冲突时非常有用。
 
-让我们直接结合您未来可能遇到的生活和职场场景，来看看这些 FVG 是如何“运行”的。
+|**意义视角**|**常用功能动词**|**移民生活例句与场景**|
+|---|---|---|
+|**表达主动** (使...发生)|versetzen, bringen, stellen|**职场:** Der Chef **versetzt** mich **in Aufregung**. (老板让我很紧张/激动。)|
+|**表达被动过程** (变得...)|geraten, kommen|**医疗:** Bitte **geraten** Sie nicht **in Panik**. (请您不要陷入恐慌。)|
+|**表达被动状态** (处于...)|sein, sich befinden|**行政:** Mein Visum **befindet sich in Bearbeitung**. (我的签证正在处理状态中。)|
 
-#### 1. 找工作与职场沟通 (Jobsuche & Beruf)
+#### 4. 否定的黄金法则
 
-在面试或写求职信时，表达自己的技能和可用性。
+在使用 FVG 时，很多同学会用错否定词。记住以下规则：
 
-- **zur Verfügung stehen** (可供使用 / 随时待命) = _da sein / helfen können_
-    - _例句：_ Für den Aufbau der neuen IT-Infrastruktur **stehe** ich Ihnen mit meiner Erfahrung in Google Cloud, AWS und Oracle Cloud jederzeit **zur Verfügung**.
-    - _解析：_ 我随时准备好用我的多云平台经验为您构建新的 IT 基础设施。在这里，_stehen_ 不是“站立”，而是与 _zur Verfügung_ 结合，表示“可供支配”。
-- **in Anspruch nehmen** (使用 / 占用) = _nutzen / beanspruchen_
-    - _例句：_ Um das Projekt rechtzeitig abzuschließen, müssen wir die neuen generativen KI-Tools von Gemini **in Anspruch nehmen**.
-    - _解析：_ 为了按时完成项目，我们必须使用 Gemini 的新型生成式 AI 工具。
+- **带介词的结构：** 必须用 **nicht**，且放在介词前面。
+    - ✅ _etwas **nicht** in Auftrag geben_ (不委托某事)
+    - ❌ _etwas in keinen Auftrag geben_ (错误用法)
+- **不带介词的结构：** 如果名词前没有冠词，推荐用 **nicht**；如果有不定冠词，按常规用 **kein**。
+    - ✅ _Wir leisten **keinen** Beitrag._ (我们不作贡献。)
+    - ✅ _Er übt **nicht** Kritik._ 或 _Er übt **keine** Kritik._ (他不提出批评。)
 
-#### 2. 行政事务与官僚机构 (Behördengänge & Administration)
-
-在处理各种账号验证、签证延期或税务问题时。
-
-- **einen Antrag stellen (auf + Akkusativ)** (提出申请) = _beantragen_
-    - _例句：_ Ich muss bei Google einen **Antrag** auf die Überprüfung meiner Rechnung und Telefonnummer für mein AdMob-Konto **stellen**.
-    - _解析：_ 我必须向 Google 提交一份关于核对 AdMob 账户账单和电话号码的申请。在这里，不能用 _machen_，必须用 _stellen_。
-- **Maßnahmen ergreifen** (采取措施) = _handeln_
-    - _例句：_ Nachdem mein OpenAI-API-Schlüssel geleakt wurde, musste ich sofort Sicherheits**maßnahmen ergreifen**.
-    - _解析：_ 在我的 OpenAI API 密钥泄露后，我必须立即采取安全措施。
-
-#### 3. 租房与合同 (Wohnungssuche & Verträge)
-
-签合同是非常严肃的事情，经常会用到 FVG。
-
-- **in Kraft treten** (生效) = _gültig werden_
-    - _例句：_ Der neue Mietvertrag **tritt** am 1. Oktober **in Kraft**.
-    - _解析：_ 新的租房合同于 10 月 1 日生效。
-
-#### 4. 医疗系统 (Gesundheitswesen)
-
-与医生预约或检查时。
-
-- **zur Untersuchung kommen** (来做检查) = _untersucht werden_
-    - _例句：_ Ich **komme** nächste Woche wegen meiner Rückenschmerzen **zur Untersuchung**.
-    - _解析：_ 我下周因为背痛来做检查。
 
 # 这么多单词我们怎么来记忆啊，不可能难道又要被那么多组合吗那这样背下去无穷无尽呢？
 
