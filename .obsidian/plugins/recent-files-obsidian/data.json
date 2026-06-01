@@ -1,28 +1,56 @@
 {
   "recentFiles": [
     {
-      "basename": "Boden  Erdkultur, Hydrokultur, Halbbodenkultur",
-      "path": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md"
+      "basename": "见字知义",
+      "path": "语言学习/德语/公共知识语法/5介词/见字知义.md"
     },
     {
-      "basename": "复合词 1+1",
-      "path": "语言学习/德语/公共知识语法/构词法/复合词 1+1.md"
+      "basename": "介词",
+      "path": "语言学习/德语/公共知识语法/介词.md"
     },
     {
-      "basename": "名词",
-      "path": "语言学习/德语/公共知识语法/名词.md"
+      "basename": "81 形容词和比较级 最高级 与 第一格",
+      "path": "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md"
     },
     {
       "basename": "介词一副词一连词",
       "path": "语言学习/德语/公共知识语法/10句型/介词一副词一连词.md"
     },
     {
+      "basename": "递进从句合集",
+      "path": "语言学习/德语/公共知识语法/10句型/从句合集/递进从句合集.md"
+    },
+    {
       "basename": "从句",
       "path": "语言学习/德语/公共知识语法/从句.md"
     },
     {
+      "basename": "复合词 1+1",
+      "path": "语言学习/德语/公共知识语法/构词法/复合词 1+1.md"
+    },
+    {
+      "basename": "连词成对",
+      "path": "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md"
+    },
+    {
+      "basename": "Boden  Erdkultur, Hydrokultur, Halbbodenkultur",
+      "path": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md"
+    },
+    {
       "basename": "ps-tang",
       "path": "电脑、软件、系统/ps-tang.md"
+    },
+    {
+      "basename": "⭐必背所有知识点整理考察整理",
+      "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
+    },
+    {
+      "basename": "名词",
+      "path": "语言学习/德语/公共知识语法/名词.md"
+    },
+    {
+      "basename": "功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）",
+      "path": "语言学习/德语/公共知识语法/2动词/功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）.md"
     },
     {
       "basename": "逗号规则",
@@ -33,20 +61,8 @@
       "path": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md"
     },
     {
-      "basename": "功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）",
-      "path": "语言学习/德语/公共知识语法/2动词/功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）.md"
-    },
-    {
       "basename": "动词",
       "path": "语言学习/德语/公共知识语法/动词.md"
-    },
-    {
-      "basename": "连词成对",
-      "path": "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md"
-    },
-    {
-      "basename": "81 形容词和比较级 最高级 与 第一格",
-      "path": "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md"
     },
     {
       "basename": "形容词",
@@ -69,20 +85,12 @@
       "path": "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md"
     },
     {
-      "basename": "介词",
-      "path": "语言学习/德语/公共知识语法/介词.md"
-    },
-    {
       "basename": "auf, von, bei 都表示在某个事物之上，怎么区分它们？",
       "path": "语言学习/德语/公共知识语法/5介词/auf, von, bei 都表示在某个事物之上，怎么区分它们？.md"
     },
     {
       "basename": "Set Link Alias",
       "path": "Excalidraw/Scripts/Downloaded/Set Link Alias.svg"
-    },
-    {
-      "basename": "⭐必背所有知识点整理考察整理",
-      "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
     },
     {
       "basename": "2 元音, 辅音",
@@ -191,14 +199,6 @@
     {
       "basename": "个人人生思想架构",
       "path": "思想思维心理哲学/个人人生思想架构.md"
-    },
-    {
-      "basename": "PixPin_2026-04-04_21-03-52",
-      "path": "assets/PixPin_2026-04-04_21-03-52.png"
-    },
-    {
-      "basename": "ExcalidrawMinimap",
-      "path": "Excalidraw/Scripts/Downloaded/ExcalidrawMinimap.svg"
     }
   ],
   "omittedPaths": [],
