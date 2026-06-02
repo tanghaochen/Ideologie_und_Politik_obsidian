@@ -1,8 +1,20 @@
 {
   "recentFiles": [
     {
+      "basename": "1名词",
+      "path": "语言学习/德语/公共知识语法/1名词.md"
+    },
+    {
+      "basename": "名词复数变化",
+      "path": "语言学习/德语/公共知识语法/名词/名词复数变化.md"
+    },
+    {
       "basename": "递进从句合集",
       "path": "语言学习/德语/公共知识语法/10句型/从句合集/递进从句合集.md"
+    },
+    {
+      "basename": "形容词",
+      "path": "语言学习/德语/公共知识语法/形容词.md"
     },
     {
       "basename": "介词的位置 在名词之前、之后和围绕着它",
@@ -49,10 +61,6 @@
       "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
     },
     {
-      "basename": "名词",
-      "path": "语言学习/德语/公共知识语法/名词.md"
-    },
-    {
       "basename": "功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）",
       "path": "语言学习/德语/公共知识语法/2动词/功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）.md"
     },
@@ -67,10 +75,6 @@
     {
       "basename": "动词",
       "path": "语言学习/德语/公共知识语法/动词.md"
-    },
-    {
-      "basename": "形容词",
-      "path": "语言学习/德语/公共知识语法/形容词.md"
     },
     {
       "basename": "Set Link Alias",
@@ -195,10 +199,6 @@
     {
       "basename": "ExcalidrawMinimap",
       "path": "Excalidraw/Scripts/Downloaded/ExcalidrawMinimap.md"
-    },
-    {
-      "basename": "形容词",
-      "path": "语言学习/德语/公共知识语法/3形容词/形容词.md"
     }
   ],
   "omittedPaths": [],
