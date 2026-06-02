@@ -1,12 +1,16 @@
 {
   "recentFiles": [
     {
-      "basename": "1名词",
-      "path": "语言学习/德语/公共知识语法/1名词.md"
+      "basename": "三种名词变格形式",
+      "path": "语言学习/德语/公共知识语法/1名词/三种名词变格形式.md"
     },
     {
       "basename": "名词复数变化",
-      "path": "语言学习/德语/公共知识语法/名词/名词复数变化.md"
+      "path": "语言学习/德语/公共知识语法/1名词/名词复数变化.md"
+    },
+    {
+      "basename": "1名词",
+      "path": "语言学习/德语/公共知识语法/1名词.md"
     },
     {
       "basename": "递进从句合集",
@@ -86,7 +90,7 @@
     },
     {
       "basename": "名词：性的规律, 不背词性，一眼识别词性",
-      "path": "语言学习/德语/公共知识语法/名词/名词：性的规律, 不背词性，一眼识别词性.md"
+      "path": "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md"
     },
     {
       "basename": "句子结构：术语，形容词，副词，表语，定语，状语",
@@ -195,10 +199,6 @@
     {
       "basename": "ExcalidrawMinimap",
       "path": "Excalidraw/ExcalidrawMinimap.md"
-    },
-    {
-      "basename": "ExcalidrawMinimap",
-      "path": "Excalidraw/Scripts/Downloaded/ExcalidrawMinimap.md"
     }
   ],
   "omittedPaths": [],

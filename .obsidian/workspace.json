@@ -66,12 +66,15 @@
             "id": "daf977c0e503e7d7",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/1名词.md"
+                "file": "语言学习/德语/公共知识语法/1名词/三种名词变格形式.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "excalidraw-icon",
-              "title": "1名词"
+              "icon": "lucide-file",
+              "title": "三种名词变格形式"
             }
           }
         ],
@@ -88,7 +91,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/名词/名词复数变化.md",
+                "file": "语言学习/德语/公共知识语法/1名词/名词复数变化.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
@@ -446,9 +449,10 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "ff36fbbbf55f4934",
+  "active": "daf977c0e503e7d7",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/名词/名词复数变化.md",
+    "语言学习/德语/公共知识语法/1名词/名词复数变化.md",
+    "语言学习/德语/公共知识语法/1名词/三种名词变格形式.md",
     "语言学习/德语/公共知识语法/1名词.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/递进从句合集.md",
     "语言学习/德语/公共知识语法/形容词.md",
@@ -481,7 +485,7 @@
     "Excalidraw/Scripts/Downloaded/Set Link Alias.md",
     "My code file.ts",
     "assets/Pasted Image 20260531203856_131.png",
-    "语言学习/德语/公共知识语法/名词/名词：性的规律, 不背词性，一眼识别词性.md",
+    "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
     "语言学习/德语/公共知识语法/5介词/auf, von, bei 都表示在某个事物之上，怎么区分它们？.md",
     "Excalidraw/Scripts/Downloaded/Zoom to Fit Selected Elements.svg",
@@ -489,7 +493,6 @@
     "Excalidraw/Scripts/Downloaded/Convert selected text elements to sticky notes.md",
     "Excalidraw/Scripts/Downloaded/AddMermaidSvg.svg",
     "Excalidraw/Scripts/Downloaded/AddMermaidSvg.md",
-    "Excalidraw/Scripts/Downloaded/Zoom to Fit Selected Elements.md",
     "Excalidraw/Scripts/Downloaded/Set Link Alias.svg",
     "assets/PixPin_2026-05-21_16-26-33.png",
     "assets/PixPin_2026-05-30_22-31-13.png",
