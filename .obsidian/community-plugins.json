@@ -27,7 +27,6 @@
   "obsidian-style-settings",
   "keyboard-analyzer",
   "obsidian-outliner",
-  "obsidian-copy-block-link",
   "obsidian-custom-frames",
   "obsidian-icon-folder",
   "table-editor-obsidian",
@@ -64,5 +63,6 @@
   "vscode-editor",
   "obsidian-editor-shortcuts",
   "table-extended",
-  "any-menu"
+  "any-menu",
+  "easy-copy"
 ]
