@@ -3010,6 +3010,22 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "语言学习/德语/公共知识语法/1名词/动词不定式作名词.md": [
+      {
+        "id": "i0doz8ia9",
+        "text": "_Das Programmieren_",
+        "tags": [],
+        "line": 39,
+        "startOffset": 894,
+        "endOffset": 917,
+        "filePath": "语言学习/德语/公共知识语法/1名词/动词不定式作名词.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1780401805232,
+        "isNativeComment": false,
+        "type": "highlight"
+      }
     ]
   },
   "collections": {},

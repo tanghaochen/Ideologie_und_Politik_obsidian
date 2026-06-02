@@ -6,7 +6,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 52.579107065452966,
+        "dimension": 49.45817078456871,
         "children": [
           {
             "id": "814bf3e4edd62ad4",
@@ -76,14 +76,44 @@
               "icon": "lucide-file",
               "title": "三种名词变格形式"
             }
+          },
+          {
+            "id": "8d75b281177cf206",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/1名词/动词不定式作名词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "动词不定式作名词"
+            }
+          },
+          {
+            "id": "83472b4b02f59cbd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/3形容词/形容词名词化.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "形容词名词化"
+            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       },
       {
         "id": "66514ff393b45104",
         "type": "tabs",
-        "dimension": 47.420892934547034,
+        "dimension": 50.5418292154313,
         "children": [
           {
             "id": "4d2f03212b000870",
@@ -446,15 +476,18 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "daf977c0e503e7d7",
+  "active": "8d75b281177cf206",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/名词.md",
+    "语言学习/德语/公共知识语法/1名词/动词不定式作名词.md",
+    "语言学习/德语/公共知识语法/1名词/三种名词变格形式.md",
+    "语言学习/德语/公共知识语法/3形容词/形容词名词化.md",
+    "语言学习/德语/公共知识语法/5介词/介词的位置 在名词之前、之后和围绕着它.md",
+    "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/柏林广场视频笔记/A1/知识点解答/名词：性与冠词 的 区别.md",
     "语言学习/德语/公共知识语法/1名词/名词复数变化.md",
-    "语言学习/德语/公共知识语法/1名词/三种名词变格形式.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/递进从句合集.md",
-    "语言学习/德语/公共知识语法/5介词/介词的位置 在名词之前、之后和围绕着它.md",
     "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/公共知识语法/5介词/见字知义.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md",
@@ -471,7 +504,6 @@
     "语言学习/德语/公共知识语法/10句型/逗号规则.md",
     "assets/image-347.png",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Vorwort.md",
-    "语言学习/德语/公共知识语法/动词.md",
     "dict/ECharts.toml",
     "dict/AdQuote.toml",
     "dict/AnyBlock.toml",
@@ -485,10 +517,8 @@
     "assets/Pasted Image 20260531203856_131.png",
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
-    "语言学习/德语/公共知识语法/5介词/auf, von, bei 都表示在某个事物之上，怎么区分它们？.md",
     "Excalidraw/Scripts/Downloaded/Zoom to Fit Selected Elements.svg",
     "Excalidraw/Scripts/Downloaded/Convert selected text elements to sticky notes.svg",
-    "Excalidraw/Scripts/Downloaded/Convert selected text elements to sticky notes.md",
     "Excalidraw/Scripts/Downloaded/AddMermaidSvg.svg",
     "Excalidraw/Scripts/Downloaded/Set Link Alias.svg",
     "assets/PixPin_2026-05-21_16-26-33.png",
