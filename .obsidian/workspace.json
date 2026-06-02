@@ -89,15 +89,12 @@
             "id": "4d2f03212b000870",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/1名词/名词复数变化.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "语言学习/德语/公共知识语法/名词.md"
               },
-              "icon": "lucide-file",
-              "title": "名词复数变化"
+              "icon": "excalidraw-icon",
+              "title": "名词"
             }
           },
           {
@@ -451,11 +448,12 @@
   },
   "active": "daf977c0e503e7d7",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/名词.md",
+    "语言学习/德语/公共知识语法/形容词.md",
+    "语言学习/德语/柏林广场视频笔记/A1/知识点解答/名词：性与冠词 的 区别.md",
     "语言学习/德语/公共知识语法/1名词/名词复数变化.md",
     "语言学习/德语/公共知识语法/1名词/三种名词变格形式.md",
-    "语言学习/德语/公共知识语法/1名词.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/递进从句合集.md",
-    "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/公共知识语法/5介词/介词的位置 在名词之前、之后和围绕着它.md",
     "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/公共知识语法/5介词/见字知义.md",
@@ -492,7 +490,6 @@
     "Excalidraw/Scripts/Downloaded/Convert selected text elements to sticky notes.svg",
     "Excalidraw/Scripts/Downloaded/Convert selected text elements to sticky notes.md",
     "Excalidraw/Scripts/Downloaded/AddMermaidSvg.svg",
-    "Excalidraw/Scripts/Downloaded/AddMermaidSvg.md",
     "Excalidraw/Scripts/Downloaded/Set Link Alias.svg",
     "assets/PixPin_2026-05-21_16-26-33.png",
     "assets/PixPin_2026-05-30_22-31-13.png",
