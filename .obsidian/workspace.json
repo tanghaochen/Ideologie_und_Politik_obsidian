@@ -6,8 +6,23 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 49.45817078456871,
+        "dimension": 51.10533159947984,
         "children": [
+          {
+            "id": "3f508a4cadb13a90",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/5介词/见字知义 的介词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "见字知义 的介词"
+            }
+          },
           {
             "id": "814bf3e4edd62ad4",
             "type": "leaf",
@@ -62,13 +77,12 @@
               "title": "动词"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "66514ff393b45104",
         "type": "tabs",
-        "dimension": 50.5418292154313,
+        "dimension": 48.89466840052016,
         "children": [
           {
             "id": "4d2f03212b000870",
@@ -86,30 +100,12 @@
             "id": "29da0ce27893c492",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/介词一副词一连词.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "语言学习/德语/公共知识语法/介词.md"
               },
-              "icon": "lucide-file",
-              "title": "介词一副词一连词"
-            }
-          },
-          {
-            "id": "77b869862f2cc192",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/5介词/见字知义.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "见字知义"
+              "icon": "excalidraw-icon",
+              "title": "介词"
             }
           },
           {
@@ -158,7 +154,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -432,32 +428,32 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "5d8b1efbe41a445c",
+  "active": "3f508a4cadb13a90",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/5介词/见字知义.md",
+    "语言学习/德语/公共知识语法/介词.md",
+    "电脑、软件、系统/ps-tang.md",
+    "语言学习/德语/公共知识语法/5介词/见字知义 的介词.md",
+    "语言学习/德语/公共知识语法/5介词/介词的位置 在名词之前、之后和围绕着它.md",
+    "语言学习/德语/公共知识语法/形容词.md",
+    "语言学习/德语/公共知识语法/10句型/介词一副词一连词.md",
     "语言学习/德语/公共知识语法/名词.md",
     "语言学习/德语/公共知识语法/1名词/三种名词变格形式.md",
     "语言学习/德语/公共知识语法/3形容词/形容词名词化.md",
     "语言学习/德语/公共知识语法/5介词/介词和动词名词化的搭配.md",
-    "语言学习/德语/公共知识语法/5介词/介词的位置 在名词之前、之后和围绕着它.md",
     "语言学习/德语/公共知识语法/3形容词/未命名133.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "未命名.md",
-    "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/公共知识语法/1名词/动词不定式作名词.md",
     "语言学习/德语/柏林广场视频笔记/A1/知识点解答/名词：性与冠词 的 区别.md",
     "语言学习/德语/公共知识语法/1名词/名词复数变化.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/递进从句合集.md",
-    "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md",
     "assets/image-348.png",
     "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
-    "语言学习/德语/公共知识语法/10句型/介词一副词一连词.md",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/构词法/复合词 1+1.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
-    "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/2动词/功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien",
     "语言学习/德语/公共知识语法/10句型/逗号规则.md",
