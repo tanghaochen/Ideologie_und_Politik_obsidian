@@ -13968,12 +13968,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 11,
-        "ch": 69
+        "line": 28,
+        "ch": 87
       },
       "to": {
-        "line": 11,
-        "ch": 69
+        "line": 28,
+        "ch": 87
       }
     },
     "expandedKeys": [
