@@ -17,7 +17,6 @@
   "lapel",
   "easy-typing-obsidian",
   "mermaid-tools",
-  "excalibrain",
   "dataview",
   "templater-obsidian",
   "highlightr-plugin",
@@ -64,5 +63,6 @@
   "obsidian-editor-shortcuts",
   "table-extended",
   "any-menu",
-  "easy-copy"
+  "easy-copy",
+  "darlal-switcher-plus"
 ]

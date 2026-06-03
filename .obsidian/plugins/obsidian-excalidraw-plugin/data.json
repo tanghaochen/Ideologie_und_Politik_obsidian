@@ -76,9 +76,9 @@
   "linkOpacity": 1,
   "openInAdjacentPane": false,
   "showSecondOrderLinks": true,
-  "focusOnFileTab": false,
+  "focusOnFileTab": true,
   "openInMainWorkspace": false,
-  "showLinkBrackets": true,
+  "showLinkBrackets": false,
   "syncElementLinkWithText": true,
   "allowCtrlClick": true,
   "forceWrap": false,
@@ -17366,7 +17366,7 @@
         "elementClickAction": "zoom",
         "side": "bottom-right",
         "offset": "12",
-        "viewportAutoHideCoverage": 0.8,
+        "viewportAutoHideCoverage": 1,
         "includeViewportInBounds": true,
         "viewportInsetPadding": 48
       }
