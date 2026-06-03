@@ -19,10 +19,6 @@
         },
         {
           "type": "note",
-          "path": "思想思维心理哲学/个人人生思想架构.md"
-        },
-        {
-          "type": "note",
           "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
         },
         {
@@ -475,11 +471,6 @@
   "customVaultName": "",
   "pinnedNotes": {
     "经济学/投资方式/投资方法/汇率逻辑Canvas.md": {
-      "folder": true,
-      "tag": false,
-      "property": false
-    },
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md": {
       "folder": true,
       "tag": false,
       "property": false

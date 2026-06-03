@@ -181,15 +181,6 @@
       "key": "ArrowRight"
     }
   ],
-  "bookmarks:bookmark-current-section": [
-    {
-      "modifiers": [
-        "Alt",
-        "Mod"
-      ],
-      "key": "K"
-    }
-  ],
   "obsidian-excalidraw-plugin:excalidraw-open-sidepanel": [
     {
       "modifiers": [
@@ -278,6 +269,15 @@
         "Mod"
       ],
       "key": "O"
+    }
+  ],
+  "bookmarks:bookmark-current-section": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "B"
     }
   ]
 }
