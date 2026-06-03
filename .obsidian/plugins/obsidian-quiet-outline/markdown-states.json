@@ -14062,12 +14062,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 14,
-        "ch": 37
+        "line": 6,
+        "ch": 21
       },
       "to": {
-        "line": 14,
-        "ch": 37
+        "line": 6,
+        "ch": 21
       }
     },
     "expandedKeys": [
