@@ -39,21 +39,6 @@
             }
           },
           {
-            "id": "5d8b1efbe41a445c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/5介词/介词的位置 在名词之前、之后和围绕着它.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "介词的位置 在名词之前、之后和围绕着它"
-            }
-          },
-          {
             "id": "a2478f1874c1208b",
             "type": "leaf",
             "state": {
@@ -78,7 +63,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       },
       {
         "id": "66514ff393b45104",
@@ -348,16 +333,6 @@
             }
           },
           {
-            "id": "4ee4fcda7e19a85a",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw-sidepanel",
-              "state": {},
-              "icon": "excalidraw-icon",
-              "title": "Excalidraw 侧边面板"
-            }
-          },
-          {
             "id": "7492b847e238b9e1",
             "type": "leaf",
             "state": {
@@ -365,6 +340,16 @@
               "state": {},
               "icon": "calendar-with-checkmark",
               "title": "Calendar"
+            }
+          },
+          {
+            "id": "8b81dd645a2d0b46",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw-sidepanel",
+              "state": {},
+              "icon": "excalidraw-icon",
+              "title": "Excalidraw 侧边面板"
             }
           }
         ]
@@ -429,15 +414,17 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "5d8b1efbe41a445c",
+  "active": "277f4be22d9411aa",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/动词.md",
     "思想思维心理哲学/个人人生思想架构.md",
-    "语言学习/德语/公共知识语法/5介词/见字知义 的介词.md",
     "语言学习/德语/公共知识语法/介词.md",
-    "电脑、软件、系统/ps-tang.md",
-    "语言学习/德语/公共知识语法/5介词/介词的位置 在名词之前、之后和围绕着它.md",
+    "思想思维心理哲学/自制.md",
+    "思想思维心理哲学/个人问题处理/自制力.md",
     "语言学习/德语/公共知识语法/形容词.md",
+    "语言学习/德语/公共知识语法/5介词/介词的位置 在名词之前、之后和围绕着它.md",
+    "语言学习/德语/公共知识语法/动词.md",
+    "语言学习/德语/公共知识语法/5介词/见字知义 的介词.md",
+    "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/10句型/介词一副词一连词.md",
     "语言学习/德语/公共知识语法/名词.md",
     "语言学习/德语/公共知识语法/1名词/三种名词变格形式.md",
@@ -456,9 +443,7 @@
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/构词法/复合词 1+1.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
-    "语言学习/德语/公共知识语法/2动词/功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien",
-    "语言学习/德语/公共知识语法/10句型/逗号规则.md",
     "assets/image-347.png",
     "dict/ECharts.toml",
     "dict/AdQuote.toml",

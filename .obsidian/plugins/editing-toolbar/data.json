@@ -231,6 +231,11 @@
       "id": "insert-template",
       "name": "模板: 插入模板",
       "icon": "lucide-copy"
+    },
+    {
+      "id": "obsidian-linter:lint-file",
+      "name": "Linter: 格式化当前文件",
+      "icon": "lint-file"
     }
   ],
   "followingCommands": [
@@ -343,7 +348,7 @@
       "artifact": "03-agent"
     },
     "pkmer": {
-      "tokenExpiresAt": 1780405250293,
+      "tokenExpiresAt": 1780479778622,
       "userInfo": {
         "sub": "e2090030-e955-43d0-85bd-be789294ed52",
         "name": "17678929134",

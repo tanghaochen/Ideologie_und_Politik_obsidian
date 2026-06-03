@@ -2568,17 +2568,15 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 6,
-        "ch": 112
+        "line": 13,
+        "ch": 0
       },
       "to": {
-        "line": 6,
-        "ch": 112
+        "line": 13,
+        "ch": 0
       }
     },
-    "expandedKeys": [
-      "item-1-0"
-    ]
+    "expandedKeys": []
   },
   "思想思维心理哲学/个人问题处理/是否要回家.md": {
     "scroll": 37.828787978232334,
@@ -5281,9 +5279,7 @@
         "ch": 0
       }
     },
-    "expandedKeys": [
-      "item-3-0"
-    ]
+    "expandedKeys": []
   },
   "语言学习/德语/公共知识语法/格.md": {
     "scroll": 0,
@@ -14240,5 +14236,51 @@
       "item-2-12",
       "item-2-15"
     ]
+  },
+  "思想思维心理哲学/个人问题处理/自制力.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 5
+      },
+      "to": {
+        "line": 0,
+        "ch": 5
+      }
+    },
+    "expandedKeys": [
+      "item-1-0"
+    ]
+  },
+  "思想思维心理哲学/个人人生思想架构.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 6,
+        "ch": 0
+      },
+      "to": {
+        "line": 6,
+        "ch": 0
+      }
+    },
+    "expandedKeys": [
+      "item-1-0"
+    ]
+  },
+  "思想思维心理哲学/自制.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
   }
 }
