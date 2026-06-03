@@ -265,7 +265,9 @@ graph TD
 请你运用今天学到的知识，将下面这两句话翻译成德语：
 
 1. **我为明天的面试做准备。** (提示：使用 `sich vorbereiten auf + Akk.` —— 想想它是真还是假？)
+	1. Ich bereite mich auf das morgige Vorstellungsgespräch vor.
 2. **我非常期待这次面试！** (提示：使用 `sich freuen auf + Akk.` —— 想想它是真还是假？)
+	1. Ich freue mich sehr auf dieses Vorstellungsgespräch!
 
 翻译好后发给我，我会为你批改，并根据你的掌握程度开启我们下一步的语法计划。你怎么翻？
 
