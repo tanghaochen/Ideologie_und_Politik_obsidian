@@ -50,17 +50,26 @@ Welche Methode ist am besten geeignet?
 		- umfassende →umfassen的第一分词 全面的,广泛的,广博的
 		- 
 - 在一个很有必要的就是为了让根系得到氧气，配合火山石 3-6 mm 尺寸，或者更便宜，轻量的珍珠岩.
-	- Ein weiterer äußerst[^1] notwendiger Aspekt besteht[^2] darin, das Wurzelsystem mit ausreichend Sauerstoff zu versorgen.  Zu diesem Zweck wird Vulkangestein mit einer Körnung von 3 bis 6 mm oder alternativ das kostengünstigere, leichte Perlit beigemischt.
+	- Ein weiterer äußerst[^1] notwendiger Aspekt besteht darin[^2] , das Wurzelsystem mit ausreichend Sauerstoff zu versorgen.  Zu diesem Zweck wird Vulkangestein mit einer Körnung von 3 bis 6 mm oder alternativ das kostengünstigere, leichte Perlit beigemischt.
+		- weiterer (adj) 另外的,其他的,附加的;进一步的,继续的
 		- notwendiger (adj) ①必要的,必需的,必不可少的②必然的,不可避免的③急迫的,迫切的
 		- Aspekt Aspekt (m) -e ①角度,观点,方面②[语]体③[天]对座位置,方位
 		- Wurzelsystem 根系
 		- ausreichend (adj)①足够的,充分的②(学生成绩)及格
 		- Sauerstoff (m) unz.[化]氧,氧气
 		- Zweck Zweck (m) -e ①目的,意图②意义,用途,用场,用处
-
+		- Vulkangestein 火山岩
+		- Körnung (f) unz．①粒度,颗粒组成②[技]成粒(作用),粒化 ③ [猎]诱饵 ④ [猎] (以鼓舞饲料为诱饵的)捕捉野禽的场所
+		- kostengünstigere 更具成本效益
+		- Perlit ① [冶](钢的)珠光体
+			- ② [质]珍珠岩
+		- beigemischt 混入
 - 以上三种材料就是一个最基础简单的组合，椰土：羊粪：支撑材料的配比范围一般是 2:1:1 或 1:1:1 都是合理的，前者是最通用的，根据植物最透气保水的需求可以调整支撑材料或填充材料的比例
 	- Die oben genannten drei Materialien stellen eine äußerst grundlegende und einfache Kombination dar. Ein Mischungsverhältnis von Kokoserde, Schafmist und Stützmaterial im Bereich von 2:1:1 oder 1:1:1 gilt im Allgemeinen als angemessen, wobei das Erstere am weitesten verbreitet ist. Je nach dem Bedürfnis der Pflanzen nach optimaler Luftdurchlässigkeit und Wasserspeicherung lässt sich der Anteil der Stütz- oder Füllmaterialien entsprechend anpassen.
-Ein weiterer äußerst[^1] notwendiger Aspekt besteht[^2] darin... 
+		- Mischungsverhältnis  混合比,配合比
+		- Schafmist [der] 羊粪
+		-  支撑材料
+
 
 
 

@@ -352,20 +352,9 @@
               "icon": "network",
               "title": "Mxmind"
             }
-          },
-          {
-            "id": "5020f6b7d22ceb0b",
-            "type": "leaf",
-            "state": {
-              "type": "footnotes",
-              "state": {
-                "file": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md"
-              },
-              "icon": "lucide-file-signature",
-              "title": "脚注"
-            }
           }
-        ]
+        ],
+        "currentTab": 2
       },
       {
         "id": "28e75bfc7e894da7",
@@ -385,8 +374,21 @@
               "icon": "lucide-info",
               "title": "语法快查必背语法canvas的笔记属性"
             }
+          },
+          {
+            "id": "5020f6b7d22ceb0b",
+            "type": "leaf",
+            "state": {
+              "type": "footnotes",
+              "state": {
+                "file": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md"
+              },
+              "icon": "lucide-file-signature",
+              "title": "脚注"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -429,7 +431,7 @@
       "darlal-switcher-plus:Open Symbols for the active editor": false
     }
   },
-  "active": "b9083d461a4c336a",
+  "active": "14d0006259a2f607",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
