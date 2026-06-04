@@ -68,7 +68,22 @@ Welche Methode ist am besten geeignet?
 	- Die oben genannten drei Materialien stellen eine äußerst grundlegende und einfache Kombination dar. Ein Mischungsverhältnis von Kokoserde, Schafmist und Stützmaterial im Bereich von 2:1:1 oder 1:1:1 gilt im Allgemeinen als angemessen, wobei das Erstere am weitesten verbreitet ist. Je nach dem Bedürfnis der Pflanzen nach optimaler Luftdurchlässigkeit und Wasserspeicherung lässt sich der Anteil der Stütz- oder Füllmaterialien entsprechend anpassen.
 		- Mischungsverhältnis  混合比,配合比
 		- Schafmist [der] 羊粪
-		-  支撑材料
+		-  Stützmaterial 支撑材料
+		- gilt ①(Gesetz 法律)适用,适合,起作用②(Münze 钱币)通用③有价值④ 针对
+		- Allgemeinen 所有；所有的；总体的；一般的；
+		- angemessen (adj) 适当的
+		- Bedürfnis 需求，需要
+		- weitesten adj. 最宽的。最远的。
+		- verbreitet Ⅰ(vt) ①传播,散布②散发,发出 Ⅱ(refl) ①散布开来,传播开来②蔓延,流行③扩展④(过分)详细地论述
+		- Luftdurchlässigkeit 透气性 
+		- Wasserspeicherung 蓄水池
+		- Anteil -e ①应得(或分摊到的)部分,份额,股份②兴趣,同情,参与
+		- Füllmaterialien 填充材料
+		- entsprechend 相当的,相应的,与...相符②有关的 Ⅱ(präp) 按照,根据
+		- anpassen  ①使合适②使适应 Ⅱ(v.refl) 适应,使自己适应
+
+
+
 
 
 
