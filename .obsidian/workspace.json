@@ -193,8 +193,7 @@
               "title": "Recent files"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -366,8 +365,7 @@
               "title": "脚注"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "28e75bfc7e894da7",
@@ -431,7 +429,7 @@
       "darlal-switcher-plus:Open Symbols for the active editor": false
     }
   },
-  "active": "80277af3735ca63b",
+  "active": "b9083d461a4c336a",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",

@@ -1,8 +1,8 @@
 {
-  "defaultMode": "preview",
+  "defaultMode": "source",
   "autoPin": "onMove",
-  "triggerDelay": 300,
-  "closeDelay": 600,
+  "triggerDelay": 30,
+  "closeDelay": 56,
   "autoFocus": true,
   "rollDown": false,
   "snapToEdges": false,
@@ -11,7 +11,7 @@
   "showViewHeader": false,
   "imageZoom": false,
   "hoverEmbeds": false,
-  "footnotes": "never",
+  "footnotes": "always",
   "headings": "always",
   "blocks": "never"
 }
