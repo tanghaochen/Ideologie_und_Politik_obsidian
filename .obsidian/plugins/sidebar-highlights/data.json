@@ -3026,6 +3026,36 @@
         "isNativeComment": false,
         "type": "highlight"
       }
+    ],
+    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md": [
+      {
+        "id": "riq73s2ki",
+        "text": "äußerst",
+        "tags": [],
+        "line": 52,
+        "startOffset": 3142,
+        "endOffset": 3153,
+        "filePath": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1780582650040,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "asy89qvi9",
+        "text": "besteht",
+        "tags": [],
+        "line": 52,
+        "startOffset": 3173,
+        "endOffset": 3184,
+        "filePath": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1780582737033,
+        "isNativeComment": false,
+        "type": "highlight"
+      }
     ]
   },
   "collections": {},

@@ -1,0 +1,42 @@
+{
+  "version": "2.0",
+  "lastModified": 1780582750319,
+  "highlights": {
+    "highlight-1498344562-3142": {
+      "text": "äußerst",
+      "position": 3142,
+      "created": 1780582709061,
+      "updated": 1780582745460,
+      "backgroundColor": "#ffeb3b",
+      "contextBefore": "泛的,广博的 - - 在一个很有必要的就是为了让根系得到氧气，配合火山石 3-6 mm 尺寸，或者更便宜，轻量的珍珠岩. - Ein weiterer",
+      "contextAfter": "notwendiger Aspekt ==besteht== darin, das Wurzelsystem mit ausreichend Sauersto",
+      "textFingerprint": "äußerst",
+      "comments": [
+        {
+          "id": "comment-1780582709061-mnu25ei8f",
+          "content": "使用 äußerst (极其) 来修饰形容词，提升学术严谨感。",
+          "created": 1780582709061,
+          "updated": 1780582709061
+        }
+      ]
+    },
+    "highlight-867384607-3173": {
+      "text": "besteht",
+      "position": 3173,
+      "created": 1780582750319,
+      "updated": 1780582750319,
+      "backgroundColor": "#ffeb3b",
+      "contextBefore": "氧气，配合火山石 3-6 mm 尺寸，或者更便宜，轻量的珍珠岩. - Ein weiterer ==äußerst== notwendiger Aspekt",
+      "contextAfter": "darin, das Wurzelsystem mit ausreichend Sauerstoff zu versorgen. Zu diesem Zwe",
+      "textFingerprint": "besteht",
+      "comments": [
+        {
+          "id": "comment-1780582750319-xcn9azcdr",
+          "content": "高级名词搭配 bestehen in + Dativ (在于...)。",
+          "created": 1780582750319,
+          "updated": 1780582750319
+        }
+      ]
+    }
+  }
+}
