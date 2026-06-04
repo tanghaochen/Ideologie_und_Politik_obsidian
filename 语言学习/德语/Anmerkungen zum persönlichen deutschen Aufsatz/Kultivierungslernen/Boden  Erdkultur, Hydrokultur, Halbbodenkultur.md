@@ -50,10 +50,38 @@ Welche Methode ist am besten geeignet?
 		- umfassende →umfassen的第一分词 全面的,广泛的,广博的
 		- 
 - 在一个很有必要的就是为了让根系得到氧气，配合火山石 3-6 mm 尺寸，或者更便宜，轻量的珍珠岩.
-	- Ein weiterer ==äußerst== notwendiger Aspekt ==besteht== darin, das Wurzelsystem mit ausreichend Sauerstoff zu versorgen.  Zu diesem Zweck wird Vulkangestein mit einer Körnung von 3 bis 6 mm oder alternativ das kostengünstigere, leichte Perlit beigemischt.
+	- Ein weiterer äußerst[^1] notwendiger Aspekt besteht[^2] darin, das Wurzelsystem mit ausreichend Sauerstoff zu versorgen.  Zu diesem Zweck wird Vulkangestein mit einer Körnung von 3 bis 6 mm oder alternativ das kostengünstigere, leichte Perlit beigemischt.
 		- notwendiger (adj) ①必要的,必需的,必不可少的②必然的,不可避免的③急迫的,迫切的
 		- Aspekt Aspekt (m) -e ①角度,观点,方面②[语]体③[天]对座位置,方位
 		- 同时，
 		- 
 - 以上三种材料就是一个最基础简单的组合，椰土：羊粪：支撑材料的配比范围一般是 2:1:1 或 1:1:1 都是合理的，前者是最通用的，根据植物最透气保水的需求可以调整支撑材料或填充材料的比例
 	- Die oben genannten drei Materialien stellen eine äußerst grundlegende und einfache Kombination dar. Ein Mischungsverhältnis von Kokoserde, Schafmist und Stützmaterial im Bereich von 2:1:1 oder 1:1:1 gilt im Allgemeinen als angemessen, wobei das Erstere am weitesten verbreitet ist. Je nach dem Bedürfnis der Pflanzen nach optimaler Luftdurchlässigkeit und Wasserspeicherung lässt sich der Anteil der Stütz- oder Füllmaterialien entsprechend anpassen.
+Ein weiterer äußerst[^1] notwendiger Aspekt besteht[^2] darin... 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[^1]: **äußerst** - **词性**：副词 (Adverb) - **释义**：极其，非常 - **例句**：Das ist äußerst wichtig. (这极其重要。) 
+[^2]: **bestehen darin, dass...** - **固定搭配**：在于……，内容是……

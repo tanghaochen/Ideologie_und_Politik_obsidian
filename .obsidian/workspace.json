@@ -234,11 +234,9 @@
           {
             "id": "14d0006259a2f607",
             "type": "leaf",
-            "pinned": true,
             "state": {
               "type": "hinote-view",
               "state": {},
-              "pinned": true,
               "icon": "highlighter",
               "title": "HiNote"
             }
@@ -354,6 +352,18 @@
               "state": {},
               "icon": "network",
               "title": "Mxmind"
+            }
+          },
+          {
+            "id": "5020f6b7d22ceb0b",
+            "type": "leaf",
+            "state": {
+              "type": "footnotes",
+              "state": {
+                "file": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md"
+              },
+              "icon": "lucide-file-signature",
+              "title": "脚注"
             }
           }
         ],
