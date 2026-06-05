@@ -6,7 +6,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 48.07108799306459,
+        "dimension": 70.5244906805375,
         "children": [
           {
             "id": "0562dedc945988be",
@@ -73,7 +73,7 @@
       {
         "id": "66514ff393b45104",
         "type": "tabs",
-        "dimension": 51.92891200693541,
+        "dimension": 29.475509319462507,
         "children": [
           {
             "id": "9c8cef9047ba0e91",
@@ -395,7 +395,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "思想思维心理哲学/个人人生思想架构.md"
+                "file": "思想思维心理哲学/过度劳累.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -445,8 +445,11 @@
       "darlal-switcher-plus:Open Symbols for the active editor": false
     }
   },
-  "active": "abbd6433f71b711a",
+  "active": "0e3905663028b11a",
   "lastOpenFiles": [
+    "思想思维心理哲学/个人人生思想架构.md",
+    "思想思维心理哲学/过度劳累.md",
+    "语言学习/德语/柏林广场视频笔记/B1/30 形容词比较级和最高级.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
     "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
     "语言学习/德语/公共知识语法/2动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
@@ -465,7 +468,6 @@
     "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
     "语言学习/德语/教材/其他/标准德语语法：精解与练习B2-C1.pdf",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
-    "语言学习/德语/柏林广场视频笔记/B1/30 形容词比较级和最高级.md",
     "德语语法 活学活用 A1-B1.pdf.md",
     "2026-05-07.md",
     "excalibrain.md",
@@ -475,8 +477,6 @@
     "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/公共知识语法/2动词/werden.md",
     "语言学习/德语/公共知识语法/介词.md",
-    "Excalidraw/ExcaliBrain Snapshot - 13 判断疑问句与动词核心框架.excalidraw.md",
-    "Excalidraw/ExcaliBrain Snapshot - 越南.excalidraw.md",
     "assets/image-348.png",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien",
     "assets/image-347.png",
