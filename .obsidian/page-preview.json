@@ -6,6 +6,5 @@
   "search": false,
   "pdf-plus-citation-link": true,
   "sidebar-highlights": false,
-  "git-view": false,
-  "recent-files": false
+  "git-view": false
 }
