@@ -54,8 +54,21 @@
               "icon": "lucide-file",
               "title": "30 形容词比较级和最高级"
             }
+          },
+          {
+            "id": "0e3905663028b11a",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "思想思维心理哲学/个人人生思想架构.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "个人人生思想架构"
+            }
           }
-        ]
+        ],
+        "currentTab": 3
       },
       {
         "id": "66514ff393b45104",
@@ -193,7 +206,8 @@
               "title": "Recent files"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -381,7 +395,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md"
+                "file": "思想思维心理哲学/个人人生思想架构.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -431,10 +445,10 @@
       "darlal-switcher-plus:Open Symbols for the active editor": false
     }
   },
-  "active": "14d0006259a2f607",
+  "active": "abbd6433f71b711a",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
+    "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
     "语言学习/德语/公共知识语法/2动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
