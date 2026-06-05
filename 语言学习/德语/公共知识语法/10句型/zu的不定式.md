@@ -263,6 +263,7 @@ graph LR
 在 `spazieren gehen`（去散步）、`kennen lernen`（去认识）这种双动词组合中，地位是天生注定且不可僭越的：
 
 - **gehen / lernen** 是核心变位动词（大 Boss）。
+
 - **spazieren / kennen** 是补充说明的状语成分（小弟）。
 
 在普通主句里，大 Boss 站在第 2 位（Ich **gehe** spazieren）；但在所有的从句、不定式中，大 Boss 必须去最后压阵。

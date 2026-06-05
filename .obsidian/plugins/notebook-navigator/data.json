@@ -500,7 +500,9 @@
   "folderColors": {},
   "folderBackgroundColors": {
     "国家": "#00000000",
-    "语言学习/德语/公共知识语法": "#22c55e30"
+    "语言学习/德语/公共知识语法": "#22c55e30",
+    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz": "#a855f7",
+    "语言学习/德语/学习记录日记-技巧": "#a855f7"
   },
   "folderSortOverrides": {
     "语言学习/德语/柏林广场视频笔记/A1": "title-asc",
