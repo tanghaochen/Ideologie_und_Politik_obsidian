@@ -38,6 +38,12 @@
       "icon": "lint-file",
       "name": "Linter: 格式化当前文件",
       "mode": "any"
+    },
+    {
+      "id": "workspace:move-to-new-window",
+      "icon": "lucide-maximize",
+      "name": "将当前标签页移动至新窗口",
+      "mode": "any"
     }
   ],
   "fileMenu": [
