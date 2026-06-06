@@ -9,21 +9,6 @@
         "dimension": 53.27264846120502,
         "children": [
           {
-            "id": "ed522742b51b8fd2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "电脑、软件、系统/ps-tang.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "ps-tang"
-            }
-          },
-          {
             "id": "eb7e49b5456feff3",
             "type": "leaf",
             "state": {
@@ -44,13 +29,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/语法对应的场景.md",
+                "file": "语言学习/德语/学习记录日记-技巧/Wortwahl und Beispielsätze/prop介词.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "语法对应的场景"
+              "title": "prop介词"
             }
           },
           {
@@ -70,7 +55,8 @@
               "title": "⭐必背所有知识点整理考察整理"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "66514ff393b45104",
@@ -364,7 +350,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "电脑、软件、系统/ps-tang.md"
+                "file": "语言学习/德语/学习记录日记-技巧/Wortwahl und Beispielsätze/prop介词.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -453,15 +439,16 @@
       }
     ]
   },
-  "active": "ed522742b51b8fd2",
+  "active": "fe6ba36a11a29a2d",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/5介词/见字知义 的介词.md",
+    "语言学习/德语/学习记录日记-技巧/Autobiogragie und Tagebuch/Meine Familienzusammensetzung.md",
+    "语言学习/德语/公共知识语法/语法对应的场景.md",
+    "语言学习/德语/公共知识语法/连词成对.md",
     "电脑、软件、系统/ps-tang.md",
+    "语言学习/德语/公共知识语法/5介词/见字知义 的介词.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/介词.md",
-    "语言学习/德语/公共知识语法/语法对应的场景.md",
     "语言学习/德语/公共知识语法/从句.md",
-    "语言学习/德语/公共知识语法/连词成对.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md",
     "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
     "语言学习/德语/公共知识语法/0格/第二格.md",
@@ -483,7 +470,6 @@
     "语言学习/德语/公共知识语法/2动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
     "语言学习/德语/公共知识语法/句子成分 结构.md",
     "assets/PixPin_2026-06-05_17-15-52.png",
-    "思想思维心理哲学/个人人生思想架构.md",
     "语言学习/德语/教材/其他/德语活学活用B2-C1.pdf",
     "语言学习/德语/教材/其他/标准德语语法：精解与练习B2-C1.pdf",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
