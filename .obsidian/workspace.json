@@ -64,6 +64,18 @@
         "dimension": 46.72735153879498,
         "children": [
           {
+            "id": "8f304aac8d1955ff",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/介词.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "介词"
+            }
+          },
+          {
             "id": "e8f1158f552ab8ff",
             "type": "leaf",
             "state": {
@@ -90,7 +102,8 @@
               "title": "见字知义 的介词"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -337,7 +350,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
+                "file": "语言学习/德语/公共知识语法/5介词/见字知义 的介词.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -426,14 +439,15 @@
       }
     ]
   },
-  "active": "814bf3e4edd62ad4",
+  "active": "2f389bcfcc16ded9",
   "lastOpenFiles": [
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/介词.md",
+    "语言学习/德语/公共知识语法/语法对应的场景.md",
+    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/连词成对.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md",
-    "语言学习/德语/公共知识语法/从句.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/5介词/见字知义 的介词.md",
-    "语言学习/德语/公共知识语法/语法对应的场景.md",
     "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
     "语言学习/德语/公共知识语法/0格/第二格.md",
     "语言学习/德语/柏林广场视频笔记/A1/54 超市购物相关 与 量词和名词复数.md",
@@ -447,7 +461,6 @@
     "语言学习/德语/公共知识语法/2动词/lassen.md",
     "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
-    "语言学习/德语/公共知识语法/介词.md",
     "assets/PixPin_2026-05-20_00-25-06.png",
     "语言学习/德语/柏林广场视频笔记/B1/30 形容词比较级和最高级.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
