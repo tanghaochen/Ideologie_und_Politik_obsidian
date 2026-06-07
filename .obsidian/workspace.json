@@ -14,13 +14,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/单词/可能性.md",
+                "file": "语言学习/德语/公共知识语法/副词.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "可能性"
+              "title": "副词"
             }
           },
           {
@@ -391,7 +391,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/单词/可能性.md"
+                "file": "语言学习/德语/公共知识语法/副词.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -482,9 +482,10 @@
   },
   "active": "ec7805eba188612a",
   "lastOpenFiles": [
+    "语言学习/德语/单词/可能性.md",
+    "语言学习/德语/公共知识语法/副词.md",
     "assets/image-349.png",
     "语言学习/德语/公共知识语法/2动词/情态动词表可能性及其时态.md",
-    "语言学习/德语/单词/可能性.md",
     "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
@@ -527,7 +528,6 @@
     "assets/Pasted Image 20260531203856_131.png",
     "Excalidraw/Scripts/Downloaded/Zoom to Fit Selected Elements.svg",
     "Excalidraw/Scripts/Downloaded/Convert selected text elements to sticky notes.svg",
-    "Excalidraw/Scripts/Downloaded/AddMermaidSvg.svg",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "网络/简述软路由网络逻辑.canvas",
     "未命名.canvas",

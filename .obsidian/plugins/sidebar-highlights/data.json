@@ -3041,7 +3041,23 @@
         "type": "highlight"
       }
     ],
-    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md": []
+    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md": [],
+    "语言学习/德语/公共知识语法/副词.md": [
+      {
+        "id": "fhh9e8o61",
+        "text": "修饰动词、形容词或整个句子",
+        "tags": [],
+        "line": 8,
+        "startOffset": 166,
+        "endOffset": 183,
+        "filePath": "语言学习/德语/公共知识语法/副词.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1780855871198,
+        "isNativeComment": false,
+        "type": "highlight"
+      }
+    ]
   },
   "collections": {},
   "groupingMode": "none",
