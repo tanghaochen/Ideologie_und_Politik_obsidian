@@ -6,7 +6,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 88.64325964456003,
+        "dimension": 58.517555266579976,
         "children": [
           {
             "id": "ec7805eba188612a",
@@ -14,13 +14,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/副词.md",
+                "file": "语言学习/德语/公共知识语法/语法对应的场景.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "副词"
+              "title": "语法对应的场景"
             }
           },
           {
@@ -87,7 +87,7 @@
       {
         "id": "66514ff393b45104",
         "type": "tabs",
-        "dimension": 11.356740355439964,
+        "dimension": 41.482444733420024,
         "children": [
           {
             "id": "7aba2ca861a87bad",
@@ -391,7 +391,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/副词.md"
+                "file": "语言学习/德语/公共知识语法/语法对应的场景.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -480,10 +480,11 @@
       }
     ]
   },
-  "active": "ec7805eba188612a",
+  "active": "ff36fbbbf55f4934",
   "lastOpenFiles": [
-    "语言学习/德语/单词/可能性.md",
+    "语言学习/德语/公共知识语法/未命名.md",
     "语言学习/德语/公共知识语法/副词.md",
+    "语言学习/德语/单词/可能性.md",
     "assets/image-349.png",
     "语言学习/德语/公共知识语法/2动词/情态动词表可能性及其时态.md",
     "语言学习/德语/公共知识语法/动词.md",
@@ -508,7 +509,6 @@
     "语言学习/德语/公共知识语法/10句型/倒装句.md",
     "语言学习/德语/公共知识语法/5介词/auf, von, bei 都表示在某个事物之上，怎么区分它们？.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/结果状语从句 sodass,weshalb,dermafsen ..,dass.md",
-    "语言学习/德语/公共知识语法/10句型/连词.md",
     "语言学习/德语/学习记录日记-技巧/Wortwahl und Beispielsätze",
     "assets/PixPin_2026-05-20_00-25-06.png",
     "assets/PixPin_2026-06-05_17-15-52.png",
