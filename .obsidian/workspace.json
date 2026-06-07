@@ -350,7 +350,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Wortwahl und Beispielsätze/prop介词.md"
+                "file": "语言学习/德语/公共知识语法/5介词/见字知义 的介词.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -394,9 +394,9 @@
       "notebook-navigator:笔记本导航器": false,
       "obsidian-livesync:P2P Status": false,
       "vscode-editor:新建代码文件": false,
-      "obsidian-livesync:显示自定义同步": false,
       "darlal-switcher-plus:Open in Headings Mode": false,
-      "darlal-switcher-plus:Open Symbols for the active editor": false
+      "darlal-switcher-plus:Open Symbols for the active editor": false,
+      "obsidian-livesync:显示自定义同步": false
     }
   },
   "floating": {
@@ -430,16 +430,16 @@
           }
         ],
         "direction": "vertical",
-        "x": 2923,
+        "x": 2922,
         "y": 156,
-        "width": 1079,
-        "height": 1392,
+        "width": 1353,
+        "height": 1740,
         "maximize": false,
         "zoom": -1.5
       }
     ]
   },
-  "active": "fe6ba36a11a29a2d",
+  "active": "2f389bcfcc16ded9",
   "lastOpenFiles": [
     "语言学习/德语/学习记录日记-技巧/Autobiogragie und Tagebuch/Meine Familienzusammensetzung.md",
     "语言学习/德语/公共知识语法/语法对应的场景.md",
