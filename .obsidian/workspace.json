@@ -64,6 +64,21 @@
         "dimension": 46.72735153879498,
         "children": [
           {
+            "id": "7aba2ca861a87bad",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "电脑、软件、系统/ps-tang.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "ps-tang"
+            }
+          },
+          {
             "id": "8f304aac8d1955ff",
             "type": "leaf",
             "state": {
@@ -91,16 +106,18 @@
             "id": "2f389bcfcc16ded9",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
+                "file": "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "excalidraw-icon",
-              "title": "格; 限定词"
+              "icon": "lucide-file",
+              "title": "名词：性的规律, 不背词性，一眼识别词性"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -347,7 +364,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
+                "file": "电脑、软件、系统/ps-tang.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -436,10 +453,13 @@
       }
     ]
   },
-  "active": "2f389bcfcc16ded9",
+  "active": "7aba2ca861a87bad",
   "lastOpenFiles": [
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
+    "语言学习/德语/公共知识语法/形容词.md",
+    "语言学习/德语/公共知识语法/2动词/复合动词.md",
     "语言学习/德语/公共知识语法/5介词/见字知义 的介词.md",
     "语言学习/德语/公共知识语法/连词成对.md",
     "语言学习/德语/学习记录日记-技巧/Wortwahl und Beispielsätze/prop介词.md",
@@ -463,9 +483,6 @@
     "assets/PixPin_2026-05-20_00-25-06.png",
     "语言学习/德语/柏林广场视频笔记/B1/30 形容词比较级和最高级.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
-    "语言学习/德语/公共知识语法/2动词/未命名.md",
-    "语言学习/德语/公共知识语法/2动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
-    "语言学习/德语/公共知识语法/句子成分 结构.md",
     "assets/PixPin_2026-06-05_17-15-52.png",
     "语言学习/德语/教材/其他/德语活学活用B2-C1.pdf",
     "语言学习/德语/教材/其他/标准德语语法：精解与练习B2-C1.pdf",

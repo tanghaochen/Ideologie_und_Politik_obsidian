@@ -236,6 +236,11 @@
       "id": "obsidian-linter:lint-file",
       "name": "Linter: 格式化当前文件",
       "icon": "lint-file"
+    },
+    {
+      "id": "obsidian-advanced-uri:copy-uri-block-with-format",
+      "name": "Advanced URI: Copy formatted URI for current block",
+      "icon": "links-going-out"
     }
   ],
   "followingCommands": [
@@ -348,7 +353,7 @@
       "artifact": "03-agent"
     },
     "pkmer": {
-      "tokenExpiresAt": 1780742725860,
+      "tokenExpiresAt": 1780839166758,
       "userInfo": {
         "sub": "e2090030-e955-43d0-85bd-be789294ed52",
         "name": "17678929134",
