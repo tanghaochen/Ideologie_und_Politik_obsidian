@@ -391,7 +391,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/语法对应的场景.md"
+                "file": "语言学习/德语/公共知识语法/2动词/lassen.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -471,17 +471,18 @@
           }
         ],
         "direction": "vertical",
-        "x": 2922,
+        "x": 2921,
         "y": 156,
-        "width": 1353,
+        "width": 1695,
         "height": 1740,
-        "maximize": false,
+        "maximize": true,
         "zoom": -1.5
       }
     ]
   },
-  "active": "ff36fbbbf55f4934",
+  "active": "8e92b29d45f43851",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/语法对应的场景.md",
     "语言学习/德语/公共知识语法/未命名.md",
     "语言学习/德语/公共知识语法/副词.md",
     "语言学习/德语/单词/可能性.md",
@@ -499,7 +500,6 @@
     "语言学习/德语/学习记录日记-技巧/Wortwahl und Beispielsätze/prop介词.md",
     "语言学习/德语/公共知识语法/2动词/lassen.md",
     "语言学习/德语/学习记录日记-技巧/Autobiogragie und Tagebuch/Meine Familienzusammensetzung.md",
-    "语言学习/德语/公共知识语法/语法对应的场景.md",
     "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md",
