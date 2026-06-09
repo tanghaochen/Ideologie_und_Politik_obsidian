@@ -7490,12 +7490,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 28,
-        "ch": 86
+        "line": 24,
+        "ch": 0
       },
       "to": {
-        "line": 28,
-        "ch": 86
+        "line": 24,
+        "ch": 0
       }
     },
     "expandedKeys": [

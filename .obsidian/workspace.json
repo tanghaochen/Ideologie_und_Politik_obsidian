@@ -9,21 +9,6 @@
         "dimension": 58.517555266579976,
         "children": [
           {
-            "id": "ec7805eba188612a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/语法对应的场景.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "语法对应的场景"
-            }
-          },
-          {
             "id": "814bf3e4edd62ad4",
             "type": "leaf",
             "pinned": true,
@@ -53,15 +38,28 @@
             }
           },
           {
-            "id": "c2bbf116fbd314d2",
+            "id": "b62f0207300dc00c",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
+            }
+          },
+          {
+            "id": "72fdd37e0128ea0a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
               "state": {
-                "file": "思想思维心理哲学/个人人生思想架构.md"
+                "file": "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "excalidraw-icon",
-              "title": "个人人生思想架构"
+              "icon": "lucide-file",
+              "title": "句子结构：术语，形容词，副词，表语，定语，状语"
             }
           }
         ],
@@ -388,7 +386,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "思想思维心理哲学/个人人生思想架构.md"
+                "file": "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -477,10 +475,11 @@
       }
     ]
   },
-  "active": "c2bbf116fbd314d2",
+  "active": "72fdd37e0128ea0a",
   "lastOpenFiles": [
-    "思想思维心理哲学/个人问题处理/精要主义.md",
+    "语言学习/德语/公共知识语法/动词.md",
     "思想思维心理哲学/个人人生思想架构.md",
+    "思想思维心理哲学/个人问题处理/精要主义.md",
     "思想思维心理哲学/过度劳累.md",
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/2动词/lassen.md",
@@ -490,7 +489,6 @@
     "语言学习/德语/单词/可能性.md",
     "assets/image-349.png",
     "语言学习/德语/公共知识语法/2动词/情态动词表可能性及其时态.md",
-    "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
