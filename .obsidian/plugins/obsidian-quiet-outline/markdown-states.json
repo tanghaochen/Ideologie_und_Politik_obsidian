@@ -2568,11 +2568,11 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 13,
+        "line": 5,
         "ch": 0
       },
       "to": {
-        "line": 13,
+        "line": 5,
         "ch": 0
       }
     },
@@ -14631,6 +14631,23 @@
       "item-2-2",
       "item-1-7",
       "item-2-9"
+    ]
+  },
+  "思想思维心理哲学/个人问题处理/精要主义.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 5,
+        "ch": 41
+      },
+      "to": {
+        "line": 5,
+        "ch": 41
+      }
+    },
+    "expandedKeys": [
+      "item-1-0",
+      "item-2-2"
     ]
   }
 }
