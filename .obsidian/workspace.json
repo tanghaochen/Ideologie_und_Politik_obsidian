@@ -102,10 +102,10 @@
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
+                "file": "语言学习/德语/公共知识语法/形容词.md"
               },
               "icon": "excalidraw-icon",
-              "title": "格; 限定词"
+              "title": "形容词"
             }
           }
         ],
@@ -355,9 +355,7 @@
             "type": "leaf",
             "state": {
               "type": "footnotes",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
-              },
+              "state": {},
               "icon": "lucide-file-signature",
               "title": "脚注"
             }
@@ -436,24 +434,29 @@
           }
         ],
         "direction": "vertical",
-        "x": 2790,
+        "x": 2789,
         "y": 208,
-        "width": 2062,
-        "height": 1127,
+        "width": 2581,
+        "height": 1410,
         "maximize": false,
         "zoom": -1.5
       }
     ]
   },
-  "active": "2f389bcfcc16ded9",
+  "active": "2a88c53147786b6e",
   "lastOpenFiles": [
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "语言学习/德语/公共知识语法/5介词/见字知义 的介词.md",
+    "网络/Excalidraw2URI.js.md",
+    "网络/Excalidraw2URI.js",
     "语言学习/德语/公共知识语法/形容词.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/连词成对.md",
+    "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/公共知识语法/2动词/lassen.md",
+    "语言学习/德语/公共知识语法/格; 限定词.md",
+    "语言学习/德语/公共知识语法/5介词/见字知义 的介词.md",
     "assets/image-350.png",
     "语言学习/德语/公共知识语法/3形容词/形容词.md",
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
-    "语言学习/德语/公共知识语法/连词成对.md",
     "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/公共知识语法/副词.md",
     "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
@@ -462,18 +465,14 @@
     "思想思维心理哲学/个人人生思想架构.md",
     "思想思维心理哲学/个人问题处理/精要主义.md",
     "思想思维心理哲学/过度劳累.md",
-    "语言学习/德语/公共知识语法/2动词/lassen.md",
     "语言学习/德语/公共知识语法/语法对应的场景.md",
     "语言学习/德语/公共知识语法/未命名.md",
     "语言学习/德语/单词/可能性.md",
     "assets/image-349.png",
     "语言学习/德语/公共知识语法/2动词/情态动词表可能性及其时态.md",
-    "语言学习/德语/公共知识语法/格; 限定词.md",
     "语言学习/德语/公共知识语法/2动词/复合动词.md",
     "语言学习/德语/学习记录日记-技巧/Wortwahl und Beispielsätze/prop介词.md",
     "语言学习/德语/学习记录日记-技巧/Autobiogragie und Tagebuch/Meine Familienzusammensetzung.md",
-    "语言学习/德语/公共知识语法/从句.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md",
     "语言学习/德语/学习记录日记-技巧/Wortwahl und Beispielsätze",
     "assets/PixPin_2026-05-20_00-25-06.png",
     "assets/PixPin_2026-06-05_17-15-52.png",
@@ -488,7 +487,6 @@
     "dict/AdQuote.toml",
     "dict/AnyBlock.toml",
     "dict/Mermaid_md.toml",
-    "dict/Markdown.toml",
     "assets/image-346.png",
     "assets/Pasted Image 20260531203856_131.png",
     "Excalidraw/Scripts/Downloaded/Zoom to Fit Selected Elements.svg",
