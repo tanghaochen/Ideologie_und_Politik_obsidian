@@ -140,7 +140,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "sowohl",
+                "query": "so weit",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -162,7 +162,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
@@ -438,7 +438,7 @@
       }
     ]
   },
-  "active": "2352117413601e49",
+  "active": "2bdbb354e1190468",
   "lastOpenFiles": [
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "assets/7bcba5aa4188d31a24aca0ac23cae122.jpg",
