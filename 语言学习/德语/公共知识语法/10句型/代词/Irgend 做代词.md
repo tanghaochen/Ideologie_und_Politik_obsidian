@@ -11,7 +11,11 @@ aliases:
 
 [[从句#^uBKzxWyF|100%]]
 
-<font color="#d83931">表示不在乎的/不确定的/任意的 -> 人/时间/地点。...想象成德语世界里的“马赛克滤镜”或者“盲盒”。**</font>
+- 意思：
+	- <font color="#d83931">表示不在乎的/不确定的/任意的 -> 人/时间/地点。...想象成德语世界里的“马赛克滤镜”或者“盲盒”。**</font>
+- 两种用法
+	- 做代词
+	- 放名词前做限定词
 
 看一眼老爷爷掏空口袋的绝望瞬间（来自你提供的教材图片）：
 
@@ -52,6 +56,25 @@ graph TD
 
 ```
 
+
+| **代词原型**                                                | **格 (Kasus)** | **词汇形式**                                                                                            | **中文翻译** | **移民生活场景例句 (实战应用)**                                                                                                                                        | **其他重要信息**                                              |
+| ------------------------------------------------------- | ------------- | --------------------------------------------------------------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| **irgendwer**<br><br>  <br><br>(指代人)                    | Nom (第一格)     | **irgendwer**                                                                                       | 随便谁、某人   | **找工作：**<br><br>  <br><br>Hier muss mir doch **irgendwer** einen Job geben können!<br><br>  <br><br>_(这里肯定有**某个人**能给我一份工作吧！)_                              | 仅用于指代人。口语中极常用。                                          |
+|                                                         | Akk (第四格)     | **irgendwen**                                                                                       | 随便谁、某人   | **医疗：**<br><br>  <br><br>Ich muss **irgendwen** finden, der Chinesisch spricht.<br><br>  <br><br>_(我必须找**随便什么人**，只要会说中文就行。)_                               | 作为动词的直接宾语。                                              |
+|                                                         | Dat (第三格)     | **irgendwem**                                                                                       | 随便谁、某人   | **行政事务：**<br><br>  <br><br>Ich habe meine Visumsunterlagen **irgendwem** im Ausländeramt gegeben.<br><br>  <br><br>_(我把我的签证材料交给了外管局的**某个人**。)_             | 作为动词的间接宾语或跟在支配第三格的介词后。                                  |
+|                                                         | Gen (第二格)     | **irgendwessen**                                                                                    | 随便某人的    | **行政事务：**<br><br>  <br><br>**Irgendwessen** Unterschrift fehlt auf diesem Mietvertrag.<br><br>  <br><br>_(这份租房合同上缺了**不知哪个人的**签字。)_                         | 极少使用，仅见于书面语或极度严谨的行政场合。                                  |
+| **irgendjemand**<br><br>  <br><br>(指代人)                 | Nom (第一格)     | **irgendjemand**                                                                                    | 某人、任何人   | **租房：**<br><br>  <br><br>Kann mir **irgendjemand** beim Umzug helfen?<br><br>  <br><br>_(有**随便哪个人**能帮我搬家吗？)_                                               | 与 irgendwer 完全同义，但听起来稍微正式一点点。                           |
+|                                                         | Akk (第四格)     | **irgendjemanden**<br><br>  <br><br>_(或 irgendjemand)_                                              | 某人、任何人   | **找工作：**<br><br>  <br><br>Sucht Ihre Firma gerade **irgendjemanden** für die IT-Abteilung?<br><br>  <br><br>_(你们公司现在IT部门在招**什么人**吗？)_                      | 词尾加 -en 是标准高地德语，口语中常省略 -en。                             |
+|                                                         | Dat (第三格)     | **irgendjemandem**<br><br>  <br><br>_(或 irgendjemand)_                                              | 某人、任何人   | **医疗：**<br><br>  <br><br>Ich möchte meine vertrauliche Krankenakte nicht **irgendjemandem** zeigen.<br><br>  <br><br>_(我不想把我的保密病历给**随便什么人**看。)_            | 词尾加 -em。口语中有时也会省略。                                      |
+|                                                         | Gen (第二格)     | **irgendjemandes**                                                                                  | 某人的      | **行政事务：**<br><br>  <br><br>Ist das **irgendjemandes** Akte? Sie liegt hier auf dem Flur.<br><br>  <br><br>_(这是**某人的**档案吗？它就放在走廊上。)_                        | 同样非常罕见，B2考试中若能用出会让考官眼前一亮。                               |
+| **irgendetwas** / **irgendwas**<br><br>  <br><br>(指代事物) | Nom & Akk     | **irgendetwas**<br><br>  <br><br>_(口语：irgendwas)_                                                   | 某事、任何事   | **租房：**<br><br>  <br><br>Steht **irgendetwas** Verstecktes im Mietvertrag?<br><br>  <br><br>_(租房合同里写了**什么**隐藏条款吗？)_                                        | 不分第一格和第四格，形式永远不变！<br><br>  <br><br>irgendwas 是它的口语缩略形式。 |
+|                                                         | Dat (第三格)     | 常与介词连用 (如 mit irgendetwas)                                                                          | 与某事...   | **医疗：**<br><br>  <br><br>Haben Sie eine Allergie gegen **irgendetwas**?<br><br>  <br><br>_(您对**什么东西**过敏吗？)_                                                | 本身词尾不变化。                                                |
+| **irgendein-**<br><br>  <br><br>(独立代词，替代已提到的单数名词)       | Nom (第一格)     | 阳: **irgendeiner**<br><br>  <br><br>阴: **irgendeine**<br><br>  <br><br>中: **irgendeines**/_(-eins)_ | 随便哪一个    | **行政事务 (替代 der Beamte)：**<br><br>  <br><br>Hier muss doch **irgendeiner** Englisch verstehen!<br><br>  <br><br>*(这里肯定有**哪一个（办事员）*_懂英语！)_                   | **重点警告**：当它不跟名词，而是自己做代词时，词尾必须体现被替代名词的词性！                |
+|                                                         | Akk (第四格)     | 阳: **irgendeinen**<br><br>  <br><br>阴: **irgendeine**<br><br>  <br><br>中: **irgendeines**/_(-eins)_ | 随便哪一个    | **租房 (替代 die Wohnung)：**<br><br>  <br><br>Ich brauche **irgendeine**, wo ich mich schnell anmelden kann.<br><br>  <br><br>_(我只需要**随便一套（公寓）**，能让我赶紧落户就行。)_  | 注意阳性变为 -en，中性口语常说 irgendeins。                           |
+|                                                         | Dat (第三格)     | 阳: **irgendeinem**<br><br>  <br><br>阴: **irgendeiner**<br><br>  <br><br>中: **irgendeinem**          | 随便哪一个    | **医疗 (替代 der Arzt)：**<br><br>  <br><br>Gehen Sie einfach zu **irgendeinem** in der Nähe.<br><br>  <br><br>*(您随便找附近**哪一个（医生）*_看就行。)_                        | 严格遵循第三格词尾变化规则 (m, r, m)。                                |
+| **irgendwelch-**<br><br>  <br><br>(独立代词，替代已提到的复数或不可数名词) | Nom (第一格)     | **irgendwelche**                                                                                    | 随便一些     | **行政事务 (替代 die Formulare)：**<br><br>  <br><br>Da drüben liegen noch **irgendwelche**.<br><br>  <br><br>_(那边还放着**随便一些（表格）**。)_                              | 这是 `irgendein-` 作为代词时的复数形式。                             |
+|                                                         | Akk (第四格)     | **irgendwelche**                                                                                    | 随便一些     | **医疗 (替代 Schmerzmittel 不可数/复数)：**<br><br>  <br><br>Haben Sie Tabletten? Geben Sie mir einfach **irgendwelche**.<br><br>  <br><br>_(您有药片吗？随便给我**一些**就行。)_   | 既可替代复数名词，也可替代不可数的物质名词。                                  |
+|                                                         | Dat (第三格)     | **irgendwelchen**                                                                                   | 随便一些     | **找工作 (替代 die Firmen)：**<br><br>  <br><br>Ich habe meinen Lebenslauf an **irgendwelche** in Berlin geschickt.<br><br>  <br><br>_(我把简历发给了柏林的**随便几家（公司）**。)_ | 复数第三格词尾加 -en。                                           |
 接下来，我们把这两个大分支掰开揉碎了讲，并且直接带入到你的德国移民生活场景中去。
 
 ### 第一部分：当 Irgend- 独自美丽（无名词的情况）
@@ -107,14 +130,5 @@ graph TD
 
 ### 德语大师的半年通关规划建议
 
-既然你的目标是六个月拿下 B 2，时间安排必须极其自律：
-
-- **前 2 个月（夯实 B 1 地基）：** 重点攻克词尾变格（就是我们今天讲的这张表）、各种从句连词（weil, dass, obwohl...）以及过去时的形态。
-- **中间 2 个月（冲刺 B 2 堡垒）：** 强攻被动语态的各种时态替代形式、虚拟一式（间接引语）和虚拟二式（非真实条件/礼貌表达）。每天强迫自己用 B 2 语法写一篇 50 字的德语日记。
-- **最后 2 个月（真题与输出）：** 疯狂做题，熟悉考试套路。同时，把你日常生活中（租房、找局子、看病）的所有中文抱怨，全都在脑子里翻译成德语。
-
-**【今日作业 - 德语大师的考验】**
-
 纸上得来终觉浅，绝知此事要躬行。请你结合你目前的职业背景，或者你来德国最担心的一件事（比如租房、或者去外管局），使用今天学的 **irgendjemand / irgendwo / irgendein (注意变格)** 造三个完整的德语句子。
 
-把德语当成你手中的工具，而不是要膜拜的神像。大胆用，搞错了大师给你兜底！加油，Viel Erfolg！

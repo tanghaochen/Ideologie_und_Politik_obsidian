@@ -44,27 +44,27 @@ mindmap
 ```
 
 
-|**代副词**|**构成方式**|**中文核心翻译/含义**|**移民生活高频场景与例句**|**核心用法提示**|
-|---|---|---|---|---|
-|**dabei**|da + bei|在这方面 / 同时 / 随身带着|**医疗：** Haben Sie Ihre Versichertenkarte **dabei**?<br><br>  <br><br>_(您随身带着医保卡吗？)_|常用于表示某物在身边，或在做某事的过程“中”。|
-|**dadurch**|da + durch|通过这（种方式）/ 因此|**工作：** Er arbeitet jeden Tag mit deutschen Kollegen. **Dadurch** lernt er schnell.<br><br>  <br><br>_(他每天和德国同事工作。由此他学得很快。)_|强烈的因果或手段关系。|
-|**dafür**|da + für|为此 / 赞成这事|**行政：** Ich brauche ein Visum. Was muss ich **dafür** tun?<br><br>  <br><br>_(我需要签证。为此我必须做什么？)_|常接在动词 _sich interessieren für_ 或 _sein für_ 之后。|
-|**dagegen**|da + gegen|反对这个 / 与此相比|**生活：** Die Miete wird erhöht. Ich bin absolut **dagegen**!<br><br>  <br><br>_(房租要涨了。我绝对反对！)_|表达反对意见，或作对比（相反）。|
-|**dahinter**|da + hinter|在这后面|**租房：** Hier ist die Küche und **dahinter** liegt das Schlafzimmer.<br><br>  <br><br>_(这是厨房，在这后面是卧室。)_|纯方位描述。|
-|**damit**|da + mit|用这个 / 与此相关|**工作：** Hier ist mein neuer Laptop. **Damit** kann ich im Homeoffice arbeiten.<br><br>  <br><br>_(这是我的新电脑。用它我可以在家办公。)_|注意与连词 _damit_ (为了) 区分，这里是副词“用它”。|
-|**danach**|da + nach|在这之后 / 询问这个|**行政：** Ich gehe zuerst zur Ausländerbehörde, und **danach** zur Bank.<br><br>  <br><br>_(我先去外管局，之后去银行。)_|表示时间先后，或接 _fragen nach_ (询问)。|
-|**daneben**|da + neben|在这旁边|**租房：** Da steht der Kleiderschrank. **Daneben** können wir ein Bett stellen.<br><br>  <br><br>_(那儿放着衣柜。在它旁边我们可以放张床。)_|纯方位描述。|
-|**daran**|da + r + an|在这上面 / 对此|**工作：** Ich arbeite hart **daran**, mein B2-Zertifikat zu bekommen.<br><br>  <br><br>_(我正为此努力，以取得B2证书。)_|结合动词固定搭配如 _denken an_, _arbeiten an_。|
-|**darauf**|da + r + auf|在这上面 / 等待这个|**租房：** Der Vermieter meldet sich bald. Ich warte **darauf**.<br><br>  <br><br>_(房东很快会回复。我正等这个呢。)_|极为高频！常用于 _warten auf_, _sich freuen auf_。|
-|**daraus**|da + r + aus|从这里面 / 由此|**行政：** Hier ist mein Arbeitsvertrag. **Daraus** können Sie mein Gehalt ersehen.<br><br>  <br><br>_(这是我的工作合同。从中您能看出我的薪水。)_|表示来源或推论。|
-|**darin**|da + r + in|在这其中 / 在这方面|**租房：** Das Zimmer ist sehr groß. **Darin** steht schon ein Schreibtisch.<br><br>  <br><br>_(这房间很大。里面已经有张书桌了。)_|表示内部空间或抽象的“在某一点上”。|
-|**darüber**|da + r + über|关于这个 / 在这上方|**行政：** Mein Antrag wurde abgelehnt. Ich ärgere mich sehr **darüber**.<br><br>  <br><br>_(我的申请被拒了。我对此非常生气。)_|极高频！配合 _sprechen über_, _sich ärgern über_。|
-|**darum**|da + r + um|围绕这个 / 因此|**行政：** Es gibt ein Problem mit meiner Steuernummer, aber mein Steuerberater kümmert sich **darum**.<br><br>  <br><br>_(我的税号有点问题，但我的税务师会处理这事。)_|常接在 _sich kümmern um_ (照顾/负责) 后面。|
-|**darunter**|da + r + unter|在这下方 / 在这之中|**生活：** Ich habe viele Dokumente, **darunter** auch mein Zeugnis.<br><br>  <br><br>_(我有很多文件，其中也包括我的毕业证。)_|常用来表示“包含在其中”（among them）。|
-|**davon**|da + von|从这里 / 关于这个|**工作：** Google ist eine tolle Firma. Ich träume **davon**, dort zu arbeiten.<br><br>  <br><br>_(谷歌是家好公司。我梦想去那儿工作。)_|结合动词搭配 _träumen von_, _erzählen von_。|
-|**davor**|da + vor|在这之前 / 害怕这个|**医疗：** Morgen ist meine Operation. Ich habe etwas Angst **davor**.<br><br>  <br><br>_(明天我要手术。我对此有点害怕。)_|时间在先，或配合 _Angst haben vor_ (害怕某事)。|
-|**dazu**|da + zu|对此 / 另外加进去|**生活：** Ich habe Pommes bestellt und möchte noch Ketchup **dazu**.<br><br>  <br><br>_(我点了薯条，还想加点番茄酱。)_|表示补充，或者配合 _Was sagst du dazu?_ (你怎么看？)|
-|**dazwischen**|da + zwischen|在这两者之间|**租房：** Hier ist der Herd und da der Kühlschrank. **Dazwischen** ist Platz für ein Regal.<br><br>  <br><br>_(这是炉灶，那是冰箱。这中间有放架子的空间。)_|强调夹在中间的状态。|
+| **代副词**        | **构成方式**       | **中文核心翻译/含义**    | **移民生活高频场景与例句**                                                                                                                                 | **核心用法提示**                                      |
+| -------------- | -------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| **dabei**      | da + bei       | 在这方面 / 同时 / 随身带着 | **医疗：** Haben Sie Ihre Versichertenkarte **dabei**?<br><br>  <br><br>_(您随身带着医保卡吗？)_                                                             | 常用于表示某物在身边，或在做某事的过程“中”。                         |
+| **dadurch**    | da + durch     | 通过这（种方式）/ 因此     | **工作：** Er arbeitet jeden Tag mit deutschen Kollegen. **Dadurch** lernt er schnell.<br><br>  <br><br>_(他每天和德国同事工作。由此他学得很快。)_                    | 强烈的因果或手段关系。                                     |
+| **dafür**      | da + für       | 为此 / 赞成这事        | **行政：** Ich brauche ein Visum. Was muss ich **dafür** tun?<br><br>  <br><br>_(我需要签证。为此我必须做什么？)_                                                 | 常接在动词 _sich interessieren für_ 或 _sein für_ 之后。 |
+| **dagegen**    | da + gegen     | 反对这个 / 与此相比      | **生活：** Die Miete wird erhöht. Ich bin absolut **dagegen**!<br><br>  <br><br>_(房租要涨了。我绝对反对！)_                                                   | 表达反对意见，或作对比（相反）。                                |
+| **dahinter**   | da + hinter    | 在这后面             | **租房：** Hier ist die Küche und **dahinter** liegt das Schlafzimmer.<br><br>  <br><br>_(这是厨房，在这后面是卧室。)_                                          | 纯方位描述。                                          |
+| **damit**      | da + mit       | 用这个 / 与此相关       | **工作：** Hier ist mein neuer Laptop. **Damit** kann ich im Homeoffice arbeiten.<br><br>  <br><br>_(这是我的新电脑。用它我可以在家办公。)_                          | 注意与连词 _damit_ (为了) 区分，这里是副词“用它”。                |
+| **danach**     | da + nach      | 在这之后 / 询问这个      | **行政：** Ich gehe zuerst zur Ausländerbehörde, und **danach** zur Bank.<br><br>  <br><br>_(我先去外管局，之后去银行。)_                                       | 表示时间先后，或接 _fragen nach_ (询问)。                   |
+| **daneben**    | da + neben     | 在这旁边             | **租房：** Da steht der Kleiderschrank. **Daneben** können wir ein Bett stellen.<br><br>  <br><br>_(那儿放着衣柜。在它旁边我们可以放张床。)_                          | 纯方位描述。                                          |
+| **daran**      | da + r + an    | 在这上面 / 对此        | **工作：** Ich arbeite hart **daran**, mein B2-Zertifikat zu bekommen.<br><br>  <br><br>_(我正为此努力，以取得B2证书。)_                                        | 结合动词固定搭配如 _denken an_, _arbeiten an_。           |
+| **darauf**     | da + r + auf   | 在这上面 / 等待这个      | **租房：** Der Vermieter meldet sich bald. Ich warte **darauf**.<br><br>  <br><br>_(房东很快会回复。我正等这个呢。)_                                              | 极为高频！常用于 _warten auf_, _sich freuen auf_。       |
+| **daraus**     | da + r + aus   | 从这里面 / 由此        | **行政：** Hier ist mein Arbeitsvertrag. **Daraus** können Sie mein Gehalt ersehen.<br><br>  <br><br>_(这是我的工作合同。从中您能看出我的薪水。)_                      | 表示来源或推论。                                        |
+| **darin**      | da + r + in    | 在这其中 / 在这方面      | **租房：** Das Zimmer ist sehr groß. **Darin** steht schon ein Schreibtisch.<br><br>  <br><br>_(这房间很大。里面已经有张书桌了。)_                                 | 表示内部空间或抽象的“在某一点上”。                              |
+| **darüber**    | da + r + über  | 关于这个 / 在这上方      | **行政：** Mein Antrag wurde abgelehnt. Ich ärgere mich sehr **darüber**.<br><br>  <br><br>_(我的申请被拒了。我对此非常生气。)_                                    | 极高频！配合 _sprechen über_, _sich ärgern über_。     |
+| **darum**      | da + r + um    | 围绕这个 / 因此        | **行政：** Es gibt ein Problem mit meiner Steuernummer, aber mein Steuerberater kümmert sich **darum**.<br><br>  <br><br>_(我的税号有点问题，但我的税务师会处理这事。)_ | 常接在 _sich kümmern um_ (照顾/负责) 后面。               |
+| **darunter**   | da + r + unter | 在这下方 / 在这之中      | **生活：** Ich habe viele Dokumente, **darunter** auch mein Zeugnis.<br><br>  <br><br>_(我有很多文件，其中也包括我的毕业证。)_                                       | 常用来表示“包含在其中”（among them）。                       |
+| **davon**      | da + von       | 从这里 / 关于这个       | **工作：** Google ist eine tolle Firma. Ich träume **davon**, dort zu arbeiten.<br><br>  <br><br>_(谷歌是家好公司。我梦想去那儿工作。)_                             | 结合动词搭配 _träumen von_, _erzählen von_。           |
+| **davor**      | da + vor       | 在这之前 / 害怕这个      | **医疗：** Morgen ist meine Operation. Ich habe etwas Angst **davor**.<br><br>  <br><br>_(明天我要手术。我对此有点害怕。)_                                        | 时间在先，或配合 _Angst haben vor_ (害怕某事)。              |
+| **dazu**       | da + zu        | 对此 / 另外加进去       | **生活：** Ich habe Pommes bestellt und möchte noch Ketchup **dazu**.<br><br>  <br><br>_(我点了薯条，还想加点番茄酱。)_                                          | 表示补充，或者配合 _Was sagst du dazu?_ (你怎么看？)          |
+| **dazwischen** | da + zwischen  | 在这两者之间           | **租房：** Hier ist der Herd und da der Kühlschrank. **Dazwischen** ist Platz für ein Regal.<br><br>  <br><br>_(这是炉灶，那是冰箱。这中间有放架子的空间。)_            | 强调夹在中间的状态。                                      |
 接下来，我们结合你未来的**租房、找工作、医疗和行政事务**四大真实移民场景，把这五大功能逐一击破！
 
 ## da / daneben / darauf 地点说明语：快捷定位 (Wo?)
