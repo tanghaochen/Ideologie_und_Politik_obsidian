@@ -14679,18 +14679,20 @@
     "expandedKeys": []
   },
   "思想思维心理哲学/未命名.md": {
-    "scroll": 0,
+    "scroll": 24.555555584137284,
     "cursor": {
       "from": {
-        "line": 0,
-        "ch": 0
+        "line": 2,
+        "ch": 23
       },
       "to": {
-        "line": 0,
-        "ch": 0
+        "line": 2,
+        "ch": 23
       }
     },
-    "expandedKeys": []
+    "expandedKeys": [
+      "item-1-2"
+    ]
   },
   "思想思维心理哲学/电钻冲击钻使用记录.md": {
     "scroll": 0.08575466493209227,
