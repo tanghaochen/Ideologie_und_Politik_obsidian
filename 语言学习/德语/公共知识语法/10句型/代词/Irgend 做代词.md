@@ -5,6 +5,8 @@ aliases:
 
 # Irgend
 
+^nbh0fv
+
 ![[PixPin_2026-05-21_17-07-17.png]]
 
 [[从句#^uBKzxWyF|100%]]
