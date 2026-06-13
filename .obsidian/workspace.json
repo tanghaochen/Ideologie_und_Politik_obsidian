@@ -200,7 +200,8 @@
               "title": "从句"
             }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -447,7 +448,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/构词法/复合词 1+1.md"
+                "file": "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -496,8 +497,9 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "85709403456d35de",
+  "active": "2352117413601e49",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/构词法/复合词 1+1.md",
     "语言学习/德语/公共知识语法/名词.md",
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/柏林广场视频笔记/A2/k19 69 形容词词尾 Adjektive vor dem Nomen.md",
@@ -533,7 +535,6 @@
     "assets/c930265474e3073e1a54cc2b7fee21a0.png",
     "网络/Excalidraw2URI.js.md",
     "网络/Excalidraw2URI.js",
-    "语言学习/德语/公共知识语法/连词成对.md",
     "assets/image-350.png",
     "语言学习/德语/学习记录日记-技巧/Wortwahl und Beispielsätze",
     "语言学习/德语/教材/其他/德语活学活用B2-C1.pdf",
