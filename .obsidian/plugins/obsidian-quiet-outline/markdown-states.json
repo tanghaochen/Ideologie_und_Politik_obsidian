@@ -14686,16 +14686,19 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 2,
-        "ch": 22
+        "line": 1,
+        "ch": 11
       },
       "to": {
-        "line": 2,
-        "ch": 22
+        "line": 1,
+        "ch": 11
       }
     },
     "expandedKeys": [
-      "item-1-2"
+      "item-1-0",
+      "item-2-1",
+      "item-1-6",
+      "item-3-9"
     ]
   },
   "思想思维心理哲学/电钻冲击钻使用记录.md": {
@@ -14733,12 +14736,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 1,
-        "ch": 21
+        "line": 16,
+        "ch": 24
       },
       "to": {
-        "line": 1,
-        "ch": 2
+        "line": 16,
+        "ch": 24
       }
     },
     "expandedKeys": [
@@ -14810,6 +14813,31 @@
     },
     "expandedKeys": [
       "item-1-0"
+    ]
+  },
+  "思想思维心理哲学/情绪壁垒与阶层突围.md": {
+    "scroll": 382.2890776895335,
+    "cursor": {
+      "from": {
+        "line": 385,
+        "ch": 0
+      },
+      "to": {
+        "line": 385,
+        "ch": 0
+      }
+    },
+    "expandedKeys": [
+      "item-1-0",
+      "item-2-1",
+      "item-1-6",
+      "item-3-9",
+      "item-1-15",
+      "item-3-17",
+      "item-3-24",
+      "item-1-30",
+      "item-3-32",
+      "item-1-38"
     ]
   }
 }
