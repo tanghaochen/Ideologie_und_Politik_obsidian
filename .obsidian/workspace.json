@@ -9,45 +9,18 @@
         "dimension": 48.634590377113135,
         "children": [
           {
-            "id": "4cc6fbdae8be36c4",
+            "id": "cc650323a041b0a1",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
+                "file": "语言学习/德语/公共知识语法/5介词/介词的位置 在名词之前、之后和围绕着它.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "werden所有变化合集"
-            }
-          },
-          {
-            "id": "9b4d78637aef12dd",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/代词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "冠词类限定词（Artikelwörter）及其形容词词尾变化"
-            }
-          },
-          {
-            "id": "4ef339dedca0e430",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/名词.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "名词"
+              "title": "介词的位置 在名词之前、之后和围绕着它"
             }
           },
           {
@@ -66,9 +39,43 @@
               "icon": "lucide-file",
               "title": "⭐必背所有知识点整理考察整理"
             }
+          }
+        ]
+      },
+      {
+        "id": "66514ff393b45104",
+        "type": "tabs",
+        "dimension": 51.36540962288687,
+        "children": [
+          {
+            "id": "71a3f8df15d4a3e6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "51 介词：静三动四"
+            }
           },
           {
-            "id": "79c87453296e2d74",
+            "id": "90ed91a9c43baacb",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/从句.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "从句"
+            }
+          },
+          {
+            "id": "067b42664e81f717",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
@@ -80,80 +87,27 @@
             }
           },
           {
-            "id": "72fdd37e0128ea0a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/单词/不规则动词表.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "不规则动词表"
-            }
-          },
-          {
-            "id": "2da3c8188b4e2f9e",
+            "id": "b10ad6e2a1bd458b",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/形容词.md"
+                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
               },
               "icon": "excalidraw-icon",
-              "title": "形容词"
-            }
-          }
-        ],
-        "currentTab": 5
-      },
-      {
-        "id": "66514ff393b45104",
-        "type": "tabs",
-        "dimension": 51.36540962288687,
-        "children": [
-          {
-            "id": "b10ad6e2a1bd458b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/被动态.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "被动态"
+              "title": "格; 限定词"
             }
           },
           {
             "id": "8def6cd5b73e01c2",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/时态/时态介绍总结.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "时态介绍总结"
-            }
-          },
-          {
-            "id": "95cc1c039a3202f4",
-            "type": "leaf",
-            "state": {
               "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/公共知识语法/时态.md"
+                "file": "语言学习/德语/公共知识语法/介词.md"
               },
               "icon": "excalidraw-icon",
-              "title": "时态"
+              "title": "介词"
             }
           }
         ]
@@ -393,7 +347,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/被动态.md"
+                "file": "语言学习/德语/柏林广场视频笔记/A1/51 介词：静三动四.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -438,47 +392,48 @@
       "vscode-editor:新建代码文件": false,
       "darlal-switcher-plus:Open in Headings Mode": false,
       "darlal-switcher-plus:Open Symbols for the active editor": false,
-      "obsidian-livesync:显示自定义同步": false
+      "obsidian-livesync:显示自定义同步": false,
+      "command-palette:打开命令面板": false
     }
   },
-  "active": "b10ad6e2a1bd458b",
+  "active": "71a3f8df15d4a3e6",
   "lastOpenFiles": [
-    "语言学习/德语/单词/不规则动词表.md",
-    "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
-    "语言学习/德语/公共知识语法/时态.md",
-    "语言学习/德语/公共知识语法/10句型/被动态.md",
-    "思想思维心理哲学/阅读/被讨厌的勇气/如何改变自己.md",
-    "语言学习/德语/公共知识语法/格; 限定词.md",
-    "语言学习/德语/公共知识语法/动词.md",
-    "语言学习/德语/公共知识语法/10句型/代词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
+    "语言学习/德语/公共知识语法/5介词/介词的位置 在名词之前、之后和围绕着它.md",
+    "语言学习/德语/公共知识语法/介词.md",
+    "语言学习/德语/公共知识语法/时态/时态介绍总结.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
+    "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/公共知识语法/语法快查必背语法canvas.md",
+    "语言学习/德语/公共知识语法/时态.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "语言学习/德语/公共知识语法/其他句式.md",
+    "语言学习/德语/公共知识语法/连词成对.md",
+    "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
+    "语言学习/德语/公共知识语法/名词.md",
+    "语言学习/德语/公共知识语法/形容词.md",
+    "语言学习/德语/公共知识语法/时态/动词的过去时.md",
+    "语言学习/德语/公共知识语法/动词.md",
+    "语言学习/德语/公共知识语法/格; 限定词.md",
+    "语言学习/德语/公共知识语法/10句型/代词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
+    "语言学习/德语/公共知识语法/10句型/被动态.md",
+    "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
+    "语言学习/德语/公共知识语法/0格/第二格.md",
+    "语言学习/德语/单词/不规则动词表.md",
+    "思想思维心理哲学/阅读/被讨厌的勇气/如何改变自己.md",
     "assets/image-354.png",
     "assets/image-353.png",
     "assets/image-352.png",
     "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
-    "语言学习/德语/公共知识语法/时态/动词的过去时.md",
-    "语言学习/德语/公共知识语法/时态/时态介绍总结.md",
     "assets/PixPin_2026-06-15_14-01-51.png",
     "assets/PixPin_2026-06-15_14-01-19.png",
     "assets/PixPin_2026-06-15_14-00-44.png",
     "assets/PixPin_2026-06-15_14-00-36.png",
     "语言学习/德语/公共知识语法/1名词/`te.md",
-    "语言学习/德语/公共知识语法/其他句式.md",
     "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
-    "语言学习/德语/公共知识语法/名词.md",
-    "语言学习/德语/公共知识语法/0格/为什么有些句子不以第一格主语开头？.md",
-    "语言学习/德语/公共知识语法/语法对应的场景.md",
-    "思想思维心理哲学/自制.md",
-    "思想思维心理哲学/个人人生思想架构.md",
     "assets/PixPin_2026-06-14_21-50-55.png",
     "assets/R.gif",
     "assets/Pasted Image 20260614214926_012.png",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "思想思维心理哲学/情绪壁垒与阶层突围.md",
-    "思想思维心理哲学/只问耕耘，不问收获；尽人事，而后听天命.md",
-    "语言学习/德语/公共知识语法/构词法/复合词 1+1.md",
-    "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
     "网络/Excalidraw2URI.js",
     "语言学习/德语/学习记录日记-技巧/Wortwahl und Beispielsätze",
     "语言学习/德语/教材/其他/德语活学活用B2-C1.pdf",
