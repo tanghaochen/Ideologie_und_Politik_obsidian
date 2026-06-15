@@ -1,5 +1,7 @@
 # werden
 
+^0ynl3x
+
 你提出了一个极其精准且极具战略眼光的问题。在德语中，** `werden` 绝对是当之无愧的“万能变形金刚”**。它既能自己当老板（实意动词），又能给别人打工（将来时、被动态、虚拟式的助动词）。很多高级学习者之所以在长难句里迷失，就是因为没有彻底拔高视角，看清 `werden` 的全貌。
 
 为了满足你的要求，我为你独家定制了这份 **“werden 终极形态与功能全景图”**。我们将它分为三个核心矩阵，让你一次性彻底拿下它！
@@ -8,14 +10,15 @@
 
 这是所有语法的基石。请特别注意**现在时**的特殊不规则变位（du/er），以及**第一虚拟式**和**第二虚拟式**之间的细微差别（有无变音符号 Umlaut）。
 
-|**人称代词**|**现在时 (Präsens)(客观事实)**|**过去时 (Präteritum)(过去事实)**|**第一虚拟式 (Konjunktiv I)(客观转述)**|**第二虚拟式 (Konjunktiv II)(假设/愿望)**|
-|---|---|---|---|---|
-|**ich**|**werde**|wurde|werde|**würde**|
-|**du**|**wirst**|wurdest|werdest|**würdest**|
-|**er/sie/es**|**wird**|wurde|**werde**|**würde**|
-|**wir**|**werden**|wurden|werden|**würden**|
-|**ihr**|**werdet**|wurdet|werdet|**würdet**|
-|**sie/Sie**|**werden**|wurden|werden|**würden**|
+| **人称代词**      | **现在时 (Präsens)(客观事实)** | **过去时 (Präteritum)(过去事实)** | **第一虚拟式 (Konjunktiv I)(客观转述)** | **第二虚拟式 (Konjunktiv II)(假设/愿望)** |
+| ------------- | ----------------------- | -------------------------- | ------------------------------ | -------------------------------- |
+| **ich**       | **werde**               | wurde                      | werde                          | **würde**                        |
+| **du**        | **wirst**               | wurdest                    | werdest                        | **würdest**                      |
+| **er/sie/es** | **wird**                | wurde                      | **werde**                      | **würde**                        |
+| **wir**       | **werden**              | wurden                     | werden                         | **würden**                       |
+| **ihr**       | **werdet**              | wurdet                     | werdet                         | **würdet**                       |
+| **sie/Sie**   | **werden**              | wurden                     | werden                         | **würden**                       |
+- [*] 除了现在时变化 du/第三行 er/si...， 其他都是词干变化 u / e / ü+固定后缀变化
 
 ### 🌐 矩阵二：`werden` 语法功能与时态大通关
 
