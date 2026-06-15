@@ -3090,12 +3090,27 @@
     ],
     "语言学习/德语/公共知识语法/10句型/从句合集/前置定语、后置定语以及扩展的分词定语.md": [
       {
+        "id": "1lzm4w9km",
+        "text": "掌握了它，你看那些又长又复杂的德语公文、租房合同就会像看报纸一样轻松",
+        "tags": [],
+        "line": 4,
+        "startOffset": 202,
+        "endOffset": 265,
+        "filePath": "语言学习/德语/公共知识语法/10句型/从句合集/前置定语、后置定语以及扩展的分词定语.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1781536780899,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
         "id": "2p4cvlpdr",
         "text": "名词是整个名词词组的中心词",
         "tags": [],
         "line": 39,
-        "startOffset": 1609,
-        "endOffset": 1651,
+        "startOffset": 1638,
+        "endOffset": 1680,
         "filePath": "语言学习/德语/公共知识语法/10句型/从句合集/前置定语、后置定语以及扩展的分词定语.md",
         "footnoteCount": 0,
         "footnoteContents": [],
@@ -3103,6 +3118,35 @@
         "isNativeComment": false,
         "color": "#d83931",
         "type": "html"
+      },
+      {
+        "id": "l08faylto",
+        "text": "_Die zwei modernen, sich in einer Stunde automatisch von selbst reinigenden",
+        "tags": [],
+        "line": 100,
+        "startOffset": 3683,
+        "endOffset": 3787,
+        "filePath": "语言学习/德语/公共知识语法/10句型/从句合集/前置定语、后置定语以及扩展的分词定语.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1781545457967,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "hdlq6iuni",
+        "text": "Öfen",
+        "tags": [],
+        "line": 100,
+        "startOffset": 3788,
+        "endOffset": 3796,
+        "filePath": "语言学习/德语/公共知识语法/10句型/从句合集/前置定语、后置定语以及扩展的分词定语.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1781545280277,
+        "isNativeComment": false,
+        "type": "highlight"
       }
     ]
   },
