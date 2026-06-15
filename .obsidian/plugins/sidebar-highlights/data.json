@@ -3087,6 +3087,23 @@
         "isNativeComment": false,
         "type": "highlight"
       }
+    ],
+    "语言学习/德语/公共知识语法/10句型/从句合集/前置定语、后置定语以及扩展的分词定语.md": [
+      {
+        "id": "2p4cvlpdr",
+        "text": "名词是整个名词词组的中心词",
+        "tags": [],
+        "line": 39,
+        "startOffset": 1609,
+        "endOffset": 1651,
+        "filePath": "语言学习/德语/公共知识语法/10句型/从句合集/前置定语、后置定语以及扩展的分词定语.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1781536726331,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},
