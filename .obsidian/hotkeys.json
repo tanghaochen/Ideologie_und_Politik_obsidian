@@ -263,14 +263,6 @@
       "key": "C"
     }
   ],
-  "darlal-switcher-plus:switcher-plus:open-headings": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "O"
-    }
-  ],
   "bookmarks:bookmark-current-section": [
     {
       "modifiers": [
@@ -295,5 +287,24 @@
       ],
       "key": "2"
     }
-  ]
+  ],
+  "darlal-switcher-plus:switcher-plus:open": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "O"
+    }
+  ],
+  "darlal-switcher-plus:switcher-plus:open-commands": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "P"
+    }
+  ],
+  "command-palette:open": [],
+  "obsidian-editor-shortcuts:deleteLine": [],
+  "switcher:open": []
 }
