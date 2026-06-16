@@ -3188,6 +3188,23 @@
         "isNativeComment": false,
         "type": "highlight"
       }
+    ],
+    "思想思维心理哲学/个人问题处理/对精彩人生的定义.md": [
+      {
+        "id": "l2psu6z3y",
+        "text": "逻辑闭环",
+        "tags": [],
+        "line": 29,
+        "startOffset": 823,
+        "endOffset": 856,
+        "filePath": "思想思维心理哲学/个人问题处理/对精彩人生的定义.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1781604758242,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},
