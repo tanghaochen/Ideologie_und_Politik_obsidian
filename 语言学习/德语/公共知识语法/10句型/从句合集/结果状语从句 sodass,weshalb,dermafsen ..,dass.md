@@ -36,7 +36,7 @@ flowchart TD
 - **教材例句：** Ich war spät, **sodass** ich den Bus verpasst habe. (我迟到了，**以至于**我错过了公交车。)
 - **大师解析：** `sodass` 是一个整体，连在一起写。它平铺直叙，不强调任何极端的语气。
 
-### 🌋 第二层：暴击强调 ä
+### 🌋 第二层：暴击强调 
 
 `so/dermaßen/derart ..., dass` : 注意这个结构，主语用 `so/dermaßen/derart` 加深形容词程度，从句 dass 开头。
 

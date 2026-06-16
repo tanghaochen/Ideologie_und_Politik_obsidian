@@ -39,7 +39,7 @@ graph TD
 - **💡 移民实战：找工作 (Jobsuche)**
     - _你想表达：_ 通过每天投递五份简历，我得到了面试机会。
     - _德语思维：_ 我得到了面试机会，通过（indem）我每天投五份简历。
-    - _德语造句：_ Ich bekam eine Einladung zum Vorstellungsgespräch, **indem** ich jeden Tag fünf Bewerbungen schickte.
+    - _德语造句：_ Ich be[^1]kam eine Einladung zum Vorstellungsgespräch, **indem** ich jeden Tag fünf Bewerbungen schickte.
 
 ### 2. dadurch, dass (升级款：“藉由... / 拆分强调 / 表原因”)
 
