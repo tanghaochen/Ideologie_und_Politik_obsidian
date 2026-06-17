@@ -120,7 +120,7 @@
   "library2": {
     "type": "excalidrawlib",
     "version": 2,
-    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag2.23.12",
+    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag2.24.1",
     "libraryItems": [
       {
         "status": "unpublished",
@@ -17419,7 +17419,7 @@
       }
     }
   },
-  "previousRelease": "2.23.12",
+  "previousRelease": "2.24.1",
   "showReleaseNotes": true,
   "excalidrawMasteryPromoCollapsed": false,
   "compareManifestToPluginVersion": true,
@@ -17434,9 +17434,7 @@
     "Excalidraw/Scripts/Downloaded/Mindmap Builder.md",
     "Excalidraw/Scripts/Downloaded/ExcalidrawMinimap.md"
   ],
-  "sidepanelTabs": [
-    "{\"script\":\"Downloaded/Mindmap Builder\",\"title\":\"MindMap Builder\"}"
-  ],
+  "sidepanelTabs": [],
   "customPens": [
     {
       "type": "default",
