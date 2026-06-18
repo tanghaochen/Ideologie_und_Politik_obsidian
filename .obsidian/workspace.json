@@ -339,9 +339,7 @@
             "type": "leaf",
             "state": {
               "type": "footnotes",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/2动词/情态动词表可能性.md"
-              },
+              "state": {},
               "icon": "lucide-file-signature",
               "title": "脚注"
             }
@@ -365,7 +363,6 @@
       "canvas:新建白板": true,
       "omnisearch:Omnisearch": false,
       "webpage-html-export:导出为HTML": true,
-      "obsidian-excalidraw-plugin:新建绘图文件": true,
       "pdf-plus:PDF++: Toggle auto-copy": false,
       "pdf-plus:PDF++: Toggle auto-focus": false,
       "pdf-plus:PDF++: Toggle auto-paste": false,
@@ -385,15 +382,15 @@
       "vscode-editor:新建代码文件": false,
       "darlal-switcher-plus:Open in Headings Mode": false,
       "darlal-switcher-plus:Open Symbols for the active editor": false,
-      "obsidian-livesync:显示自定义同步": false,
       "command-palette:打开命令面板": false,
-      "obsidian-excalidraw-plugin:New drawing": false
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "7d8203736bf441aa",
+  "active": "a2e16b5fb5cc5dcb",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/公共知识语法/2动词/情态动词表可能性.md",
+    "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/公共知识语法/2动词/阳性弱变化动词.md",
     "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
     "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
