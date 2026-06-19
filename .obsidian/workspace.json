@@ -27,12 +27,15 @@
             "id": "45c07e03bdd8b68a",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md"
+                "file": "语言学习/德语/公共知识语法/10句型/第二虚拟式.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "excalidraw-icon",
-              "title": "从句"
+              "icon": "lucide-file",
+              "title": "第二虚拟式"
             }
           },
           {
@@ -94,7 +97,8 @@
               "title": "动词"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "66514ff393b45104",
@@ -132,12 +136,25 @@
             "id": "3c43133706afab79",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/介词.md"
+                "file": "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "excalidraw-icon",
-              "title": "介词"
+              "icon": "lucide-file",
+              "title": "第一分词作定语"
+            }
+          },
+          {
+            "id": "4607cfa39dd53262",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
             }
           }
         ],
@@ -378,7 +395,9 @@
             "type": "leaf",
             "state": {
               "type": "footnotes",
-              "state": {},
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/第二虚拟式.md"
+              },
               "icon": "lucide-file-signature",
               "title": "脚注"
             }
@@ -426,8 +445,14 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "969eb899db797c4e",
+  "active": "45c07e03bdd8b68a",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/2动词/汇总所有动词变化.md",
+    "语言学习/德语/公共知识语法/时态/动词的过去时.md",
+    "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
+    "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
+    "思想思维心理哲学/自制.md",
     "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/单词/国家.md",
     "语言学习/德语/公共知识语法/5介词/表信息来源与参照的介词.md",
@@ -435,26 +460,20 @@
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/公共知识语法/10句型/zu的不定式.md",
     "经济学/术语/PSR; Price-to-Sales Ratio; 市销率.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
     "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/时态.md",
     "语言学习/德语/公共知识语法/2动词/情态动词表可能性.md",
     "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/公共知识语法/2动词/阳性弱变化动词.md",
-    "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
     "语言学习/德语/公共知识语法/10句型/第二虚拟式.md",
     "语言学习/德语/公共知识语法/5介词/表因果的介词.md",
-    "语言学习/德语/公共知识语法/2动词/汇总所有动词变化.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/汇总对比从句.md",
-    "语言学习/德语/公共知识语法/时态/动词的过去时.md",
     "语言学习/德语/公共知识语法/10句型/代词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
     "语言学习/德语/公共知识语法/10句型/被动态.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
     "语言学习/德语/公共知识语法/1词/短语/短语.md",
     "语言学习/德语/公共知识语法/10句型/代词/da-构成的代副词.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen..md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/结果状语从句 sodass,weshalb,dermafsen ..,dass.md",
     "assets/image-355.png",
     "assets/PixPin_2026-06-16_18-33-34.png",
     "assets/ChatGPT Image 2026年6月16日 17_50_32.png",
