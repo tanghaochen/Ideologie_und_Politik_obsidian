@@ -9,6 +9,36 @@
         "dimension": 48.89466840052016,
         "children": [
           {
+            "id": "c7e0f4f54daa31a1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/2动词/阳性弱变化动词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "阳性弱变化动词"
+            }
+          },
+          {
+            "id": "f32aed7f74e03991",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "目的从句"
+            }
+          },
+          {
             "id": "4e40469d0ca005a1",
             "type": "leaf",
             "state": {
@@ -48,18 +78,30 @@
         "dimension": 51.10533159947984,
         "children": [
           {
-            "id": "1fe5a9401ee07d12",
+            "id": "d4eee0dd1bbabdcb",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
+                "file": "语言学习/德语/单词/动词.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "阳性弱变化名词"
+              "title": "动词"
+            }
+          },
+          {
+            "id": "1fe5a9401ee07d12",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/从句.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "从句"
             }
           },
           {
@@ -352,7 +394,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md"
+                "file": "语言学习/德语/公共知识语法/2动词/阳性弱变化动词.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -401,8 +443,13 @@
       "obsidian-livesync:显示自定义同步": false
     }
   },
-  "active": "1fe5a9401ee07d12",
+  "active": "c7e0f4f54daa31a1",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/动词.md",
+    "语言学习/德语/单词/动词.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
+    "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
     "语言学习/德语/公共知识语法/10句型/zu的不定式.md",
     "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/5介词/表信息来源与参照的介词.md",
@@ -414,22 +461,17 @@
     "语言学习/德语/公共知识语法/2动词/汇总所有动词变化.md",
     "语言学习/德语/公共知识语法/时态/动词的过去时.md",
     "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "思想思维心理哲学/自制.md",
     "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/单词/国家.md",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "经济学/术语/PSR; Price-to-Sales Ratio; 市销率.md",
-    "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
     "语言学习/德语/公共知识语法/时态.md",
     "语言学习/德语/公共知识语法/2动词/情态动词表可能性.md",
-    "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/公共知识语法/2动词/阳性弱变化动词.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/汇总对比从句.md",
     "语言学习/德语/公共知识语法/10句型/代词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
-    "语言学习/德语/公共知识语法/10句型/被动态.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
     "assets/image-355.png",
     "assets/PixPin_2026-06-16_18-33-34.png",
     "assets/ChatGPT Image 2026年6月16日 17_50_32.png",
