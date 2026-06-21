@@ -341,10 +341,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "语言学习/德语/单词/生词/2026年6月.md"
+                "file": "2026-03-21.md"
               },
               "icon": "lucide-info",
-              "title": "2026年6月的笔记属性"
+              "title": "2026-03-21的笔记属性"
             }
           },
           {
@@ -366,9 +366,19 @@
               "icon": "network",
               "title": "Mxmind"
             }
+          },
+          {
+            "id": "964202bcbc7a7b27",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw-sidepanel",
+              "state": {},
+              "icon": "excalidraw-icon",
+              "title": "Excalidraw Sidepanel"
+            }
           }
         ],
-        "currentTab": 10
+        "currentTab": 12
       },
       {
         "id": "28e75bfc7e894da7",
@@ -395,7 +405,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/单词/生词/2026年6月.md"
+                "file": "2026-03-21.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -447,14 +457,14 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "d4eee0dd1bbabdcb",
+  "active": "f32aed7f74e03991",
   "lastOpenFiles": [
+    "语言学习/德语/单词/生词/2026年6月.md",
     "assets/PixPin_2026-06-21_21-19-09-3.png",
     "assets/PixPin_2026-06-21_21-19-09-2.png",
     "assets/PixPin_2026-06-21_21-19-09-1.png",
     "assets/PixPin_2026-06-21_21-19-09.png",
     "语言学习/德语/公共知识语法/从句.md",
-    "语言学习/德语/单词/生词/2026年6月.md",
     "2026-06-21.md",
     "2026-W25.md",
     "2026-03-21.md",
@@ -490,7 +500,6 @@
     "语言学习/德语/教材/其他/德语语法表解.pdf",
     "assets/PixPin_2026-06-16_15-07-31.png",
     "assets/image-354.png",
-    "assets/image-353.png",
     "网络/Excalidraw2URI.js",
     "语言学习/德语/学习记录日记-技巧/Wortwahl und Beispielsätze",
     "语言学习/德语/教材/其他/德语活学活用B2-C1.pdf",
