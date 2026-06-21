@@ -11,7 +11,7 @@
   "alwaysUpdateLinks": true,
   "promptDelete": false,
   "strictLineBreaks": true,
-  "readableLineLength": false,
+  "readableLineLength": true,
   "propertiesInDocument": "visible",
   "useTab": true,
   "rightToLeft": false,

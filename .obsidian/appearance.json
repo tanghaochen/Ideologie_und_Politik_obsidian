@@ -5,5 +5,7 @@
   "showRibbon": true,
   "baseFontSize": 18,
   "theme": "obsidian",
-  "enabledCssSnippets": []
+  "enabledCssSnippets": [
+    "sider"
+  ]
 }

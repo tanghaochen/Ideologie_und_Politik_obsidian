@@ -78,6 +78,18 @@
         "dimension": 49.32813177286519,
         "children": [
           {
+            "id": "1fe5a9401ee07d12",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/从句.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "从句"
+            }
+          },
+          {
             "id": "d4eee0dd1bbabdcb",
             "type": "leaf",
             "state": {
@@ -90,18 +102,6 @@
               },
               "icon": "lucide-file",
               "title": "2026年6月"
-            }
-          },
-          {
-            "id": "1fe5a9401ee07d12",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "从句"
             }
           },
           {
@@ -156,7 +156,8 @@
               "title": "新标签页"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -448,12 +449,17 @@
   },
   "active": "d4eee0dd1bbabdcb",
   "lastOpenFiles": [
+    "assets/PixPin_2026-06-21_21-19-09-3.png",
+    "assets/PixPin_2026-06-21_21-19-09-2.png",
+    "assets/PixPin_2026-06-21_21-19-09-1.png",
+    "assets/PixPin_2026-06-21_21-19-09.png",
+    "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/单词/生词/2026年6月.md",
     "2026-06-21.md",
     "2026-W25.md",
     "2026-03-21.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
     "OBSetting/templater/每日总结复盘.md",
-    "语言学习/德语/单词/生词/2026年6月.md",
     "OBSetting/口号.md",
     "思想思维心理哲学/个人人生思想架构.md",
     "思想思维心理哲学/过度劳累.md",
@@ -462,7 +468,6 @@
     "思想思维心理哲学/个人问题处理/对精彩人生的定义.md",
     "OBSetting/templater/生词表格-anki.md",
     "语言学习/德语/单词/动词.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/2动词/阳性弱变化动词.md",
     "OBSetting/templater",
     "OBSetting",
@@ -477,7 +482,6 @@
     "语言学习/德语/公共知识语法/10句型/第二虚拟式.md",
     "语言学习/德语/公共知识语法/2动词/汇总所有动词变化.md",
     "语言学习/德语/公共知识语法/时态/动词的过去时.md",
-    "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "assets/image-355.png",
     "assets/PixPin_2026-06-16_18-33-34.png",
@@ -487,9 +491,6 @@
     "assets/PixPin_2026-06-16_15-07-31.png",
     "assets/image-354.png",
     "assets/image-353.png",
-    "assets/image-352.png",
-    "assets/PixPin_2026-06-15_14-01-51.png",
-    "assets/PixPin_2026-06-15_14-01-19.png",
     "网络/Excalidraw2URI.js",
     "语言学习/德语/学习记录日记-技巧/Wortwahl und Beispielsätze",
     "语言学习/德语/教材/其他/德语活学活用B2-C1.pdf",
