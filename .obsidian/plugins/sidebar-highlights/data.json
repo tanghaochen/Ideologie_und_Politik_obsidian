@@ -3222,64 +3222,6 @@
         "color": "#d83931",
         "type": "html"
       }
-    ],
-    "语言学习/德语/公共知识语法/介词.md": [
-      {
-        "id": "8sx4aemhn",
-        "text": "伴随动作方向，第四格。",
-        "tags": [],
-        "line": 291,
-        "startOffset": 9940,
-        "endOffset": 9955,
-        "filePath": "语言学习/德语/公共知识语法/介词.md",
-        "footnoteCount": 0,
-        "footnoteContents": [],
-        "createdAt": 1781784989933,
-        "isNativeComment": false,
-        "type": "highlight"
-      },
-      {
-        "id": "ninp2jcnu",
-        "text": "状态已定，第三格",
-        "tags": [],
-        "line": 292,
-        "startOffset": 10047,
-        "endOffset": 10059,
-        "filePath": "语言学习/德语/公共知识语法/介词.md",
-        "footnoteCount": 0,
-        "footnoteContents": [],
-        "createdAt": 1781784989040,
-        "isNativeComment": false,
-        "type": "highlight"
-      },
-      {
-        "id": "ewlaqlpyl",
-        "text": "而是“朝着”某个对象的",
-        "tags": [],
-        "line": 312,
-        "startOffset": 10822,
-        "endOffset": 10837,
-        "filePath": "语言学习/德语/公共知识语法/介词.md",
-        "footnoteCount": 0,
-        "footnoteContents": [],
-        "createdAt": 1781784989815,
-        "isNativeComment": false,
-        "type": "highlight"
-      },
-      {
-        "id": "skbcisojh",
-        "text": "你喜欢一个东西，你爱一个人",
-        "tags": [],
-        "line": 313,
-        "startOffset": 10972,
-        "endOffset": 10989,
-        "filePath": "语言学习/德语/公共知识语法/介词.md",
-        "footnoteCount": 0,
-        "footnoteContents": [],
-        "createdAt": 1781784989965,
-        "isNativeComment": false,
-        "type": "highlight"
-      }
     ]
   },
   "collections": {},
