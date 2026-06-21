@@ -10,11 +10,20 @@ var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __defNormalProp = (obj, key, value2) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value: value2 }) : obj[key] = value2;
-var __esm = (fn, res) => function __init() {
-  return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
+var __esm = (fn, res, err) => function __init() {
+  if (err) throw err[0];
+  try {
+    return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
+  } catch (e2) {
+    throw err = [e2], e2;
+  }
 };
 var __commonJS = (cb, mod) => function __require() {
-  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  try {
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  } catch (e2) {
+    throw mod = 0, e2;
+  }
 };
 var __export = (target, all2) => {
   for (var name in all2)
@@ -39,81 +48,282 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var __publicField = (obj, key, value2) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value2);
 
-// src/settings/VoiceSettings.ts
-var VOICES, DEFAULT_SETTINGS;
-var init_VoiceSettings = __esm({
-  "src/settings/VoiceSettings.ts"() {
-    VOICES = [
-      { id: "Stephen", label: "Stephen (American)", lang: "en-US" },
-      { id: "Joanna", label: "Joanna (American)", lang: "en-US" },
-      { id: "Brian", label: "Brian (British)", lang: "en-GB" },
-      { id: "Emma", label: "Emma (British)", lang: "en-GB" },
-      { id: "Daniel", label: "Daniel (German)", lang: "de-DE" },
-      { id: "Vicki", label: "Vicki (German)", lang: "de-DE" },
-      { id: "Remi", label: "R\xE9mi (French)", lang: "fr-FR" },
-      { id: "Lea", label: "L\xE9a (French)", lang: "fr-FR" },
-      { id: "Sergio", label: "Sergio (Spanish)", lang: "es-ES" },
-      { id: "Lucia", label: "Lucia (Spanish)", lang: "es-ES" },
-      { id: "Adriano", label: "Adriano (Italian)", lang: "it-IT" },
-      { id: "Bianca", label: "Bianca (Italian)", lang: "it-IT" },
-      { id: "Ola", label: "Ola (Polish)", lang: "pl-PL" },
-      { id: "Laura", label: "Laura (Dutch)", lang: "nl-NL" },
-      { id: "Ines", label: "Ines (Portuguese)", lang: "pt-PT" },
-      { id: "Arlet", label: "Arlet (Catalan)", lang: "ca-ES" },
-      { id: "Elin", label: "Elin (Swedish)", lang: "sv-SE" },
-      { id: "Sofie", label: "Sofie (Danish)", lang: "da-DK" },
-      { id: "Ida", label: "Ida (Norwegian)", lang: "nb-NO" },
-      { id: "Suvi", label: "Suvi (Finnish)", lang: "fi-FI" },
-      { id: "Takumi", label: "Takumi (Japanese)", lang: "ja-JP" },
-      { id: "Tomoko", label: "Tomoko (Japanese)", lang: "ja-JP" },
-      { id: "Seoyeon", label: "Seoyeon (Korean)", lang: "ko-KR" },
-      { id: "Kajal", label: "Kajal (Hindi)", lang: "hi-IN" },
-      { id: "Zhiyu", label: "Zhiyu (Mandarin)", lang: "cmn-CN" }
-    ];
-    DEFAULT_SETTINGS = {
-      VOICE: "Stephen",
-      SPEED: 1,
-      AWS_REGION: "eu-central-1",
-      AWS_ACCESS_KEY_ID: "",
-      AWS_SECRET_ACCESS_KEY: "",
-      spellOutAcronyms: true
+// node_modules/@smithy/core/dist-es/submodules/client/middleware-stack/MiddlewareStack.js
+var getAllAliases, getMiddlewareNameWithAliases, constructStack, stepWeights, priorityWeights;
+var init_MiddlewareStack = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/client/middleware-stack/MiddlewareStack.js"() {
+    getAllAliases = (name, aliases) => {
+      const _aliases = [];
+      if (name) {
+        _aliases.push(name);
+      }
+      if (aliases) {
+        for (const alias of aliases) {
+          _aliases.push(alias);
+        }
+      }
+      return _aliases;
     };
-  }
-});
-
-// node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js
-var getHttpHandlerExtensionConfiguration, resolveHttpHandlerRuntimeConfig;
-var init_httpExtensionConfiguration = __esm({
-  "node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js"() {
-    getHttpHandlerExtensionConfiguration = (runtimeConfig) => {
-      return {
-        setHttpHandler(handler2) {
-          runtimeConfig.httpHandler = handler2;
+    getMiddlewareNameWithAliases = (name, aliases) => {
+      return `${name || "anonymous"}${aliases && aliases.length > 0 ? ` (a.k.a. ${aliases.join(",")})` : ""}`;
+    };
+    constructStack = () => {
+      let absoluteEntries = [];
+      let relativeEntries = [];
+      let identifyOnResolve = false;
+      const entriesNameSet = /* @__PURE__ */ new Set();
+      const sort = (entries) => entries.sort((a2, b2) => stepWeights[b2.step] - stepWeights[a2.step] || priorityWeights[b2.priority || "normal"] - priorityWeights[a2.priority || "normal"]);
+      const removeByName = (toRemove) => {
+        let isRemoved = false;
+        const filterCb = (entry) => {
+          const aliases = getAllAliases(entry.name, entry.aliases);
+          if (aliases.includes(toRemove)) {
+            isRemoved = true;
+            for (const alias of aliases) {
+              entriesNameSet.delete(alias);
+            }
+            return false;
+          }
+          return true;
+        };
+        absoluteEntries = absoluteEntries.filter(filterCb);
+        relativeEntries = relativeEntries.filter(filterCb);
+        return isRemoved;
+      };
+      const removeByReference = (toRemove) => {
+        let isRemoved = false;
+        const filterCb = (entry) => {
+          if (entry.middleware === toRemove) {
+            isRemoved = true;
+            for (const alias of getAllAliases(entry.name, entry.aliases)) {
+              entriesNameSet.delete(alias);
+            }
+            return false;
+          }
+          return true;
+        };
+        absoluteEntries = absoluteEntries.filter(filterCb);
+        relativeEntries = relativeEntries.filter(filterCb);
+        return isRemoved;
+      };
+      const cloneTo = (toStack) => {
+        var _a3;
+        absoluteEntries.forEach((entry) => {
+          toStack.add(entry.middleware, { ...entry });
+        });
+        relativeEntries.forEach((entry) => {
+          toStack.addRelativeTo(entry.middleware, { ...entry });
+        });
+        (_a3 = toStack.identifyOnResolve) == null ? void 0 : _a3.call(toStack, stack.identifyOnResolve());
+        return toStack;
+      };
+      const expandRelativeMiddlewareList = (from) => {
+        const expandedMiddlewareList = [];
+        from.before.forEach((entry) => {
+          if (entry.before.length === 0 && entry.after.length === 0) {
+            expandedMiddlewareList.push(entry);
+          } else {
+            expandedMiddlewareList.push(...expandRelativeMiddlewareList(entry));
+          }
+        });
+        expandedMiddlewareList.push(from);
+        from.after.reverse().forEach((entry) => {
+          if (entry.before.length === 0 && entry.after.length === 0) {
+            expandedMiddlewareList.push(entry);
+          } else {
+            expandedMiddlewareList.push(...expandRelativeMiddlewareList(entry));
+          }
+        });
+        return expandedMiddlewareList;
+      };
+      const getMiddlewareList = (debug = false) => {
+        const normalizedAbsoluteEntries = [];
+        const normalizedRelativeEntries = [];
+        const normalizedEntriesNameMap = {};
+        absoluteEntries.forEach((entry) => {
+          const normalizedEntry = {
+            ...entry,
+            before: [],
+            after: []
+          };
+          for (const alias of getAllAliases(normalizedEntry.name, normalizedEntry.aliases)) {
+            normalizedEntriesNameMap[alias] = normalizedEntry;
+          }
+          normalizedAbsoluteEntries.push(normalizedEntry);
+        });
+        relativeEntries.forEach((entry) => {
+          const normalizedEntry = {
+            ...entry,
+            before: [],
+            after: []
+          };
+          for (const alias of getAllAliases(normalizedEntry.name, normalizedEntry.aliases)) {
+            normalizedEntriesNameMap[alias] = normalizedEntry;
+          }
+          normalizedRelativeEntries.push(normalizedEntry);
+        });
+        normalizedRelativeEntries.forEach((entry) => {
+          if (entry.toMiddleware) {
+            const toMiddleware = normalizedEntriesNameMap[entry.toMiddleware];
+            if (toMiddleware === void 0) {
+              if (debug) {
+                return;
+              }
+              throw new Error(`${entry.toMiddleware} is not found when adding ${getMiddlewareNameWithAliases(entry.name, entry.aliases)} middleware ${entry.relation} ${entry.toMiddleware}`);
+            }
+            if (entry.relation === "after") {
+              toMiddleware.after.push(entry);
+            }
+            if (entry.relation === "before") {
+              toMiddleware.before.push(entry);
+            }
+          }
+        });
+        const mainChain = sort(normalizedAbsoluteEntries).map(expandRelativeMiddlewareList).reduce((wholeList, expandedMiddlewareList) => {
+          wholeList.push(...expandedMiddlewareList);
+          return wholeList;
+        }, []);
+        return mainChain;
+      };
+      const stack = {
+        add: (middleware, options = {}) => {
+          const { name, override, aliases: _aliases } = options;
+          const entry = {
+            step: "initialize",
+            priority: "normal",
+            middleware,
+            ...options
+          };
+          const aliases = getAllAliases(name, _aliases);
+          if (aliases.length > 0) {
+            if (aliases.some((alias) => entriesNameSet.has(alias))) {
+              if (!override)
+                throw new Error(`Duplicate middleware name '${getMiddlewareNameWithAliases(name, _aliases)}'`);
+              for (const alias of aliases) {
+                const toOverrideIndex = absoluteEntries.findIndex((entry2) => {
+                  var _a3;
+                  return entry2.name === alias || ((_a3 = entry2.aliases) == null ? void 0 : _a3.some((a2) => a2 === alias));
+                });
+                if (toOverrideIndex === -1) {
+                  continue;
+                }
+                const toOverride = absoluteEntries[toOverrideIndex];
+                if (toOverride.step !== entry.step || entry.priority !== toOverride.priority) {
+                  throw new Error(`"${getMiddlewareNameWithAliases(toOverride.name, toOverride.aliases)}" middleware with ${toOverride.priority} priority in ${toOverride.step} step cannot be overridden by "${getMiddlewareNameWithAliases(name, _aliases)}" middleware with ${entry.priority} priority in ${entry.step} step.`);
+                }
+                absoluteEntries.splice(toOverrideIndex, 1);
+              }
+            }
+            for (const alias of aliases) {
+              entriesNameSet.add(alias);
+            }
+          }
+          absoluteEntries.push(entry);
         },
-        httpHandler() {
-          return runtimeConfig.httpHandler;
+        addRelativeTo: (middleware, options) => {
+          const { name, override, aliases: _aliases } = options;
+          const entry = {
+            middleware,
+            ...options
+          };
+          const aliases = getAllAliases(name, _aliases);
+          if (aliases.length > 0) {
+            if (aliases.some((alias) => entriesNameSet.has(alias))) {
+              if (!override)
+                throw new Error(`Duplicate middleware name '${getMiddlewareNameWithAliases(name, _aliases)}'`);
+              for (const alias of aliases) {
+                const toOverrideIndex = relativeEntries.findIndex((entry2) => {
+                  var _a3;
+                  return entry2.name === alias || ((_a3 = entry2.aliases) == null ? void 0 : _a3.some((a2) => a2 === alias));
+                });
+                if (toOverrideIndex === -1) {
+                  continue;
+                }
+                const toOverride = relativeEntries[toOverrideIndex];
+                if (toOverride.toMiddleware !== entry.toMiddleware || toOverride.relation !== entry.relation) {
+                  throw new Error(`"${getMiddlewareNameWithAliases(toOverride.name, toOverride.aliases)}" middleware ${toOverride.relation} "${toOverride.toMiddleware}" middleware cannot be overridden by "${getMiddlewareNameWithAliases(name, _aliases)}" middleware ${entry.relation} "${entry.toMiddleware}" middleware.`);
+                }
+                relativeEntries.splice(toOverrideIndex, 1);
+              }
+            }
+            for (const alias of aliases) {
+              entriesNameSet.add(alias);
+            }
+          }
+          relativeEntries.push(entry);
         },
-        updateHttpClientConfig(key, value2) {
-          var _a;
-          (_a = runtimeConfig.httpHandler) == null ? void 0 : _a.updateHttpClientConfig(key, value2);
+        clone: () => cloneTo(constructStack()),
+        use: (plugin) => {
+          plugin.applyToStack(stack);
         },
-        httpHandlerConfigs() {
-          return runtimeConfig.httpHandler.httpHandlerConfigs();
+        remove: (toRemove) => {
+          if (typeof toRemove === "string")
+            return removeByName(toRemove);
+          else
+            return removeByReference(toRemove);
+        },
+        removeByTag: (toRemove) => {
+          let isRemoved = false;
+          const filterCb = (entry) => {
+            const { tags, name, aliases: _aliases } = entry;
+            if (tags && tags.includes(toRemove)) {
+              const aliases = getAllAliases(name, _aliases);
+              for (const alias of aliases) {
+                entriesNameSet.delete(alias);
+              }
+              isRemoved = true;
+              return false;
+            }
+            return true;
+          };
+          absoluteEntries = absoluteEntries.filter(filterCb);
+          relativeEntries = relativeEntries.filter(filterCb);
+          return isRemoved;
+        },
+        concat: (from) => {
+          var _a3, _b2;
+          const cloned = cloneTo(constructStack());
+          cloned.use(from);
+          cloned.identifyOnResolve(identifyOnResolve || cloned.identifyOnResolve() || ((_b2 = (_a3 = from.identifyOnResolve) == null ? void 0 : _a3.call(from)) != null ? _b2 : false));
+          return cloned;
+        },
+        applyToStack: cloneTo,
+        identify: () => {
+          return getMiddlewareList(true).map((mw) => {
+            var _a3;
+            const step = (_a3 = mw.step) != null ? _a3 : mw.relation + " " + mw.toMiddleware;
+            return getMiddlewareNameWithAliases(mw.name, mw.aliases) + " - " + step;
+          });
+        },
+        identifyOnResolve(toggle) {
+          if (typeof toggle === "boolean")
+            identifyOnResolve = toggle;
+          return identifyOnResolve;
+        },
+        resolve: (handler2, context) => {
+          for (const middleware of getMiddlewareList().map((entry) => entry.middleware).reverse()) {
+            handler2 = middleware(handler2, context);
+          }
+          if (identifyOnResolve) {
+            console.log(stack.identify());
+          }
+          return handler2;
         }
       };
+      return stack;
     };
-    resolveHttpHandlerRuntimeConfig = (httpHandlerExtensionConfiguration) => {
-      return {
-        httpHandler: httpHandlerExtensionConfiguration.httpHandler()
-      };
+    stepWeights = {
+      initialize: 5,
+      serialize: 4,
+      build: 3,
+      finalizeRequest: 2,
+      deserialize: 1
     };
-  }
-});
-
-// node_modules/@smithy/protocol-http/dist-es/extensions/index.js
-var init_extensions = __esm({
-  "node_modules/@smithy/protocol-http/dist-es/extensions/index.js"() {
-    init_httpExtensionConfiguration();
+    priorityWeights = {
+      high: 3,
+      normal: 2,
+      low: 1
+    };
   }
 });
 
@@ -329,7 +539,7 @@ var init_defaultExtensionConfiguration = __esm({
 });
 
 // node_modules/@smithy/types/dist-es/extensions/index.js
-var init_extensions2 = __esm({
+var init_extensions = __esm({
   "node_modules/@smithy/types/dist-es/extensions/index.js"() {
     init_defaultClientConfiguration();
     init_defaultExtensionConfiguration();
@@ -579,7 +789,7 @@ var init_dist_es = __esm({
     init_endpoint();
     init_endpoints();
     init_eventStream();
-    init_extensions2();
+    init_extensions();
     init_feature_ids();
     init_http();
     init_httpHandlerInitialization();
@@ -613,25 +823,16 @@ var init_dist_es = __esm({
   }
 });
 
-// node_modules/@smithy/protocol-http/dist-es/Field.js
-var init_Field = __esm({
-  "node_modules/@smithy/protocol-http/dist-es/Field.js"() {
+// node_modules/@smithy/core/dist-es/submodules/transport/getSmithyContext.js
+var getSmithyContext;
+var init_getSmithyContext = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/transport/getSmithyContext.js"() {
+    init_dist_es();
+    getSmithyContext = (context) => context[SMITHY_CONTEXT_KEY] || (context[SMITHY_CONTEXT_KEY] = {});
   }
 });
 
-// node_modules/@smithy/protocol-http/dist-es/Fields.js
-var init_Fields = __esm({
-  "node_modules/@smithy/protocol-http/dist-es/Fields.js"() {
-  }
-});
-
-// node_modules/@smithy/protocol-http/dist-es/httpHandler.js
-var init_httpHandler = __esm({
-  "node_modules/@smithy/protocol-http/dist-es/httpHandler.js"() {
-  }
-});
-
-// node_modules/@smithy/protocol-http/dist-es/httpRequest.js
+// node_modules/@smithy/core/dist-es/submodules/transport/httpRequest.js
 function cloneQuery(query) {
   return Object.keys(query).reduce((carry, paramName) => {
     const param = query[paramName];
@@ -643,7 +844,7 @@ function cloneQuery(query) {
 }
 var HttpRequest;
 var init_httpRequest = __esm({
-  "node_modules/@smithy/protocol-http/dist-es/httpRequest.js"() {
+  "node_modules/@smithy/core/dist-es/submodules/transport/httpRequest.js"() {
     HttpRequest = class _HttpRequest {
       constructor(options) {
         __publicField(this, "method");
@@ -693,10 +894,10 @@ var init_httpRequest = __esm({
   }
 });
 
-// node_modules/@smithy/protocol-http/dist-es/httpResponse.js
+// node_modules/@smithy/core/dist-es/submodules/transport/httpResponse.js
 var HttpResponse;
 var init_httpResponse = __esm({
-  "node_modules/@smithy/protocol-http/dist-es/httpResponse.js"() {
+  "node_modules/@smithy/core/dist-es/submodules/transport/httpResponse.js"() {
     HttpResponse = class {
       constructor(options) {
         __publicField(this, "statusCode");
@@ -718,190 +919,30 @@ var init_httpResponse = __esm({
   }
 });
 
-// node_modules/@smithy/protocol-http/dist-es/isValidHostname.js
-var init_isValidHostname = __esm({
-  "node_modules/@smithy/protocol-http/dist-es/isValidHostname.js"() {
-  }
-});
-
-// node_modules/@smithy/protocol-http/dist-es/types.js
-var init_types = __esm({
-  "node_modules/@smithy/protocol-http/dist-es/types.js"() {
-  }
-});
-
-// node_modules/@smithy/protocol-http/dist-es/index.js
-var init_dist_es2 = __esm({
-  "node_modules/@smithy/protocol-http/dist-es/index.js"() {
-    init_extensions();
-    init_Field();
-    init_Fields();
-    init_httpHandler();
-    init_httpRequest();
-    init_httpResponse();
-    init_isValidHostname();
-    init_types();
-  }
-});
-
-// node_modules/@aws-sdk/middleware-host-header/dist-es/index.js
-function resolveHostHeaderConfig(input) {
-  return input;
-}
-var hostHeaderMiddleware, hostHeaderMiddlewareOptions, getHostHeaderPlugin;
-var init_dist_es3 = __esm({
-  "node_modules/@aws-sdk/middleware-host-header/dist-es/index.js"() {
-    init_dist_es2();
-    hostHeaderMiddleware = (options) => (next) => async (args) => {
-      if (!HttpRequest.isInstance(args.request))
-        return next(args);
-      const { request } = args;
-      const { handlerProtocol = "" } = options.requestHandler.metadata || {};
-      if (handlerProtocol.indexOf("h2") >= 0 && !request.headers[":authority"]) {
-        delete request.headers["host"];
-        request.headers[":authority"] = request.hostname + (request.port ? ":" + request.port : "");
-      } else if (!request.headers["host"]) {
-        let host = request.hostname;
-        if (request.port != null)
-          host += `:${request.port}`;
-        request.headers["host"] = host;
+// node_modules/@smithy/core/dist-es/submodules/transport/isValidHostLabel.js
+var VALID_HOST_LABEL_REGEX, isValidHostLabel;
+var init_isValidHostLabel = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/transport/isValidHostLabel.js"() {
+    VALID_HOST_LABEL_REGEX = new RegExp(`^(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}$`);
+    isValidHostLabel = (value2, allowSubDomains = false) => {
+      if (!allowSubDomains) {
+        return VALID_HOST_LABEL_REGEX.test(value2);
       }
-      return next(args);
-    };
-    hostHeaderMiddlewareOptions = {
-      name: "hostHeaderMiddleware",
-      step: "build",
-      priority: "low",
-      tags: ["HOST"],
-      override: true
-    };
-    getHostHeaderPlugin = (options) => ({
-      applyToStack: (clientStack) => {
-        clientStack.add(hostHeaderMiddleware(options), hostHeaderMiddlewareOptions);
+      const labels = value2.split(".");
+      for (const label of labels) {
+        if (!isValidHostLabel(label)) {
+          return false;
+        }
       }
-    });
-  }
-});
-
-// node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js
-var loggerMiddleware, loggerMiddlewareOptions, getLoggerPlugin;
-var init_loggerMiddleware = __esm({
-  "node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js"() {
-    loggerMiddleware = () => (next, context) => async (args) => {
-      var _a, _b;
-      try {
-        const response = await next(args);
-        const { clientName, commandName, logger: logger2, dynamoDbDocumentClientOptions = {} } = context;
-        const { overrideInputFilterSensitiveLog, overrideOutputFilterSensitiveLog } = dynamoDbDocumentClientOptions;
-        const inputFilterSensitiveLog = overrideInputFilterSensitiveLog != null ? overrideInputFilterSensitiveLog : context.inputFilterSensitiveLog;
-        const outputFilterSensitiveLog = overrideOutputFilterSensitiveLog != null ? overrideOutputFilterSensitiveLog : context.outputFilterSensitiveLog;
-        const { $metadata, ...outputWithoutMetadata } = response.output;
-        (_a = logger2 == null ? void 0 : logger2.info) == null ? void 0 : _a.call(logger2, {
-          clientName,
-          commandName,
-          input: inputFilterSensitiveLog(args.input),
-          output: outputFilterSensitiveLog(outputWithoutMetadata),
-          metadata: $metadata
-        });
-        return response;
-      } catch (error) {
-        const { clientName, commandName, logger: logger2, dynamoDbDocumentClientOptions = {} } = context;
-        const { overrideInputFilterSensitiveLog } = dynamoDbDocumentClientOptions;
-        const inputFilterSensitiveLog = overrideInputFilterSensitiveLog != null ? overrideInputFilterSensitiveLog : context.inputFilterSensitiveLog;
-        (_b = logger2 == null ? void 0 : logger2.error) == null ? void 0 : _b.call(logger2, {
-          clientName,
-          commandName,
-          input: inputFilterSensitiveLog(args.input),
-          error,
-          metadata: error.$metadata
-        });
-        throw error;
-      }
-    };
-    loggerMiddlewareOptions = {
-      name: "loggerMiddleware",
-      tags: ["LOGGER"],
-      step: "initialize",
-      override: true
-    };
-    getLoggerPlugin = (options) => ({
-      applyToStack: (clientStack) => {
-        clientStack.add(loggerMiddleware(), loggerMiddlewareOptions);
-      }
-    });
-  }
-});
-
-// node_modules/@aws-sdk/middleware-logger/dist-es/index.js
-var init_dist_es4 = __esm({
-  "node_modules/@aws-sdk/middleware-logger/dist-es/index.js"() {
-    init_loggerMiddleware();
-  }
-});
-
-// node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js
-var recursionDetectionMiddlewareOptions;
-var init_configuration = __esm({
-  "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js"() {
-    recursionDetectionMiddlewareOptions = {
-      step: "build",
-      tags: ["RECURSION_DETECTION"],
-      name: "recursionDetectionMiddleware",
-      override: true,
-      priority: "low"
+      return true;
     };
   }
 });
 
-// node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js
-var recursionDetectionMiddleware;
-var init_recursionDetectionMiddleware_browser = __esm({
-  "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js"() {
-    recursionDetectionMiddleware = () => (next) => async (args) => next(args);
-  }
-});
-
-// node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js
-var getRecursionDetectionPlugin;
-var init_getRecursionDetectionPlugin = __esm({
-  "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js"() {
-    init_configuration();
-    init_recursionDetectionMiddleware_browser();
-    getRecursionDetectionPlugin = (options) => ({
-      applyToStack: (clientStack) => {
-        clientStack.add(recursionDetectionMiddleware(), recursionDetectionMiddlewareOptions);
-      }
-    });
-  }
-});
-
-// node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js
-var init_dist_es5 = __esm({
-  "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js"() {
-    init_getRecursionDetectionPlugin();
-    init_recursionDetectionMiddleware_browser();
-  }
-});
-
-// node_modules/@smithy/core/dist-es/getSmithyContext.js
-var init_getSmithyContext = __esm({
-  "node_modules/@smithy/core/dist-es/getSmithyContext.js"() {
-  }
-});
-
-// node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js
-var getSmithyContext;
-var init_getSmithyContext2 = __esm({
-  "node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js"() {
-    init_dist_es();
-    getSmithyContext = (context) => context[SMITHY_CONTEXT_KEY] || (context[SMITHY_CONTEXT_KEY] = {});
-  }
-});
-
-// node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js
+// node_modules/@smithy/core/dist-es/submodules/transport/normalizeProvider.js
 var normalizeProvider;
 var init_normalizeProvider = __esm({
-  "node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js"() {
+  "node_modules/@smithy/core/dist-es/submodules/transport/normalizeProvider.js"() {
     normalizeProvider = (input) => {
       if (typeof input === "function")
         return input;
@@ -911,142 +952,231 @@ var init_normalizeProvider = __esm({
   }
 });
 
-// node_modules/@smithy/util-middleware/dist-es/index.js
-var init_dist_es6 = __esm({
-  "node_modules/@smithy/util-middleware/dist-es/index.js"() {
-    init_getSmithyContext2();
-    init_normalizeProvider();
+// node_modules/@smithy/core/dist-es/submodules/transport/parseQueryString.js
+function parseQueryString(querystring) {
+  const query = {};
+  querystring = querystring.replace(/^\?/, "");
+  if (querystring) {
+    for (const pair of querystring.split("&")) {
+      let [key, value2 = null] = pair.split("=");
+      key = decodeURIComponent(key);
+      if (value2) {
+        value2 = decodeURIComponent(value2);
+      }
+      if (!(key in query)) {
+        query[key] = value2;
+      } else if (Array.isArray(query[key])) {
+        query[key].push(value2);
+      } else {
+        query[key] = [query[key], value2];
+      }
+    }
+  }
+  return query;
+}
+var init_parseQueryString = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/transport/parseQueryString.js"() {
   }
 });
 
-// node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js
-var resolveAuthOptions;
-var init_resolveAuthOptions = __esm({
-  "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js"() {
-    resolveAuthOptions = (candidateAuthOptions, authSchemePreference) => {
-      if (!authSchemePreference || authSchemePreference.length === 0) {
-        return candidateAuthOptions;
+// node_modules/@smithy/core/dist-es/submodules/transport/parseUrl.js
+var parseUrl;
+var init_parseUrl = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/transport/parseUrl.js"() {
+    init_parseQueryString();
+    parseUrl = (url) => {
+      if (typeof url === "string") {
+        return parseUrl(new URL(url));
       }
-      const preferredAuthOptions = [];
-      for (const preferredSchemeName of authSchemePreference) {
-        for (const candidateAuthOption of candidateAuthOptions) {
-          const candidateAuthSchemeName = candidateAuthOption.schemeId.split("#")[1];
-          if (candidateAuthSchemeName === preferredSchemeName) {
-            preferredAuthOptions.push(candidateAuthOption);
+      const { hostname, pathname, port, protocol, search: search2 } = url;
+      let query;
+      if (search2) {
+        query = parseQueryString(search2);
+      }
+      return {
+        hostname,
+        port: port ? parseInt(port) : void 0,
+        protocol,
+        path: pathname,
+        query
+      };
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/transport/toEndpointV1.js
+var toEndpointV1;
+var init_toEndpointV1 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/transport/toEndpointV1.js"() {
+    init_parseUrl();
+    toEndpointV1 = (endpoint) => {
+      if (typeof endpoint === "object") {
+        if ("url" in endpoint) {
+          const v1Endpoint = parseUrl(endpoint.url);
+          if (endpoint.headers) {
+            v1Endpoint.headers = {};
+            for (const name in endpoint.headers) {
+              v1Endpoint.headers[name.toLowerCase()] = endpoint.headers[name].join(", ");
+            }
+          }
+          return v1Endpoint;
+        }
+        return endpoint;
+      }
+      return parseUrl(endpoint);
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/transport/index.js
+var init_transport = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/transport/index.js"() {
+    init_getSmithyContext();
+    init_httpRequest();
+    init_httpResponse();
+    init_isValidHostLabel();
+    init_normalizeProvider();
+    init_parseUrl();
+    init_toEndpointV1();
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/client/invalid-dependency/invalidFunction.js
+var invalidFunction;
+var init_invalidFunction = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/client/invalid-dependency/invalidFunction.js"() {
+    invalidFunction = (message) => () => {
+      throw new Error(message);
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/client/invalid-dependency/invalidProvider.js
+var invalidProvider;
+var init_invalidProvider = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/client/invalid-dependency/invalidProvider.js"() {
+    invalidProvider = (message) => () => Promise.reject(message);
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/client/smithy-client/client.js
+var Client;
+var init_client2 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/client/smithy-client/client.js"() {
+    init_MiddlewareStack();
+    Client = class {
+      constructor(config) {
+        __publicField(this, "config");
+        __publicField(this, "middlewareStack", constructStack());
+        __publicField(this, "initConfig");
+        __publicField(this, "handlers");
+        this.config = config;
+        const { protocol, protocolSettings } = config;
+        if (protocolSettings) {
+          if (typeof protocol === "function") {
+            config.protocol = new protocol(protocolSettings);
           }
         }
       }
-      for (const candidateAuthOption of candidateAuthOptions) {
-        if (!preferredAuthOptions.find(({ schemeId }) => schemeId === candidateAuthOption.schemeId)) {
-          preferredAuthOptions.push(candidateAuthOption);
+      send(command, optionsOrCb, cb) {
+        const options = typeof optionsOrCb !== "function" ? optionsOrCb : void 0;
+        const callback = typeof optionsOrCb === "function" ? optionsOrCb : cb;
+        const useHandlerCache = options === void 0 && this.config.cacheMiddleware === true;
+        let handler2;
+        if (useHandlerCache) {
+          if (!this.handlers) {
+            this.handlers = /* @__PURE__ */ new WeakMap();
+          }
+          const handlers = this.handlers;
+          if (handlers.has(command.constructor)) {
+            handler2 = handlers.get(command.constructor);
+          } else {
+            handler2 = command.resolveMiddleware(this.middlewareStack, this.config, options);
+            handlers.set(command.constructor, handler2);
+          }
+        } else {
+          delete this.handlers;
+          handler2 = command.resolveMiddleware(this.middlewareStack, this.config, options);
+        }
+        if (callback) {
+          handler2(command).then((result) => callback(null, result.output), (err) => callback(err)).catch(() => {
+          });
+        } else {
+          return handler2(command).then((result) => result.output);
         }
       }
-      return preferredAuthOptions;
+      destroy() {
+        var _a3, _b2, _c2;
+        (_c2 = (_b2 = (_a3 = this.config) == null ? void 0 : _a3.requestHandler) == null ? void 0 : _b2.destroy) == null ? void 0 : _c2.call(_b2);
+        delete this.handlers;
+      }
     };
   }
 });
 
-// node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js
-function convertHttpAuthSchemesToMap(httpAuthSchemes) {
-  const map4 = /* @__PURE__ */ new Map();
-  for (const scheme of httpAuthSchemes) {
-    map4.set(scheme.schemeId, scheme);
-  }
-  return map4;
-}
-var httpAuthSchemeMiddleware;
-var init_httpAuthSchemeMiddleware = __esm({
-  "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js"() {
-    init_dist_es6();
-    init_resolveAuthOptions();
-    httpAuthSchemeMiddleware = (config, mwOptions) => (next, context) => async (args) => {
-      var _a;
-      const options = config.httpAuthSchemeProvider(await mwOptions.httpAuthSchemeParametersProvider(config, context, args.input));
-      const authSchemePreference = config.authSchemePreference ? await config.authSchemePreference() : [];
-      const resolvedOptions = resolveAuthOptions(options, authSchemePreference);
-      const authSchemes = convertHttpAuthSchemesToMap(config.httpAuthSchemes);
-      const smithyContext = getSmithyContext(context);
-      const failureReasons = [];
-      for (const option of resolvedOptions) {
-        const scheme = authSchemes.get(option.schemeId);
-        if (!scheme) {
-          failureReasons.push(`HttpAuthScheme \`${option.schemeId}\` was not enabled for this service.`);
-          continue;
-        }
-        const identityProvider = scheme.identityProvider(await mwOptions.identityProviderConfigProvider(config));
-        if (!identityProvider) {
-          failureReasons.push(`HttpAuthScheme \`${option.schemeId}\` did not have an IdentityProvider configured.`);
-          continue;
-        }
-        const { identityProperties = {}, signingProperties = {} } = ((_a = option.propertiesExtractor) == null ? void 0 : _a.call(option, config, context)) || {};
-        option.identityProperties = Object.assign(option.identityProperties || {}, identityProperties);
-        option.signingProperties = Object.assign(option.signingProperties || {}, signingProperties);
-        smithyContext.selectedHttpAuthScheme = {
-          httpAuthOption: option,
-          identity: await identityProvider(option.identityProperties),
-          signer: scheme.signer
-        };
-        break;
+// node_modules/@smithy/core/dist-es/submodules/schema/deref.js
+var deref;
+var init_deref = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/deref.js"() {
+    deref = (schemaRef) => {
+      if (typeof schemaRef === "function") {
+        return schemaRef();
       }
-      if (!smithyContext.selectedHttpAuthScheme) {
-        throw new Error(failureReasons.join("\n"));
-      }
-      return next(args);
+      return schemaRef;
     };
   }
 });
 
-// node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js
-var httpAuthSchemeEndpointRuleSetMiddlewareOptions, getHttpAuthSchemeEndpointRuleSetPlugin;
-var init_getHttpAuthSchemeEndpointRuleSetPlugin = __esm({
-  "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js"() {
-    init_httpAuthSchemeMiddleware();
-    httpAuthSchemeEndpointRuleSetMiddlewareOptions = {
-      step: "serialize",
-      tags: ["HTTP_AUTH_SCHEME"],
-      name: "httpAuthSchemeMiddleware",
-      override: true,
-      relation: "before",
-      toMiddleware: "endpointV2Middleware"
-    };
-    getHttpAuthSchemeEndpointRuleSetPlugin = (config, { httpAuthSchemeParametersProvider, identityProviderConfigProvider }) => ({
-      applyToStack: (clientStack) => {
-        clientStack.addRelativeTo(httpAuthSchemeMiddleware(config, {
-          httpAuthSchemeParametersProvider,
-          identityProviderConfigProvider
-        }), httpAuthSchemeEndpointRuleSetMiddlewareOptions);
-      }
+// node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js
+var operation;
+var init_operation = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js"() {
+    operation = (namespace, name, traits, input, output) => ({
+      name,
+      namespace,
+      traits,
+      input,
+      output
     });
   }
 });
 
-// node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js
-var deserializerMiddleware, findHeader;
-var init_deserializerMiddleware = __esm({
-  "node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js"() {
-    init_dist_es2();
-    deserializerMiddleware = (options, deserializer) => (next, context) => async (args) => {
-      var _a, _b, _c, _d;
+// node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js
+var schemaDeserializationMiddleware, findHeader;
+var init_schemaDeserializationMiddleware = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js"() {
+    init_transport();
+    init_operation();
+    schemaDeserializationMiddleware = (config) => (next, context) => async (args) => {
+      var _a3, _b2, _c2, _d;
       const { response } = await next(args);
+      const { operationSchema } = getSmithyContext(context);
+      const [, ns, n, t, i2, o] = operationSchema != null ? operationSchema : [];
       try {
-        const parsed = await deserializer(response, options);
+        const parsed = await config.protocol.deserializeResponse(operation(ns, n, t, i2, o), {
+          ...config,
+          ...context
+        }, response);
         return {
           response,
           output: parsed
         };
       } catch (error) {
         Object.defineProperty(error, "$response", {
-          value: response
+          value: response,
+          enumerable: false,
+          writable: false,
+          configurable: false
         });
         if (!("$metadata" in error)) {
           const hint = `Deserialization error: to see the raw response, inspect the hidden field {error}.$response on this object.`;
           try {
             error.message += "\n  " + hint;
           } catch (e2) {
-            if (!context.logger || ((_b = (_a = context.logger) == null ? void 0 : _a.constructor) == null ? void 0 : _b.name) === "NoOpLogger") {
+            if (!context.logger || ((_b2 = (_a3 = context.logger) == null ? void 0 : _a3.constructor) == null ? void 0 : _b2.name) === "NoOpLogger") {
               console.warn(hint);
             } else {
-              (_d = (_c = context.logger) == null ? void 0 : _c.warn) == null ? void 0 : _d.call(_c, hint);
+              (_d = (_c2 = context.logger) == null ? void 0 : _c2.warn) == null ? void 0 : _d.call(_c2, hint);
             }
           }
           if (typeof error.$responseBodyText !== "undefined") {
@@ -1056,10 +1186,10 @@ var init_deserializerMiddleware = __esm({
           }
           try {
             if (HttpResponse.isInstance(response)) {
-              const { headers = {} } = response;
+              const { headers = {}, statusCode } = response;
               const headerEntries = Object.entries(headers);
               error.$metadata = {
-                httpStatusCode: response.statusCode,
+                httpStatusCode: statusCode,
                 requestId: findHeader(/^x-[\w-]+-request-?id$/, headerEntries),
                 extendedRequestId: findHeader(/^x-[\w-]+-id-2$/, headerEntries),
                 cfId: findHeader(/^x-[\w-]+-cf-id$/, headerEntries)
@@ -1079,18 +1209,21 @@ var init_deserializerMiddleware = __esm({
   }
 });
 
-// node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js
-var serializerMiddleware;
-var init_serializerMiddleware = __esm({
-  "node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js"() {
-    serializerMiddleware = (options, serializer) => (next, context) => async (args) => {
-      var _a;
-      const endpointConfig = options;
-      const endpoint = ((_a = context.endpointV2) == null ? void 0 : _a.url) && endpointConfig.urlParser ? async () => endpointConfig.urlParser(context.endpointV2.url) : endpointConfig.endpoint;
-      if (!endpoint) {
-        throw new Error("No valid endpoint provider available.");
-      }
-      const request = await serializer(args.input, { ...options, endpoint });
+// node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js
+var schemaSerializationMiddleware;
+var init_schemaSerializationMiddleware = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js"() {
+    init_transport();
+    init_operation();
+    schemaSerializationMiddleware = (config) => (next, context) => async (args) => {
+      const { operationSchema } = getSmithyContext(context);
+      const [, ns, n, t, i2, o] = operationSchema != null ? operationSchema : [];
+      const endpoint = context.endpointV2 ? async () => toEndpointV1(context.endpointV2) : config.endpoint;
+      const request = await config.protocol.serializeRequest(operation(ns, n, t, i2, o), args.input, {
+        ...config,
+        ...context,
+        endpoint
+      });
       return next({
         ...args,
         request
@@ -1099,20 +1232,21 @@ var init_serializerMiddleware = __esm({
   }
 });
 
-// node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js
-function getSerdePlugin(config, serializer, deserializer) {
+// node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js
+function getSchemaSerdePlugin(config) {
   return {
     applyToStack: (commandStack) => {
-      commandStack.add(deserializerMiddleware(config, deserializer), deserializerMiddlewareOption);
-      commandStack.add(serializerMiddleware(config, serializer), serializerMiddlewareOption);
+      commandStack.add(schemaSerializationMiddleware(config), serializerMiddlewareOption);
+      commandStack.add(schemaDeserializationMiddleware(config), deserializerMiddlewareOption);
+      config.protocol.setSerdeContext(config);
     }
   };
 }
 var deserializerMiddlewareOption, serializerMiddlewareOption;
-var init_serdePlugin = __esm({
-  "node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js"() {
-    init_deserializerMiddleware();
-    init_serializerMiddleware();
+var init_getSchemaSerdePlugin = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js"() {
+    init_schemaDeserializationMiddleware();
+    init_schemaSerializationMiddleware();
     deserializerMiddlewareOption = {
       name: "deserializerMiddleware",
       step: "deserialize",
@@ -1128,167 +1262,909 @@ var init_serdePlugin = __esm({
   }
 });
 
-// node_modules/@smithy/middleware-serde/dist-es/index.js
-var init_dist_es7 = __esm({
-  "node_modules/@smithy/middleware-serde/dist-es/index.js"() {
-    init_deserializerMiddleware();
-    init_serdePlugin();
-    init_serializerMiddleware();
+// node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js
+var init_Schema = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js"() {
   }
 });
 
-// node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js
-var httpAuthSchemeMiddlewareOptions;
-var init_getHttpAuthSchemePlugin = __esm({
-  "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js"() {
-    init_dist_es7();
-    httpAuthSchemeMiddlewareOptions = {
-      step: "serialize",
-      tags: ["HTTP_AUTH_SCHEME"],
-      name: "httpAuthSchemeMiddleware",
-      override: true,
-      relation: "before",
-      toMiddleware: serializerMiddlewareOption.name
-    };
+// node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js
+var init_ListSchema = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js"() {
   }
 });
 
-// node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js
-var init_middleware_http_auth_scheme = __esm({
-  "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js"() {
-    init_httpAuthSchemeMiddleware();
-    init_getHttpAuthSchemeEndpointRuleSetPlugin();
-    init_getHttpAuthSchemePlugin();
+// node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js
+var init_MapSchema = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js"() {
   }
 });
 
-// node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js
-var defaultErrorHandler, defaultSuccessHandler, httpSigningMiddleware;
-var init_httpSigningMiddleware = __esm({
-  "node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js"() {
-    init_dist_es2();
-    init_dist_es6();
-    defaultErrorHandler = (signingProperties) => (error) => {
-      throw error;
-    };
-    defaultSuccessHandler = (httpResponse, signingProperties) => {
-    };
-    httpSigningMiddleware = (config) => (next, context) => async (args) => {
-      if (!HttpRequest.isInstance(args.request)) {
-        return next(args);
-      }
-      const smithyContext = getSmithyContext(context);
-      const scheme = smithyContext.selectedHttpAuthScheme;
-      if (!scheme) {
-        throw new Error(`No HttpAuthScheme was selected: unable to sign request`);
-      }
-      const { httpAuthOption: { signingProperties = {} }, identity, signer } = scheme;
-      const output = await next({
-        ...args,
-        request: await signer.sign(args.request, identity, signingProperties)
-      }).catch((signer.errorHandler || defaultErrorHandler)(signingProperties));
-      (signer.successHandler || defaultSuccessHandler)(output.response, signingProperties);
-      return output;
-    };
+// node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js
+var init_OperationSchema = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js"() {
   }
 });
 
-// node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js
-var httpSigningMiddlewareOptions, getHttpSigningPlugin;
-var init_getHttpSigningMiddleware = __esm({
-  "node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js"() {
-    init_httpSigningMiddleware();
-    httpSigningMiddlewareOptions = {
-      step: "finalizeRequest",
-      tags: ["HTTP_SIGNING"],
-      name: "httpSigningMiddleware",
-      aliases: ["apiKeyMiddleware", "tokenMiddleware", "awsAuthMiddleware"],
-      override: true,
-      relation: "after",
-      toMiddleware: "retryMiddleware"
-    };
-    getHttpSigningPlugin = (config) => ({
-      applyToStack: (clientStack) => {
-        clientStack.addRelativeTo(httpSigningMiddleware(config), httpSigningMiddlewareOptions);
-      }
+// node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js
+var init_StructureSchema = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js
+var init_ErrorSchema = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js
+function translateTraits(indicator) {
+  if (typeof indicator === "object") {
+    return indicator;
+  }
+  indicator = indicator | 0;
+  if (traitsCache[indicator]) {
+    return traitsCache[indicator];
+  }
+  const traits = {};
+  let i2 = 0;
+  for (const trait of [
+    "httpLabel",
+    "idempotent",
+    "idempotencyToken",
+    "sensitive",
+    "httpPayload",
+    "httpResponseCode",
+    "httpQueryParams"
+  ]) {
+    if ((indicator >> i2++ & 1) === 1) {
+      traits[trait] = 1;
+    }
+  }
+  return traitsCache[indicator] = traits;
+}
+var traitsCache;
+var init_translateTraits = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js"() {
+    traitsCache = [];
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js
+function member(memberSchema, memberName) {
+  if (memberSchema instanceof NormalizedSchema) {
+    return Object.assign(memberSchema, {
+      memberName,
+      _isMemberSchema: true
     });
   }
-});
-
-// node_modules/@smithy/core/dist-es/middleware-http-signing/index.js
-var init_middleware_http_signing = __esm({
-  "node_modules/@smithy/core/dist-es/middleware-http-signing/index.js"() {
-    init_httpSigningMiddleware();
-    init_getHttpSigningMiddleware();
-  }
-});
-
-// node_modules/@smithy/core/dist-es/normalizeProvider.js
-var normalizeProvider2;
-var init_normalizeProvider2 = __esm({
-  "node_modules/@smithy/core/dist-es/normalizeProvider.js"() {
-    normalizeProvider2 = (input) => {
-      if (typeof input === "function")
-        return input;
-      const promisified = Promise.resolve(input);
-      return () => promisified;
-    };
-  }
-});
-
-// node_modules/@smithy/core/dist-es/pagination/createPaginator.js
-function createPaginator(ClientCtor, CommandCtor, inputTokenName, outputTokenName, pageSizeTokenName) {
-  return async function* paginateOperation(config, input, ...additionalArguments) {
-    var _a, _b;
-    const _input = input;
-    let token = (_a = config.startingToken) != null ? _a : _input[inputTokenName];
-    let hasNext = true;
-    let page;
-    while (hasNext) {
-      _input[inputTokenName] = token;
-      if (pageSizeTokenName) {
-        _input[pageSizeTokenName] = (_b = _input[pageSizeTokenName]) != null ? _b : config.pageSize;
-      }
-      if (config.client instanceof ClientCtor) {
-        page = await makePagedClientRequest(CommandCtor, config.client, input, config.withCommand, ...additionalArguments);
-      } else {
-        throw new Error(`Invalid client, expected instance of ${ClientCtor.name}`);
-      }
-      yield page;
-      const prevToken = token;
-      token = get(page, outputTokenName);
-      hasNext = !!(token && (!config.stopOnSameToken || token !== prevToken));
-    }
-    return void 0;
-  };
+  const internalCtorAccess = NormalizedSchema;
+  return new internalCtorAccess(memberSchema, memberName);
 }
-var makePagedClientRequest, get;
-var init_createPaginator = __esm({
-  "node_modules/@smithy/core/dist-es/pagination/createPaginator.js"() {
-    makePagedClientRequest = async (CommandCtor, client, input, withCommand = (_) => _, ...args) => {
-      var _a;
-      let command = new CommandCtor(input);
-      command = (_a = withCommand(command)) != null ? _a : command;
-      return await client.send(command, ...args);
+var anno, simpleSchemaCacheN, simpleSchemaCacheS, _NormalizedSchema, NormalizedSchema, isMemberSchema, isStaticSchema;
+var init_NormalizedSchema = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js"() {
+    init_deref();
+    init_translateTraits();
+    anno = {
+      it: /* @__PURE__ */ Symbol.for("@smithy/nor-struct-it"),
+      ns: /* @__PURE__ */ Symbol.for("@smithy/ns")
     };
-    get = (fromObject, path2) => {
-      let cursor = fromObject;
-      const pathComponents = path2.split(".");
-      for (const step of pathComponents) {
-        if (!cursor || typeof cursor !== "object") {
-          return void 0;
+    simpleSchemaCacheN = [];
+    simpleSchemaCacheS = {};
+    _NormalizedSchema = class _NormalizedSchema {
+      constructor(ref, memberName) {
+        __publicField(this, "ref");
+        __publicField(this, "memberName");
+        __publicField(this, "symbol", _NormalizedSchema.symbol);
+        __publicField(this, "name");
+        __publicField(this, "schema");
+        __publicField(this, "_isMemberSchema");
+        __publicField(this, "traits");
+        __publicField(this, "memberTraits");
+        __publicField(this, "normalizedTraits");
+        var _a3;
+        this.ref = ref;
+        this.memberName = memberName;
+        const traitStack = [];
+        let _ref = ref;
+        let schema = ref;
+        this._isMemberSchema = false;
+        while (isMemberSchema(_ref)) {
+          traitStack.push(_ref[1]);
+          _ref = _ref[0];
+          schema = deref(_ref);
+          this._isMemberSchema = true;
         }
-        cursor = cursor[step];
+        if (traitStack.length > 0) {
+          this.memberTraits = {};
+          for (let i2 = traitStack.length - 1; i2 >= 0; --i2) {
+            const traitSet = traitStack[i2];
+            Object.assign(this.memberTraits, translateTraits(traitSet));
+          }
+        } else {
+          this.memberTraits = 0;
+        }
+        if (schema instanceof _NormalizedSchema) {
+          const computedMemberTraits = this.memberTraits;
+          Object.assign(this, schema);
+          this.memberTraits = Object.assign({}, computedMemberTraits, schema.getMemberTraits(), this.getMemberTraits());
+          this.normalizedTraits = void 0;
+          this.memberName = memberName != null ? memberName : schema.memberName;
+          return;
+        }
+        this.schema = deref(schema);
+        if (isStaticSchema(this.schema)) {
+          this.name = `${this.schema[1]}#${this.schema[2]}`;
+          this.traits = this.schema[3];
+        } else {
+          this.name = (_a3 = this.memberName) != null ? _a3 : String(schema);
+          this.traits = 0;
+        }
+        if (this._isMemberSchema && !memberName) {
+          throw new Error(`@smithy/core/schema - NormalizedSchema member init ${this.getName(true)} missing member name.`);
+        }
       }
-      return cursor;
+      static [Symbol.hasInstance](lhs) {
+        const isPrototype = this.prototype.isPrototypeOf(lhs);
+        if (!isPrototype && typeof lhs === "object" && lhs !== null) {
+          const ns = lhs;
+          return ns.symbol === this.symbol;
+        }
+        return isPrototype;
+      }
+      static of(ref) {
+        const keyAble = typeof ref === "function" || typeof ref === "object" && ref !== null;
+        if (typeof ref === "number") {
+          if (simpleSchemaCacheN[ref]) {
+            return simpleSchemaCacheN[ref];
+          }
+        } else if (typeof ref === "string") {
+          if (simpleSchemaCacheS[ref]) {
+            return simpleSchemaCacheS[ref];
+          }
+        } else if (keyAble) {
+          if (ref[anno.ns]) {
+            return ref[anno.ns];
+          }
+        }
+        const sc = deref(ref);
+        if (sc instanceof _NormalizedSchema) {
+          return sc;
+        }
+        if (isMemberSchema(sc)) {
+          const [ns2, traits] = sc;
+          if (ns2 instanceof _NormalizedSchema) {
+            Object.assign(ns2.getMergedTraits(), translateTraits(traits));
+            return ns2;
+          }
+          throw new Error(`@smithy/core/schema - may not init unwrapped member schema=${JSON.stringify(ref, null, 2)}.`);
+        }
+        const ns = new _NormalizedSchema(sc);
+        if (keyAble) {
+          return ref[anno.ns] = ns;
+        }
+        if (typeof sc === "string") {
+          return simpleSchemaCacheS[sc] = ns;
+        }
+        if (typeof sc === "number") {
+          return simpleSchemaCacheN[sc] = ns;
+        }
+        return ns;
+      }
+      getSchema() {
+        const sc = this.schema;
+        if (Array.isArray(sc) && sc[0] === 0) {
+          return sc[4];
+        }
+        return sc;
+      }
+      getName(withNamespace = false) {
+        const { name } = this;
+        const short = !withNamespace && name && name.includes("#");
+        return short ? name.split("#")[1] : name || void 0;
+      }
+      getMemberName() {
+        return this.memberName;
+      }
+      isMemberSchema() {
+        return this._isMemberSchema;
+      }
+      isListSchema() {
+        const sc = this.getSchema();
+        return typeof sc === "number" ? sc >= 64 && sc < 128 : sc[0] === 1;
+      }
+      isMapSchema() {
+        const sc = this.getSchema();
+        return typeof sc === "number" ? sc >= 128 && sc <= 255 : sc[0] === 2;
+      }
+      isStructSchema() {
+        const sc = this.getSchema();
+        if (typeof sc !== "object") {
+          return false;
+        }
+        const id = sc[0];
+        return id === 3 || id === -3 || id === 4;
+      }
+      isUnionSchema() {
+        const sc = this.getSchema();
+        if (typeof sc !== "object") {
+          return false;
+        }
+        return sc[0] === 4;
+      }
+      isBlobSchema() {
+        const sc = this.getSchema();
+        return sc === 21 || sc === 42;
+      }
+      isTimestampSchema() {
+        const sc = this.getSchema();
+        return typeof sc === "number" && sc >= 4 && sc <= 7;
+      }
+      isUnitSchema() {
+        return this.getSchema() === "unit";
+      }
+      isDocumentSchema() {
+        return this.getSchema() === 15;
+      }
+      isStringSchema() {
+        return this.getSchema() === 0;
+      }
+      isBooleanSchema() {
+        return this.getSchema() === 2;
+      }
+      isNumericSchema() {
+        return this.getSchema() === 1;
+      }
+      isBigIntegerSchema() {
+        return this.getSchema() === 17;
+      }
+      isBigDecimalSchema() {
+        return this.getSchema() === 19;
+      }
+      isStreaming() {
+        const { streaming } = this.getMergedTraits();
+        return !!streaming || this.getSchema() === 42;
+      }
+      isIdempotencyToken() {
+        return !!this.getMergedTraits().idempotencyToken;
+      }
+      getMergedTraits() {
+        var _a3;
+        return (_a3 = this.normalizedTraits) != null ? _a3 : this.normalizedTraits = {
+          ...this.getOwnTraits(),
+          ...this.getMemberTraits()
+        };
+      }
+      getMemberTraits() {
+        return translateTraits(this.memberTraits);
+      }
+      getOwnTraits() {
+        return translateTraits(this.traits);
+      }
+      getKeySchema() {
+        var _a3;
+        const [isDoc, isMap] = [this.isDocumentSchema(), this.isMapSchema()];
+        if (!isDoc && !isMap) {
+          throw new Error(`@smithy/core/schema - cannot get key for non-map: ${this.getName(true)}`);
+        }
+        const schema = this.getSchema();
+        const memberSchema = isDoc ? 15 : (_a3 = schema[4]) != null ? _a3 : 0;
+        return member([memberSchema, 0], "key");
+      }
+      getValueSchema() {
+        const sc = this.getSchema();
+        const [isDoc, isMap, isList] = [this.isDocumentSchema(), this.isMapSchema(), this.isListSchema()];
+        const memberSchema = typeof sc === "number" ? 63 & sc : sc && typeof sc === "object" && (isMap || isList) ? sc[3 + sc[0]] : isDoc ? 15 : void 0;
+        if (memberSchema != null) {
+          return member([memberSchema, 0], isMap ? "value" : "member");
+        }
+        throw new Error(`@smithy/core/schema - ${this.getName(true)} has no value member.`);
+      }
+      getMemberSchema(memberName) {
+        const struct = this.getSchema();
+        if (this.isStructSchema() && struct[4].includes(memberName)) {
+          const i2 = struct[4].indexOf(memberName);
+          const memberSchema = struct[5][i2];
+          return member(isMemberSchema(memberSchema) ? memberSchema : [memberSchema, 0], memberName);
+        }
+        if (this.isDocumentSchema()) {
+          return member([15, 0], memberName);
+        }
+        throw new Error(`@smithy/core/schema - ${this.getName(true)} has no member=${memberName}.`);
+      }
+      getMemberSchemas() {
+        const buffer = {};
+        try {
+          for (const [k2, v] of this.structIterator()) {
+            buffer[k2] = v;
+          }
+        } catch (ignored) {
+        }
+        return buffer;
+      }
+      getEventStreamMember() {
+        if (this.isStructSchema()) {
+          for (const [memberName, memberSchema] of this.structIterator()) {
+            if (memberSchema.isStreaming() && memberSchema.isStructSchema()) {
+              return memberName;
+            }
+          }
+        }
+        return "";
+      }
+      *structIterator() {
+        if (this.isUnitSchema()) {
+          return;
+        }
+        if (!this.isStructSchema()) {
+          throw new Error("@smithy/core/schema - cannot iterate non-struct schema.");
+        }
+        const struct = this.getSchema();
+        const z = struct[4].length;
+        let it = struct[anno.it];
+        if (it && z === it.length) {
+          yield* it;
+          return;
+        }
+        it = Array(z);
+        for (let i2 = 0; i2 < z; ++i2) {
+          const k2 = struct[4][i2];
+          const v = member([struct[5][i2], 0], k2);
+          yield it[i2] = [k2, v];
+        }
+        struct[anno.it] = it;
+      }
+    };
+    __publicField(_NormalizedSchema, "symbol", /* @__PURE__ */ Symbol.for("@smithy/nor"));
+    NormalizedSchema = _NormalizedSchema;
+    isMemberSchema = (sc) => Array.isArray(sc) && sc.length === 2;
+    isStaticSchema = (sc) => Array.isArray(sc) && sc.length >= 5;
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js
+var init_SimpleSchema = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js
+var init_sentinels2 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js
+var _TypeRegistry, TypeRegistry;
+var init_TypeRegistry = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js"() {
+    _TypeRegistry = class _TypeRegistry {
+      constructor(namespace, schemas = /* @__PURE__ */ new Map(), exceptions = /* @__PURE__ */ new Map()) {
+        __publicField(this, "namespace");
+        __publicField(this, "schemas");
+        __publicField(this, "exceptions");
+        this.namespace = namespace;
+        this.schemas = schemas;
+        this.exceptions = exceptions;
+      }
+      static for(namespace) {
+        if (!_TypeRegistry.registries.has(namespace)) {
+          _TypeRegistry.registries.set(namespace, new _TypeRegistry(namespace));
+        }
+        return _TypeRegistry.registries.get(namespace);
+      }
+      copyFrom(other) {
+        const { schemas, exceptions } = this;
+        for (const [k2, v] of other.schemas) {
+          if (!schemas.has(k2)) {
+            schemas.set(k2, v);
+          }
+        }
+        for (const [k2, v] of other.exceptions) {
+          if (!exceptions.has(k2)) {
+            exceptions.set(k2, v);
+          }
+        }
+      }
+      register(shapeId, schema) {
+        const qualifiedName = this.normalizeShapeId(shapeId);
+        for (const r2 of [this, _TypeRegistry.for(qualifiedName.split("#")[0])]) {
+          r2.schemas.set(qualifiedName, schema);
+        }
+      }
+      getSchema(shapeId) {
+        const id = this.normalizeShapeId(shapeId);
+        if (!this.schemas.has(id)) {
+          if (!shapeId.includes("#")) {
+            const suffix = "#" + shapeId;
+            const candidates = [];
+            for (const [shapeId2, schema] of this.schemas.entries()) {
+              if (shapeId2.endsWith(suffix)) {
+                candidates.push(schema);
+              }
+            }
+            if (candidates.length === 1) {
+              return candidates[0];
+            }
+          }
+          throw new Error(`@smithy/core/schema - schema not found for ${id}`);
+        }
+        return this.schemas.get(id);
+      }
+      registerError(es, ctor) {
+        const $error = es;
+        const ns = $error[1];
+        for (const r2 of [this, _TypeRegistry.for(ns)]) {
+          r2.schemas.set(ns + "#" + $error[2], $error);
+          r2.exceptions.set($error, ctor);
+        }
+      }
+      getErrorCtor(es) {
+        const $error = es;
+        if (this.exceptions.has($error)) {
+          return this.exceptions.get($error);
+        }
+        const registry = _TypeRegistry.for($error[1]);
+        return registry.exceptions.get($error);
+      }
+      getBaseException() {
+        for (const exceptionKey of this.exceptions.keys()) {
+          if (Array.isArray(exceptionKey)) {
+            const [, ns, name] = exceptionKey;
+            const id = ns + "#" + name;
+            if (id.startsWith("smithy.ts.sdk.synthetic.") && id.endsWith("ServiceException")) {
+              return exceptionKey;
+            }
+          }
+        }
+        return void 0;
+      }
+      find(predicate) {
+        for (const schema of this.schemas.values()) {
+          if (predicate(schema)) {
+            return schema;
+          }
+        }
+        return void 0;
+      }
+      clear() {
+        this.schemas.clear();
+        this.exceptions.clear();
+      }
+      normalizeShapeId(shapeId) {
+        if (shapeId.includes("#")) {
+          return shapeId;
+        }
+        return this.namespace + "#" + shapeId;
+      }
+    };
+    __publicField(_TypeRegistry, "registries", /* @__PURE__ */ new Map());
+    TypeRegistry = _TypeRegistry;
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/schema/index.js
+var init_schema2 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/schema/index.js"() {
+    init_deref();
+    init_getSchemaSerdePlugin();
+    init_ListSchema();
+    init_MapSchema();
+    init_OperationSchema();
+    init_operation();
+    init_ErrorSchema();
+    init_NormalizedSchema();
+    init_Schema();
+    init_SimpleSchema();
+    init_StructureSchema();
+    init_sentinels2();
+    init_translateTraits();
+    init_TypeRegistry();
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/client/smithy-client/schemaLogFilter.js
+function schemaLogFilter(schema, data) {
+  if (data == null) {
+    return data;
+  }
+  const ns = NormalizedSchema.of(schema);
+  if (ns.getMergedTraits().sensitive) {
+    return SENSITIVE_STRING;
+  }
+  if (ns.isListSchema()) {
+    const isSensitive = !!ns.getValueSchema().getMergedTraits().sensitive;
+    if (isSensitive) {
+      return SENSITIVE_STRING;
+    }
+  } else if (ns.isMapSchema()) {
+    const isSensitive = !!ns.getKeySchema().getMergedTraits().sensitive || !!ns.getValueSchema().getMergedTraits().sensitive;
+    if (isSensitive) {
+      return SENSITIVE_STRING;
+    }
+  } else if (ns.isStructSchema() && typeof data === "object") {
+    const object = data;
+    const newObject = {};
+    for (const [member2, memberNs] of ns.structIterator()) {
+      if (object[member2] != null) {
+        newObject[member2] = schemaLogFilter(memberNs, object[member2]);
+      }
+    }
+    return newObject;
+  }
+  return data;
+}
+var SENSITIVE_STRING;
+var init_schemaLogFilter = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/client/smithy-client/schemaLogFilter.js"() {
+    init_schema2();
+    SENSITIVE_STRING = "***SensitiveInformation***";
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/client/smithy-client/command.js
+var Command, ClassBuilder;
+var init_command2 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/client/smithy-client/command.js"() {
+    init_dist_es();
+    init_MiddlewareStack();
+    init_schemaLogFilter();
+    Command = class {
+      constructor() {
+        __publicField(this, "middlewareStack", constructStack());
+        __publicField(this, "schema");
+      }
+      static classBuilder() {
+        return new ClassBuilder();
+      }
+      resolveMiddlewareWithContext(clientStack, configuration, options, { middlewareFn, clientName, commandName, inputFilterSensitiveLog, outputFilterSensitiveLog, smithyContext, additionalContext, CommandCtor }) {
+        for (const mw of middlewareFn.bind(this)(CommandCtor, clientStack, configuration, options)) {
+          this.middlewareStack.use(mw);
+        }
+        const stack = clientStack.concat(this.middlewareStack);
+        const { logger: logger2 } = configuration;
+        const handlerExecutionContext = {
+          logger: logger2,
+          clientName,
+          commandName,
+          inputFilterSensitiveLog,
+          outputFilterSensitiveLog,
+          [SMITHY_CONTEXT_KEY]: {
+            commandInstance: this,
+            ...smithyContext
+          },
+          ...additionalContext
+        };
+        const { requestHandler } = configuration;
+        let requestOptions = options != null ? options : {};
+        if (smithyContext.eventStream) {
+          requestOptions = {
+            isEventStream: true,
+            ...requestOptions
+          };
+        }
+        return stack.resolve((request) => requestHandler.handle(request.request, requestOptions), handlerExecutionContext);
+      }
+    };
+    ClassBuilder = class {
+      constructor() {
+        __publicField(this, "_init", () => {
+        });
+        __publicField(this, "_ep", {});
+        __publicField(this, "_middlewareFn", () => []);
+        __publicField(this, "_commandName", "");
+        __publicField(this, "_clientName", "");
+        __publicField(this, "_additionalContext", {});
+        __publicField(this, "_smithyContext", {});
+        __publicField(this, "_inputFilterSensitiveLog");
+        __publicField(this, "_outputFilterSensitiveLog");
+        __publicField(this, "_serializer", null);
+        __publicField(this, "_deserializer", null);
+        __publicField(this, "_operationSchema");
+      }
+      init(cb) {
+        this._init = cb;
+      }
+      ep(endpointParameterInstructions) {
+        this._ep = endpointParameterInstructions;
+        return this;
+      }
+      m(middlewareSupplier) {
+        this._middlewareFn = middlewareSupplier;
+        return this;
+      }
+      s(service, operation2, smithyContext = {}) {
+        this._smithyContext = {
+          service,
+          operation: operation2,
+          ...smithyContext
+        };
+        return this;
+      }
+      c(additionalContext = {}) {
+        this._additionalContext = additionalContext;
+        return this;
+      }
+      n(clientName, commandName) {
+        this._clientName = clientName;
+        this._commandName = commandName;
+        return this;
+      }
+      f(inputFilter = (_) => _, outputFilter = (_) => _) {
+        this._inputFilterSensitiveLog = inputFilter;
+        this._outputFilterSensitiveLog = outputFilter;
+        return this;
+      }
+      ser(serializer) {
+        this._serializer = serializer;
+        return this;
+      }
+      de(deserializer) {
+        this._deserializer = deserializer;
+        return this;
+      }
+      sc(operation2) {
+        this._operationSchema = operation2;
+        this._smithyContext.operationSchema = operation2;
+        return this;
+      }
+      build() {
+        const closure = this;
+        let CommandRef;
+        return CommandRef = class extends Command {
+          constructor(...[input]) {
+            super();
+            __publicField(this, "input");
+            __publicField(this, "serialize", closure._serializer);
+            __publicField(this, "deserialize", closure._deserializer);
+            this.input = input != null ? input : {};
+            closure._init(this);
+            this.schema = closure._operationSchema;
+          }
+          static getEndpointParameterInstructions() {
+            return closure._ep;
+          }
+          resolveMiddleware(stack, configuration, options) {
+            var _a3, _b2, _c2, _d;
+            const op = closure._operationSchema;
+            const input = (_a3 = op == null ? void 0 : op[4]) != null ? _a3 : op == null ? void 0 : op.input;
+            const output = (_b2 = op == null ? void 0 : op[5]) != null ? _b2 : op == null ? void 0 : op.output;
+            return this.resolveMiddlewareWithContext(stack, configuration, options, {
+              CommandCtor: CommandRef,
+              middlewareFn: closure._middlewareFn,
+              clientName: closure._clientName,
+              commandName: closure._commandName,
+              inputFilterSensitiveLog: (_c2 = closure._inputFilterSensitiveLog) != null ? _c2 : op ? schemaLogFilter.bind(null, input) : (_) => _,
+              outputFilterSensitiveLog: (_d = closure._outputFilterSensitiveLog) != null ? _d : op ? schemaLogFilter.bind(null, output) : (_) => _,
+              smithyContext: closure._smithyContext,
+              additionalContext: closure._additionalContext
+            });
+          }
+        };
+      }
     };
   }
 });
 
-// node_modules/@smithy/util-base64/dist-es/constants.browser.js
+// node_modules/@smithy/core/dist-es/submodules/client/smithy-client/exceptions.js
+var ServiceException, decorateServiceException;
+var init_exceptions = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/client/smithy-client/exceptions.js"() {
+    ServiceException = class _ServiceException extends Error {
+      constructor(options) {
+        super(options.message);
+        __publicField(this, "$fault");
+        __publicField(this, "$response");
+        __publicField(this, "$retryable");
+        __publicField(this, "$metadata");
+        Object.setPrototypeOf(this, Object.getPrototypeOf(this).constructor.prototype);
+        this.name = options.name;
+        this.$fault = options.$fault;
+        this.$metadata = options.$metadata;
+      }
+      static isInstance(value2) {
+        if (!value2)
+          return false;
+        const candidate = value2;
+        return _ServiceException.prototype.isPrototypeOf(candidate) || Boolean(candidate.$fault) && Boolean(candidate.$metadata) && (candidate.$fault === "client" || candidate.$fault === "server");
+      }
+      static [Symbol.hasInstance](instance) {
+        if (!instance)
+          return false;
+        const candidate = instance;
+        if (this === _ServiceException) {
+          return _ServiceException.isInstance(instance);
+        }
+        if (_ServiceException.isInstance(instance)) {
+          if (candidate.name && this.name) {
+            return this.prototype.isPrototypeOf(instance) || candidate.name === this.name;
+          }
+          return this.prototype.isPrototypeOf(instance);
+        }
+        return false;
+      }
+    };
+    decorateServiceException = (exception, additions = {}) => {
+      Object.entries(additions).filter(([, v]) => v !== void 0).forEach(([k2, v]) => {
+        if (exception[k2] == void 0 || exception[k2] === "") {
+          exception[k2] = v;
+        }
+      });
+      const message = exception.message || exception.Message || "UnknownError";
+      exception.message = message;
+      delete exception.Message;
+      return exception;
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/client/smithy-client/defaults-mode.js
+var loadConfigsForDefaultMode;
+var init_defaults_mode = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/client/smithy-client/defaults-mode.js"() {
+    loadConfigsForDefaultMode = (mode) => {
+      switch (mode) {
+        case "standard":
+          return {
+            retryMode: "standard",
+            connectionTimeout: 3100
+          };
+        case "in-region":
+          return {
+            retryMode: "standard",
+            connectionTimeout: 1100
+          };
+        case "cross-region":
+          return {
+            retryMode: "standard",
+            connectionTimeout: 3100
+          };
+        case "mobile":
+          return {
+            retryMode: "standard",
+            connectionTimeout: 3e4
+          };
+        default:
+          return {};
+      }
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/client/smithy-client/extensions/checksum.js
+var knownAlgorithms, getChecksumConfiguration, resolveChecksumRuntimeConfig;
+var init_checksum3 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/client/smithy-client/extensions/checksum.js"() {
+    init_dist_es();
+    knownAlgorithms = Object.values(AlgorithmId);
+    getChecksumConfiguration = (runtimeConfig) => {
+      var _a3;
+      const checksumAlgorithms = [];
+      for (const id in AlgorithmId) {
+        const algorithmId = AlgorithmId[id];
+        if (runtimeConfig[algorithmId] === void 0) {
+          continue;
+        }
+        checksumAlgorithms.push({
+          algorithmId: () => algorithmId,
+          checksumConstructor: () => runtimeConfig[algorithmId]
+        });
+      }
+      for (const [id, ChecksumCtor] of Object.entries((_a3 = runtimeConfig.checksumAlgorithms) != null ? _a3 : {})) {
+        checksumAlgorithms.push({
+          algorithmId: () => id,
+          checksumConstructor: () => ChecksumCtor
+        });
+      }
+      return {
+        addChecksumAlgorithm(algo) {
+          var _a4;
+          runtimeConfig.checksumAlgorithms = (_a4 = runtimeConfig.checksumAlgorithms) != null ? _a4 : {};
+          const id = algo.algorithmId();
+          const ctor = algo.checksumConstructor();
+          if (knownAlgorithms.includes(id)) {
+            runtimeConfig.checksumAlgorithms[id.toUpperCase()] = ctor;
+          } else {
+            runtimeConfig.checksumAlgorithms[id] = ctor;
+          }
+          checksumAlgorithms.push(algo);
+        },
+        checksumAlgorithms() {
+          return checksumAlgorithms;
+        }
+      };
+    };
+    resolveChecksumRuntimeConfig = (clientConfig) => {
+      const runtimeConfig = {};
+      clientConfig.checksumAlgorithms().forEach((checksumAlgorithm) => {
+        const id = checksumAlgorithm.algorithmId();
+        if (knownAlgorithms.includes(id)) {
+          runtimeConfig[id] = checksumAlgorithm.checksumConstructor();
+        }
+      });
+      return runtimeConfig;
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/client/smithy-client/extensions/retry.js
+var getRetryConfiguration, resolveRetryRuntimeConfig;
+var init_retry2 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/client/smithy-client/extensions/retry.js"() {
+    getRetryConfiguration = (runtimeConfig) => {
+      return {
+        setRetryStrategy(retryStrategy) {
+          runtimeConfig.retryStrategy = retryStrategy;
+        },
+        retryStrategy() {
+          return runtimeConfig.retryStrategy;
+        }
+      };
+    };
+    resolveRetryRuntimeConfig = (retryStrategyConfiguration) => {
+      const runtimeConfig = {};
+      runtimeConfig.retryStrategy = retryStrategyConfiguration.retryStrategy();
+      return runtimeConfig;
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/client/smithy-client/extensions/defaultExtensionConfiguration.js
+var getDefaultExtensionConfiguration, resolveDefaultRuntimeConfig;
+var init_defaultExtensionConfiguration2 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/client/smithy-client/extensions/defaultExtensionConfiguration.js"() {
+    init_checksum3();
+    init_retry2();
+    getDefaultExtensionConfiguration = (runtimeConfig) => {
+      return Object.assign(getChecksumConfiguration(runtimeConfig), getRetryConfiguration(runtimeConfig));
+    };
+    resolveDefaultRuntimeConfig = (config) => {
+      return Object.assign(resolveChecksumRuntimeConfig(config), resolveRetryRuntimeConfig(config));
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/client/smithy-client/NoOpLogger.js
+var NoOpLogger;
+var init_NoOpLogger = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/client/smithy-client/NoOpLogger.js"() {
+    NoOpLogger = class {
+      trace() {
+      }
+      debug() {
+      }
+      info() {
+      }
+      warn() {
+      }
+      error() {
+      }
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/client/index.js
+var init_client3 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/client/index.js"() {
+    init_transport();
+    init_transport();
+    init_invalidFunction();
+    init_invalidProvider();
+    init_client2();
+    init_command2();
+    init_defaults_mode();
+    init_exceptions();
+    init_defaultExtensionConfiguration2();
+    init_NoOpLogger();
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/serde/util-base64/constants-for-browser.js
 var chars, alphabetByEncoding, alphabetByValue, bitsPerLetter, bitsPerByte, maxLetterValue;
-var init_constants_browser = __esm({
-  "node_modules/@smithy/util-base64/dist-es/constants.browser.js"() {
+var init_constants_for_browser = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/util-base64/constants-for-browser.js"() {
     chars = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/`;
     alphabetByEncoding = Object.entries(chars).reduce((acc, [i2, c2]) => {
       acc[c2] = Number(i2);
@@ -1301,11 +2177,11 @@ var init_constants_browser = __esm({
   }
 });
 
-// node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js
+// node_modules/@smithy/core/dist-es/submodules/serde/util-base64/fromBase64.browser.js
 var fromBase64;
 var init_fromBase64_browser = __esm({
-  "node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js"() {
-    init_constants_browser();
+  "node_modules/@smithy/core/dist-es/submodules/serde/util-base64/fromBase64.browser.js"() {
+    init_constants_for_browser();
     fromBase64 = (input) => {
       let totalByteLength = input.length / 4 * 3;
       if (input.slice(-2) === "==") {
@@ -1342,57 +2218,15 @@ var init_fromBase64_browser = __esm({
   }
 });
 
-// node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
+// node_modules/@smithy/core/dist-es/submodules/serde/util-utf8/fromUtf8.browser.js
 var fromUtf8;
 var init_fromUtf8_browser = __esm({
-  "node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
+  "node_modules/@smithy/core/dist-es/submodules/serde/util-utf8/fromUtf8.browser.js"() {
     fromUtf8 = (input) => new TextEncoder().encode(input);
   }
 });
 
-// node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
-var toUint8Array;
-var init_toUint8Array = __esm({
-  "node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
-    init_fromUtf8_browser();
-    toUint8Array = (data) => {
-      if (typeof data === "string") {
-        return fromUtf8(data);
-      }
-      if (ArrayBuffer.isView(data)) {
-        return new Uint8Array(data.buffer, data.byteOffset, data.byteLength / Uint8Array.BYTES_PER_ELEMENT);
-      }
-      return new Uint8Array(data);
-    };
-  }
-});
-
-// node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
-var toUtf8;
-var init_toUtf8_browser = __esm({
-  "node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
-    toUtf8 = (input) => {
-      if (typeof input === "string") {
-        return input;
-      }
-      if (typeof input !== "object" || typeof input.byteOffset !== "number" || typeof input.byteLength !== "number") {
-        throw new Error("@smithy/util-utf8: toUtf8 encoder function only accepts string | Uint8Array.");
-      }
-      return new TextDecoder("utf-8").decode(input);
-    };
-  }
-});
-
-// node_modules/@smithy/util-utf8/dist-es/index.js
-var init_dist_es8 = __esm({
-  "node_modules/@smithy/util-utf8/dist-es/index.js"() {
-    init_fromUtf8_browser();
-    init_toUint8Array();
-    init_toUtf8_browser();
-  }
-});
-
-// node_modules/@smithy/util-base64/dist-es/toBase64.browser.js
+// node_modules/@smithy/core/dist-es/submodules/serde/util-base64/toBase64.browser.js
 function toBase64(_input) {
   let input;
   if (typeof _input === "string") {
@@ -1424,316 +2258,1734 @@ function toBase64(_input) {
   return str;
 }
 var init_toBase64_browser = __esm({
-  "node_modules/@smithy/util-base64/dist-es/toBase64.browser.js"() {
-    init_dist_es8();
-    init_constants_browser();
+  "node_modules/@smithy/core/dist-es/submodules/serde/util-base64/toBase64.browser.js"() {
+    init_fromUtf8_browser();
+    init_constants_for_browser();
   }
 });
 
-// node_modules/@smithy/util-base64/dist-es/index.js
-var init_dist_es9 = __esm({
-  "node_modules/@smithy/util-base64/dist-es/index.js"() {
-    init_fromBase64_browser();
-    init_toBase64_browser();
-  }
-});
-
-// node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js
-var Uint8ArrayBlobAdapter;
-var init_Uint8ArrayBlobAdapter = __esm({
-  "node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js"() {
-    init_dist_es9();
-    init_dist_es8();
-    Uint8ArrayBlobAdapter = class _Uint8ArrayBlobAdapter extends Uint8Array {
-      static fromString(source, encoding = "utf-8") {
-        if (typeof source === "string") {
-          if (encoding === "base64") {
-            return _Uint8ArrayBlobAdapter.mutate(fromBase64(source));
-          }
-          return _Uint8ArrayBlobAdapter.mutate(fromUtf8(source));
-        }
-        throw new Error(`Unsupported conversion from ${typeof source} to Uint8ArrayBlobAdapter.`);
-      }
-      static mutate(source) {
-        Object.setPrototypeOf(source, _Uint8ArrayBlobAdapter.prototype);
-        return source;
-      }
-      transformToString(encoding = "utf-8") {
+// node_modules/@smithy/core/dist-es/submodules/serde/util-stream/blob/Uint8ArrayBlobAdapter.js
+function bindUint8ArrayBlobAdapter(toUtf82, fromUtf84, toBase642, fromBase642) {
+  return class Uint8ArrayBlobAdapter2 extends Uint8Array {
+    static fromString(source, encoding = "utf-8") {
+      if (typeof source === "string") {
         if (encoding === "base64") {
-          return toBase64(this);
+          return Uint8ArrayBlobAdapter2.mutate(fromBase642(source));
         }
-        return toUtf8(this);
+        return Uint8ArrayBlobAdapter2.mutate(fromUtf84(source));
       }
+      throw new Error(`Unsupported conversion from ${typeof source} to Uint8ArrayBlobAdapter.`);
+    }
+    static mutate(source) {
+      Object.setPrototypeOf(source, Uint8ArrayBlobAdapter2.prototype);
+      return source;
+    }
+    transformToString(encoding = "utf-8") {
+      if (encoding === "base64") {
+        return toBase642(this);
+      }
+      return toUtf82(this);
+    }
+  };
+}
+var init_Uint8ArrayBlobAdapter = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/util-stream/blob/Uint8ArrayBlobAdapter.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/serde/util-utf8/toUtf8.browser.js
+var toUtf8;
+var init_toUtf8_browser = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/util-utf8/toUtf8.browser.js"() {
+    toUtf8 = (input) => {
+      if (typeof input === "string") {
+        return input;
+      }
+      if (typeof input !== "object" || typeof input.byteOffset !== "number" || typeof input.byteLength !== "number") {
+        throw new Error("@smithy/util-utf8: toUtf8 encoder function only accepts string | Uint8Array.");
+      }
+      return new TextDecoder("utf-8").decode(input);
     };
   }
 });
 
-// node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js
-var init_ChecksumStream_browser = __esm({
-  "node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js"() {
+// node_modules/@smithy/core/dist-es/submodules/serde/uuid/v4.js
+function bindV4(getRandomValues) {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return () => crypto.randomUUID();
+  }
+  return () => {
+    const rnds = new Uint8Array(16);
+    getRandomValues(rnds);
+    rnds[6] = rnds[6] & 15 | 64;
+    rnds[8] = rnds[8] & 63 | 128;
+    return decimalToHex[rnds[0]] + decimalToHex[rnds[1]] + decimalToHex[rnds[2]] + decimalToHex[rnds[3]] + "-" + decimalToHex[rnds[4]] + decimalToHex[rnds[5]] + "-" + decimalToHex[rnds[6]] + decimalToHex[rnds[7]] + "-" + decimalToHex[rnds[8]] + decimalToHex[rnds[9]] + "-" + decimalToHex[rnds[10]] + decimalToHex[rnds[11]] + decimalToHex[rnds[12]] + decimalToHex[rnds[13]] + decimalToHex[rnds[14]] + decimalToHex[rnds[15]];
+  };
+}
+var decimalToHex;
+var init_v4 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/uuid/v4.js"() {
+    decimalToHex = Array.from({ length: 256 }, (_, i2) => i2.toString(16).padStart(2, "0"));
   }
 });
 
-// node_modules/@smithy/util-stream/dist-es/stream-type-check.js
-var isReadableStream;
-var init_stream_type_check = __esm({
-  "node_modules/@smithy/util-stream/dist-es/stream-type-check.js"() {
-    isReadableStream = (stream) => {
-      var _a;
-      return typeof ReadableStream === "function" && (((_a = stream == null ? void 0 : stream.constructor) == null ? void 0 : _a.name) === ReadableStream.name || stream instanceof ReadableStream);
+// node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js
+var expectNumber, MAX_FLOAT, expectFloat32, expectLong, expectShort, expectByte, expectSizedInt, castInt, strictParseDouble, strictParseFloat32, NUMBER_REGEX, parseNumber, strictParseShort, strictParseByte, stackTraceWarning, logger;
+var init_parse_utils = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js"() {
+    expectNumber = (value2) => {
+      if (value2 === null || value2 === void 0) {
+        return void 0;
+      }
+      if (typeof value2 === "string") {
+        const parsed = parseFloat(value2);
+        if (!Number.isNaN(parsed)) {
+          if (String(parsed) !== String(value2)) {
+            logger.warn(stackTraceWarning(`Expected number but observed string: ${value2}`));
+          }
+          return parsed;
+        }
+      }
+      if (typeof value2 === "number") {
+        return value2;
+      }
+      throw new TypeError(`Expected number, got ${typeof value2}: ${value2}`);
+    };
+    MAX_FLOAT = Math.ceil(2 ** 127 * (2 - 2 ** -23));
+    expectFloat32 = (value2) => {
+      const expected = expectNumber(value2);
+      if (expected !== void 0 && !Number.isNaN(expected) && expected !== Infinity && expected !== -Infinity) {
+        if (Math.abs(expected) > MAX_FLOAT) {
+          throw new TypeError(`Expected 32-bit float, got ${value2}`);
+        }
+      }
+      return expected;
+    };
+    expectLong = (value2) => {
+      if (value2 === null || value2 === void 0) {
+        return void 0;
+      }
+      if (Number.isInteger(value2) && !Number.isNaN(value2)) {
+        return value2;
+      }
+      throw new TypeError(`Expected integer, got ${typeof value2}: ${value2}`);
+    };
+    expectShort = (value2) => expectSizedInt(value2, 16);
+    expectByte = (value2) => expectSizedInt(value2, 8);
+    expectSizedInt = (value2, size) => {
+      const expected = expectLong(value2);
+      if (expected !== void 0 && castInt(expected, size) !== expected) {
+        throw new TypeError(`Expected ${size}-bit integer, got ${value2}`);
+      }
+      return expected;
+    };
+    castInt = (value2, size) => {
+      switch (size) {
+        case 32:
+          return Int32Array.of(value2)[0];
+        case 16:
+          return Int16Array.of(value2)[0];
+        case 8:
+          return Int8Array.of(value2)[0];
+      }
+    };
+    strictParseDouble = (value2) => {
+      if (typeof value2 == "string") {
+        return expectNumber(parseNumber(value2));
+      }
+      return expectNumber(value2);
+    };
+    strictParseFloat32 = (value2) => {
+      if (typeof value2 == "string") {
+        return expectFloat32(parseNumber(value2));
+      }
+      return expectFloat32(value2);
+    };
+    NUMBER_REGEX = /(-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?)|(-?Infinity)|(NaN)/g;
+    parseNumber = (value2) => {
+      const matches = value2.match(NUMBER_REGEX);
+      if (matches === null || matches[0].length !== value2.length) {
+        throw new TypeError(`Expected real number, got implicit NaN`);
+      }
+      return parseFloat(value2);
+    };
+    strictParseShort = (value2) => {
+      if (typeof value2 === "string") {
+        return expectShort(parseNumber(value2));
+      }
+      return expectShort(value2);
+    };
+    strictParseByte = (value2) => {
+      if (typeof value2 === "string") {
+        return expectByte(parseNumber(value2));
+      }
+      return expectByte(value2);
+    };
+    stackTraceWarning = (message) => {
+      return String(new TypeError(message).stack || message).split("\n").slice(0, 5).filter((s) => !s.includes("stackTraceWarning")).join("\n");
+    };
+    logger = {
+      warn: console.warn
     };
   }
 });
 
-// node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js
-var init_createChecksumStream_browser = __esm({
-  "node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js"() {
-  }
-});
-
-// node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js
-var init_createBufferedReadableStream = __esm({
-  "node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js"() {
-  }
-});
-
-// node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js
-var init_getAwsChunkedEncodingStream_browser = __esm({
-  "node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js"() {
-  }
-});
-
-// node_modules/@smithy/util-stream/dist-es/headStream.browser.js
-var init_headStream_browser = __esm({
-  "node_modules/@smithy/util-stream/dist-es/headStream.browser.js"() {
-  }
-});
-
-// node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js
-var escapeUri, hexEncode;
-var init_escape_uri = __esm({
-  "node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js"() {
-    escapeUri = (uri) => encodeURIComponent(uri).replace(/[!'()*]/g, hexEncode);
-    hexEncode = (c2) => `%${c2.charCodeAt(0).toString(16).toUpperCase()}`;
-  }
-});
-
-// node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js
-var init_escape_uri_path = __esm({
-  "node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js"() {
-  }
-});
-
-// node_modules/@smithy/util-uri-escape/dist-es/index.js
-var init_dist_es10 = __esm({
-  "node_modules/@smithy/util-uri-escape/dist-es/index.js"() {
-    init_escape_uri();
-    init_escape_uri_path();
-  }
-});
-
-// node_modules/@smithy/querystring-builder/dist-es/index.js
-function buildQueryString(query) {
-  const parts = [];
-  for (let key of Object.keys(query).sort()) {
-    const value2 = query[key];
-    key = escapeUri(key);
-    if (Array.isArray(value2)) {
-      for (let i2 = 0, iLen = value2.length; i2 < iLen; i2++) {
-        parts.push(`${key}=${escapeUri(value2[i2])}`);
+// node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js
+function dateToUtcString(date2) {
+  const year2 = date2.getUTCFullYear();
+  const month = date2.getUTCMonth();
+  const dayOfWeek = date2.getUTCDay();
+  const dayOfMonthInt = date2.getUTCDate();
+  const hoursInt = date2.getUTCHours();
+  const minutesInt = date2.getUTCMinutes();
+  const secondsInt = date2.getUTCSeconds();
+  const dayOfMonthString = dayOfMonthInt < 10 ? `0${dayOfMonthInt}` : `${dayOfMonthInt}`;
+  const hoursString = hoursInt < 10 ? `0${hoursInt}` : `${hoursInt}`;
+  const minutesString = minutesInt < 10 ? `0${minutesInt}` : `${minutesInt}`;
+  const secondsString = secondsInt < 10 ? `0${secondsInt}` : `${secondsInt}`;
+  return `${DAYS[dayOfWeek]}, ${dayOfMonthString} ${MONTHS[month]} ${year2} ${hoursString}:${minutesString}:${secondsString} GMT`;
+}
+var DAYS, MONTHS, RFC3339, RFC3339_WITH_OFFSET, parseRfc3339DateTimeWithOffset, IMF_FIXDATE, RFC_850_DATE, ASC_TIME, parseRfc7231DateTime, parseEpochTimestamp, buildDate, parseTwoDigitYear, FIFTY_YEARS_IN_MILLIS, adjustRfc850Year, parseMonthByShortName, DAYS_IN_MONTH, validateDayOfMonth, isLeapYear, parseDateValue, parseMilliseconds, parseOffsetToMilliseconds, stripLeadingZeroes;
+var init_date_utils = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js"() {
+    init_parse_utils();
+    DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    RFC3339 = new RegExp(/^(\d{4})-(\d{2})-(\d{2})[tT](\d{2}):(\d{2}):(\d{2})(?:\.(\d+))?[zZ]$/);
+    RFC3339_WITH_OFFSET = new RegExp(/^(\d{4})-(\d{2})-(\d{2})[tT](\d{2}):(\d{2}):(\d{2})(?:\.(\d+))?(([-+]\d{2}\:\d{2})|[zZ])$/);
+    parseRfc3339DateTimeWithOffset = (value2) => {
+      if (value2 === null || value2 === void 0) {
+        return void 0;
       }
+      if (typeof value2 !== "string") {
+        throw new TypeError("RFC-3339 date-times must be expressed as strings");
+      }
+      const match = RFC3339_WITH_OFFSET.exec(value2);
+      if (!match) {
+        throw new TypeError("Invalid RFC-3339 date-time value");
+      }
+      const [_, yearStr, monthStr, dayStr, hours, minutes, seconds, fractionalMilliseconds, offsetStr] = match;
+      const year2 = strictParseShort(stripLeadingZeroes(yearStr));
+      const month = parseDateValue(monthStr, "month", 1, 12);
+      const day = parseDateValue(dayStr, "day", 1, 31);
+      const date2 = buildDate(year2, month, day, { hours, minutes, seconds, fractionalMilliseconds });
+      if (offsetStr.toUpperCase() != "Z") {
+        date2.setTime(date2.getTime() - parseOffsetToMilliseconds(offsetStr));
+      }
+      return date2;
+    };
+    IMF_FIXDATE = new RegExp(/^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun), (\d{2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{4}) (\d{1,2}):(\d{2}):(\d{2})(?:\.(\d+))? GMT$/);
+    RFC_850_DATE = new RegExp(/^(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (\d{2})-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-(\d{2}) (\d{1,2}):(\d{2}):(\d{2})(?:\.(\d+))? GMT$/);
+    ASC_TIME = new RegExp(/^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ( [1-9]|\d{2}) (\d{1,2}):(\d{2}):(\d{2})(?:\.(\d+))? (\d{4})$/);
+    parseRfc7231DateTime = (value2) => {
+      if (value2 === null || value2 === void 0) {
+        return void 0;
+      }
+      if (typeof value2 !== "string") {
+        throw new TypeError("RFC-7231 date-times must be expressed as strings");
+      }
+      let match = IMF_FIXDATE.exec(value2);
+      if (match) {
+        const [_, dayStr, monthStr, yearStr, hours, minutes, seconds, fractionalMilliseconds] = match;
+        return buildDate(strictParseShort(stripLeadingZeroes(yearStr)), parseMonthByShortName(monthStr), parseDateValue(dayStr, "day", 1, 31), { hours, minutes, seconds, fractionalMilliseconds });
+      }
+      match = RFC_850_DATE.exec(value2);
+      if (match) {
+        const [_, dayStr, monthStr, yearStr, hours, minutes, seconds, fractionalMilliseconds] = match;
+        return adjustRfc850Year(buildDate(parseTwoDigitYear(yearStr), parseMonthByShortName(monthStr), parseDateValue(dayStr, "day", 1, 31), {
+          hours,
+          minutes,
+          seconds,
+          fractionalMilliseconds
+        }));
+      }
+      match = ASC_TIME.exec(value2);
+      if (match) {
+        const [_, monthStr, dayStr, hours, minutes, seconds, fractionalMilliseconds, yearStr] = match;
+        return buildDate(strictParseShort(stripLeadingZeroes(yearStr)), parseMonthByShortName(monthStr), parseDateValue(dayStr.trimLeft(), "day", 1, 31), { hours, minutes, seconds, fractionalMilliseconds });
+      }
+      throw new TypeError("Invalid RFC-7231 date-time value");
+    };
+    parseEpochTimestamp = (value2) => {
+      if (value2 === null || value2 === void 0) {
+        return void 0;
+      }
+      let valueAsDouble;
+      if (typeof value2 === "number") {
+        valueAsDouble = value2;
+      } else if (typeof value2 === "string") {
+        valueAsDouble = strictParseDouble(value2);
+      } else if (typeof value2 === "object" && value2.tag === 1) {
+        valueAsDouble = value2.value;
+      } else {
+        throw new TypeError("Epoch timestamps must be expressed as floating point numbers or their string representation");
+      }
+      if (Number.isNaN(valueAsDouble) || valueAsDouble === Infinity || valueAsDouble === -Infinity) {
+        throw new TypeError("Epoch timestamps must be valid, non-Infinite, non-NaN numerics");
+      }
+      return new Date(Math.round(valueAsDouble * 1e3));
+    };
+    buildDate = (year2, month, day, time2) => {
+      const adjustedMonth = month - 1;
+      validateDayOfMonth(year2, adjustedMonth, day);
+      return new Date(Date.UTC(year2, adjustedMonth, day, parseDateValue(time2.hours, "hour", 0, 23), parseDateValue(time2.minutes, "minute", 0, 59), parseDateValue(time2.seconds, "seconds", 0, 60), parseMilliseconds(time2.fractionalMilliseconds)));
+    };
+    parseTwoDigitYear = (value2) => {
+      const thisYear = (/* @__PURE__ */ new Date()).getUTCFullYear();
+      const valueInThisCentury = Math.floor(thisYear / 100) * 100 + strictParseShort(stripLeadingZeroes(value2));
+      if (valueInThisCentury < thisYear) {
+        return valueInThisCentury + 100;
+      }
+      return valueInThisCentury;
+    };
+    FIFTY_YEARS_IN_MILLIS = 50 * 365 * 24 * 60 * 60 * 1e3;
+    adjustRfc850Year = (input) => {
+      if (input.getTime() - (/* @__PURE__ */ new Date()).getTime() > FIFTY_YEARS_IN_MILLIS) {
+        return new Date(Date.UTC(input.getUTCFullYear() - 100, input.getUTCMonth(), input.getUTCDate(), input.getUTCHours(), input.getUTCMinutes(), input.getUTCSeconds(), input.getUTCMilliseconds()));
+      }
+      return input;
+    };
+    parseMonthByShortName = (value2) => {
+      const monthIdx = MONTHS.indexOf(value2);
+      if (monthIdx < 0) {
+        throw new TypeError(`Invalid month: ${value2}`);
+      }
+      return monthIdx + 1;
+    };
+    DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    validateDayOfMonth = (year2, month, day) => {
+      let maxDays = DAYS_IN_MONTH[month];
+      if (month === 1 && isLeapYear(year2)) {
+        maxDays = 29;
+      }
+      if (day > maxDays) {
+        throw new TypeError(`Invalid day for ${MONTHS[month]} in ${year2}: ${day}`);
+      }
+    };
+    isLeapYear = (year2) => {
+      return year2 % 4 === 0 && (year2 % 100 !== 0 || year2 % 400 === 0);
+    };
+    parseDateValue = (value2, type, lower, upper) => {
+      const dateVal = strictParseByte(stripLeadingZeroes(value2));
+      if (dateVal < lower || dateVal > upper) {
+        throw new TypeError(`${type} must be between ${lower} and ${upper}, inclusive`);
+      }
+      return dateVal;
+    };
+    parseMilliseconds = (value2) => {
+      if (value2 === null || value2 === void 0) {
+        return 0;
+      }
+      return strictParseFloat32("0." + value2) * 1e3;
+    };
+    parseOffsetToMilliseconds = (value2) => {
+      const directionStr = value2[0];
+      let direction = 1;
+      if (directionStr == "+") {
+        direction = 1;
+      } else if (directionStr == "-") {
+        direction = -1;
+      } else {
+        throw new TypeError(`Offset direction, ${directionStr}, must be "+" or "-"`);
+      }
+      const hour = Number(value2.substring(1, 3));
+      const minute = Number(value2.substring(4, 6));
+      return direction * (hour * 60 + minute) * 60 * 1e3;
+    };
+    stripLeadingZeroes = (value2) => {
+      let idx = 0;
+      while (idx < value2.length - 1 && value2.charAt(idx) === "0") {
+        idx++;
+      }
+      if (idx === 0) {
+        return value2;
+      }
+      return value2.slice(idx);
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js
+var LazyJsonString;
+var init_lazy_json = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js"() {
+    LazyJsonString = function LazyJsonString2(val) {
+      const str = Object.assign(new String(val), {
+        deserializeJSON() {
+          return JSON.parse(String(val));
+        },
+        toString() {
+          return String(val);
+        },
+        toJSON() {
+          return String(val);
+        }
+      });
+      return str;
+    };
+    LazyJsonString.from = (object) => {
+      if (object && typeof object === "object" && (object instanceof LazyJsonString || "deserializeJSON" in object)) {
+        return object;
+      } else if (typeof object === "string" || Object.getPrototypeOf(object) === String.prototype) {
+        return LazyJsonString(String(object));
+      }
+      return LazyJsonString(JSON.stringify(object));
+    };
+    LazyJsonString.fromObject = LazyJsonString.from;
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js
+function quoteHeader(part) {
+  if (part.includes(",") || part.includes('"')) {
+    part = `"${part.replace(/"/g, '\\"')}"`;
+  }
+  return part;
+}
+var init_quote_header = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js
+function range(v, min, max) {
+  const _v = Number(v);
+  if (_v < min || _v > max) {
+    throw new Error(`Value ${_v} out of range [${min}, ${max}]`);
+  }
+}
+var ddd, mmm, time, date, year, RFC3339_WITH_OFFSET2, IMF_FIXDATE2, RFC_850_DATE2, ASC_TIME2, months, _parseEpochTimestamp, _parseRfc3339DateTimeWithOffset, _parseRfc7231DateTime;
+var init_schema_date_utils = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js"() {
+    ddd = `(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)(?:[ne|u?r]?s?day)?`;
+    mmm = `(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)`;
+    time = `(\\d?\\d):(\\d{2}):(\\d{2})(?:\\.(\\d+))?`;
+    date = `(\\d?\\d)`;
+    year = `(\\d{4})`;
+    RFC3339_WITH_OFFSET2 = new RegExp(/^(\d{4})-(\d\d)-(\d\d)[tT](\d\d):(\d\d):(\d\d)(\.(\d+))?(([-+]\d\d:\d\d)|[zZ])$/);
+    IMF_FIXDATE2 = new RegExp(`^${ddd}, ${date} ${mmm} ${year} ${time} GMT$`);
+    RFC_850_DATE2 = new RegExp(`^${ddd}, ${date}-${mmm}-(\\d\\d) ${time} GMT$`);
+    ASC_TIME2 = new RegExp(`^${ddd} ${mmm} ( [1-9]|\\d\\d) ${time} ${year}$`);
+    months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    _parseEpochTimestamp = (value2) => {
+      if (value2 == null) {
+        return void 0;
+      }
+      let num = NaN;
+      if (typeof value2 === "number") {
+        num = value2;
+      } else if (typeof value2 === "string") {
+        if (!/^-?\d*\.?\d+$/.test(value2)) {
+          throw new TypeError(`parseEpochTimestamp - numeric string invalid.`);
+        }
+        num = Number.parseFloat(value2);
+      } else if (typeof value2 === "object" && value2.tag === 1) {
+        num = value2.value;
+      }
+      if (isNaN(num) || Math.abs(num) === Infinity) {
+        throw new TypeError("Epoch timestamps must be valid finite numbers.");
+      }
+      return new Date(Math.round(num * 1e3));
+    };
+    _parseRfc3339DateTimeWithOffset = (value2) => {
+      if (value2 == null) {
+        return void 0;
+      }
+      if (typeof value2 !== "string") {
+        throw new TypeError("RFC3339 timestamps must be strings");
+      }
+      const matches = RFC3339_WITH_OFFSET2.exec(value2);
+      if (!matches) {
+        throw new TypeError(`Invalid RFC3339 timestamp format ${value2}`);
+      }
+      const [, yearStr, monthStr, dayStr, hours, minutes, seconds, , ms, offsetStr] = matches;
+      range(monthStr, 1, 12);
+      range(dayStr, 1, 31);
+      range(hours, 0, 23);
+      range(minutes, 0, 59);
+      range(seconds, 0, 60);
+      const date2 = new Date(Date.UTC(Number(yearStr), Number(monthStr) - 1, Number(dayStr), Number(hours), Number(minutes), Number(seconds), Number(ms) ? Math.round(parseFloat(`0.${ms}`) * 1e3) : 0));
+      date2.setUTCFullYear(Number(yearStr));
+      if (offsetStr.toUpperCase() != "Z") {
+        const [, sign, offsetH, offsetM] = /([+-])(\d\d):(\d\d)/.exec(offsetStr) || [void 0, "+", 0, 0];
+        const scalar = sign === "-" ? 1 : -1;
+        date2.setTime(date2.getTime() + scalar * (Number(offsetH) * 60 * 60 * 1e3 + Number(offsetM) * 60 * 1e3));
+      }
+      return date2;
+    };
+    _parseRfc7231DateTime = (value2) => {
+      if (value2 == null) {
+        return void 0;
+      }
+      if (typeof value2 !== "string") {
+        throw new TypeError("RFC7231 timestamps must be strings.");
+      }
+      let day;
+      let month;
+      let year2;
+      let hour;
+      let minute;
+      let second;
+      let fraction;
+      let matches;
+      if (matches = IMF_FIXDATE2.exec(value2)) {
+        [, day, month, year2, hour, minute, second, fraction] = matches;
+      } else if (matches = RFC_850_DATE2.exec(value2)) {
+        [, day, month, year2, hour, minute, second, fraction] = matches;
+        year2 = (Number(year2) + 1900).toString();
+      } else if (matches = ASC_TIME2.exec(value2)) {
+        [, month, day, hour, minute, second, fraction, year2] = matches;
+      }
+      if (year2 && second) {
+        const timestamp = Date.UTC(Number(year2), months.indexOf(month), Number(day), Number(hour), Number(minute), Number(second), fraction ? Math.round(parseFloat(`0.${fraction}`) * 1e3) : 0);
+        range(day, 1, 31);
+        range(hour, 0, 23);
+        range(minute, 0, 59);
+        range(second, 0, 60);
+        const date2 = new Date(timestamp);
+        date2.setUTCFullYear(Number(year2));
+        return date2;
+      }
+      throw new TypeError(`Invalid RFC7231 date-time value ${value2}.`);
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/serde/split-every.js
+function splitEvery(value2, delimiter, numDelimiters) {
+  if (numDelimiters <= 0 || !Number.isInteger(numDelimiters)) {
+    throw new Error("Invalid number of delimiters (" + numDelimiters + ") for splitEvery.");
+  }
+  const segments = value2.split(delimiter);
+  if (numDelimiters === 1) {
+    return segments;
+  }
+  const compoundSegments = [];
+  let currentSegment = "";
+  for (let i2 = 0; i2 < segments.length; i2++) {
+    if (currentSegment === "") {
+      currentSegment = segments[i2];
     } else {
-      let qsEntry = key;
-      if (value2 || typeof value2 === "string") {
-        qsEntry += `=${escapeUri(value2)}`;
-      }
-      parts.push(qsEntry);
+      currentSegment += delimiter + segments[i2];
+    }
+    if ((i2 + 1) % numDelimiters === 0) {
+      compoundSegments.push(currentSegment);
+      currentSegment = "";
     }
   }
-  return parts.join("&");
+  if (currentSegment !== "") {
+    compoundSegments.push(currentSegment);
+  }
+  return compoundSegments;
 }
-var init_dist_es11 = __esm({
-  "node_modules/@smithy/querystring-builder/dist-es/index.js"() {
-    init_dist_es10();
+var init_split_every = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/split-every.js"() {
   }
 });
 
-// node_modules/@smithy/fetch-http-handler/dist-es/create-request.js
-function createRequest(url, requestOptions) {
-  return new Request(url, requestOptions);
-}
-var init_create_request = __esm({
-  "node_modules/@smithy/fetch-http-handler/dist-es/create-request.js"() {
+// node_modules/@smithy/core/dist-es/submodules/serde/split-header.js
+var splitHeader;
+var init_split_header = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/split-header.js"() {
+    splitHeader = (value2) => {
+      const z = value2.length;
+      const values = [];
+      let withinQuotes = false;
+      let prevChar = void 0;
+      let anchor = 0;
+      for (let i2 = 0; i2 < z; ++i2) {
+        const char = value2[i2];
+        switch (char) {
+          case `"`:
+            if (prevChar !== "\\") {
+              withinQuotes = !withinQuotes;
+            }
+            break;
+          case ",":
+            if (!withinQuotes) {
+              values.push(value2.slice(anchor, i2));
+              anchor = i2 + 1;
+            }
+            break;
+          default:
+        }
+        prevChar = char;
+      }
+      values.push(value2.slice(anchor));
+      return values.map((v) => {
+        v = v.trim();
+        const z2 = v.length;
+        if (z2 < 2) {
+          return v;
+        }
+        if (v[0] === `"` && v[z2 - 1] === `"`) {
+          v = v.slice(1, z2 - 1);
+        }
+        return v.replace(/\\"/g, '"');
+      });
+    };
   }
 });
 
-// node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js
-function requestTimeout(timeoutInMs = 0) {
-  return new Promise((resolve, reject) => {
-    if (timeoutInMs) {
-      setTimeout(() => {
-        const timeoutError = new Error(`Request did not complete within ${timeoutInMs} ms`);
-        timeoutError.name = "TimeoutError";
-        reject(timeoutError);
-      }, timeoutInMs);
+// node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js
+var format, NumericValue;
+var init_NumericValue = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js"() {
+    format = /^-?\d*(\.\d+)?$/;
+    NumericValue = class _NumericValue {
+      constructor(string3, type) {
+        __publicField(this, "string");
+        __publicField(this, "type");
+        this.string = string3;
+        this.type = type;
+        if (!format.test(string3)) {
+          throw new Error(`@smithy/core/serde - NumericValue must only contain [0-9], at most one decimal point ".", and an optional negation prefix "-".`);
+        }
+      }
+      toString() {
+        return this.string;
+      }
+      static [Symbol.hasInstance](object) {
+        if (!object || typeof object !== "object") {
+          return false;
+        }
+        const _nv = object;
+        return _NumericValue.prototype.isPrototypeOf(object) || _nv.type === "bigDecimal" && format.test(_nv.string);
+      }
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/serde/util-hex-encoding/hex-encoding.js
+function fromHex(encoded) {
+  if (encoded.length % 2 !== 0) {
+    throw new Error("Hex encoded strings must have an even number length");
+  }
+  const out = new Uint8Array(encoded.length / 2);
+  for (let i2 = 0; i2 < encoded.length; i2 += 2) {
+    const encodedByte = encoded.slice(i2, i2 + 2).toLowerCase();
+    if (encodedByte in HEX_TO_SHORT) {
+      out[i2 / 2] = HEX_TO_SHORT[encodedByte];
+    } else {
+      throw new Error(`Cannot decode unrecognized sequence ${encodedByte} as hexadecimal`);
+    }
+  }
+  return out;
+}
+function toHex(bytes) {
+  let out = "";
+  for (let i2 = 0; i2 < bytes.byteLength; i2++) {
+    out += SHORT_TO_HEX[bytes[i2]];
+  }
+  return out;
+}
+var SHORT_TO_HEX, HEX_TO_SHORT;
+var init_hex_encoding = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/util-hex-encoding/hex-encoding.js"() {
+    SHORT_TO_HEX = {};
+    HEX_TO_SHORT = {};
+    for (let i2 = 0; i2 < 256; i2++) {
+      let encodedByte = i2.toString(16).toLowerCase();
+      if (encodedByte.length === 1) {
+        encodedByte = `0${encodedByte}`;
+      }
+      SHORT_TO_HEX[i2] = encodedByte;
+      HEX_TO_SHORT[encodedByte] = i2;
+    }
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/serde/util-body-length/calculateBodyLength.browser.js
+var TEXT_ENCODER, calculateBodyLength;
+var init_calculateBodyLength_browser = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/util-body-length/calculateBodyLength.browser.js"() {
+    TEXT_ENCODER = typeof TextEncoder == "function" ? new TextEncoder() : null;
+    calculateBodyLength = (body) => {
+      if (typeof body === "string") {
+        if (TEXT_ENCODER) {
+          return TEXT_ENCODER.encode(body).byteLength;
+        }
+        let len = body.length;
+        for (let i2 = len - 1; i2 >= 0; i2--) {
+          const code3 = body.charCodeAt(i2);
+          if (code3 > 127 && code3 <= 2047)
+            len++;
+          else if (code3 > 2047 && code3 <= 65535)
+            len += 2;
+          if (code3 >= 56320 && code3 <= 57343)
+            i2--;
+        }
+        return len;
+      } else if (typeof body.byteLength === "number") {
+        return body.byteLength;
+      } else if (typeof body.size === "number") {
+        return body.size;
+      }
+      throw new Error(`Body Length computation failed for ${body}`);
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/serde/util-utf8/toUint8Array.browser.js
+var toUint8Array;
+var init_toUint8Array_browser = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/util-utf8/toUint8Array.browser.js"() {
+    init_fromUtf8_browser();
+    toUint8Array = (data) => {
+      if (typeof data === "string") {
+        return fromUtf8(data);
+      }
+      if (ArrayBuffer.isView(data)) {
+        return new Uint8Array(data.buffer, data.byteOffset, data.byteLength / Uint8Array.BYTES_PER_ELEMENT);
+      }
+      return new Uint8Array(data);
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/serde/is-array-buffer/is-array-buffer.js
+var isArrayBuffer;
+var init_is_array_buffer = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/is-array-buffer/is-array-buffer.js"() {
+    isArrayBuffer = (arg) => typeof ArrayBuffer === "function" && arg instanceof ArrayBuffer || Object.prototype.toString.call(arg) === "[object ArrayBuffer]";
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/adaptors/getEndpointFromConfig.browser.js
+var getEndpointFromConfig;
+var init_getEndpointFromConfig_browser = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/adaptors/getEndpointFromConfig.browser.js"() {
+    getEndpointFromConfig = async (serviceId) => void 0;
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/service-customizations/s3.js
+var resolveParamsForS3, DOMAIN_PATTERN, IP_ADDRESS_PATTERN, DOTS_PATTERN, isDnsCompatibleBucketName, isArnBucketName;
+var init_s3 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/service-customizations/s3.js"() {
+    resolveParamsForS3 = async (endpointParams) => {
+      const bucket = (endpointParams == null ? void 0 : endpointParams.Bucket) || "";
+      if (typeof endpointParams.Bucket === "string") {
+        endpointParams.Bucket = bucket.replace(/#/g, encodeURIComponent("#")).replace(/\?/g, encodeURIComponent("?"));
+      }
+      if (isArnBucketName(bucket)) {
+        if (endpointParams.ForcePathStyle === true) {
+          throw new Error("Path-style addressing cannot be used with ARN buckets");
+        }
+      } else if (!isDnsCompatibleBucketName(bucket) || bucket.indexOf(".") !== -1 && !String(endpointParams.Endpoint).startsWith("http:") || bucket.toLowerCase() !== bucket || bucket.length < 3) {
+        endpointParams.ForcePathStyle = true;
+      }
+      if (endpointParams.DisableMultiRegionAccessPoints) {
+        endpointParams.disableMultiRegionAccessPoints = true;
+        endpointParams.DisableMRAP = true;
+      }
+      return endpointParams;
+    };
+    DOMAIN_PATTERN = /^[a-z0-9][a-z0-9\.\-]{1,61}[a-z0-9]$/;
+    IP_ADDRESS_PATTERN = /(\d+\.){3}\d+/;
+    DOTS_PATTERN = /\.\./;
+    isDnsCompatibleBucketName = (bucketName) => DOMAIN_PATTERN.test(bucketName) && !IP_ADDRESS_PATTERN.test(bucketName) && !DOTS_PATTERN.test(bucketName);
+    isArnBucketName = (bucketName) => {
+      const [arn, partition2, service, , , bucket] = bucketName.split(":");
+      const isArn = arn === "arn" && bucketName.split(":").length >= 6;
+      const isValidArn = Boolean(isArn && partition2 && service && bucket);
+      if (isArn && !isValidArn) {
+        throw new Error(`Invalid ARN: ${bucketName} was an invalid ARN.`);
+      }
+      return isValidArn;
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/service-customizations/index.js
+var init_service_customizations = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/service-customizations/index.js"() {
+    init_s3();
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/adaptors/createConfigValueProvider.js
+var createConfigValueProvider;
+var init_createConfigValueProvider = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/adaptors/createConfigValueProvider.js"() {
+    createConfigValueProvider = (configKey, canonicalEndpointParamKey, config, isClientContextParam = false) => {
+      const configProvider = async () => {
+        var _a3, _b2;
+        let configValue;
+        if (isClientContextParam) {
+          const clientContextParams = config.clientContextParams;
+          const nestedValue = clientContextParams == null ? void 0 : clientContextParams[configKey];
+          configValue = (_a3 = nestedValue != null ? nestedValue : config[configKey]) != null ? _a3 : config[canonicalEndpointParamKey];
+        } else {
+          configValue = (_b2 = config[configKey]) != null ? _b2 : config[canonicalEndpointParamKey];
+        }
+        if (typeof configValue === "function") {
+          return configValue();
+        }
+        return configValue;
+      };
+      if (configKey === "credentialScope" || canonicalEndpointParamKey === "CredentialScope") {
+        return async () => {
+          var _a3;
+          const credentials = typeof config.credentials === "function" ? await config.credentials() : config.credentials;
+          const configValue = (_a3 = credentials == null ? void 0 : credentials.credentialScope) != null ? _a3 : credentials == null ? void 0 : credentials.CredentialScope;
+          return configValue;
+        };
+      }
+      if (configKey === "accountId" || canonicalEndpointParamKey === "AccountId") {
+        return async () => {
+          var _a3;
+          const credentials = typeof config.credentials === "function" ? await config.credentials() : config.credentials;
+          const configValue = (_a3 = credentials == null ? void 0 : credentials.accountId) != null ? _a3 : credentials == null ? void 0 : credentials.AccountId;
+          return configValue;
+        };
+      }
+      if (configKey === "endpoint" || canonicalEndpointParamKey === "endpoint") {
+        return async () => {
+          if (config.isCustomEndpoint === false) {
+            return void 0;
+          }
+          const endpoint = await configProvider();
+          if (endpoint && typeof endpoint === "object") {
+            if ("url" in endpoint) {
+              return endpoint.url.href;
+            }
+            if ("hostname" in endpoint) {
+              const { protocol, hostname, port, path: path2 } = endpoint;
+              return `${protocol}//${hostname}${port ? ":" + port : ""}${path2}`;
+            }
+          }
+          return endpoint;
+        };
+      }
+      return configProvider;
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/adaptors/toEndpointV1.js
+var init_toEndpointV12 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/adaptors/toEndpointV1.js"() {
+    init_transport();
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/adaptors/getEndpointFromInstructions.js
+function bindGetEndpointFromInstructions(getEndpointFromConfig2) {
+  return async (commandInput, instructionsSupplier, clientConfig, context) => {
+    var _a3;
+    if (!clientConfig.isCustomEndpoint) {
+      let endpointFromConfig;
+      if (clientConfig.serviceConfiguredEndpoint) {
+        endpointFromConfig = await clientConfig.serviceConfiguredEndpoint();
+      } else {
+        endpointFromConfig = await getEndpointFromConfig2(clientConfig.serviceId);
+      }
+      if (endpointFromConfig) {
+        clientConfig.endpoint = () => Promise.resolve(toEndpointV1(endpointFromConfig));
+        clientConfig.isCustomEndpoint = true;
+      }
+    }
+    const endpointParams = await resolveParams(commandInput, instructionsSupplier, clientConfig);
+    if (typeof clientConfig.endpointProvider !== "function") {
+      throw new Error("config.endpointProvider is not set.");
+    }
+    const endpoint = clientConfig.endpointProvider(endpointParams, context);
+    if (clientConfig.isCustomEndpoint && clientConfig.endpoint) {
+      const customEndpoint = await clientConfig.endpoint();
+      if (customEndpoint == null ? void 0 : customEndpoint.headers) {
+        (_a3 = endpoint.headers) != null ? _a3 : endpoint.headers = {};
+        for (const [name, value2] of Object.entries(customEndpoint.headers)) {
+          endpoint.headers[name] = Array.isArray(value2) ? value2 : [value2];
+        }
+      }
+    }
+    return endpoint;
+  };
+}
+var resolveParams;
+var init_getEndpointFromInstructions = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/adaptors/getEndpointFromInstructions.js"() {
+    init_service_customizations();
+    init_createConfigValueProvider();
+    init_toEndpointV12();
+    resolveParams = async (commandInput, instructionsSupplier, clientConfig) => {
+      var _a3;
+      const endpointParams = {};
+      const instructions = ((_a3 = instructionsSupplier == null ? void 0 : instructionsSupplier.getEndpointParameterInstructions) == null ? void 0 : _a3.call(instructionsSupplier)) || {};
+      for (const [name, instruction] of Object.entries(instructions)) {
+        switch (instruction.type) {
+          case "staticContextParams":
+            endpointParams[name] = instruction.value;
+            break;
+          case "contextParams":
+            endpointParams[name] = commandInput[instruction.name];
+            break;
+          case "clientContextParams":
+          case "builtInParams":
+            endpointParams[name] = await createConfigValueProvider(instruction.name, name, clientConfig, instruction.type !== "builtInParams")();
+            break;
+          case "operationContextParams":
+            endpointParams[name] = instruction.get(commandInput);
+            break;
+          default:
+            throw new Error("Unrecognized endpoint parameter instruction: " + JSON.stringify(instruction));
+        }
+      }
+      if (Object.keys(instructions).length === 0) {
+        Object.assign(endpointParams, clientConfig);
+      }
+      if (String(clientConfig.serviceId).toLowerCase() === "s3") {
+        await resolveParamsForS3(endpointParams);
+      }
+      return endpointParams;
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/endpointMiddleware.js
+function setFeature(context, feature, value2) {
+  if (!context.__smithy_context) {
+    context.__smithy_context = { features: {} };
+  } else if (!context.__smithy_context.features) {
+    context.__smithy_context.features = {};
+  }
+  context.__smithy_context.features[feature] = value2;
+}
+function bindEndpointMiddleware(getEndpointFromConfig2) {
+  const getEndpointFromInstructions2 = bindGetEndpointFromInstructions(getEndpointFromConfig2);
+  return ({ config, instructions }) => {
+    return (next, context) => async (args) => {
+      var _a3, _b2, _c2;
+      if (config.isCustomEndpoint) {
+        setFeature(context, "ENDPOINT_OVERRIDE", "N");
+      }
+      const endpoint = await getEndpointFromInstructions2(args.input, {
+        getEndpointParameterInstructions() {
+          return instructions;
+        }
+      }, { ...config }, context);
+      context.endpointV2 = endpoint;
+      context.authSchemes = (_a3 = endpoint.properties) == null ? void 0 : _a3.authSchemes;
+      const authScheme = (_b2 = context.authSchemes) == null ? void 0 : _b2[0];
+      if (authScheme) {
+        context["signing_region"] = authScheme.signingRegion;
+        context["signing_service"] = authScheme.signingName;
+        const smithyContext = getSmithyContext(context);
+        const httpAuthOption = (_c2 = smithyContext == null ? void 0 : smithyContext.selectedHttpAuthScheme) == null ? void 0 : _c2.httpAuthOption;
+        if (httpAuthOption) {
+          httpAuthOption.signingProperties = Object.assign(httpAuthOption.signingProperties || {}, {
+            signing_region: authScheme.signingRegion,
+            signingRegion: authScheme.signingRegion,
+            signing_service: authScheme.signingName,
+            signingName: authScheme.signingName,
+            signingRegionSet: authScheme.signingRegionSet
+          }, authScheme.properties);
+        }
+      }
+      return next({
+        ...args
+      });
+    };
+  };
+}
+var init_endpointMiddleware = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/endpointMiddleware.js"() {
+    init_client3();
+    init_getEndpointFromInstructions();
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/getEndpointPlugin.js
+function bindGetEndpointPlugin(getEndpointFromConfig2) {
+  const endpointMiddleware2 = bindEndpointMiddleware(getEndpointFromConfig2);
+  return (config, instructions) => ({
+    applyToStack: (clientStack) => {
+      clientStack.addRelativeTo(endpointMiddleware2({
+        config,
+        instructions
+      }), endpointMiddlewareOptions);
     }
   });
 }
-var init_request_timeout = __esm({
-  "node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js"() {
+var serializerMiddlewareOption2, endpointMiddlewareOptions;
+var init_getEndpointPlugin = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/getEndpointPlugin.js"() {
+    init_endpointMiddleware();
+    serializerMiddlewareOption2 = {
+      name: "serializerMiddleware",
+      step: "serialize",
+      tags: ["SERIALIZER"],
+      override: true
+    };
+    endpointMiddlewareOptions = {
+      step: "serialize",
+      tags: ["ENDPOINT_PARAMETERS", "ENDPOINT_V2", "ENDPOINT"],
+      name: "endpointV2Middleware",
+      override: true,
+      relation: "before",
+      toMiddleware: serializerMiddlewareOption2.name
+    };
   }
 });
 
-// node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js
-var keepAliveSupport, FetchHttpHandler;
-var init_fetch_http_handler = __esm({
-  "node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js"() {
-    init_dist_es2();
-    init_dist_es11();
-    init_create_request();
-    init_request_timeout();
-    keepAliveSupport = {
-      supported: void 0
+// node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/resolveEndpointConfig.js
+function bindResolveEndpointConfig(getEndpointFromConfig2) {
+  return (input) => {
+    var _a3;
+    const tls = (_a3 = input.tls) != null ? _a3 : true;
+    const { endpoint, useDualstackEndpoint, useFipsEndpoint } = input;
+    const customEndpointProvider = endpoint != null ? async () => toEndpointV1(await normalizeProvider(endpoint)()) : void 0;
+    const isCustomEndpoint = !!endpoint;
+    const resolvedConfig = Object.assign(input, {
+      endpoint: customEndpointProvider,
+      tls,
+      isCustomEndpoint,
+      useDualstackEndpoint: normalizeProvider(useDualstackEndpoint != null ? useDualstackEndpoint : false),
+      useFipsEndpoint: normalizeProvider(useFipsEndpoint != null ? useFipsEndpoint : false)
+    });
+    let configuredEndpointPromise = void 0;
+    resolvedConfig.serviceConfiguredEndpoint = async () => {
+      if (input.serviceId && !configuredEndpointPromise) {
+        configuredEndpointPromise = getEndpointFromConfig2(input.serviceId);
+      }
+      return configuredEndpointPromise;
     };
-    FetchHttpHandler = class _FetchHttpHandler {
-      constructor(options) {
-        __publicField(this, "config");
-        __publicField(this, "configProvider");
-        if (typeof options === "function") {
-          this.configProvider = options().then((opts) => opts || {});
+    return resolvedConfig;
+  };
+}
+var init_resolveEndpointConfig = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/middleware-endpoint/resolveEndpointConfig.js"() {
+    init_transport();
+    init_toEndpointV12();
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/bdd/BinaryDecisionDiagram.js
+var BinaryDecisionDiagram;
+var init_BinaryDecisionDiagram = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/bdd/BinaryDecisionDiagram.js"() {
+    BinaryDecisionDiagram = class _BinaryDecisionDiagram {
+      constructor(bdd2, root3, conditions, results) {
+        __publicField(this, "nodes");
+        __publicField(this, "root");
+        __publicField(this, "conditions");
+        __publicField(this, "results");
+        this.nodes = bdd2;
+        this.root = root3;
+        this.conditions = conditions;
+        this.results = results;
+      }
+      static from(bdd2, root3, conditions, results) {
+        return new _BinaryDecisionDiagram(bdd2, root3, conditions, results);
+      }
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/cache/EndpointCache.js
+var EndpointCache;
+var init_EndpointCache = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/cache/EndpointCache.js"() {
+    EndpointCache = class {
+      constructor({ size, params }) {
+        __publicField(this, "capacity");
+        __publicField(this, "data", /* @__PURE__ */ new Map());
+        __publicField(this, "parameters", []);
+        this.capacity = size != null ? size : 50;
+        if (params) {
+          this.parameters = params;
+        }
+      }
+      get(endpointParams, resolver2) {
+        const key = this.hash(endpointParams);
+        if (key === false) {
+          return resolver2();
+        }
+        if (!this.data.has(key)) {
+          if (this.data.size > this.capacity + 10) {
+            const keys = this.data.keys();
+            let i2 = 0;
+            while (true) {
+              const { value: value2, done } = keys.next();
+              this.data.delete(value2);
+              if (done || ++i2 > 10) {
+                break;
+              }
+            }
+          }
+          this.data.set(key, resolver2());
+        }
+        return this.data.get(key);
+      }
+      size() {
+        return this.data.size;
+      }
+      hash(endpointParams) {
+        var _a3;
+        let buffer = "";
+        const { parameters } = this;
+        if (parameters.length === 0) {
+          return false;
+        }
+        for (const param of parameters) {
+          const val = String((_a3 = endpointParams[param]) != null ? _a3 : "");
+          if (val.includes("|;")) {
+            return false;
+          }
+          buffer += val + "|;";
+        }
+        return buffer;
+      }
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/types/EndpointError.js
+var EndpointError;
+var init_EndpointError = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/types/EndpointError.js"() {
+    EndpointError = class extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "EndpointError";
+      }
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/types/EndpointFunctions.js
+var init_EndpointFunctions = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/types/EndpointFunctions.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/types/EndpointRuleObject.js
+var init_EndpointRuleObject2 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/types/EndpointRuleObject.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/types/ErrorRuleObject.js
+var init_ErrorRuleObject2 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/types/ErrorRuleObject.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/types/RuleSetObject.js
+var init_RuleSetObject2 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/types/RuleSetObject.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/types/TreeRuleObject.js
+var init_TreeRuleObject2 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/types/TreeRuleObject.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/types/shared.js
+var init_shared2 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/types/shared.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/types/index.js
+var init_types = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/types/index.js"() {
+    init_EndpointError();
+    init_EndpointFunctions();
+    init_EndpointRuleObject2();
+    init_ErrorRuleObject2();
+    init_RuleSetObject2();
+    init_TreeRuleObject2();
+    init_shared2();
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/debug/debugId.js
+var debugId;
+var init_debugId = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/debug/debugId.js"() {
+    debugId = "endpoints";
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/debug/toDebugString.js
+function toDebugString(input) {
+  if (typeof input !== "object" || input == null) {
+    return input;
+  }
+  if ("ref" in input) {
+    return `$${toDebugString(input.ref)}`;
+  }
+  if ("fn" in input) {
+    return `${input.fn}(${(input.argv || []).map(toDebugString).join(", ")})`;
+  }
+  return JSON.stringify(input, null, 2);
+}
+var init_toDebugString = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/debug/toDebugString.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/debug/index.js
+var init_debug = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/debug/index.js"() {
+    init_debugId();
+    init_toDebugString();
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/customEndpointFunctions.js
+var customEndpointFunctions;
+var init_customEndpointFunctions = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/customEndpointFunctions.js"() {
+    customEndpointFunctions = {};
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/booleanEquals.js
+var booleanEquals;
+var init_booleanEquals = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/booleanEquals.js"() {
+    booleanEquals = (value1, value2) => value1 === value2;
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/coalesce.js
+function coalesce(...args) {
+  for (const arg of args) {
+    if (arg != null) {
+      return arg;
+    }
+  }
+  return void 0;
+}
+var init_coalesce = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/coalesce.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/getAttrPathList.js
+var getAttrPathList;
+var init_getAttrPathList = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/getAttrPathList.js"() {
+    init_types();
+    getAttrPathList = (path2) => {
+      const parts = path2.split(".");
+      const pathList = [];
+      for (const part of parts) {
+        const squareBracketIndex = part.indexOf("[");
+        if (squareBracketIndex !== -1) {
+          if (part.indexOf("]") !== part.length - 1) {
+            throw new EndpointError(`Path: '${path2}' does not end with ']'`);
+          }
+          const arrayIndex = part.slice(squareBracketIndex + 1, -1);
+          if (Number.isNaN(parseInt(arrayIndex))) {
+            throw new EndpointError(`Invalid array index: '${arrayIndex}' in path: '${path2}'`);
+          }
+          if (squareBracketIndex !== 0) {
+            pathList.push(part.slice(0, squareBracketIndex));
+          }
+          pathList.push(arrayIndex);
         } else {
-          this.config = options != null ? options : {};
-          this.configProvider = Promise.resolve(this.config);
-        }
-        if (keepAliveSupport.supported === void 0) {
-          keepAliveSupport.supported = Boolean(typeof Request !== "undefined" && "keepalive" in createRequest("https://[::1]"));
+          pathList.push(part);
         }
       }
-      static create(instanceOrOptions) {
-        if (typeof (instanceOrOptions == null ? void 0 : instanceOrOptions.handle) === "function") {
-          return instanceOrOptions;
-        }
-        return new _FetchHttpHandler(instanceOrOptions);
-      }
-      destroy() {
-      }
-      async handle(request, { abortSignal, requestTimeout: requestTimeout2 } = {}) {
-        var _a, _b, _c;
-        if (!this.config) {
-          this.config = await this.configProvider;
-        }
-        const requestTimeoutInMs = requestTimeout2 != null ? requestTimeout2 : this.config.requestTimeout;
-        const keepAlive = this.config.keepAlive === true;
-        const credentials = this.config.credentials;
-        if (abortSignal == null ? void 0 : abortSignal.aborted) {
-          const abortError = new Error("Request aborted");
-          abortError.name = "AbortError";
-          return Promise.reject(abortError);
-        }
-        let path2 = request.path;
-        const queryString = buildQueryString(request.query || {});
-        if (queryString) {
-          path2 += `?${queryString}`;
-        }
-        if (request.fragment) {
-          path2 += `#${request.fragment}`;
-        }
-        let auth = "";
-        if (request.username != null || request.password != null) {
-          const username = (_a = request.username) != null ? _a : "";
-          const password = (_b = request.password) != null ? _b : "";
-          auth = `${username}:${password}@`;
-        }
-        const { port, method } = request;
-        const url = `${request.protocol}//${auth}${request.hostname}${port ? `:${port}` : ""}${path2}`;
-        const body = method === "GET" || method === "HEAD" ? void 0 : request.body;
-        const requestOptions = {
-          body,
-          headers: new Headers(request.headers),
-          method,
-          credentials
-        };
-        if ((_c = this.config) == null ? void 0 : _c.cache) {
-          requestOptions.cache = this.config.cache;
-        }
-        if (body) {
-          requestOptions.duplex = "half";
-        }
-        if (typeof AbortController !== "undefined") {
-          requestOptions.signal = abortSignal;
-        }
-        if (keepAliveSupport.supported) {
-          requestOptions.keepalive = keepAlive;
-        }
-        if (typeof this.config.requestInit === "function") {
-          Object.assign(requestOptions, this.config.requestInit(request));
-        }
-        let removeSignalEventListener = () => {
-        };
-        const fetchRequest = createRequest(url, requestOptions);
-        const raceOfPromises = [
-          fetch(fetchRequest).then((response) => {
-            const fetchHeaders = response.headers;
-            const transformedHeaders = {};
-            for (const pair of fetchHeaders.entries()) {
-              transformedHeaders[pair[0]] = pair[1];
-            }
-            const hasReadableStream = response.body != void 0;
-            if (!hasReadableStream) {
-              return response.blob().then((body2) => ({
-                response: new HttpResponse({
-                  headers: transformedHeaders,
-                  reason: response.statusText,
-                  statusCode: response.status,
-                  body: body2
-                })
-              }));
-            }
-            return {
-              response: new HttpResponse({
-                headers: transformedHeaders,
-                reason: response.statusText,
-                statusCode: response.status,
-                body: response.body
-              })
-            };
-          }),
-          requestTimeout(requestTimeoutInMs)
-        ];
-        if (abortSignal) {
-          raceOfPromises.push(new Promise((resolve, reject) => {
-            const onAbort = () => {
-              const abortError = new Error("Request aborted");
-              abortError.name = "AbortError";
-              reject(abortError);
-            };
-            if (typeof abortSignal.addEventListener === "function") {
-              const signal = abortSignal;
-              signal.addEventListener("abort", onAbort, { once: true });
-              removeSignalEventListener = () => signal.removeEventListener("abort", onAbort);
-            } else {
-              abortSignal.onabort = onAbort;
-            }
-          }));
-        }
-        return Promise.race(raceOfPromises).finally(removeSignalEventListener);
-      }
-      updateHttpClientConfig(key, value2) {
-        this.config = void 0;
-        this.configProvider = this.configProvider.then((config) => {
-          config[key] = value2;
-          return config;
-        });
-      }
-      httpHandlerConfigs() {
-        var _a;
-        return (_a = this.config) != null ? _a : {};
-      }
+      return pathList;
     };
   }
 });
 
-// node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/getAttr.js
+var getAttr;
+var init_getAttr = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/getAttr.js"() {
+    init_types();
+    init_getAttrPathList();
+    getAttr = (value2, path2) => getAttrPathList(path2).reduce((acc, index2) => {
+      if (typeof acc !== "object") {
+        throw new EndpointError(`Index '${index2}' in '${path2}' not found in '${JSON.stringify(value2)}'`);
+      } else if (Array.isArray(acc)) {
+        const i2 = parseInt(index2);
+        return acc[i2 < 0 ? acc.length + i2 : i2];
+      }
+      return acc[index2];
+    }, value2);
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/isSet.js
+var isSet;
+var init_isSet = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/isSet.js"() {
+    isSet = (value2) => value2 != null;
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/ite.js
+function ite(condition, trueValue, falseValue) {
+  return condition ? trueValue : falseValue;
+}
+var init_ite = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/ite.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/not.js
+var not;
+var init_not = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/not.js"() {
+    not = (value2) => !value2;
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/isIpAddress.js
+var IP_V4_REGEX, isIpAddress;
+var init_isIpAddress = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/isIpAddress.js"() {
+    IP_V4_REGEX = new RegExp(`^(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}$`);
+    isIpAddress = (value2) => IP_V4_REGEX.test(value2) || value2.startsWith("[") && value2.endsWith("]");
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/parseURL.js
+var DEFAULT_PORTS, parseURL;
+var init_parseURL = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/parseURL.js"() {
+    init_dist_es();
+    init_isIpAddress();
+    DEFAULT_PORTS = {
+      [EndpointURLScheme.HTTP]: 80,
+      [EndpointURLScheme.HTTPS]: 443
+    };
+    parseURL = (value2) => {
+      const whatwgURL = (() => {
+        try {
+          if (value2 instanceof URL) {
+            return value2;
+          }
+          if (typeof value2 === "object" && "hostname" in value2) {
+            const { hostname: hostname2, port, protocol: protocol2 = "", path: path2 = "", query = {} } = value2;
+            const url = new URL(`${protocol2}//${hostname2}${port ? `:${port}` : ""}${path2}`);
+            url.search = Object.entries(query).map(([k2, v]) => `${k2}=${v}`).join("&");
+            return url;
+          }
+          return new URL(value2);
+        } catch (error) {
+          return null;
+        }
+      })();
+      if (!whatwgURL) {
+        console.error(`Unable to parse ${JSON.stringify(value2)} as a whatwg URL.`);
+        return null;
+      }
+      const urlString = whatwgURL.href;
+      const { host, hostname, pathname, protocol, search: search2 } = whatwgURL;
+      if (search2) {
+        return null;
+      }
+      const scheme = protocol.slice(0, -1);
+      if (!Object.values(EndpointURLScheme).includes(scheme)) {
+        return null;
+      }
+      const isIp = isIpAddress(hostname);
+      const inputContainsDefaultPort = urlString.includes(`${host}:${DEFAULT_PORTS[scheme]}`) || typeof value2 === "string" && value2.includes(`${host}:${DEFAULT_PORTS[scheme]}`);
+      const authority = `${host}${inputContainsDefaultPort ? `:${DEFAULT_PORTS[scheme]}` : ``}`;
+      return {
+        scheme,
+        authority,
+        path: pathname,
+        normalizedPath: pathname.endsWith("/") ? pathname : `${pathname}/`,
+        isIp
+      };
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/split.js
+function split(value2, delimiter, limit) {
+  if (limit === 1) {
+    return [value2];
+  }
+  if (value2 === "") {
+    return [""];
+  }
+  const parts = value2.split(delimiter);
+  if (limit === 0) {
+    return parts;
+  }
+  return parts.slice(0, limit - 1).concat(parts.slice(1).join(delimiter));
+}
+var init_split = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/split.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/stringEquals.js
+var stringEquals;
+var init_stringEquals = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/stringEquals.js"() {
+    stringEquals = (value1, value2) => value1 === value2;
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/substring.js
+var substring;
+var init_substring = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/substring.js"() {
+    substring = (input, start, stop, reverse) => {
+      if (input == null || start >= stop || input.length < stop || /[^\u0000-\u007f]/.test(input)) {
+        return null;
+      }
+      if (!reverse) {
+        return input.substring(start, stop);
+      }
+      return input.substring(input.length - stop, input.length - start);
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/uriEncode.js
+var uriEncode;
+var init_uriEncode = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/uriEncode.js"() {
+    uriEncode = (value2) => encodeURIComponent(value2).replace(/[!*'()]/g, (c2) => `%${c2.charCodeAt(0).toString(16).toUpperCase()}`);
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/index.js
+var init_lib = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/lib/index.js"() {
+    init_booleanEquals();
+    init_coalesce();
+    init_getAttr();
+    init_isSet();
+    init_transport();
+    init_ite();
+    init_not();
+    init_parseURL();
+    init_split();
+    init_stringEquals();
+    init_substring();
+    init_uriEncode();
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/endpointFunctions.js
+var endpointFunctions;
+var init_endpointFunctions = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/endpointFunctions.js"() {
+    init_lib();
+    endpointFunctions = {
+      booleanEquals,
+      coalesce,
+      getAttr,
+      isSet,
+      isValidHostLabel,
+      ite,
+      not,
+      parseURL,
+      split,
+      stringEquals,
+      substring,
+      uriEncode
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/evaluateTemplate.js
+var evaluateTemplate;
+var init_evaluateTemplate = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/evaluateTemplate.js"() {
+    init_lib();
+    evaluateTemplate = (template, options) => {
+      var _a3, _b2;
+      const evaluatedTemplateArr = [];
+      const { referenceRecord, endpointParams } = options;
+      let currentIndex = 0;
+      while (currentIndex < template.length) {
+        const openingBraceIndex = template.indexOf("{", currentIndex);
+        if (openingBraceIndex === -1) {
+          evaluatedTemplateArr.push(template.slice(currentIndex));
+          break;
+        }
+        evaluatedTemplateArr.push(template.slice(currentIndex, openingBraceIndex));
+        const closingBraceIndex = template.indexOf("}", openingBraceIndex);
+        if (closingBraceIndex === -1) {
+          evaluatedTemplateArr.push(template.slice(openingBraceIndex));
+          break;
+        }
+        if (template[openingBraceIndex + 1] === "{" && template[closingBraceIndex + 1] === "}") {
+          evaluatedTemplateArr.push(template.slice(openingBraceIndex + 1, closingBraceIndex));
+          currentIndex = closingBraceIndex + 2;
+        }
+        const parameterName = template.substring(openingBraceIndex + 1, closingBraceIndex);
+        if (parameterName.includes("#")) {
+          const [refName, attrName] = parameterName.split("#");
+          evaluatedTemplateArr.push(getAttr((_a3 = referenceRecord[refName]) != null ? _a3 : endpointParams[refName], attrName));
+        } else {
+          evaluatedTemplateArr.push((_b2 = referenceRecord[parameterName]) != null ? _b2 : endpointParams[parameterName]);
+        }
+        currentIndex = closingBraceIndex + 1;
+      }
+      return evaluatedTemplateArr.join("");
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/getReferenceValue.js
+var getReferenceValue;
+var init_getReferenceValue = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/getReferenceValue.js"() {
+    getReferenceValue = ({ ref }, options) => {
+      var _a3;
+      return (_a3 = options.referenceRecord[ref]) != null ? _a3 : options.endpointParams[ref];
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/evaluateExpression.js
+var evaluateExpression, callFunction, group;
+var init_evaluateExpression = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/evaluateExpression.js"() {
+    init_types();
+    init_customEndpointFunctions();
+    init_endpointFunctions();
+    init_evaluateTemplate();
+    init_getReferenceValue();
+    evaluateExpression = (obj, keyName, options) => {
+      if (typeof obj === "string") {
+        return evaluateTemplate(obj, options);
+      } else if (obj["fn"]) {
+        return group.callFunction(obj, options);
+      } else if (obj["ref"]) {
+        return getReferenceValue(obj, options);
+      }
+      throw new EndpointError(`'${keyName}': ${String(obj)} is not a string, function or reference.`);
+    };
+    callFunction = ({ fn, argv }, options) => {
+      const evaluatedArgs = Array(argv.length);
+      for (let i2 = 0; i2 < evaluatedArgs.length; ++i2) {
+        const arg = argv[i2];
+        if (typeof arg === "boolean" || typeof arg === "number") {
+          evaluatedArgs[i2] = arg;
+        } else {
+          evaluatedArgs[i2] = group.evaluateExpression(arg, "arg", options);
+        }
+      }
+      const namespaceSeparatorIndex = fn.indexOf(".");
+      if (namespaceSeparatorIndex !== -1) {
+        const namespaceFunctions = customEndpointFunctions[fn.slice(0, namespaceSeparatorIndex)];
+        const customFunction = namespaceFunctions == null ? void 0 : namespaceFunctions[fn.slice(namespaceSeparatorIndex + 1)];
+        if (typeof customFunction === "function") {
+          return customFunction(...evaluatedArgs);
+        }
+      }
+      const callable = endpointFunctions[fn];
+      if (typeof callable === "function") {
+        return callable(...evaluatedArgs);
+      }
+      throw new Error(`function ${fn} not loaded in endpointFunctions.`);
+    };
+    group = {
+      evaluateExpression,
+      callFunction
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/callFunction.js
+var init_callFunction = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/callFunction.js"() {
+    init_evaluateExpression();
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/evaluateCondition.js
+var evaluateCondition;
+var init_evaluateCondition = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/evaluateCondition.js"() {
+    init_debug();
+    init_types();
+    init_callFunction();
+    evaluateCondition = (condition, options) => {
+      var _a3, _b2;
+      const { assign } = condition;
+      if (assign && assign in options.referenceRecord) {
+        throw new EndpointError(`'${assign}' is already defined in Reference Record.`);
+      }
+      const value2 = callFunction(condition, options);
+      (_b2 = (_a3 = options.logger) == null ? void 0 : _a3.debug) == null ? void 0 : _b2.call(_a3, `${debugId} evaluateCondition: ${toDebugString(condition)} = ${toDebugString(value2)}`);
+      const result = value2 === "" ? true : !!value2;
+      if (assign != null) {
+        return { result, toAssign: { name: assign, value: value2 } };
+      }
+      return { result };
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/getEndpointHeaders.js
+var getEndpointHeaders;
+var init_getEndpointHeaders = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/getEndpointHeaders.js"() {
+    init_types();
+    init_evaluateExpression();
+    getEndpointHeaders = (headers, options) => Object.entries(headers != null ? headers : {}).reduce((acc, [headerKey, headerVal]) => {
+      acc[headerKey] = headerVal.map((headerValEntry) => {
+        const processedExpr = evaluateExpression(headerValEntry, "Header value entry", options);
+        if (typeof processedExpr !== "string") {
+          throw new EndpointError(`Header '${headerKey}' value '${processedExpr}' is not a string`);
+        }
+        return processedExpr;
+      });
+      return acc;
+    }, {});
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/getEndpointProperties.js
+var getEndpointProperties, getEndpointProperty, group2;
+var init_getEndpointProperties = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/getEndpointProperties.js"() {
+    init_types();
+    init_evaluateTemplate();
+    getEndpointProperties = (properties, options) => Object.entries(properties).reduce((acc, [propertyKey, propertyVal]) => {
+      acc[propertyKey] = group2.getEndpointProperty(propertyVal, options);
+      return acc;
+    }, {});
+    getEndpointProperty = (property, options) => {
+      if (Array.isArray(property)) {
+        return property.map((propertyEntry) => getEndpointProperty(propertyEntry, options));
+      }
+      switch (typeof property) {
+        case "string":
+          return evaluateTemplate(property, options);
+        case "object":
+          if (property === null) {
+            throw new EndpointError(`Unexpected endpoint property: ${property}`);
+          }
+          return group2.getEndpointProperties(property, options);
+        case "boolean":
+          return property;
+        default:
+          throw new EndpointError(`Unexpected endpoint property type: ${typeof property}`);
+      }
+    };
+    group2 = {
+      getEndpointProperty,
+      getEndpointProperties
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/getEndpointUrl.js
+var getEndpointUrl;
+var init_getEndpointUrl = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/utils/getEndpointUrl.js"() {
+    init_types();
+    init_evaluateExpression();
+    getEndpointUrl = (endpointUrl, options) => {
+      const expression = evaluateExpression(endpointUrl, "Endpoint URL", options);
+      if (typeof expression === "string") {
+        try {
+          return new URL(expression);
+        } catch (error) {
+          console.error(`Failed to construct URL with ${expression}`, error);
+          throw error;
+        }
+      }
+      throw new EndpointError(`Endpoint URL must be a string, got ${typeof expression}`);
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/decideEndpoint.js
+var RESULT, decideEndpoint;
+var init_decideEndpoint = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/util-endpoints/decideEndpoint.js"() {
+    init_types();
+    init_evaluateCondition();
+    init_evaluateExpression();
+    init_getEndpointHeaders();
+    init_getEndpointProperties();
+    init_getEndpointUrl();
+    RESULT = 1e8;
+    decideEndpoint = (bdd2, options) => {
+      const { nodes: nodes2, root: root3, results, conditions } = bdd2;
+      let ref = root3;
+      const referenceRecord = {};
+      const closure = {
+        referenceRecord,
+        endpointParams: options.endpointParams,
+        logger: options.logger
+      };
+      while (ref !== 1 && ref !== -1 && ref < RESULT) {
+        const node_i = 3 * (Math.abs(ref) - 1);
+        const [condition_i, highRef, lowRef] = [nodes2[node_i], nodes2[node_i + 1], nodes2[node_i + 2]];
+        const [fn, argv, assign] = conditions[condition_i];
+        const evaluation = evaluateCondition({ fn, assign, argv }, closure);
+        if (evaluation.toAssign) {
+          const { name, value: value2 } = evaluation.toAssign;
+          referenceRecord[name] = value2;
+        }
+        ref = ref >= 0 === evaluation.result ? highRef : lowRef;
+      }
+      if (ref >= RESULT) {
+        const result = results[ref - RESULT];
+        if (result[0] === -1) {
+          const [, errorExpression] = result;
+          throw new EndpointError(evaluateExpression(errorExpression, "Error", closure));
+        }
+        const [url, properties, headers] = result;
+        return {
+          url: getEndpointUrl(url, closure),
+          properties: getEndpointProperties(properties, closure),
+          headers: getEndpointHeaders(headers != null ? headers : {}, closure)
+        };
+      }
+      throw new EndpointError(`No matching endpoint.`);
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/endpoints/index.browser.js
+var getEndpointFromInstructions, resolveEndpointConfig, endpointMiddleware, getEndpointPlugin;
+var init_index_browser = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/endpoints/index.browser.js"() {
+    init_getEndpointFromConfig_browser();
+    init_getEndpointFromInstructions();
+    init_endpointMiddleware();
+    init_getEndpointPlugin();
+    init_resolveEndpointConfig();
+    init_BinaryDecisionDiagram();
+    init_EndpointCache();
+    init_decideEndpoint();
+    init_isIpAddress();
+    init_transport();
+    init_customEndpointFunctions();
+    init_types();
+    getEndpointFromInstructions = bindGetEndpointFromInstructions(getEndpointFromConfig);
+    resolveEndpointConfig = bindResolveEndpointConfig(getEndpointFromConfig);
+    endpointMiddleware = bindEndpointMiddleware(getEndpointFromConfig);
+    getEndpointPlugin = bindGetEndpointPlugin(getEndpointFromConfig);
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/serde/util-stream/stream-type-check.js
+var isReadableStream;
+var init_stream_type_check = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/util-stream/stream-type-check.js"() {
+    isReadableStream = (stream) => {
+      var _a3;
+      return typeof ReadableStream === "function" && (((_a3 = stream == null ? void 0 : stream.constructor) == null ? void 0 : _a3.name) === ReadableStream.name || stream instanceof ReadableStream);
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/serde/util-stream/stream-collector.browser.js
 async function collectBlob(blob) {
   const base64 = await readToBase64(blob);
   const arrayBuffer = fromBase64(base64);
@@ -1764,11 +4016,11 @@ function readToBase64(blob) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onloadend = () => {
-      var _a;
+      var _a3;
       if (reader.readyState !== 2) {
         return reject(new Error("Reader aborted too early"));
       }
-      const result = (_a = reader.result) != null ? _a : "";
+      const result = (_a3 = reader.result) != null ? _a3 : "";
       const commaIndex = result.indexOf(",");
       const dataOffset = commaIndex > -1 ? commaIndex + 1 : result.length;
       resolve(result.substring(dataOffset));
@@ -1779,12 +4031,12 @@ function readToBase64(blob) {
   });
 }
 var streamCollector;
-var init_stream_collector = __esm({
-  "node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js"() {
-    init_dist_es9();
+var init_stream_collector_browser = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/util-stream/stream-collector.browser.js"() {
+    init_fromBase64_browser();
     streamCollector = async (stream) => {
-      var _a;
-      if (typeof Blob === "function" && stream instanceof Blob || ((_a = stream.constructor) == null ? void 0 : _a.name) === "Blob") {
+      var _a3;
+      if (typeof Blob === "function" && stream instanceof Blob || ((_a3 = stream.constructor) == null ? void 0 : _a3.name) === "Blob") {
         if (Blob.prototype.arrayBuffer !== void 0) {
           return new Uint8Array(await stream.arrayBuffer());
         }
@@ -1795,67 +4047,20 @@ var init_stream_collector = __esm({
   }
 });
 
-// node_modules/@smithy/fetch-http-handler/dist-es/index.js
-var init_dist_es12 = __esm({
-  "node_modules/@smithy/fetch-http-handler/dist-es/index.js"() {
-    init_fetch_http_handler();
-    init_stream_collector();
-  }
-});
-
-// node_modules/@smithy/util-hex-encoding/dist-es/index.js
-function fromHex(encoded) {
-  if (encoded.length % 2 !== 0) {
-    throw new Error("Hex encoded strings must have an even number length");
-  }
-  const out = new Uint8Array(encoded.length / 2);
-  for (let i2 = 0; i2 < encoded.length; i2 += 2) {
-    const encodedByte = encoded.slice(i2, i2 + 2).toLowerCase();
-    if (encodedByte in HEX_TO_SHORT) {
-      out[i2 / 2] = HEX_TO_SHORT[encodedByte];
-    } else {
-      throw new Error(`Cannot decode unrecognized sequence ${encodedByte} as hexadecimal`);
-    }
-  }
-  return out;
-}
-function toHex(bytes) {
-  let out = "";
-  for (let i2 = 0; i2 < bytes.byteLength; i2++) {
-    out += SHORT_TO_HEX[bytes[i2]];
-  }
-  return out;
-}
-var SHORT_TO_HEX, HEX_TO_SHORT;
-var init_dist_es13 = __esm({
-  "node_modules/@smithy/util-hex-encoding/dist-es/index.js"() {
-    SHORT_TO_HEX = {};
-    HEX_TO_SHORT = {};
-    for (let i2 = 0; i2 < 256; i2++) {
-      let encodedByte = i2.toString(16).toLowerCase();
-      if (encodedByte.length === 1) {
-        encodedByte = `0${encodedByte}`;
-      }
-      SHORT_TO_HEX[i2] = encodedByte;
-      HEX_TO_SHORT[encodedByte] = i2;
-    }
-  }
-});
-
-// node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js
+// node_modules/@smithy/core/dist-es/submodules/serde/util-stream/sdk-stream-mixin.browser.js
 var ERR_MSG_STREAM_HAS_BEEN_TRANSFORMED, sdkStreamMixin, isBlobInstance;
 var init_sdk_stream_mixin_browser = __esm({
-  "node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js"() {
-    init_dist_es12();
-    init_dist_es9();
-    init_dist_es13();
-    init_dist_es8();
+  "node_modules/@smithy/core/dist-es/submodules/serde/util-stream/sdk-stream-mixin.browser.js"() {
+    init_toBase64_browser();
+    init_hex_encoding();
+    init_toUtf8_browser();
+    init_stream_collector_browser();
     init_stream_type_check();
     ERR_MSG_STREAM_HAS_BEEN_TRANSFORMED = "The stream has already been transformed.";
     sdkStreamMixin = (stream) => {
-      var _a, _b;
+      var _a3, _b2;
       if (!isBlobInstance(stream) && !isReadableStream(stream)) {
-        const name = ((_b = (_a = stream == null ? void 0 : stream.__proto__) == null ? void 0 : _a.constructor) == null ? void 0 : _b.name) || stream;
+        const name = ((_b2 = (_a3 = stream == null ? void 0 : stream.__proto__) == null ? void 0 : _a3.constructor) == null ? void 0 : _b2.name) || stream;
         throw new Error(`Unexpected stream implementation, expect Blob or ReadableStream, got ${name}`);
       }
       let transformed = false;
@@ -1907,2878 +4112,585 @@ var init_sdk_stream_mixin_browser = __esm({
   }
 });
 
-// node_modules/@smithy/util-stream/dist-es/splitStream.browser.js
-var init_splitStream_browser = __esm({
-  "node_modules/@smithy/util-stream/dist-es/splitStream.browser.js"() {
-  }
-});
-
-// node_modules/@smithy/util-stream/dist-es/index.js
-var init_dist_es14 = __esm({
-  "node_modules/@smithy/util-stream/dist-es/index.js"() {
+// node_modules/@smithy/core/dist-es/submodules/serde/index.browser.js
+var Uint8ArrayBlobAdapter, _getRandomValues, v4, generateIdempotencyToken;
+var init_index_browser2 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/serde/index.browser.js"() {
+    init_fromBase64_browser();
+    init_toBase64_browser();
     init_Uint8ArrayBlobAdapter();
-    init_ChecksumStream_browser();
-    init_createChecksumStream_browser();
-    init_createBufferedReadableStream();
-    init_getAwsChunkedEncodingStream_browser();
-    init_headStream_browser();
-    init_sdk_stream_mixin_browser();
-    init_splitStream_browser();
-    init_stream_type_check();
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js
-var collectBody;
-var init_collect_stream_body = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js"() {
-    init_dist_es14();
-    collectBody = async (streamBody = new Uint8Array(), context) => {
-      if (streamBody instanceof Uint8Array) {
-        return Uint8ArrayBlobAdapter.mutate(streamBody);
-      }
-      if (!streamBody) {
-        return Uint8ArrayBlobAdapter.mutate(new Uint8Array());
-      }
-      const fromContext = context.streamCollector(streamBody);
-      return Uint8ArrayBlobAdapter.mutate(await fromContext);
-    };
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js
-function extendedEncodeURIComponent(str) {
-  return encodeURIComponent(str).replace(/[!'()*]/g, function(c2) {
-    return "%" + c2.charCodeAt(0).toString(16).toUpperCase();
-  });
-}
-var init_extended_encode_uri_component = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/schema/deref.js
-var deref;
-var init_deref = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/schema/deref.js"() {
-    deref = (schemaRef) => {
-      if (typeof schemaRef === "function") {
-        return schemaRef();
-      }
-      return schemaRef;
-    };
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js
-var init_operation = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js
-var init_getSchemaSerdePlugin = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js
-var Schema;
-var init_Schema = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js"() {
-    Schema = class {
-      constructor() {
-        __publicField(this, "name");
-        __publicField(this, "namespace");
-        __publicField(this, "traits");
-      }
-      static assign(instance, values) {
-        const schema = Object.assign(instance, values);
-        return schema;
-      }
-      static [Symbol.hasInstance](lhs) {
-        const isPrototype = this.prototype.isPrototypeOf(lhs);
-        if (!isPrototype && typeof lhs === "object" && lhs !== null) {
-          const list3 = lhs;
-          return list3.symbol === this.symbol;
-        }
-        return isPrototype;
-      }
-      getName() {
-        return this.namespace + "#" + this.name;
-      }
-    };
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js
-var _ListSchema, ListSchema;
-var init_ListSchema = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js"() {
-    init_Schema();
-    _ListSchema = class _ListSchema extends Schema {
-      constructor() {
-        super(...arguments);
-        __publicField(this, "name");
-        __publicField(this, "traits");
-        __publicField(this, "valueSchema");
-        __publicField(this, "symbol", _ListSchema.symbol);
-      }
-    };
-    __publicField(_ListSchema, "symbol", Symbol.for("@smithy/lis"));
-    ListSchema = _ListSchema;
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js
-var _MapSchema, MapSchema;
-var init_MapSchema = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js"() {
-    init_Schema();
-    _MapSchema = class _MapSchema extends Schema {
-      constructor() {
-        super(...arguments);
-        __publicField(this, "name");
-        __publicField(this, "traits");
-        __publicField(this, "keySchema");
-        __publicField(this, "valueSchema");
-        __publicField(this, "symbol", _MapSchema.symbol);
-      }
-    };
-    __publicField(_MapSchema, "symbol", Symbol.for("@smithy/map"));
-    MapSchema = _MapSchema;
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js
-var _OperationSchema, OperationSchema;
-var init_OperationSchema = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js"() {
-    init_Schema();
-    _OperationSchema = class _OperationSchema extends Schema {
-      constructor() {
-        super(...arguments);
-        __publicField(this, "name");
-        __publicField(this, "traits");
-        __publicField(this, "input");
-        __publicField(this, "output");
-        __publicField(this, "symbol", _OperationSchema.symbol);
-      }
-    };
-    __publicField(_OperationSchema, "symbol", Symbol.for("@smithy/ope"));
-    OperationSchema = _OperationSchema;
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js
-var _StructureSchema, StructureSchema;
-var init_StructureSchema = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js"() {
-    init_Schema();
-    _StructureSchema = class _StructureSchema extends Schema {
-      constructor() {
-        super(...arguments);
-        __publicField(this, "name");
-        __publicField(this, "traits");
-        __publicField(this, "memberNames");
-        __publicField(this, "memberList");
-        __publicField(this, "symbol", _StructureSchema.symbol);
-      }
-    };
-    __publicField(_StructureSchema, "symbol", Symbol.for("@smithy/str"));
-    StructureSchema = _StructureSchema;
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js
-var _ErrorSchema, ErrorSchema;
-var init_ErrorSchema = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js"() {
-    init_StructureSchema();
-    _ErrorSchema = class _ErrorSchema extends StructureSchema {
-      constructor() {
-        super(...arguments);
-        __publicField(this, "ctor");
-        __publicField(this, "symbol", _ErrorSchema.symbol);
-      }
-    };
-    __publicField(_ErrorSchema, "symbol", Symbol.for("@smithy/err"));
-    ErrorSchema = _ErrorSchema;
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js
-function translateTraits(indicator) {
-  if (typeof indicator === "object") {
-    return indicator;
-  }
-  indicator = indicator | 0;
-  const traits = {};
-  let i2 = 0;
-  for (const trait of [
-    "httpLabel",
-    "idempotent",
-    "idempotencyToken",
-    "sensitive",
-    "httpPayload",
-    "httpResponseCode",
-    "httpQueryParams"
-  ]) {
-    if ((indicator >> i2++ & 1) === 1) {
-      traits[trait] = 1;
-    }
-  }
-  return traits;
-}
-var init_translateTraits = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js
-function member(memberSchema, memberName) {
-  if (memberSchema instanceof NormalizedSchema) {
-    return Object.assign(memberSchema, {
-      memberName,
-      _isMemberSchema: true
-    });
-  }
-  const internalCtorAccess = NormalizedSchema;
-  return new internalCtorAccess(memberSchema, memberName);
-}
-var _NormalizedSchema, NormalizedSchema, isMemberSchema, isStaticSchema;
-var init_NormalizedSchema = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js"() {
-    init_deref();
-    init_translateTraits();
-    _NormalizedSchema = class _NormalizedSchema {
-      constructor(ref, memberName) {
-        __publicField(this, "ref");
-        __publicField(this, "memberName");
-        __publicField(this, "symbol", _NormalizedSchema.symbol);
-        __publicField(this, "name");
-        __publicField(this, "schema");
-        __publicField(this, "_isMemberSchema");
-        __publicField(this, "traits");
-        __publicField(this, "memberTraits");
-        __publicField(this, "normalizedTraits");
-        var _a;
-        this.ref = ref;
-        this.memberName = memberName;
-        const traitStack = [];
-        let _ref = ref;
-        let schema = ref;
-        this._isMemberSchema = false;
-        while (isMemberSchema(_ref)) {
-          traitStack.push(_ref[1]);
-          _ref = _ref[0];
-          schema = deref(_ref);
-          this._isMemberSchema = true;
-        }
-        if (traitStack.length > 0) {
-          this.memberTraits = {};
-          for (let i2 = traitStack.length - 1; i2 >= 0; --i2) {
-            const traitSet = traitStack[i2];
-            Object.assign(this.memberTraits, translateTraits(traitSet));
-          }
-        } else {
-          this.memberTraits = 0;
-        }
-        if (schema instanceof _NormalizedSchema) {
-          const computedMemberTraits = this.memberTraits;
-          Object.assign(this, schema);
-          this.memberTraits = Object.assign({}, computedMemberTraits, schema.getMemberTraits(), this.getMemberTraits());
-          this.normalizedTraits = void 0;
-          this.memberName = memberName != null ? memberName : schema.memberName;
-          return;
-        }
-        this.schema = deref(schema);
-        if (isStaticSchema(this.schema)) {
-          this.name = `${this.schema[1]}#${this.schema[2]}`;
-          this.traits = this.schema[3];
-        } else {
-          this.name = (_a = this.memberName) != null ? _a : String(schema);
-          this.traits = 0;
-        }
-        if (this._isMemberSchema && !memberName) {
-          throw new Error(`@smithy/core/schema - NormalizedSchema member init ${this.getName(true)} missing member name.`);
-        }
-      }
-      static [Symbol.hasInstance](lhs) {
-        const isPrototype = this.prototype.isPrototypeOf(lhs);
-        if (!isPrototype && typeof lhs === "object" && lhs !== null) {
-          const ns = lhs;
-          return ns.symbol === this.symbol;
-        }
-        return isPrototype;
-      }
-      static of(ref) {
-        const sc = deref(ref);
-        if (sc instanceof _NormalizedSchema) {
-          return sc;
-        }
-        if (isMemberSchema(sc)) {
-          const [ns, traits] = sc;
-          if (ns instanceof _NormalizedSchema) {
-            Object.assign(ns.getMergedTraits(), translateTraits(traits));
-            return ns;
-          }
-          throw new Error(`@smithy/core/schema - may not init unwrapped member schema=${JSON.stringify(ref, null, 2)}.`);
-        }
-        return new _NormalizedSchema(sc);
-      }
-      getSchema() {
-        const sc = this.schema;
-        if (sc[0] === 0) {
-          return sc[4];
-        }
-        return sc;
-      }
-      getName(withNamespace = false) {
-        const { name } = this;
-        const short = !withNamespace && name && name.includes("#");
-        return short ? name.split("#")[1] : name || void 0;
-      }
-      getMemberName() {
-        return this.memberName;
-      }
-      isMemberSchema() {
-        return this._isMemberSchema;
-      }
-      isListSchema() {
-        const sc = this.getSchema();
-        return typeof sc === "number" ? sc >= 64 && sc < 128 : sc[0] === 1;
-      }
-      isMapSchema() {
-        const sc = this.getSchema();
-        return typeof sc === "number" ? sc >= 128 && sc <= 255 : sc[0] === 2;
-      }
-      isStructSchema() {
-        const sc = this.getSchema();
-        return sc[0] === 3 || sc[0] === -3;
-      }
-      isBlobSchema() {
-        const sc = this.getSchema();
-        return sc === 21 || sc === 42;
-      }
-      isTimestampSchema() {
-        const sc = this.getSchema();
-        return typeof sc === "number" && sc >= 4 && sc <= 7;
-      }
-      isUnitSchema() {
-        return this.getSchema() === "unit";
-      }
-      isDocumentSchema() {
-        return this.getSchema() === 15;
-      }
-      isStringSchema() {
-        return this.getSchema() === 0;
-      }
-      isBooleanSchema() {
-        return this.getSchema() === 2;
-      }
-      isNumericSchema() {
-        return this.getSchema() === 1;
-      }
-      isBigIntegerSchema() {
-        return this.getSchema() === 17;
-      }
-      isBigDecimalSchema() {
-        return this.getSchema() === 19;
-      }
-      isStreaming() {
-        const { streaming } = this.getMergedTraits();
-        return !!streaming || this.getSchema() === 42;
-      }
-      isIdempotencyToken() {
-        const match = (traits2) => (traits2 & 4) === 4 || !!(traits2 == null ? void 0 : traits2.idempotencyToken);
-        const { normalizedTraits, traits, memberTraits } = this;
-        return match(normalizedTraits) || match(traits) || match(memberTraits);
-      }
-      getMergedTraits() {
-        var _a;
-        return (_a = this.normalizedTraits) != null ? _a : this.normalizedTraits = {
-          ...this.getOwnTraits(),
-          ...this.getMemberTraits()
-        };
-      }
-      getMemberTraits() {
-        return translateTraits(this.memberTraits);
-      }
-      getOwnTraits() {
-        return translateTraits(this.traits);
-      }
-      getKeySchema() {
-        var _a;
-        const [isDoc, isMap] = [this.isDocumentSchema(), this.isMapSchema()];
-        if (!isDoc && !isMap) {
-          throw new Error(`@smithy/core/schema - cannot get key for non-map: ${this.getName(true)}`);
-        }
-        const schema = this.getSchema();
-        const memberSchema = isDoc ? 15 : (_a = schema[4]) != null ? _a : 0;
-        return member([memberSchema, 0], "key");
-      }
-      getValueSchema() {
-        const sc = this.getSchema();
-        const [isDoc, isMap, isList] = [this.isDocumentSchema(), this.isMapSchema(), this.isListSchema()];
-        const memberSchema = typeof sc === "number" ? 63 & sc : sc && typeof sc === "object" && (isMap || isList) ? sc[3 + sc[0]] : isDoc ? 15 : void 0;
-        if (memberSchema != null) {
-          return member([memberSchema, 0], isMap ? "value" : "member");
-        }
-        throw new Error(`@smithy/core/schema - ${this.getName(true)} has no value member.`);
-      }
-      getMemberSchema(memberName) {
-        const struct = this.getSchema();
-        if (this.isStructSchema() && struct[4].includes(memberName)) {
-          const i2 = struct[4].indexOf(memberName);
-          const memberSchema = struct[5][i2];
-          return member(isMemberSchema(memberSchema) ? memberSchema : [memberSchema, 0], memberName);
-        }
-        if (this.isDocumentSchema()) {
-          return member([15, 0], memberName);
-        }
-        throw new Error(`@smithy/core/schema - ${this.getName(true)} has no no member=${memberName}.`);
-      }
-      getMemberSchemas() {
-        const buffer = {};
-        try {
-          for (const [k2, v2] of this.structIterator()) {
-            buffer[k2] = v2;
-          }
-        } catch (ignored) {
-        }
-        return buffer;
-      }
-      getEventStreamMember() {
-        if (this.isStructSchema()) {
-          for (const [memberName, memberSchema] of this.structIterator()) {
-            if (memberSchema.isStreaming() && memberSchema.isStructSchema()) {
-              return memberName;
-            }
-          }
-        }
-        return "";
-      }
-      *structIterator() {
-        if (this.isUnitSchema()) {
-          return;
-        }
-        if (!this.isStructSchema()) {
-          throw new Error("@smithy/core/schema - cannot iterate non-struct schema.");
-        }
-        const struct = this.getSchema();
-        for (let i2 = 0; i2 < struct[4].length; ++i2) {
-          yield [struct[4][i2], member([struct[5][i2], 0], struct[4][i2])];
-        }
-      }
-    };
-    __publicField(_NormalizedSchema, "symbol", Symbol.for("@smithy/nor"));
-    NormalizedSchema = _NormalizedSchema;
-    isMemberSchema = (sc) => Array.isArray(sc) && sc.length === 2;
-    isStaticSchema = (sc) => Array.isArray(sc) && sc.length >= 5;
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js
-var _SimpleSchema, SimpleSchema;
-var init_SimpleSchema = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js"() {
-    init_Schema();
-    _SimpleSchema = class _SimpleSchema extends Schema {
-      constructor() {
-        super(...arguments);
-        __publicField(this, "name");
-        __publicField(this, "schemaRef");
-        __publicField(this, "traits");
-        __publicField(this, "symbol", _SimpleSchema.symbol);
-      }
-    };
-    __publicField(_SimpleSchema, "symbol", Symbol.for("@smithy/sim"));
-    SimpleSchema = _SimpleSchema;
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js
-var init_sentinels2 = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js
-var init_TypeRegistry = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/schema/index.js
-var init_schema2 = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/schema/index.js"() {
-    init_deref();
-    init_getSchemaSerdePlugin();
-    init_ListSchema();
-    init_MapSchema();
-    init_OperationSchema();
-    init_operation();
-    init_ErrorSchema();
-    init_NormalizedSchema();
-    init_Schema();
-    init_SimpleSchema();
-    init_StructureSchema();
-    init_sentinels2();
-    init_translateTraits();
-    init_TypeRegistry();
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js
-var init_copyDocumentWithTransform = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js
-var expectNumber, MAX_FLOAT, expectLong, expectInt32, expectSizedInt, castInt, expectNonNull, expectObject, expectString, strictParseDouble, NUMBER_REGEX, parseNumber, strictParseInt32, stackTraceWarning, logger;
-var init_parse_utils = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js"() {
-    expectNumber = (value2) => {
-      if (value2 === null || value2 === void 0) {
-        return void 0;
-      }
-      if (typeof value2 === "string") {
-        const parsed = parseFloat(value2);
-        if (!Number.isNaN(parsed)) {
-          if (String(parsed) !== String(value2)) {
-            logger.warn(stackTraceWarning(`Expected number but observed string: ${value2}`));
-          }
-          return parsed;
-        }
-      }
-      if (typeof value2 === "number") {
-        return value2;
-      }
-      throw new TypeError(`Expected number, got ${typeof value2}: ${value2}`);
-    };
-    MAX_FLOAT = Math.ceil(2 ** 127 * (2 - 2 ** -23));
-    expectLong = (value2) => {
-      if (value2 === null || value2 === void 0) {
-        return void 0;
-      }
-      if (Number.isInteger(value2) && !Number.isNaN(value2)) {
-        return value2;
-      }
-      throw new TypeError(`Expected integer, got ${typeof value2}: ${value2}`);
-    };
-    expectInt32 = (value2) => expectSizedInt(value2, 32);
-    expectSizedInt = (value2, size) => {
-      const expected = expectLong(value2);
-      if (expected !== void 0 && castInt(expected, size) !== expected) {
-        throw new TypeError(`Expected ${size}-bit integer, got ${value2}`);
-      }
-      return expected;
-    };
-    castInt = (value2, size) => {
-      switch (size) {
-        case 32:
-          return Int32Array.of(value2)[0];
-        case 16:
-          return Int16Array.of(value2)[0];
-        case 8:
-          return Int8Array.of(value2)[0];
-      }
-    };
-    expectNonNull = (value2, location) => {
-      if (value2 === null || value2 === void 0) {
-        if (location) {
-          throw new TypeError(`Expected a non-null value for ${location}`);
-        }
-        throw new TypeError("Expected a non-null value");
-      }
-      return value2;
-    };
-    expectObject = (value2) => {
-      if (value2 === null || value2 === void 0) {
-        return void 0;
-      }
-      if (typeof value2 === "object" && !Array.isArray(value2)) {
-        return value2;
-      }
-      const receivedType = Array.isArray(value2) ? "array" : typeof value2;
-      throw new TypeError(`Expected object, got ${receivedType}: ${value2}`);
-    };
-    expectString = (value2) => {
-      if (value2 === null || value2 === void 0) {
-        return void 0;
-      }
-      if (typeof value2 === "string") {
-        return value2;
-      }
-      if (["boolean", "number", "bigint"].includes(typeof value2)) {
-        logger.warn(stackTraceWarning(`Expected string, got ${typeof value2}: ${value2}`));
-        return String(value2);
-      }
-      throw new TypeError(`Expected string, got ${typeof value2}: ${value2}`);
-    };
-    strictParseDouble = (value2) => {
-      if (typeof value2 == "string") {
-        return expectNumber(parseNumber(value2));
-      }
-      return expectNumber(value2);
-    };
-    NUMBER_REGEX = /(-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?)|(-?Infinity)|(NaN)/g;
-    parseNumber = (value2) => {
-      const matches = value2.match(NUMBER_REGEX);
-      if (matches === null || matches[0].length !== value2.length) {
-        throw new TypeError(`Expected real number, got implicit NaN`);
-      }
-      return parseFloat(value2);
-    };
-    strictParseInt32 = (value2) => {
-      if (typeof value2 === "string") {
-        return expectInt32(parseNumber(value2));
-      }
-      return expectInt32(value2);
-    };
-    stackTraceWarning = (message) => {
-      return String(new TypeError(message).stack || message).split("\n").slice(0, 5).filter((s2) => !s2.includes("stackTraceWarning")).join("\n");
-    };
-    logger = {
-      warn: console.warn
-    };
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js
-var RFC3339, RFC3339_WITH_OFFSET, IMF_FIXDATE, RFC_850_DATE, ASC_TIME, parseEpochTimestamp, FIFTY_YEARS_IN_MILLIS;
-var init_date_utils = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js"() {
-    init_parse_utils();
-    RFC3339 = new RegExp(/^(\d{4})-(\d{2})-(\d{2})[tT](\d{2}):(\d{2}):(\d{2})(?:\.(\d+))?[zZ]$/);
-    RFC3339_WITH_OFFSET = new RegExp(/^(\d{4})-(\d{2})-(\d{2})[tT](\d{2}):(\d{2}):(\d{2})(?:\.(\d+))?(([-+]\d{2}\:\d{2})|[zZ])$/);
-    IMF_FIXDATE = new RegExp(/^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun), (\d{2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{4}) (\d{1,2}):(\d{2}):(\d{2})(?:\.(\d+))? GMT$/);
-    RFC_850_DATE = new RegExp(/^(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (\d{2})-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-(\d{2}) (\d{1,2}):(\d{2}):(\d{2})(?:\.(\d+))? GMT$/);
-    ASC_TIME = new RegExp(/^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ( [1-9]|\d{2}) (\d{1,2}):(\d{2}):(\d{2})(?:\.(\d+))? (\d{4})$/);
-    parseEpochTimestamp = (value2) => {
-      if (value2 === null || value2 === void 0) {
-        return void 0;
-      }
-      let valueAsDouble;
-      if (typeof value2 === "number") {
-        valueAsDouble = value2;
-      } else if (typeof value2 === "string") {
-        valueAsDouble = strictParseDouble(value2);
-      } else if (typeof value2 === "object" && value2.tag === 1) {
-        valueAsDouble = value2.value;
-      } else {
-        throw new TypeError("Epoch timestamps must be expressed as floating point numbers or their string representation");
-      }
-      if (Number.isNaN(valueAsDouble) || valueAsDouble === Infinity || valueAsDouble === -Infinity) {
-        throw new TypeError("Epoch timestamps must be valid, non-Infinite, non-NaN numerics");
-      }
-      return new Date(Math.round(valueAsDouble * 1e3));
-    };
-    FIFTY_YEARS_IN_MILLIS = 50 * 365 * 24 * 60 * 60 * 1e3;
-  }
-});
-
-// node_modules/@smithy/uuid/dist-es/randomUUID.browser.js
-var randomUUID;
-var init_randomUUID_browser = __esm({
-  "node_modules/@smithy/uuid/dist-es/randomUUID.browser.js"() {
-    randomUUID = typeof crypto !== "undefined" && crypto.randomUUID && crypto.randomUUID.bind(crypto);
-  }
-});
-
-// node_modules/@smithy/uuid/dist-es/v4.js
-var decimalToHex, v4;
-var init_v4 = __esm({
-  "node_modules/@smithy/uuid/dist-es/v4.js"() {
-    init_randomUUID_browser();
-    decimalToHex = Array.from({ length: 256 }, (_, i2) => i2.toString(16).padStart(2, "0"));
-    v4 = () => {
-      if (randomUUID) {
-        return randomUUID();
-      }
-      const rnds = new Uint8Array(16);
-      crypto.getRandomValues(rnds);
-      rnds[6] = rnds[6] & 15 | 64;
-      rnds[8] = rnds[8] & 63 | 128;
-      return decimalToHex[rnds[0]] + decimalToHex[rnds[1]] + decimalToHex[rnds[2]] + decimalToHex[rnds[3]] + "-" + decimalToHex[rnds[4]] + decimalToHex[rnds[5]] + "-" + decimalToHex[rnds[6]] + decimalToHex[rnds[7]] + "-" + decimalToHex[rnds[8]] + decimalToHex[rnds[9]] + "-" + decimalToHex[rnds[10]] + decimalToHex[rnds[11]] + decimalToHex[rnds[12]] + decimalToHex[rnds[13]] + decimalToHex[rnds[14]] + decimalToHex[rnds[15]];
-    };
-  }
-});
-
-// node_modules/@smithy/uuid/dist-es/index.js
-var init_dist_es15 = __esm({
-  "node_modules/@smithy/uuid/dist-es/index.js"() {
+    init_fromUtf8_browser();
+    init_toUtf8_browser();
     init_v4();
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js
-var init_generateIdempotencyToken = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js
-var LazyJsonString;
-var init_lazy_json = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js"() {
-    LazyJsonString = function LazyJsonString2(val) {
-      const str = Object.assign(new String(val), {
-        deserializeJSON() {
-          return JSON.parse(String(val));
-        },
-        toString() {
-          return String(val);
-        },
-        toJSON() {
-          return String(val);
-        }
-      });
-      return str;
-    };
-    LazyJsonString.from = (object) => {
-      if (object && typeof object === "object" && (object instanceof LazyJsonString || "deserializeJSON" in object)) {
-        return object;
-      } else if (typeof object === "string" || Object.getPrototypeOf(object) === String.prototype) {
-        return LazyJsonString(String(object));
-      }
-      return LazyJsonString(JSON.stringify(object));
-    };
-    LazyJsonString.fromObject = LazyJsonString.from;
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js
-var init_quote_header = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js
-var ddd, mmm, time, date, year, RFC3339_WITH_OFFSET2, IMF_FIXDATE2, RFC_850_DATE2, ASC_TIME2;
-var init_schema_date_utils = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js"() {
-    ddd = `(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)(?:[ne|u?r]?s?day)?`;
-    mmm = `(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)`;
-    time = `(\\d?\\d):(\\d{2}):(\\d{2})(?:\\.(\\d+))?`;
-    date = `(\\d?\\d)`;
-    year = `(\\d{4})`;
-    RFC3339_WITH_OFFSET2 = new RegExp(/^(\d{4})-(\d\d)-(\d\d)[tT](\d\d):(\d\d):(\d\d)(\.(\d+))?(([-+]\d\d:\d\d)|[zZ])$/);
-    IMF_FIXDATE2 = new RegExp(`^${ddd}, ${date} ${mmm} ${year} ${time} GMT$`);
-    RFC_850_DATE2 = new RegExp(`^${ddd}, ${date}-${mmm}-(\\d\\d) ${time} GMT$`);
-    ASC_TIME2 = new RegExp(`^${ddd} ${mmm} ( [1-9]|\\d\\d) ${time} ${year}$`);
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/serde/split-every.js
-var init_split_every = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/serde/split-every.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/serde/split-header.js
-var init_split_header = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/serde/split-header.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js
-var init_NumericValue = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/serde/index.js
-var init_serde2 = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/serde/index.js"() {
-    init_copyDocumentWithTransform();
     init_date_utils();
-    init_generateIdempotencyToken();
     init_lazy_json();
-    init_parse_utils();
     init_quote_header();
     init_schema_date_utils();
     init_split_every();
     init_split_header();
     init_NumericValue();
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js
-var init_SerdeContext = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js
-var init_HttpProtocol = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js
-var init_HttpBindingProtocol = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js
-var init_RpcProtocol = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js
-var resolvedPath;
-var init_resolve_path = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js"() {
-    init_extended_encode_uri_component();
-    resolvedPath = (resolvedPath2, input, memberName, labelValueProvider, uriLabel, isGreedyLabel) => {
-      if (input != null && input[memberName] !== void 0) {
-        const labelValue = labelValueProvider();
-        if (labelValue.length <= 0) {
-          throw new Error("Empty value provided for input HTTP label: " + memberName + ".");
-        }
-        resolvedPath2 = resolvedPath2.replace(uriLabel, isGreedyLabel ? labelValue.split("/").map((segment) => extendedEncodeURIComponent(segment)).join("/") : extendedEncodeURIComponent(labelValue));
-      } else {
-        throw new Error("No value provided for input HTTP label: " + memberName + ".");
-      }
-      return resolvedPath2;
+    init_hex_encoding();
+    init_calculateBodyLength_browser();
+    init_toUint8Array_browser();
+    init_is_array_buffer();
+    init_sdk_stream_mixin_browser();
+    Uint8ArrayBlobAdapter = class extends bindUint8ArrayBlobAdapter(toUtf8, fromUtf8, toBase64, fromBase64) {
     };
+    _getRandomValues = (array) => crypto.getRandomValues(array);
+    v4 = bindV4(_getRandomValues);
+    generateIdempotencyToken = v4;
   }
 });
 
-// node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js
-function requestBuilder(input, context) {
-  return new RequestBuilder(input, context);
-}
-var RequestBuilder;
-var init_requestBuilder = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js"() {
-    init_dist_es2();
-    init_resolve_path();
-    RequestBuilder = class {
-      constructor(input, context) {
-        __publicField(this, "input");
-        __publicField(this, "context");
-        __publicField(this, "query", {});
-        __publicField(this, "method", "");
-        __publicField(this, "headers", {});
-        __publicField(this, "path", "");
-        __publicField(this, "body", null);
-        __publicField(this, "hostname", "");
-        __publicField(this, "resolvePathStack", []);
-        this.input = input;
-        this.context = context;
+// node_modules/tslib/tslib.es6.mjs
+function __awaiter(thisArg, _arguments, P, generator) {
+  function adopt(value2) {
+    return value2 instanceof P ? value2 : new P(function(resolve) {
+      resolve(value2);
+    });
+  }
+  return new (P || (P = Promise))(function(resolve, reject) {
+    function fulfilled(value2) {
+      try {
+        step(generator.next(value2));
+      } catch (e2) {
+        reject(e2);
       }
-      async build() {
-        const { hostname, protocol = "https", port, path: basePath } = await this.context.endpoint();
-        this.path = basePath;
-        for (const resolvePath of this.resolvePathStack) {
-          resolvePath(this.path);
-        }
-        return new HttpRequest({
-          protocol,
-          hostname: this.hostname || hostname,
-          port,
-          method: this.method,
-          path: this.path,
-          query: this.query,
-          body: this.body,
-          headers: this.headers
-        });
-      }
-      hn(hostname) {
-        this.hostname = hostname;
-        return this;
-      }
-      bp(uriLabel) {
-        this.resolvePathStack.push((basePath) => {
-          this.path = `${(basePath == null ? void 0 : basePath.endsWith("/")) ? basePath.slice(0, -1) : basePath || ""}` + uriLabel;
-        });
-        return this;
-      }
-      p(memberName, labelValueProvider, uriLabel, isGreedyLabel) {
-        this.resolvePathStack.push((path2) => {
-          this.path = resolvedPath(path2, this.input, memberName, labelValueProvider, uriLabel, isGreedyLabel);
-        });
-        return this;
-      }
-      h(headers) {
-        this.headers = headers;
-        return this;
-      }
-      q(query) {
-        this.query = query;
-        return this;
-      }
-      b(body) {
-        this.body = body;
-        return this;
-      }
-      m(method) {
-        this.method = method;
-        return this;
-      }
-    };
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js
-var init_determineTimestampFormat = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js
-var init_FromStringShapeDeserializer = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js
-var init_HttpInterceptingShapeDeserializer = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js
-var init_ToStringShapeSerializer = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js
-var init_HttpInterceptingShapeSerializer = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/submodules/protocols/index.js
-var init_protocols = __esm({
-  "node_modules/@smithy/core/dist-es/submodules/protocols/index.js"() {
-    init_collect_stream_body();
-    init_extended_encode_uri_component();
-    init_HttpBindingProtocol();
-    init_HttpProtocol();
-    init_RpcProtocol();
-    init_requestBuilder();
-    init_resolve_path();
-    init_FromStringShapeDeserializer();
-    init_HttpInterceptingShapeDeserializer();
-    init_HttpInterceptingShapeSerializer();
-    init_ToStringShapeSerializer();
-    init_determineTimestampFormat();
-    init_SerdeContext();
-  }
-});
-
-// node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js
-var init_requestBuilder2 = __esm({
-  "node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js"() {
-    init_protocols();
-  }
-});
-
-// node_modules/@smithy/core/dist-es/setFeature.js
-function setFeature(context, feature, value2) {
-  if (!context.__smithy_context) {
-    context.__smithy_context = {
-      features: {}
-    };
-  } else if (!context.__smithy_context.features) {
-    context.__smithy_context.features = {};
-  }
-  context.__smithy_context.features[feature] = value2;
-}
-var init_setFeature = __esm({
-  "node_modules/@smithy/core/dist-es/setFeature.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js
-var DefaultIdentityProviderConfig;
-var init_DefaultIdentityProviderConfig = __esm({
-  "node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js"() {
-    DefaultIdentityProviderConfig = class {
-      constructor(config) {
-        __publicField(this, "authSchemes", /* @__PURE__ */ new Map());
-        for (const [key, value2] of Object.entries(config)) {
-          if (value2 !== void 0) {
-            this.authSchemes.set(key, value2);
-          }
-        }
-      }
-      getIdentityProvider(schemeId) {
-        return this.authSchemes.get(schemeId);
-      }
-    };
-  }
-});
-
-// node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js
-var init_httpApiKeyAuth = __esm({
-  "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js
-var init_httpBearerAuth = __esm({
-  "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js
-var init_noAuth = __esm({
-  "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js"() {
-  }
-});
-
-// node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js
-var init_httpAuthSchemes = __esm({
-  "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js"() {
-    init_httpApiKeyAuth();
-    init_httpBearerAuth();
-    init_noAuth();
-  }
-});
-
-// node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js
-var createIsIdentityExpiredFunction, EXPIRATION_MS, isIdentityExpired, doesIdentityRequireRefresh, memoizeIdentityProvider;
-var init_memoizeIdentityProvider = __esm({
-  "node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js"() {
-    createIsIdentityExpiredFunction = (expirationMs) => function isIdentityExpired2(identity) {
-      return doesIdentityRequireRefresh(identity) && identity.expiration.getTime() - Date.now() < expirationMs;
-    };
-    EXPIRATION_MS = 3e5;
-    isIdentityExpired = createIsIdentityExpiredFunction(EXPIRATION_MS);
-    doesIdentityRequireRefresh = (identity) => identity.expiration !== void 0;
-    memoizeIdentityProvider = (provider, isExpired, requiresRefresh) => {
-      if (provider === void 0) {
-        return void 0;
-      }
-      const normalizedProvider = typeof provider !== "function" ? async () => Promise.resolve(provider) : provider;
-      let resolved;
-      let pending;
-      let hasResult;
-      let isConstant = false;
-      const coalesceProvider = async (options) => {
-        if (!pending) {
-          pending = normalizedProvider(options);
-        }
-        try {
-          resolved = await pending;
-          hasResult = true;
-          isConstant = false;
-        } finally {
-          pending = void 0;
-        }
-        return resolved;
-      };
-      if (isExpired === void 0) {
-        return async (options) => {
-          if (!hasResult || (options == null ? void 0 : options.forceRefresh)) {
-            resolved = await coalesceProvider(options);
-          }
-          return resolved;
-        };
-      }
-      return async (options) => {
-        if (!hasResult || (options == null ? void 0 : options.forceRefresh)) {
-          resolved = await coalesceProvider(options);
-        }
-        if (isConstant) {
-          return resolved;
-        }
-        if (!requiresRefresh(resolved)) {
-          isConstant = true;
-          return resolved;
-        }
-        if (isExpired(resolved)) {
-          await coalesceProvider(options);
-          return resolved;
-        }
-        return resolved;
-      };
-    };
-  }
-});
-
-// node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js
-var init_util_identity_and_auth = __esm({
-  "node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js"() {
-    init_DefaultIdentityProviderConfig();
-    init_httpAuthSchemes();
-    init_memoizeIdentityProvider();
-  }
-});
-
-// node_modules/@smithy/core/dist-es/index.js
-var init_dist_es16 = __esm({
-  "node_modules/@smithy/core/dist-es/index.js"() {
-    init_getSmithyContext();
-    init_middleware_http_auth_scheme();
-    init_middleware_http_signing();
-    init_normalizeProvider2();
-    init_createPaginator();
-    init_requestBuilder2();
-    init_setFeature();
-    init_util_identity_and_auth();
-  }
-});
-
-// node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js
-function isValidUserAgentAppId(appId) {
-  if (appId === void 0) {
-    return true;
-  }
-  return typeof appId === "string" && appId.length <= 50;
-}
-function resolveUserAgentConfig(input) {
-  var _a;
-  const normalizedAppIdProvider = normalizeProvider2((_a = input.userAgentAppId) != null ? _a : DEFAULT_UA_APP_ID);
-  const { customUserAgent } = input;
-  return Object.assign(input, {
-    customUserAgent: typeof customUserAgent === "string" ? [[customUserAgent]] : customUserAgent,
-    userAgentAppId: async () => {
-      var _a2, _b;
-      const appId = await normalizedAppIdProvider();
-      if (!isValidUserAgentAppId(appId)) {
-        const logger2 = ((_b = (_a2 = input.logger) == null ? void 0 : _a2.constructor) == null ? void 0 : _b.name) === "NoOpLogger" || !input.logger ? console : input.logger;
-        if (typeof appId !== "string") {
-          logger2 == null ? void 0 : logger2.warn("userAgentAppId must be a string or undefined.");
-        } else if (appId.length > 50) {
-          logger2 == null ? void 0 : logger2.warn("The provided userAgentAppId exceeds the maximum length of 50 characters.");
-        }
-      }
-      return appId;
     }
+    function rejected(value2) {
+      try {
+        step(generator["throw"](value2));
+      } catch (e2) {
+        reject(e2);
+      }
+    }
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
   });
 }
-var DEFAULT_UA_APP_ID;
-var init_configurations = __esm({
-  "node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js"() {
-    init_dist_es16();
-    DEFAULT_UA_APP_ID = void 0;
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js
-var EndpointCache;
-var init_EndpointCache = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js"() {
-    EndpointCache = class {
-      constructor({ size, params }) {
-        __publicField(this, "capacity");
-        __publicField(this, "data", /* @__PURE__ */ new Map());
-        __publicField(this, "parameters", []);
-        this.capacity = size != null ? size : 50;
-        if (params) {
-          this.parameters = params;
-        }
-      }
-      get(endpointParams, resolver2) {
-        const key = this.hash(endpointParams);
-        if (key === false) {
-          return resolver2();
-        }
-        if (!this.data.has(key)) {
-          if (this.data.size > this.capacity + 10) {
-            const keys = this.data.keys();
-            let i2 = 0;
-            while (true) {
-              const { value: value2, done } = keys.next();
-              this.data.delete(value2);
-              if (done || ++i2 > 10) {
-                break;
-              }
-            }
-          }
-          this.data.set(key, resolver2());
-        }
-        return this.data.get(key);
-      }
-      size() {
-        return this.data.size;
-      }
-      hash(endpointParams) {
-        var _a;
-        let buffer = "";
-        const { parameters } = this;
-        if (parameters.length === 0) {
-          return false;
-        }
-        for (const param of parameters) {
-          const val = String((_a = endpointParams[param]) != null ? _a : "");
-          if (val.includes("|;")) {
-            return false;
-          }
-          buffer += val + "|;";
-        }
-        return buffer;
-      }
+function __generator(thisArg, body) {
+  var _ = { label: 0, sent: function() {
+    if (t[0] & 1) throw t[1];
+    return t[1];
+  }, trys: [], ops: [] }, f2, y, t, g2 = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+  return g2.next = verb(0), g2["throw"] = verb(1), g2["return"] = verb(2), typeof Symbol === "function" && (g2[Symbol.iterator] = function() {
+    return this;
+  }), g2;
+  function verb(n) {
+    return function(v) {
+      return step([n, v]);
     };
   }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js
-var IP_V4_REGEX, isIpAddress;
-var init_isIpAddress = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js"() {
-    IP_V4_REGEX = new RegExp(`^(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}$`);
-    isIpAddress = (value2) => IP_V4_REGEX.test(value2) || value2.startsWith("[") && value2.endsWith("]");
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js
-var VALID_HOST_LABEL_REGEX, isValidHostLabel;
-var init_isValidHostLabel = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js"() {
-    VALID_HOST_LABEL_REGEX = new RegExp(`^(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}$`);
-    isValidHostLabel = (value2, allowSubDomains = false) => {
-      if (!allowSubDomains) {
-        return VALID_HOST_LABEL_REGEX.test(value2);
-      }
-      const labels = value2.split(".");
-      for (const label of labels) {
-        if (!isValidHostLabel(label)) {
-          return false;
-        }
-      }
-      return true;
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js
-var customEndpointFunctions;
-var init_customEndpointFunctions = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js"() {
-    customEndpointFunctions = {};
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js
-var debugId;
-var init_debugId = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js"() {
-    debugId = "endpoints";
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js
-function toDebugString(input) {
-  if (typeof input !== "object" || input == null) {
-    return input;
-  }
-  if ("ref" in input) {
-    return `$${toDebugString(input.ref)}`;
-  }
-  if ("fn" in input) {
-    return `${input.fn}(${(input.argv || []).map(toDebugString).join(", ")})`;
-  }
-  return JSON.stringify(input, null, 2);
-}
-var init_toDebugString = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js"() {
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/debug/index.js
-var init_debug = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/debug/index.js"() {
-    init_debugId();
-    init_toDebugString();
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js
-var EndpointError;
-var init_EndpointError = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js"() {
-    EndpointError = class extends Error {
-      constructor(message) {
-        super(message);
-        this.name = "EndpointError";
-      }
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js
-var init_EndpointFunctions = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js"() {
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js
-var init_EndpointRuleObject2 = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js
-var init_ErrorRuleObject2 = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js
-var init_RuleSetObject2 = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js"() {
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js
-var init_TreeRuleObject2 = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js"() {
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/types/shared.js
-var init_shared2 = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/types/shared.js"() {
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/types/index.js
-var init_types2 = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/types/index.js"() {
-    init_EndpointError();
-    init_EndpointFunctions();
-    init_EndpointRuleObject2();
-    init_ErrorRuleObject2();
-    init_RuleSetObject2();
-    init_TreeRuleObject2();
-    init_shared2();
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js
-var booleanEquals;
-var init_booleanEquals = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js"() {
-    booleanEquals = (value1, value2) => value1 === value2;
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js
-var getAttrPathList;
-var init_getAttrPathList = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js"() {
-    init_types2();
-    getAttrPathList = (path2) => {
-      const parts = path2.split(".");
-      const pathList = [];
-      for (const part of parts) {
-        const squareBracketIndex = part.indexOf("[");
-        if (squareBracketIndex !== -1) {
-          if (part.indexOf("]") !== part.length - 1) {
-            throw new EndpointError(`Path: '${path2}' does not end with ']'`);
-          }
-          const arrayIndex = part.slice(squareBracketIndex + 1, -1);
-          if (Number.isNaN(parseInt(arrayIndex))) {
-            throw new EndpointError(`Invalid array index: '${arrayIndex}' in path: '${path2}'`);
-          }
-          if (squareBracketIndex !== 0) {
-            pathList.push(part.slice(0, squareBracketIndex));
-          }
-          pathList.push(arrayIndex);
-        } else {
-          pathList.push(part);
-        }
-      }
-      return pathList;
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js
-var getAttr;
-var init_getAttr = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js"() {
-    init_types2();
-    init_getAttrPathList();
-    getAttr = (value2, path2) => getAttrPathList(path2).reduce((acc, index2) => {
-      if (typeof acc !== "object") {
-        throw new EndpointError(`Index '${index2}' in '${path2}' not found in '${JSON.stringify(value2)}'`);
-      } else if (Array.isArray(acc)) {
-        return acc[parseInt(index2)];
-      }
-      return acc[index2];
-    }, value2);
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js
-var isSet;
-var init_isSet = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js"() {
-    isSet = (value2) => value2 != null;
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/lib/not.js
-var not;
-var init_not = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/lib/not.js"() {
-    not = (value2) => !value2;
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js
-var DEFAULT_PORTS, parseURL;
-var init_parseURL = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js"() {
-    init_dist_es();
-    init_isIpAddress();
-    DEFAULT_PORTS = {
-      [EndpointURLScheme.HTTP]: 80,
-      [EndpointURLScheme.HTTPS]: 443
-    };
-    parseURL = (value2) => {
-      const whatwgURL = (() => {
-        try {
-          if (value2 instanceof URL) {
-            return value2;
-          }
-          if (typeof value2 === "object" && "hostname" in value2) {
-            const { hostname: hostname2, port, protocol: protocol2 = "", path: path2 = "", query = {} } = value2;
-            const url = new URL(`${protocol2}//${hostname2}${port ? `:${port}` : ""}${path2}`);
-            url.search = Object.entries(query).map(([k2, v2]) => `${k2}=${v2}`).join("&");
-            return url;
-          }
-          return new URL(value2);
-        } catch (error) {
-          return null;
-        }
-      })();
-      if (!whatwgURL) {
-        console.error(`Unable to parse ${JSON.stringify(value2)} as a whatwg URL.`);
-        return null;
-      }
-      const urlString = whatwgURL.href;
-      const { host, hostname, pathname, protocol, search: search2 } = whatwgURL;
-      if (search2) {
-        return null;
-      }
-      const scheme = protocol.slice(0, -1);
-      if (!Object.values(EndpointURLScheme).includes(scheme)) {
-        return null;
-      }
-      const isIp = isIpAddress(hostname);
-      const inputContainsDefaultPort = urlString.includes(`${host}:${DEFAULT_PORTS[scheme]}`) || typeof value2 === "string" && value2.includes(`${host}:${DEFAULT_PORTS[scheme]}`);
-      const authority = `${host}${inputContainsDefaultPort ? `:${DEFAULT_PORTS[scheme]}` : ``}`;
-      return {
-        scheme,
-        authority,
-        path: pathname,
-        normalizedPath: pathname.endsWith("/") ? pathname : `${pathname}/`,
-        isIp
-      };
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js
-var stringEquals;
-var init_stringEquals = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js"() {
-    stringEquals = (value1, value2) => value1 === value2;
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/lib/substring.js
-var substring;
-var init_substring = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/lib/substring.js"() {
-    substring = (input, start, stop, reverse) => {
-      if (start >= stop || input.length < stop) {
-        return null;
-      }
-      if (!reverse) {
-        return input.substring(start, stop);
-      }
-      return input.substring(input.length - stop, input.length - start);
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js
-var uriEncode;
-var init_uriEncode = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js"() {
-    uriEncode = (value2) => encodeURIComponent(value2).replace(/[!*'()]/g, (c2) => `%${c2.charCodeAt(0).toString(16).toUpperCase()}`);
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/lib/index.js
-var init_lib = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/lib/index.js"() {
-    init_booleanEquals();
-    init_getAttr();
-    init_isSet();
-    init_isValidHostLabel();
-    init_not();
-    init_parseURL();
-    init_stringEquals();
-    init_substring();
-    init_uriEncode();
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js
-var endpointFunctions;
-var init_endpointFunctions = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js"() {
-    init_lib();
-    endpointFunctions = {
-      booleanEquals,
-      getAttr,
-      isSet,
-      isValidHostLabel,
-      not,
-      parseURL,
-      stringEquals,
-      substring,
-      uriEncode
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js
-var evaluateTemplate;
-var init_evaluateTemplate = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js"() {
-    init_lib();
-    evaluateTemplate = (template, options) => {
-      const evaluatedTemplateArr = [];
-      const templateContext = {
-        ...options.endpointParams,
-        ...options.referenceRecord
-      };
-      let currentIndex = 0;
-      while (currentIndex < template.length) {
-        const openingBraceIndex = template.indexOf("{", currentIndex);
-        if (openingBraceIndex === -1) {
-          evaluatedTemplateArr.push(template.slice(currentIndex));
+  function step(op) {
+    if (f2) throw new TypeError("Generator is already executing.");
+    while (g2 && (g2 = 0, op[0] && (_ = 0)), _) try {
+      if (f2 = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+      if (y = 0, t) op = [op[0] & 2, t.value];
+      switch (op[0]) {
+        case 0:
+        case 1:
+          t = op;
           break;
-        }
-        evaluatedTemplateArr.push(template.slice(currentIndex, openingBraceIndex));
-        const closingBraceIndex = template.indexOf("}", openingBraceIndex);
-        if (closingBraceIndex === -1) {
-          evaluatedTemplateArr.push(template.slice(openingBraceIndex));
-          break;
-        }
-        if (template[openingBraceIndex + 1] === "{" && template[closingBraceIndex + 1] === "}") {
-          evaluatedTemplateArr.push(template.slice(openingBraceIndex + 1, closingBraceIndex));
-          currentIndex = closingBraceIndex + 2;
-        }
-        const parameterName = template.substring(openingBraceIndex + 1, closingBraceIndex);
-        if (parameterName.includes("#")) {
-          const [refName, attrName] = parameterName.split("#");
-          evaluatedTemplateArr.push(getAttr(templateContext[refName], attrName));
-        } else {
-          evaluatedTemplateArr.push(templateContext[parameterName]);
-        }
-        currentIndex = closingBraceIndex + 1;
-      }
-      return evaluatedTemplateArr.join("");
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js
-var getReferenceValue;
-var init_getReferenceValue = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js"() {
-    getReferenceValue = ({ ref }, options) => {
-      const referenceRecord = {
-        ...options.endpointParams,
-        ...options.referenceRecord
-      };
-      return referenceRecord[ref];
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js
-var evaluateExpression, callFunction, group;
-var init_evaluateExpression = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js"() {
-    init_types2();
-    init_customEndpointFunctions();
-    init_endpointFunctions();
-    init_evaluateTemplate();
-    init_getReferenceValue();
-    evaluateExpression = (obj, keyName, options) => {
-      if (typeof obj === "string") {
-        return evaluateTemplate(obj, options);
-      } else if (obj["fn"]) {
-        return group.callFunction(obj, options);
-      } else if (obj["ref"]) {
-        return getReferenceValue(obj, options);
-      }
-      throw new EndpointError(`'${keyName}': ${String(obj)} is not a string, function or reference.`);
-    };
-    callFunction = ({ fn, argv }, options) => {
-      const evaluatedArgs = argv.map((arg) => ["boolean", "number"].includes(typeof arg) ? arg : group.evaluateExpression(arg, "arg", options));
-      const fnSegments = fn.split(".");
-      if (fnSegments[0] in customEndpointFunctions && fnSegments[1] != null) {
-        return customEndpointFunctions[fnSegments[0]][fnSegments[1]](...evaluatedArgs);
-      }
-      return endpointFunctions[fn](...evaluatedArgs);
-    };
-    group = {
-      evaluateExpression,
-      callFunction
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js
-var init_callFunction = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js"() {
-    init_evaluateExpression();
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js
-var evaluateCondition;
-var init_evaluateCondition = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js"() {
-    init_debug();
-    init_types2();
-    init_callFunction();
-    evaluateCondition = ({ assign, ...fnArgs }, options) => {
-      var _a, _b;
-      if (assign && assign in options.referenceRecord) {
-        throw new EndpointError(`'${assign}' is already defined in Reference Record.`);
-      }
-      const value2 = callFunction(fnArgs, options);
-      (_b = (_a = options.logger) == null ? void 0 : _a.debug) == null ? void 0 : _b.call(_a, `${debugId} evaluateCondition: ${toDebugString(fnArgs)} = ${toDebugString(value2)}`);
-      return {
-        result: value2 === "" ? true : !!value2,
-        ...assign != null && { toAssign: { name: assign, value: value2 } }
-      };
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/utils/evaluateConditions.js
-var evaluateConditions;
-var init_evaluateConditions = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateConditions.js"() {
-    init_debug();
-    init_evaluateCondition();
-    evaluateConditions = (conditions = [], options) => {
-      var _a, _b;
-      const conditionsReferenceRecord = {};
-      for (const condition of conditions) {
-        const { result, toAssign } = evaluateCondition(condition, {
-          ...options,
-          referenceRecord: {
-            ...options.referenceRecord,
-            ...conditionsReferenceRecord
-          }
-        });
-        if (!result) {
-          return { result };
-        }
-        if (toAssign) {
-          conditionsReferenceRecord[toAssign.name] = toAssign.value;
-          (_b = (_a = options.logger) == null ? void 0 : _a.debug) == null ? void 0 : _b.call(_a, `${debugId} assign: ${toAssign.name} := ${toDebugString(toAssign.value)}`);
-        }
-      }
-      return { result: true, referenceRecord: conditionsReferenceRecord };
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js
-var getEndpointHeaders;
-var init_getEndpointHeaders = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js"() {
-    init_types2();
-    init_evaluateExpression();
-    getEndpointHeaders = (headers, options) => Object.entries(headers).reduce((acc, [headerKey, headerVal]) => ({
-      ...acc,
-      [headerKey]: headerVal.map((headerValEntry) => {
-        const processedExpr = evaluateExpression(headerValEntry, "Header value entry", options);
-        if (typeof processedExpr !== "string") {
-          throw new EndpointError(`Header '${headerKey}' value '${processedExpr}' is not a string`);
-        }
-        return processedExpr;
-      })
-    }), {});
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js
-var getEndpointProperties, getEndpointProperty, group2;
-var init_getEndpointProperties = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js"() {
-    init_types2();
-    init_evaluateTemplate();
-    getEndpointProperties = (properties, options) => Object.entries(properties).reduce((acc, [propertyKey, propertyVal]) => ({
-      ...acc,
-      [propertyKey]: group2.getEndpointProperty(propertyVal, options)
-    }), {});
-    getEndpointProperty = (property, options) => {
-      if (Array.isArray(property)) {
-        return property.map((propertyEntry) => getEndpointProperty(propertyEntry, options));
-      }
-      switch (typeof property) {
-        case "string":
-          return evaluateTemplate(property, options);
-        case "object":
-          if (property === null) {
-            throw new EndpointError(`Unexpected endpoint property: ${property}`);
-          }
-          return group2.getEndpointProperties(property, options);
-        case "boolean":
-          return property;
-        default:
-          throw new EndpointError(`Unexpected endpoint property type: ${typeof property}`);
-      }
-    };
-    group2 = {
-      getEndpointProperty,
-      getEndpointProperties
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js
-var getEndpointUrl;
-var init_getEndpointUrl = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js"() {
-    init_types2();
-    init_evaluateExpression();
-    getEndpointUrl = (endpointUrl, options) => {
-      const expression = evaluateExpression(endpointUrl, "Endpoint URL", options);
-      if (typeof expression === "string") {
-        try {
-          return new URL(expression);
-        } catch (error) {
-          console.error(`Failed to construct URL with ${expression}`, error);
-          throw error;
-        }
-      }
-      throw new EndpointError(`Endpoint URL must be a string, got ${typeof expression}`);
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/utils/evaluateEndpointRule.js
-var evaluateEndpointRule;
-var init_evaluateEndpointRule = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateEndpointRule.js"() {
-    init_debug();
-    init_evaluateConditions();
-    init_getEndpointHeaders();
-    init_getEndpointProperties();
-    init_getEndpointUrl();
-    evaluateEndpointRule = (endpointRule, options) => {
-      var _a, _b;
-      const { conditions, endpoint } = endpointRule;
-      const { result, referenceRecord } = evaluateConditions(conditions, options);
-      if (!result) {
-        return;
-      }
-      const endpointRuleOptions = {
-        ...options,
-        referenceRecord: { ...options.referenceRecord, ...referenceRecord }
-      };
-      const { url, properties, headers } = endpoint;
-      (_b = (_a = options.logger) == null ? void 0 : _a.debug) == null ? void 0 : _b.call(_a, `${debugId} Resolving endpoint from template: ${toDebugString(endpoint)}`);
-      return {
-        ...headers != void 0 && {
-          headers: getEndpointHeaders(headers, endpointRuleOptions)
-        },
-        ...properties != void 0 && {
-          properties: getEndpointProperties(properties, endpointRuleOptions)
-        },
-        url: getEndpointUrl(url, endpointRuleOptions)
-      };
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/utils/evaluateErrorRule.js
-var evaluateErrorRule;
-var init_evaluateErrorRule = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateErrorRule.js"() {
-    init_types2();
-    init_evaluateConditions();
-    init_evaluateExpression();
-    evaluateErrorRule = (errorRule, options) => {
-      const { conditions, error } = errorRule;
-      const { result, referenceRecord } = evaluateConditions(conditions, options);
-      if (!result) {
-        return;
-      }
-      throw new EndpointError(evaluateExpression(error, "Error", {
-        ...options,
-        referenceRecord: { ...options.referenceRecord, ...referenceRecord }
-      }));
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/utils/evaluateRules.js
-var evaluateRules, evaluateTreeRule, group3;
-var init_evaluateRules = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateRules.js"() {
-    init_types2();
-    init_evaluateConditions();
-    init_evaluateEndpointRule();
-    init_evaluateErrorRule();
-    evaluateRules = (rules, options) => {
-      for (const rule of rules) {
-        if (rule.type === "endpoint") {
-          const endpointOrUndefined = evaluateEndpointRule(rule, options);
-          if (endpointOrUndefined) {
-            return endpointOrUndefined;
-          }
-        } else if (rule.type === "error") {
-          evaluateErrorRule(rule, options);
-        } else if (rule.type === "tree") {
-          const endpointOrUndefined = group3.evaluateTreeRule(rule, options);
-          if (endpointOrUndefined) {
-            return endpointOrUndefined;
-          }
-        } else {
-          throw new EndpointError(`Unknown endpoint rule: ${rule}`);
-        }
-      }
-      throw new EndpointError(`Rules evaluation failed`);
-    };
-    evaluateTreeRule = (treeRule, options) => {
-      const { conditions, rules } = treeRule;
-      const { result, referenceRecord } = evaluateConditions(conditions, options);
-      if (!result) {
-        return;
-      }
-      return group3.evaluateRules(rules, {
-        ...options,
-        referenceRecord: { ...options.referenceRecord, ...referenceRecord }
-      });
-    };
-    group3 = {
-      evaluateRules,
-      evaluateTreeRule
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/utils/index.js
-var init_utils = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/utils/index.js"() {
-    init_customEndpointFunctions();
-    init_evaluateRules();
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js
-var resolveEndpoint;
-var init_resolveEndpoint = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js"() {
-    init_debug();
-    init_types2();
-    init_utils();
-    resolveEndpoint = (ruleSetObject, options) => {
-      var _a, _b, _c, _d, _e;
-      const { endpointParams, logger: logger2 } = options;
-      const { parameters, rules } = ruleSetObject;
-      (_b = (_a = options.logger) == null ? void 0 : _a.debug) == null ? void 0 : _b.call(_a, `${debugId} Initial EndpointParams: ${toDebugString(endpointParams)}`);
-      const paramsWithDefault = Object.entries(parameters).filter(([, v2]) => v2.default != null).map(([k2, v2]) => [k2, v2.default]);
-      if (paramsWithDefault.length > 0) {
-        for (const [paramKey, paramDefaultValue] of paramsWithDefault) {
-          endpointParams[paramKey] = (_c = endpointParams[paramKey]) != null ? _c : paramDefaultValue;
-        }
-      }
-      const requiredParams = Object.entries(parameters).filter(([, v2]) => v2.required).map(([k2]) => k2);
-      for (const requiredParam of requiredParams) {
-        if (endpointParams[requiredParam] == null) {
-          throw new EndpointError(`Missing required parameter: '${requiredParam}'`);
-        }
-      }
-      const endpoint = evaluateRules(rules, { endpointParams, logger: logger2, referenceRecord: {} });
-      (_e = (_d = options.logger) == null ? void 0 : _d.debug) == null ? void 0 : _e.call(_d, `${debugId} Resolved endpoint: ${toDebugString(endpoint)}`);
-      return endpoint;
-    };
-  }
-});
-
-// node_modules/@smithy/util-endpoints/dist-es/index.js
-var init_dist_es17 = __esm({
-  "node_modules/@smithy/util-endpoints/dist-es/index.js"() {
-    init_EndpointCache();
-    init_isIpAddress();
-    init_isValidHostLabel();
-    init_customEndpointFunctions();
-    init_resolveEndpoint();
-    init_types2();
-  }
-});
-
-// node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js
-var init_isIpAddress2 = __esm({
-  "node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js"() {
-    init_dist_es17();
-  }
-});
-
-// node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js
-var isVirtualHostableS3Bucket;
-var init_isVirtualHostableS3Bucket = __esm({
-  "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js"() {
-    init_dist_es17();
-    init_isIpAddress2();
-    isVirtualHostableS3Bucket = (value2, allowSubDomains = false) => {
-      if (allowSubDomains) {
-        for (const label of value2.split(".")) {
-          if (!isVirtualHostableS3Bucket(label)) {
-            return false;
-          }
-        }
-        return true;
-      }
-      if (!isValidHostLabel(value2)) {
-        return false;
-      }
-      if (value2.length < 3 || value2.length > 63) {
-        return false;
-      }
-      if (value2 !== value2.toLowerCase()) {
-        return false;
-      }
-      if (isIpAddress(value2)) {
-        return false;
-      }
-      return true;
-    };
-  }
-});
-
-// node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js
-var ARN_DELIMITER, RESOURCE_DELIMITER, parseArn;
-var init_parseArn = __esm({
-  "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js"() {
-    ARN_DELIMITER = ":";
-    RESOURCE_DELIMITER = "/";
-    parseArn = (value2) => {
-      const segments = value2.split(ARN_DELIMITER);
-      if (segments.length < 6)
-        return null;
-      const [arn, partition2, service, region, accountId, ...resourcePath] = segments;
-      if (arn !== "arn" || partition2 === "" || service === "" || resourcePath.join(ARN_DELIMITER) === "")
-        return null;
-      const resourceId = resourcePath.map((resource) => resource.split(RESOURCE_DELIMITER)).flat();
-      return {
-        partition: partition2,
-        service,
-        region,
-        accountId,
-        resourceId
-      };
-    };
-  }
-});
-
-// node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json
-var partitions_default;
-var init_partitions = __esm({
-  "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json"() {
-    partitions_default = {
-      partitions: [{
-        id: "aws",
-        outputs: {
-          dnsSuffix: "amazonaws.com",
-          dualStackDnsSuffix: "api.aws",
-          implicitGlobalRegion: "us-east-1",
-          name: "aws",
-          supportsDualStack: true,
-          supportsFIPS: true
-        },
-        regionRegex: "^(us|eu|ap|sa|ca|me|af|il|mx)\\-\\w+\\-\\d+$",
-        regions: {
-          "af-south-1": {
-            description: "Africa (Cape Town)"
-          },
-          "ap-east-1": {
-            description: "Asia Pacific (Hong Kong)"
-          },
-          "ap-east-2": {
-            description: "Asia Pacific (Taipei)"
-          },
-          "ap-northeast-1": {
-            description: "Asia Pacific (Tokyo)"
-          },
-          "ap-northeast-2": {
-            description: "Asia Pacific (Seoul)"
-          },
-          "ap-northeast-3": {
-            description: "Asia Pacific (Osaka)"
-          },
-          "ap-south-1": {
-            description: "Asia Pacific (Mumbai)"
-          },
-          "ap-south-2": {
-            description: "Asia Pacific (Hyderabad)"
-          },
-          "ap-southeast-1": {
-            description: "Asia Pacific (Singapore)"
-          },
-          "ap-southeast-2": {
-            description: "Asia Pacific (Sydney)"
-          },
-          "ap-southeast-3": {
-            description: "Asia Pacific (Jakarta)"
-          },
-          "ap-southeast-4": {
-            description: "Asia Pacific (Melbourne)"
-          },
-          "ap-southeast-5": {
-            description: "Asia Pacific (Malaysia)"
-          },
-          "ap-southeast-6": {
-            description: "Asia Pacific (New Zealand)"
-          },
-          "ap-southeast-7": {
-            description: "Asia Pacific (Thailand)"
-          },
-          "aws-global": {
-            description: "aws global region"
-          },
-          "ca-central-1": {
-            description: "Canada (Central)"
-          },
-          "ca-west-1": {
-            description: "Canada West (Calgary)"
-          },
-          "eu-central-1": {
-            description: "Europe (Frankfurt)"
-          },
-          "eu-central-2": {
-            description: "Europe (Zurich)"
-          },
-          "eu-north-1": {
-            description: "Europe (Stockholm)"
-          },
-          "eu-south-1": {
-            description: "Europe (Milan)"
-          },
-          "eu-south-2": {
-            description: "Europe (Spain)"
-          },
-          "eu-west-1": {
-            description: "Europe (Ireland)"
-          },
-          "eu-west-2": {
-            description: "Europe (London)"
-          },
-          "eu-west-3": {
-            description: "Europe (Paris)"
-          },
-          "il-central-1": {
-            description: "Israel (Tel Aviv)"
-          },
-          "me-central-1": {
-            description: "Middle East (UAE)"
-          },
-          "me-south-1": {
-            description: "Middle East (Bahrain)"
-          },
-          "mx-central-1": {
-            description: "Mexico (Central)"
-          },
-          "sa-east-1": {
-            description: "South America (Sao Paulo)"
-          },
-          "us-east-1": {
-            description: "US East (N. Virginia)"
-          },
-          "us-east-2": {
-            description: "US East (Ohio)"
-          },
-          "us-west-1": {
-            description: "US West (N. California)"
-          },
-          "us-west-2": {
-            description: "US West (Oregon)"
-          }
-        }
-      }, {
-        id: "aws-cn",
-        outputs: {
-          dnsSuffix: "amazonaws.com.cn",
-          dualStackDnsSuffix: "api.amazonwebservices.com.cn",
-          implicitGlobalRegion: "cn-northwest-1",
-          name: "aws-cn",
-          supportsDualStack: true,
-          supportsFIPS: true
-        },
-        regionRegex: "^cn\\-\\w+\\-\\d+$",
-        regions: {
-          "aws-cn-global": {
-            description: "aws-cn global region"
-          },
-          "cn-north-1": {
-            description: "China (Beijing)"
-          },
-          "cn-northwest-1": {
-            description: "China (Ningxia)"
-          }
-        }
-      }, {
-        id: "aws-eusc",
-        outputs: {
-          dnsSuffix: "amazonaws.eu",
-          dualStackDnsSuffix: "api.amazonwebservices.eu",
-          implicitGlobalRegion: "eusc-de-east-1",
-          name: "aws-eusc",
-          supportsDualStack: true,
-          supportsFIPS: true
-        },
-        regionRegex: "^eusc\\-(de)\\-\\w+\\-\\d+$",
-        regions: {
-          "eusc-de-east-1": {
-            description: "EU (Germany)"
-          }
-        }
-      }, {
-        id: "aws-iso",
-        outputs: {
-          dnsSuffix: "c2s.ic.gov",
-          dualStackDnsSuffix: "api.aws.ic.gov",
-          implicitGlobalRegion: "us-iso-east-1",
-          name: "aws-iso",
-          supportsDualStack: true,
-          supportsFIPS: true
-        },
-        regionRegex: "^us\\-iso\\-\\w+\\-\\d+$",
-        regions: {
-          "aws-iso-global": {
-            description: "aws-iso global region"
-          },
-          "us-iso-east-1": {
-            description: "US ISO East"
-          },
-          "us-iso-west-1": {
-            description: "US ISO WEST"
-          }
-        }
-      }, {
-        id: "aws-iso-b",
-        outputs: {
-          dnsSuffix: "sc2s.sgov.gov",
-          dualStackDnsSuffix: "api.aws.scloud",
-          implicitGlobalRegion: "us-isob-east-1",
-          name: "aws-iso-b",
-          supportsDualStack: true,
-          supportsFIPS: true
-        },
-        regionRegex: "^us\\-isob\\-\\w+\\-\\d+$",
-        regions: {
-          "aws-iso-b-global": {
-            description: "aws-iso-b global region"
-          },
-          "us-isob-east-1": {
-            description: "US ISOB East (Ohio)"
-          },
-          "us-isob-west-1": {
-            description: "US ISOB West"
-          }
-        }
-      }, {
-        id: "aws-iso-e",
-        outputs: {
-          dnsSuffix: "cloud.adc-e.uk",
-          dualStackDnsSuffix: "api.cloud-aws.adc-e.uk",
-          implicitGlobalRegion: "eu-isoe-west-1",
-          name: "aws-iso-e",
-          supportsDualStack: true,
-          supportsFIPS: true
-        },
-        regionRegex: "^eu\\-isoe\\-\\w+\\-\\d+$",
-        regions: {
-          "aws-iso-e-global": {
-            description: "aws-iso-e global region"
-          },
-          "eu-isoe-west-1": {
-            description: "EU ISOE West"
-          }
-        }
-      }, {
-        id: "aws-iso-f",
-        outputs: {
-          dnsSuffix: "csp.hci.ic.gov",
-          dualStackDnsSuffix: "api.aws.hci.ic.gov",
-          implicitGlobalRegion: "us-isof-south-1",
-          name: "aws-iso-f",
-          supportsDualStack: true,
-          supportsFIPS: true
-        },
-        regionRegex: "^us\\-isof\\-\\w+\\-\\d+$",
-        regions: {
-          "aws-iso-f-global": {
-            description: "aws-iso-f global region"
-          },
-          "us-isof-east-1": {
-            description: "US ISOF EAST"
-          },
-          "us-isof-south-1": {
-            description: "US ISOF SOUTH"
-          }
-        }
-      }, {
-        id: "aws-us-gov",
-        outputs: {
-          dnsSuffix: "amazonaws.com",
-          dualStackDnsSuffix: "api.aws",
-          implicitGlobalRegion: "us-gov-west-1",
-          name: "aws-us-gov",
-          supportsDualStack: true,
-          supportsFIPS: true
-        },
-        regionRegex: "^us\\-gov\\-\\w+\\-\\d+$",
-        regions: {
-          "aws-us-gov-global": {
-            description: "aws-us-gov global region"
-          },
-          "us-gov-east-1": {
-            description: "AWS GovCloud (US-East)"
-          },
-          "us-gov-west-1": {
-            description: "AWS GovCloud (US-West)"
-          }
-        }
-      }],
-      version: "1.1"
-    };
-  }
-});
-
-// node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js
-var selectedPartitionsInfo, selectedUserAgentPrefix, partition, getUserAgentPrefix;
-var init_partition = __esm({
-  "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js"() {
-    init_partitions();
-    selectedPartitionsInfo = partitions_default;
-    selectedUserAgentPrefix = "";
-    partition = (value2) => {
-      const { partitions } = selectedPartitionsInfo;
-      for (const partition2 of partitions) {
-        const { regions, outputs } = partition2;
-        for (const [region, regionData] of Object.entries(regions)) {
-          if (region === value2) {
-            return {
-              ...outputs,
-              ...regionData
-            };
-          }
-        }
-      }
-      for (const partition2 of partitions) {
-        const { regionRegex, outputs } = partition2;
-        if (new RegExp(regionRegex).test(value2)) {
-          return {
-            ...outputs
-          };
-        }
-      }
-      const DEFAULT_PARTITION = partitions.find((partition2) => partition2.id === "aws");
-      if (!DEFAULT_PARTITION) {
-        throw new Error("Provided region was not found in the partition array or regex, and default partition with id 'aws' doesn't exist.");
-      }
-      return {
-        ...DEFAULT_PARTITION.outputs
-      };
-    };
-    getUserAgentPrefix = () => selectedUserAgentPrefix;
-  }
-});
-
-// node_modules/@aws-sdk/util-endpoints/dist-es/aws.js
-var awsEndpointFunctions;
-var init_aws = __esm({
-  "node_modules/@aws-sdk/util-endpoints/dist-es/aws.js"() {
-    init_dist_es17();
-    init_isVirtualHostableS3Bucket();
-    init_parseArn();
-    init_partition();
-    awsEndpointFunctions = {
-      isVirtualHostableS3Bucket,
-      parseArn,
-      partition
-    };
-    customEndpointFunctions.aws = awsEndpointFunctions;
-  }
-});
-
-// node_modules/@smithy/querystring-parser/dist-es/index.js
-function parseQueryString(querystring) {
-  const query = {};
-  querystring = querystring.replace(/^\?/, "");
-  if (querystring) {
-    for (const pair of querystring.split("&")) {
-      let [key, value2 = null] = pair.split("=");
-      key = decodeURIComponent(key);
-      if (value2) {
-        value2 = decodeURIComponent(value2);
-      }
-      if (!(key in query)) {
-        query[key] = value2;
-      } else if (Array.isArray(query[key])) {
-        query[key].push(value2);
-      } else {
-        query[key] = [query[key], value2];
-      }
-    }
-  }
-  return query;
-}
-var init_dist_es18 = __esm({
-  "node_modules/@smithy/querystring-parser/dist-es/index.js"() {
-  }
-});
-
-// node_modules/@smithy/url-parser/dist-es/index.js
-var parseUrl;
-var init_dist_es19 = __esm({
-  "node_modules/@smithy/url-parser/dist-es/index.js"() {
-    init_dist_es18();
-    parseUrl = (url) => {
-      if (typeof url === "string") {
-        return parseUrl(new URL(url));
-      }
-      const { hostname, pathname, port, protocol, search: search2 } = url;
-      let query;
-      if (search2) {
-        query = parseQueryString(search2);
-      }
-      return {
-        hostname,
-        port: port ? parseInt(port) : void 0,
-        protocol,
-        path: pathname,
-        query
-      };
-    };
-  }
-});
-
-// node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js
-var init_resolveDefaultAwsRegionalEndpointsConfig = __esm({
-  "node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js
-var init_resolveEndpoint2 = __esm({
-  "node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js
-var init_EndpointError2 = __esm({
-  "node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js
-var init_EndpointRuleObject3 = __esm({
-  "node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js
-var init_ErrorRuleObject3 = __esm({
-  "node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js
-var init_RuleSetObject3 = __esm({
-  "node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js
-var init_TreeRuleObject3 = __esm({
-  "node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js
-var init_shared3 = __esm({
-  "node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js
-var init_types3 = __esm({
-  "node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js"() {
-    init_EndpointError2();
-    init_EndpointRuleObject3();
-    init_ErrorRuleObject3();
-    init_RuleSetObject3();
-    init_TreeRuleObject3();
-    init_shared3();
-  }
-});
-
-// node_modules/@aws-sdk/util-endpoints/dist-es/index.js
-var init_dist_es20 = __esm({
-  "node_modules/@aws-sdk/util-endpoints/dist-es/index.js"() {
-    init_aws();
-    init_partition();
-    init_isIpAddress2();
-    init_resolveDefaultAwsRegionalEndpointsConfig();
-    init_resolveEndpoint2();
-    init_types3();
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js
-var init_emitWarningIfUnsupportedVersion = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js
-function setCredentialFeature(credentials, feature, value2) {
-  if (!credentials.$source) {
-    credentials.$source = {};
-  }
-  credentials.$source[feature] = value2;
-  return credentials;
-}
-var init_setCredentialFeature = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js
-function setFeature2(context, feature, value2) {
-  if (!context.__aws_sdk_context) {
-    context.__aws_sdk_context = {
-      features: {}
-    };
-  } else if (!context.__aws_sdk_context.features) {
-    context.__aws_sdk_context.features = {};
-  }
-  context.__aws_sdk_context.features[feature] = value2;
-}
-var init_setFeature2 = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js
-var init_setTokenFeature = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/client/index.js
-var init_client2 = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/client/index.js"() {
-    init_emitWarningIfUnsupportedVersion();
-    init_setCredentialFeature();
-    init_setFeature2();
-    init_setTokenFeature();
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js
-var getDateHeader;
-var init_getDateHeader = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js"() {
-    init_dist_es2();
-    getDateHeader = (response) => {
-      var _a, _b, _c;
-      return HttpResponse.isInstance(response) ? (_c = (_a = response.headers) == null ? void 0 : _a.date) != null ? _c : (_b = response.headers) == null ? void 0 : _b.Date : void 0;
-    };
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js
-var getSkewCorrectedDate;
-var init_getSkewCorrectedDate = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js"() {
-    getSkewCorrectedDate = (systemClockOffset) => new Date(Date.now() + systemClockOffset);
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js
-var isClockSkewed;
-var init_isClockSkewed = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js"() {
-    init_getSkewCorrectedDate();
-    isClockSkewed = (clockTime, systemClockOffset) => Math.abs(getSkewCorrectedDate(systemClockOffset).getTime() - clockTime) >= 3e5;
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js
-var getUpdatedSystemClockOffset;
-var init_getUpdatedSystemClockOffset = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js"() {
-    init_isClockSkewed();
-    getUpdatedSystemClockOffset = (clockTime, currentSystemClockOffset) => {
-      const clockTimeInMs = Date.parse(clockTime);
-      if (isClockSkewed(clockTimeInMs, currentSystemClockOffset)) {
-        return clockTimeInMs - Date.now();
-      }
-      return currentSystemClockOffset;
-    };
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js
-var init_utils2 = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js"() {
-    init_getDateHeader();
-    init_getSkewCorrectedDate();
-    init_getUpdatedSystemClockOffset();
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js
-var throwSigningPropertyError, validateSigningProperties, AwsSdkSigV4Signer;
-var init_AwsSdkSigV4Signer = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js"() {
-    init_dist_es2();
-    init_utils2();
-    throwSigningPropertyError = (name, property) => {
-      if (!property) {
-        throw new Error(`Property \`${name}\` is not resolved for AWS SDK SigV4Auth`);
-      }
-      return property;
-    };
-    validateSigningProperties = async (signingProperties) => {
-      var _a, _b, _c;
-      const context = throwSigningPropertyError("context", signingProperties.context);
-      const config = throwSigningPropertyError("config", signingProperties.config);
-      const authScheme = (_c = (_b = (_a = context.endpointV2) == null ? void 0 : _a.properties) == null ? void 0 : _b.authSchemes) == null ? void 0 : _c[0];
-      const signerFunction = throwSigningPropertyError("signer", config.signer);
-      const signer = await signerFunction(authScheme);
-      const signingRegion = signingProperties == null ? void 0 : signingProperties.signingRegion;
-      const signingRegionSet = signingProperties == null ? void 0 : signingProperties.signingRegionSet;
-      const signingName = signingProperties == null ? void 0 : signingProperties.signingName;
-      return {
-        config,
-        signer,
-        signingRegion,
-        signingRegionSet,
-        signingName
-      };
-    };
-    AwsSdkSigV4Signer = class {
-      async sign(httpRequest, identity, signingProperties) {
-        var _a, _b, _c, _d;
-        if (!HttpRequest.isInstance(httpRequest)) {
-          throw new Error("The request is not an instance of `HttpRequest` and cannot be signed");
-        }
-        const validatedProps = await validateSigningProperties(signingProperties);
-        const { config, signer } = validatedProps;
-        let { signingRegion, signingName } = validatedProps;
-        const handlerExecutionContext = signingProperties.context;
-        if ((_b = (_a = handlerExecutionContext == null ? void 0 : handlerExecutionContext.authSchemes) == null ? void 0 : _a.length) != null ? _b : 0 > 1) {
-          const [first, second] = handlerExecutionContext.authSchemes;
-          if ((first == null ? void 0 : first.name) === "sigv4a" && (second == null ? void 0 : second.name) === "sigv4") {
-            signingRegion = (_c = second == null ? void 0 : second.signingRegion) != null ? _c : signingRegion;
-            signingName = (_d = second == null ? void 0 : second.signingName) != null ? _d : signingName;
-          }
-        }
-        const signedRequest = await signer.sign(httpRequest, {
-          signingDate: getSkewCorrectedDate(config.systemClockOffset),
-          signingRegion,
-          signingService: signingName
-        });
-        return signedRequest;
-      }
-      errorHandler(signingProperties) {
-        return (error) => {
-          var _a;
-          const serverTime = (_a = error.ServerTime) != null ? _a : getDateHeader(error.$response);
-          if (serverTime) {
-            const config = throwSigningPropertyError("config", signingProperties.config);
-            const initialSystemClockOffset = config.systemClockOffset;
-            config.systemClockOffset = getUpdatedSystemClockOffset(serverTime, config.systemClockOffset);
-            const clockSkewCorrected = config.systemClockOffset !== initialSystemClockOffset;
-            if (clockSkewCorrected && error.$metadata) {
-              error.$metadata.clockSkewCorrected = true;
-            }
-          }
-          throw error;
-        };
-      }
-      successHandler(httpResponse, signingProperties) {
-        const dateHeader = getDateHeader(httpResponse);
-        if (dateHeader) {
-          const config = throwSigningPropertyError("config", signingProperties.config);
-          config.systemClockOffset = getUpdatedSystemClockOffset(dateHeader, config.systemClockOffset);
-        }
-      }
-    };
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js
-var init_getBearerTokenEnvKey = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js
-var init_NODE_AUTH_SCHEME_PREFERENCE_OPTIONS = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js"() {
-  }
-});
-
-// node_modules/@smithy/property-provider/dist-es/ProviderError.js
-var init_ProviderError = __esm({
-  "node_modules/@smithy/property-provider/dist-es/ProviderError.js"() {
-  }
-});
-
-// node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js
-var init_CredentialsProviderError = __esm({
-  "node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js"() {
-  }
-});
-
-// node_modules/@smithy/property-provider/dist-es/TokenProviderError.js
-var init_TokenProviderError = __esm({
-  "node_modules/@smithy/property-provider/dist-es/TokenProviderError.js"() {
-  }
-});
-
-// node_modules/@smithy/property-provider/dist-es/chain.js
-var init_chain = __esm({
-  "node_modules/@smithy/property-provider/dist-es/chain.js"() {
-  }
-});
-
-// node_modules/@smithy/property-provider/dist-es/fromStatic.js
-var init_fromStatic = __esm({
-  "node_modules/@smithy/property-provider/dist-es/fromStatic.js"() {
-  }
-});
-
-// node_modules/@smithy/property-provider/dist-es/memoize.js
-var memoize;
-var init_memoize = __esm({
-  "node_modules/@smithy/property-provider/dist-es/memoize.js"() {
-    memoize = (provider, isExpired, requiresRefresh) => {
-      let resolved;
-      let pending;
-      let hasResult;
-      let isConstant = false;
-      const coalesceProvider = async () => {
-        if (!pending) {
-          pending = provider();
-        }
-        try {
-          resolved = await pending;
-          hasResult = true;
-          isConstant = false;
-        } finally {
-          pending = void 0;
-        }
-        return resolved;
-      };
-      if (isExpired === void 0) {
-        return async (options) => {
-          if (!hasResult || (options == null ? void 0 : options.forceRefresh)) {
-            resolved = await coalesceProvider();
-          }
-          return resolved;
-        };
-      }
-      return async (options) => {
-        if (!hasResult || (options == null ? void 0 : options.forceRefresh)) {
-          resolved = await coalesceProvider();
-        }
-        if (isConstant) {
-          return resolved;
-        }
-        if (requiresRefresh && !requiresRefresh(resolved)) {
-          isConstant = true;
-          return resolved;
-        }
-        if (isExpired(resolved)) {
-          await coalesceProvider();
-          return resolved;
-        }
-        return resolved;
-      };
-    };
-  }
-});
-
-// node_modules/@smithy/property-provider/dist-es/index.js
-var init_dist_es21 = __esm({
-  "node_modules/@smithy/property-provider/dist-es/index.js"() {
-    init_CredentialsProviderError();
-    init_ProviderError();
-    init_TokenProviderError();
-    init_chain();
-    init_fromStatic();
-    init_memoize();
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js
-var init_resolveAwsSdkSigV4AConfig = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js"() {
-  }
-});
-
-// node_modules/@smithy/signature-v4/dist-es/constants.js
-var ALGORITHM_QUERY_PARAM, CREDENTIAL_QUERY_PARAM, AMZ_DATE_QUERY_PARAM, SIGNED_HEADERS_QUERY_PARAM, EXPIRES_QUERY_PARAM, SIGNATURE_QUERY_PARAM, TOKEN_QUERY_PARAM, AUTH_HEADER, AMZ_DATE_HEADER, DATE_HEADER, GENERATED_HEADERS, SIGNATURE_HEADER, SHA256_HEADER, TOKEN_HEADER, ALWAYS_UNSIGNABLE_HEADERS, PROXY_HEADER_PATTERN, SEC_HEADER_PATTERN, ALGORITHM_IDENTIFIER, EVENT_ALGORITHM_IDENTIFIER, UNSIGNED_PAYLOAD, MAX_CACHE_SIZE, KEY_TYPE_IDENTIFIER, MAX_PRESIGNED_TTL;
-var init_constants = __esm({
-  "node_modules/@smithy/signature-v4/dist-es/constants.js"() {
-    ALGORITHM_QUERY_PARAM = "X-Amz-Algorithm";
-    CREDENTIAL_QUERY_PARAM = "X-Amz-Credential";
-    AMZ_DATE_QUERY_PARAM = "X-Amz-Date";
-    SIGNED_HEADERS_QUERY_PARAM = "X-Amz-SignedHeaders";
-    EXPIRES_QUERY_PARAM = "X-Amz-Expires";
-    SIGNATURE_QUERY_PARAM = "X-Amz-Signature";
-    TOKEN_QUERY_PARAM = "X-Amz-Security-Token";
-    AUTH_HEADER = "authorization";
-    AMZ_DATE_HEADER = AMZ_DATE_QUERY_PARAM.toLowerCase();
-    DATE_HEADER = "date";
-    GENERATED_HEADERS = [AUTH_HEADER, AMZ_DATE_HEADER, DATE_HEADER];
-    SIGNATURE_HEADER = SIGNATURE_QUERY_PARAM.toLowerCase();
-    SHA256_HEADER = "x-amz-content-sha256";
-    TOKEN_HEADER = TOKEN_QUERY_PARAM.toLowerCase();
-    ALWAYS_UNSIGNABLE_HEADERS = {
-      authorization: true,
-      "cache-control": true,
-      connection: true,
-      expect: true,
-      from: true,
-      "keep-alive": true,
-      "max-forwards": true,
-      pragma: true,
-      referer: true,
-      te: true,
-      trailer: true,
-      "transfer-encoding": true,
-      upgrade: true,
-      "user-agent": true,
-      "x-amzn-trace-id": true
-    };
-    PROXY_HEADER_PATTERN = /^proxy-/;
-    SEC_HEADER_PATTERN = /^sec-/;
-    ALGORITHM_IDENTIFIER = "AWS4-HMAC-SHA256";
-    EVENT_ALGORITHM_IDENTIFIER = "AWS4-HMAC-SHA256-PAYLOAD";
-    UNSIGNED_PAYLOAD = "UNSIGNED-PAYLOAD";
-    MAX_CACHE_SIZE = 50;
-    KEY_TYPE_IDENTIFIER = "aws4_request";
-    MAX_PRESIGNED_TTL = 60 * 60 * 24 * 7;
-  }
-});
-
-// node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js
-var signingKeyCache, cacheQueue, createScope, getSigningKey, hmac;
-var init_credentialDerivation = __esm({
-  "node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js"() {
-    init_dist_es13();
-    init_dist_es8();
-    init_constants();
-    signingKeyCache = {};
-    cacheQueue = [];
-    createScope = (shortDate, region, service) => `${shortDate}/${region}/${service}/${KEY_TYPE_IDENTIFIER}`;
-    getSigningKey = async (sha256Constructor, credentials, shortDate, region, service) => {
-      const credsHash = await hmac(sha256Constructor, credentials.secretAccessKey, credentials.accessKeyId);
-      const cacheKey = `${shortDate}:${region}:${service}:${toHex(credsHash)}:${credentials.sessionToken}`;
-      if (cacheKey in signingKeyCache) {
-        return signingKeyCache[cacheKey];
-      }
-      cacheQueue.push(cacheKey);
-      while (cacheQueue.length > MAX_CACHE_SIZE) {
-        delete signingKeyCache[cacheQueue.shift()];
-      }
-      let key = `AWS4${credentials.secretAccessKey}`;
-      for (const signable of [shortDate, region, service, KEY_TYPE_IDENTIFIER]) {
-        key = await hmac(sha256Constructor, key, signable);
-      }
-      return signingKeyCache[cacheKey] = key;
-    };
-    hmac = (ctor, secret, data) => {
-      const hash = new ctor(secret);
-      hash.update(toUint8Array(data));
-      return hash.digest();
-    };
-  }
-});
-
-// node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js
-var getCanonicalHeaders;
-var init_getCanonicalHeaders = __esm({
-  "node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js"() {
-    init_constants();
-    getCanonicalHeaders = ({ headers }, unsignableHeaders, signableHeaders) => {
-      const canonical = {};
-      for (const headerName of Object.keys(headers).sort()) {
-        if (headers[headerName] == void 0) {
+        case 4:
+          _.label++;
+          return { value: op[1], done: false };
+        case 5:
+          _.label++;
+          y = op[1];
+          op = [0];
           continue;
-        }
-        const canonicalHeaderName = headerName.toLowerCase();
-        if (canonicalHeaderName in ALWAYS_UNSIGNABLE_HEADERS || (unsignableHeaders == null ? void 0 : unsignableHeaders.has(canonicalHeaderName)) || PROXY_HEADER_PATTERN.test(canonicalHeaderName) || SEC_HEADER_PATTERN.test(canonicalHeaderName)) {
-          if (!signableHeaders || signableHeaders && !signableHeaders.has(canonicalHeaderName)) {
+        case 7:
+          op = _.ops.pop();
+          _.trys.pop();
+          continue;
+        default:
+          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+            _ = 0;
             continue;
           }
+          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+            _.label = op[1];
+            break;
+          }
+          if (op[0] === 6 && _.label < t[1]) {
+            _.label = t[1];
+            t = op;
+            break;
+          }
+          if (t && _.label < t[2]) {
+            _.label = t[2];
+            _.ops.push(op);
+            break;
+          }
+          if (t[2]) _.ops.pop();
+          _.trys.pop();
+          continue;
+      }
+      op = body.call(thisArg, _);
+    } catch (e2) {
+      op = [6, e2];
+      y = 0;
+    } finally {
+      f2 = t = 0;
+    }
+    if (op[0] & 5) throw op[1];
+    return { value: op[0] ? op[1] : void 0, done: true };
+  }
+}
+function __values(o) {
+  var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i2 = 0;
+  if (m) return m.call(o);
+  if (o && typeof o.length === "number") return {
+    next: function() {
+      if (o && i2 >= o.length) o = void 0;
+      return { value: o && o[i2++], done: !o };
+    }
+  };
+  throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+var init_tslib_es6 = __esm({
+  "node_modules/tslib/tslib.es6.mjs"() {
+  }
+});
+
+// node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
+var fromUtf82;
+var init_fromUtf8_browser2 = __esm({
+  "node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
+    fromUtf82 = (input) => new TextEncoder().encode(input);
+  }
+});
+
+// node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
+var init_toUint8Array = __esm({
+  "node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
+    init_fromUtf8_browser2();
+  }
+});
+
+// node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
+var init_toUtf8_browser2 = __esm({
+  "node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
+  }
+});
+
+// node_modules/@smithy/util-utf8/dist-es/index.js
+var init_dist_es2 = __esm({
+  "node_modules/@smithy/util-utf8/dist-es/index.js"() {
+    init_fromUtf8_browser2();
+    init_toUint8Array();
+    init_toUtf8_browser2();
+  }
+});
+
+// node_modules/@aws-crypto/util/build/module/convertToBuffer.js
+function convertToBuffer(data) {
+  if (data instanceof Uint8Array)
+    return data;
+  if (typeof data === "string") {
+    return fromUtf83(data);
+  }
+  if (ArrayBuffer.isView(data)) {
+    return new Uint8Array(data.buffer, data.byteOffset, data.byteLength / Uint8Array.BYTES_PER_ELEMENT);
+  }
+  return new Uint8Array(data);
+}
+var fromUtf83;
+var init_convertToBuffer = __esm({
+  "node_modules/@aws-crypto/util/build/module/convertToBuffer.js"() {
+    init_dist_es2();
+    fromUtf83 = typeof Buffer !== "undefined" && Buffer.from ? function(input) {
+      return Buffer.from(input, "utf8");
+    } : fromUtf82;
+  }
+});
+
+// node_modules/@aws-crypto/util/build/module/isEmptyData.js
+function isEmptyData(data) {
+  if (typeof data === "string") {
+    return data.length === 0;
+  }
+  return data.byteLength === 0;
+}
+var init_isEmptyData = __esm({
+  "node_modules/@aws-crypto/util/build/module/isEmptyData.js"() {
+  }
+});
+
+// node_modules/@aws-crypto/util/build/module/numToUint8.js
+function numToUint8(num) {
+  return new Uint8Array([
+    (num & 4278190080) >> 24,
+    (num & 16711680) >> 16,
+    (num & 65280) >> 8,
+    num & 255
+  ]);
+}
+var init_numToUint8 = __esm({
+  "node_modules/@aws-crypto/util/build/module/numToUint8.js"() {
+  }
+});
+
+// node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js
+function uint32ArrayFrom(a_lookUpTable2) {
+  if (!Uint32Array.from) {
+    var return_array = new Uint32Array(a_lookUpTable2.length);
+    var a_index = 0;
+    while (a_index < a_lookUpTable2.length) {
+      return_array[a_index] = a_lookUpTable2[a_index];
+      a_index += 1;
+    }
+    return return_array;
+  }
+  return Uint32Array.from(a_lookUpTable2);
+}
+var init_uint32ArrayFrom = __esm({
+  "node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js"() {
+  }
+});
+
+// node_modules/@aws-crypto/util/build/module/index.js
+var init_module = __esm({
+  "node_modules/@aws-crypto/util/build/module/index.js"() {
+    init_convertToBuffer();
+    init_isEmptyData();
+    init_numToUint8();
+    init_uint32ArrayFrom();
+  }
+});
+
+// node_modules/@aws-crypto/crc32/build/module/aws_crc32.js
+var AwsCrc32;
+var init_aws_crc32 = __esm({
+  "node_modules/@aws-crypto/crc32/build/module/aws_crc32.js"() {
+    init_tslib_es6();
+    init_module();
+    init_module2();
+    AwsCrc32 = /** @class */
+    (function() {
+      function AwsCrc322() {
+        this.crc32 = new Crc32();
+      }
+      AwsCrc322.prototype.update = function(toHash) {
+        if (isEmptyData(toHash))
+          return;
+        this.crc32.update(convertToBuffer(toHash));
+      };
+      AwsCrc322.prototype.digest = function() {
+        return __awaiter(this, void 0, void 0, function() {
+          return __generator(this, function(_a3) {
+            return [2, numToUint8(this.crc32.digest())];
+          });
+        });
+      };
+      AwsCrc322.prototype.reset = function() {
+        this.crc32 = new Crc32();
+      };
+      return AwsCrc322;
+    })();
+  }
+});
+
+// node_modules/@aws-crypto/crc32/build/module/index.js
+var Crc32, a_lookUpTable, lookupTable;
+var init_module2 = __esm({
+  "node_modules/@aws-crypto/crc32/build/module/index.js"() {
+    init_tslib_es6();
+    init_module();
+    init_aws_crc32();
+    Crc32 = /** @class */
+    (function() {
+      function Crc322() {
+        this.checksum = 4294967295;
+      }
+      Crc322.prototype.update = function(data) {
+        var e_1, _a3;
+        try {
+          for (var data_1 = __values(data), data_1_1 = data_1.next(); !data_1_1.done; data_1_1 = data_1.next()) {
+            var byte = data_1_1.value;
+            this.checksum = this.checksum >>> 8 ^ lookupTable[(this.checksum ^ byte) & 255];
+          }
+        } catch (e_1_1) {
+          e_1 = { error: e_1_1 };
+        } finally {
+          try {
+            if (data_1_1 && !data_1_1.done && (_a3 = data_1.return)) _a3.call(data_1);
+          } finally {
+            if (e_1) throw e_1.error;
+          }
         }
-        canonical[canonicalHeaderName] = headers[headerName].trim().replace(/\s+/g, " ");
-      }
-      return canonical;
-    };
+        return this;
+      };
+      Crc322.prototype.digest = function() {
+        return (this.checksum ^ 4294967295) >>> 0;
+      };
+      return Crc322;
+    })();
+    a_lookUpTable = [
+      0,
+      1996959894,
+      3993919788,
+      2567524794,
+      124634137,
+      1886057615,
+      3915621685,
+      2657392035,
+      249268274,
+      2044508324,
+      3772115230,
+      2547177864,
+      162941995,
+      2125561021,
+      3887607047,
+      2428444049,
+      498536548,
+      1789927666,
+      4089016648,
+      2227061214,
+      450548861,
+      1843258603,
+      4107580753,
+      2211677639,
+      325883990,
+      1684777152,
+      4251122042,
+      2321926636,
+      335633487,
+      1661365465,
+      4195302755,
+      2366115317,
+      997073096,
+      1281953886,
+      3579855332,
+      2724688242,
+      1006888145,
+      1258607687,
+      3524101629,
+      2768942443,
+      901097722,
+      1119000684,
+      3686517206,
+      2898065728,
+      853044451,
+      1172266101,
+      3705015759,
+      2882616665,
+      651767980,
+      1373503546,
+      3369554304,
+      3218104598,
+      565507253,
+      1454621731,
+      3485111705,
+      3099436303,
+      671266974,
+      1594198024,
+      3322730930,
+      2970347812,
+      795835527,
+      1483230225,
+      3244367275,
+      3060149565,
+      1994146192,
+      31158534,
+      2563907772,
+      4023717930,
+      1907459465,
+      112637215,
+      2680153253,
+      3904427059,
+      2013776290,
+      251722036,
+      2517215374,
+      3775830040,
+      2137656763,
+      141376813,
+      2439277719,
+      3865271297,
+      1802195444,
+      476864866,
+      2238001368,
+      4066508878,
+      1812370925,
+      453092731,
+      2181625025,
+      4111451223,
+      1706088902,
+      314042704,
+      2344532202,
+      4240017532,
+      1658658271,
+      366619977,
+      2362670323,
+      4224994405,
+      1303535960,
+      984961486,
+      2747007092,
+      3569037538,
+      1256170817,
+      1037604311,
+      2765210733,
+      3554079995,
+      1131014506,
+      879679996,
+      2909243462,
+      3663771856,
+      1141124467,
+      855842277,
+      2852801631,
+      3708648649,
+      1342533948,
+      654459306,
+      3188396048,
+      3373015174,
+      1466479909,
+      544179635,
+      3110523913,
+      3462522015,
+      1591671054,
+      702138776,
+      2966460450,
+      3352799412,
+      1504918807,
+      783551873,
+      3082640443,
+      3233442989,
+      3988292384,
+      2596254646,
+      62317068,
+      1957810842,
+      3939845945,
+      2647816111,
+      81470997,
+      1943803523,
+      3814918930,
+      2489596804,
+      225274430,
+      2053790376,
+      3826175755,
+      2466906013,
+      167816743,
+      2097651377,
+      4027552580,
+      2265490386,
+      503444072,
+      1762050814,
+      4150417245,
+      2154129355,
+      426522225,
+      1852507879,
+      4275313526,
+      2312317920,
+      282753626,
+      1742555852,
+      4189708143,
+      2394877945,
+      397917763,
+      1622183637,
+      3604390888,
+      2714866558,
+      953729732,
+      1340076626,
+      3518719985,
+      2797360999,
+      1068828381,
+      1219638859,
+      3624741850,
+      2936675148,
+      906185462,
+      1090812512,
+      3747672003,
+      2825379669,
+      829329135,
+      1181335161,
+      3412177804,
+      3160834842,
+      628085408,
+      1382605366,
+      3423369109,
+      3138078467,
+      570562233,
+      1426400815,
+      3317316542,
+      2998733608,
+      733239954,
+      1555261956,
+      3268935591,
+      3050360625,
+      752459403,
+      1541320221,
+      2607071920,
+      3965973030,
+      1969922972,
+      40735498,
+      2617837225,
+      3943577151,
+      1913087877,
+      83908371,
+      2512341634,
+      3803740692,
+      2075208622,
+      213261112,
+      2463272603,
+      3855990285,
+      2094854071,
+      198958881,
+      2262029012,
+      4057260610,
+      1759359992,
+      534414190,
+      2176718541,
+      4139329115,
+      1873836001,
+      414664567,
+      2282248934,
+      4279200368,
+      1711684554,
+      285281116,
+      2405801727,
+      4167216745,
+      1634467795,
+      376229701,
+      2685067896,
+      3608007406,
+      1308918612,
+      956543938,
+      2808555105,
+      3495958263,
+      1231636301,
+      1047427035,
+      2932959818,
+      3654703836,
+      1088359270,
+      936918e3,
+      2847714899,
+      3736837829,
+      1202900863,
+      817233897,
+      3183342108,
+      3401237130,
+      1404277552,
+      615818150,
+      3134207493,
+      3453421203,
+      1423857449,
+      601450431,
+      3009837614,
+      3294710456,
+      1567103746,
+      711928724,
+      3020668471,
+      3272380065,
+      1510334235,
+      755167117
+    ];
+    lookupTable = uint32ArrayFrom(a_lookUpTable);
   }
 });
 
-// node_modules/@smithy/is-array-buffer/dist-es/index.js
-var isArrayBuffer;
-var init_dist_es22 = __esm({
-  "node_modules/@smithy/is-array-buffer/dist-es/index.js"() {
-    isArrayBuffer = (arg) => typeof ArrayBuffer === "function" && arg instanceof ArrayBuffer || Object.prototype.toString.call(arg) === "[object ArrayBuffer]";
-  }
-});
-
-// node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js
-var getPayloadHash;
-var init_getPayloadHash = __esm({
-  "node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js"() {
-    init_dist_es22();
-    init_dist_es13();
-    init_dist_es8();
-    init_constants();
-    getPayloadHash = async ({ headers, body }, hashConstructor) => {
-      for (const headerName of Object.keys(headers)) {
-        if (headerName.toLowerCase() === SHA256_HEADER) {
-          return headers[headerName];
-        }
-      }
-      if (body == void 0) {
-        return "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
-      } else if (typeof body === "string" || ArrayBuffer.isView(body) || isArrayBuffer(body)) {
-        const hashCtor = new hashConstructor();
-        hashCtor.update(toUint8Array(body));
-        return toHex(await hashCtor.digest());
-      }
-      return UNSIGNED_PAYLOAD;
-    };
-  }
-});
-
-// node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js
+// node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-codec/Int64.js
 function negate(bytes) {
   for (let i2 = 0; i2 < 8; i2++) {
     bytes[i2] ^= 255;
@@ -4789,16 +4701,63 @@ function negate(bytes) {
       break;
   }
 }
-var HeaderFormatter, HEADER_VALUE_TYPE, UUID_PATTERN, Int64;
-var init_HeaderFormatter = __esm({
-  "node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js"() {
-    init_dist_es13();
-    init_dist_es8();
-    HeaderFormatter = class {
+var Int64;
+var init_Int64 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-codec/Int64.js"() {
+    init_index_browser2();
+    Int64 = class _Int64 {
+      constructor(bytes) {
+        __publicField(this, "bytes");
+        this.bytes = bytes;
+        if (bytes.byteLength !== 8) {
+          throw new Error("Int64 buffers must be exactly 8 bytes");
+        }
+      }
+      static fromNumber(number) {
+        if (number > 9223372036854776e3 || number < -9223372036854776e3) {
+          throw new Error(`${number} is too large (or, if negative, too small) to represent as an Int64`);
+        }
+        const bytes = new Uint8Array(8);
+        for (let i2 = 7, remaining = Math.abs(Math.round(number)); i2 > -1 && remaining > 0; i2--, remaining /= 256) {
+          bytes[i2] = remaining;
+        }
+        if (number < 0) {
+          negate(bytes);
+        }
+        return new _Int64(bytes);
+      }
+      valueOf() {
+        const bytes = this.bytes.slice(0);
+        const negative = bytes[0] & 128;
+        if (negative) {
+          negate(bytes);
+        }
+        return parseInt(toHex(bytes), 16) * (negative ? -1 : 1);
+      }
+      toString() {
+        return String(this.valueOf());
+      }
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-codec/HeaderMarshaller.js
+var HeaderMarshaller, HEADER_VALUE_TYPE, BOOLEAN_TAG, BYTE_TAG, SHORT_TAG, INT_TAG, LONG_TAG, BINARY_TAG, STRING_TAG, TIMESTAMP_TAG, UUID_TAG, UUID_PATTERN;
+var init_HeaderMarshaller = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-codec/HeaderMarshaller.js"() {
+    init_index_browser2();
+    init_Int64();
+    HeaderMarshaller = class {
+      constructor(toUtf82, fromUtf84) {
+        __publicField(this, "toUtf8");
+        __publicField(this, "fromUtf8");
+        this.toUtf8 = toUtf82;
+        this.fromUtf8 = fromUtf84;
+      }
       format(headers) {
         const chunks = [];
         for (const headerName of Object.keys(headers)) {
-          const bytes = fromUtf8(headerName);
+          const bytes = this.fromUtf8(headerName);
           chunks.push(Uint8Array.from([bytes.byteLength]), bytes, this.formatHeaderValue(headers[headerName]));
         }
         const out = new Uint8Array(chunks.reduce((carry, bytes) => carry + bytes.byteLength, 0));
@@ -4838,7 +4797,7 @@ var init_HeaderFormatter = __esm({
             binBytes.set(header.value, 3);
             return binBytes;
           case "string":
-            const utf8Bytes = fromUtf8(header.value);
+            const utf8Bytes = this.fromUtf8(header.value);
             const strView = new DataView(new ArrayBuffer(3 + utf8Bytes.byteLength));
             strView.setUint8(0, 7);
             strView.setUint16(1, utf8Bytes.byteLength, false);
@@ -4860,5521 +4819,841 @@ var init_HeaderFormatter = __esm({
             return uuidBytes;
         }
       }
-    };
-    (function(HEADER_VALUE_TYPE2) {
-      HEADER_VALUE_TYPE2[HEADER_VALUE_TYPE2["boolTrue"] = 0] = "boolTrue";
-      HEADER_VALUE_TYPE2[HEADER_VALUE_TYPE2["boolFalse"] = 1] = "boolFalse";
-      HEADER_VALUE_TYPE2[HEADER_VALUE_TYPE2["byte"] = 2] = "byte";
-      HEADER_VALUE_TYPE2[HEADER_VALUE_TYPE2["short"] = 3] = "short";
-      HEADER_VALUE_TYPE2[HEADER_VALUE_TYPE2["integer"] = 4] = "integer";
-      HEADER_VALUE_TYPE2[HEADER_VALUE_TYPE2["long"] = 5] = "long";
-      HEADER_VALUE_TYPE2[HEADER_VALUE_TYPE2["byteArray"] = 6] = "byteArray";
-      HEADER_VALUE_TYPE2[HEADER_VALUE_TYPE2["string"] = 7] = "string";
-      HEADER_VALUE_TYPE2[HEADER_VALUE_TYPE2["timestamp"] = 8] = "timestamp";
-      HEADER_VALUE_TYPE2[HEADER_VALUE_TYPE2["uuid"] = 9] = "uuid";
-    })(HEADER_VALUE_TYPE || (HEADER_VALUE_TYPE = {}));
-    UUID_PATTERN = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
-    Int64 = class _Int64 {
-      constructor(bytes) {
-        __publicField(this, "bytes");
-        this.bytes = bytes;
-        if (bytes.byteLength !== 8) {
-          throw new Error("Int64 buffers must be exactly 8 bytes");
-        }
-      }
-      static fromNumber(number) {
-        if (number > 9223372036854776e3 || number < -9223372036854776e3) {
-          throw new Error(`${number} is too large (or, if negative, too small) to represent as an Int64`);
-        }
-        const bytes = new Uint8Array(8);
-        for (let i2 = 7, remaining = Math.abs(Math.round(number)); i2 > -1 && remaining > 0; i2--, remaining /= 256) {
-          bytes[i2] = remaining;
-        }
-        if (number < 0) {
-          negate(bytes);
-        }
-        return new _Int64(bytes);
-      }
-      valueOf() {
-        const bytes = this.bytes.slice(0);
-        const negative = bytes[0] & 128;
-        if (negative) {
-          negate(bytes);
-        }
-        return parseInt(toHex(bytes), 16) * (negative ? -1 : 1);
-      }
-      toString() {
-        return String(this.valueOf());
-      }
-    };
-  }
-});
-
-// node_modules/@smithy/signature-v4/dist-es/headerUtil.js
-var hasHeader;
-var init_headerUtil = __esm({
-  "node_modules/@smithy/signature-v4/dist-es/headerUtil.js"() {
-    hasHeader = (soughtHeader, headers) => {
-      soughtHeader = soughtHeader.toLowerCase();
-      for (const headerName of Object.keys(headers)) {
-        if (soughtHeader === headerName.toLowerCase()) {
-          return true;
-        }
-      }
-      return false;
-    };
-  }
-});
-
-// node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js
-var moveHeadersToQuery;
-var init_moveHeadersToQuery = __esm({
-  "node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js"() {
-    init_dist_es2();
-    moveHeadersToQuery = (request, options = {}) => {
-      var _a, _b;
-      const { headers, query = {} } = HttpRequest.clone(request);
-      for (const name of Object.keys(headers)) {
-        const lname = name.toLowerCase();
-        if (lname.slice(0, 6) === "x-amz-" && !((_a = options.unhoistableHeaders) == null ? void 0 : _a.has(lname)) || ((_b = options.hoistableHeaders) == null ? void 0 : _b.has(lname))) {
-          query[name] = headers[name];
-          delete headers[name];
-        }
-      }
-      return {
-        ...request,
-        headers,
-        query
-      };
-    };
-  }
-});
-
-// node_modules/@smithy/signature-v4/dist-es/prepareRequest.js
-var prepareRequest;
-var init_prepareRequest = __esm({
-  "node_modules/@smithy/signature-v4/dist-es/prepareRequest.js"() {
-    init_dist_es2();
-    init_constants();
-    prepareRequest = (request) => {
-      request = HttpRequest.clone(request);
-      for (const headerName of Object.keys(request.headers)) {
-        if (GENERATED_HEADERS.indexOf(headerName.toLowerCase()) > -1) {
-          delete request.headers[headerName];
-        }
-      }
-      return request;
-    };
-  }
-});
-
-// node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js
-var getCanonicalQuery;
-var init_getCanonicalQuery = __esm({
-  "node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js"() {
-    init_dist_es10();
-    init_constants();
-    getCanonicalQuery = ({ query = {} }) => {
-      const keys = [];
-      const serialized = {};
-      for (const key of Object.keys(query)) {
-        if (key.toLowerCase() === SIGNATURE_HEADER) {
-          continue;
-        }
-        const encodedKey = escapeUri(key);
-        keys.push(encodedKey);
-        const value2 = query[key];
-        if (typeof value2 === "string") {
-          serialized[encodedKey] = `${encodedKey}=${escapeUri(value2)}`;
-        } else if (Array.isArray(value2)) {
-          serialized[encodedKey] = value2.slice(0).reduce((encoded, value3) => encoded.concat([`${encodedKey}=${escapeUri(value3)}`]), []).sort().join("&");
-        }
-      }
-      return keys.sort().map((key) => serialized[key]).filter((serialized2) => serialized2).join("&");
-    };
-  }
-});
-
-// node_modules/@smithy/signature-v4/dist-es/utilDate.js
-var iso8601, toDate;
-var init_utilDate = __esm({
-  "node_modules/@smithy/signature-v4/dist-es/utilDate.js"() {
-    iso8601 = (time2) => toDate(time2).toISOString().replace(/\.\d{3}Z$/, "Z");
-    toDate = (time2) => {
-      if (typeof time2 === "number") {
-        return new Date(time2 * 1e3);
-      }
-      if (typeof time2 === "string") {
-        if (Number(time2)) {
-          return new Date(Number(time2) * 1e3);
-        }
-        return new Date(time2);
-      }
-      return time2;
-    };
-  }
-});
-
-// node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js
-var SignatureV4Base;
-var init_SignatureV4Base = __esm({
-  "node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js"() {
-    init_dist_es13();
-    init_dist_es6();
-    init_dist_es10();
-    init_dist_es8();
-    init_getCanonicalQuery();
-    init_utilDate();
-    SignatureV4Base = class {
-      constructor({ applyChecksum, credentials, region, service, sha256, uriEscapePath = true }) {
-        __publicField(this, "service");
-        __publicField(this, "regionProvider");
-        __publicField(this, "credentialProvider");
-        __publicField(this, "sha256");
-        __publicField(this, "uriEscapePath");
-        __publicField(this, "applyChecksum");
-        this.service = service;
-        this.sha256 = sha256;
-        this.uriEscapePath = uriEscapePath;
-        this.applyChecksum = typeof applyChecksum === "boolean" ? applyChecksum : true;
-        this.regionProvider = normalizeProvider(region);
-        this.credentialProvider = normalizeProvider(credentials);
-      }
-      createCanonicalRequest(request, canonicalHeaders, payloadHash) {
-        const sortedHeaders = Object.keys(canonicalHeaders).sort();
-        return `${request.method}
-${this.getCanonicalPath(request)}
-${getCanonicalQuery(request)}
-${sortedHeaders.map((name) => `${name}:${canonicalHeaders[name]}`).join("\n")}
-
-${sortedHeaders.join(";")}
-${payloadHash}`;
-      }
-      async createStringToSign(longDate, credentialScope, canonicalRequest, algorithmIdentifier) {
-        const hash = new this.sha256();
-        hash.update(toUint8Array(canonicalRequest));
-        const hashedRequest = await hash.digest();
-        return `${algorithmIdentifier}
-${longDate}
-${credentialScope}
-${toHex(hashedRequest)}`;
-      }
-      getCanonicalPath({ path: path2 }) {
-        if (this.uriEscapePath) {
-          const normalizedPathSegments = [];
-          for (const pathSegment of path2.split("/")) {
-            if ((pathSegment == null ? void 0 : pathSegment.length) === 0)
-              continue;
-            if (pathSegment === ".")
-              continue;
-            if (pathSegment === "..") {
-              normalizedPathSegments.pop();
-            } else {
-              normalizedPathSegments.push(pathSegment);
-            }
+      parse(headers) {
+        const out = {};
+        let position2 = 0;
+        while (position2 < headers.byteLength) {
+          const nameLength = headers.getUint8(position2++);
+          const name = this.toUtf8(new Uint8Array(headers.buffer, headers.byteOffset + position2, nameLength));
+          position2 += nameLength;
+          switch (headers.getUint8(position2++)) {
+            case 0:
+              out[name] = {
+                type: BOOLEAN_TAG,
+                value: true
+              };
+              break;
+            case 1:
+              out[name] = {
+                type: BOOLEAN_TAG,
+                value: false
+              };
+              break;
+            case 2:
+              out[name] = {
+                type: BYTE_TAG,
+                value: headers.getInt8(position2++)
+              };
+              break;
+            case 3:
+              out[name] = {
+                type: SHORT_TAG,
+                value: headers.getInt16(position2, false)
+              };
+              position2 += 2;
+              break;
+            case 4:
+              out[name] = {
+                type: INT_TAG,
+                value: headers.getInt32(position2, false)
+              };
+              position2 += 4;
+              break;
+            case 5:
+              out[name] = {
+                type: LONG_TAG,
+                value: new Int64(new Uint8Array(headers.buffer, headers.byteOffset + position2, 8))
+              };
+              position2 += 8;
+              break;
+            case 6:
+              const binaryLength = headers.getUint16(position2, false);
+              position2 += 2;
+              out[name] = {
+                type: BINARY_TAG,
+                value: new Uint8Array(headers.buffer, headers.byteOffset + position2, binaryLength)
+              };
+              position2 += binaryLength;
+              break;
+            case 7:
+              const stringLength = headers.getUint16(position2, false);
+              position2 += 2;
+              out[name] = {
+                type: STRING_TAG,
+                value: this.toUtf8(new Uint8Array(headers.buffer, headers.byteOffset + position2, stringLength))
+              };
+              position2 += stringLength;
+              break;
+            case 8:
+              out[name] = {
+                type: TIMESTAMP_TAG,
+                value: new Date(new Int64(new Uint8Array(headers.buffer, headers.byteOffset + position2, 8)).valueOf())
+              };
+              position2 += 8;
+              break;
+            case 9:
+              const uuidBytes = new Uint8Array(headers.buffer, headers.byteOffset + position2, 16);
+              position2 += 16;
+              out[name] = {
+                type: UUID_TAG,
+                value: `${toHex(uuidBytes.subarray(0, 4))}-${toHex(uuidBytes.subarray(4, 6))}-${toHex(uuidBytes.subarray(6, 8))}-${toHex(uuidBytes.subarray(8, 10))}-${toHex(uuidBytes.subarray(10))}`
+              };
+              break;
+            default:
+              throw new Error(`Unrecognized header type tag`);
           }
-          const normalizedPath = `${(path2 == null ? void 0 : path2.startsWith("/")) ? "/" : ""}${normalizedPathSegments.join("/")}${normalizedPathSegments.length > 0 && (path2 == null ? void 0 : path2.endsWith("/")) ? "/" : ""}`;
-          const doubleEncoded = escapeUri(normalizedPath);
-          return doubleEncoded.replace(/%2F/g, "/");
-        }
-        return path2;
-      }
-      validateResolvedCredentials(credentials) {
-        if (typeof credentials !== "object" || typeof credentials.accessKeyId !== "string" || typeof credentials.secretAccessKey !== "string") {
-          throw new Error("Resolved credential object is not valid");
-        }
-      }
-      formatDate(now) {
-        const longDate = iso8601(now).replace(/[\-:]/g, "");
-        return {
-          longDate,
-          shortDate: longDate.slice(0, 8)
-        };
-      }
-      getCanonicalHeaderList(headers) {
-        return Object.keys(headers).sort().join(";");
-      }
-    };
-  }
-});
-
-// node_modules/@smithy/signature-v4/dist-es/SignatureV4.js
-var SignatureV4;
-var init_SignatureV4 = __esm({
-  "node_modules/@smithy/signature-v4/dist-es/SignatureV4.js"() {
-    init_dist_es13();
-    init_dist_es8();
-    init_constants();
-    init_credentialDerivation();
-    init_getCanonicalHeaders();
-    init_getPayloadHash();
-    init_HeaderFormatter();
-    init_headerUtil();
-    init_moveHeadersToQuery();
-    init_prepareRequest();
-    init_SignatureV4Base();
-    SignatureV4 = class extends SignatureV4Base {
-      constructor({ applyChecksum, credentials, region, service, sha256, uriEscapePath = true }) {
-        super({
-          applyChecksum,
-          credentials,
-          region,
-          service,
-          sha256,
-          uriEscapePath
-        });
-        __publicField(this, "headerFormatter", new HeaderFormatter());
-      }
-      async presign(originalRequest, options = {}) {
-        const { signingDate = /* @__PURE__ */ new Date(), expiresIn = 3600, unsignableHeaders, unhoistableHeaders, signableHeaders, hoistableHeaders, signingRegion, signingService } = options;
-        const credentials = await this.credentialProvider();
-        this.validateResolvedCredentials(credentials);
-        const region = signingRegion != null ? signingRegion : await this.regionProvider();
-        const { longDate, shortDate } = this.formatDate(signingDate);
-        if (expiresIn > MAX_PRESIGNED_TTL) {
-          return Promise.reject("Signature version 4 presigned URLs must have an expiration date less than one week in the future");
-        }
-        const scope = createScope(shortDate, region, signingService != null ? signingService : this.service);
-        const request = moveHeadersToQuery(prepareRequest(originalRequest), { unhoistableHeaders, hoistableHeaders });
-        if (credentials.sessionToken) {
-          request.query[TOKEN_QUERY_PARAM] = credentials.sessionToken;
-        }
-        request.query[ALGORITHM_QUERY_PARAM] = ALGORITHM_IDENTIFIER;
-        request.query[CREDENTIAL_QUERY_PARAM] = `${credentials.accessKeyId}/${scope}`;
-        request.query[AMZ_DATE_QUERY_PARAM] = longDate;
-        request.query[EXPIRES_QUERY_PARAM] = expiresIn.toString(10);
-        const canonicalHeaders = getCanonicalHeaders(request, unsignableHeaders, signableHeaders);
-        request.query[SIGNED_HEADERS_QUERY_PARAM] = this.getCanonicalHeaderList(canonicalHeaders);
-        request.query[SIGNATURE_QUERY_PARAM] = await this.getSignature(longDate, scope, this.getSigningKey(credentials, region, shortDate, signingService), this.createCanonicalRequest(request, canonicalHeaders, await getPayloadHash(originalRequest, this.sha256)));
-        return request;
-      }
-      async sign(toSign, options) {
-        if (typeof toSign === "string") {
-          return this.signString(toSign, options);
-        } else if (toSign.headers && toSign.payload) {
-          return this.signEvent(toSign, options);
-        } else if (toSign.message) {
-          return this.signMessage(toSign, options);
-        } else {
-          return this.signRequest(toSign, options);
-        }
-      }
-      async signEvent({ headers, payload }, { signingDate = /* @__PURE__ */ new Date(), priorSignature, signingRegion, signingService }) {
-        const region = signingRegion != null ? signingRegion : await this.regionProvider();
-        const { shortDate, longDate } = this.formatDate(signingDate);
-        const scope = createScope(shortDate, region, signingService != null ? signingService : this.service);
-        const hashedPayload = await getPayloadHash({ headers: {}, body: payload }, this.sha256);
-        const hash = new this.sha256();
-        hash.update(headers);
-        const hashedHeaders = toHex(await hash.digest());
-        const stringToSign = [
-          EVENT_ALGORITHM_IDENTIFIER,
-          longDate,
-          scope,
-          priorSignature,
-          hashedHeaders,
-          hashedPayload
-        ].join("\n");
-        return this.signString(stringToSign, { signingDate, signingRegion: region, signingService });
-      }
-      async signMessage(signableMessage, { signingDate = /* @__PURE__ */ new Date(), signingRegion, signingService }) {
-        const promise = this.signEvent({
-          headers: this.headerFormatter.format(signableMessage.message.headers),
-          payload: signableMessage.message.body
-        }, {
-          signingDate,
-          signingRegion,
-          signingService,
-          priorSignature: signableMessage.priorSignature
-        });
-        return promise.then((signature) => {
-          return { message: signableMessage.message, signature };
-        });
-      }
-      async signString(stringToSign, { signingDate = /* @__PURE__ */ new Date(), signingRegion, signingService } = {}) {
-        const credentials = await this.credentialProvider();
-        this.validateResolvedCredentials(credentials);
-        const region = signingRegion != null ? signingRegion : await this.regionProvider();
-        const { shortDate } = this.formatDate(signingDate);
-        const hash = new this.sha256(await this.getSigningKey(credentials, region, shortDate, signingService));
-        hash.update(toUint8Array(stringToSign));
-        return toHex(await hash.digest());
-      }
-      async signRequest(requestToSign, { signingDate = /* @__PURE__ */ new Date(), signableHeaders, unsignableHeaders, signingRegion, signingService } = {}) {
-        const credentials = await this.credentialProvider();
-        this.validateResolvedCredentials(credentials);
-        const region = signingRegion != null ? signingRegion : await this.regionProvider();
-        const request = prepareRequest(requestToSign);
-        const { longDate, shortDate } = this.formatDate(signingDate);
-        const scope = createScope(shortDate, region, signingService != null ? signingService : this.service);
-        request.headers[AMZ_DATE_HEADER] = longDate;
-        if (credentials.sessionToken) {
-          request.headers[TOKEN_HEADER] = credentials.sessionToken;
-        }
-        const payloadHash = await getPayloadHash(request, this.sha256);
-        if (!hasHeader(SHA256_HEADER, request.headers) && this.applyChecksum) {
-          request.headers[SHA256_HEADER] = payloadHash;
-        }
-        const canonicalHeaders = getCanonicalHeaders(request, unsignableHeaders, signableHeaders);
-        const signature = await this.getSignature(longDate, scope, this.getSigningKey(credentials, region, shortDate, signingService), this.createCanonicalRequest(request, canonicalHeaders, payloadHash));
-        request.headers[AUTH_HEADER] = `${ALGORITHM_IDENTIFIER} Credential=${credentials.accessKeyId}/${scope}, SignedHeaders=${this.getCanonicalHeaderList(canonicalHeaders)}, Signature=${signature}`;
-        return request;
-      }
-      async getSignature(longDate, credentialScope, keyPromise, canonicalRequest) {
-        const stringToSign = await this.createStringToSign(longDate, credentialScope, canonicalRequest, ALGORITHM_IDENTIFIER);
-        const hash = new this.sha256(await keyPromise);
-        hash.update(toUint8Array(stringToSign));
-        return toHex(await hash.digest());
-      }
-      getSigningKey(credentials, region, shortDate, service) {
-        return getSigningKey(this.sha256, credentials, shortDate, region, service || this.service);
-      }
-    };
-  }
-});
-
-// node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js
-var init_signature_v4a_container = __esm({
-  "node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js"() {
-  }
-});
-
-// node_modules/@smithy/signature-v4/dist-es/index.js
-var init_dist_es23 = __esm({
-  "node_modules/@smithy/signature-v4/dist-es/index.js"() {
-    init_SignatureV4();
-    init_constants();
-    init_credentialDerivation();
-    init_signature_v4a_container();
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js
-function normalizeCredentialProvider(config, { credentials, credentialDefaultProvider }) {
-  let credentialsProvider;
-  if (credentials) {
-    if (!(credentials == null ? void 0 : credentials.memoized)) {
-      credentialsProvider = memoizeIdentityProvider(credentials, isIdentityExpired, doesIdentityRequireRefresh);
-    } else {
-      credentialsProvider = credentials;
-    }
-  } else {
-    if (credentialDefaultProvider) {
-      credentialsProvider = normalizeProvider2(credentialDefaultProvider(Object.assign({}, config, {
-        parentClientConfig: config
-      })));
-    } else {
-      credentialsProvider = async () => {
-        throw new Error("@aws-sdk/core::resolveAwsSdkSigV4Config - `credentials` not provided and no credentialDefaultProvider was configured.");
-      };
-    }
-  }
-  credentialsProvider.memoized = true;
-  return credentialsProvider;
-}
-function bindCallerConfig(config, credentialsProvider) {
-  if (credentialsProvider.configBound) {
-    return credentialsProvider;
-  }
-  const fn = async (options) => credentialsProvider({ ...options, callerClientConfig: config });
-  fn.memoized = credentialsProvider.memoized;
-  fn.configBound = true;
-  return fn;
-}
-var resolveAwsSdkSigV4Config;
-var init_resolveAwsSdkSigV4Config = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js"() {
-    init_client2();
-    init_dist_es16();
-    init_dist_es23();
-    resolveAwsSdkSigV4Config = (config) => {
-      let inputCredentials = config.credentials;
-      let isUserSupplied = !!config.credentials;
-      let resolvedCredentials = void 0;
-      Object.defineProperty(config, "credentials", {
-        set(credentials) {
-          if (credentials && credentials !== inputCredentials && credentials !== resolvedCredentials) {
-            isUserSupplied = true;
-          }
-          inputCredentials = credentials;
-          const memoizedProvider = normalizeCredentialProvider(config, {
-            credentials: inputCredentials,
-            credentialDefaultProvider: config.credentialDefaultProvider
-          });
-          const boundProvider = bindCallerConfig(config, memoizedProvider);
-          if (isUserSupplied && !boundProvider.attributed) {
-            resolvedCredentials = async (options) => boundProvider(options).then((creds) => setCredentialFeature(creds, "CREDENTIALS_CODE", "e"));
-            resolvedCredentials.memoized = boundProvider.memoized;
-            resolvedCredentials.configBound = boundProvider.configBound;
-            resolvedCredentials.attributed = true;
-          } else {
-            resolvedCredentials = boundProvider;
-          }
-        },
-        get() {
-          return resolvedCredentials;
-        },
-        enumerable: true,
-        configurable: true
-      });
-      config.credentials = inputCredentials;
-      const { signingEscapePath = true, systemClockOffset = config.systemClockOffset || 0, sha256 } = config;
-      let signer;
-      if (config.signer) {
-        signer = normalizeProvider2(config.signer);
-      } else if (config.regionInfoProvider) {
-        signer = () => normalizeProvider2(config.region)().then(async (region) => [
-          await config.regionInfoProvider(region, {
-            useFipsEndpoint: await config.useFipsEndpoint(),
-            useDualstackEndpoint: await config.useDualstackEndpoint()
-          }) || {},
-          region
-        ]).then(([regionInfo, region]) => {
-          const { signingRegion, signingService } = regionInfo;
-          config.signingRegion = config.signingRegion || signingRegion || region;
-          config.signingName = config.signingName || signingService || config.serviceId;
-          const params = {
-            ...config,
-            credentials: config.credentials,
-            region: config.signingRegion,
-            service: config.signingName,
-            sha256,
-            uriEscapePath: signingEscapePath
-          };
-          const SignerCtor = config.signerConstructor || SignatureV4;
-          return new SignerCtor(params);
-        });
-      } else {
-        signer = async (authScheme) => {
-          authScheme = Object.assign({}, {
-            name: "sigv4",
-            signingName: config.signingName || config.defaultSigningName,
-            signingRegion: await normalizeProvider2(config.region)(),
-            properties: {}
-          }, authScheme);
-          const signingRegion = authScheme.signingRegion;
-          const signingService = authScheme.signingName;
-          config.signingRegion = config.signingRegion || signingRegion;
-          config.signingName = config.signingName || signingService || config.serviceId;
-          const params = {
-            ...config,
-            credentials: config.credentials,
-            region: config.signingRegion,
-            service: config.signingName,
-            sha256,
-            uriEscapePath: signingEscapePath
-          };
-          const SignerCtor = config.signerConstructor || SignatureV4;
-          return new SignerCtor(params);
-        };
-      }
-      const resolvedConfig = Object.assign(config, {
-        systemClockOffset,
-        signingEscapePath,
-        signer
-      });
-      return resolvedConfig;
-    };
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js
-var init_aws_sdk = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js"() {
-    init_AwsSdkSigV4Signer();
-    init_NODE_AUTH_SCHEME_PREFERENCE_OPTIONS();
-    init_resolveAwsSdkSigV4AConfig();
-    init_resolveAwsSdkSigV4Config();
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js
-var init_httpAuthSchemes2 = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js"() {
-    init_aws_sdk();
-    init_getBearerTokenEnvKey();
-  }
-});
-
-// node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js
-var TEXT_ENCODER, calculateBodyLength;
-var init_calculateBodyLength = __esm({
-  "node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js"() {
-    TEXT_ENCODER = typeof TextEncoder == "function" ? new TextEncoder() : null;
-    calculateBodyLength = (body) => {
-      if (typeof body === "string") {
-        if (TEXT_ENCODER) {
-          return TEXT_ENCODER.encode(body).byteLength;
-        }
-        let len = body.length;
-        for (let i2 = len - 1; i2 >= 0; i2--) {
-          const code3 = body.charCodeAt(i2);
-          if (code3 > 127 && code3 <= 2047)
-            len++;
-          else if (code3 > 2047 && code3 <= 65535)
-            len += 2;
-          if (code3 >= 56320 && code3 <= 57343)
-            i2--;
-        }
-        return len;
-      } else if (typeof body.byteLength === "number") {
-        return body.byteLength;
-      } else if (typeof body.size === "number") {
-        return body.size;
-      }
-      throw new Error(`Body Length computation failed for ${body}`);
-    };
-  }
-});
-
-// node_modules/@smithy/util-body-length-browser/dist-es/index.js
-var init_dist_es24 = __esm({
-  "node_modules/@smithy/util-body-length-browser/dist-es/index.js"() {
-    init_calculateBodyLength();
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js
-var init_AwsSmithyRpcV2CborProtocol = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js
-var init_coercing_serializers = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js"() {
-  }
-});
-
-// node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js
-var getAllAliases, getMiddlewareNameWithAliases, constructStack, stepWeights, priorityWeights;
-var init_MiddlewareStack = __esm({
-  "node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js"() {
-    getAllAliases = (name, aliases) => {
-      const _aliases = [];
-      if (name) {
-        _aliases.push(name);
-      }
-      if (aliases) {
-        for (const alias of aliases) {
-          _aliases.push(alias);
-        }
-      }
-      return _aliases;
-    };
-    getMiddlewareNameWithAliases = (name, aliases) => {
-      return `${name || "anonymous"}${aliases && aliases.length > 0 ? ` (a.k.a. ${aliases.join(",")})` : ""}`;
-    };
-    constructStack = () => {
-      let absoluteEntries = [];
-      let relativeEntries = [];
-      let identifyOnResolve = false;
-      const entriesNameSet = /* @__PURE__ */ new Set();
-      const sort = (entries) => entries.sort((a2, b2) => stepWeights[b2.step] - stepWeights[a2.step] || priorityWeights[b2.priority || "normal"] - priorityWeights[a2.priority || "normal"]);
-      const removeByName = (toRemove) => {
-        let isRemoved = false;
-        const filterCb = (entry) => {
-          const aliases = getAllAliases(entry.name, entry.aliases);
-          if (aliases.includes(toRemove)) {
-            isRemoved = true;
-            for (const alias of aliases) {
-              entriesNameSet.delete(alias);
-            }
-            return false;
-          }
-          return true;
-        };
-        absoluteEntries = absoluteEntries.filter(filterCb);
-        relativeEntries = relativeEntries.filter(filterCb);
-        return isRemoved;
-      };
-      const removeByReference = (toRemove) => {
-        let isRemoved = false;
-        const filterCb = (entry) => {
-          if (entry.middleware === toRemove) {
-            isRemoved = true;
-            for (const alias of getAllAliases(entry.name, entry.aliases)) {
-              entriesNameSet.delete(alias);
-            }
-            return false;
-          }
-          return true;
-        };
-        absoluteEntries = absoluteEntries.filter(filterCb);
-        relativeEntries = relativeEntries.filter(filterCb);
-        return isRemoved;
-      };
-      const cloneTo = (toStack) => {
-        var _a;
-        absoluteEntries.forEach((entry) => {
-          toStack.add(entry.middleware, { ...entry });
-        });
-        relativeEntries.forEach((entry) => {
-          toStack.addRelativeTo(entry.middleware, { ...entry });
-        });
-        (_a = toStack.identifyOnResolve) == null ? void 0 : _a.call(toStack, stack.identifyOnResolve());
-        return toStack;
-      };
-      const expandRelativeMiddlewareList = (from) => {
-        const expandedMiddlewareList = [];
-        from.before.forEach((entry) => {
-          if (entry.before.length === 0 && entry.after.length === 0) {
-            expandedMiddlewareList.push(entry);
-          } else {
-            expandedMiddlewareList.push(...expandRelativeMiddlewareList(entry));
-          }
-        });
-        expandedMiddlewareList.push(from);
-        from.after.reverse().forEach((entry) => {
-          if (entry.before.length === 0 && entry.after.length === 0) {
-            expandedMiddlewareList.push(entry);
-          } else {
-            expandedMiddlewareList.push(...expandRelativeMiddlewareList(entry));
-          }
-        });
-        return expandedMiddlewareList;
-      };
-      const getMiddlewareList = (debug = false) => {
-        const normalizedAbsoluteEntries = [];
-        const normalizedRelativeEntries = [];
-        const normalizedEntriesNameMap = {};
-        absoluteEntries.forEach((entry) => {
-          const normalizedEntry = {
-            ...entry,
-            before: [],
-            after: []
-          };
-          for (const alias of getAllAliases(normalizedEntry.name, normalizedEntry.aliases)) {
-            normalizedEntriesNameMap[alias] = normalizedEntry;
-          }
-          normalizedAbsoluteEntries.push(normalizedEntry);
-        });
-        relativeEntries.forEach((entry) => {
-          const normalizedEntry = {
-            ...entry,
-            before: [],
-            after: []
-          };
-          for (const alias of getAllAliases(normalizedEntry.name, normalizedEntry.aliases)) {
-            normalizedEntriesNameMap[alias] = normalizedEntry;
-          }
-          normalizedRelativeEntries.push(normalizedEntry);
-        });
-        normalizedRelativeEntries.forEach((entry) => {
-          if (entry.toMiddleware) {
-            const toMiddleware = normalizedEntriesNameMap[entry.toMiddleware];
-            if (toMiddleware === void 0) {
-              if (debug) {
-                return;
-              }
-              throw new Error(`${entry.toMiddleware} is not found when adding ${getMiddlewareNameWithAliases(entry.name, entry.aliases)} middleware ${entry.relation} ${entry.toMiddleware}`);
-            }
-            if (entry.relation === "after") {
-              toMiddleware.after.push(entry);
-            }
-            if (entry.relation === "before") {
-              toMiddleware.before.push(entry);
-            }
-          }
-        });
-        const mainChain = sort(normalizedAbsoluteEntries).map(expandRelativeMiddlewareList).reduce((wholeList, expandedMiddlewareList) => {
-          wholeList.push(...expandedMiddlewareList);
-          return wholeList;
-        }, []);
-        return mainChain;
-      };
-      const stack = {
-        add: (middleware, options = {}) => {
-          const { name, override, aliases: _aliases } = options;
-          const entry = {
-            step: "initialize",
-            priority: "normal",
-            middleware,
-            ...options
-          };
-          const aliases = getAllAliases(name, _aliases);
-          if (aliases.length > 0) {
-            if (aliases.some((alias) => entriesNameSet.has(alias))) {
-              if (!override)
-                throw new Error(`Duplicate middleware name '${getMiddlewareNameWithAliases(name, _aliases)}'`);
-              for (const alias of aliases) {
-                const toOverrideIndex = absoluteEntries.findIndex((entry2) => {
-                  var _a;
-                  return entry2.name === alias || ((_a = entry2.aliases) == null ? void 0 : _a.some((a2) => a2 === alias));
-                });
-                if (toOverrideIndex === -1) {
-                  continue;
-                }
-                const toOverride = absoluteEntries[toOverrideIndex];
-                if (toOverride.step !== entry.step || entry.priority !== toOverride.priority) {
-                  throw new Error(`"${getMiddlewareNameWithAliases(toOverride.name, toOverride.aliases)}" middleware with ${toOverride.priority} priority in ${toOverride.step} step cannot be overridden by "${getMiddlewareNameWithAliases(name, _aliases)}" middleware with ${entry.priority} priority in ${entry.step} step.`);
-                }
-                absoluteEntries.splice(toOverrideIndex, 1);
-              }
-            }
-            for (const alias of aliases) {
-              entriesNameSet.add(alias);
-            }
-          }
-          absoluteEntries.push(entry);
-        },
-        addRelativeTo: (middleware, options) => {
-          const { name, override, aliases: _aliases } = options;
-          const entry = {
-            middleware,
-            ...options
-          };
-          const aliases = getAllAliases(name, _aliases);
-          if (aliases.length > 0) {
-            if (aliases.some((alias) => entriesNameSet.has(alias))) {
-              if (!override)
-                throw new Error(`Duplicate middleware name '${getMiddlewareNameWithAliases(name, _aliases)}'`);
-              for (const alias of aliases) {
-                const toOverrideIndex = relativeEntries.findIndex((entry2) => {
-                  var _a;
-                  return entry2.name === alias || ((_a = entry2.aliases) == null ? void 0 : _a.some((a2) => a2 === alias));
-                });
-                if (toOverrideIndex === -1) {
-                  continue;
-                }
-                const toOverride = relativeEntries[toOverrideIndex];
-                if (toOverride.toMiddleware !== entry.toMiddleware || toOverride.relation !== entry.relation) {
-                  throw new Error(`"${getMiddlewareNameWithAliases(toOverride.name, toOverride.aliases)}" middleware ${toOverride.relation} "${toOverride.toMiddleware}" middleware cannot be overridden by "${getMiddlewareNameWithAliases(name, _aliases)}" middleware ${entry.relation} "${entry.toMiddleware}" middleware.`);
-                }
-                relativeEntries.splice(toOverrideIndex, 1);
-              }
-            }
-            for (const alias of aliases) {
-              entriesNameSet.add(alias);
-            }
-          }
-          relativeEntries.push(entry);
-        },
-        clone: () => cloneTo(constructStack()),
-        use: (plugin) => {
-          plugin.applyToStack(stack);
-        },
-        remove: (toRemove) => {
-          if (typeof toRemove === "string")
-            return removeByName(toRemove);
-          else
-            return removeByReference(toRemove);
-        },
-        removeByTag: (toRemove) => {
-          let isRemoved = false;
-          const filterCb = (entry) => {
-            const { tags, name, aliases: _aliases } = entry;
-            if (tags && tags.includes(toRemove)) {
-              const aliases = getAllAliases(name, _aliases);
-              for (const alias of aliases) {
-                entriesNameSet.delete(alias);
-              }
-              isRemoved = true;
-              return false;
-            }
-            return true;
-          };
-          absoluteEntries = absoluteEntries.filter(filterCb);
-          relativeEntries = relativeEntries.filter(filterCb);
-          return isRemoved;
-        },
-        concat: (from) => {
-          var _a, _b;
-          const cloned = cloneTo(constructStack());
-          cloned.use(from);
-          cloned.identifyOnResolve(identifyOnResolve || cloned.identifyOnResolve() || ((_b = (_a = from.identifyOnResolve) == null ? void 0 : _a.call(from)) != null ? _b : false));
-          return cloned;
-        },
-        applyToStack: cloneTo,
-        identify: () => {
-          return getMiddlewareList(true).map((mw) => {
-            var _a;
-            const step = (_a = mw.step) != null ? _a : mw.relation + " " + mw.toMiddleware;
-            return getMiddlewareNameWithAliases(mw.name, mw.aliases) + " - " + step;
-          });
-        },
-        identifyOnResolve(toggle) {
-          if (typeof toggle === "boolean")
-            identifyOnResolve = toggle;
-          return identifyOnResolve;
-        },
-        resolve: (handler2, context) => {
-          for (const middleware of getMiddlewareList().map((entry) => entry.middleware).reverse()) {
-            handler2 = middleware(handler2, context);
-          }
-          if (identifyOnResolve) {
-            console.log(stack.identify());
-          }
-          return handler2;
-        }
-      };
-      return stack;
-    };
-    stepWeights = {
-      initialize: 5,
-      serialize: 4,
-      build: 3,
-      finalizeRequest: 2,
-      deserialize: 1
-    };
-    priorityWeights = {
-      high: 3,
-      normal: 2,
-      low: 1
-    };
-  }
-});
-
-// node_modules/@smithy/middleware-stack/dist-es/index.js
-var init_dist_es25 = __esm({
-  "node_modules/@smithy/middleware-stack/dist-es/index.js"() {
-    init_MiddlewareStack();
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/client.js
-var Client;
-var init_client3 = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/client.js"() {
-    init_dist_es25();
-    Client = class {
-      constructor(config) {
-        __publicField(this, "config");
-        __publicField(this, "middlewareStack", constructStack());
-        __publicField(this, "initConfig");
-        __publicField(this, "handlers");
-        this.config = config;
-      }
-      send(command, optionsOrCb, cb) {
-        const options = typeof optionsOrCb !== "function" ? optionsOrCb : void 0;
-        const callback = typeof optionsOrCb === "function" ? optionsOrCb : cb;
-        const useHandlerCache = options === void 0 && this.config.cacheMiddleware === true;
-        let handler2;
-        if (useHandlerCache) {
-          if (!this.handlers) {
-            this.handlers = /* @__PURE__ */ new WeakMap();
-          }
-          const handlers = this.handlers;
-          if (handlers.has(command.constructor)) {
-            handler2 = handlers.get(command.constructor);
-          } else {
-            handler2 = command.resolveMiddleware(this.middlewareStack, this.config, options);
-            handlers.set(command.constructor, handler2);
-          }
-        } else {
-          delete this.handlers;
-          handler2 = command.resolveMiddleware(this.middlewareStack, this.config, options);
-        }
-        if (callback) {
-          handler2(command).then((result) => callback(null, result.output), (err) => callback(err)).catch(() => {
-          });
-        } else {
-          return handler2(command).then((result) => result.output);
-        }
-      }
-      destroy() {
-        var _a, _b, _c;
-        (_c = (_b = (_a = this.config) == null ? void 0 : _a.requestHandler) == null ? void 0 : _b.destroy) == null ? void 0 : _c.call(_b);
-        delete this.handlers;
-      }
-    };
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js
-var init_collect_stream_body2 = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js"() {
-    init_protocols();
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js
-function schemaLogFilter(schema, data) {
-  if (data == null) {
-    return data;
-  }
-  const ns = NormalizedSchema.of(schema);
-  if (ns.getMergedTraits().sensitive) {
-    return SENSITIVE_STRING;
-  }
-  if (ns.isListSchema()) {
-    const isSensitive = !!ns.getValueSchema().getMergedTraits().sensitive;
-    if (isSensitive) {
-      return SENSITIVE_STRING;
-    }
-  } else if (ns.isMapSchema()) {
-    const isSensitive = !!ns.getKeySchema().getMergedTraits().sensitive || !!ns.getValueSchema().getMergedTraits().sensitive;
-    if (isSensitive) {
-      return SENSITIVE_STRING;
-    }
-  } else if (ns.isStructSchema() && typeof data === "object") {
-    const object = data;
-    const newObject = {};
-    for (const [member2, memberNs] of ns.structIterator()) {
-      if (object[member2] != null) {
-        newObject[member2] = schemaLogFilter(memberNs, object[member2]);
-      }
-    }
-    return newObject;
-  }
-  return data;
-}
-var SENSITIVE_STRING;
-var init_schemaLogFilter = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js"() {
-    init_schema2();
-    SENSITIVE_STRING = "***SensitiveInformation***";
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/command.js
-var Command, ClassBuilder;
-var init_command2 = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/command.js"() {
-    init_dist_es25();
-    init_dist_es();
-    init_schemaLogFilter();
-    Command = class {
-      constructor() {
-        __publicField(this, "middlewareStack", constructStack());
-        __publicField(this, "schema");
-      }
-      static classBuilder() {
-        return new ClassBuilder();
-      }
-      resolveMiddlewareWithContext(clientStack, configuration, options, { middlewareFn, clientName, commandName, inputFilterSensitiveLog, outputFilterSensitiveLog, smithyContext, additionalContext, CommandCtor }) {
-        for (const mw of middlewareFn.bind(this)(CommandCtor, clientStack, configuration, options)) {
-          this.middlewareStack.use(mw);
-        }
-        const stack = clientStack.concat(this.middlewareStack);
-        const { logger: logger2 } = configuration;
-        const handlerExecutionContext = {
-          logger: logger2,
-          clientName,
-          commandName,
-          inputFilterSensitiveLog,
-          outputFilterSensitiveLog,
-          [SMITHY_CONTEXT_KEY]: {
-            commandInstance: this,
-            ...smithyContext
-          },
-          ...additionalContext
-        };
-        const { requestHandler } = configuration;
-        return stack.resolve((request) => requestHandler.handle(request.request, options || {}), handlerExecutionContext);
-      }
-    };
-    ClassBuilder = class {
-      constructor() {
-        __publicField(this, "_init", () => {
-        });
-        __publicField(this, "_ep", {});
-        __publicField(this, "_middlewareFn", () => []);
-        __publicField(this, "_commandName", "");
-        __publicField(this, "_clientName", "");
-        __publicField(this, "_additionalContext", {});
-        __publicField(this, "_smithyContext", {});
-        __publicField(this, "_inputFilterSensitiveLog");
-        __publicField(this, "_outputFilterSensitiveLog");
-        __publicField(this, "_serializer", null);
-        __publicField(this, "_deserializer", null);
-        __publicField(this, "_operationSchema");
-      }
-      init(cb) {
-        this._init = cb;
-      }
-      ep(endpointParameterInstructions) {
-        this._ep = endpointParameterInstructions;
-        return this;
-      }
-      m(middlewareSupplier) {
-        this._middlewareFn = middlewareSupplier;
-        return this;
-      }
-      s(service, operation, smithyContext = {}) {
-        this._smithyContext = {
-          service,
-          operation,
-          ...smithyContext
-        };
-        return this;
-      }
-      c(additionalContext = {}) {
-        this._additionalContext = additionalContext;
-        return this;
-      }
-      n(clientName, commandName) {
-        this._clientName = clientName;
-        this._commandName = commandName;
-        return this;
-      }
-      f(inputFilter = (_) => _, outputFilter = (_) => _) {
-        this._inputFilterSensitiveLog = inputFilter;
-        this._outputFilterSensitiveLog = outputFilter;
-        return this;
-      }
-      ser(serializer) {
-        this._serializer = serializer;
-        return this;
-      }
-      de(deserializer) {
-        this._deserializer = deserializer;
-        return this;
-      }
-      sc(operation) {
-        this._operationSchema = operation;
-        this._smithyContext.operationSchema = operation;
-        return this;
-      }
-      build() {
-        const closure = this;
-        let CommandRef;
-        return CommandRef = class extends Command {
-          constructor(...[input]) {
-            super();
-            __publicField(this, "input");
-            __publicField(this, "serialize", closure._serializer);
-            __publicField(this, "deserialize", closure._deserializer);
-            this.input = input != null ? input : {};
-            closure._init(this);
-            this.schema = closure._operationSchema;
-          }
-          static getEndpointParameterInstructions() {
-            return closure._ep;
-          }
-          resolveMiddleware(stack, configuration, options) {
-            var _a, _b, _c, _d;
-            const op = closure._operationSchema;
-            const input = (_a = op == null ? void 0 : op[4]) != null ? _a : op == null ? void 0 : op.input;
-            const output = (_b = op == null ? void 0 : op[5]) != null ? _b : op == null ? void 0 : op.output;
-            return this.resolveMiddlewareWithContext(stack, configuration, options, {
-              CommandCtor: CommandRef,
-              middlewareFn: closure._middlewareFn,
-              clientName: closure._clientName,
-              commandName: closure._commandName,
-              inputFilterSensitiveLog: (_c = closure._inputFilterSensitiveLog) != null ? _c : op ? schemaLogFilter.bind(null, input) : (_) => _,
-              outputFilterSensitiveLog: (_d = closure._outputFilterSensitiveLog) != null ? _d : op ? schemaLogFilter.bind(null, output) : (_) => _,
-              smithyContext: closure._smithyContext,
-              additionalContext: closure._additionalContext
-            });
-          }
-        };
-      }
-    };
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/constants.js
-var SENSITIVE_STRING2;
-var init_constants2 = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/constants.js"() {
-    SENSITIVE_STRING2 = "***SensitiveInformation***";
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js
-var createAggregatedClient;
-var init_create_aggregated_client = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js"() {
-    createAggregatedClient = (commands2, Client2) => {
-      for (const command of Object.keys(commands2)) {
-        const CommandCtor = commands2[command];
-        const methodImpl = async function(args, optionsOrCb, cb) {
-          const command2 = new CommandCtor(args);
-          if (typeof optionsOrCb === "function") {
-            this.send(command2, optionsOrCb);
-          } else if (typeof cb === "function") {
-            if (typeof optionsOrCb !== "object")
-              throw new Error(`Expected http options but got ${typeof optionsOrCb}`);
-            this.send(command2, optionsOrCb || {}, cb);
-          } else {
-            return this.send(command2, optionsOrCb);
-          }
-        };
-        const methodName = (command[0].toLowerCase() + command.slice(1)).replace(/Command$/, "");
-        Client2.prototype[methodName] = methodImpl;
-      }
-    };
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/exceptions.js
-var ServiceException, decorateServiceException;
-var init_exceptions = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/exceptions.js"() {
-    ServiceException = class _ServiceException extends Error {
-      constructor(options) {
-        super(options.message);
-        __publicField(this, "$fault");
-        __publicField(this, "$response");
-        __publicField(this, "$retryable");
-        __publicField(this, "$metadata");
-        Object.setPrototypeOf(this, Object.getPrototypeOf(this).constructor.prototype);
-        this.name = options.name;
-        this.$fault = options.$fault;
-        this.$metadata = options.$metadata;
-      }
-      static isInstance(value2) {
-        if (!value2)
-          return false;
-        const candidate = value2;
-        return _ServiceException.prototype.isPrototypeOf(candidate) || Boolean(candidate.$fault) && Boolean(candidate.$metadata) && (candidate.$fault === "client" || candidate.$fault === "server");
-      }
-      static [Symbol.hasInstance](instance) {
-        if (!instance)
-          return false;
-        const candidate = instance;
-        if (this === _ServiceException) {
-          return _ServiceException.isInstance(instance);
-        }
-        if (_ServiceException.isInstance(instance)) {
-          if (candidate.name && this.name) {
-            return this.prototype.isPrototypeOf(instance) || candidate.name === this.name;
-          }
-          return this.prototype.isPrototypeOf(instance);
-        }
-        return false;
-      }
-    };
-    decorateServiceException = (exception, additions = {}) => {
-      Object.entries(additions).filter(([, v2]) => v2 !== void 0).forEach(([k2, v2]) => {
-        if (exception[k2] == void 0 || exception[k2] === "") {
-          exception[k2] = v2;
-        }
-      });
-      const message = exception.message || exception.Message || "UnknownError";
-      exception.message = message;
-      delete exception.Message;
-      return exception;
-    };
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/default-error-handler.js
-var throwDefaultError, withBaseException, deserializeMetadata;
-var init_default_error_handler = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/default-error-handler.js"() {
-    init_exceptions();
-    throwDefaultError = ({ output, parsedBody, exceptionCtor, errorCode }) => {
-      const $metadata = deserializeMetadata(output);
-      const statusCode = $metadata.httpStatusCode ? $metadata.httpStatusCode + "" : void 0;
-      const response = new exceptionCtor({
-        name: (parsedBody == null ? void 0 : parsedBody.code) || (parsedBody == null ? void 0 : parsedBody.Code) || errorCode || statusCode || "UnknownError",
-        $fault: "client",
-        $metadata
-      });
-      throw decorateServiceException(response, parsedBody);
-    };
-    withBaseException = (ExceptionCtor) => {
-      return ({ output, parsedBody, errorCode }) => {
-        throwDefaultError({ output, parsedBody, exceptionCtor: ExceptionCtor, errorCode });
-      };
-    };
-    deserializeMetadata = (output) => {
-      var _a, _b;
-      return {
-        httpStatusCode: output.statusCode,
-        requestId: (_b = (_a = output.headers["x-amzn-requestid"]) != null ? _a : output.headers["x-amzn-request-id"]) != null ? _b : output.headers["x-amz-request-id"],
-        extendedRequestId: output.headers["x-amz-id-2"],
-        cfId: output.headers["x-amz-cf-id"]
-      };
-    };
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/defaults-mode.js
-var loadConfigsForDefaultMode;
-var init_defaults_mode = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/defaults-mode.js"() {
-    loadConfigsForDefaultMode = (mode) => {
-      switch (mode) {
-        case "standard":
-          return {
-            retryMode: "standard",
-            connectionTimeout: 3100
-          };
-        case "in-region":
-          return {
-            retryMode: "standard",
-            connectionTimeout: 1100
-          };
-        case "cross-region":
-          return {
-            retryMode: "standard",
-            connectionTimeout: 3100
-          };
-        case "mobile":
-          return {
-            retryMode: "standard",
-            connectionTimeout: 3e4
-          };
-        default:
-          return {};
-      }
-    };
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js
-var init_emitWarningIfUnsupportedVersion2 = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js"() {
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js
-var init_extended_encode_uri_component2 = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js"() {
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js
-var getChecksumConfiguration, resolveChecksumRuntimeConfig;
-var init_checksum3 = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js"() {
-    init_dist_es();
-    getChecksumConfiguration = (runtimeConfig) => {
-      const checksumAlgorithms = [];
-      for (const id in AlgorithmId) {
-        const algorithmId = AlgorithmId[id];
-        if (runtimeConfig[algorithmId] === void 0) {
-          continue;
-        }
-        checksumAlgorithms.push({
-          algorithmId: () => algorithmId,
-          checksumConstructor: () => runtimeConfig[algorithmId]
-        });
-      }
-      return {
-        addChecksumAlgorithm(algo) {
-          checksumAlgorithms.push(algo);
-        },
-        checksumAlgorithms() {
-          return checksumAlgorithms;
-        }
-      };
-    };
-    resolveChecksumRuntimeConfig = (clientConfig) => {
-      const runtimeConfig = {};
-      clientConfig.checksumAlgorithms().forEach((checksumAlgorithm) => {
-        runtimeConfig[checksumAlgorithm.algorithmId()] = checksumAlgorithm.checksumConstructor();
-      });
-      return runtimeConfig;
-    };
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/extensions/retry.js
-var getRetryConfiguration, resolveRetryRuntimeConfig;
-var init_retry2 = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/extensions/retry.js"() {
-    getRetryConfiguration = (runtimeConfig) => {
-      return {
-        setRetryStrategy(retryStrategy) {
-          runtimeConfig.retryStrategy = retryStrategy;
-        },
-        retryStrategy() {
-          return runtimeConfig.retryStrategy;
-        }
-      };
-    };
-    resolveRetryRuntimeConfig = (retryStrategyConfiguration) => {
-      const runtimeConfig = {};
-      runtimeConfig.retryStrategy = retryStrategyConfiguration.retryStrategy();
-      return runtimeConfig;
-    };
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js
-var getDefaultExtensionConfiguration, resolveDefaultRuntimeConfig;
-var init_defaultExtensionConfiguration2 = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js"() {
-    init_checksum3();
-    init_retry2();
-    getDefaultExtensionConfiguration = (runtimeConfig) => {
-      return Object.assign(getChecksumConfiguration(runtimeConfig), getRetryConfiguration(runtimeConfig));
-    };
-    resolveDefaultRuntimeConfig = (config) => {
-      return Object.assign(resolveChecksumRuntimeConfig(config), resolveRetryRuntimeConfig(config));
-    };
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/extensions/index.js
-var init_extensions3 = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/extensions/index.js"() {
-    init_defaultExtensionConfiguration2();
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js
-var init_get_array_if_single_item = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js"() {
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js
-var init_get_value_from_text_node = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js"() {
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js
-var init_is_serializable_header_value = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js"() {
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js
-var NoOpLogger;
-var init_NoOpLogger = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js"() {
-    NoOpLogger = class {
-      trace() {
-      }
-      debug() {
-      }
-      info() {
-      }
-      warn() {
-      }
-      error() {
-      }
-    };
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/object-mapping.js
-function map(arg0, arg1, arg2) {
-  let target;
-  let filter;
-  let instructions;
-  if (typeof arg1 === "undefined" && typeof arg2 === "undefined") {
-    target = {};
-    instructions = arg0;
-  } else {
-    target = arg0;
-    if (typeof arg1 === "function") {
-      filter = arg1;
-      instructions = arg2;
-      return mapWithFilter(target, filter, instructions);
-    } else {
-      instructions = arg1;
-    }
-  }
-  for (const key of Object.keys(instructions)) {
-    if (!Array.isArray(instructions[key])) {
-      target[key] = instructions[key];
-      continue;
-    }
-    applyInstruction(target, null, instructions, key);
-  }
-  return target;
-}
-var take, mapWithFilter, applyInstruction, nonNullish, pass;
-var init_object_mapping = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/object-mapping.js"() {
-    take = (source, instructions) => {
-      const out = {};
-      for (const key in instructions) {
-        applyInstruction(out, source, instructions, key);
-      }
-      return out;
-    };
-    mapWithFilter = (target, filter, instructions) => {
-      return map(target, Object.entries(instructions).reduce((_instructions, [key, value2]) => {
-        if (Array.isArray(value2)) {
-          _instructions[key] = value2;
-        } else {
-          if (typeof value2 === "function") {
-            _instructions[key] = [filter, value2()];
-          } else {
-            _instructions[key] = [filter, value2];
-          }
-        }
-        return _instructions;
-      }, {}));
-    };
-    applyInstruction = (target, source, instructions, targetKey) => {
-      if (source !== null) {
-        let instruction = instructions[targetKey];
-        if (typeof instruction === "function") {
-          instruction = [, instruction];
-        }
-        const [filter2 = nonNullish, valueFn = pass, sourceKey = targetKey] = instruction;
-        if (typeof filter2 === "function" && filter2(source[sourceKey]) || typeof filter2 !== "function" && !!filter2) {
-          target[targetKey] = valueFn(source[sourceKey]);
-        }
-        return;
-      }
-      let [filter, value2] = instructions[targetKey];
-      if (typeof value2 === "function") {
-        let _value;
-        const defaultFilterPassed = filter === void 0 && (_value = value2()) != null;
-        const customFilterPassed = typeof filter === "function" && !!filter(void 0) || typeof filter !== "function" && !!filter;
-        if (defaultFilterPassed) {
-          target[targetKey] = _value;
-        } else if (customFilterPassed) {
-          target[targetKey] = value2();
-        }
-      } else {
-        const defaultFilterPassed = filter === void 0 && value2 != null;
-        const customFilterPassed = typeof filter === "function" && !!filter(value2) || typeof filter !== "function" && !!filter;
-        if (defaultFilterPassed || customFilterPassed) {
-          target[targetKey] = value2;
-        }
-      }
-    };
-    nonNullish = (_) => _ != null;
-    pass = (_) => _;
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/resolve-path.js
-var init_resolve_path2 = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/resolve-path.js"() {
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/ser-utils.js
-var init_ser_utils = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/ser-utils.js"() {
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/serde-json.js
-var _json;
-var init_serde_json = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/serde-json.js"() {
-    _json = (obj) => {
-      if (obj == null) {
-        return {};
-      }
-      if (Array.isArray(obj)) {
-        return obj.filter((_) => _ != null).map(_json);
-      }
-      if (typeof obj === "object") {
-        const target = {};
-        for (const key of Object.keys(obj)) {
-          if (obj[key] == null) {
-            continue;
-          }
-          target[key] = _json(obj[key]);
-        }
-        return target;
-      }
-      return obj;
-    };
-  }
-});
-
-// node_modules/@smithy/smithy-client/dist-es/index.js
-var init_dist_es26 = __esm({
-  "node_modules/@smithy/smithy-client/dist-es/index.js"() {
-    init_client3();
-    init_collect_stream_body2();
-    init_command2();
-    init_constants2();
-    init_create_aggregated_client();
-    init_default_error_handler();
-    init_defaults_mode();
-    init_emitWarningIfUnsupportedVersion2();
-    init_exceptions();
-    init_extended_encode_uri_component2();
-    init_extensions3();
-    init_get_array_if_single_item();
-    init_get_value_from_text_node();
-    init_is_serializable_header_value();
-    init_NoOpLogger();
-    init_object_mapping();
-    init_resolve_path2();
-    init_ser_utils();
-    init_serde_json();
-    init_serde2();
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/common.js
-var collectBodyString;
-var init_common = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/common.js"() {
-    init_dist_es26();
-    init_dist_es8();
-    collectBodyString = (streamBody, context) => collectBody(streamBody, context).then((body) => {
-      var _a;
-      return ((_a = context == null ? void 0 : context.utf8Encoder) != null ? _a : toUtf8)(body);
-    });
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js
-var parseJsonBody, parseJsonErrorBody, loadRestJsonErrorCode;
-var init_parseJsonBody = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js"() {
-    init_common();
-    parseJsonBody = (streamBody, context) => collectBodyString(streamBody, context).then((encoded) => {
-      if (encoded.length) {
-        try {
-          return JSON.parse(encoded);
-        } catch (e2) {
-          if ((e2 == null ? void 0 : e2.name) === "SyntaxError") {
-            Object.defineProperty(e2, "$responseBodyText", {
-              value: encoded
-            });
-          }
-          throw e2;
-        }
-      }
-      return {};
-    });
-    parseJsonErrorBody = async (errorBody, context) => {
-      var _a;
-      const value2 = await parseJsonBody(errorBody, context);
-      value2.message = (_a = value2.message) != null ? _a : value2.Message;
-      return value2;
-    };
-    loadRestJsonErrorCode = (output, data) => {
-      const findKey = (object, key) => Object.keys(object).find((k2) => k2.toLowerCase() === key.toLowerCase());
-      const sanitizeErrorCode = (rawValue) => {
-        let cleanValue = rawValue;
-        if (typeof cleanValue === "number") {
-          cleanValue = cleanValue.toString();
-        }
-        if (cleanValue.indexOf(",") >= 0) {
-          cleanValue = cleanValue.split(",")[0];
-        }
-        if (cleanValue.indexOf(":") >= 0) {
-          cleanValue = cleanValue.split(":")[0];
-        }
-        if (cleanValue.indexOf("#") >= 0) {
-          cleanValue = cleanValue.split("#")[1];
-        }
-        return cleanValue;
-      };
-      const headerKey = findKey(output.headers, "x-amzn-errortype");
-      if (headerKey !== void 0) {
-        return sanitizeErrorCode(output.headers[headerKey]);
-      }
-      if (data && typeof data === "object") {
-        const codeKey = findKey(data, "code");
-        if (codeKey && data[codeKey] !== void 0) {
-          return sanitizeErrorCode(data[codeKey]);
-        }
-        if (data["__type"] !== void 0) {
-          return sanitizeErrorCode(data["__type"]);
-        }
-      }
-    };
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js
-var init_JsonShapeDeserializer = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js
-var init_JsonShapeSerializer = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js
-var init_JsonCodec = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js
-var init_AwsJsonRpcProtocol = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js
-var init_AwsJson1_0Protocol = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js
-var init_AwsJson1_1Protocol = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js
-var init_AwsRestJsonProtocol = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js
-var init_awsExpectUnion = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js
-var init_XmlShapeDeserializer = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js
-var init_AwsQueryProtocol = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js
-var init_AwsEc2QueryProtocol = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js
-var init_parseXmlBody = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js
-var init_XmlShapeSerializer = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js
-var init_XmlCodec = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js
-var init_AwsRestXmlProtocol = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js
-var init_protocols2 = __esm({
-  "node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js"() {
-    init_AwsSmithyRpcV2CborProtocol();
-    init_coercing_serializers();
-    init_AwsJson1_0Protocol();
-    init_AwsJson1_1Protocol();
-    init_AwsJsonRpcProtocol();
-    init_AwsRestJsonProtocol();
-    init_JsonCodec();
-    init_JsonShapeDeserializer();
-    init_JsonShapeSerializer();
-    init_awsExpectUnion();
-    init_parseJsonBody();
-    init_AwsEc2QueryProtocol();
-    init_AwsQueryProtocol();
-    init_AwsRestXmlProtocol();
-    init_XmlCodec();
-    init_XmlShapeDeserializer();
-    init_XmlShapeSerializer();
-    init_parseXmlBody();
-  }
-});
-
-// node_modules/@aws-sdk/core/dist-es/index.js
-var init_dist_es27 = __esm({
-  "node_modules/@aws-sdk/core/dist-es/index.js"() {
-    init_client2();
-    init_httpAuthSchemes2();
-    init_protocols2();
-  }
-});
-
-// node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js
-async function checkFeatures(context, config, args) {
-  var _a, _b, _c, _d, _e, _f, _g, _h;
-  const request = args.request;
-  if (((_a = request == null ? void 0 : request.headers) == null ? void 0 : _a["smithy-protocol"]) === "rpc-v2-cbor") {
-    setFeature2(context, "PROTOCOL_RPC_V2_CBOR", "M");
-  }
-  if (typeof config.retryStrategy === "function") {
-    const retryStrategy = await config.retryStrategy();
-    if (typeof retryStrategy.acquireInitialRetryToken === "function") {
-      if ((_c = (_b = retryStrategy.constructor) == null ? void 0 : _b.name) == null ? void 0 : _c.includes("Adaptive")) {
-        setFeature2(context, "RETRY_MODE_ADAPTIVE", "F");
-      } else {
-        setFeature2(context, "RETRY_MODE_STANDARD", "E");
-      }
-    } else {
-      setFeature2(context, "RETRY_MODE_LEGACY", "D");
-    }
-  }
-  if (typeof config.accountIdEndpointMode === "function") {
-    const endpointV2 = context.endpointV2;
-    if (String((_d = endpointV2 == null ? void 0 : endpointV2.url) == null ? void 0 : _d.hostname).match(ACCOUNT_ID_ENDPOINT_REGEX)) {
-      setFeature2(context, "ACCOUNT_ID_ENDPOINT", "O");
-    }
-    switch (await ((_e = config.accountIdEndpointMode) == null ? void 0 : _e.call(config))) {
-      case "disabled":
-        setFeature2(context, "ACCOUNT_ID_MODE_DISABLED", "Q");
-        break;
-      case "preferred":
-        setFeature2(context, "ACCOUNT_ID_MODE_PREFERRED", "P");
-        break;
-      case "required":
-        setFeature2(context, "ACCOUNT_ID_MODE_REQUIRED", "R");
-        break;
-    }
-  }
-  const identity = (_g = (_f = context.__smithy_context) == null ? void 0 : _f.selectedHttpAuthScheme) == null ? void 0 : _g.identity;
-  if (identity == null ? void 0 : identity.$source) {
-    const credentials = identity;
-    if (credentials.accountId) {
-      setFeature2(context, "RESOLVED_ACCOUNT_ID", "T");
-    }
-    for (const [key, value2] of Object.entries((_h = credentials.$source) != null ? _h : {})) {
-      setFeature2(context, key, value2);
-    }
-  }
-}
-var ACCOUNT_ID_ENDPOINT_REGEX;
-var init_check_features = __esm({
-  "node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js"() {
-    init_dist_es27();
-    ACCOUNT_ID_ENDPOINT_REGEX = /\d{12}\.ddb/;
-  }
-});
-
-// node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js
-var USER_AGENT, X_AMZ_USER_AGENT, SPACE, UA_NAME_SEPARATOR, UA_NAME_ESCAPE_REGEX, UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR;
-var init_constants3 = __esm({
-  "node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js"() {
-    USER_AGENT = "user-agent";
-    X_AMZ_USER_AGENT = "x-amz-user-agent";
-    SPACE = " ";
-    UA_NAME_SEPARATOR = "/";
-    UA_NAME_ESCAPE_REGEX = /[^!$%&'*+\-.^_`|~\w]/g;
-    UA_VALUE_ESCAPE_REGEX = /[^!$%&'*+\-.^_`|~\w#]/g;
-    UA_ESCAPE_CHAR = "-";
-  }
-});
-
-// node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js
-function encodeFeatures(features) {
-  let buffer = "";
-  for (const key in features) {
-    const val = features[key];
-    if (buffer.length + val.length + 1 <= BYTE_LIMIT) {
-      if (buffer.length) {
-        buffer += "," + val;
-      } else {
-        buffer += val;
-      }
-      continue;
-    }
-    break;
-  }
-  return buffer;
-}
-var BYTE_LIMIT;
-var init_encode_features = __esm({
-  "node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js"() {
-    BYTE_LIMIT = 1024;
-  }
-});
-
-// node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js
-var userAgentMiddleware, escapeUserAgent, getUserAgentMiddlewareOptions, getUserAgentPlugin;
-var init_user_agent_middleware = __esm({
-  "node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js"() {
-    init_dist_es20();
-    init_dist_es2();
-    init_check_features();
-    init_constants3();
-    init_encode_features();
-    userAgentMiddleware = (options) => (next, context) => async (args) => {
-      var _a, _b, _c, _d;
-      const { request } = args;
-      if (!HttpRequest.isInstance(request)) {
-        return next(args);
-      }
-      const { headers } = request;
-      const userAgent = ((_a = context == null ? void 0 : context.userAgent) == null ? void 0 : _a.map(escapeUserAgent)) || [];
-      const defaultUserAgent = (await options.defaultUserAgentProvider()).map(escapeUserAgent);
-      await checkFeatures(context, options, args);
-      const awsContext = context;
-      defaultUserAgent.push(`m/${encodeFeatures(Object.assign({}, (_b = context.__smithy_context) == null ? void 0 : _b.features, (_c = awsContext.__aws_sdk_context) == null ? void 0 : _c.features))}`);
-      const customUserAgent = ((_d = options == null ? void 0 : options.customUserAgent) == null ? void 0 : _d.map(escapeUserAgent)) || [];
-      const appId = await options.userAgentAppId();
-      if (appId) {
-        defaultUserAgent.push(escapeUserAgent([`app`, `${appId}`]));
-      }
-      const prefix = getUserAgentPrefix();
-      const sdkUserAgentValue = (prefix ? [prefix] : []).concat([...defaultUserAgent, ...userAgent, ...customUserAgent]).join(SPACE);
-      const normalUAValue = [
-        ...defaultUserAgent.filter((section) => section.startsWith("aws-sdk-")),
-        ...customUserAgent
-      ].join(SPACE);
-      if (options.runtime !== "browser") {
-        if (normalUAValue) {
-          headers[X_AMZ_USER_AGENT] = headers[X_AMZ_USER_AGENT] ? `${headers[USER_AGENT]} ${normalUAValue}` : normalUAValue;
-        }
-        headers[USER_AGENT] = sdkUserAgentValue;
-      } else {
-        headers[X_AMZ_USER_AGENT] = sdkUserAgentValue;
-      }
-      return next({
-        ...args,
-        request
-      });
-    };
-    escapeUserAgent = (userAgentPair) => {
-      var _a;
-      const name = userAgentPair[0].split(UA_NAME_SEPARATOR).map((part) => part.replace(UA_NAME_ESCAPE_REGEX, UA_ESCAPE_CHAR)).join(UA_NAME_SEPARATOR);
-      const version = (_a = userAgentPair[1]) == null ? void 0 : _a.replace(UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR);
-      const prefixSeparatorIndex = name.indexOf(UA_NAME_SEPARATOR);
-      const prefix = name.substring(0, prefixSeparatorIndex);
-      let uaName = name.substring(prefixSeparatorIndex + 1);
-      if (prefix === "api") {
-        uaName = uaName.toLowerCase();
-      }
-      return [prefix, uaName, version].filter((item) => item && item.length > 0).reduce((acc, item, index2) => {
-        switch (index2) {
-          case 0:
-            return item;
-          case 1:
-            return `${acc}/${item}`;
-          default:
-            return `${acc}#${item}`;
-        }
-      }, "");
-    };
-    getUserAgentMiddlewareOptions = {
-      name: "getUserAgentMiddleware",
-      step: "build",
-      priority: "low",
-      tags: ["SET_USER_AGENT", "USER_AGENT"],
-      override: true
-    };
-    getUserAgentPlugin = (config) => ({
-      applyToStack: (clientStack) => {
-        clientStack.add(userAgentMiddleware(config), getUserAgentMiddlewareOptions);
-      }
-    });
-  }
-});
-
-// node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js
-var init_dist_es28 = __esm({
-  "node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js"() {
-    init_configurations();
-    init_user_agent_middleware();
-  }
-});
-
-// node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js
-var DEFAULT_USE_DUALSTACK_ENDPOINT;
-var init_NodeUseDualstackEndpointConfigOptions = __esm({
-  "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js"() {
-    DEFAULT_USE_DUALSTACK_ENDPOINT = false;
-  }
-});
-
-// node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js
-var DEFAULT_USE_FIPS_ENDPOINT;
-var init_NodeUseFipsEndpointConfigOptions = __esm({
-  "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js"() {
-    DEFAULT_USE_FIPS_ENDPOINT = false;
-  }
-});
-
-// node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js
-var init_resolveCustomEndpointsConfig = __esm({
-  "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js"() {
-  }
-});
-
-// node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js
-var init_resolveEndpointsConfig = __esm({
-  "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js"() {
-  }
-});
-
-// node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js
-var init_endpointsConfig = __esm({
-  "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js"() {
-    init_NodeUseDualstackEndpointConfigOptions();
-    init_NodeUseFipsEndpointConfigOptions();
-    init_resolveCustomEndpointsConfig();
-    init_resolveEndpointsConfig();
-  }
-});
-
-// node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js
-var init_config2 = __esm({
-  "node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js"() {
-  }
-});
-
-// node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js
-var validRegions, checkRegion;
-var init_checkRegion = __esm({
-  "node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js"() {
-    init_dist_es17();
-    validRegions = /* @__PURE__ */ new Set();
-    checkRegion = (region, check = isValidHostLabel) => {
-      if (!validRegions.has(region) && !check(region)) {
-        if (region === "*") {
-          console.warn(`@smithy/config-resolver WARN - Please use the caller region instead of "*". See "sigv4a" in https://github.com/aws/aws-sdk-js-v3/blob/main/supplemental-docs/CLIENTS.md.`);
-        } else {
-          throw new Error(`Region not accepted: region="${region}" is not a valid hostname component.`);
-        }
-      } else {
-        validRegions.add(region);
-      }
-    };
-  }
-});
-
-// node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js
-var isFipsRegion;
-var init_isFipsRegion = __esm({
-  "node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js"() {
-    isFipsRegion = (region) => typeof region === "string" && (region.startsWith("fips-") || region.endsWith("-fips"));
-  }
-});
-
-// node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js
-var getRealRegion;
-var init_getRealRegion = __esm({
-  "node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js"() {
-    init_isFipsRegion();
-    getRealRegion = (region) => isFipsRegion(region) ? ["fips-aws-global", "aws-fips"].includes(region) ? "us-east-1" : region.replace(/fips-(dkr-|prod-)?|-fips/, "") : region;
-  }
-});
-
-// node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js
-var resolveRegionConfig;
-var init_resolveRegionConfig = __esm({
-  "node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js"() {
-    init_checkRegion();
-    init_getRealRegion();
-    init_isFipsRegion();
-    resolveRegionConfig = (input) => {
-      const { region, useFipsEndpoint } = input;
-      if (!region) {
-        throw new Error("Region is missing");
-      }
-      return Object.assign(input, {
-        region: async () => {
-          const providedRegion = typeof region === "function" ? await region() : region;
-          const realRegion = getRealRegion(providedRegion);
-          checkRegion(realRegion);
-          return realRegion;
-        },
-        useFipsEndpoint: async () => {
-          const providedRegion = typeof region === "string" ? region : await region();
-          if (isFipsRegion(providedRegion)) {
-            return true;
-          }
-          return typeof useFipsEndpoint !== "function" ? Promise.resolve(!!useFipsEndpoint) : useFipsEndpoint();
-        }
-      });
-    };
-  }
-});
-
-// node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js
-var init_regionConfig = __esm({
-  "node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js"() {
-    init_config2();
-    init_resolveRegionConfig();
-  }
-});
-
-// node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js
-var init_PartitionHash = __esm({
-  "node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js"() {
-  }
-});
-
-// node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js
-var init_RegionHash = __esm({
-  "node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js"() {
-  }
-});
-
-// node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js
-var init_getRegionInfo = __esm({
-  "node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js"() {
-  }
-});
-
-// node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js
-var init_regionInfo = __esm({
-  "node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js"() {
-    init_PartitionHash();
-    init_RegionHash();
-    init_getRegionInfo();
-  }
-});
-
-// node_modules/@smithy/config-resolver/dist-es/index.js
-var init_dist_es29 = __esm({
-  "node_modules/@smithy/config-resolver/dist-es/index.js"() {
-    init_endpointsConfig();
-    init_regionConfig();
-    init_regionInfo();
-  }
-});
-
-// node_modules/@smithy/middleware-content-length/dist-es/index.js
-function contentLengthMiddleware(bodyLengthChecker) {
-  return (next) => async (args) => {
-    const request = args.request;
-    if (HttpRequest.isInstance(request)) {
-      const { body, headers } = request;
-      if (body && Object.keys(headers).map((str) => str.toLowerCase()).indexOf(CONTENT_LENGTH_HEADER) === -1) {
-        try {
-          const length = bodyLengthChecker(body);
-          request.headers = {
-            ...request.headers,
-            [CONTENT_LENGTH_HEADER]: String(length)
-          };
-        } catch (error) {
-        }
-      }
-    }
-    return next({
-      ...args,
-      request
-    });
-  };
-}
-var CONTENT_LENGTH_HEADER, contentLengthMiddlewareOptions, getContentLengthPlugin;
-var init_dist_es30 = __esm({
-  "node_modules/@smithy/middleware-content-length/dist-es/index.js"() {
-    init_dist_es2();
-    CONTENT_LENGTH_HEADER = "content-length";
-    contentLengthMiddlewareOptions = {
-      step: "build",
-      tags: ["SET_CONTENT_LENGTH", "CONTENT_LENGTH"],
-      name: "contentLengthMiddleware",
-      override: true
-    };
-    getContentLengthPlugin = (options) => ({
-      applyToStack: (clientStack) => {
-        clientStack.add(contentLengthMiddleware(options.bodyLengthChecker), contentLengthMiddlewareOptions);
-      }
-    });
-  }
-});
-
-// node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js
-var resolveParamsForS3, DOMAIN_PATTERN, IP_ADDRESS_PATTERN, DOTS_PATTERN, isDnsCompatibleBucketName, isArnBucketName;
-var init_s3 = __esm({
-  "node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js"() {
-    resolveParamsForS3 = async (endpointParams) => {
-      const bucket = (endpointParams == null ? void 0 : endpointParams.Bucket) || "";
-      if (typeof endpointParams.Bucket === "string") {
-        endpointParams.Bucket = bucket.replace(/#/g, encodeURIComponent("#")).replace(/\?/g, encodeURIComponent("?"));
-      }
-      if (isArnBucketName(bucket)) {
-        if (endpointParams.ForcePathStyle === true) {
-          throw new Error("Path-style addressing cannot be used with ARN buckets");
-        }
-      } else if (!isDnsCompatibleBucketName(bucket) || bucket.indexOf(".") !== -1 && !String(endpointParams.Endpoint).startsWith("http:") || bucket.toLowerCase() !== bucket || bucket.length < 3) {
-        endpointParams.ForcePathStyle = true;
-      }
-      if (endpointParams.DisableMultiRegionAccessPoints) {
-        endpointParams.disableMultiRegionAccessPoints = true;
-        endpointParams.DisableMRAP = true;
-      }
-      return endpointParams;
-    };
-    DOMAIN_PATTERN = /^[a-z0-9][a-z0-9\.\-]{1,61}[a-z0-9]$/;
-    IP_ADDRESS_PATTERN = /(\d+\.){3}\d+/;
-    DOTS_PATTERN = /\.\./;
-    isDnsCompatibleBucketName = (bucketName) => DOMAIN_PATTERN.test(bucketName) && !IP_ADDRESS_PATTERN.test(bucketName) && !DOTS_PATTERN.test(bucketName);
-    isArnBucketName = (bucketName) => {
-      const [arn, partition2, service, , , bucket] = bucketName.split(":");
-      const isArn = arn === "arn" && bucketName.split(":").length >= 6;
-      const isValidArn = Boolean(isArn && partition2 && service && bucket);
-      if (isArn && !isValidArn) {
-        throw new Error(`Invalid ARN: ${bucketName} was an invalid ARN.`);
-      }
-      return isValidArn;
-    };
-  }
-});
-
-// node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js
-var init_service_customizations = __esm({
-  "node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js"() {
-    init_s3();
-  }
-});
-
-// node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js
-var createConfigValueProvider;
-var init_createConfigValueProvider = __esm({
-  "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js"() {
-    createConfigValueProvider = (configKey, canonicalEndpointParamKey, config) => {
-      const configProvider = async () => {
-        var _a;
-        const configValue = (_a = config[configKey]) != null ? _a : config[canonicalEndpointParamKey];
-        if (typeof configValue === "function") {
-          return configValue();
-        }
-        return configValue;
-      };
-      if (configKey === "credentialScope" || canonicalEndpointParamKey === "CredentialScope") {
-        return async () => {
-          var _a;
-          const credentials = typeof config.credentials === "function" ? await config.credentials() : config.credentials;
-          const configValue = (_a = credentials == null ? void 0 : credentials.credentialScope) != null ? _a : credentials == null ? void 0 : credentials.CredentialScope;
-          return configValue;
-        };
-      }
-      if (configKey === "accountId" || canonicalEndpointParamKey === "AccountId") {
-        return async () => {
-          var _a;
-          const credentials = typeof config.credentials === "function" ? await config.credentials() : config.credentials;
-          const configValue = (_a = credentials == null ? void 0 : credentials.accountId) != null ? _a : credentials == null ? void 0 : credentials.AccountId;
-          return configValue;
-        };
-      }
-      if (configKey === "endpoint" || canonicalEndpointParamKey === "endpoint") {
-        return async () => {
-          if (config.isCustomEndpoint === false) {
-            return void 0;
-          }
-          const endpoint = await configProvider();
-          if (endpoint && typeof endpoint === "object") {
-            if ("url" in endpoint) {
-              return endpoint.url.href;
-            }
-            if ("hostname" in endpoint) {
-              const { protocol, hostname, port, path: path2 } = endpoint;
-              return `${protocol}//${hostname}${port ? ":" + port : ""}${path2}`;
-            }
-          }
-          return endpoint;
-        };
-      }
-      return configProvider;
-    };
-  }
-});
-
-// node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js
-var getEndpointFromConfig;
-var init_getEndpointFromConfig_browser = __esm({
-  "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js"() {
-    getEndpointFromConfig = async (serviceId) => void 0;
-  }
-});
-
-// node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js
-var toEndpointV1;
-var init_toEndpointV1 = __esm({
-  "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js"() {
-    init_dist_es19();
-    toEndpointV1 = (endpoint) => {
-      if (typeof endpoint === "object") {
-        if ("url" in endpoint) {
-          return parseUrl(endpoint.url);
-        }
-        return endpoint;
-      }
-      return parseUrl(endpoint);
-    };
-  }
-});
-
-// node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js
-var getEndpointFromInstructions, resolveParams;
-var init_getEndpointFromInstructions = __esm({
-  "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js"() {
-    init_service_customizations();
-    init_createConfigValueProvider();
-    init_getEndpointFromConfig_browser();
-    init_toEndpointV1();
-    getEndpointFromInstructions = async (commandInput, instructionsSupplier, clientConfig, context) => {
-      if (!clientConfig.isCustomEndpoint) {
-        let endpointFromConfig;
-        if (clientConfig.serviceConfiguredEndpoint) {
-          endpointFromConfig = await clientConfig.serviceConfiguredEndpoint();
-        } else {
-          endpointFromConfig = await getEndpointFromConfig(clientConfig.serviceId);
-        }
-        if (endpointFromConfig) {
-          clientConfig.endpoint = () => Promise.resolve(toEndpointV1(endpointFromConfig));
-          clientConfig.isCustomEndpoint = true;
-        }
-      }
-      const endpointParams = await resolveParams(commandInput, instructionsSupplier, clientConfig);
-      if (typeof clientConfig.endpointProvider !== "function") {
-        throw new Error("config.endpointProvider is not set.");
-      }
-      const endpoint = clientConfig.endpointProvider(endpointParams, context);
-      return endpoint;
-    };
-    resolveParams = async (commandInput, instructionsSupplier, clientConfig) => {
-      var _a;
-      const endpointParams = {};
-      const instructions = ((_a = instructionsSupplier == null ? void 0 : instructionsSupplier.getEndpointParameterInstructions) == null ? void 0 : _a.call(instructionsSupplier)) || {};
-      for (const [name, instruction] of Object.entries(instructions)) {
-        switch (instruction.type) {
-          case "staticContextParams":
-            endpointParams[name] = instruction.value;
-            break;
-          case "contextParams":
-            endpointParams[name] = commandInput[instruction.name];
-            break;
-          case "clientContextParams":
-          case "builtInParams":
-            endpointParams[name] = await createConfigValueProvider(instruction.name, name, clientConfig)();
-            break;
-          case "operationContextParams":
-            endpointParams[name] = instruction.get(commandInput);
-            break;
-          default:
-            throw new Error("Unrecognized endpoint parameter instruction: " + JSON.stringify(instruction));
-        }
-      }
-      if (Object.keys(instructions).length === 0) {
-        Object.assign(endpointParams, clientConfig);
-      }
-      if (String(clientConfig.serviceId).toLowerCase() === "s3") {
-        await resolveParamsForS3(endpointParams);
-      }
-      return endpointParams;
-    };
-  }
-});
-
-// node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js
-var init_adaptors = __esm({
-  "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js"() {
-    init_getEndpointFromInstructions();
-    init_toEndpointV1();
-  }
-});
-
-// node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js
-var endpointMiddleware;
-var init_endpointMiddleware = __esm({
-  "node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js"() {
-    init_dist_es16();
-    init_dist_es6();
-    init_getEndpointFromInstructions();
-    endpointMiddleware = ({ config, instructions }) => {
-      return (next, context) => async (args) => {
-        var _a, _b, _c;
-        if (config.isCustomEndpoint) {
-          setFeature(context, "ENDPOINT_OVERRIDE", "N");
-        }
-        const endpoint = await getEndpointFromInstructions(args.input, {
-          getEndpointParameterInstructions() {
-            return instructions;
-          }
-        }, { ...config }, context);
-        context.endpointV2 = endpoint;
-        context.authSchemes = (_a = endpoint.properties) == null ? void 0 : _a.authSchemes;
-        const authScheme = (_b = context.authSchemes) == null ? void 0 : _b[0];
-        if (authScheme) {
-          context["signing_region"] = authScheme.signingRegion;
-          context["signing_service"] = authScheme.signingName;
-          const smithyContext = getSmithyContext(context);
-          const httpAuthOption = (_c = smithyContext == null ? void 0 : smithyContext.selectedHttpAuthScheme) == null ? void 0 : _c.httpAuthOption;
-          if (httpAuthOption) {
-            httpAuthOption.signingProperties = Object.assign(httpAuthOption.signingProperties || {}, {
-              signing_region: authScheme.signingRegion,
-              signingRegion: authScheme.signingRegion,
-              signing_service: authScheme.signingName,
-              signingName: authScheme.signingName,
-              signingRegionSet: authScheme.signingRegionSet
-            }, authScheme.properties);
-          }
-        }
-        return next({
-          ...args
-        });
-      };
-    };
-  }
-});
-
-// node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js
-var endpointMiddlewareOptions, getEndpointPlugin;
-var init_getEndpointPlugin = __esm({
-  "node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js"() {
-    init_dist_es7();
-    init_endpointMiddleware();
-    endpointMiddlewareOptions = {
-      step: "serialize",
-      tags: ["ENDPOINT_PARAMETERS", "ENDPOINT_V2", "ENDPOINT"],
-      name: "endpointV2Middleware",
-      override: true,
-      relation: "before",
-      toMiddleware: serializerMiddlewareOption.name
-    };
-    getEndpointPlugin = (config, instructions) => ({
-      applyToStack: (clientStack) => {
-        clientStack.addRelativeTo(endpointMiddleware({
-          config,
-          instructions
-        }), endpointMiddlewareOptions);
-      }
-    });
-  }
-});
-
-// node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js
-var resolveEndpointConfig;
-var init_resolveEndpointConfig = __esm({
-  "node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js"() {
-    init_dist_es6();
-    init_getEndpointFromConfig_browser();
-    init_toEndpointV1();
-    resolveEndpointConfig = (input) => {
-      var _a;
-      const tls = (_a = input.tls) != null ? _a : true;
-      const { endpoint, useDualstackEndpoint, useFipsEndpoint } = input;
-      const customEndpointProvider = endpoint != null ? async () => toEndpointV1(await normalizeProvider(endpoint)()) : void 0;
-      const isCustomEndpoint = !!endpoint;
-      const resolvedConfig = Object.assign(input, {
-        endpoint: customEndpointProvider,
-        tls,
-        isCustomEndpoint,
-        useDualstackEndpoint: normalizeProvider(useDualstackEndpoint != null ? useDualstackEndpoint : false),
-        useFipsEndpoint: normalizeProvider(useFipsEndpoint != null ? useFipsEndpoint : false)
-      });
-      let configuredEndpointPromise = void 0;
-      resolvedConfig.serviceConfiguredEndpoint = async () => {
-        if (input.serviceId && !configuredEndpointPromise) {
-          configuredEndpointPromise = getEndpointFromConfig(input.serviceId);
-        }
-        return configuredEndpointPromise;
-      };
-      return resolvedConfig;
-    };
-  }
-});
-
-// node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js
-var init_resolveEndpointRequiredConfig = __esm({
-  "node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js"() {
-  }
-});
-
-// node_modules/@smithy/middleware-endpoint/dist-es/types.js
-var init_types4 = __esm({
-  "node_modules/@smithy/middleware-endpoint/dist-es/types.js"() {
-  }
-});
-
-// node_modules/@smithy/middleware-endpoint/dist-es/index.js
-var init_dist_es31 = __esm({
-  "node_modules/@smithy/middleware-endpoint/dist-es/index.js"() {
-    init_adaptors();
-    init_endpointMiddleware();
-    init_getEndpointPlugin();
-    init_resolveEndpointConfig();
-    init_resolveEndpointRequiredConfig();
-    init_types4();
-  }
-});
-
-// node_modules/@smithy/util-retry/dist-es/config.js
-var RETRY_MODES, DEFAULT_MAX_ATTEMPTS, DEFAULT_RETRY_MODE;
-var init_config3 = __esm({
-  "node_modules/@smithy/util-retry/dist-es/config.js"() {
-    (function(RETRY_MODES2) {
-      RETRY_MODES2["STANDARD"] = "standard";
-      RETRY_MODES2["ADAPTIVE"] = "adaptive";
-    })(RETRY_MODES || (RETRY_MODES = {}));
-    DEFAULT_MAX_ATTEMPTS = 3;
-    DEFAULT_RETRY_MODE = RETRY_MODES.STANDARD;
-  }
-});
-
-// node_modules/@smithy/service-error-classification/dist-es/constants.js
-var THROTTLING_ERROR_CODES, TRANSIENT_ERROR_CODES, TRANSIENT_ERROR_STATUS_CODES, NODEJS_TIMEOUT_ERROR_CODES, NODEJS_NETWORK_ERROR_CODES;
-var init_constants4 = __esm({
-  "node_modules/@smithy/service-error-classification/dist-es/constants.js"() {
-    THROTTLING_ERROR_CODES = [
-      "BandwidthLimitExceeded",
-      "EC2ThrottledException",
-      "LimitExceededException",
-      "PriorRequestNotComplete",
-      "ProvisionedThroughputExceededException",
-      "RequestLimitExceeded",
-      "RequestThrottled",
-      "RequestThrottledException",
-      "SlowDown",
-      "ThrottledException",
-      "Throttling",
-      "ThrottlingException",
-      "TooManyRequestsException",
-      "TransactionInProgressException"
-    ];
-    TRANSIENT_ERROR_CODES = ["TimeoutError", "RequestTimeout", "RequestTimeoutException"];
-    TRANSIENT_ERROR_STATUS_CODES = [500, 502, 503, 504];
-    NODEJS_TIMEOUT_ERROR_CODES = ["ECONNRESET", "ECONNREFUSED", "EPIPE", "ETIMEDOUT"];
-    NODEJS_NETWORK_ERROR_CODES = ["EHOSTUNREACH", "ENETUNREACH", "ENOTFOUND"];
-  }
-});
-
-// node_modules/@smithy/service-error-classification/dist-es/index.js
-var isRetryableByTrait, isClockSkewCorrectedError, isBrowserNetworkError, isThrottlingError, isTransientError, isServerError;
-var init_dist_es32 = __esm({
-  "node_modules/@smithy/service-error-classification/dist-es/index.js"() {
-    init_constants4();
-    isRetryableByTrait = (error) => (error == null ? void 0 : error.$retryable) !== void 0;
-    isClockSkewCorrectedError = (error) => {
-      var _a;
-      return (_a = error.$metadata) == null ? void 0 : _a.clockSkewCorrected;
-    };
-    isBrowserNetworkError = (error) => {
-      const errorMessages = /* @__PURE__ */ new Set([
-        "Failed to fetch",
-        "NetworkError when attempting to fetch resource",
-        "The Internet connection appears to be offline",
-        "Load failed",
-        "Network request failed"
-      ]);
-      const isValid = error && error instanceof TypeError;
-      if (!isValid) {
-        return false;
-      }
-      return errorMessages.has(error.message);
-    };
-    isThrottlingError = (error) => {
-      var _a, _b;
-      return ((_a = error.$metadata) == null ? void 0 : _a.httpStatusCode) === 429 || THROTTLING_ERROR_CODES.includes(error.name) || ((_b = error.$retryable) == null ? void 0 : _b.throttling) == true;
-    };
-    isTransientError = (error, depth = 0) => {
-      var _a;
-      return isRetryableByTrait(error) || isClockSkewCorrectedError(error) || TRANSIENT_ERROR_CODES.includes(error.name) || NODEJS_TIMEOUT_ERROR_CODES.includes((error == null ? void 0 : error.code) || "") || NODEJS_NETWORK_ERROR_CODES.includes((error == null ? void 0 : error.code) || "") || TRANSIENT_ERROR_STATUS_CODES.includes(((_a = error.$metadata) == null ? void 0 : _a.httpStatusCode) || 0) || isBrowserNetworkError(error) || error.cause !== void 0 && depth <= 10 && isTransientError(error.cause, depth + 1);
-    };
-    isServerError = (error) => {
-      var _a;
-      if (((_a = error.$metadata) == null ? void 0 : _a.httpStatusCode) !== void 0) {
-        const statusCode = error.$metadata.httpStatusCode;
-        if (500 <= statusCode && statusCode <= 599 && !isTransientError(error)) {
-          return true;
-        }
-        return false;
-      }
-      return false;
-    };
-  }
-});
-
-// node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js
-var _DefaultRateLimiter, DefaultRateLimiter;
-var init_DefaultRateLimiter = __esm({
-  "node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js"() {
-    init_dist_es32();
-    _DefaultRateLimiter = class _DefaultRateLimiter {
-      constructor(options) {
-        __publicField(this, "beta");
-        __publicField(this, "minCapacity");
-        __publicField(this, "minFillRate");
-        __publicField(this, "scaleConstant");
-        __publicField(this, "smooth");
-        __publicField(this, "currentCapacity", 0);
-        __publicField(this, "enabled", false);
-        __publicField(this, "lastMaxRate", 0);
-        __publicField(this, "measuredTxRate", 0);
-        __publicField(this, "requestCount", 0);
-        __publicField(this, "fillRate");
-        __publicField(this, "lastThrottleTime");
-        __publicField(this, "lastTimestamp", 0);
-        __publicField(this, "lastTxRateBucket");
-        __publicField(this, "maxCapacity");
-        __publicField(this, "timeWindow", 0);
-        var _a, _b, _c, _d, _e;
-        this.beta = (_a = options == null ? void 0 : options.beta) != null ? _a : 0.7;
-        this.minCapacity = (_b = options == null ? void 0 : options.minCapacity) != null ? _b : 1;
-        this.minFillRate = (_c = options == null ? void 0 : options.minFillRate) != null ? _c : 0.5;
-        this.scaleConstant = (_d = options == null ? void 0 : options.scaleConstant) != null ? _d : 0.4;
-        this.smooth = (_e = options == null ? void 0 : options.smooth) != null ? _e : 0.8;
-        const currentTimeInSeconds = this.getCurrentTimeInSeconds();
-        this.lastThrottleTime = currentTimeInSeconds;
-        this.lastTxRateBucket = Math.floor(this.getCurrentTimeInSeconds());
-        this.fillRate = this.minFillRate;
-        this.maxCapacity = this.minCapacity;
-      }
-      getCurrentTimeInSeconds() {
-        return Date.now() / 1e3;
-      }
-      async getSendToken() {
-        return this.acquireTokenBucket(1);
-      }
-      async acquireTokenBucket(amount) {
-        if (!this.enabled) {
-          return;
-        }
-        this.refillTokenBucket();
-        if (amount > this.currentCapacity) {
-          const delay = (amount - this.currentCapacity) / this.fillRate * 1e3;
-          await new Promise((resolve) => _DefaultRateLimiter.setTimeoutFn(resolve, delay));
-        }
-        this.currentCapacity = this.currentCapacity - amount;
-      }
-      refillTokenBucket() {
-        const timestamp = this.getCurrentTimeInSeconds();
-        if (!this.lastTimestamp) {
-          this.lastTimestamp = timestamp;
-          return;
-        }
-        const fillAmount = (timestamp - this.lastTimestamp) * this.fillRate;
-        this.currentCapacity = Math.min(this.maxCapacity, this.currentCapacity + fillAmount);
-        this.lastTimestamp = timestamp;
-      }
-      updateClientSendingRate(response) {
-        let calculatedRate;
-        this.updateMeasuredRate();
-        if (isThrottlingError(response)) {
-          const rateToUse = !this.enabled ? this.measuredTxRate : Math.min(this.measuredTxRate, this.fillRate);
-          this.lastMaxRate = rateToUse;
-          this.calculateTimeWindow();
-          this.lastThrottleTime = this.getCurrentTimeInSeconds();
-          calculatedRate = this.cubicThrottle(rateToUse);
-          this.enableTokenBucket();
-        } else {
-          this.calculateTimeWindow();
-          calculatedRate = this.cubicSuccess(this.getCurrentTimeInSeconds());
-        }
-        const newRate = Math.min(calculatedRate, 2 * this.measuredTxRate);
-        this.updateTokenBucketRate(newRate);
-      }
-      calculateTimeWindow() {
-        this.timeWindow = this.getPrecise(Math.pow(this.lastMaxRate * (1 - this.beta) / this.scaleConstant, 1 / 3));
-      }
-      cubicThrottle(rateToUse) {
-        return this.getPrecise(rateToUse * this.beta);
-      }
-      cubicSuccess(timestamp) {
-        return this.getPrecise(this.scaleConstant * Math.pow(timestamp - this.lastThrottleTime - this.timeWindow, 3) + this.lastMaxRate);
-      }
-      enableTokenBucket() {
-        this.enabled = true;
-      }
-      updateTokenBucketRate(newRate) {
-        this.refillTokenBucket();
-        this.fillRate = Math.max(newRate, this.minFillRate);
-        this.maxCapacity = Math.max(newRate, this.minCapacity);
-        this.currentCapacity = Math.min(this.currentCapacity, this.maxCapacity);
-      }
-      updateMeasuredRate() {
-        const t2 = this.getCurrentTimeInSeconds();
-        const timeBucket = Math.floor(t2 * 2) / 2;
-        this.requestCount++;
-        if (timeBucket > this.lastTxRateBucket) {
-          const currentRate = this.requestCount / (timeBucket - this.lastTxRateBucket);
-          this.measuredTxRate = this.getPrecise(currentRate * this.smooth + this.measuredTxRate * (1 - this.smooth));
-          this.requestCount = 0;
-          this.lastTxRateBucket = timeBucket;
-        }
-      }
-      getPrecise(num) {
-        return parseFloat(num.toFixed(8));
-      }
-    };
-    __publicField(_DefaultRateLimiter, "setTimeoutFn", setTimeout);
-    DefaultRateLimiter = _DefaultRateLimiter;
-  }
-});
-
-// node_modules/@smithy/util-retry/dist-es/constants.js
-var DEFAULT_RETRY_DELAY_BASE, MAXIMUM_RETRY_DELAY, THROTTLING_RETRY_DELAY_BASE, INITIAL_RETRY_TOKENS, RETRY_COST, TIMEOUT_RETRY_COST, NO_RETRY_INCREMENT, INVOCATION_ID_HEADER, REQUEST_HEADER;
-var init_constants5 = __esm({
-  "node_modules/@smithy/util-retry/dist-es/constants.js"() {
-    DEFAULT_RETRY_DELAY_BASE = 100;
-    MAXIMUM_RETRY_DELAY = 20 * 1e3;
-    THROTTLING_RETRY_DELAY_BASE = 500;
-    INITIAL_RETRY_TOKENS = 500;
-    RETRY_COST = 5;
-    TIMEOUT_RETRY_COST = 10;
-    NO_RETRY_INCREMENT = 1;
-    INVOCATION_ID_HEADER = "amz-sdk-invocation-id";
-    REQUEST_HEADER = "amz-sdk-request";
-  }
-});
-
-// node_modules/@smithy/util-retry/dist-es/defaultRetryBackoffStrategy.js
-var getDefaultRetryBackoffStrategy;
-var init_defaultRetryBackoffStrategy = __esm({
-  "node_modules/@smithy/util-retry/dist-es/defaultRetryBackoffStrategy.js"() {
-    init_constants5();
-    getDefaultRetryBackoffStrategy = () => {
-      let delayBase = DEFAULT_RETRY_DELAY_BASE;
-      const computeNextBackoffDelay = (attempts) => {
-        return Math.floor(Math.min(MAXIMUM_RETRY_DELAY, Math.random() * 2 ** attempts * delayBase));
-      };
-      const setDelayBase = (delay) => {
-        delayBase = delay;
-      };
-      return {
-        computeNextBackoffDelay,
-        setDelayBase
-      };
-    };
-  }
-});
-
-// node_modules/@smithy/util-retry/dist-es/defaultRetryToken.js
-var createDefaultRetryToken;
-var init_defaultRetryToken = __esm({
-  "node_modules/@smithy/util-retry/dist-es/defaultRetryToken.js"() {
-    init_constants5();
-    createDefaultRetryToken = ({ retryDelay, retryCount, retryCost }) => {
-      const getRetryCount = () => retryCount;
-      const getRetryDelay = () => Math.min(MAXIMUM_RETRY_DELAY, retryDelay);
-      const getRetryCost = () => retryCost;
-      return {
-        getRetryCount,
-        getRetryDelay,
-        getRetryCost
-      };
-    };
-  }
-});
-
-// node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js
-var StandardRetryStrategy;
-var init_StandardRetryStrategy = __esm({
-  "node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js"() {
-    init_config3();
-    init_constants5();
-    init_defaultRetryBackoffStrategy();
-    init_defaultRetryToken();
-    StandardRetryStrategy = class {
-      constructor(maxAttempts) {
-        __publicField(this, "maxAttempts");
-        __publicField(this, "mode", RETRY_MODES.STANDARD);
-        __publicField(this, "capacity", INITIAL_RETRY_TOKENS);
-        __publicField(this, "retryBackoffStrategy", getDefaultRetryBackoffStrategy());
-        __publicField(this, "maxAttemptsProvider");
-        this.maxAttempts = maxAttempts;
-        this.maxAttemptsProvider = typeof maxAttempts === "function" ? maxAttempts : async () => maxAttempts;
-      }
-      async acquireInitialRetryToken(retryTokenScope) {
-        return createDefaultRetryToken({
-          retryDelay: DEFAULT_RETRY_DELAY_BASE,
-          retryCount: 0
-        });
-      }
-      async refreshRetryTokenForRetry(token, errorInfo) {
-        const maxAttempts = await this.getMaxAttempts();
-        if (this.shouldRetry(token, errorInfo, maxAttempts)) {
-          const errorType = errorInfo.errorType;
-          this.retryBackoffStrategy.setDelayBase(errorType === "THROTTLING" ? THROTTLING_RETRY_DELAY_BASE : DEFAULT_RETRY_DELAY_BASE);
-          const delayFromErrorType = this.retryBackoffStrategy.computeNextBackoffDelay(token.getRetryCount());
-          const retryDelay = errorInfo.retryAfterHint ? Math.max(errorInfo.retryAfterHint.getTime() - Date.now() || 0, delayFromErrorType) : delayFromErrorType;
-          const capacityCost = this.getCapacityCost(errorType);
-          this.capacity -= capacityCost;
-          return createDefaultRetryToken({
-            retryDelay,
-            retryCount: token.getRetryCount() + 1,
-            retryCost: capacityCost
-          });
-        }
-        throw new Error("No retry token available");
-      }
-      recordSuccess(token) {
-        var _a;
-        this.capacity = Math.max(INITIAL_RETRY_TOKENS, this.capacity + ((_a = token.getRetryCost()) != null ? _a : NO_RETRY_INCREMENT));
-      }
-      getCapacity() {
-        return this.capacity;
-      }
-      async getMaxAttempts() {
-        try {
-          return await this.maxAttemptsProvider();
-        } catch (error) {
-          console.warn(`Max attempts provider could not resolve. Using default of ${DEFAULT_MAX_ATTEMPTS}`);
-          return DEFAULT_MAX_ATTEMPTS;
-        }
-      }
-      shouldRetry(tokenToRenew, errorInfo, maxAttempts) {
-        const attempts = tokenToRenew.getRetryCount() + 1;
-        return attempts < maxAttempts && this.capacity >= this.getCapacityCost(errorInfo.errorType) && this.isRetryableError(errorInfo.errorType);
-      }
-      getCapacityCost(errorType) {
-        return errorType === "TRANSIENT" ? TIMEOUT_RETRY_COST : RETRY_COST;
-      }
-      isRetryableError(errorType) {
-        return errorType === "THROTTLING" || errorType === "TRANSIENT";
-      }
-    };
-  }
-});
-
-// node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js
-var AdaptiveRetryStrategy;
-var init_AdaptiveRetryStrategy = __esm({
-  "node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js"() {
-    init_config3();
-    init_DefaultRateLimiter();
-    init_StandardRetryStrategy();
-    AdaptiveRetryStrategy = class {
-      constructor(maxAttemptsProvider, options) {
-        __publicField(this, "maxAttemptsProvider");
-        __publicField(this, "rateLimiter");
-        __publicField(this, "standardRetryStrategy");
-        __publicField(this, "mode", RETRY_MODES.ADAPTIVE);
-        this.maxAttemptsProvider = maxAttemptsProvider;
-        const { rateLimiter } = options != null ? options : {};
-        this.rateLimiter = rateLimiter != null ? rateLimiter : new DefaultRateLimiter();
-        this.standardRetryStrategy = new StandardRetryStrategy(maxAttemptsProvider);
-      }
-      async acquireInitialRetryToken(retryTokenScope) {
-        await this.rateLimiter.getSendToken();
-        return this.standardRetryStrategy.acquireInitialRetryToken(retryTokenScope);
-      }
-      async refreshRetryTokenForRetry(tokenToRenew, errorInfo) {
-        this.rateLimiter.updateClientSendingRate(errorInfo);
-        return this.standardRetryStrategy.refreshRetryTokenForRetry(tokenToRenew, errorInfo);
-      }
-      recordSuccess(token) {
-        this.rateLimiter.updateClientSendingRate({});
-        this.standardRetryStrategy.recordSuccess(token);
-      }
-    };
-  }
-});
-
-// node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js
-var init_ConfiguredRetryStrategy = __esm({
-  "node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js"() {
-  }
-});
-
-// node_modules/@smithy/util-retry/dist-es/types.js
-var init_types5 = __esm({
-  "node_modules/@smithy/util-retry/dist-es/types.js"() {
-  }
-});
-
-// node_modules/@smithy/util-retry/dist-es/index.js
-var init_dist_es33 = __esm({
-  "node_modules/@smithy/util-retry/dist-es/index.js"() {
-    init_AdaptiveRetryStrategy();
-    init_ConfiguredRetryStrategy();
-    init_DefaultRateLimiter();
-    init_StandardRetryStrategy();
-    init_config3();
-    init_constants5();
-    init_types5();
-  }
-});
-
-// node_modules/@smithy/middleware-retry/dist-es/delayDecider.js
-var init_delayDecider = __esm({
-  "node_modules/@smithy/middleware-retry/dist-es/delayDecider.js"() {
-  }
-});
-
-// node_modules/@smithy/middleware-retry/dist-es/retryDecider.js
-var init_retryDecider = __esm({
-  "node_modules/@smithy/middleware-retry/dist-es/retryDecider.js"() {
-  }
-});
-
-// node_modules/@smithy/middleware-retry/dist-es/util.js
-var asSdkError;
-var init_util2 = __esm({
-  "node_modules/@smithy/middleware-retry/dist-es/util.js"() {
-    asSdkError = (error) => {
-      if (error instanceof Error)
-        return error;
-      if (error instanceof Object)
-        return Object.assign(new Error(), error);
-      if (typeof error === "string")
-        return new Error(error);
-      return new Error(`AWS SDK error wrapper for ${error}`);
-    };
-  }
-});
-
-// node_modules/@smithy/middleware-retry/dist-es/StandardRetryStrategy.js
-var init_StandardRetryStrategy2 = __esm({
-  "node_modules/@smithy/middleware-retry/dist-es/StandardRetryStrategy.js"() {
-  }
-});
-
-// node_modules/@smithy/middleware-retry/dist-es/AdaptiveRetryStrategy.js
-var init_AdaptiveRetryStrategy2 = __esm({
-  "node_modules/@smithy/middleware-retry/dist-es/AdaptiveRetryStrategy.js"() {
-  }
-});
-
-// node_modules/@smithy/middleware-retry/dist-es/configurations.js
-var resolveRetryConfig;
-var init_configurations2 = __esm({
-  "node_modules/@smithy/middleware-retry/dist-es/configurations.js"() {
-    init_dist_es6();
-    init_dist_es33();
-    resolveRetryConfig = (input) => {
-      const { retryStrategy, retryMode: _retryMode, maxAttempts: _maxAttempts } = input;
-      const maxAttempts = normalizeProvider(_maxAttempts != null ? _maxAttempts : DEFAULT_MAX_ATTEMPTS);
-      return Object.assign(input, {
-        maxAttempts,
-        retryStrategy: async () => {
-          if (retryStrategy) {
-            return retryStrategy;
-          }
-          const retryMode = await normalizeProvider(_retryMode)();
-          if (retryMode === RETRY_MODES.ADAPTIVE) {
-            return new AdaptiveRetryStrategy(maxAttempts);
-          }
-          return new StandardRetryStrategy(maxAttempts);
-        }
-      });
-    };
-  }
-});
-
-// node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js
-var init_omitRetryHeadersMiddleware = __esm({
-  "node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js"() {
-  }
-});
-
-// node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js
-var isStreamingPayload;
-var init_isStreamingPayload_browser = __esm({
-  "node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js"() {
-    isStreamingPayload = (request) => (request == null ? void 0 : request.body) instanceof ReadableStream;
-  }
-});
-
-// node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js
-var retryMiddleware, isRetryStrategyV2, getRetryErrorInfo, getRetryErrorType, retryMiddlewareOptions, getRetryPlugin, getRetryAfterHint;
-var init_retryMiddleware = __esm({
-  "node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js"() {
-    init_dist_es2();
-    init_dist_es32();
-    init_dist_es26();
-    init_dist_es33();
-    init_dist_es15();
-    init_isStreamingPayload_browser();
-    init_util2();
-    retryMiddleware = (options) => (next, context) => async (args) => {
-      var _a;
-      let retryStrategy = await options.retryStrategy();
-      const maxAttempts = await options.maxAttempts();
-      if (isRetryStrategyV2(retryStrategy)) {
-        retryStrategy = retryStrategy;
-        let retryToken = await retryStrategy.acquireInitialRetryToken(context["partition_id"]);
-        let lastError = new Error();
-        let attempts = 0;
-        let totalRetryDelay = 0;
-        const { request } = args;
-        const isRequest = HttpRequest.isInstance(request);
-        if (isRequest) {
-          request.headers[INVOCATION_ID_HEADER] = v4();
-        }
-        while (true) {
-          try {
-            if (isRequest) {
-              request.headers[REQUEST_HEADER] = `attempt=${attempts + 1}; max=${maxAttempts}`;
-            }
-            const { response, output } = await next(args);
-            retryStrategy.recordSuccess(retryToken);
-            output.$metadata.attempts = attempts + 1;
-            output.$metadata.totalRetryDelay = totalRetryDelay;
-            return { response, output };
-          } catch (e2) {
-            const retryErrorInfo = getRetryErrorInfo(e2);
-            lastError = asSdkError(e2);
-            if (isRequest && isStreamingPayload(request)) {
-              (_a = context.logger instanceof NoOpLogger ? console : context.logger) == null ? void 0 : _a.warn("An error was encountered in a non-retryable streaming request.");
-              throw lastError;
-            }
-            try {
-              retryToken = await retryStrategy.refreshRetryTokenForRetry(retryToken, retryErrorInfo);
-            } catch (refreshError) {
-              if (!lastError.$metadata) {
-                lastError.$metadata = {};
-              }
-              lastError.$metadata.attempts = attempts + 1;
-              lastError.$metadata.totalRetryDelay = totalRetryDelay;
-              throw lastError;
-            }
-            attempts = retryToken.getRetryCount();
-            const delay = retryToken.getRetryDelay();
-            totalRetryDelay += delay;
-            await new Promise((resolve) => setTimeout(resolve, delay));
-          }
-        }
-      } else {
-        retryStrategy = retryStrategy;
-        if (retryStrategy == null ? void 0 : retryStrategy.mode)
-          context.userAgent = [...context.userAgent || [], ["cfg/retry-mode", retryStrategy.mode]];
-        return retryStrategy.retry(next, args);
-      }
-    };
-    isRetryStrategyV2 = (retryStrategy) => typeof retryStrategy.acquireInitialRetryToken !== "undefined" && typeof retryStrategy.refreshRetryTokenForRetry !== "undefined" && typeof retryStrategy.recordSuccess !== "undefined";
-    getRetryErrorInfo = (error) => {
-      const errorInfo = {
-        error,
-        errorType: getRetryErrorType(error)
-      };
-      const retryAfterHint = getRetryAfterHint(error.$response);
-      if (retryAfterHint) {
-        errorInfo.retryAfterHint = retryAfterHint;
-      }
-      return errorInfo;
-    };
-    getRetryErrorType = (error) => {
-      if (isThrottlingError(error))
-        return "THROTTLING";
-      if (isTransientError(error))
-        return "TRANSIENT";
-      if (isServerError(error))
-        return "SERVER_ERROR";
-      return "CLIENT_ERROR";
-    };
-    retryMiddlewareOptions = {
-      name: "retryMiddleware",
-      tags: ["RETRY"],
-      step: "finalizeRequest",
-      priority: "high",
-      override: true
-    };
-    getRetryPlugin = (options) => ({
-      applyToStack: (clientStack) => {
-        clientStack.add(retryMiddleware(options), retryMiddlewareOptions);
-      }
-    });
-    getRetryAfterHint = (response) => {
-      if (!HttpResponse.isInstance(response))
-        return;
-      const retryAfterHeaderName = Object.keys(response.headers).find((key) => key.toLowerCase() === "retry-after");
-      if (!retryAfterHeaderName)
-        return;
-      const retryAfter = response.headers[retryAfterHeaderName];
-      const retryAfterSeconds = Number(retryAfter);
-      if (!Number.isNaN(retryAfterSeconds))
-        return new Date(retryAfterSeconds * 1e3);
-      const retryAfterDate = new Date(retryAfter);
-      return retryAfterDate;
-    };
-  }
-});
-
-// node_modules/@smithy/middleware-retry/dist-es/index.js
-var init_dist_es34 = __esm({
-  "node_modules/@smithy/middleware-retry/dist-es/index.js"() {
-    init_AdaptiveRetryStrategy2();
-    init_StandardRetryStrategy2();
-    init_configurations2();
-    init_delayDecider();
-    init_omitRetryHeadersMiddleware();
-    init_retryDecider();
-    init_retryMiddleware();
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/auth/httpAuthSchemeProvider.js
-function createAwsAuthSigv4HttpAuthOption(authParameters) {
-  return {
-    schemeId: "aws.auth#sigv4",
-    signingProperties: {
-      name: "polly",
-      region: authParameters.region
-    },
-    propertiesExtractor: (config, context) => ({
-      signingProperties: {
-        config,
-        context
-      }
-    })
-  };
-}
-var defaultPollyHttpAuthSchemeParametersProvider, defaultPollyHttpAuthSchemeProvider, resolveHttpAuthSchemeConfig;
-var init_httpAuthSchemeProvider = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/auth/httpAuthSchemeProvider.js"() {
-    init_dist_es27();
-    init_dist_es6();
-    defaultPollyHttpAuthSchemeParametersProvider = async (config, context, input) => {
-      return {
-        operation: getSmithyContext(context).operation,
-        region: await normalizeProvider(config.region)() || (() => {
-          throw new Error("expected `region` to be configured for `aws.auth#sigv4`");
-        })()
-      };
-    };
-    defaultPollyHttpAuthSchemeProvider = (authParameters) => {
-      const options = [];
-      switch (authParameters.operation) {
-        default: {
-          options.push(createAwsAuthSigv4HttpAuthOption(authParameters));
-        }
-      }
-      return options;
-    };
-    resolveHttpAuthSchemeConfig = (config) => {
-      var _a;
-      const config_0 = resolveAwsSdkSigV4Config(config);
-      return Object.assign(config_0, {
-        authSchemePreference: normalizeProvider((_a = config.authSchemePreference) != null ? _a : [])
-      });
-    };
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/endpoint/EndpointParameters.js
-var resolveClientEndpointParameters, commonParams;
-var init_EndpointParameters = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/endpoint/EndpointParameters.js"() {
-    resolveClientEndpointParameters = (options) => {
-      var _a, _b;
-      return Object.assign(options, {
-        useDualstackEndpoint: (_a = options.useDualstackEndpoint) != null ? _a : false,
-        useFipsEndpoint: (_b = options.useFipsEndpoint) != null ? _b : false,
-        defaultSigningName: "polly"
-      });
-    };
-    commonParams = {
-      UseFIPS: { type: "builtInParams", name: "useFipsEndpoint" },
-      Endpoint: { type: "builtInParams", name: "endpoint" },
-      Region: { type: "builtInParams", name: "region" },
-      UseDualStack: { type: "builtInParams", name: "useDualstackEndpoint" }
-    };
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/package.json
-var package_default;
-var init_package = __esm({
-  "node_modules/@aws-sdk/client-polly/package.json"() {
-    package_default = {
-      name: "@aws-sdk/client-polly",
-      description: "AWS SDK for JavaScript Polly Client for Node.js, Browser and React Native",
-      version: "3.926.0",
-      scripts: {
-        build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
-        "build:cjs": "node ../../scripts/compilation/inline client-polly",
-        "build:es": "tsc -p tsconfig.es.json",
-        "build:include:deps": "lerna run --scope $npm_package_name --include-dependencies build",
-        "build:types": "tsc -p tsconfig.types.json",
-        "build:types:downlevel": "downlevel-dts dist-types dist-types/ts3.4",
-        clean: "rimraf ./dist-* && rimraf *.tsbuildinfo",
-        "extract:docs": "api-extractor run --local",
-        "generate:client": "node ../../scripts/generate-clients/single-service --solo polly"
-      },
-      main: "./dist-cjs/index.js",
-      types: "./dist-types/index.d.ts",
-      module: "./dist-es/index.js",
-      sideEffects: false,
-      dependencies: {
-        "@aws-crypto/sha256-browser": "5.2.0",
-        "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/core": "3.926.0",
-        "@aws-sdk/credential-provider-node": "3.926.0",
-        "@aws-sdk/middleware-host-header": "3.922.0",
-        "@aws-sdk/middleware-logger": "3.922.0",
-        "@aws-sdk/middleware-recursion-detection": "3.922.0",
-        "@aws-sdk/middleware-user-agent": "3.926.0",
-        "@aws-sdk/region-config-resolver": "3.925.0",
-        "@aws-sdk/types": "3.922.0",
-        "@aws-sdk/util-endpoints": "3.922.0",
-        "@aws-sdk/util-user-agent-browser": "3.922.0",
-        "@aws-sdk/util-user-agent-node": "3.926.0",
-        "@smithy/config-resolver": "^4.4.2",
-        "@smithy/core": "^3.17.2",
-        "@smithy/fetch-http-handler": "^5.3.5",
-        "@smithy/hash-node": "^4.2.4",
-        "@smithy/invalid-dependency": "^4.2.4",
-        "@smithy/middleware-content-length": "^4.2.4",
-        "@smithy/middleware-endpoint": "^4.3.6",
-        "@smithy/middleware-retry": "^4.4.6",
-        "@smithy/middleware-serde": "^4.2.4",
-        "@smithy/middleware-stack": "^4.2.4",
-        "@smithy/node-config-provider": "^4.3.4",
-        "@smithy/node-http-handler": "^4.4.4",
-        "@smithy/protocol-http": "^5.3.4",
-        "@smithy/smithy-client": "^4.9.2",
-        "@smithy/types": "^4.8.1",
-        "@smithy/url-parser": "^4.2.4",
-        "@smithy/util-base64": "^4.3.0",
-        "@smithy/util-body-length-browser": "^4.2.0",
-        "@smithy/util-body-length-node": "^4.2.1",
-        "@smithy/util-defaults-mode-browser": "^4.3.5",
-        "@smithy/util-defaults-mode-node": "^4.2.8",
-        "@smithy/util-endpoints": "^3.2.4",
-        "@smithy/util-middleware": "^4.2.4",
-        "@smithy/util-retry": "^4.2.4",
-        "@smithy/util-stream": "^4.5.5",
-        "@smithy/util-utf8": "^4.2.0",
-        tslib: "^2.6.2"
-      },
-      devDependencies: {
-        "@tsconfig/node18": "18.2.4",
-        "@types/node": "^18.19.69",
-        concurrently: "7.0.0",
-        "downlevel-dts": "0.10.1",
-        rimraf: "3.0.2",
-        typescript: "~5.8.3"
-      },
-      engines: {
-        node: ">=18.0.0"
-      },
-      typesVersions: {
-        "<4.0": {
-          "dist-types/*": [
-            "dist-types/ts3.4/*"
-          ]
-        }
-      },
-      files: [
-        "dist-*/**"
-      ],
-      author: {
-        name: "AWS SDK for JavaScript Team",
-        url: "https://aws.amazon.com/javascript/"
-      },
-      license: "Apache-2.0",
-      browser: {
-        "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
-      },
-      "react-native": {
-        "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.native"
-      },
-      homepage: "https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-polly",
-      repository: {
-        type: "git",
-        url: "https://github.com/aws/aws-sdk-js-v3.git",
-        directory: "clients/client-polly"
-      }
-    };
-  }
-});
-
-// node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
-var fromUtf82;
-var init_fromUtf8_browser2 = __esm({
-  "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
-    fromUtf82 = (input) => new TextEncoder().encode(input);
-  }
-});
-
-// node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
-var init_toUint8Array2 = __esm({
-  "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
-    init_fromUtf8_browser2();
-  }
-});
-
-// node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
-var init_toUtf8_browser2 = __esm({
-  "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
-  }
-});
-
-// node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js
-var init_dist_es35 = __esm({
-  "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js"() {
-    init_fromUtf8_browser2();
-    init_toUint8Array2();
-    init_toUtf8_browser2();
-  }
-});
-
-// node_modules/@aws-crypto/util/build/module/convertToBuffer.js
-function convertToBuffer(data) {
-  if (data instanceof Uint8Array)
-    return data;
-  if (typeof data === "string") {
-    return fromUtf83(data);
-  }
-  if (ArrayBuffer.isView(data)) {
-    return new Uint8Array(data.buffer, data.byteOffset, data.byteLength / Uint8Array.BYTES_PER_ELEMENT);
-  }
-  return new Uint8Array(data);
-}
-var fromUtf83;
-var init_convertToBuffer = __esm({
-  "node_modules/@aws-crypto/util/build/module/convertToBuffer.js"() {
-    init_dist_es35();
-    fromUtf83 = typeof Buffer !== "undefined" && Buffer.from ? function(input) {
-      return Buffer.from(input, "utf8");
-    } : fromUtf82;
-  }
-});
-
-// node_modules/@aws-crypto/util/build/module/isEmptyData.js
-function isEmptyData(data) {
-  if (typeof data === "string") {
-    return data.length === 0;
-  }
-  return data.byteLength === 0;
-}
-var init_isEmptyData = __esm({
-  "node_modules/@aws-crypto/util/build/module/isEmptyData.js"() {
-  }
-});
-
-// node_modules/@aws-crypto/util/build/module/numToUint8.js
-var init_numToUint8 = __esm({
-  "node_modules/@aws-crypto/util/build/module/numToUint8.js"() {
-  }
-});
-
-// node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js
-var init_uint32ArrayFrom = __esm({
-  "node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js"() {
-  }
-});
-
-// node_modules/@aws-crypto/util/build/module/index.js
-var init_module = __esm({
-  "node_modules/@aws-crypto/util/build/module/index.js"() {
-    init_convertToBuffer();
-    init_isEmptyData();
-    init_numToUint8();
-    init_uint32ArrayFrom();
-  }
-});
-
-// node_modules/@aws-crypto/sha256-browser/build/module/constants.js
-var SHA_256_HASH, SHA_256_HMAC_ALGO, EMPTY_DATA_SHA_256;
-var init_constants6 = __esm({
-  "node_modules/@aws-crypto/sha256-browser/build/module/constants.js"() {
-    SHA_256_HASH = { name: "SHA-256" };
-    SHA_256_HMAC_ALGO = {
-      name: "HMAC",
-      hash: SHA_256_HASH
-    };
-    EMPTY_DATA_SHA_256 = new Uint8Array([
-      227,
-      176,
-      196,
-      66,
-      152,
-      252,
-      28,
-      20,
-      154,
-      251,
-      244,
-      200,
-      153,
-      111,
-      185,
-      36,
-      39,
-      174,
-      65,
-      228,
-      100,
-      155,
-      147,
-      76,
-      164,
-      149,
-      153,
-      27,
-      120,
-      82,
-      184,
-      85
-    ]);
-  }
-});
-
-// node_modules/@aws-sdk/util-locate-window/dist-es/index.js
-function locateWindow() {
-  if (typeof window !== "undefined") {
-    return window;
-  } else if (typeof self !== "undefined") {
-    return self;
-  }
-  return fallbackWindow;
-}
-var fallbackWindow;
-var init_dist_es36 = __esm({
-  "node_modules/@aws-sdk/util-locate-window/dist-es/index.js"() {
-    fallbackWindow = {};
-  }
-});
-
-// node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js
-var Sha256;
-var init_webCryptoSha256 = __esm({
-  "node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js"() {
-    init_module();
-    init_constants6();
-    init_dist_es36();
-    Sha256 = /** @class */
-    (function() {
-      function Sha2564(secret) {
-        this.toHash = new Uint8Array(0);
-        this.secret = secret;
-        this.reset();
-      }
-      Sha2564.prototype.update = function(data) {
-        if (isEmptyData(data)) {
-          return;
-        }
-        var update = convertToBuffer(data);
-        var typedArray = new Uint8Array(this.toHash.byteLength + update.byteLength);
-        typedArray.set(this.toHash, 0);
-        typedArray.set(update, this.toHash.byteLength);
-        this.toHash = typedArray;
-      };
-      Sha2564.prototype.digest = function() {
-        var _this = this;
-        if (this.key) {
-          return this.key.then(function(key) {
-            return locateWindow().crypto.subtle.sign(SHA_256_HMAC_ALGO, key, _this.toHash).then(function(data) {
-              return new Uint8Array(data);
-            });
-          });
-        }
-        if (isEmptyData(this.toHash)) {
-          return Promise.resolve(EMPTY_DATA_SHA_256);
-        }
-        return Promise.resolve().then(function() {
-          return locateWindow().crypto.subtle.digest(SHA_256_HASH, _this.toHash);
-        }).then(function(data) {
-          return Promise.resolve(new Uint8Array(data));
-        });
-      };
-      Sha2564.prototype.reset = function() {
-        var _this = this;
-        this.toHash = new Uint8Array(0);
-        if (this.secret && this.secret !== void 0) {
-          this.key = new Promise(function(resolve, reject) {
-            locateWindow().crypto.subtle.importKey("raw", convertToBuffer(_this.secret), SHA_256_HMAC_ALGO, false, ["sign"]).then(resolve, reject);
-          });
-          this.key.catch(function() {
-          });
-        }
-      };
-      return Sha2564;
-    })();
-  }
-});
-
-// node_modules/tslib/tslib.es6.mjs
-function __awaiter(thisArg, _arguments, P, generator) {
-  function adopt(value2) {
-    return value2 instanceof P ? value2 : new P(function(resolve) {
-      resolve(value2);
-    });
-  }
-  return new (P || (P = Promise))(function(resolve, reject) {
-    function fulfilled(value2) {
-      try {
-        step(generator.next(value2));
-      } catch (e2) {
-        reject(e2);
-      }
-    }
-    function rejected(value2) {
-      try {
-        step(generator["throw"](value2));
-      } catch (e2) {
-        reject(e2);
-      }
-    }
-    function step(result) {
-      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-    }
-    step((generator = generator.apply(thisArg, _arguments || [])).next());
-  });
-}
-function __generator(thisArg, body) {
-  var _ = { label: 0, sent: function() {
-    if (t2[0] & 1) throw t2[1];
-    return t2[1];
-  }, trys: [], ops: [] }, f2, y, t2, g2 = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
-  return g2.next = verb(0), g2["throw"] = verb(1), g2["return"] = verb(2), typeof Symbol === "function" && (g2[Symbol.iterator] = function() {
-    return this;
-  }), g2;
-  function verb(n2) {
-    return function(v2) {
-      return step([n2, v2]);
-    };
-  }
-  function step(op) {
-    if (f2) throw new TypeError("Generator is already executing.");
-    while (g2 && (g2 = 0, op[0] && (_ = 0)), _) try {
-      if (f2 = 1, y && (t2 = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t2 = y["return"]) && t2.call(y), 0) : y.next) && !(t2 = t2.call(y, op[1])).done) return t2;
-      if (y = 0, t2) op = [op[0] & 2, t2.value];
-      switch (op[0]) {
-        case 0:
-        case 1:
-          t2 = op;
-          break;
-        case 4:
-          _.label++;
-          return { value: op[1], done: false };
-        case 5:
-          _.label++;
-          y = op[1];
-          op = [0];
-          continue;
-        case 7:
-          op = _.ops.pop();
-          _.trys.pop();
-          continue;
-        default:
-          if (!(t2 = _.trys, t2 = t2.length > 0 && t2[t2.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-            _ = 0;
-            continue;
-          }
-          if (op[0] === 3 && (!t2 || op[1] > t2[0] && op[1] < t2[3])) {
-            _.label = op[1];
-            break;
-          }
-          if (op[0] === 6 && _.label < t2[1]) {
-            _.label = t2[1];
-            t2 = op;
-            break;
-          }
-          if (t2 && _.label < t2[2]) {
-            _.label = t2[2];
-            _.ops.push(op);
-            break;
-          }
-          if (t2[2]) _.ops.pop();
-          _.trys.pop();
-          continue;
-      }
-      op = body.call(thisArg, _);
-    } catch (e2) {
-      op = [6, e2];
-      y = 0;
-    } finally {
-      f2 = t2 = 0;
-    }
-    if (op[0] & 5) throw op[1];
-    return { value: op[0] ? op[1] : void 0, done: true };
-  }
-}
-var init_tslib_es6 = __esm({
-  "node_modules/tslib/tslib.es6.mjs"() {
-  }
-});
-
-// node_modules/@aws-crypto/sha256-js/build/module/constants.js
-var BLOCK_SIZE, DIGEST_LENGTH, KEY, INIT, MAX_HASHABLE_LENGTH;
-var init_constants7 = __esm({
-  "node_modules/@aws-crypto/sha256-js/build/module/constants.js"() {
-    BLOCK_SIZE = 64;
-    DIGEST_LENGTH = 32;
-    KEY = new Uint32Array([
-      1116352408,
-      1899447441,
-      3049323471,
-      3921009573,
-      961987163,
-      1508970993,
-      2453635748,
-      2870763221,
-      3624381080,
-      310598401,
-      607225278,
-      1426881987,
-      1925078388,
-      2162078206,
-      2614888103,
-      3248222580,
-      3835390401,
-      4022224774,
-      264347078,
-      604807628,
-      770255983,
-      1249150122,
-      1555081692,
-      1996064986,
-      2554220882,
-      2821834349,
-      2952996808,
-      3210313671,
-      3336571891,
-      3584528711,
-      113926993,
-      338241895,
-      666307205,
-      773529912,
-      1294757372,
-      1396182291,
-      1695183700,
-      1986661051,
-      2177026350,
-      2456956037,
-      2730485921,
-      2820302411,
-      3259730800,
-      3345764771,
-      3516065817,
-      3600352804,
-      4094571909,
-      275423344,
-      430227734,
-      506948616,
-      659060556,
-      883997877,
-      958139571,
-      1322822218,
-      1537002063,
-      1747873779,
-      1955562222,
-      2024104815,
-      2227730452,
-      2361852424,
-      2428436474,
-      2756734187,
-      3204031479,
-      3329325298
-    ]);
-    INIT = [
-      1779033703,
-      3144134277,
-      1013904242,
-      2773480762,
-      1359893119,
-      2600822924,
-      528734635,
-      1541459225
-    ];
-    MAX_HASHABLE_LENGTH = Math.pow(2, 53) - 1;
-  }
-});
-
-// node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js
-var RawSha256;
-var init_RawSha256 = __esm({
-  "node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js"() {
-    init_constants7();
-    RawSha256 = /** @class */
-    (function() {
-      function RawSha2562() {
-        this.state = Int32Array.from(INIT);
-        this.temp = new Int32Array(64);
-        this.buffer = new Uint8Array(64);
-        this.bufferLength = 0;
-        this.bytesHashed = 0;
-        this.finished = false;
-      }
-      RawSha2562.prototype.update = function(data) {
-        if (this.finished) {
-          throw new Error("Attempted to update an already finished hash.");
-        }
-        var position2 = 0;
-        var byteLength = data.byteLength;
-        this.bytesHashed += byteLength;
-        if (this.bytesHashed * 8 > MAX_HASHABLE_LENGTH) {
-          throw new Error("Cannot hash more than 2^53 - 1 bits");
-        }
-        while (byteLength > 0) {
-          this.buffer[this.bufferLength++] = data[position2++];
-          byteLength--;
-          if (this.bufferLength === BLOCK_SIZE) {
-            this.hashBuffer();
-            this.bufferLength = 0;
-          }
-        }
-      };
-      RawSha2562.prototype.digest = function() {
-        if (!this.finished) {
-          var bitsHashed = this.bytesHashed * 8;
-          var bufferView = new DataView(this.buffer.buffer, this.buffer.byteOffset, this.buffer.byteLength);
-          var undecoratedLength = this.bufferLength;
-          bufferView.setUint8(this.bufferLength++, 128);
-          if (undecoratedLength % BLOCK_SIZE >= BLOCK_SIZE - 8) {
-            for (var i2 = this.bufferLength; i2 < BLOCK_SIZE; i2++) {
-              bufferView.setUint8(i2, 0);
-            }
-            this.hashBuffer();
-            this.bufferLength = 0;
-          }
-          for (var i2 = this.bufferLength; i2 < BLOCK_SIZE - 8; i2++) {
-            bufferView.setUint8(i2, 0);
-          }
-          bufferView.setUint32(BLOCK_SIZE - 8, Math.floor(bitsHashed / 4294967296), true);
-          bufferView.setUint32(BLOCK_SIZE - 4, bitsHashed);
-          this.hashBuffer();
-          this.finished = true;
-        }
-        var out = new Uint8Array(DIGEST_LENGTH);
-        for (var i2 = 0; i2 < 8; i2++) {
-          out[i2 * 4] = this.state[i2] >>> 24 & 255;
-          out[i2 * 4 + 1] = this.state[i2] >>> 16 & 255;
-          out[i2 * 4 + 2] = this.state[i2] >>> 8 & 255;
-          out[i2 * 4 + 3] = this.state[i2] >>> 0 & 255;
         }
         return out;
-      };
-      RawSha2562.prototype.hashBuffer = function() {
-        var _a = this, buffer = _a.buffer, state = _a.state;
-        var state0 = state[0], state1 = state[1], state2 = state[2], state3 = state[3], state4 = state[4], state5 = state[5], state6 = state[6], state7 = state[7];
-        for (var i2 = 0; i2 < BLOCK_SIZE; i2++) {
-          if (i2 < 16) {
-            this.temp[i2] = (buffer[i2 * 4] & 255) << 24 | (buffer[i2 * 4 + 1] & 255) << 16 | (buffer[i2 * 4 + 2] & 255) << 8 | buffer[i2 * 4 + 3] & 255;
-          } else {
-            var u2 = this.temp[i2 - 2];
-            var t1_1 = (u2 >>> 17 | u2 << 15) ^ (u2 >>> 19 | u2 << 13) ^ u2 >>> 10;
-            u2 = this.temp[i2 - 15];
-            var t2_1 = (u2 >>> 7 | u2 << 25) ^ (u2 >>> 18 | u2 << 14) ^ u2 >>> 3;
-            this.temp[i2] = (t1_1 + this.temp[i2 - 7] | 0) + (t2_1 + this.temp[i2 - 16] | 0);
-          }
-          var t1 = (((state4 >>> 6 | state4 << 26) ^ (state4 >>> 11 | state4 << 21) ^ (state4 >>> 25 | state4 << 7)) + (state4 & state5 ^ ~state4 & state6) | 0) + (state7 + (KEY[i2] + this.temp[i2] | 0) | 0) | 0;
-          var t2 = ((state0 >>> 2 | state0 << 30) ^ (state0 >>> 13 | state0 << 19) ^ (state0 >>> 22 | state0 << 10)) + (state0 & state1 ^ state0 & state2 ^ state1 & state2) | 0;
-          state7 = state6;
-          state6 = state5;
-          state5 = state4;
-          state4 = state3 + t1 | 0;
-          state3 = state2;
-          state2 = state1;
-          state1 = state0;
-          state0 = t1 + t2 | 0;
-        }
-        state[0] += state0;
-        state[1] += state1;
-        state[2] += state2;
-        state[3] += state3;
-        state[4] += state4;
-        state[5] += state5;
-        state[6] += state6;
-        state[7] += state7;
-      };
-      return RawSha2562;
-    })();
-  }
-});
-
-// node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js
-function bufferFromSecret(secret) {
-  var input = convertToBuffer(secret);
-  if (input.byteLength > BLOCK_SIZE) {
-    var bufferHash = new RawSha256();
-    bufferHash.update(input);
-    input = bufferHash.digest();
-  }
-  var buffer = new Uint8Array(BLOCK_SIZE);
-  buffer.set(input);
-  return buffer;
-}
-var Sha2562;
-var init_jsSha256 = __esm({
-  "node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js"() {
-    init_tslib_es6();
-    init_constants7();
-    init_RawSha256();
-    init_module();
-    Sha2562 = /** @class */
-    (function() {
-      function Sha2564(secret) {
-        this.secret = secret;
-        this.hash = new RawSha256();
-        this.reset();
       }
-      Sha2564.prototype.update = function(toHash) {
-        if (isEmptyData(toHash) || this.error) {
-          return;
-        }
-        try {
-          this.hash.update(convertToBuffer(toHash));
-        } catch (e2) {
-          this.error = e2;
-        }
-      };
-      Sha2564.prototype.digestSync = function() {
-        if (this.error) {
-          throw this.error;
-        }
-        if (this.outer) {
-          if (!this.outer.finished) {
-            this.outer.update(this.hash.digest());
-          }
-          return this.outer.digest();
-        }
-        return this.hash.digest();
-      };
-      Sha2564.prototype.digest = function() {
-        return __awaiter(this, void 0, void 0, function() {
-          return __generator(this, function(_a) {
-            return [2, this.digestSync()];
-          });
-        });
-      };
-      Sha2564.prototype.reset = function() {
-        this.hash = new RawSha256();
-        if (this.secret) {
-          this.outer = new RawSha256();
-          var inner = bufferFromSecret(this.secret);
-          var outer = new Uint8Array(BLOCK_SIZE);
-          outer.set(inner);
-          for (var i2 = 0; i2 < BLOCK_SIZE; i2++) {
-            inner[i2] ^= 54;
-            outer[i2] ^= 92;
-          }
-          this.hash.update(inner);
-          this.outer.update(outer);
-          for (var i2 = 0; i2 < inner.byteLength; i2++) {
-            inner[i2] = 0;
-          }
-        }
-      };
-      return Sha2564;
-    })();
+    };
+    (function(HEADER_VALUE_TYPE3) {
+      HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["boolTrue"] = 0] = "boolTrue";
+      HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["boolFalse"] = 1] = "boolFalse";
+      HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["byte"] = 2] = "byte";
+      HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["short"] = 3] = "short";
+      HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["integer"] = 4] = "integer";
+      HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["long"] = 5] = "long";
+      HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["byteArray"] = 6] = "byteArray";
+      HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["string"] = 7] = "string";
+      HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["timestamp"] = 8] = "timestamp";
+      HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["uuid"] = 9] = "uuid";
+    })(HEADER_VALUE_TYPE || (HEADER_VALUE_TYPE = {}));
+    BOOLEAN_TAG = "boolean";
+    BYTE_TAG = "byte";
+    SHORT_TAG = "short";
+    INT_TAG = "integer";
+    LONG_TAG = "long";
+    BINARY_TAG = "binary";
+    STRING_TAG = "string";
+    TIMESTAMP_TAG = "timestamp";
+    UUID_TAG = "uuid";
+    UUID_PATTERN = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
   }
 });
 
-// node_modules/@aws-crypto/sha256-js/build/module/index.js
-var init_module2 = __esm({
-  "node_modules/@aws-crypto/sha256-js/build/module/index.js"() {
-    init_jsSha256();
+// node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-codec/splitMessage.js
+function splitMessage({ byteLength, byteOffset, buffer }) {
+  if (byteLength < MINIMUM_MESSAGE_LENGTH) {
+    throw new Error("Provided message too short to accommodate event stream message overhead");
   }
-});
-
-// node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js
-function supportsWebCrypto(window2) {
-  if (supportsSecureRandom(window2) && typeof window2.crypto.subtle === "object") {
-    var subtle = window2.crypto.subtle;
-    return supportsSubtleCrypto(subtle);
+  const view = new DataView(buffer, byteOffset, byteLength);
+  const messageLength = view.getUint32(0, false);
+  if (byteLength !== messageLength) {
+    throw new Error("Reported message length does not match received message length");
   }
-  return false;
+  const headerLength = view.getUint32(PRELUDE_MEMBER_LENGTH, false);
+  const expectedPreludeChecksum = view.getUint32(PRELUDE_LENGTH, false);
+  const expectedMessageChecksum = view.getUint32(byteLength - CHECKSUM_LENGTH, false);
+  const checksummer = new Crc32().update(new Uint8Array(buffer, byteOffset, PRELUDE_LENGTH));
+  if (expectedPreludeChecksum !== checksummer.digest()) {
+    throw new Error(`The prelude checksum specified in the message (${expectedPreludeChecksum}) does not match the calculated CRC32 checksum (${checksummer.digest()})`);
+  }
+  checksummer.update(new Uint8Array(buffer, byteOffset + PRELUDE_LENGTH, byteLength - (PRELUDE_LENGTH + CHECKSUM_LENGTH)));
+  if (expectedMessageChecksum !== checksummer.digest()) {
+    throw new Error(`The message checksum (${checksummer.digest()}) did not match the expected value of ${expectedMessageChecksum}`);
+  }
+  return {
+    headers: new DataView(buffer, byteOffset + PRELUDE_LENGTH + CHECKSUM_LENGTH, headerLength),
+    body: new Uint8Array(buffer, byteOffset + PRELUDE_LENGTH + CHECKSUM_LENGTH + headerLength, messageLength - headerLength - (PRELUDE_LENGTH + CHECKSUM_LENGTH + CHECKSUM_LENGTH))
+  };
 }
-function supportsSecureRandom(window2) {
-  if (typeof window2 === "object" && typeof window2.crypto === "object") {
-    var getRandomValues = window2.crypto.getRandomValues;
-    return typeof getRandomValues === "function";
-  }
-  return false;
-}
-function supportsSubtleCrypto(subtle) {
-  return subtle && subtleCryptoMethods.every(function(methodName) {
-    return typeof subtle[methodName] === "function";
-  });
-}
-var subtleCryptoMethods;
-var init_supportsWebCrypto = __esm({
-  "node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js"() {
-    subtleCryptoMethods = [
-      "decrypt",
-      "digest",
-      "encrypt",
-      "exportKey",
-      "generateKey",
-      "importKey",
-      "sign",
-      "verify"
-    ];
-  }
-});
-
-// node_modules/@aws-crypto/supports-web-crypto/build/module/index.js
-var init_module3 = __esm({
-  "node_modules/@aws-crypto/supports-web-crypto/build/module/index.js"() {
-    init_supportsWebCrypto();
-  }
-});
-
-// node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js
-var Sha2563;
-var init_crossPlatformSha256 = __esm({
-  "node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js"() {
-    init_webCryptoSha256();
+var PRELUDE_MEMBER_LENGTH, PRELUDE_LENGTH, CHECKSUM_LENGTH, MINIMUM_MESSAGE_LENGTH;
+var init_splitMessage = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-codec/splitMessage.js"() {
     init_module2();
-    init_module3();
-    init_dist_es36();
-    init_module();
-    Sha2563 = /** @class */
-    (function() {
-      function Sha2564(secret) {
-        if (supportsWebCrypto(locateWindow())) {
-          this.hash = new Sha256(secret);
-        } else {
-          this.hash = new Sha2562(secret);
-        }
+    PRELUDE_MEMBER_LENGTH = 4;
+    PRELUDE_LENGTH = PRELUDE_MEMBER_LENGTH * 2;
+    CHECKSUM_LENGTH = 4;
+    MINIMUM_MESSAGE_LENGTH = PRELUDE_LENGTH + CHECKSUM_LENGTH * 2;
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-codec/EventStreamCodec.js
+var EventStreamCodec;
+var init_EventStreamCodec = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-codec/EventStreamCodec.js"() {
+    init_module2();
+    init_HeaderMarshaller();
+    init_splitMessage();
+    EventStreamCodec = class {
+      constructor(toUtf82, fromUtf84) {
+        __publicField(this, "headerMarshaller");
+        __publicField(this, "messageBuffer");
+        __publicField(this, "isEndOfStream");
+        this.headerMarshaller = new HeaderMarshaller(toUtf82, fromUtf84);
+        this.messageBuffer = [];
+        this.isEndOfStream = false;
       }
-      Sha2564.prototype.update = function(data, encoding) {
-        this.hash.update(convertToBuffer(data));
-      };
-      Sha2564.prototype.digest = function() {
-        return this.hash.digest();
-      };
-      Sha2564.prototype.reset = function() {
-        this.hash.reset();
-      };
-      return Sha2564;
-    })();
-  }
-});
-
-// node_modules/@aws-crypto/sha256-browser/build/module/index.js
-var init_module4 = __esm({
-  "node_modules/@aws-crypto/sha256-browser/build/module/index.js"() {
-    init_crossPlatformSha256();
-    init_webCryptoSha256();
-  }
-});
-
-// node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js
-var createDefaultUserAgentProvider, fallback;
-var init_dist_es37 = __esm({
-  "node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js"() {
-    createDefaultUserAgentProvider = ({ serviceId, clientVersion }) => async (config) => {
-      var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
-      const navigator = typeof window !== "undefined" ? window.navigator : void 0;
-      const uaString = (_a = navigator == null ? void 0 : navigator.userAgent) != null ? _a : "";
-      const osName = (_d = (_c = (_b = navigator == null ? void 0 : navigator.userAgentData) == null ? void 0 : _b.platform) != null ? _c : fallback.os(uaString)) != null ? _d : "other";
-      const osVersion = void 0;
-      const brands = (_f = (_e = navigator == null ? void 0 : navigator.userAgentData) == null ? void 0 : _e.brands) != null ? _f : [];
-      const brand = brands[brands.length - 1];
-      const browserName = (_h = (_g = brand == null ? void 0 : brand.brand) != null ? _g : fallback.browser(uaString)) != null ? _h : "unknown";
-      const browserVersion = (_i = brand == null ? void 0 : brand.version) != null ? _i : "unknown";
-      const sections = [
-        ["aws-sdk-js", clientVersion],
-        ["ua", "2.1"],
-        [`os/${osName}`, osVersion],
-        ["lang/js"],
-        ["md/browser", `${browserName}_${browserVersion}`]
-      ];
-      if (serviceId) {
-        sections.push([`api/${serviceId}`, clientVersion]);
+      feed(message) {
+        this.messageBuffer.push(this.decode(message));
       }
-      const appId = await ((_j = config == null ? void 0 : config.userAgentAppId) == null ? void 0 : _j.call(config));
-      if (appId) {
-        sections.push([`app/${appId}`]);
+      endOfStream() {
+        this.isEndOfStream = true;
       }
-      return sections;
-    };
-    fallback = {
-      os(ua) {
-        if (/iPhone|iPad|iPod/.test(ua))
-          return "iOS";
-        if (/Macintosh|Mac OS X/.test(ua))
-          return "macOS";
-        if (/Windows NT/.test(ua))
-          return "Windows";
-        if (/Android/.test(ua))
-          return "Android";
-        if (/Linux/.test(ua))
-          return "Linux";
-        return void 0;
-      },
-      browser(ua) {
-        if (/EdgiOS|EdgA|Edg\//.test(ua))
-          return "Microsoft Edge";
-        if (/Firefox\//.test(ua))
-          return "Firefox";
-        if (/Chrome\//.test(ua))
-          return "Chrome";
-        if (/Safari\//.test(ua))
-          return "Safari";
-        return void 0;
-      }
-    };
-  }
-});
-
-// node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js
-var init_invalidFunction = __esm({
-  "node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js"() {
-  }
-});
-
-// node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js
-var invalidProvider;
-var init_invalidProvider = __esm({
-  "node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js"() {
-    invalidProvider = (message) => () => Promise.reject(message);
-  }
-});
-
-// node_modules/@smithy/invalid-dependency/dist-es/index.js
-var init_dist_es38 = __esm({
-  "node_modules/@smithy/invalid-dependency/dist-es/index.js"() {
-    init_invalidFunction();
-    init_invalidProvider();
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/endpoint/ruleset.js
-var s, t, u, v, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, _data, ruleSet;
-var init_ruleset = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/endpoint/ruleset.js"() {
-    s = "required";
-    t = "fn";
-    u = "argv";
-    v = "ref";
-    a = true;
-    b = "isSet";
-    c = "booleanEquals";
-    d = "error";
-    e = "endpoint";
-    f = "tree";
-    g = "PartitionResult";
-    h = { [s]: false, "type": "string" };
-    i = { [s]: true, "default": false, "type": "boolean" };
-    j = { [v]: "Endpoint" };
-    k = { [t]: c, [u]: [{ [v]: "UseFIPS" }, true] };
-    l = { [t]: c, [u]: [{ [v]: "UseDualStack" }, true] };
-    m = {};
-    n = { [t]: "getAttr", [u]: [{ [v]: g }, "supportsFIPS"] };
-    o = { [t]: c, [u]: [true, { [t]: "getAttr", [u]: [{ [v]: g }, "supportsDualStack"] }] };
-    p = [k];
-    q = [l];
-    r = [{ [v]: "Region" }];
-    _data = { version: "1.0", parameters: { Region: h, UseDualStack: i, UseFIPS: i, Endpoint: h }, rules: [{ conditions: [{ [t]: b, [u]: [j] }], rules: [{ conditions: p, error: "Invalid Configuration: FIPS and custom endpoint are not supported", type: d }, { conditions: q, error: "Invalid Configuration: Dualstack and custom endpoint are not supported", type: d }, { endpoint: { url: j, properties: m, headers: m }, type: e }], type: f }, { conditions: [{ [t]: b, [u]: r }], rules: [{ conditions: [{ [t]: "aws.partition", [u]: r, assign: g }], rules: [{ conditions: [k, l], rules: [{ conditions: [{ [t]: c, [u]: [a, n] }, o], rules: [{ endpoint: { url: "https://polly-fips.{Region}.{PartitionResult#dualStackDnsSuffix}", properties: m, headers: m }, type: e }], type: f }, { error: "FIPS and DualStack are enabled, but this partition does not support one or both", type: d }], type: f }, { conditions: p, rules: [{ conditions: [{ [t]: c, [u]: [n, a] }], rules: [{ endpoint: { url: "https://polly-fips.{Region}.{PartitionResult#dnsSuffix}", properties: m, headers: m }, type: e }], type: f }, { error: "FIPS is enabled but this partition does not support FIPS", type: d }], type: f }, { conditions: q, rules: [{ conditions: [o], rules: [{ endpoint: { url: "https://polly.{Region}.{PartitionResult#dualStackDnsSuffix}", properties: m, headers: m }, type: e }], type: f }, { error: "DualStack is enabled but this partition does not support DualStack", type: d }], type: f }, { endpoint: { url: "https://polly.{Region}.{PartitionResult#dnsSuffix}", properties: m, headers: m }, type: e }], type: f }], type: f }, { error: "Invalid Configuration: Missing Region", type: d }] };
-    ruleSet = _data;
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/endpoint/endpointResolver.js
-var cache, defaultEndpointResolver;
-var init_endpointResolver = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/endpoint/endpointResolver.js"() {
-    init_dist_es20();
-    init_dist_es17();
-    init_ruleset();
-    cache = new EndpointCache({
-      size: 50,
-      params: ["Endpoint", "Region", "UseDualStack", "UseFIPS"]
-    });
-    defaultEndpointResolver = (endpointParams, context = {}) => {
-      return cache.get(endpointParams, () => resolveEndpoint(ruleSet, {
-        endpointParams,
-        logger: context.logger
-      }));
-    };
-    customEndpointFunctions.aws = awsEndpointFunctions;
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/runtimeConfig.shared.js
-var getRuntimeConfig;
-var init_runtimeConfig_shared = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/runtimeConfig.shared.js"() {
-    init_dist_es27();
-    init_dist_es26();
-    init_dist_es19();
-    init_dist_es9();
-    init_dist_es14();
-    init_dist_es8();
-    init_httpAuthSchemeProvider();
-    init_endpointResolver();
-    getRuntimeConfig = (config) => {
-      var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m;
-      return {
-        apiVersion: "2016-06-10",
-        base64Decoder: (_a = config == null ? void 0 : config.base64Decoder) != null ? _a : fromBase64,
-        base64Encoder: (_b = config == null ? void 0 : config.base64Encoder) != null ? _b : toBase64,
-        disableHostPrefix: (_c = config == null ? void 0 : config.disableHostPrefix) != null ? _c : false,
-        endpointProvider: (_d = config == null ? void 0 : config.endpointProvider) != null ? _d : defaultEndpointResolver,
-        extensions: (_e = config == null ? void 0 : config.extensions) != null ? _e : [],
-        httpAuthSchemeProvider: (_f = config == null ? void 0 : config.httpAuthSchemeProvider) != null ? _f : defaultPollyHttpAuthSchemeProvider,
-        httpAuthSchemes: (_g = config == null ? void 0 : config.httpAuthSchemes) != null ? _g : [
-          {
-            schemeId: "aws.auth#sigv4",
-            identityProvider: (ipc) => ipc.getIdentityProvider("aws.auth#sigv4"),
-            signer: new AwsSdkSigV4Signer()
+      getMessage() {
+        const message = this.messageBuffer.pop();
+        const isEndOfStream = this.isEndOfStream;
+        return {
+          getMessage() {
+            return message;
+          },
+          isEndOfStream() {
+            return isEndOfStream;
           }
-        ],
-        logger: (_h = config == null ? void 0 : config.logger) != null ? _h : new NoOpLogger(),
-        sdkStreamMixin: (_i = config == null ? void 0 : config.sdkStreamMixin) != null ? _i : sdkStreamMixin,
-        serviceId: (_j = config == null ? void 0 : config.serviceId) != null ? _j : "Polly",
-        urlParser: (_k = config == null ? void 0 : config.urlParser) != null ? _k : parseUrl,
-        utf8Decoder: (_l = config == null ? void 0 : config.utf8Decoder) != null ? _l : fromUtf8,
-        utf8Encoder: (_m = config == null ? void 0 : config.utf8Encoder) != null ? _m : toUtf8
-      };
-    };
-  }
-});
-
-// node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js
-var DEFAULTS_MODE_OPTIONS;
-var init_constants8 = __esm({
-  "node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js"() {
-    DEFAULTS_MODE_OPTIONS = ["in-region", "cross-region", "mobile", "standard", "legacy"];
-  }
-});
-
-// node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js
-var resolveDefaultsModeConfig, useMobileConfiguration;
-var init_resolveDefaultsModeConfig = __esm({
-  "node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js"() {
-    init_dist_es21();
-    init_constants8();
-    resolveDefaultsModeConfig = ({ defaultsMode } = {}) => memoize(async () => {
-      const mode = typeof defaultsMode === "function" ? await defaultsMode() : defaultsMode;
-      switch (mode == null ? void 0 : mode.toLowerCase()) {
-        case "auto":
-          return Promise.resolve(useMobileConfiguration() ? "mobile" : "standard");
-        case "mobile":
-        case "in-region":
-        case "cross-region":
-        case "standard":
-        case "legacy":
-          return Promise.resolve(mode == null ? void 0 : mode.toLocaleLowerCase());
-        case void 0:
-          return Promise.resolve("legacy");
-        default:
-          throw new Error(`Invalid parameter for "defaultsMode", expect ${DEFAULTS_MODE_OPTIONS.join(", ")}, got ${mode}`);
+        };
       }
-    });
-    useMobileConfiguration = () => {
-      var _a;
-      const navigator = window == null ? void 0 : window.navigator;
-      if (navigator == null ? void 0 : navigator.connection) {
-        const { effectiveType, rtt, downlink } = navigator == null ? void 0 : navigator.connection;
-        const slow = typeof effectiveType === "string" && effectiveType !== "4g" || Number(rtt) > 100 || Number(downlink) < 10;
-        if (slow) {
-          return true;
-        }
-      }
-      return ((_a = navigator == null ? void 0 : navigator.userAgentData) == null ? void 0 : _a.mobile) || typeof (navigator == null ? void 0 : navigator.maxTouchPoints) === "number" && (navigator == null ? void 0 : navigator.maxTouchPoints) > 1;
-    };
-  }
-});
-
-// node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js
-var init_dist_es39 = __esm({
-  "node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js"() {
-    init_resolveDefaultsModeConfig();
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/runtimeConfig.browser.js
-var getRuntimeConfig2;
-var init_runtimeConfig_browser = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/runtimeConfig.browser.js"() {
-    init_package();
-    init_module4();
-    init_dist_es37();
-    init_dist_es29();
-    init_dist_es12();
-    init_dist_es38();
-    init_dist_es24();
-    init_dist_es33();
-    init_runtimeConfig_shared();
-    init_dist_es26();
-    init_dist_es39();
-    getRuntimeConfig2 = (config) => {
-      var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k;
-      const defaultsMode = resolveDefaultsModeConfig(config);
-      const defaultConfigProvider = () => defaultsMode().then(loadConfigsForDefaultMode);
-      const clientSharedValues = getRuntimeConfig(config);
-      return {
-        ...clientSharedValues,
-        ...config,
-        runtime: "browser",
-        defaultsMode,
-        bodyLengthChecker: (_a = config == null ? void 0 : config.bodyLengthChecker) != null ? _a : calculateBodyLength,
-        credentialDefaultProvider: (_b = config == null ? void 0 : config.credentialDefaultProvider) != null ? _b : ((_) => () => Promise.reject(new Error("Credential is missing"))),
-        defaultUserAgentProvider: (_c = config == null ? void 0 : config.defaultUserAgentProvider) != null ? _c : createDefaultUserAgentProvider({ serviceId: clientSharedValues.serviceId, clientVersion: package_default.version }),
-        maxAttempts: (_d = config == null ? void 0 : config.maxAttempts) != null ? _d : DEFAULT_MAX_ATTEMPTS,
-        region: (_e = config == null ? void 0 : config.region) != null ? _e : invalidProvider("Region is missing"),
-        requestHandler: FetchHttpHandler.create((_f = config == null ? void 0 : config.requestHandler) != null ? _f : defaultConfigProvider),
-        retryMode: (_g = config == null ? void 0 : config.retryMode) != null ? _g : (async () => (await defaultConfigProvider()).retryMode || DEFAULT_RETRY_MODE),
-        sha256: (_h = config == null ? void 0 : config.sha256) != null ? _h : Sha2563,
-        streamCollector: (_i = config == null ? void 0 : config.streamCollector) != null ? _i : streamCollector,
-        useDualstackEndpoint: (_j = config == null ? void 0 : config.useDualstackEndpoint) != null ? _j : (() => Promise.resolve(DEFAULT_USE_DUALSTACK_ENDPOINT)),
-        useFipsEndpoint: (_k = config == null ? void 0 : config.useFipsEndpoint) != null ? _k : (() => Promise.resolve(DEFAULT_USE_FIPS_ENDPOINT))
-      };
-    };
-  }
-});
-
-// node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js
-var getAwsRegionExtensionConfiguration, resolveAwsRegionExtensionConfiguration;
-var init_extensions4 = __esm({
-  "node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js"() {
-    getAwsRegionExtensionConfiguration = (runtimeConfig) => {
-      return {
-        setRegion(region) {
-          runtimeConfig.region = region;
-        },
-        region() {
-          return runtimeConfig.region;
-        }
-      };
-    };
-    resolveAwsRegionExtensionConfiguration = (awsRegionExtensionConfiguration) => {
-      return {
-        region: awsRegionExtensionConfiguration.region()
-      };
-    };
-  }
-});
-
-// node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js
-var init_awsRegionConfig = __esm({
-  "node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js
-var init_stsRegionDefaultResolver_browser = __esm({
-  "node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/region-config-resolver/dist-es/index.js
-var init_dist_es40 = __esm({
-  "node_modules/@aws-sdk/region-config-resolver/dist-es/index.js"() {
-    init_extensions4();
-    init_awsRegionConfig();
-    init_stsRegionDefaultResolver_browser();
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/auth/httpAuthExtensionConfiguration.js
-var getHttpAuthExtensionConfiguration, resolveHttpAuthRuntimeConfig;
-var init_httpAuthExtensionConfiguration = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/auth/httpAuthExtensionConfiguration.js"() {
-    getHttpAuthExtensionConfiguration = (runtimeConfig) => {
-      const _httpAuthSchemes = runtimeConfig.httpAuthSchemes;
-      let _httpAuthSchemeProvider = runtimeConfig.httpAuthSchemeProvider;
-      let _credentials = runtimeConfig.credentials;
-      return {
-        setHttpAuthScheme(httpAuthScheme) {
-          const index2 = _httpAuthSchemes.findIndex((scheme) => scheme.schemeId === httpAuthScheme.schemeId);
-          if (index2 === -1) {
-            _httpAuthSchemes.push(httpAuthScheme);
-          } else {
-            _httpAuthSchemes.splice(index2, 1, httpAuthScheme);
+      getAvailableMessages() {
+        const messages = this.messageBuffer;
+        this.messageBuffer = [];
+        const isEndOfStream = this.isEndOfStream;
+        return {
+          getMessages() {
+            return messages;
+          },
+          isEndOfStream() {
+            return isEndOfStream;
           }
-        },
-        httpAuthSchemes() {
-          return _httpAuthSchemes;
-        },
-        setHttpAuthSchemeProvider(httpAuthSchemeProvider) {
-          _httpAuthSchemeProvider = httpAuthSchemeProvider;
-        },
-        httpAuthSchemeProvider() {
-          return _httpAuthSchemeProvider;
-        },
-        setCredentials(credentials) {
-          _credentials = credentials;
-        },
-        credentials() {
-          return _credentials;
-        }
-      };
-    };
-    resolveHttpAuthRuntimeConfig = (config) => {
-      return {
-        httpAuthSchemes: config.httpAuthSchemes(),
-        httpAuthSchemeProvider: config.httpAuthSchemeProvider(),
-        credentials: config.credentials()
-      };
-    };
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/runtimeExtensions.js
-var resolveRuntimeExtensions;
-var init_runtimeExtensions = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/runtimeExtensions.js"() {
-    init_dist_es40();
-    init_dist_es2();
-    init_dist_es26();
-    init_httpAuthExtensionConfiguration();
-    resolveRuntimeExtensions = (runtimeConfig, extensions) => {
-      const extensionConfiguration = Object.assign(getAwsRegionExtensionConfiguration(runtimeConfig), getDefaultExtensionConfiguration(runtimeConfig), getHttpHandlerExtensionConfiguration(runtimeConfig), getHttpAuthExtensionConfiguration(runtimeConfig));
-      extensions.forEach((extension2) => extension2.configure(extensionConfiguration));
-      return Object.assign(runtimeConfig, resolveAwsRegionExtensionConfiguration(extensionConfiguration), resolveDefaultRuntimeConfig(extensionConfiguration), resolveHttpHandlerRuntimeConfig(extensionConfiguration), resolveHttpAuthRuntimeConfig(extensionConfiguration));
-    };
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/PollyClient.js
-var PollyClient;
-var init_PollyClient = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/PollyClient.js"() {
-    init_dist_es3();
-    init_dist_es4();
-    init_dist_es5();
-    init_dist_es28();
-    init_dist_es29();
-    init_dist_es16();
-    init_dist_es30();
-    init_dist_es31();
-    init_dist_es34();
-    init_dist_es26();
-    init_httpAuthSchemeProvider();
-    init_EndpointParameters();
-    init_runtimeConfig_browser();
-    init_runtimeExtensions();
-    PollyClient = class extends Client {
-      constructor(...[configuration]) {
-        const _config_0 = getRuntimeConfig2(configuration || {});
-        super(_config_0);
-        __publicField(this, "config");
-        this.initConfig = _config_0;
-        const _config_1 = resolveClientEndpointParameters(_config_0);
-        const _config_2 = resolveUserAgentConfig(_config_1);
-        const _config_3 = resolveRetryConfig(_config_2);
-        const _config_4 = resolveRegionConfig(_config_3);
-        const _config_5 = resolveHostHeaderConfig(_config_4);
-        const _config_6 = resolveEndpointConfig(_config_5);
-        const _config_7 = resolveHttpAuthSchemeConfig(_config_6);
-        const _config_8 = resolveRuntimeExtensions(_config_7, (configuration == null ? void 0 : configuration.extensions) || []);
-        this.config = _config_8;
-        this.middlewareStack.use(getUserAgentPlugin(this.config));
-        this.middlewareStack.use(getRetryPlugin(this.config));
-        this.middlewareStack.use(getContentLengthPlugin(this.config));
-        this.middlewareStack.use(getHostHeaderPlugin(this.config));
-        this.middlewareStack.use(getLoggerPlugin(this.config));
-        this.middlewareStack.use(getRecursionDetectionPlugin(this.config));
-        this.middlewareStack.use(getHttpAuthSchemeEndpointRuleSetPlugin(this.config, {
-          httpAuthSchemeParametersProvider: defaultPollyHttpAuthSchemeParametersProvider,
-          identityProviderConfigProvider: async (config) => new DefaultIdentityProviderConfig({
-            "aws.auth#sigv4": config.credentials
-          })
-        }));
-        this.middlewareStack.use(getHttpSigningPlugin(this.config));
+        };
       }
-      destroy() {
-        super.destroy();
+      encode({ headers: rawHeaders, body }) {
+        const headers = this.headerMarshaller.format(rawHeaders);
+        const length = headers.byteLength + body.byteLength + 16;
+        const out = new Uint8Array(length);
+        const view = new DataView(out.buffer, out.byteOffset, out.byteLength);
+        const checksum = new Crc32();
+        view.setUint32(0, length, false);
+        view.setUint32(4, headers.byteLength, false);
+        view.setUint32(8, checksum.update(out.subarray(0, 8)).digest(), false);
+        out.set(headers, 12);
+        out.set(body, headers.byteLength + 12);
+        view.setUint32(length - 4, checksum.update(out.subarray(8, length - 4)).digest(), false);
+        return out;
+      }
+      decode(message) {
+        const { headers, body } = splitMessage(message);
+        return { headers: this.headerMarshaller.parse(headers), body };
+      }
+      formatHeaders(rawHeaders) {
+        return this.headerMarshaller.format(rawHeaders);
       }
     };
   }
 });
 
-// node_modules/@aws-sdk/client-polly/dist-es/models/PollyServiceException.js
-var PollyServiceException;
-var init_PollyServiceException = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/models/PollyServiceException.js"() {
-    init_dist_es26();
-    PollyServiceException = class _PollyServiceException extends ServiceException {
+// node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-codec/MessageDecoderStream.js
+var MessageDecoderStream;
+var init_MessageDecoderStream = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-codec/MessageDecoderStream.js"() {
+    MessageDecoderStream = class {
       constructor(options) {
-        super(options);
-        Object.setPrototypeOf(this, _PollyServiceException.prototype);
+        __publicField(this, "options");
+        this.options = options;
+      }
+      [Symbol.asyncIterator]() {
+        return this.asyncIterator();
+      }
+      async *asyncIterator() {
+        for await (const bytes of this.options.inputStream) {
+          const decoded = this.options.decoder.decode(bytes);
+          yield decoded;
+        }
       }
     };
   }
 });
 
-// node_modules/@aws-sdk/client-polly/dist-es/models/models_0.js
-var LexiconNotFoundException, ServiceFailureException, InvalidNextTokenException, EngineNotSupportedException, InvalidTaskIdException, SynthesisTaskNotFoundException, InvalidLexiconException, InvalidS3BucketException, InvalidS3KeyException, InvalidSampleRateException, InvalidSnsTopicArnException, InvalidSsmlException, LanguageNotSupportedException, LexiconSizeExceededException, MarksNotSupportedForFormatException, MaxLexemeLengthExceededException, MaxLexiconsNumberExceededException, UnsupportedPlsAlphabetException, UnsupportedPlsLanguageException, SsmlMarksNotSupportedForTextTypeException, TextLengthExceededException, LexiconFilterSensitiveLog, GetLexiconOutputFilterSensitiveLog, PutLexiconInputFilterSensitiveLog, SynthesizeSpeechOutputFilterSensitiveLog;
-var init_models_0 = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/models/models_0.js"() {
-    init_dist_es26();
-    init_PollyServiceException();
-    LexiconNotFoundException = class _LexiconNotFoundException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "LexiconNotFoundException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "LexiconNotFoundException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _LexiconNotFoundException.prototype);
+// node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-codec/MessageEncoderStream.js
+var MessageEncoderStream;
+var init_MessageEncoderStream = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-codec/MessageEncoderStream.js"() {
+    MessageEncoderStream = class {
+      constructor(options) {
+        __publicField(this, "options");
+        this.options = options;
+      }
+      [Symbol.asyncIterator]() {
+        return this.asyncIterator();
+      }
+      async *asyncIterator() {
+        for await (const msg of this.options.messageStream) {
+          const encoded = this.options.encoder.encode(msg);
+          yield encoded;
+        }
+        if (this.options.includeEndFrame) {
+          yield new Uint8Array(0);
+        }
       }
     };
-    ServiceFailureException = class _ServiceFailureException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "ServiceFailureException",
-          $fault: "server",
-          ...opts
-        });
-        __publicField(this, "name", "ServiceFailureException");
-        __publicField(this, "$fault", "server");
-        Object.setPrototypeOf(this, _ServiceFailureException.prototype);
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-codec/SmithyMessageDecoderStream.js
+var SmithyMessageDecoderStream;
+var init_SmithyMessageDecoderStream = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-codec/SmithyMessageDecoderStream.js"() {
+    SmithyMessageDecoderStream = class {
+      constructor(options) {
+        __publicField(this, "options");
+        this.options = options;
+      }
+      [Symbol.asyncIterator]() {
+        return this.asyncIterator();
+      }
+      async *asyncIterator() {
+        for await (const message of this.options.messageStream) {
+          const deserialized = await this.options.deserializer(message);
+          if (deserialized === void 0)
+            continue;
+          yield deserialized;
+        }
       }
     };
-    InvalidNextTokenException = class _InvalidNextTokenException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "InvalidNextTokenException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "InvalidNextTokenException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _InvalidNextTokenException.prototype);
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-codec/SmithyMessageEncoderStream.js
+var SmithyMessageEncoderStream;
+var init_SmithyMessageEncoderStream = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-codec/SmithyMessageEncoderStream.js"() {
+    SmithyMessageEncoderStream = class {
+      constructor(options) {
+        __publicField(this, "options");
+        this.options = options;
+      }
+      [Symbol.asyncIterator]() {
+        return this.asyncIterator();
+      }
+      async *asyncIterator() {
+        for await (const chunk of this.options.inputStream) {
+          const payloadBuf = this.options.serializer(chunk);
+          yield payloadBuf;
+        }
       }
     };
-    EngineNotSupportedException = class _EngineNotSupportedException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "EngineNotSupportedException",
-          $fault: "client",
-          ...opts
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-serde-universal/getChunkedStream.js
+function getChunkedStream(source) {
+  let currentMessageTotalLength = 0;
+  let currentMessagePendingLength = 0;
+  let currentMessage = null;
+  let messageLengthBuffer = null;
+  const allocateMessage = (size) => {
+    if (typeof size !== "number") {
+      throw new Error("Attempted to allocate an event message where size was not a number: " + size);
+    }
+    currentMessageTotalLength = size;
+    currentMessagePendingLength = 4;
+    currentMessage = new Uint8Array(size);
+    const currentMessageView = new DataView(currentMessage.buffer);
+    currentMessageView.setUint32(0, size, false);
+  };
+  const iterator = async function* () {
+    const sourceIterator = source[Symbol.asyncIterator]();
+    while (true) {
+      const { value: value2, done } = await sourceIterator.next();
+      if (done) {
+        if (!currentMessageTotalLength) {
+          return;
+        } else if (currentMessageTotalLength === currentMessagePendingLength) {
+          yield currentMessage;
+        } else {
+          throw new Error("Truncated event message received.");
+        }
+        return;
+      }
+      const chunkLength = value2.length;
+      let currentOffset = 0;
+      while (currentOffset < chunkLength) {
+        if (!currentMessage) {
+          const bytesRemaining = chunkLength - currentOffset;
+          if (!messageLengthBuffer) {
+            messageLengthBuffer = new Uint8Array(4);
+          }
+          const numBytesForTotal = Math.min(4 - currentMessagePendingLength, bytesRemaining);
+          messageLengthBuffer.set(value2.slice(currentOffset, currentOffset + numBytesForTotal), currentMessagePendingLength);
+          currentMessagePendingLength += numBytesForTotal;
+          currentOffset += numBytesForTotal;
+          if (currentMessagePendingLength < 4) {
+            break;
+          }
+          allocateMessage(new DataView(messageLengthBuffer.buffer).getUint32(0, false));
+          messageLengthBuffer = null;
+        }
+        const numBytesToWrite = Math.min(currentMessageTotalLength - currentMessagePendingLength, chunkLength - currentOffset);
+        currentMessage.set(value2.slice(currentOffset, currentOffset + numBytesToWrite), currentMessagePendingLength);
+        currentMessagePendingLength += numBytesToWrite;
+        currentOffset += numBytesToWrite;
+        if (currentMessageTotalLength && currentMessageTotalLength === currentMessagePendingLength) {
+          yield currentMessage;
+          currentMessage = null;
+          currentMessageTotalLength = 0;
+          currentMessagePendingLength = 0;
+        }
+      }
+    }
+  };
+  return {
+    [Symbol.asyncIterator]: iterator
+  };
+}
+var init_getChunkedStream = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-serde-universal/getChunkedStream.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-serde-universal/getUnmarshalledStream.js
+function getUnmarshalledStream(source, options) {
+  const messageUnmarshaller = getMessageUnmarshaller(options.deserializer, options.toUtf8);
+  return {
+    [Symbol.asyncIterator]: async function* () {
+      for await (const chunk of source) {
+        const message = options.eventStreamCodec.decode(chunk);
+        const type = await messageUnmarshaller(message);
+        if (type === void 0)
+          continue;
+        yield type;
+      }
+    }
+  };
+}
+function getMessageUnmarshaller(deserializer, toUtf82) {
+  return async function(message) {
+    const { value: messageType } = message.headers[":message-type"];
+    if (messageType === "error") {
+      const unmodeledError = new Error(message.headers[":error-message"].value || "UnknownError");
+      unmodeledError.name = message.headers[":error-code"].value;
+      throw unmodeledError;
+    } else if (messageType === "exception") {
+      const code3 = message.headers[":exception-type"].value;
+      const exception = { [code3]: message };
+      const deserializedException = await deserializer(exception);
+      if (deserializedException.$unknown) {
+        const error = new Error(toUtf82(message.body));
+        error.name = code3;
+        throw error;
+      }
+      throw deserializedException[code3];
+    } else if (messageType === "event") {
+      const event = {
+        [message.headers[":event-type"].value]: message
+      };
+      const deserialized = await deserializer(event);
+      if (deserialized.$unknown)
+        return;
+      return deserialized;
+    } else {
+      throw Error(`Unrecognizable event type: ${message.headers[":event-type"].value}`);
+    }
+  };
+}
+var init_getUnmarshalledStream = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-serde-universal/getUnmarshalledStream.js"() {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-serde-universal/EventStreamMarshaller.js
+var EventStreamMarshaller, eventStreamSerdeProvider;
+var init_EventStreamMarshaller = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-serde-universal/EventStreamMarshaller.js"() {
+    init_EventStreamCodec();
+    init_MessageDecoderStream();
+    init_MessageEncoderStream();
+    init_SmithyMessageDecoderStream();
+    init_SmithyMessageEncoderStream();
+    init_getChunkedStream();
+    init_getUnmarshalledStream();
+    EventStreamMarshaller = class {
+      constructor({ utf8Encoder, utf8Decoder }) {
+        __publicField(this, "eventStreamCodec");
+        __publicField(this, "utfEncoder");
+        this.eventStreamCodec = new EventStreamCodec(utf8Encoder, utf8Decoder);
+        this.utfEncoder = utf8Encoder;
+      }
+      deserialize(body, deserializer) {
+        const inputStream = getChunkedStream(body);
+        return new SmithyMessageDecoderStream({
+          messageStream: new MessageDecoderStream({ inputStream, decoder: this.eventStreamCodec }),
+          deserializer: getMessageUnmarshaller(deserializer, this.utfEncoder)
         });
-        __publicField(this, "name", "EngineNotSupportedException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _EngineNotSupportedException.prototype);
+      }
+      serialize(inputStream, serializer) {
+        return new MessageEncoderStream({
+          messageStream: new SmithyMessageEncoderStream({ inputStream, serializer }),
+          encoder: this.eventStreamCodec,
+          includeEndFrame: true
+        });
       }
     };
-    InvalidTaskIdException = class _InvalidTaskIdException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "InvalidTaskIdException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "InvalidTaskIdException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _InvalidTaskIdException.prototype);
+    eventStreamSerdeProvider = (options) => new EventStreamMarshaller(options);
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-serde/utils.js
+var readableStreamToIterable, iterableToReadableStream;
+var init_utils = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-serde/utils.js"() {
+    readableStreamToIterable = (readableStream) => ({
+      [Symbol.asyncIterator]: async function* () {
+        const reader = readableStream.getReader();
+        try {
+          while (true) {
+            const { done, value: value2 } = await reader.read();
+            if (done)
+              return;
+            yield value2;
+          }
+        } finally {
+          reader.releaseLock();
+        }
       }
-    };
-    SynthesisTaskNotFoundException = class _SynthesisTaskNotFoundException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "SynthesisTaskNotFoundException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "SynthesisTaskNotFoundException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _SynthesisTaskNotFoundException.prototype);
-      }
-    };
-    InvalidLexiconException = class _InvalidLexiconException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "InvalidLexiconException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "InvalidLexiconException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _InvalidLexiconException.prototype);
-      }
-    };
-    InvalidS3BucketException = class _InvalidS3BucketException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "InvalidS3BucketException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "InvalidS3BucketException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _InvalidS3BucketException.prototype);
-      }
-    };
-    InvalidS3KeyException = class _InvalidS3KeyException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "InvalidS3KeyException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "InvalidS3KeyException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _InvalidS3KeyException.prototype);
-      }
-    };
-    InvalidSampleRateException = class _InvalidSampleRateException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "InvalidSampleRateException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "InvalidSampleRateException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _InvalidSampleRateException.prototype);
-      }
-    };
-    InvalidSnsTopicArnException = class _InvalidSnsTopicArnException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "InvalidSnsTopicArnException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "InvalidSnsTopicArnException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _InvalidSnsTopicArnException.prototype);
-      }
-    };
-    InvalidSsmlException = class _InvalidSsmlException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "InvalidSsmlException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "InvalidSsmlException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _InvalidSsmlException.prototype);
-      }
-    };
-    LanguageNotSupportedException = class _LanguageNotSupportedException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "LanguageNotSupportedException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "LanguageNotSupportedException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _LanguageNotSupportedException.prototype);
-      }
-    };
-    LexiconSizeExceededException = class _LexiconSizeExceededException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "LexiconSizeExceededException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "LexiconSizeExceededException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _LexiconSizeExceededException.prototype);
-      }
-    };
-    MarksNotSupportedForFormatException = class _MarksNotSupportedForFormatException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "MarksNotSupportedForFormatException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "MarksNotSupportedForFormatException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _MarksNotSupportedForFormatException.prototype);
-      }
-    };
-    MaxLexemeLengthExceededException = class _MaxLexemeLengthExceededException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "MaxLexemeLengthExceededException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "MaxLexemeLengthExceededException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _MaxLexemeLengthExceededException.prototype);
-      }
-    };
-    MaxLexiconsNumberExceededException = class _MaxLexiconsNumberExceededException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "MaxLexiconsNumberExceededException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "MaxLexiconsNumberExceededException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _MaxLexiconsNumberExceededException.prototype);
-      }
-    };
-    UnsupportedPlsAlphabetException = class _UnsupportedPlsAlphabetException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "UnsupportedPlsAlphabetException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "UnsupportedPlsAlphabetException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _UnsupportedPlsAlphabetException.prototype);
-      }
-    };
-    UnsupportedPlsLanguageException = class _UnsupportedPlsLanguageException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "UnsupportedPlsLanguageException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "UnsupportedPlsLanguageException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _UnsupportedPlsLanguageException.prototype);
-      }
-    };
-    SsmlMarksNotSupportedForTextTypeException = class _SsmlMarksNotSupportedForTextTypeException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "SsmlMarksNotSupportedForTextTypeException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "SsmlMarksNotSupportedForTextTypeException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _SsmlMarksNotSupportedForTextTypeException.prototype);
-      }
-    };
-    TextLengthExceededException = class _TextLengthExceededException extends PollyServiceException {
-      constructor(opts) {
-        super({
-          name: "TextLengthExceededException",
-          $fault: "client",
-          ...opts
-        });
-        __publicField(this, "name", "TextLengthExceededException");
-        __publicField(this, "$fault", "client");
-        Object.setPrototypeOf(this, _TextLengthExceededException.prototype);
-      }
-    };
-    LexiconFilterSensitiveLog = (obj) => ({
-      ...obj,
-      ...obj.Content && { Content: SENSITIVE_STRING2 }
     });
-    GetLexiconOutputFilterSensitiveLog = (obj) => ({
-      ...obj,
-      ...obj.Lexicon && { Lexicon: LexiconFilterSensitiveLog(obj.Lexicon) }
+    iterableToReadableStream = (asyncIterable) => {
+      const iterator = asyncIterable[Symbol.asyncIterator]();
+      return new ReadableStream({
+        async pull(controller) {
+          const { done, value: value2 } = await iterator.next();
+          if (done) {
+            return controller.close();
+          }
+          controller.enqueue(value2);
+        }
+      });
+    };
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-serde/EventStreamMarshaller.browser.js
+var EventStreamMarshaller2, isReadableStream2, eventStreamSerdeProvider2;
+var init_EventStreamMarshaller_browser = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-serde/EventStreamMarshaller.browser.js"() {
+    init_EventStreamMarshaller();
+    init_utils();
+    EventStreamMarshaller2 = class {
+      constructor({ utf8Encoder, utf8Decoder }) {
+        __publicField(this, "universalMarshaller");
+        this.universalMarshaller = new EventStreamMarshaller({
+          utf8Decoder,
+          utf8Encoder
+        });
+      }
+      deserialize(body, deserializer) {
+        const bodyIterable = isReadableStream2(body) ? readableStreamToIterable(body) : body;
+        return this.universalMarshaller.deserialize(bodyIterable, deserializer);
+      }
+      serialize(input, serializer) {
+        const serializedIterable = this.universalMarshaller.serialize(input, serializer);
+        return typeof ReadableStream === "function" ? iterableToReadableStream(serializedIterable) : serializedIterable;
+      }
+    };
+    isReadableStream2 = (body) => typeof ReadableStream === "function" && body instanceof ReadableStream;
+    eventStreamSerdeProvider2 = (options) => new EventStreamMarshaller2(options);
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-serde-config-resolver/EventStreamSerdeConfig.js
+var resolveEventStreamSerdeConfig;
+var init_EventStreamSerdeConfig = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/event-streams/eventstream-serde-config-resolver/EventStreamSerdeConfig.js"() {
+    resolveEventStreamSerdeConfig = (input) => Object.assign(input, {
+      eventStreamMarshaller: input.eventStreamSerdeProvider(input)
     });
-    PutLexiconInputFilterSensitiveLog = (obj) => ({
-      ...obj,
-      ...obj.Content && { Content: SENSITIVE_STRING2 }
-    });
-    SynthesizeSpeechOutputFilterSensitiveLog = (obj) => ({
-      ...obj
-    });
   }
 });
 
-// node_modules/@aws-sdk/client-polly/dist-es/protocols/Aws_restJson1.js
-var se_DeleteLexiconCommand, se_DescribeVoicesCommand, se_GetLexiconCommand, se_GetSpeechSynthesisTaskCommand, se_ListLexiconsCommand, se_ListSpeechSynthesisTasksCommand, se_PutLexiconCommand, se_StartSpeechSynthesisTaskCommand, se_SynthesizeSpeechCommand, de_DeleteLexiconCommand, de_DescribeVoicesCommand, de_GetLexiconCommand, de_GetSpeechSynthesisTaskCommand, de_ListLexiconsCommand, de_ListSpeechSynthesisTasksCommand, de_PutLexiconCommand, de_StartSpeechSynthesisTaskCommand, de_SynthesizeSpeechCommand, de_CommandError, throwDefaultError2, de_EngineNotSupportedExceptionRes, de_InvalidLexiconExceptionRes, de_InvalidNextTokenExceptionRes, de_InvalidS3BucketExceptionRes, de_InvalidS3KeyExceptionRes, de_InvalidSampleRateExceptionRes, de_InvalidSnsTopicArnExceptionRes, de_InvalidSsmlExceptionRes, de_InvalidTaskIdExceptionRes, de_LanguageNotSupportedExceptionRes, de_LexiconNotFoundExceptionRes, de_LexiconSizeExceededExceptionRes, de_MarksNotSupportedForFormatExceptionRes, de_MaxLexemeLengthExceededExceptionRes, de_MaxLexiconsNumberExceededExceptionRes, de_ServiceFailureExceptionRes, de_SsmlMarksNotSupportedForTextTypeExceptionRes, de_SynthesisTaskNotFoundExceptionRes, de_TextLengthExceededExceptionRes, de_UnsupportedPlsAlphabetExceptionRes, de_UnsupportedPlsLanguageExceptionRes, de_LexiconAttributes, de_LexiconDescription, de_LexiconDescriptionList, de_SynthesisTask, de_SynthesisTasks, deserializeMetadata2, _CT, _E, _IALC, _LC, _MR, _NT, _RC, _S, _ct, _xar;
-var init_Aws_restJson1 = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/protocols/Aws_restJson1.js"() {
-    init_dist_es27();
-    init_dist_es16();
-    init_dist_es26();
-    init_models_0();
-    init_PollyServiceException();
-    se_DeleteLexiconCommand = async (input, context) => {
-      const b2 = requestBuilder(input, context);
-      const headers = {};
-      b2.bp("/v1/lexicons/{Name}");
-      b2.p("Name", () => input.Name, "{Name}", false);
-      let body;
-      b2.m("DELETE").h(headers).b(body);
-      return b2.build();
-    };
-    se_DescribeVoicesCommand = async (input, context) => {
-      const b2 = requestBuilder(input, context);
-      const headers = {};
-      b2.bp("/v1/voices");
-      const query = map({
-        [_E]: [, input[_E]],
-        [_LC]: [, input[_LC]],
-        [_IALC]: [() => input.IncludeAdditionalLanguageCodes !== void 0, () => input[_IALC].toString()],
-        [_NT]: [, input[_NT]]
-      });
-      let body;
-      b2.m("GET").h(headers).q(query).b(body);
-      return b2.build();
-    };
-    se_GetLexiconCommand = async (input, context) => {
-      const b2 = requestBuilder(input, context);
-      const headers = {};
-      b2.bp("/v1/lexicons/{Name}");
-      b2.p("Name", () => input.Name, "{Name}", false);
-      let body;
-      b2.m("GET").h(headers).b(body);
-      return b2.build();
-    };
-    se_GetSpeechSynthesisTaskCommand = async (input, context) => {
-      const b2 = requestBuilder(input, context);
-      const headers = {};
-      b2.bp("/v1/synthesisTasks/{TaskId}");
-      b2.p("TaskId", () => input.TaskId, "{TaskId}", false);
-      let body;
-      b2.m("GET").h(headers).b(body);
-      return b2.build();
-    };
-    se_ListLexiconsCommand = async (input, context) => {
-      const b2 = requestBuilder(input, context);
-      const headers = {};
-      b2.bp("/v1/lexicons");
-      const query = map({
-        [_NT]: [, input[_NT]]
-      });
-      let body;
-      b2.m("GET").h(headers).q(query).b(body);
-      return b2.build();
-    };
-    se_ListSpeechSynthesisTasksCommand = async (input, context) => {
-      const b2 = requestBuilder(input, context);
-      const headers = {};
-      b2.bp("/v1/synthesisTasks");
-      const query = map({
-        [_MR]: [() => input.MaxResults !== void 0, () => input[_MR].toString()],
-        [_NT]: [, input[_NT]],
-        [_S]: [, input[_S]]
-      });
-      let body;
-      b2.m("GET").h(headers).q(query).b(body);
-      return b2.build();
-    };
-    se_PutLexiconCommand = async (input, context) => {
-      const b2 = requestBuilder(input, context);
-      const headers = {
-        "content-type": "application/json"
-      };
-      b2.bp("/v1/lexicons/{Name}");
-      b2.p("Name", () => input.Name, "{Name}", false);
-      let body;
-      body = JSON.stringify(take(input, {
-        Content: []
-      }));
-      b2.m("PUT").h(headers).b(body);
-      return b2.build();
-    };
-    se_StartSpeechSynthesisTaskCommand = async (input, context) => {
-      const b2 = requestBuilder(input, context);
-      const headers = {
-        "content-type": "application/json"
-      };
-      b2.bp("/v1/synthesisTasks");
-      let body;
-      body = JSON.stringify(take(input, {
-        Engine: [],
-        LanguageCode: [],
-        LexiconNames: (_) => _json(_),
-        OutputFormat: [],
-        OutputS3BucketName: [],
-        OutputS3KeyPrefix: [],
-        SampleRate: [],
-        SnsTopicArn: [],
-        SpeechMarkTypes: (_) => _json(_),
-        Text: [],
-        TextType: [],
-        VoiceId: []
-      }));
-      b2.m("POST").h(headers).b(body);
-      return b2.build();
-    };
-    se_SynthesizeSpeechCommand = async (input, context) => {
-      const b2 = requestBuilder(input, context);
-      const headers = {
-        "content-type": "application/json"
-      };
-      b2.bp("/v1/speech");
-      let body;
-      body = JSON.stringify(take(input, {
-        Engine: [],
-        LanguageCode: [],
-        LexiconNames: (_) => _json(_),
-        OutputFormat: [],
-        SampleRate: [],
-        SpeechMarkTypes: (_) => _json(_),
-        Text: [],
-        TextType: [],
-        VoiceId: []
-      }));
-      b2.m("POST").h(headers).b(body);
-      return b2.build();
-    };
-    de_DeleteLexiconCommand = async (output, context) => {
-      if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_CommandError(output, context);
+// node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js
+var EventStreamSerde;
+var init_EventStreamSerde = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js"() {
+    init_index_browser2();
+    EventStreamSerde = class {
+      constructor({ marshaller, serializer, deserializer, serdeContext, defaultContentType }) {
+        __publicField(this, "marshaller");
+        __publicField(this, "serializer");
+        __publicField(this, "deserializer");
+        __publicField(this, "serdeContext");
+        __publicField(this, "defaultContentType");
+        this.marshaller = marshaller;
+        this.serializer = serializer;
+        this.deserializer = deserializer;
+        this.serdeContext = serdeContext;
+        this.defaultContentType = defaultContentType;
       }
-      const contents = map({
-        $metadata: deserializeMetadata2(output)
-      });
-      await collectBody(output.body, context);
-      return contents;
-    };
-    de_DescribeVoicesCommand = async (output, context) => {
-      if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_CommandError(output, context);
+      async serializeEventStream({ eventStream, requestSchema, initialRequest }) {
+        const marshaller = this.marshaller;
+        const eventStreamMember = requestSchema.getEventStreamMember();
+        const unionSchema = requestSchema.getMemberSchema(eventStreamMember);
+        const serializer = this.serializer;
+        const defaultContentType = this.defaultContentType;
+        const initialRequestMarker = /* @__PURE__ */ Symbol("initialRequestMarker");
+        const eventStreamIterable = {
+          async *[Symbol.asyncIterator]() {
+            if (initialRequest) {
+              const headers = {
+                ":event-type": { type: "string", value: "initial-request" },
+                ":message-type": { type: "string", value: "event" },
+                ":content-type": { type: "string", value: defaultContentType }
+              };
+              serializer.write(requestSchema, initialRequest);
+              const body = serializer.flush();
+              yield {
+                [initialRequestMarker]: true,
+                headers,
+                body
+              };
+            }
+            for await (const page of eventStream) {
+              yield page;
+            }
+          }
+        };
+        return marshaller.serialize(eventStreamIterable, (event) => {
+          if (event[initialRequestMarker]) {
+            return {
+              headers: event.headers,
+              body: event.body
+            };
+          }
+          let unionMember = "";
+          for (const key in event) {
+            if (key !== "__type") {
+              unionMember = key;
+              break;
+            }
+          }
+          const { additionalHeaders, body, eventType, explicitPayloadContentType } = this.writeEventBody(unionMember, unionSchema, event);
+          const headers = {
+            ":event-type": { type: "string", value: eventType },
+            ":message-type": { type: "string", value: "event" },
+            ":content-type": { type: "string", value: explicitPayloadContentType != null ? explicitPayloadContentType : defaultContentType },
+            ...additionalHeaders
+          };
+          return {
+            headers,
+            body
+          };
+        });
       }
-      const contents = map({
-        $metadata: deserializeMetadata2(output)
-      });
-      const data = expectNonNull(expectObject(await parseJsonBody(output.body, context)), "body");
-      const doc = take(data, {
-        NextToken: expectString,
-        Voices: _json
-      });
-      Object.assign(contents, doc);
-      return contents;
-    };
-    de_GetLexiconCommand = async (output, context) => {
-      if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_CommandError(output, context);
+      async deserializeEventStream({ response, responseSchema, initialResponseContainer }) {
+        var _a3;
+        const marshaller = this.marshaller;
+        const eventStreamMember = responseSchema.getEventStreamMember();
+        const unionSchema = responseSchema.getMemberSchema(eventStreamMember);
+        const memberSchemas = unionSchema.getMemberSchemas();
+        const initialResponseMarker = /* @__PURE__ */ Symbol("initialResponseMarker");
+        const asyncIterable = marshaller.deserialize(response.body, async (event) => {
+          var _a4, _b2, _c2;
+          let unionMember = "";
+          for (const key in event) {
+            if (key !== "__type") {
+              unionMember = key;
+              break;
+            }
+          }
+          const body = event[unionMember].body;
+          if (unionMember === "initial-response") {
+            const dataObject = await this.deserializer.read(responseSchema, body);
+            delete dataObject[eventStreamMember];
+            return {
+              [initialResponseMarker]: true,
+              ...dataObject
+            };
+          } else if (unionMember in memberSchemas) {
+            const eventStreamSchema = memberSchemas[unionMember];
+            if (eventStreamSchema.isStructSchema()) {
+              const out = {};
+              let hasBindings = false;
+              for (const [name, member2] of eventStreamSchema.structIterator()) {
+                const { eventHeader, eventPayload } = member2.getMergedTraits();
+                hasBindings = hasBindings || Boolean(eventHeader || eventPayload);
+                if (eventPayload) {
+                  if (member2.isBlobSchema()) {
+                    out[name] = body;
+                  } else if (member2.isStringSchema()) {
+                    out[name] = ((_b2 = (_a4 = this.serdeContext) == null ? void 0 : _a4.utf8Encoder) != null ? _b2 : toUtf8)(body);
+                  } else if (member2.isStructSchema()) {
+                    out[name] = await this.deserializer.read(member2, body);
+                  }
+                } else if (eventHeader) {
+                  const value2 = (_c2 = event[unionMember].headers[name]) == null ? void 0 : _c2.value;
+                  if (value2 != null) {
+                    if (member2.isNumericSchema()) {
+                      if (value2 && typeof value2 === "object" && "bytes" in value2) {
+                        out[name] = BigInt(value2.toString());
+                      } else {
+                        out[name] = Number(value2);
+                      }
+                    } else {
+                      out[name] = value2;
+                    }
+                  }
+                }
+              }
+              if (hasBindings) {
+                return {
+                  [unionMember]: out
+                };
+              }
+              if (body.byteLength === 0) {
+                return {
+                  [unionMember]: {}
+                };
+              }
+            }
+            return {
+              [unionMember]: await this.deserializer.read(eventStreamSchema, body)
+            };
+          } else {
+            return {
+              $unknown: event
+            };
+          }
+        });
+        const asyncIterator = asyncIterable[Symbol.asyncIterator]();
+        const firstEvent = await asyncIterator.next();
+        if (firstEvent.done) {
+          return asyncIterable;
+        }
+        if ((_a3 = firstEvent.value) == null ? void 0 : _a3[initialResponseMarker]) {
+          if (!responseSchema) {
+            throw new Error("@smithy::core/protocols - initial-response event encountered in event stream but no response schema given.");
+          }
+          for (const key in firstEvent.value) {
+            initialResponseContainer[key] = firstEvent.value[key];
+          }
+        }
+        return {
+          async *[Symbol.asyncIterator]() {
+            var _a4;
+            if (!((_a4 = firstEvent == null ? void 0 : firstEvent.value) == null ? void 0 : _a4[initialResponseMarker])) {
+              yield firstEvent.value;
+            }
+            while (true) {
+              const { done, value: value2 } = await asyncIterator.next();
+              if (done) {
+                break;
+              }
+              yield value2;
+            }
+          }
+        };
       }
-      const contents = map({
-        $metadata: deserializeMetadata2(output)
-      });
-      const data = expectNonNull(expectObject(await parseJsonBody(output.body, context)), "body");
-      const doc = take(data, {
-        Lexicon: _json,
-        LexiconAttributes: (_) => de_LexiconAttributes(_, context)
-      });
-      Object.assign(contents, doc);
-      return contents;
-    };
-    de_GetSpeechSynthesisTaskCommand = async (output, context) => {
-      if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_CommandError(output, context);
-      }
-      const contents = map({
-        $metadata: deserializeMetadata2(output)
-      });
-      const data = expectNonNull(expectObject(await parseJsonBody(output.body, context)), "body");
-      const doc = take(data, {
-        SynthesisTask: (_) => de_SynthesisTask(_, context)
-      });
-      Object.assign(contents, doc);
-      return contents;
-    };
-    de_ListLexiconsCommand = async (output, context) => {
-      if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_CommandError(output, context);
-      }
-      const contents = map({
-        $metadata: deserializeMetadata2(output)
-      });
-      const data = expectNonNull(expectObject(await parseJsonBody(output.body, context)), "body");
-      const doc = take(data, {
-        Lexicons: (_) => de_LexiconDescriptionList(_, context),
-        NextToken: expectString
-      });
-      Object.assign(contents, doc);
-      return contents;
-    };
-    de_ListSpeechSynthesisTasksCommand = async (output, context) => {
-      if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_CommandError(output, context);
-      }
-      const contents = map({
-        $metadata: deserializeMetadata2(output)
-      });
-      const data = expectNonNull(expectObject(await parseJsonBody(output.body, context)), "body");
-      const doc = take(data, {
-        NextToken: expectString,
-        SynthesisTasks: (_) => de_SynthesisTasks(_, context)
-      });
-      Object.assign(contents, doc);
-      return contents;
-    };
-    de_PutLexiconCommand = async (output, context) => {
-      if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_CommandError(output, context);
-      }
-      const contents = map({
-        $metadata: deserializeMetadata2(output)
-      });
-      await collectBody(output.body, context);
-      return contents;
-    };
-    de_StartSpeechSynthesisTaskCommand = async (output, context) => {
-      if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_CommandError(output, context);
-      }
-      const contents = map({
-        $metadata: deserializeMetadata2(output)
-      });
-      const data = expectNonNull(expectObject(await parseJsonBody(output.body, context)), "body");
-      const doc = take(data, {
-        SynthesisTask: (_) => de_SynthesisTask(_, context)
-      });
-      Object.assign(contents, doc);
-      return contents;
-    };
-    de_SynthesizeSpeechCommand = async (output, context) => {
-      if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_CommandError(output, context);
-      }
-      const contents = map({
-        $metadata: deserializeMetadata2(output),
-        [_CT]: [, output.headers[_ct]],
-        [_RC]: [() => void 0 !== output.headers[_xar], () => strictParseInt32(output.headers[_xar])]
-      });
-      const data = output.body;
-      context.sdkStreamMixin(data);
-      contents.AudioStream = data;
-      return contents;
-    };
-    de_CommandError = async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseJsonErrorBody(output.body, context)
-      };
-      const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "LexiconNotFoundException":
-        case "com.amazonaws.polly#LexiconNotFoundException":
-          throw await de_LexiconNotFoundExceptionRes(parsedOutput, context);
-        case "ServiceFailureException":
-        case "com.amazonaws.polly#ServiceFailureException":
-          throw await de_ServiceFailureExceptionRes(parsedOutput, context);
-        case "InvalidNextTokenException":
-        case "com.amazonaws.polly#InvalidNextTokenException":
-          throw await de_InvalidNextTokenExceptionRes(parsedOutput, context);
-        case "InvalidTaskIdException":
-        case "com.amazonaws.polly#InvalidTaskIdException":
-          throw await de_InvalidTaskIdExceptionRes(parsedOutput, context);
-        case "SynthesisTaskNotFoundException":
-        case "com.amazonaws.polly#SynthesisTaskNotFoundException":
-          throw await de_SynthesisTaskNotFoundExceptionRes(parsedOutput, context);
-        case "InvalidLexiconException":
-        case "com.amazonaws.polly#InvalidLexiconException":
-          throw await de_InvalidLexiconExceptionRes(parsedOutput, context);
-        case "LexiconSizeExceededException":
-        case "com.amazonaws.polly#LexiconSizeExceededException":
-          throw await de_LexiconSizeExceededExceptionRes(parsedOutput, context);
-        case "MaxLexemeLengthExceededException":
-        case "com.amazonaws.polly#MaxLexemeLengthExceededException":
-          throw await de_MaxLexemeLengthExceededExceptionRes(parsedOutput, context);
-        case "MaxLexiconsNumberExceededException":
-        case "com.amazonaws.polly#MaxLexiconsNumberExceededException":
-          throw await de_MaxLexiconsNumberExceededExceptionRes(parsedOutput, context);
-        case "UnsupportedPlsAlphabetException":
-        case "com.amazonaws.polly#UnsupportedPlsAlphabetException":
-          throw await de_UnsupportedPlsAlphabetExceptionRes(parsedOutput, context);
-        case "UnsupportedPlsLanguageException":
-        case "com.amazonaws.polly#UnsupportedPlsLanguageException":
-          throw await de_UnsupportedPlsLanguageExceptionRes(parsedOutput, context);
-        case "EngineNotSupportedException":
-        case "com.amazonaws.polly#EngineNotSupportedException":
-          throw await de_EngineNotSupportedExceptionRes(parsedOutput, context);
-        case "InvalidS3BucketException":
-        case "com.amazonaws.polly#InvalidS3BucketException":
-          throw await de_InvalidS3BucketExceptionRes(parsedOutput, context);
-        case "InvalidS3KeyException":
-        case "com.amazonaws.polly#InvalidS3KeyException":
-          throw await de_InvalidS3KeyExceptionRes(parsedOutput, context);
-        case "InvalidSampleRateException":
-        case "com.amazonaws.polly#InvalidSampleRateException":
-          throw await de_InvalidSampleRateExceptionRes(parsedOutput, context);
-        case "InvalidSnsTopicArnException":
-        case "com.amazonaws.polly#InvalidSnsTopicArnException":
-          throw await de_InvalidSnsTopicArnExceptionRes(parsedOutput, context);
-        case "InvalidSsmlException":
-        case "com.amazonaws.polly#InvalidSsmlException":
-          throw await de_InvalidSsmlExceptionRes(parsedOutput, context);
-        case "LanguageNotSupportedException":
-        case "com.amazonaws.polly#LanguageNotSupportedException":
-          throw await de_LanguageNotSupportedExceptionRes(parsedOutput, context);
-        case "MarksNotSupportedForFormatException":
-        case "com.amazonaws.polly#MarksNotSupportedForFormatException":
-          throw await de_MarksNotSupportedForFormatExceptionRes(parsedOutput, context);
-        case "SsmlMarksNotSupportedForTextTypeException":
-        case "com.amazonaws.polly#SsmlMarksNotSupportedForTextTypeException":
-          throw await de_SsmlMarksNotSupportedForTextTypeExceptionRes(parsedOutput, context);
-        case "TextLengthExceededException":
-        case "com.amazonaws.polly#TextLengthExceededException":
-          throw await de_TextLengthExceededExceptionRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError2({
-            output,
-            parsedBody,
-            errorCode
-          });
+      writeEventBody(unionMember, unionSchema, event) {
+        var _a3, _b2, _c2;
+        const serializer = this.serializer;
+        let eventType = unionMember;
+        let explicitPayloadMember = null;
+        let explicitPayloadContentType;
+        const isKnownSchema = (() => {
+          const struct = unionSchema.getSchema();
+          return struct[4].includes(unionMember);
+        })();
+        const additionalHeaders = {};
+        if (!isKnownSchema) {
+          const [type, value2] = event[unionMember];
+          eventType = type;
+          serializer.write(15, value2);
+        } else {
+          const eventSchema = unionSchema.getMemberSchema(unionMember);
+          if (eventSchema.isStructSchema()) {
+            for (const [memberName, memberSchema] of eventSchema.structIterator()) {
+              const { eventHeader, eventPayload } = memberSchema.getMergedTraits();
+              if (eventPayload) {
+                explicitPayloadMember = memberName;
+              } else if (eventHeader) {
+                const value2 = event[unionMember][memberName];
+                let type = "binary";
+                if (memberSchema.isNumericSchema()) {
+                  if ((-2) ** 31 <= value2 && value2 <= 2 ** 31 - 1) {
+                    type = "integer";
+                  } else {
+                    type = "long";
+                  }
+                } else if (memberSchema.isTimestampSchema()) {
+                  type = "timestamp";
+                } else if (memberSchema.isStringSchema()) {
+                  type = "string";
+                } else if (memberSchema.isBooleanSchema()) {
+                  type = "boolean";
+                }
+                if (value2 != null) {
+                  additionalHeaders[memberName] = {
+                    type,
+                    value: value2
+                  };
+                  delete event[unionMember][memberName];
+                }
+              }
+            }
+            if (explicitPayloadMember !== null) {
+              const payloadSchema = eventSchema.getMemberSchema(explicitPayloadMember);
+              if (payloadSchema.isBlobSchema()) {
+                explicitPayloadContentType = "application/octet-stream";
+              } else if (payloadSchema.isStringSchema()) {
+                explicitPayloadContentType = "text/plain";
+              }
+              serializer.write(payloadSchema, event[unionMember][explicitPayloadMember]);
+            } else {
+              serializer.write(eventSchema, event[unionMember]);
+            }
+          } else if (eventSchema.isUnitSchema()) {
+            serializer.write(eventSchema, {});
+          } else {
+            throw new Error("@smithy/core/event-streams - non-struct member not supported in event stream union.");
+          }
+        }
+        const messageSerialization = (_a3 = serializer.flush()) != null ? _a3 : new Uint8Array();
+        const body = typeof messageSerialization === "string" ? ((_c2 = (_b2 = this.serdeContext) == null ? void 0 : _b2.utf8Decoder) != null ? _c2 : fromUtf8)(messageSerialization) : messageSerialization;
+        return {
+          body,
+          eventType,
+          explicitPayloadContentType,
+          additionalHeaders
+        };
       }
     };
-    throwDefaultError2 = withBaseException(PollyServiceException);
-    de_EngineNotSupportedExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new EngineNotSupportedException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_InvalidLexiconExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new InvalidLexiconException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_InvalidNextTokenExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new InvalidNextTokenException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_InvalidS3BucketExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new InvalidS3BucketException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_InvalidS3KeyExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new InvalidS3KeyException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_InvalidSampleRateExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new InvalidSampleRateException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_InvalidSnsTopicArnExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new InvalidSnsTopicArnException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_InvalidSsmlExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new InvalidSsmlException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_InvalidTaskIdExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new InvalidTaskIdException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_LanguageNotSupportedExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new LanguageNotSupportedException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_LexiconNotFoundExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new LexiconNotFoundException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_LexiconSizeExceededExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new LexiconSizeExceededException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_MarksNotSupportedForFormatExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new MarksNotSupportedForFormatException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_MaxLexemeLengthExceededExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new MaxLexemeLengthExceededException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_MaxLexiconsNumberExceededExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new MaxLexiconsNumberExceededException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_ServiceFailureExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new ServiceFailureException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_SsmlMarksNotSupportedForTextTypeExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new SsmlMarksNotSupportedForTextTypeException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_SynthesisTaskNotFoundExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new SynthesisTaskNotFoundException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_TextLengthExceededExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new TextLengthExceededException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_UnsupportedPlsAlphabetExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new UnsupportedPlsAlphabetException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_UnsupportedPlsLanguageExceptionRes = async (parsedOutput, context) => {
-      const contents = map({});
-      const data = parsedOutput.body;
-      const doc = take(data, {
-        message: expectString
-      });
-      Object.assign(contents, doc);
-      const exception = new UnsupportedPlsLanguageException({
-        $metadata: deserializeMetadata2(parsedOutput),
-        ...contents
-      });
-      return decorateServiceException(exception, parsedOutput.body);
-    };
-    de_LexiconAttributes = (output, context) => {
-      return take(output, {
-        Alphabet: expectString,
-        LanguageCode: expectString,
-        LastModified: (_) => expectNonNull(parseEpochTimestamp(expectNumber(_))),
-        LexemesCount: expectInt32,
-        LexiconArn: expectString,
-        Size: expectInt32
-      });
-    };
-    de_LexiconDescription = (output, context) => {
-      return take(output, {
-        Attributes: (_) => de_LexiconAttributes(_, context),
-        Name: expectString
-      });
-    };
-    de_LexiconDescriptionList = (output, context) => {
-      const retVal = (output || []).filter((e2) => e2 != null).map((entry) => {
-        return de_LexiconDescription(entry, context);
-      });
-      return retVal;
-    };
-    de_SynthesisTask = (output, context) => {
-      return take(output, {
-        CreationTime: (_) => expectNonNull(parseEpochTimestamp(expectNumber(_))),
-        Engine: expectString,
-        LanguageCode: expectString,
-        LexiconNames: _json,
-        OutputFormat: expectString,
-        OutputUri: expectString,
-        RequestCharacters: expectInt32,
-        SampleRate: expectString,
-        SnsTopicArn: expectString,
-        SpeechMarkTypes: _json,
-        TaskId: expectString,
-        TaskStatus: expectString,
-        TaskStatusReason: expectString,
-        TextType: expectString,
-        VoiceId: expectString
-      });
-    };
-    de_SynthesisTasks = (output, context) => {
-      const retVal = (output || []).filter((e2) => e2 != null).map((entry) => {
-        return de_SynthesisTask(entry, context);
-      });
-      return retVal;
-    };
-    deserializeMetadata2 = (output) => {
-      var _a, _b;
-      return {
-        httpStatusCode: output.statusCode,
-        requestId: (_b = (_a = output.headers["x-amzn-requestid"]) != null ? _a : output.headers["x-amzn-request-id"]) != null ? _b : output.headers["x-amz-request-id"],
-        extendedRequestId: output.headers["x-amz-id-2"],
-        cfId: output.headers["x-amz-cf-id"]
-      };
-    };
-    _CT = "ContentType";
-    _E = "Engine";
-    _IALC = "IncludeAdditionalLanguageCodes";
-    _LC = "LanguageCode";
-    _MR = "MaxResults";
-    _NT = "NextToken";
-    _RC = "RequestCharacters";
-    _S = "Status";
-    _ct = "content-type";
-    _xar = "x-amzn-requestcharacters";
   }
 });
 
-// node_modules/@aws-sdk/client-polly/dist-es/commands/DeleteLexiconCommand.js
-var DeleteLexiconCommand;
-var init_DeleteLexiconCommand = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/commands/DeleteLexiconCommand.js"() {
-    init_dist_es31();
-    init_dist_es7();
-    init_dist_es26();
-    init_EndpointParameters();
-    init_Aws_restJson1();
-    DeleteLexiconCommand = class extends Command.classBuilder().ep(commonParams).m(function(Command2, cs, config, o2) {
-      return [
-        getSerdePlugin(config, this.serialize, this.deserialize),
-        getEndpointPlugin(config, Command2.getEndpointParameterInstructions())
-      ];
-    }).s("Parrot_v1", "DeleteLexicon", {}).n("PollyClient", "DeleteLexiconCommand").f(void 0, void 0).ser(se_DeleteLexiconCommand).de(de_DeleteLexiconCommand).build() {
-    };
-  }
+// node_modules/@smithy/core/dist-es/submodules/event-streams/index.browser.js
+var index_browser_exports = {};
+__export(index_browser_exports, {
+  EventStreamCodec: () => EventStreamCodec,
+  EventStreamMarshaller: () => EventStreamMarshaller2,
+  EventStreamSerde: () => EventStreamSerde,
+  HeaderMarshaller: () => HeaderMarshaller,
+  Int64: () => Int64,
+  MessageDecoderStream: () => MessageDecoderStream,
+  MessageEncoderStream: () => MessageEncoderStream,
+  SmithyMessageDecoderStream: () => SmithyMessageDecoderStream,
+  SmithyMessageEncoderStream: () => SmithyMessageEncoderStream,
+  UniversalEventStreamMarshaller: () => EventStreamMarshaller,
+  eventStreamSerdeProvider: () => eventStreamSerdeProvider2,
+  getChunkedStream: () => getChunkedStream,
+  getMessageUnmarshaller: () => getMessageUnmarshaller,
+  getUnmarshalledStream: () => getUnmarshalledStream,
+  iterableToReadableStream: () => iterableToReadableStream,
+  readableStreamToIterable: () => readableStreamToIterable,
+  resolveEventStreamSerdeConfig: () => resolveEventStreamSerdeConfig,
+  universalEventStreamSerdeProvider: () => eventStreamSerdeProvider
 });
-
-// node_modules/@aws-sdk/client-polly/dist-es/commands/DescribeVoicesCommand.js
-var DescribeVoicesCommand;
-var init_DescribeVoicesCommand = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/commands/DescribeVoicesCommand.js"() {
-    init_dist_es31();
-    init_dist_es7();
-    init_dist_es26();
-    init_EndpointParameters();
-    init_Aws_restJson1();
-    DescribeVoicesCommand = class extends Command.classBuilder().ep(commonParams).m(function(Command2, cs, config, o2) {
-      return [
-        getSerdePlugin(config, this.serialize, this.deserialize),
-        getEndpointPlugin(config, Command2.getEndpointParameterInstructions())
-      ];
-    }).s("Parrot_v1", "DescribeVoices", {}).n("PollyClient", "DescribeVoicesCommand").f(void 0, void 0).ser(se_DescribeVoicesCommand).de(de_DescribeVoicesCommand).build() {
-    };
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/commands/GetLexiconCommand.js
-var GetLexiconCommand;
-var init_GetLexiconCommand = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/commands/GetLexiconCommand.js"() {
-    init_dist_es31();
-    init_dist_es7();
-    init_dist_es26();
-    init_EndpointParameters();
-    init_models_0();
-    init_Aws_restJson1();
-    GetLexiconCommand = class extends Command.classBuilder().ep(commonParams).m(function(Command2, cs, config, o2) {
-      return [
-        getSerdePlugin(config, this.serialize, this.deserialize),
-        getEndpointPlugin(config, Command2.getEndpointParameterInstructions())
-      ];
-    }).s("Parrot_v1", "GetLexicon", {}).n("PollyClient", "GetLexiconCommand").f(void 0, GetLexiconOutputFilterSensitiveLog).ser(se_GetLexiconCommand).de(de_GetLexiconCommand).build() {
-    };
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/commands/GetSpeechSynthesisTaskCommand.js
-var GetSpeechSynthesisTaskCommand;
-var init_GetSpeechSynthesisTaskCommand = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/commands/GetSpeechSynthesisTaskCommand.js"() {
-    init_dist_es31();
-    init_dist_es7();
-    init_dist_es26();
-    init_EndpointParameters();
-    init_Aws_restJson1();
-    GetSpeechSynthesisTaskCommand = class extends Command.classBuilder().ep(commonParams).m(function(Command2, cs, config, o2) {
-      return [
-        getSerdePlugin(config, this.serialize, this.deserialize),
-        getEndpointPlugin(config, Command2.getEndpointParameterInstructions())
-      ];
-    }).s("Parrot_v1", "GetSpeechSynthesisTask", {}).n("PollyClient", "GetSpeechSynthesisTaskCommand").f(void 0, void 0).ser(se_GetSpeechSynthesisTaskCommand).de(de_GetSpeechSynthesisTaskCommand).build() {
-    };
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/commands/ListLexiconsCommand.js
-var ListLexiconsCommand;
-var init_ListLexiconsCommand = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/commands/ListLexiconsCommand.js"() {
-    init_dist_es31();
-    init_dist_es7();
-    init_dist_es26();
-    init_EndpointParameters();
-    init_Aws_restJson1();
-    ListLexiconsCommand = class extends Command.classBuilder().ep(commonParams).m(function(Command2, cs, config, o2) {
-      return [
-        getSerdePlugin(config, this.serialize, this.deserialize),
-        getEndpointPlugin(config, Command2.getEndpointParameterInstructions())
-      ];
-    }).s("Parrot_v1", "ListLexicons", {}).n("PollyClient", "ListLexiconsCommand").f(void 0, void 0).ser(se_ListLexiconsCommand).de(de_ListLexiconsCommand).build() {
-    };
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/commands/ListSpeechSynthesisTasksCommand.js
-var ListSpeechSynthesisTasksCommand;
-var init_ListSpeechSynthesisTasksCommand = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/commands/ListSpeechSynthesisTasksCommand.js"() {
-    init_dist_es31();
-    init_dist_es7();
-    init_dist_es26();
-    init_EndpointParameters();
-    init_Aws_restJson1();
-    ListSpeechSynthesisTasksCommand = class extends Command.classBuilder().ep(commonParams).m(function(Command2, cs, config, o2) {
-      return [
-        getSerdePlugin(config, this.serialize, this.deserialize),
-        getEndpointPlugin(config, Command2.getEndpointParameterInstructions())
-      ];
-    }).s("Parrot_v1", "ListSpeechSynthesisTasks", {}).n("PollyClient", "ListSpeechSynthesisTasksCommand").f(void 0, void 0).ser(se_ListSpeechSynthesisTasksCommand).de(de_ListSpeechSynthesisTasksCommand).build() {
-    };
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/commands/PutLexiconCommand.js
-var PutLexiconCommand;
-var init_PutLexiconCommand = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/commands/PutLexiconCommand.js"() {
-    init_dist_es31();
-    init_dist_es7();
-    init_dist_es26();
-    init_EndpointParameters();
-    init_models_0();
-    init_Aws_restJson1();
-    PutLexiconCommand = class extends Command.classBuilder().ep(commonParams).m(function(Command2, cs, config, o2) {
-      return [
-        getSerdePlugin(config, this.serialize, this.deserialize),
-        getEndpointPlugin(config, Command2.getEndpointParameterInstructions())
-      ];
-    }).s("Parrot_v1", "PutLexicon", {}).n("PollyClient", "PutLexiconCommand").f(PutLexiconInputFilterSensitiveLog, void 0).ser(se_PutLexiconCommand).de(de_PutLexiconCommand).build() {
-    };
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/commands/StartSpeechSynthesisTaskCommand.js
-var StartSpeechSynthesisTaskCommand;
-var init_StartSpeechSynthesisTaskCommand = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/commands/StartSpeechSynthesisTaskCommand.js"() {
-    init_dist_es31();
-    init_dist_es7();
-    init_dist_es26();
-    init_EndpointParameters();
-    init_Aws_restJson1();
-    StartSpeechSynthesisTaskCommand = class extends Command.classBuilder().ep(commonParams).m(function(Command2, cs, config, o2) {
-      return [
-        getSerdePlugin(config, this.serialize, this.deserialize),
-        getEndpointPlugin(config, Command2.getEndpointParameterInstructions())
-      ];
-    }).s("Parrot_v1", "StartSpeechSynthesisTask", {}).n("PollyClient", "StartSpeechSynthesisTaskCommand").f(void 0, void 0).ser(se_StartSpeechSynthesisTaskCommand).de(de_StartSpeechSynthesisTaskCommand).build() {
-    };
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/commands/SynthesizeSpeechCommand.js
-var SynthesizeSpeechCommand;
-var init_SynthesizeSpeechCommand = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/commands/SynthesizeSpeechCommand.js"() {
-    init_dist_es31();
-    init_dist_es7();
-    init_dist_es26();
-    init_EndpointParameters();
-    init_models_0();
-    init_Aws_restJson1();
-    SynthesizeSpeechCommand = class extends Command.classBuilder().ep(commonParams).m(function(Command2, cs, config, o2) {
-      return [
-        getSerdePlugin(config, this.serialize, this.deserialize),
-        getEndpointPlugin(config, Command2.getEndpointParameterInstructions())
-      ];
-    }).s("Parrot_v1", "SynthesizeSpeech", {}).n("PollyClient", "SynthesizeSpeechCommand").f(void 0, SynthesizeSpeechOutputFilterSensitiveLog).ser(se_SynthesizeSpeechCommand).de(de_SynthesizeSpeechCommand).build() {
-    };
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/Polly.js
-var commands, Polly;
-var init_Polly = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/Polly.js"() {
-    init_dist_es26();
-    init_DeleteLexiconCommand();
-    init_DescribeVoicesCommand();
-    init_GetLexiconCommand();
-    init_GetSpeechSynthesisTaskCommand();
-    init_ListLexiconsCommand();
-    init_ListSpeechSynthesisTasksCommand();
-    init_PutLexiconCommand();
-    init_StartSpeechSynthesisTaskCommand();
-    init_SynthesizeSpeechCommand();
-    init_PollyClient();
-    commands = {
-      DeleteLexiconCommand,
-      DescribeVoicesCommand,
-      GetLexiconCommand,
-      GetSpeechSynthesisTaskCommand,
-      ListLexiconsCommand,
-      ListSpeechSynthesisTasksCommand,
-      PutLexiconCommand,
-      StartSpeechSynthesisTaskCommand,
-      SynthesizeSpeechCommand
-    };
-    Polly = class extends PollyClient {
-    };
-    createAggregatedClient(commands, Polly);
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/commands/index.js
-var init_commands = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/commands/index.js"() {
-    init_DeleteLexiconCommand();
-    init_DescribeVoicesCommand();
-    init_GetLexiconCommand();
-    init_GetSpeechSynthesisTaskCommand();
-    init_ListLexiconsCommand();
-    init_ListSpeechSynthesisTasksCommand();
-    init_PutLexiconCommand();
-    init_StartSpeechSynthesisTaskCommand();
-    init_SynthesizeSpeechCommand();
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/pagination/Interfaces.js
-var init_Interfaces = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/pagination/Interfaces.js"() {
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/pagination/ListSpeechSynthesisTasksPaginator.js
-var paginateListSpeechSynthesisTasks;
-var init_ListSpeechSynthesisTasksPaginator = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/pagination/ListSpeechSynthesisTasksPaginator.js"() {
-    init_dist_es16();
-    init_ListSpeechSynthesisTasksCommand();
-    init_PollyClient();
-    paginateListSpeechSynthesisTasks = createPaginator(PollyClient, ListSpeechSynthesisTasksCommand, "NextToken", "NextToken", "MaxResults");
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/pagination/index.js
-var init_pagination2 = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/pagination/index.js"() {
-    init_Interfaces();
-    init_ListSpeechSynthesisTasksPaginator();
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/models/index.js
-var init_models = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/models/index.js"() {
-    init_models_0();
-  }
-});
-
-// node_modules/@aws-sdk/client-polly/dist-es/index.js
-var init_dist_es41 = __esm({
-  "node_modules/@aws-sdk/client-polly/dist-es/index.js"() {
-    init_PollyClient();
-    init_Polly();
-    init_commands();
-    init_pagination2();
-    init_models();
+var init_index_browser3 = __esm({
+  "node_modules/@smithy/core/dist-es/submodules/event-streams/index.browser.js"() {
+    init_EventStreamCodec();
+    init_HeaderMarshaller();
+    init_Int64();
+    init_MessageDecoderStream();
+    init_MessageEncoderStream();
+    init_SmithyMessageDecoderStream();
+    init_SmithyMessageEncoderStream();
+    init_EventStreamMarshaller_browser();
+    init_utils();
+    init_EventStreamMarshaller();
+    init_getChunkedStream();
+    init_getUnmarshalledStream();
+    init_EventStreamSerdeConfig();
+    init_EventStreamSerde();
   }
 });
 
@@ -10511,560 +5790,6 @@ var init_SSMLChunker = __esm({
   }
 });
 
-// src/service/AwsPollyService.ts
-var AwsPollyService_exports = {};
-__export(AwsPollyService_exports, {
-  AwsPollyService: () => AwsPollyService
-});
-var AwsPollyService;
-var init_AwsPollyService = __esm({
-  "src/service/AwsPollyService.ts"() {
-    init_dist_es41();
-    init_VoiceSettings();
-    AwsPollyService = class {
-      constructor(awsConfig, voice, speed) {
-        this.isLoading = false;
-        this.lastGeneratedAudio = null;
-        this.lastGeneratedAudioFilePath = null;
-        // Request lock mechanism - prevents concurrent operations
-        this.currentRequestId = null;
-        // Flag to track if PollyClient has been initialized with valid credentials
-        this.pollyClientInitialized = false;
-        this.speed = speed || 1;
-        this.audio = new Audio();
-        this.audio.src = "";
-        this.voiceChanged = false;
-        this.currentCredentials = {
-          accessKeyId: awsConfig.credentials.accessKeyId,
-          secretAccessKey: awsConfig.credentials.secretAccessKey,
-          region: awsConfig.region
-        };
-        const engine = false ? "standard" : "neural";
-        this.synthesizeInput = {
-          Engine: engine,
-          SampleRate: "24000",
-          TextType: "text",
-          OutputFormat: "mp3",
-          LanguageCode: this.getLanguageCode(voice),
-          VoiceId: voice || "Stephen",
-          Text: "No document selected."
-        };
-        if (this.hasValidCredentials()) {
-          this.initializePollyClient();
-        }
-      }
-      /**
-       * Check if credentials are non-empty and valid
-       */
-      hasValidCredentials() {
-        return this.currentCredentials.accessKeyId !== "" && this.currentCredentials.secretAccessKey !== "" && this.currentCredentials.region !== "";
-      }
-      /**
-       * Initialize or reinitialize the PollyClient with credential provider function
-       */
-      initializePollyClient() {
-        this.pollyClient = new PollyClient({
-          credentials: async () => {
-            return {
-              accessKeyId: this.currentCredentials.accessKeyId,
-              secretAccessKey: this.currentCredentials.secretAccessKey
-            };
-          },
-          region: this.currentCredentials.region
-        });
-        this.pollyClientInitialized = true;
-      }
-      /**
-       * Validates AWS credentials by attempting to call DescribeVoices
-       * @returns Promise that resolves to validation result
-       */
-      async validateCredentials() {
-        var _a;
-        try {
-          const command = new DescribeVoicesCommand({
-            Engine: "neural",
-            IncludeAdditionalLanguageCodes: false
-          });
-          const response = await this.pollyClient.send(command);
-          return {
-            isValid: true,
-            voiceCount: ((_a = response.Voices) == null ? void 0 : _a.length) || 0
-          };
-        } catch (error) {
-          let errorMessage = "Unknown error occurred";
-          if (error && typeof error === "object" && "name" in error) {
-            const awsError = error;
-            if (awsError.name === "InvalidSignatureException") {
-              errorMessage = "Invalid AWS credentials - please check your Access Key ID and Secret Access Key";
-            } else if (awsError.name === "SignatureDoesNotMatchException") {
-              errorMessage = "AWS Secret Access Key does not match the Access Key ID";
-            } else if (awsError.name === "AccessDeniedException") {
-              errorMessage = "Access denied - your AWS credentials don't have permission to use Polly";
-            } else if (awsError.name === "UnrecognizedClientException") {
-              errorMessage = "Invalid AWS Access Key ID format";
-            } else if (awsError.name === "NetworkingError" || awsError.code === "NetworkingError") {
-              errorMessage = "Network error - please check your internet connection";
-            } else if (awsError.name === "InvalidParameterValueException") {
-              errorMessage = "Invalid AWS region specified";
-            } else if (awsError.message) {
-              errorMessage = awsError.message;
-            }
-          }
-          return {
-            isValid: false,
-            error: errorMessage
-          };
-        }
-      }
-      /**
-       * Update AWS credentials and reinitialize the Polly client
-       * Allows updating credentials without restarting the plugin
-       * Uses credential provider function to avoid AWS SDK credential caching issues
-       */
-      updateCredentials(awsConfig) {
-        this.currentCredentials = {
-          accessKeyId: awsConfig.credentials.accessKeyId,
-          secretAccessKey: awsConfig.credentials.secretAccessKey,
-          region: awsConfig.region
-        };
-        if (this.hasValidCredentials()) {
-          this.initializePollyClient();
-        }
-      }
-      /**
-       * Play pre-generated SSML audio with automatic chunking
-       * This method accepts SSML that's already been generated by the pipeline
-       * and chunks it if necessary for AWS Polly limits
-       */
-      async playSSMLAudio(ssml, speed, filePath) {
-        try {
-          const { chunkSSML: chunkSSML2, validateChunks: validateChunks2 } = await Promise.resolve().then(() => (init_SSMLChunker(), SSMLChunker_exports));
-          if (ssml.length > 2500) {
-            const chunks = chunkSSML2(ssml, 2500);
-            const validation = validateChunks2(chunks);
-            if (!validation.isValid) {
-              console.error("Chunk validation errors:", validation.errors);
-              throw new Error(
-                `SSML chunking failed: ${validation.errors.join(", ")}`
-              );
-            }
-            await this.playSSMLChunks(chunks, speed, filePath);
-          } else {
-            if (ssml === this.synthesizeInput.Text && !this.voiceChanged) {
-              this.playAudio(speed);
-            } else {
-              this.synthesizeInput.Text = ssml;
-              await this.callPollySSML(ssml, speed, filePath);
-            }
-          }
-          this.voiceChanged = false;
-        } catch (error) {
-          if (error instanceof Error && error.name === "AbortError") {
-            return;
-          }
-          console.error("Error in playSSMLAudio:", error);
-          this.reportError(error);
-          throw error;
-        }
-      }
-      /**
-       * Play multiple SSML chunks in sequence
-       */
-      async playSSMLChunks(chunks, speed, filePath) {
-        var _a;
-        const audioBlobs = [];
-        for (const chunk of chunks) {
-          if ((_a = this.abortController) == null ? void 0 : _a.signal.aborted) {
-            throw new Error("AbortError");
-          }
-          const blob = await this.synthesizeSSMLChunk(
-            chunk.ssml,
-            chunk.index,
-            chunk.total
-          );
-          audioBlobs.push(blob);
-        }
-        const finalBlob = new Blob(audioBlobs, { type: "audio/mpeg" });
-        this.lastGeneratedAudio = finalBlob;
-        if (filePath) {
-          this.lastGeneratedAudioFilePath = filePath;
-        }
-        this.audio.src = URL.createObjectURL(finalBlob);
-        this.reportProgress(1, 1);
-        this.playAudio(speed);
-      }
-      /**
-       * Synthesize a single SSML chunk and return the audio blob
-       */
-      async synthesizeSSMLChunk(ssml, chunkIndex, totalChunks) {
-        var _a, _b, _c;
-        this.setLanguageCode(this.getLanguageCode(this.synthesizeInput.VoiceId));
-        const input = {
-          Engine: this.synthesizeInput.Engine,
-          LanguageCode: this.synthesizeInput.LanguageCode,
-          SampleRate: this.synthesizeInput.SampleRate,
-          TextType: "ssml",
-          OutputFormat: this.synthesizeInput.OutputFormat,
-          Text: ssml,
-          VoiceId: this.synthesizeInput.VoiceId
-        };
-        const command = new SynthesizeSpeechCommand(input);
-        const data = await this.pollyClient.send(command, {
-          abortSignal: (_a = this.abortController) == null ? void 0 : _a.signal
-        });
-        if (!data || !data.AudioStream) {
-          throw new Error("Invalid response from Polly");
-        }
-        const audioStream = data.AudioStream;
-        if (typeof audioStream === "object" && audioStream !== null && "getReader" in audioStream) {
-          const readableStream = audioStream;
-          const reader = readableStream.getReader();
-          const blobParts = [];
-          const baseProgress = chunkIndex / totalChunks;
-          const chunkProgress = 1 / totalChunks;
-          while (true) {
-            if ((_b = this.abortController) == null ? void 0 : _b.signal.aborted) {
-              reader.cancel();
-              throw new Error("AbortError");
-            }
-            const { done, value: value2 } = await reader.read();
-            if (done) break;
-            const chunk = new Uint8Array(value2.length);
-            chunk.set(value2);
-            blobParts.push(chunk);
-            const progress = baseProgress + chunkProgress * 0.9;
-            this.reportProgress(progress, 1);
-          }
-          return new Blob(blobParts, { type: "audio/mpeg" });
-        }
-        if (Symbol.asyncIterator in audioStream) {
-          const chunks = [];
-          const asyncIterable = audioStream;
-          for await (const chunk of asyncIterable) {
-            if ((_c = this.abortController) == null ? void 0 : _c.signal.aborted) {
-              throw new Error("AbortError");
-            }
-            chunks.push(Buffer.from(chunk));
-          }
-          const audioBuffer = Buffer.concat(chunks);
-          return new Blob([audioBuffer], { type: "audio/mpeg" });
-        }
-        throw new Error("Unsupported audio stream format");
-      }
-      /**
-       * Call Polly with pre-generated SSML (no chunking, SSML is already prepared)
-       */
-      async callPollySSML(ssml, speed, filePath) {
-        var _a, _b, _c;
-        if (this.isLoading) {
-          throw new Error(
-            "AWS Polly call already in progress. This should not happen if startOperation() guard is working."
-          );
-        }
-        this.isLoading = true;
-        try {
-          this.setLanguageCode(this.getLanguageCode(this.synthesizeInput.VoiceId));
-          this.reportProgress(0, 1);
-          const input = {
-            Engine: this.synthesizeInput.Engine,
-            LanguageCode: this.synthesizeInput.LanguageCode,
-            SampleRate: this.synthesizeInput.SampleRate,
-            TextType: "ssml",
-            OutputFormat: this.synthesizeInput.OutputFormat,
-            Text: ssml,
-            VoiceId: this.synthesizeInput.VoiceId
-          };
-          const command = new SynthesizeSpeechCommand(input);
-          const data = await this.pollyClient.send(command, {
-            abortSignal: (_a = this.abortController) == null ? void 0 : _a.signal
-          });
-          if ((_b = this.abortController) == null ? void 0 : _b.signal.aborted) {
-            throw new Error("AbortError");
-          }
-          if (!data || !data.AudioStream) {
-            throw new Error("Invalid response from Polly");
-          }
-          const audioStream = data.AudioStream;
-          if (typeof audioStream === "object" && audioStream !== null) {
-            if ("getReader" in audioStream) {
-              const readableStream = audioStream;
-              const reader = readableStream.getReader();
-              const blobParts = [];
-              let bytesReceived = 0;
-              let progressReported = 0;
-              while (true) {
-                if ((_c = this.abortController) == null ? void 0 : _c.signal.aborted) {
-                  reader.cancel();
-                  throw new Error("AbortError");
-                }
-                const { done, value: value2 } = await reader.read();
-                if (done) break;
-                const chunk = new Uint8Array(value2.length);
-                chunk.set(value2);
-                blobParts.push(chunk);
-                bytesReceived += value2.length;
-                const newProgress = Math.min(0.95, bytesReceived / 5e5);
-                if (newProgress - progressReported > 0.1) {
-                  this.reportProgress(newProgress, 1);
-                  progressReported = newProgress;
-                }
-              }
-              const audioBlob = new Blob(blobParts, { type: "audio/mpeg" });
-              this.lastGeneratedAudio = audioBlob;
-              if (filePath) {
-                this.lastGeneratedAudioFilePath = filePath;
-              }
-              this.audio.src = URL.createObjectURL(audioBlob);
-              this.reportProgress(1, 1);
-              this.playAudio(speed);
-            }
-          }
-        } finally {
-          this.isLoading = false;
-          this.abortController = void 0;
-        }
-      }
-      async playAudio(speed) {
-        let fSpeed = typeof speed === "number" ? parseFloat(speed.toFixed(2)) : this.speed;
-        if (fSpeed < 0.5) {
-          fSpeed = 0.5;
-        } else if (fSpeed > 2) {
-          fSpeed = 2;
-        }
-        this.audio.playbackRate = fSpeed;
-        this.audio.play();
-      }
-      pauseAudio() {
-        this.audio.pause();
-      }
-      stopAudio() {
-        this.audio.pause();
-        this.audio.currentTime = 0;
-      }
-      /**
-       * Check if any operation is currently in progress
-       * @returns true if an operation is active
-       */
-      isOperationInProgress() {
-        return this.currentRequestId !== null;
-      }
-      /**
-       * Start a new operation with UUID tracking
-       * @throws Error if operation already in progress
-       * @returns Unique request ID for this operation
-       */
-      startOperation() {
-        if (this.currentRequestId !== null) {
-          throw new Error(
-            `Operation already in progress: ${this.currentRequestId}`
-          );
-        }
-        const requestId = `req_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
-        this.currentRequestId = requestId;
-        this.abortController = new AbortController();
-        return requestId;
-      }
-      /**
-       * Validate if the given request ID is still the current active request
-       * @param requestId The request ID to validate
-       * @returns true if this is the current request
-       */
-      isCurrentRequest(requestId) {
-        return this.currentRequestId === requestId;
-      }
-      /**
-       * Cancel the current operation
-       */
-      cancelOperation() {
-        if (this.currentRequestId && this.abortController) {
-          this.abortController.abort();
-          this.currentRequestId = null;
-          this.isLoading = false;
-          this.abortController = void 0;
-          this.reportProgress(0, 1);
-        }
-      }
-      /**
-       * End an operation and cleanup resources
-       * @param requestId The request ID to end
-       */
-      endOperation(requestId) {
-        if (this.currentRequestId === requestId) {
-          this.currentRequestId = null;
-          this.isLoading = false;
-          this.abortController = void 0;
-        } else if (this.currentRequestId !== null) {
-          console.warn(
-            `[Voice] Attempted to end operation ${requestId} but current is ${this.currentRequestId}`
-          );
-        }
-      }
-      /**
-       * @deprecated Use isOperationInProgress() instead
-       */
-      isLoadingInProgress() {
-        return this.isOperationInProgress();
-      }
-      /**
-       * @deprecated Use cancelOperation() instead
-       */
-      cancelLoading() {
-        this.cancelOperation();
-      }
-      rewindAudio() {
-        if (this.audio && !isNaN(this.audio.duration)) {
-          this.audio.currentTime = Math.max(0, this.audio.currentTime - 3);
-        }
-      }
-      fastForwardAudio() {
-        if (this.audio && !isNaN(this.audio.duration)) {
-          this.audio.currentTime = Math.min(
-            this.audio.duration,
-            this.audio.currentTime + 3
-          );
-        }
-      }
-      setSynthesizeInput(synthesizeInput) {
-        this.synthesizeInput = {
-          ...this.synthesizeInput,
-          ...synthesizeInput
-        };
-      }
-      setAudio(text5) {
-        this.synthesizeInput.Text = text5;
-      }
-      setSpeed(speed) {
-        this.speed = speed;
-        this.updatePlaybackRate(speed);
-        return this.speed;
-      }
-      setProgressCallback(callback) {
-        this.progressCallback = callback;
-      }
-      setErrorCallback(callback) {
-        this.errorCallback = callback;
-      }
-      reportProgress(current, total) {
-        if (this.progressCallback) {
-          const progress = total > 0 ? current / total : 0;
-          this.progressCallback(Math.min(1, Math.max(0, progress)));
-        }
-      }
-      reportError(error) {
-        if (this.errorCallback) {
-          let errorMessage = "Network error. Please try again.";
-          if (error && typeof error === "object" && "message" in error) {
-            const errorObj = error;
-            if (errorObj.message.includes("NetworkingError")) {
-              errorMessage = "Connection failed. Check your internet.";
-            } else if (errorObj.message.includes("InvalidAccessKeyId")) {
-              errorMessage = "Invalid AWS credentials.";
-            } else if (errorObj.message.includes("ThrottlingException")) {
-              errorMessage = "Rate limited. Please wait and try again.";
-            } else if (errorObj.message.includes("TextLengthExceededException")) {
-              errorMessage = "Text too long. Try shorter content.";
-            } else {
-              errorMessage = `AWS Error: ${errorObj.message}`;
-            }
-          }
-          this.errorCallback(errorMessage);
-        }
-      }
-      updatePlaybackRate(speed) {
-        if (this.audio && this.audio.src) {
-          let fSpeed = typeof speed === "number" ? parseFloat(speed.toFixed(2)) : this.speed;
-          if (fSpeed < 0.5) {
-            fSpeed = 0.5;
-          } else if (fSpeed > 2) {
-            fSpeed = 2;
-          }
-          this.audio.playbackRate = fSpeed;
-        }
-      }
-      setVoice(voice) {
-        this.synthesizeInput.VoiceId = voice;
-        this.synthesizeInput.LanguageCode = this.getLanguageCode(
-          voice
-        );
-        this.voiceChanged = true;
-      }
-      setLanguageCode(language) {
-        this.synthesizeInput.LanguageCode = language;
-        this.voiceChanged = true;
-      }
-      isPlaying() {
-        return !this.audio.paused;
-      }
-      hasEnded() {
-        return this.audio.ended;
-      }
-      getLanguageCode(voice) {
-        const voiceOption = VOICES.find((v2) => v2.id === voice);
-        return voiceOption ? voiceOption.lang : "en-US";
-      }
-      getContent() {
-        return this.synthesizeInput.Text;
-      }
-      getVoice() {
-        return this.synthesizeInput.VoiceId;
-      }
-      getAudio() {
-        return this.audio;
-      }
-      getSpeed() {
-        return this.speed;
-      }
-      getDuration() {
-        return this.audio.duration;
-      }
-      getCurrentTime() {
-        return this.audio.currentTime;
-      }
-      getVolume() {
-        return this.audio.volume;
-      }
-      chunkText(text5, chunkSize) {
-        const words = text5.split(" ");
-        const chunks = [];
-        let startIndex = 0;
-        while (startIndex < words.length) {
-          const chunk = words.slice(startIndex, startIndex + chunkSize).join(" ");
-          chunks.push(chunk);
-          startIndex += chunkSize;
-        }
-        return chunks;
-      }
-      /**
-       * Get the last generated audio blob for download
-       * @param filePath - Path of the current file to validate cache
-       * @returns The cached audio blob or null if not available or doesn't match file
-       */
-      getLastGeneratedAudio(filePath) {
-        if (filePath && this.lastGeneratedAudioFilePath !== filePath) {
-          return null;
-        }
-        return this.lastGeneratedAudio;
-      }
-      /**
-       * Clear the cached audio blob to free memory
-       */
-      clearCachedAudio() {
-        this.lastGeneratedAudio = null;
-        this.lastGeneratedAudioFilePath = null;
-      }
-      /**
-       * Set the cached audio with file path tracking
-       * @param audioBlob - The audio blob to cache
-       * @param filePath - Path of the file this audio belongs to
-       */
-      setCachedAudio(audioBlob, filePath) {
-        this.lastGeneratedAudio = audioBlob;
-        this.lastGeneratedAudioFilePath = filePath;
-      }
-    };
-  }
-});
-
 // node_modules/extend/index.js
 var require_extend = __commonJS({
   "node_modules/extend/index.js"(exports, module2) {
@@ -11162,25 +5887,25 @@ var require_format = __commonJS({
     (function() {
       var namespace;
       if (typeof module2 !== "undefined") {
-        namespace = module2.exports = format;
+        namespace = module2.exports = format2;
       } else {
         namespace = (function() {
           return this || (1, eval)("this");
         })();
       }
-      namespace.format = format;
+      namespace.format = format2;
       namespace.vsprintf = vsprintf;
       if (typeof console !== "undefined" && typeof console.log === "function") {
         namespace.printf = printf;
       }
       function printf() {
-        console.log(format.apply(null, arguments));
+        console.log(format2.apply(null, arguments));
       }
       function vsprintf(fmt, replacements) {
-        return format.apply(null, [fmt].concat(replacements));
+        return format2.apply(null, [fmt].concat(replacements));
       }
-      function format(fmt) {
-        var argIndex = 1, args = [].slice.call(arguments), i2 = 0, n2 = fmt.length, result = "", c2, escaped = false, arg, tmp, leadingZero = false, precision, nextArg = function() {
+      function format2(fmt) {
+        var argIndex = 1, args = [].slice.call(arguments), i2 = 0, n = fmt.length, result = "", c2, escaped = false, arg, tmp, leadingZero = false, precision, nextArg = function() {
           return args[argIndex++];
         }, slurpNumber = function() {
           var digits = "";
@@ -11190,7 +5915,7 @@ var require_format = __commonJS({
           }
           return digits.length > 0 ? parseInt(digits) : null;
         };
-        for (; i2 < n2; ++i2) {
+        for (; i2 < n; ++i2) {
           c2 = fmt[i2];
           if (escaped) {
             escaped = false;
@@ -11261,13 +5986,7470 @@ __export(main_exports, {
 });
 module.exports = __toCommonJS(main_exports);
 
-// src/utils/VoicePlugin.ts
-init_VoiceSettings();
+// src/settings/VoiceSettings.ts
+var MIN_SKIP_SECONDS = 1;
+var MAX_SKIP_SECONDS = 60;
+var DEFAULT_SKIP_SECONDS = 3;
+var VOICES = [
+  { id: "Stephen", label: "Stephen (American)", lang: "en-US" },
+  { id: "Joanna", label: "Joanna (American)", lang: "en-US" },
+  { id: "Brian", label: "Brian (British)", lang: "en-GB" },
+  { id: "Emma", label: "Emma (British)", lang: "en-GB" },
+  { id: "Daniel", label: "Daniel (German)", lang: "de-DE" },
+  { id: "Vicki", label: "Vicki (German)", lang: "de-DE" },
+  { id: "Remi", label: "R\xE9mi (French)", lang: "fr-FR" },
+  { id: "Lea", label: "L\xE9a (French)", lang: "fr-FR" },
+  { id: "Sergio", label: "Sergio (Spanish)", lang: "es-ES" },
+  { id: "Lucia", label: "Lucia (Spanish)", lang: "es-ES" },
+  { id: "Adriano", label: "Adriano (Italian)", lang: "it-IT" },
+  { id: "Bianca", label: "Bianca (Italian)", lang: "it-IT" },
+  { id: "Ola", label: "Ola (Polish)", lang: "pl-PL" },
+  { id: "Laura", label: "Laura (Dutch)", lang: "nl-NL" },
+  { id: "Ines", label: "Ines (Portuguese)", lang: "pt-PT" },
+  { id: "Camila", label: "Camila (Portuguese, Brazilian)", lang: "pt-BR" },
+  { id: "Thiago", label: "Thiago (Portuguese, Brazilian)", lang: "pt-BR" },
+  { id: "Vitoria", label: "Vitoria (Portuguese, Brazilian)", lang: "pt-BR" },
+  { id: "Arlet", label: "Arlet (Catalan)", lang: "ca-ES" },
+  { id: "Elin", label: "Elin (Swedish)", lang: "sv-SE" },
+  { id: "Sofie", label: "Sofie (Danish)", lang: "da-DK" },
+  { id: "Ida", label: "Ida (Norwegian)", lang: "nb-NO" },
+  { id: "Suvi", label: "Suvi (Finnish)", lang: "fi-FI" },
+  { id: "Takumi", label: "Takumi (Japanese)", lang: "ja-JP" },
+  { id: "Tomoko", label: "Tomoko (Japanese)", lang: "ja-JP" },
+  { id: "Seoyeon", label: "Seoyeon (Korean)", lang: "ko-KR" },
+  { id: "Kajal", label: "Kajal (Hindi)", lang: "hi-IN" },
+  { id: "Zhiyu", label: "Zhiyu (Mandarin)", lang: "cmn-CN" }
+];
+var ELEVENLABS_MODELS = [
+  { id: "eleven_multilingual_v2", label: "Multilingual v2 (quality)" },
+  { id: "eleven_flash_v2_5", label: "Flash v2.5 (fastest)" },
+  { id: "eleven_turbo_v2_5", label: "Turbo v2.5 (balanced)" }
+];
+var ELEVENLABS_VOICES = [
+  { id: "21m00Tcm4TlvDq8ikWAM", label: "Rachel (Female)", lang: "en-US" },
+  { id: "EXAVITQu4vr4xnSDxMaL", label: "Bella (Female)", lang: "en-US" },
+  { id: "AZnzlk1XvdvUeBnXmlld", label: "Domi (Female)", lang: "en-US" },
+  { id: "pNInz6obpgDQGcFmaJgB", label: "Adam (Male)", lang: "en-US" },
+  { id: "ErXwobaYiN019PkySvjV", label: "Antoni (Male)", lang: "en-US" },
+  { id: "TxGEqnHWrfWFTfGW9XjX", label: "Josh (Male)", lang: "en-US" },
+  { id: "yoZ06aMxZJJ28mfd3POQ", label: "Sam (Male)", lang: "en-US" }
+];
+var GOOGLE_VOICES = [
+  {
+    id: "en-US-Neural2-C",
+    label: "Neural2 C (American, Female)",
+    lang: "en-US"
+  },
+  { id: "en-US-Neural2-D", label: "Neural2 D (American, Male)", lang: "en-US" },
+  {
+    id: "en-US-Neural2-F",
+    label: "Neural2 F (American, Female)",
+    lang: "en-US"
+  },
+  { id: "en-US-Wavenet-D", label: "WaveNet D (American, Male)", lang: "en-US" },
+  {
+    id: "en-GB-Neural2-A",
+    label: "Neural2 A (British, Female)",
+    lang: "en-GB"
+  },
+  { id: "en-GB-Neural2-B", label: "Neural2 B (British, Male)", lang: "en-GB" },
+  { id: "de-DE-Neural2-A", label: "Neural2 A (German, Female)", lang: "de-DE" },
+  { id: "de-DE-Neural2-B", label: "Neural2 B (German, Male)", lang: "de-DE" },
+  { id: "fr-FR-Neural2-A", label: "Neural2 A (French, Female)", lang: "fr-FR" },
+  { id: "fr-FR-Neural2-B", label: "Neural2 B (French, Male)", lang: "fr-FR" },
+  {
+    id: "es-ES-Neural2-A",
+    label: "Neural2 A (Spanish, Female)",
+    lang: "es-ES"
+  },
+  { id: "es-ES-Neural2-B", label: "Neural2 B (Spanish, Male)", lang: "es-ES" },
+  {
+    id: "it-IT-Neural2-A",
+    label: "Neural2 A (Italian, Female)",
+    lang: "it-IT"
+  },
+  { id: "it-IT-Neural2-C", label: "Neural2 C (Italian, Male)", lang: "it-IT" },
+  {
+    id: "pt-BR-Neural2-A",
+    label: "Neural2 A (Portuguese, Brazilian)",
+    lang: "pt-BR"
+  },
+  { id: "nl-NL-Wavenet-A", label: "WaveNet A (Dutch, Female)", lang: "nl-NL" },
+  {
+    id: "ja-JP-Neural2-B",
+    label: "Neural2 B (Japanese, Female)",
+    lang: "ja-JP"
+  },
+  { id: "ko-KR-Neural2-A", label: "Neural2 A (Korean, Female)", lang: "ko-KR" }
+];
+var AZURE_REGIONS = [
+  { id: "eastus", label: "East US" },
+  { id: "eastus2", label: "East US 2" },
+  { id: "westus", label: "West US" },
+  { id: "westus2", label: "West US 2" },
+  { id: "westus3", label: "West US 3" },
+  { id: "centralus", label: "Central US" },
+  { id: "westeurope", label: "West Europe" },
+  { id: "northeurope", label: "North Europe" },
+  { id: "uksouth", label: "UK South" },
+  { id: "francecentral", label: "France Central" },
+  { id: "germanywestcentral", label: "Germany West Central" },
+  { id: "switzerlandnorth", label: "Switzerland North" },
+  { id: "swedencentral", label: "Sweden Central" },
+  { id: "japaneast", label: "Japan East" },
+  { id: "southeastasia", label: "Southeast Asia" },
+  { id: "centralindia", label: "Central India" },
+  { id: "australiaeast", label: "Australia East" },
+  { id: "canadacentral", label: "Canada Central" },
+  { id: "brazilsouth", label: "Brazil South" }
+];
+var AZURE_VOICES = [
+  { id: "en-US-JennyNeural", label: "Jenny (American, Female)", lang: "en-US" },
+  { id: "en-US-AriaNeural", label: "Aria (American, Female)", lang: "en-US" },
+  { id: "en-US-GuyNeural", label: "Guy (American, Male)", lang: "en-US" },
+  {
+    id: "en-US-ChristopherNeural",
+    label: "Christopher (American, Male)",
+    lang: "en-US"
+  },
+  { id: "en-GB-SoniaNeural", label: "Sonia (British, Female)", lang: "en-GB" },
+  { id: "en-GB-RyanNeural", label: "Ryan (British, Male)", lang: "en-GB" },
+  {
+    id: "en-AU-NatashaNeural",
+    label: "Natasha (Australian, Female)",
+    lang: "en-AU"
+  },
+  { id: "de-DE-KatjaNeural", label: "Katja (German, Female)", lang: "de-DE" },
+  { id: "de-DE-ConradNeural", label: "Conrad (German, Male)", lang: "de-DE" },
+  { id: "fr-FR-DeniseNeural", label: "Denise (French, Female)", lang: "fr-FR" },
+  { id: "fr-FR-HenriNeural", label: "Henri (French, Male)", lang: "fr-FR" },
+  {
+    id: "es-ES-ElviraNeural",
+    label: "Elvira (Spanish, Female)",
+    lang: "es-ES"
+  },
+  { id: "es-ES-AlvaroNeural", label: "Alvaro (Spanish, Male)", lang: "es-ES" },
+  { id: "it-IT-ElsaNeural", label: "Elsa (Italian, Female)", lang: "it-IT" },
+  { id: "it-IT-DiegoNeural", label: "Diego (Italian, Male)", lang: "it-IT" },
+  {
+    id: "pt-BR-FranciscaNeural",
+    label: "Francisca (Portuguese, Brazilian)",
+    lang: "pt-BR"
+  },
+  {
+    id: "nl-NL-ColetteNeural",
+    label: "Colette (Dutch, Female)",
+    lang: "nl-NL"
+  },
+  {
+    id: "ja-JP-NanamiNeural",
+    label: "Nanami (Japanese, Female)",
+    lang: "ja-JP"
+  },
+  { id: "ko-KR-SunHiNeural", label: "Sun-Hi (Korean, Female)", lang: "ko-KR" },
+  {
+    id: "zh-CN-XiaoxiaoNeural",
+    label: "Xiaoxiao (Mandarin, Female)",
+    lang: "zh-CN"
+  }
+];
+var OPENAI_MODELS = [
+  { id: "gpt-4o-mini-tts", label: "GPT-4o mini TTS (recommended)" },
+  { id: "tts-1", label: "TTS-1 (fast)" },
+  { id: "tts-1-hd", label: "TTS-1 HD (quality)" }
+];
+var OPENAI_VOICES = [
+  { id: "alloy", label: "Alloy (Neutral)", lang: "en-US" },
+  { id: "ash", label: "Ash (Expressive)", lang: "en-US" },
+  { id: "coral", label: "Coral (Warm)", lang: "en-US" },
+  { id: "echo", label: "Echo (Male)", lang: "en-US" },
+  { id: "fable", label: "Fable (British)", lang: "en-GB" },
+  { id: "onyx", label: "Onyx (Deep)", lang: "en-US" },
+  { id: "nova", label: "Nova (Female)", lang: "en-US" },
+  { id: "sage", label: "Sage (Calm)", lang: "en-US" },
+  { id: "shimmer", label: "Shimmer (Soft)", lang: "en-US" }
+];
+var DEFAULT_SETTINGS = {
+  TTS_PROVIDER: "polly",
+  VOICE: "Stephen",
+  SPEED: 1,
+  AWS_REGION: "eu-central-1",
+  AWS_ACCESS_KEY_ID: "",
+  AWS_SECRET_ACCESS_KEY: "",
+  ELEVENLABS_API_KEY: "",
+  ELEVENLABS_VOICE: "21m00Tcm4TlvDq8ikWAM",
+  ELEVENLABS_MODEL: "eleven_multilingual_v2",
+  GOOGLE_API_KEY: "",
+  GOOGLE_VOICE: "en-US-Neural2-C",
+  AZURE_API_KEY: "",
+  AZURE_REGION: "eastus",
+  AZURE_VOICE: "en-US-JennyNeural",
+  OPENAI_API_KEY: "",
+  OPENAI_VOICE: "alloy",
+  OPENAI_MODEL: "gpt-4o-mini-tts",
+  spellOutAcronyms: false,
+  readCodeBlocks: false,
+  autoDownloadAudio: false,
+  // Embed the saved MP3 in the note. On by default so manual downloads keep
+  // their previous behaviour (save + embed). Turn off to download only.
+  autoEmbedAudio: true,
+  skipUrls: false,
+  rewindSeconds: DEFAULT_SKIP_SECONDS,
+  forwardSeconds: DEFAULT_SKIP_SECONDS,
+  folderSelectorFollowsNote: true,
+  acronymDefaultMigrated: false,
+  playerPanePlaced: false,
+  lastWhatsNewVersion: ""
+};
 
 // src/settings/VoiceSettingTab.ts
+var import_obsidian5 = require("obsidian");
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js
+function setCredentialFeature(credentials, feature, value2) {
+  if (!credentials.$source) {
+    credentials.$source = {};
+  }
+  credentials.$source[feature] = value2;
+  return credentials;
+}
+
+// node_modules/@smithy/core/dist-es/submodules/retry/middleware-retry/isStreamingPayload/isStreamingPayload.browser.js
+var isStreamingPayload = (request) => (request == null ? void 0 : request.body) instanceof ReadableStream;
+
+// node_modules/@smithy/core/dist-es/submodules/retry/middleware-retry/retryMiddleware.js
+init_client3();
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js
+init_index_browser2();
+var collectBody = async (streamBody = new Uint8Array(), context) => {
+  if (streamBody instanceof Uint8Array) {
+    return Uint8ArrayBlobAdapter.mutate(streamBody);
+  }
+  if (!streamBody) {
+    return Uint8ArrayBlobAdapter.mutate(new Uint8Array());
+  }
+  const fromContext = context.streamCollector(streamBody);
+  return Uint8ArrayBlobAdapter.mutate(await fromContext);
+};
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js
+function extendedEncodeURIComponent(str) {
+  return encodeURIComponent(str).replace(/[!'()*]/g, function(c2) {
+    return "%" + c2.charCodeAt(0).toString(16).toUpperCase();
+  });
+}
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js
+init_schema2();
+init_index_browser2();
+init_transport();
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js
+init_schema2();
+init_transport();
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js
+var SerdeContext = class {
+  constructor() {
+    __publicField(this, "serdeContext");
+  }
+  setSerdeContext(serdeContext) {
+    this.serdeContext = serdeContext;
+  }
+};
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js
+var HttpProtocol = class extends SerdeContext {
+  constructor(options) {
+    var _a3;
+    super();
+    __publicField(this, "options");
+    __publicField(this, "compositeErrorRegistry");
+    this.options = options;
+    this.compositeErrorRegistry = TypeRegistry.for(options.defaultNamespace);
+    for (const etr of (_a3 = options.errorTypeRegistries) != null ? _a3 : []) {
+      this.compositeErrorRegistry.copyFrom(etr);
+    }
+  }
+  getRequestType() {
+    return HttpRequest;
+  }
+  getResponseType() {
+    return HttpResponse;
+  }
+  setSerdeContext(serdeContext) {
+    this.serdeContext = serdeContext;
+    this.serializer.setSerdeContext(serdeContext);
+    this.deserializer.setSerdeContext(serdeContext);
+    if (this.getPayloadCodec()) {
+      this.getPayloadCodec().setSerdeContext(serdeContext);
+    }
+  }
+  updateServiceEndpoint(request, endpoint) {
+    if ("url" in endpoint) {
+      request.protocol = endpoint.url.protocol;
+      request.hostname = endpoint.url.hostname;
+      request.port = endpoint.url.port ? Number(endpoint.url.port) : void 0;
+      request.path = endpoint.url.pathname;
+      request.fragment = endpoint.url.hash || void 0;
+      request.username = endpoint.url.username || void 0;
+      request.password = endpoint.url.password || void 0;
+      if (!request.query) {
+        request.query = {};
+      }
+      for (const [k2, v] of endpoint.url.searchParams.entries()) {
+        request.query[k2] = v;
+      }
+      if (endpoint.headers) {
+        for (const name in endpoint.headers) {
+          request.headers[name] = endpoint.headers[name].join(", ");
+        }
+      }
+      return request;
+    } else {
+      request.protocol = endpoint.protocol;
+      request.hostname = endpoint.hostname;
+      request.port = endpoint.port ? Number(endpoint.port) : void 0;
+      request.path = endpoint.path;
+      request.query = {
+        ...endpoint.query
+      };
+      if (endpoint.headers) {
+        for (const name in endpoint.headers) {
+          request.headers[name] = endpoint.headers[name];
+        }
+      }
+      return request;
+    }
+  }
+  setHostPrefix(request, operationSchema, input) {
+    var _a3, _b2, _c2;
+    if ((_a3 = this.serdeContext) == null ? void 0 : _a3.disableHostPrefix) {
+      return;
+    }
+    const inputNs = NormalizedSchema.of(operationSchema.input);
+    const opTraits = translateTraits((_b2 = operationSchema.traits) != null ? _b2 : {});
+    if (opTraits.endpoint) {
+      let hostPrefix = (_c2 = opTraits.endpoint) == null ? void 0 : _c2[0];
+      if (typeof hostPrefix === "string") {
+        for (const [name, member2] of inputNs.structIterator()) {
+          if (!member2.getMergedTraits().hostLabel) {
+            continue;
+          }
+          const replacement = input[name];
+          if (typeof replacement !== "string") {
+            throw new Error(`@smithy/core/schema - ${name} in input must be a string as hostLabel.`);
+          }
+          hostPrefix = hostPrefix.replace(`{${name}}`, replacement);
+        }
+        request.hostname = hostPrefix + request.hostname;
+      }
+    }
+  }
+  deserializeMetadata(output) {
+    var _a3, _b2;
+    return {
+      httpStatusCode: output.statusCode,
+      requestId: (_b2 = (_a3 = output.headers["x-amzn-requestid"]) != null ? _a3 : output.headers["x-amzn-request-id"]) != null ? _b2 : output.headers["x-amz-request-id"],
+      extendedRequestId: output.headers["x-amz-id-2"],
+      cfId: output.headers["x-amz-cf-id"]
+    };
+  }
+  async serializeEventStream({ eventStream, requestSchema, initialRequest }) {
+    const eventStreamSerde = await this.loadEventStreamCapability();
+    return eventStreamSerde.serializeEventStream({
+      eventStream,
+      requestSchema,
+      initialRequest
+    });
+  }
+  async deserializeEventStream({ response, responseSchema, initialResponseContainer }) {
+    const eventStreamSerde = await this.loadEventStreamCapability();
+    return eventStreamSerde.deserializeEventStream({
+      response,
+      responseSchema,
+      initialResponseContainer
+    });
+  }
+  async loadEventStreamCapability() {
+    const { EventStreamSerde: EventStreamSerde2 } = await Promise.resolve().then(() => (init_index_browser3(), index_browser_exports));
+    return new EventStreamSerde2({
+      marshaller: this.getEventStreamMarshaller(),
+      serializer: this.serializer,
+      deserializer: this.deserializer,
+      serdeContext: this.serdeContext,
+      defaultContentType: this.getDefaultContentType()
+    });
+  }
+  getDefaultContentType() {
+    throw new Error(`@smithy/core/protocols - ${this.constructor.name} getDefaultContentType() implementation missing.`);
+  }
+  async deserializeHttpMessage(schema, context, response, arg4, arg5) {
+    void schema;
+    void context;
+    void response;
+    void arg4;
+    void arg5;
+    return [];
+  }
+  getEventStreamMarshaller() {
+    const context = this.serdeContext;
+    if (!context.eventStreamMarshaller) {
+      throw new Error("@smithy/core - HttpProtocol: eventStreamMarshaller missing in serdeContext.");
+    }
+    return context.eventStreamMarshaller;
+  }
+};
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js
+var HttpBindingProtocol = class extends HttpProtocol {
+  async serializeRequest(operationSchema, _input, context) {
+    var _a3, _b2;
+    const input = _input && typeof _input === "object" ? _input : {};
+    const serializer = this.serializer;
+    const query = {};
+    const headers = {};
+    const endpoint = await context.endpoint();
+    const ns = NormalizedSchema.of(operationSchema == null ? void 0 : operationSchema.input);
+    const payloadMemberNames = [];
+    const payloadMemberSchemas = [];
+    let hasNonHttpBindingMember = false;
+    let payload;
+    const request = new HttpRequest({
+      protocol: "",
+      hostname: "",
+      port: void 0,
+      path: "",
+      fragment: void 0,
+      query,
+      headers,
+      body: void 0
+    });
+    if (endpoint) {
+      this.updateServiceEndpoint(request, endpoint);
+      this.setHostPrefix(request, operationSchema, input);
+      const opTraits = translateTraits(operationSchema.traits);
+      if (opTraits.http) {
+        request.method = opTraits.http[0];
+        const [path2, search2] = opTraits.http[1].split("?");
+        if (request.path == "/") {
+          request.path = path2;
+        } else {
+          request.path += path2;
+        }
+        const traitSearchParams = new URLSearchParams(search2 != null ? search2 : "");
+        for (const [key, value2] of traitSearchParams) {
+          query[key] = value2;
+        }
+      }
+    }
+    for (const [memberName, memberNs] of ns.structIterator()) {
+      const memberTraits = (_a3 = memberNs.getMergedTraits()) != null ? _a3 : {};
+      const inputMemberValue = input[memberName];
+      if (inputMemberValue == null && !memberNs.isIdempotencyToken()) {
+        if (memberTraits.httpLabel) {
+          if (request.path.includes(`{${memberName}+}`) || request.path.includes(`{${memberName}}`)) {
+            throw new Error(`No value provided for input HTTP label: ${memberName}.`);
+          }
+        }
+        continue;
+      }
+      if (memberTraits.httpPayload) {
+        const isStreaming = memberNs.isStreaming();
+        if (isStreaming) {
+          const isEventStream = memberNs.isStructSchema();
+          if (isEventStream) {
+            if (input[memberName]) {
+              payload = await this.serializeEventStream({
+                eventStream: input[memberName],
+                requestSchema: ns
+              });
+            }
+          } else {
+            payload = inputMemberValue;
+          }
+        } else {
+          serializer.write(memberNs, inputMemberValue);
+          payload = serializer.flush();
+        }
+      } else if (memberTraits.httpLabel) {
+        serializer.write(memberNs, inputMemberValue);
+        const replacement = serializer.flush();
+        if (request.path.includes(`{${memberName}+}`)) {
+          request.path = request.path.replace(`{${memberName}+}`, replacement.split("/").map(extendedEncodeURIComponent).join("/"));
+        } else if (request.path.includes(`{${memberName}}`)) {
+          request.path = request.path.replace(`{${memberName}}`, extendedEncodeURIComponent(replacement));
+        }
+      } else if (memberTraits.httpHeader) {
+        serializer.write(memberNs, inputMemberValue);
+        headers[memberTraits.httpHeader.toLowerCase()] = String(serializer.flush());
+      } else if (typeof memberTraits.httpPrefixHeaders === "string") {
+        for (const key in inputMemberValue) {
+          const val = inputMemberValue[key];
+          const amalgam = memberTraits.httpPrefixHeaders + key;
+          serializer.write([memberNs.getValueSchema(), { httpHeader: amalgam }], val);
+          headers[amalgam.toLowerCase()] = serializer.flush();
+        }
+      } else if (memberTraits.httpQuery || memberTraits.httpQueryParams) {
+        this.serializeQuery(memberNs, inputMemberValue, query);
+      } else {
+        hasNonHttpBindingMember = true;
+        payloadMemberNames.push(memberName);
+        payloadMemberSchemas.push(memberNs);
+      }
+    }
+    if (hasNonHttpBindingMember && input) {
+      const [namespace, name] = ((_b2 = ns.getName(true)) != null ? _b2 : "#Unknown").split("#");
+      const requiredMembers = ns.getSchema()[6];
+      const payloadSchema = [
+        3,
+        namespace,
+        name,
+        ns.getMergedTraits(),
+        payloadMemberNames,
+        payloadMemberSchemas,
+        void 0
+      ];
+      if (requiredMembers) {
+        payloadSchema[6] = requiredMembers;
+      } else {
+        payloadSchema.pop();
+      }
+      serializer.write(payloadSchema, input);
+      payload = serializer.flush();
+    }
+    request.headers = headers;
+    request.query = query;
+    request.body = payload;
+    return request;
+  }
+  serializeQuery(ns, data, query) {
+    const serializer = this.serializer;
+    const traits = ns.getMergedTraits();
+    if (traits.httpQueryParams) {
+      for (const key in data) {
+        if (!(key in query)) {
+          const val = data[key];
+          const valueSchema = ns.getValueSchema();
+          Object.assign(valueSchema.getMergedTraits(), {
+            ...traits,
+            httpQuery: key,
+            httpQueryParams: void 0
+          });
+          this.serializeQuery(valueSchema, val, query);
+        }
+      }
+      return;
+    }
+    if (ns.isListSchema()) {
+      const sparse = !!ns.getMergedTraits().sparse;
+      const buffer = [];
+      for (const item of data) {
+        serializer.write([ns.getValueSchema(), traits], item);
+        const serializable = serializer.flush();
+        if (sparse || serializable !== void 0) {
+          buffer.push(serializable);
+        }
+      }
+      query[traits.httpQuery] = buffer;
+    } else {
+      serializer.write([ns, traits], data);
+      query[traits.httpQuery] = serializer.flush();
+    }
+  }
+  async deserializeResponse(operationSchema, context, response) {
+    const deserializer = this.deserializer;
+    const ns = NormalizedSchema.of(operationSchema.output);
+    const dataObject = {};
+    if (response.statusCode >= 300) {
+      const bytes = await collectBody(response.body, context);
+      if (bytes.byteLength > 0) {
+        Object.assign(dataObject, await deserializer.read(15, bytes));
+      }
+      await this.handleError(operationSchema, context, response, dataObject, this.deserializeMetadata(response));
+      throw new Error("@smithy/core/protocols - HTTP Protocol error handler failed to throw.");
+    }
+    for (const header in response.headers) {
+      const value2 = response.headers[header];
+      delete response.headers[header];
+      response.headers[header.toLowerCase()] = value2;
+    }
+    const nonHttpBindingMembers = await this.deserializeHttpMessage(ns, context, response, dataObject);
+    if (nonHttpBindingMembers.length) {
+      const bytes = await collectBody(response.body, context);
+      if (bytes.byteLength > 0) {
+        const dataFromBody = await deserializer.read(ns, bytes);
+        for (const member2 of nonHttpBindingMembers) {
+          if (dataFromBody[member2] != null) {
+            dataObject[member2] = dataFromBody[member2];
+          }
+        }
+      }
+    } else if (nonHttpBindingMembers.discardResponseBody) {
+      await collectBody(response.body, context);
+    }
+    dataObject.$metadata = this.deserializeMetadata(response);
+    return dataObject;
+  }
+  async deserializeHttpMessage(schema, context, response, arg4, arg5) {
+    let dataObject;
+    if (arg4 instanceof Set) {
+      dataObject = arg5;
+    } else {
+      dataObject = arg4;
+    }
+    let discardResponseBody = true;
+    const deserializer = this.deserializer;
+    const ns = NormalizedSchema.of(schema);
+    const nonHttpBindingMembers = [];
+    for (const [memberName, memberSchema] of ns.structIterator()) {
+      const memberTraits = memberSchema.getMemberTraits();
+      if (memberTraits.httpPayload) {
+        discardResponseBody = false;
+        const isStreaming = memberSchema.isStreaming();
+        if (isStreaming) {
+          const isEventStream = memberSchema.isStructSchema();
+          if (isEventStream) {
+            dataObject[memberName] = await this.deserializeEventStream({
+              response,
+              responseSchema: ns
+            });
+          } else {
+            dataObject[memberName] = sdkStreamMixin(response.body);
+          }
+        } else if (response.body) {
+          const bytes = await collectBody(response.body, context);
+          if (bytes.byteLength > 0) {
+            dataObject[memberName] = await deserializer.read(memberSchema, bytes);
+          }
+        }
+      } else if (memberTraits.httpHeader) {
+        const key = String(memberTraits.httpHeader).toLowerCase();
+        const value2 = response.headers[key];
+        if (null != value2) {
+          if (memberSchema.isListSchema()) {
+            const headerListValueSchema = memberSchema.getValueSchema();
+            headerListValueSchema.getMergedTraits().httpHeader = key;
+            let sections;
+            if (headerListValueSchema.isTimestampSchema() && headerListValueSchema.getSchema() === 4) {
+              sections = splitEvery(value2, ",", 2);
+            } else {
+              sections = splitHeader(value2);
+            }
+            const list3 = [];
+            for (const section of sections) {
+              list3.push(await deserializer.read(headerListValueSchema, section.trim()));
+            }
+            dataObject[memberName] = list3;
+          } else {
+            dataObject[memberName] = await deserializer.read(memberSchema, value2);
+          }
+        }
+      } else if (memberTraits.httpPrefixHeaders !== void 0) {
+        dataObject[memberName] = {};
+        for (const header in response.headers) {
+          if (header.startsWith(memberTraits.httpPrefixHeaders)) {
+            const value2 = response.headers[header];
+            const valueSchema = memberSchema.getValueSchema();
+            valueSchema.getMergedTraits().httpHeader = header;
+            dataObject[memberName][header.slice(memberTraits.httpPrefixHeaders.length)] = await deserializer.read(valueSchema, value2);
+          }
+        }
+      } else if (memberTraits.httpResponseCode) {
+        dataObject[memberName] = response.statusCode;
+      } else {
+        nonHttpBindingMembers.push(memberName);
+      }
+    }
+    nonHttpBindingMembers.discardResponseBody = discardResponseBody;
+    return nonHttpBindingMembers;
+  }
+};
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js
+init_schema2();
+init_index_browser2();
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js
+function determineTimestampFormat(ns, settings) {
+  if (settings.timestampFormat.useTrait) {
+    if (ns.isTimestampSchema() && (ns.getSchema() === 5 || ns.getSchema() === 6 || ns.getSchema() === 7)) {
+      return ns.getSchema();
+    }
+  }
+  const { httpLabel, httpPrefixHeaders, httpHeader, httpQuery } = ns.getMergedTraits();
+  const bindingFormat = settings.httpBindings ? typeof httpPrefixHeaders === "string" || Boolean(httpHeader) ? 6 : Boolean(httpQuery) || Boolean(httpLabel) ? 5 : void 0 : void 0;
+  return bindingFormat != null ? bindingFormat : settings.timestampFormat.default;
+}
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js
+var FromStringShapeDeserializer = class extends SerdeContext {
+  constructor(settings) {
+    super();
+    __publicField(this, "settings");
+    this.settings = settings;
+  }
+  read(_schema, data) {
+    var _a3, _b2;
+    const ns = NormalizedSchema.of(_schema);
+    if (ns.isListSchema()) {
+      return splitHeader(data).map((item) => this.read(ns.getValueSchema(), item));
+    }
+    if (ns.isBlobSchema()) {
+      return ((_b2 = (_a3 = this.serdeContext) == null ? void 0 : _a3.base64Decoder) != null ? _b2 : fromBase64)(data);
+    }
+    if (ns.isTimestampSchema()) {
+      const format2 = determineTimestampFormat(ns, this.settings);
+      switch (format2) {
+        case 5:
+          return _parseRfc3339DateTimeWithOffset(data);
+        case 6:
+          return _parseRfc7231DateTime(data);
+        case 7:
+          return _parseEpochTimestamp(data);
+        default:
+          console.warn("Missing timestamp format, parsing value with Date constructor:", data);
+          return new Date(data);
+      }
+    }
+    if (ns.isStringSchema()) {
+      const mediaType = ns.getMergedTraits().mediaType;
+      let intermediateValue = data;
+      if (mediaType) {
+        if (ns.getMergedTraits().httpHeader) {
+          intermediateValue = this.base64ToUtf8(intermediateValue);
+        }
+        const isJson = mediaType === "application/json" || mediaType.endsWith("+json");
+        if (isJson) {
+          intermediateValue = LazyJsonString.from(intermediateValue);
+        }
+        return intermediateValue;
+      }
+    }
+    if (ns.isNumericSchema()) {
+      return Number(data);
+    }
+    if (ns.isBigIntegerSchema()) {
+      return BigInt(data);
+    }
+    if (ns.isBigDecimalSchema()) {
+      return new NumericValue(data, "bigDecimal");
+    }
+    if (ns.isBooleanSchema()) {
+      return String(data).toLowerCase() === "true";
+    }
+    return data;
+  }
+  base64ToUtf8(base64String) {
+    var _a3, _b2, _c2, _d;
+    return ((_b2 = (_a3 = this.serdeContext) == null ? void 0 : _a3.utf8Encoder) != null ? _b2 : toUtf8)(((_d = (_c2 = this.serdeContext) == null ? void 0 : _c2.base64Decoder) != null ? _d : fromBase64)(base64String));
+  }
+};
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js
+init_schema2();
+init_index_browser2();
+var HttpInterceptingShapeDeserializer = class extends SerdeContext {
+  constructor(codecDeserializer, codecSettings) {
+    super();
+    __publicField(this, "codecDeserializer");
+    __publicField(this, "stringDeserializer");
+    this.codecDeserializer = codecDeserializer;
+    this.stringDeserializer = new FromStringShapeDeserializer(codecSettings);
+  }
+  setSerdeContext(serdeContext) {
+    this.stringDeserializer.setSerdeContext(serdeContext);
+    this.codecDeserializer.setSerdeContext(serdeContext);
+    this.serdeContext = serdeContext;
+  }
+  read(schema, data) {
+    var _a3, _b2, _c2, _d;
+    const ns = NormalizedSchema.of(schema);
+    const traits = ns.getMergedTraits();
+    const toString2 = (_b2 = (_a3 = this.serdeContext) == null ? void 0 : _a3.utf8Encoder) != null ? _b2 : toUtf8;
+    if (traits.httpHeader || traits.httpResponseCode) {
+      return this.stringDeserializer.read(ns, toString2(data));
+    }
+    if (traits.httpPayload) {
+      if (ns.isBlobSchema()) {
+        const toBytes = (_d = (_c2 = this.serdeContext) == null ? void 0 : _c2.utf8Decoder) != null ? _d : fromUtf8;
+        if (typeof data === "string") {
+          return toBytes(data);
+        }
+        return data;
+      } else if (ns.isStringSchema()) {
+        if ("byteLength" in data) {
+          return toString2(data);
+        }
+        return data;
+      }
+    }
+    return this.codecDeserializer.read(ns, data);
+  }
+};
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js
+init_schema2();
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js
+init_schema2();
+init_index_browser2();
+var ToStringShapeSerializer = class extends SerdeContext {
+  constructor(settings) {
+    super();
+    __publicField(this, "settings");
+    __publicField(this, "stringBuffer", "");
+    this.settings = settings;
+  }
+  write(schema, value2) {
+    var _a3, _b2, _c2, _d;
+    const ns = NormalizedSchema.of(schema);
+    switch (typeof value2) {
+      case "object":
+        if (value2 === null) {
+          this.stringBuffer = "null";
+          return;
+        }
+        if (ns.isTimestampSchema()) {
+          if (!(value2 instanceof Date)) {
+            throw new Error(`@smithy/core/protocols - received non-Date value ${value2} when schema expected Date in ${ns.getName(true)}`);
+          }
+          const format2 = determineTimestampFormat(ns, this.settings);
+          switch (format2) {
+            case 5:
+              this.stringBuffer = value2.toISOString().replace(".000Z", "Z");
+              break;
+            case 6:
+              this.stringBuffer = dateToUtcString(value2);
+              break;
+            case 7:
+              this.stringBuffer = String(value2.getTime() / 1e3);
+              break;
+            default:
+              console.warn("Missing timestamp format, using epoch seconds", value2);
+              this.stringBuffer = String(value2.getTime() / 1e3);
+          }
+          return;
+        }
+        if (ns.isBlobSchema() && "byteLength" in value2) {
+          this.stringBuffer = ((_b2 = (_a3 = this.serdeContext) == null ? void 0 : _a3.base64Encoder) != null ? _b2 : toBase64)(value2);
+          return;
+        }
+        if (ns.isListSchema() && Array.isArray(value2)) {
+          let buffer = "";
+          for (const item of value2) {
+            this.write([ns.getValueSchema(), ns.getMergedTraits()], item);
+            const headerItem = this.flush();
+            const serialized = ns.getValueSchema().isTimestampSchema() ? headerItem : quoteHeader(headerItem);
+            if (buffer !== "") {
+              buffer += ", ";
+            }
+            buffer += serialized;
+          }
+          this.stringBuffer = buffer;
+          return;
+        }
+        this.stringBuffer = JSON.stringify(value2, null, 2);
+        break;
+      case "string":
+        const mediaType = ns.getMergedTraits().mediaType;
+        let intermediateValue = value2;
+        if (mediaType) {
+          const isJson = mediaType === "application/json" || mediaType.endsWith("+json");
+          if (isJson) {
+            intermediateValue = LazyJsonString.from(intermediateValue);
+          }
+          if (ns.getMergedTraits().httpHeader) {
+            this.stringBuffer = ((_d = (_c2 = this.serdeContext) == null ? void 0 : _c2.base64Encoder) != null ? _d : toBase64)(intermediateValue.toString());
+            return;
+          }
+        }
+        this.stringBuffer = value2;
+        break;
+      default:
+        if (ns.isIdempotencyToken()) {
+          this.stringBuffer = generateIdempotencyToken();
+        } else {
+          this.stringBuffer = String(value2);
+        }
+    }
+  }
+  flush() {
+    const buffer = this.stringBuffer;
+    this.stringBuffer = "";
+    return buffer;
+  }
+};
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js
+var HttpInterceptingShapeSerializer = class {
+  constructor(codecSerializer, codecSettings, stringSerializer = new ToStringShapeSerializer(codecSettings)) {
+    __publicField(this, "codecSerializer");
+    __publicField(this, "stringSerializer");
+    __publicField(this, "buffer");
+    this.codecSerializer = codecSerializer;
+    this.stringSerializer = stringSerializer;
+  }
+  setSerdeContext(serdeContext) {
+    this.codecSerializer.setSerdeContext(serdeContext);
+    this.stringSerializer.setSerdeContext(serdeContext);
+  }
+  write(schema, value2) {
+    const ns = NormalizedSchema.of(schema);
+    const traits = ns.getMergedTraits();
+    if (traits.httpHeader || traits.httpLabel || traits.httpQuery) {
+      this.stringSerializer.write(ns, value2);
+      this.buffer = this.stringSerializer.flush();
+      return;
+    }
+    return this.codecSerializer.write(ns, value2);
+  }
+  flush() {
+    if (this.buffer !== void 0) {
+      const buffer = this.buffer;
+      this.buffer = void 0;
+      return buffer;
+    }
+    return this.codecSerializer.flush();
+  }
+};
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/index.js
+init_transport();
+init_transport();
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/protocol-http/extensions/httpExtensionConfiguration.js
+var getHttpHandlerExtensionConfiguration = (runtimeConfig) => {
+  return {
+    setHttpHandler(handler2) {
+      runtimeConfig.httpHandler = handler2;
+    },
+    httpHandler() {
+      return runtimeConfig.httpHandler;
+    },
+    updateHttpClientConfig(key, value2) {
+      var _a3;
+      (_a3 = runtimeConfig.httpHandler) == null ? void 0 : _a3.updateHttpClientConfig(key, value2);
+    },
+    httpHandlerConfigs() {
+      return runtimeConfig.httpHandler.httpHandlerConfigs();
+    }
+  };
+};
+var resolveHttpHandlerRuntimeConfig = (httpHandlerExtensionConfiguration) => {
+  return {
+    httpHandler: httpHandlerExtensionConfiguration.httpHandler()
+  };
+};
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/middleware-content-length/contentLengthMiddleware.js
+init_transport();
+var CONTENT_LENGTH_HEADER = "content-length";
+function contentLengthMiddleware(bodyLengthChecker) {
+  return (next) => async (args) => {
+    const request = args.request;
+    if (HttpRequest.isInstance(request)) {
+      const { body, headers } = request;
+      if (body && Object.keys(headers).map((str) => str.toLowerCase()).indexOf(CONTENT_LENGTH_HEADER) === -1) {
+        try {
+          const length = bodyLengthChecker(body);
+          request.headers = {
+            ...request.headers,
+            [CONTENT_LENGTH_HEADER]: String(length)
+          };
+        } catch (error) {
+        }
+      }
+    }
+    return next({
+      ...args,
+      request
+    });
+  };
+}
+var contentLengthMiddlewareOptions = {
+  step: "build",
+  tags: ["SET_CONTENT_LENGTH", "CONTENT_LENGTH"],
+  name: "contentLengthMiddleware",
+  override: true
+};
+var getContentLengthPlugin = (options) => ({
+  applyToStack: (clientStack) => {
+    clientStack.add(contentLengthMiddleware(options.bodyLengthChecker), contentLengthMiddlewareOptions);
+  }
+});
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/util-uri-escape/escape-uri.js
+var escapeUri = (uri) => encodeURIComponent(uri).replace(/[!'()*]/g, hexEncode);
+var hexEncode = (c2) => `%${c2.charCodeAt(0).toString(16).toUpperCase()}`;
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/querystring-builder/buildQueryString.js
+function buildQueryString(query) {
+  const parts = [];
+  for (let key of Object.keys(query).sort()) {
+    const value2 = query[key];
+    key = escapeUri(key);
+    if (Array.isArray(value2)) {
+      for (let i2 = 0, iLen = value2.length; i2 < iLen; i2++) {
+        parts.push(`${key}=${escapeUri(value2[i2])}`);
+      }
+    } else {
+      let qsEntry = key;
+      if (value2 || typeof value2 === "string") {
+        qsEntry += `=${escapeUri(value2)}`;
+      }
+      parts.push(qsEntry);
+    }
+  }
+  return parts.join("&");
+}
+
+// node_modules/@smithy/core/dist-es/submodules/protocols/index.js
+init_transport();
+
+// node_modules/@smithy/core/dist-es/submodules/retry/middleware-retry/retryMiddleware.js
+init_index_browser2();
+
+// node_modules/@smithy/core/dist-es/submodules/retry/service-error-classification/constants.js
+var THROTTLING_ERROR_CODES = [
+  "BandwidthLimitExceeded",
+  "EC2ThrottledException",
+  "LimitExceededException",
+  "PriorRequestNotComplete",
+  "ProvisionedThroughputExceededException",
+  "RequestLimitExceeded",
+  "RequestThrottled",
+  "RequestThrottledException",
+  "SlowDown",
+  "ThrottledException",
+  "Throttling",
+  "ThrottlingException",
+  "TooManyRequestsException",
+  "TransactionInProgressException"
+];
+var TRANSIENT_ERROR_CODES = ["TimeoutError", "RequestTimeout", "RequestTimeoutException"];
+var TRANSIENT_ERROR_STATUS_CODES = [500, 502, 503, 504];
+var NODEJS_TIMEOUT_ERROR_CODES = ["ECONNRESET", "ECONNREFUSED", "EPIPE", "ETIMEDOUT"];
+var NODEJS_NETWORK_ERROR_CODES = ["EHOSTUNREACH", "ENETUNREACH", "ENOTFOUND", "EAI_AGAIN"];
+
+// node_modules/@smithy/core/dist-es/submodules/retry/service-error-classification/service-error-classification.js
+var isRetryableByTrait = (error) => (error == null ? void 0 : error.$retryable) !== void 0;
+var isClockSkewCorrectedError = (error) => {
+  var _a3;
+  return (_a3 = error.$metadata) == null ? void 0 : _a3.clockSkewCorrected;
+};
+var isBrowserNetworkError = (error) => {
+  const errorMessages = /* @__PURE__ */ new Set([
+    "Failed to fetch",
+    "NetworkError when attempting to fetch resource",
+    "The Internet connection appears to be offline",
+    "Load failed",
+    "Network request failed"
+  ]);
+  const isValid = error && error instanceof TypeError;
+  if (!isValid) {
+    return false;
+  }
+  return errorMessages.has(error.message);
+};
+var isThrottlingError = (error) => {
+  var _a3, _b2;
+  return ((_a3 = error.$metadata) == null ? void 0 : _a3.httpStatusCode) === 429 || THROTTLING_ERROR_CODES.includes(error.name) || ((_b2 = error.$retryable) == null ? void 0 : _b2.throttling) == true;
+};
+var isTransientError = (error, depth = 0) => {
+  var _a3, _b2;
+  return isRetryableByTrait(error) || isClockSkewCorrectedError(error) || error.name === "InvalidSignatureException" && ((_a3 = error.message) == null ? void 0 : _a3.includes("Signature expired")) || TRANSIENT_ERROR_CODES.includes(error.name) || NODEJS_TIMEOUT_ERROR_CODES.includes((error == null ? void 0 : error.code) || "") || NODEJS_NETWORK_ERROR_CODES.includes((error == null ? void 0 : error.code) || "") || TRANSIENT_ERROR_STATUS_CODES.includes(((_b2 = error.$metadata) == null ? void 0 : _b2.httpStatusCode) || 0) || isBrowserNetworkError(error) || isNodeJsHttp2TransientError(error) || error.cause !== void 0 && depth <= 10 && isTransientError(error.cause, depth + 1);
+};
+var isServerError = (error) => {
+  var _a3;
+  if (((_a3 = error.$metadata) == null ? void 0 : _a3.httpStatusCode) !== void 0) {
+    const statusCode = error.$metadata.httpStatusCode;
+    if (500 <= statusCode && statusCode <= 599 && !isTransientError(error)) {
+      return true;
+    }
+    return false;
+  }
+  return false;
+};
+function isNodeJsHttp2TransientError(error) {
+  return error.code === "ERR_HTTP2_STREAM_ERROR" && error.message.includes("NGHTTP2_REFUSED_STREAM");
+}
+
+// node_modules/@smithy/core/dist-es/submodules/retry/util-retry/constants.js
+var MAXIMUM_RETRY_DELAY = 20 * 1e3;
+var INITIAL_RETRY_TOKENS = 500;
+var NO_RETRY_INCREMENT = 1;
+var INVOCATION_ID_HEADER = "amz-sdk-invocation-id";
+var REQUEST_HEADER = "amz-sdk-request";
+
+// node_modules/@smithy/core/dist-es/submodules/retry/middleware-retry/parseRetryAfterHeader.js
+init_index_browser2();
+function parseRetryAfterHeader(response, logger2) {
+  var _a3, _b2, _c2, _d;
+  if (!HttpResponse.isInstance(response)) {
+    return;
+  }
+  for (const header of Object.keys(response.headers)) {
+    const h2 = header.toLowerCase();
+    if (h2 === "retry-after") {
+      const retryAfter = response.headers[header];
+      let retryAfterSeconds = NaN;
+      if (retryAfter.endsWith("GMT")) {
+        try {
+          const date2 = parseRfc7231DateTime(retryAfter);
+          retryAfterSeconds = (date2.getTime() - Date.now()) / 1e3;
+        } catch (e2) {
+          (_a3 = logger2 == null ? void 0 : logger2.trace) == null ? void 0 : _a3.call(logger2, "Failed to parse retry-after header");
+          (_b2 = logger2 == null ? void 0 : logger2.trace) == null ? void 0 : _b2.call(logger2, e2);
+        }
+      } else if (retryAfter.match(/ GMT, ((\d+)|(\d+\.\d+))$/)) {
+        retryAfterSeconds = Number((_c2 = retryAfter.match(/ GMT, ([\d.]+)$/)) == null ? void 0 : _c2[1]);
+      } else if (retryAfter.match(/^((\d+)|(\d+\.\d+))$/)) {
+        retryAfterSeconds = Number(retryAfter);
+      } else if (Date.parse(retryAfter) >= Date.now()) {
+        retryAfterSeconds = (Date.parse(retryAfter) - Date.now()) / 1e3;
+      }
+      if (isNaN(retryAfterSeconds)) {
+        return;
+      }
+      return new Date(Date.now() + retryAfterSeconds * 1e3);
+    } else if (h2 === "x-amz-retry-after") {
+      const v = response.headers[header];
+      const backoffMilliseconds = Number(v);
+      if (isNaN(backoffMilliseconds)) {
+        (_d = logger2 == null ? void 0 : logger2.trace) == null ? void 0 : _d.call(logger2, `Failed to parse x-amz-retry-after=${v}`);
+        return;
+      }
+      return new Date(Date.now() + backoffMilliseconds);
+    }
+  }
+}
+
+// node_modules/@smithy/core/dist-es/submodules/retry/middleware-retry/util.js
+var asSdkError = (error) => {
+  if (error instanceof Error)
+    return error;
+  if (error instanceof Object)
+    return Object.assign(new Error(), error);
+  if (typeof error === "string")
+    return new Error(error);
+  return new Error(`AWS SDK error wrapper for ${error}`);
+};
+
+// node_modules/@smithy/core/dist-es/submodules/retry/middleware-retry/retryMiddleware.js
+function bindRetryMiddleware(isStreamingPayload2) {
+  return (options) => (next, context) => async (args) => {
+    var _a3, _b2, _c2, _d;
+    let retryStrategy = await options.retryStrategy();
+    const maxAttempts = await options.maxAttempts();
+    if (isRetryStrategyV2(retryStrategy)) {
+      retryStrategy = retryStrategy;
+      let retryToken = await retryStrategy.acquireInitialRetryToken(((_a3 = context["partition_id"]) != null ? _a3 : "") + (context.__retryLongPoll ? ":longpoll" : ""));
+      let lastError = new Error();
+      let attempts = 0;
+      let totalRetryDelay = 0;
+      const { request } = args;
+      const isRequest = HttpRequest.isInstance(request);
+      if (isRequest) {
+        request.headers[INVOCATION_ID_HEADER] = v4();
+      }
+      while (true) {
+        try {
+          if (isRequest) {
+            request.headers[REQUEST_HEADER] = `attempt=${attempts + 1}; max=${maxAttempts}`;
+          }
+          const { response, output } = await next(args);
+          retryStrategy.recordSuccess(retryToken);
+          output.$metadata.attempts = attempts + 1;
+          output.$metadata.totalRetryDelay = totalRetryDelay;
+          return { response, output };
+        } catch (e2) {
+          const retryErrorInfo = getRetryErrorInfo(e2, options.logger);
+          lastError = asSdkError(e2);
+          if (isRequest && isStreamingPayload2(request)) {
+            (_b2 = context.logger instanceof NoOpLogger ? console : context.logger) == null ? void 0 : _b2.warn("An error was encountered in a non-retryable streaming request.");
+            throw lastError;
+          }
+          try {
+            retryToken = await retryStrategy.refreshRetryTokenForRetry(retryToken, retryErrorInfo);
+          } catch (refreshError) {
+            if (!lastError.$metadata) {
+              lastError.$metadata = {};
+            }
+            lastError.$metadata.attempts = attempts + 1;
+            lastError.$metadata.totalRetryDelay = totalRetryDelay;
+            throw lastError;
+          }
+          attempts = retryToken.getRetryCount();
+          const delay = retryToken.getRetryDelay();
+          totalRetryDelay += ((_d = (_c2 = retryToken == null ? void 0 : retryToken.$retryLog) == null ? void 0 : _c2.acquisitionDelay) != null ? _d : 0) + delay;
+          if (delay > 0) {
+            await cooldown(delay);
+          }
+        }
+      }
+    } else {
+      retryStrategy = retryStrategy;
+      if (retryStrategy == null ? void 0 : retryStrategy.mode) {
+        context.userAgent = [...context.userAgent || [], ["cfg/retry-mode", retryStrategy.mode]];
+      }
+      return retryStrategy.retry(next, args);
+    }
+  };
+}
+var cooldown = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+var isRetryStrategyV2 = (retryStrategy) => typeof retryStrategy.acquireInitialRetryToken !== "undefined" && typeof retryStrategy.refreshRetryTokenForRetry !== "undefined" && typeof retryStrategy.recordSuccess !== "undefined";
+var getRetryErrorInfo = (error, logger2) => {
+  const errorInfo = {
+    error,
+    errorType: getRetryErrorType(error)
+  };
+  const retryAfterHint = parseRetryAfterHeader(error.$response, logger2);
+  if (retryAfterHint) {
+    errorInfo.retryAfterHint = retryAfterHint;
+  }
+  return errorInfo;
+};
+var getRetryErrorType = (error) => {
+  if (isThrottlingError(error))
+    return "THROTTLING";
+  if (isTransientError(error))
+    return "TRANSIENT";
+  if (isServerError(error))
+    return "SERVER_ERROR";
+  return "CLIENT_ERROR";
+};
+var retryMiddlewareOptions = {
+  name: "retryMiddleware",
+  tags: ["RETRY"],
+  step: "finalizeRequest",
+  priority: "high",
+  override: true
+};
+function bindGetRetryPlugin(isStreamingPayload2) {
+  const retryMiddleware2 = bindRetryMiddleware(isStreamingPayload2);
+  return (options) => ({
+    applyToStack: (clientStack) => {
+      clientStack.add(retryMiddleware2(options), retryMiddlewareOptions);
+    }
+  });
+}
+
+// node_modules/@smithy/core/dist-es/submodules/retry/util-retry/DefaultRateLimiter.js
+var _DefaultRateLimiter = class _DefaultRateLimiter {
+  constructor(options) {
+    __publicField(this, "beta");
+    __publicField(this, "minCapacity");
+    __publicField(this, "minFillRate");
+    __publicField(this, "scaleConstant");
+    __publicField(this, "smooth");
+    __publicField(this, "enabled", false);
+    __publicField(this, "availableTokens", 0);
+    __publicField(this, "lastMaxRate", 0);
+    __publicField(this, "measuredTxRate", 0);
+    __publicField(this, "requestCount", 0);
+    __publicField(this, "fillRate");
+    __publicField(this, "lastThrottleTime");
+    __publicField(this, "lastTimestamp", 0);
+    __publicField(this, "lastTxRateBucket");
+    __publicField(this, "maxCapacity");
+    __publicField(this, "timeWindow", 0);
+    var _a3, _b2, _c2, _d, _e2;
+    this.beta = (_a3 = options == null ? void 0 : options.beta) != null ? _a3 : 0.7;
+    this.minCapacity = (_b2 = options == null ? void 0 : options.minCapacity) != null ? _b2 : 1;
+    this.minFillRate = (_c2 = options == null ? void 0 : options.minFillRate) != null ? _c2 : 0.5;
+    this.scaleConstant = (_d = options == null ? void 0 : options.scaleConstant) != null ? _d : 0.4;
+    this.smooth = (_e2 = options == null ? void 0 : options.smooth) != null ? _e2 : 0.8;
+    this.lastThrottleTime = this.getCurrentTimeInSeconds();
+    this.lastTxRateBucket = Math.floor(this.getCurrentTimeInSeconds());
+    this.fillRate = this.minFillRate;
+    this.maxCapacity = this.minCapacity;
+  }
+  async getSendToken() {
+    return this.acquireTokenBucket(1);
+  }
+  updateClientSendingRate(response) {
+    var _a3;
+    let calculatedRate;
+    this.updateMeasuredRate();
+    const retryErrorInfo = response;
+    const isThrottling = (retryErrorInfo == null ? void 0 : retryErrorInfo.errorType) === "THROTTLING" || isThrottlingError((_a3 = retryErrorInfo == null ? void 0 : retryErrorInfo.error) != null ? _a3 : response);
+    if (isThrottling) {
+      const rateToUse = !this.enabled ? this.measuredTxRate : Math.min(this.measuredTxRate, this.fillRate);
+      this.lastMaxRate = rateToUse;
+      this.calculateTimeWindow();
+      this.lastThrottleTime = this.getCurrentTimeInSeconds();
+      calculatedRate = this.cubicThrottle(rateToUse);
+      this.enableTokenBucket();
+    } else {
+      this.calculateTimeWindow();
+      calculatedRate = this.cubicSuccess(this.getCurrentTimeInSeconds());
+    }
+    const newRate = Math.min(calculatedRate, 2 * this.measuredTxRate);
+    this.updateTokenBucketRate(newRate);
+  }
+  getCurrentTimeInSeconds() {
+    return Date.now() / 1e3;
+  }
+  async acquireTokenBucket(amount) {
+    if (!this.enabled) {
+      return;
+    }
+    this.refillTokenBucket();
+    while (amount > this.availableTokens) {
+      const delay = (amount - this.availableTokens) / this.fillRate * 1e3;
+      await new Promise((resolve) => _DefaultRateLimiter.setTimeoutFn(resolve, delay));
+      this.refillTokenBucket();
+    }
+    this.availableTokens = this.availableTokens - amount;
+  }
+  refillTokenBucket() {
+    const timestamp = this.getCurrentTimeInSeconds();
+    if (!this.lastTimestamp) {
+      this.lastTimestamp = timestamp;
+      return;
+    }
+    const fillAmount = (timestamp - this.lastTimestamp) * this.fillRate;
+    this.availableTokens = Math.min(this.maxCapacity, this.availableTokens + fillAmount);
+    this.lastTimestamp = timestamp;
+  }
+  calculateTimeWindow() {
+    this.timeWindow = this.getPrecise(Math.pow(this.lastMaxRate * (1 - this.beta) / this.scaleConstant, 1 / 3));
+  }
+  cubicThrottle(rateToUse) {
+    return this.getPrecise(rateToUse * this.beta);
+  }
+  cubicSuccess(timestamp) {
+    return this.getPrecise(this.scaleConstant * Math.pow(timestamp - this.lastThrottleTime - this.timeWindow, 3) + this.lastMaxRate);
+  }
+  enableTokenBucket() {
+    this.enabled = true;
+  }
+  updateTokenBucketRate(newRate) {
+    this.refillTokenBucket();
+    this.fillRate = Math.max(newRate, this.minFillRate);
+    this.maxCapacity = Math.max(newRate, this.minCapacity);
+    this.availableTokens = Math.min(this.availableTokens, this.maxCapacity);
+  }
+  updateMeasuredRate() {
+    const t = this.getCurrentTimeInSeconds();
+    const timeBucket = Math.floor(t * 2) / 2;
+    this.requestCount++;
+    if (timeBucket > this.lastTxRateBucket) {
+      const currentRate = this.requestCount / (timeBucket - this.lastTxRateBucket);
+      this.measuredTxRate = this.getPrecise(currentRate * this.smooth + this.measuredTxRate * (1 - this.smooth));
+      this.requestCount = 0;
+      this.lastTxRateBucket = timeBucket;
+    }
+  }
+  getPrecise(num) {
+    return parseFloat(num.toFixed(8));
+  }
+};
+__publicField(_DefaultRateLimiter, "setTimeoutFn", (fn, delay) => setTimeout(fn, delay));
+var DefaultRateLimiter = _DefaultRateLimiter;
+
+// node_modules/@smithy/core/dist-es/submodules/retry/util-retry/retries-2026-config.js
+var _a;
+var _Retry = class _Retry {
+  static delay() {
+    return _Retry.v2026 ? 50 : 100;
+  }
+  static throttlingDelay() {
+    return _Retry.v2026 ? 1e3 : 500;
+  }
+  static cost() {
+    return _Retry.v2026 ? 14 : 5;
+  }
+  static throttlingCost() {
+    return _Retry.v2026 ? 5 : 10;
+  }
+  static modifiedCostType() {
+    return _Retry.v2026 ? "THROTTLING" : "TRANSIENT";
+  }
+};
+__publicField(_Retry, "v2026", typeof process !== "undefined" && ((_a = process.env) == null ? void 0 : _a.SMITHY_NEW_RETRIES_2026) === "true");
+var Retry = _Retry;
+
+// node_modules/@smithy/core/dist-es/submodules/retry/util-retry/DefaultRetryBackoffStrategy.js
+var DefaultRetryBackoffStrategy = class {
+  constructor() {
+    __publicField(this, "x", Retry.delay());
+  }
+  computeNextBackoffDelay(i2) {
+    const b2 = Math.random();
+    const r2 = 2;
+    const t_i = b2 * Math.min(this.x * r2 ** i2, MAXIMUM_RETRY_DELAY);
+    return Math.floor(t_i);
+  }
+  setDelayBase(delay) {
+    this.x = delay;
+  }
+};
+
+// node_modules/@smithy/core/dist-es/submodules/retry/util-retry/DefaultRetryToken.js
+var DefaultRetryToken = class {
+  constructor(delay, count, cost, longPoll) {
+    __publicField(this, "delay");
+    __publicField(this, "count");
+    __publicField(this, "cost");
+    __publicField(this, "longPoll");
+    __publicField(this, "$retryLog", {
+      acquisitionDelay: 0
+    });
+    this.delay = delay;
+    this.count = count;
+    this.cost = cost;
+    this.longPoll = longPoll;
+  }
+  getRetryCount() {
+    return this.count;
+  }
+  getRetryDelay() {
+    return Math.min(MAXIMUM_RETRY_DELAY, this.delay);
+  }
+  getRetryCost() {
+    return this.cost;
+  }
+  isLongPoll() {
+    return this.longPoll;
+  }
+};
+
+// node_modules/@smithy/core/dist-es/submodules/retry/util-retry/config.js
+var RETRY_MODES;
+(function(RETRY_MODES2) {
+  RETRY_MODES2["STANDARD"] = "standard";
+  RETRY_MODES2["ADAPTIVE"] = "adaptive";
+})(RETRY_MODES || (RETRY_MODES = {}));
+var DEFAULT_MAX_ATTEMPTS = 3;
+var DEFAULT_RETRY_MODE = RETRY_MODES.STANDARD;
+
+// node_modules/@smithy/core/dist-es/submodules/retry/util-retry/StandardRetryStrategy.js
+var refusal = {
+  incompatible: 1,
+  attempts: 2,
+  capacity: 3
+};
+var StandardRetryStrategy = class {
+  constructor(arg1) {
+    __publicField(this, "mode", RETRY_MODES.STANDARD);
+    __publicField(this, "retryBackoffStrategy");
+    __publicField(this, "capacity", INITIAL_RETRY_TOKENS);
+    __publicField(this, "maxAttemptsProvider");
+    __publicField(this, "baseDelay");
+    var _a3, _b2, _c2;
+    if (typeof arg1 === "number") {
+      this.maxAttemptsProvider = async () => arg1;
+    } else if (typeof arg1 === "function") {
+      this.maxAttemptsProvider = arg1;
+    } else if (arg1 && typeof arg1 === "object") {
+      this.maxAttemptsProvider = async () => arg1.maxAttempts;
+      this.baseDelay = arg1.baseDelay;
+      this.retryBackoffStrategy = arg1.backoff;
+    }
+    (_a3 = this.maxAttemptsProvider) != null ? _a3 : this.maxAttemptsProvider = async () => DEFAULT_MAX_ATTEMPTS;
+    (_b2 = this.baseDelay) != null ? _b2 : this.baseDelay = Retry.delay();
+    (_c2 = this.retryBackoffStrategy) != null ? _c2 : this.retryBackoffStrategy = new DefaultRetryBackoffStrategy();
+  }
+  async acquireInitialRetryToken(retryTokenScope) {
+    return new DefaultRetryToken(Retry.delay(), 0, void 0, Retry.v2026 && retryTokenScope.includes(":longpoll"));
+  }
+  async refreshRetryTokenForRetry(token, errorInfo) {
+    var _a3, _b2, _c2;
+    const maxAttempts = await this.getMaxAttempts();
+    const retryCode = this.retryCode(token, errorInfo, maxAttempts);
+    const shouldRetry = retryCode === 0;
+    const isLongPoll = (_a3 = token.isLongPoll) == null ? void 0 : _a3.call(token);
+    if (shouldRetry || isLongPoll) {
+      const errorType = errorInfo.errorType;
+      this.retryBackoffStrategy.setDelayBase(errorType === "THROTTLING" ? Retry.throttlingDelay() : this.baseDelay);
+      const delayFromErrorType = this.retryBackoffStrategy.computeNextBackoffDelay(token.getRetryCount());
+      let retryDelay = delayFromErrorType;
+      if (errorInfo.retryAfterHint instanceof Date) {
+        retryDelay = Math.max(delayFromErrorType, Math.min(errorInfo.retryAfterHint.getTime() - Date.now(), delayFromErrorType + 5e3));
+      }
+      if (!shouldRetry) {
+        const longPollBackoff = Retry.v2026 && retryCode === refusal.capacity && isLongPoll ? retryDelay : 0;
+        if (longPollBackoff > 0) {
+          await new Promise((r2) => setTimeout(r2, longPollBackoff));
+        }
+      } else {
+        const capacityCost = this.getCapacityCost(errorType);
+        this.capacity -= capacityCost;
+        const nextToken = new DefaultRetryToken(0, token.getRetryCount() + 1, capacityCost, (_c2 = (_b2 = token.isLongPoll) == null ? void 0 : _b2.call(token)) != null ? _c2 : false);
+        await new Promise((r2) => setTimeout(r2, retryDelay));
+        nextToken.$retryLog.acquisitionDelay = retryDelay;
+        return nextToken;
+      }
+    }
+    throw new Error("No retry token available");
+  }
+  recordSuccess(token) {
+    var _a3;
+    this.capacity = Math.min(INITIAL_RETRY_TOKENS, this.capacity + ((_a3 = token.getRetryCost()) != null ? _a3 : NO_RETRY_INCREMENT));
+  }
+  getCapacity() {
+    return this.capacity;
+  }
+  async maxAttempts() {
+    return this.maxAttemptsProvider();
+  }
+  async getMaxAttempts() {
+    try {
+      return await this.maxAttemptsProvider();
+    } catch (error) {
+      console.warn(`Max attempts provider could not resolve. Using default of ${DEFAULT_MAX_ATTEMPTS}`);
+      return DEFAULT_MAX_ATTEMPTS;
+    }
+  }
+  retryCode(tokenToRenew, errorInfo, maxAttempts) {
+    const attempts = tokenToRenew.getRetryCount() + 1;
+    const retryableStatus = this.isRetryableError(errorInfo.errorType) ? 0 : refusal.incompatible;
+    const attemptStatus = attempts < maxAttempts ? 0 : refusal.attempts;
+    const capacityStatus = this.capacity >= this.getCapacityCost(errorInfo.errorType) ? 0 : refusal.capacity;
+    return retryableStatus || attemptStatus || capacityStatus;
+  }
+  getCapacityCost(errorType) {
+    return errorType === Retry.modifiedCostType() ? Retry.throttlingCost() : Retry.cost();
+  }
+  isRetryableError(errorType) {
+    return errorType === "THROTTLING" || errorType === "TRANSIENT";
+  }
+};
+
+// node_modules/@smithy/core/dist-es/submodules/retry/util-retry/AdaptiveRetryStrategy.js
+var AdaptiveRetryStrategy = class {
+  constructor(maxAttemptsProvider, options) {
+    __publicField(this, "mode", RETRY_MODES.ADAPTIVE);
+    __publicField(this, "rateLimiter");
+    __publicField(this, "standardRetryStrategy");
+    const { rateLimiter } = options != null ? options : {};
+    this.rateLimiter = rateLimiter != null ? rateLimiter : new DefaultRateLimiter();
+    this.standardRetryStrategy = options ? new StandardRetryStrategy({
+      maxAttempts: typeof maxAttemptsProvider === "number" ? maxAttemptsProvider : 3,
+      ...options
+    }) : new StandardRetryStrategy(maxAttemptsProvider);
+  }
+  async acquireInitialRetryToken(retryTokenScope) {
+    const token = await this.standardRetryStrategy.acquireInitialRetryToken(retryTokenScope);
+    await this.rateLimiter.getSendToken();
+    return token;
+  }
+  async refreshRetryTokenForRetry(tokenToRenew, errorInfo) {
+    this.rateLimiter.updateClientSendingRate(errorInfo);
+    const token = await this.standardRetryStrategy.refreshRetryTokenForRetry(tokenToRenew, errorInfo);
+    await this.rateLimiter.getSendToken();
+    return token;
+  }
+  recordSuccess(token) {
+    this.rateLimiter.updateClientSendingRate({});
+    this.standardRetryStrategy.recordSuccess(token);
+  }
+  async maxAttemptsProvider() {
+    return this.standardRetryStrategy.maxAttempts();
+  }
+};
+
+// node_modules/@smithy/core/dist-es/submodules/retry/middleware-retry/configurations.js
+init_client3();
+var resolveRetryConfig = (input, defaults) => {
+  var _a3;
+  const { retryStrategy, retryMode } = input;
+  const { defaultMaxAttempts = DEFAULT_MAX_ATTEMPTS, defaultBaseDelay = Retry.delay() } = defaults != null ? defaults : {};
+  const maxAttemptsProvider = normalizeProvider((_a3 = input.maxAttempts) != null ? _a3 : defaultMaxAttempts);
+  let controller = retryStrategy ? Promise.resolve(retryStrategy) : void 0;
+  const getDefault = async () => {
+    const maxAttempts = await maxAttemptsProvider();
+    const adaptive = await normalizeProvider(retryMode)() === RETRY_MODES.ADAPTIVE;
+    if (adaptive) {
+      return new AdaptiveRetryStrategy(maxAttemptsProvider, {
+        maxAttempts,
+        baseDelay: defaultBaseDelay
+      });
+    }
+    return new StandardRetryStrategy({
+      maxAttempts,
+      baseDelay: defaultBaseDelay
+    });
+  };
+  return Object.assign(input, {
+    maxAttempts: maxAttemptsProvider,
+    retryStrategy: () => controller != null ? controller : controller = getDefault()
+  });
+};
+
+// node_modules/@smithy/core/dist-es/submodules/retry/index.browser.js
+var retryMiddleware = bindRetryMiddleware(isStreamingPayload);
+var getRetryPlugin = bindGetRetryPlugin(isStreamingPayload);
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js
+var _a2, _b;
+(_b = Retry).v2026 || (_b.v2026 = typeof process === "object" && ((_a2 = process.env) == null ? void 0 : _a2.AWS_NEW_RETRIES_2026) === "true");
+function setFeature2(context, feature, value2) {
+  if (!context.__aws_sdk_context) {
+    context.__aws_sdk_context = {
+      features: {}
+    };
+  } else if (!context.__aws_sdk_context.features) {
+    context.__aws_sdk_context.features = {};
+  }
+  context.__aws_sdk_context.features[feature] = value2;
+}
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/middleware-host-header/hostHeaderMiddleware.js
+function resolveHostHeaderConfig(input) {
+  return input;
+}
+var hostHeaderMiddleware = (options) => (next) => async (args) => {
+  if (!HttpRequest.isInstance(args.request))
+    return next(args);
+  const { request } = args;
+  const { handlerProtocol = "" } = options.requestHandler.metadata || {};
+  if (handlerProtocol.indexOf("h2") >= 0 && !request.headers[":authority"]) {
+    delete request.headers["host"];
+    request.headers[":authority"] = request.hostname + (request.port ? ":" + request.port : "");
+  } else if (!request.headers["host"]) {
+    let host = request.hostname;
+    if (request.port != null)
+      host += `:${request.port}`;
+    request.headers["host"] = host;
+  }
+  return next(args);
+};
+var hostHeaderMiddlewareOptions = {
+  name: "hostHeaderMiddleware",
+  step: "build",
+  priority: "low",
+  tags: ["HOST"],
+  override: true
+};
+var getHostHeaderPlugin = (options) => ({
+  applyToStack: (clientStack) => {
+    clientStack.add(hostHeaderMiddleware(options), hostHeaderMiddlewareOptions);
+  }
+});
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/middleware-logger/loggerMiddleware.js
+var loggerMiddleware = () => (next, context) => async (args) => {
+  var _a3, _b2;
+  try {
+    const response = await next(args);
+    const { clientName, commandName, logger: logger2, dynamoDbDocumentClientOptions = {} } = context;
+    const { overrideInputFilterSensitiveLog, overrideOutputFilterSensitiveLog } = dynamoDbDocumentClientOptions;
+    const inputFilterSensitiveLog = overrideInputFilterSensitiveLog != null ? overrideInputFilterSensitiveLog : context.inputFilterSensitiveLog;
+    const outputFilterSensitiveLog = overrideOutputFilterSensitiveLog != null ? overrideOutputFilterSensitiveLog : context.outputFilterSensitiveLog;
+    const { $metadata, ...outputWithoutMetadata } = response.output;
+    (_a3 = logger2 == null ? void 0 : logger2.info) == null ? void 0 : _a3.call(logger2, {
+      clientName,
+      commandName,
+      input: inputFilterSensitiveLog(args.input),
+      output: outputFilterSensitiveLog(outputWithoutMetadata),
+      metadata: $metadata
+    });
+    return response;
+  } catch (error) {
+    const { clientName, commandName, logger: logger2, dynamoDbDocumentClientOptions = {} } = context;
+    const { overrideInputFilterSensitiveLog } = dynamoDbDocumentClientOptions;
+    const inputFilterSensitiveLog = overrideInputFilterSensitiveLog != null ? overrideInputFilterSensitiveLog : context.inputFilterSensitiveLog;
+    (_b2 = logger2 == null ? void 0 : logger2.error) == null ? void 0 : _b2.call(logger2, {
+      clientName,
+      commandName,
+      input: inputFilterSensitiveLog(args.input),
+      error,
+      metadata: error.$metadata
+    });
+    throw error;
+  }
+};
+var loggerMiddlewareOptions = {
+  name: "loggerMiddleware",
+  tags: ["LOGGER"],
+  step: "initialize",
+  override: true
+};
+var getLoggerPlugin = (options) => ({
+  applyToStack: (clientStack) => {
+    clientStack.add(loggerMiddleware(), loggerMiddlewareOptions);
+  }
+});
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/middleware-recursion-detection/getRecursionDetectionPlugin.browser.js
+var getRecursionDetectionPlugin = (options) => ({
+  applyToStack: (clientStack) => {
+  }
+});
+
+// node_modules/@smithy/core/dist-es/legacy-root-exports/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js
+init_client3();
+
+// node_modules/@smithy/core/dist-es/legacy-root-exports/middleware-http-auth-scheme/resolveAuthOptions.js
+var resolveAuthOptions = (candidateAuthOptions, authSchemePreference) => {
+  if (!authSchemePreference || authSchemePreference.length === 0) {
+    return candidateAuthOptions;
+  }
+  const preferredAuthOptions = [];
+  for (const preferredSchemeName of authSchemePreference) {
+    for (const candidateAuthOption of candidateAuthOptions) {
+      const candidateAuthSchemeName = candidateAuthOption.schemeId.split("#")[1];
+      if (candidateAuthSchemeName === preferredSchemeName) {
+        preferredAuthOptions.push(candidateAuthOption);
+      }
+    }
+  }
+  for (const candidateAuthOption of candidateAuthOptions) {
+    if (!preferredAuthOptions.find(({ schemeId }) => schemeId === candidateAuthOption.schemeId)) {
+      preferredAuthOptions.push(candidateAuthOption);
+    }
+  }
+  return preferredAuthOptions;
+};
+
+// node_modules/@smithy/core/dist-es/legacy-root-exports/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js
+function convertHttpAuthSchemesToMap(httpAuthSchemes) {
+  const map3 = /* @__PURE__ */ new Map();
+  for (const scheme of httpAuthSchemes) {
+    map3.set(scheme.schemeId, scheme);
+  }
+  return map3;
+}
+var httpAuthSchemeMiddleware = (config, mwOptions) => (next, context) => async (args) => {
+  var _a3;
+  const options = config.httpAuthSchemeProvider(await mwOptions.httpAuthSchemeParametersProvider(config, context, args.input));
+  const authSchemePreference = config.authSchemePreference ? await config.authSchemePreference() : [];
+  const resolvedOptions = resolveAuthOptions(options, authSchemePreference);
+  const authSchemes = convertHttpAuthSchemesToMap(config.httpAuthSchemes);
+  const smithyContext = getSmithyContext(context);
+  const failureReasons = [];
+  for (const option of resolvedOptions) {
+    const scheme = authSchemes.get(option.schemeId);
+    if (!scheme) {
+      failureReasons.push(`HttpAuthScheme \`${option.schemeId}\` was not enabled for this service.`);
+      continue;
+    }
+    const identityProvider = scheme.identityProvider(await mwOptions.identityProviderConfigProvider(config));
+    if (!identityProvider) {
+      failureReasons.push(`HttpAuthScheme \`${option.schemeId}\` did not have an IdentityProvider configured.`);
+      continue;
+    }
+    const { identityProperties = {}, signingProperties = {} } = ((_a3 = option.propertiesExtractor) == null ? void 0 : _a3.call(option, config, context)) || {};
+    option.identityProperties = Object.assign(option.identityProperties || {}, identityProperties);
+    option.signingProperties = Object.assign(option.signingProperties || {}, signingProperties);
+    smithyContext.selectedHttpAuthScheme = {
+      httpAuthOption: option,
+      identity: await identityProvider(option.identityProperties),
+      signer: scheme.signer
+    };
+    break;
+  }
+  if (!smithyContext.selectedHttpAuthScheme) {
+    throw new Error(failureReasons.join("\n"));
+  }
+  return next(args);
+};
+
+// node_modules/@smithy/core/dist-es/legacy-root-exports/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js
+var httpAuthSchemeEndpointRuleSetMiddlewareOptions = {
+  step: "serialize",
+  tags: ["HTTP_AUTH_SCHEME"],
+  name: "httpAuthSchemeMiddleware",
+  override: true,
+  relation: "before",
+  toMiddleware: "endpointV2Middleware"
+};
+var getHttpAuthSchemeEndpointRuleSetPlugin = (config, { httpAuthSchemeParametersProvider, identityProviderConfigProvider }) => ({
+  applyToStack: (clientStack) => {
+    clientStack.addRelativeTo(httpAuthSchemeMiddleware(config, {
+      httpAuthSchemeParametersProvider,
+      identityProviderConfigProvider
+    }), httpAuthSchemeEndpointRuleSetMiddlewareOptions);
+  }
+});
+
+// node_modules/@smithy/core/dist-es/legacy-root-exports/middleware-http-signing/httpSigningMiddleware.js
+init_client3();
+var defaultErrorHandler = (signingProperties) => (error) => {
+  throw error;
+};
+var defaultSuccessHandler = (httpResponse, signingProperties) => {
+};
+var httpSigningMiddleware = (config) => (next, context) => async (args) => {
+  if (!HttpRequest.isInstance(args.request)) {
+    return next(args);
+  }
+  const smithyContext = getSmithyContext(context);
+  const scheme = smithyContext.selectedHttpAuthScheme;
+  if (!scheme) {
+    throw new Error(`No HttpAuthScheme was selected: unable to sign request`);
+  }
+  const { httpAuthOption: { signingProperties = {} }, identity, signer } = scheme;
+  const output = await next({
+    ...args,
+    request: await signer.sign(args.request, identity, signingProperties)
+  }).catch((signer.errorHandler || defaultErrorHandler)(signingProperties));
+  (signer.successHandler || defaultSuccessHandler)(output.response, signingProperties);
+  return output;
+};
+
+// node_modules/@smithy/core/dist-es/legacy-root-exports/middleware-http-signing/getHttpSigningMiddleware.js
+var httpSigningMiddlewareOptions = {
+  step: "finalizeRequest",
+  tags: ["HTTP_SIGNING"],
+  name: "httpSigningMiddleware",
+  aliases: ["apiKeyMiddleware", "tokenMiddleware", "awsAuthMiddleware"],
+  override: true,
+  relation: "after",
+  toMiddleware: "retryMiddleware"
+};
+var getHttpSigningPlugin = (config) => ({
+  applyToStack: (clientStack) => {
+    clientStack.addRelativeTo(httpSigningMiddleware(config), httpSigningMiddlewareOptions);
+  }
+});
+
+// node_modules/@smithy/core/dist-es/normalizeProvider.js
+var normalizeProvider2 = (input) => {
+  if (typeof input === "function")
+    return input;
+  const promisified = Promise.resolve(input);
+  return () => promisified;
+};
+
+// node_modules/@smithy/core/dist-es/legacy-root-exports/util-identity-and-auth/DefaultIdentityProviderConfig.js
+var DefaultIdentityProviderConfig = class {
+  constructor(config) {
+    __publicField(this, "authSchemes", /* @__PURE__ */ new Map());
+    for (const key in config) {
+      const value2 = config[key];
+      if (value2 !== void 0) {
+        this.authSchemes.set(key, value2);
+      }
+    }
+  }
+  getIdentityProvider(schemeId) {
+    return this.authSchemes.get(schemeId);
+  }
+};
+
+// node_modules/@smithy/core/dist-es/legacy-root-exports/util-identity-and-auth/memoizeIdentityProvider.js
+var createIsIdentityExpiredFunction = (expirationMs) => function isIdentityExpired2(identity) {
+  return doesIdentityRequireRefresh(identity) && identity.expiration.getTime() - Date.now() < expirationMs;
+};
+var EXPIRATION_MS = 3e5;
+var isIdentityExpired = createIsIdentityExpiredFunction(EXPIRATION_MS);
+var doesIdentityRequireRefresh = (identity) => identity.expiration !== void 0;
+var memoizeIdentityProvider = (provider, isExpired, requiresRefresh) => {
+  if (provider === void 0) {
+    return void 0;
+  }
+  const normalizedProvider = typeof provider !== "function" ? async () => Promise.resolve(provider) : provider;
+  let resolved;
+  let pending;
+  let hasResult;
+  let isConstant = false;
+  const coalesceProvider = async (options) => {
+    if (!pending) {
+      pending = normalizedProvider(options);
+    }
+    try {
+      resolved = await pending;
+      hasResult = true;
+      isConstant = false;
+    } finally {
+      pending = void 0;
+    }
+    return resolved;
+  };
+  if (isExpired === void 0) {
+    return async (options) => {
+      if (!hasResult || (options == null ? void 0 : options.forceRefresh)) {
+        resolved = await coalesceProvider(options);
+      }
+      return resolved;
+    };
+  }
+  return async (options) => {
+    if (!hasResult || (options == null ? void 0 : options.forceRefresh)) {
+      resolved = await coalesceProvider(options);
+    }
+    if (isConstant) {
+      return resolved;
+    }
+    if (!requiresRefresh(resolved)) {
+      isConstant = true;
+      return resolved;
+    }
+    if (isExpired(resolved)) {
+      await coalesceProvider(options);
+      return resolved;
+    }
+    return resolved;
+  };
+};
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/middleware-user-agent/configurations.js
+var DEFAULT_UA_APP_ID = void 0;
+function isValidUserAgentAppId(appId) {
+  if (appId === void 0) {
+    return true;
+  }
+  return typeof appId === "string" && appId.length <= 50;
+}
+function resolveUserAgentConfig(input) {
+  var _a3;
+  const normalizedAppIdProvider = normalizeProvider2((_a3 = input.userAgentAppId) != null ? _a3 : DEFAULT_UA_APP_ID);
+  const { customUserAgent } = input;
+  return Object.assign(input, {
+    customUserAgent: typeof customUserAgent === "string" ? [[customUserAgent]] : customUserAgent,
+    userAgentAppId: async () => {
+      var _a4, _b2;
+      const appId = await normalizedAppIdProvider();
+      if (!isValidUserAgentAppId(appId)) {
+        const logger2 = ((_b2 = (_a4 = input.logger) == null ? void 0 : _a4.constructor) == null ? void 0 : _b2.name) === "NoOpLogger" || !input.logger ? console : input.logger;
+        if (typeof appId !== "string") {
+          logger2 == null ? void 0 : logger2.warn("userAgentAppId must be a string or undefined.");
+        } else if (appId.length > 50) {
+          logger2 == null ? void 0 : logger2.warn("The provided userAgentAppId exceeds the maximum length of 50 characters.");
+        }
+      }
+      return appId;
+    }
+  });
+}
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/util-endpoints/lib/aws/partitions.js
+var partitionsInfo = { "partitions": [{ "id": "aws", "outputs": { "dnsSuffix": "amazonaws.com", "dualStackDnsSuffix": "api.aws", "implicitGlobalRegion": "us-east-1", "name": "aws", "supportsDualStack": true, "supportsFIPS": true }, "regionRegex": "^(us|eu|ap|sa|ca|me|af|il|mx)\\-\\w+\\-\\d+$", "regions": { "af-south-1": { "description": "Africa (Cape Town)" }, "ap-east-1": { "description": "Asia Pacific (Hong Kong)" }, "ap-east-2": { "description": "Asia Pacific (Taipei)" }, "ap-northeast-1": { "description": "Asia Pacific (Tokyo)" }, "ap-northeast-2": { "description": "Asia Pacific (Seoul)" }, "ap-northeast-3": { "description": "Asia Pacific (Osaka)" }, "ap-south-1": { "description": "Asia Pacific (Mumbai)" }, "ap-south-2": { "description": "Asia Pacific (Hyderabad)" }, "ap-southeast-1": { "description": "Asia Pacific (Singapore)" }, "ap-southeast-2": { "description": "Asia Pacific (Sydney)" }, "ap-southeast-3": { "description": "Asia Pacific (Jakarta)" }, "ap-southeast-4": { "description": "Asia Pacific (Melbourne)" }, "ap-southeast-5": { "description": "Asia Pacific (Malaysia)" }, "ap-southeast-6": { "description": "Asia Pacific (New Zealand)" }, "ap-southeast-7": { "description": "Asia Pacific (Thailand)" }, "aws-global": { "description": "aws global region" }, "ca-central-1": { "description": "Canada (Central)" }, "ca-west-1": { "description": "Canada West (Calgary)" }, "eu-central-1": { "description": "Europe (Frankfurt)" }, "eu-central-2": { "description": "Europe (Zurich)" }, "eu-north-1": { "description": "Europe (Stockholm)" }, "eu-south-1": { "description": "Europe (Milan)" }, "eu-south-2": { "description": "Europe (Spain)" }, "eu-west-1": { "description": "Europe (Ireland)" }, "eu-west-2": { "description": "Europe (London)" }, "eu-west-3": { "description": "Europe (Paris)" }, "il-central-1": { "description": "Israel (Tel Aviv)" }, "me-central-1": { "description": "Middle East (UAE)" }, "me-south-1": { "description": "Middle East (Bahrain)" }, "mx-central-1": { "description": "Mexico (Central)" }, "sa-east-1": { "description": "South America (Sao Paulo)" }, "us-east-1": { "description": "US East (N. Virginia)" }, "us-east-2": { "description": "US East (Ohio)" }, "us-west-1": { "description": "US West (N. California)" }, "us-west-2": { "description": "US West (Oregon)" } } }, { "id": "aws-cn", "outputs": { "dnsSuffix": "amazonaws.com.cn", "dualStackDnsSuffix": "api.amazonwebservices.com.cn", "implicitGlobalRegion": "cn-northwest-1", "name": "aws-cn", "supportsDualStack": true, "supportsFIPS": true }, "regionRegex": "^cn\\-\\w+\\-\\d+$", "regions": { "aws-cn-global": { "description": "aws-cn global region" }, "cn-north-1": { "description": "China (Beijing)" }, "cn-northwest-1": { "description": "China (Ningxia)" } } }, { "id": "aws-eusc", "outputs": { "dnsSuffix": "amazonaws.eu", "dualStackDnsSuffix": "api.amazonwebservices.eu", "implicitGlobalRegion": "eusc-de-east-1", "name": "aws-eusc", "supportsDualStack": true, "supportsFIPS": true }, "regionRegex": "^eusc\\-(de)\\-\\w+\\-\\d+$", "regions": { "eusc-de-east-1": { "description": "AWS European Sovereign Cloud (Germany)" } } }, { "id": "aws-iso", "outputs": { "dnsSuffix": "c2s.ic.gov", "dualStackDnsSuffix": "api.aws.ic.gov", "implicitGlobalRegion": "us-iso-east-1", "name": "aws-iso", "supportsDualStack": true, "supportsFIPS": true }, "regionRegex": "^us\\-iso\\-\\w+\\-\\d+$", "regions": { "aws-iso-global": { "description": "aws-iso global region" }, "us-iso-east-1": { "description": "US ISO East" }, "us-iso-west-1": { "description": "US ISO WEST" } } }, { "id": "aws-iso-b", "outputs": { "dnsSuffix": "sc2s.sgov.gov", "dualStackDnsSuffix": "api.aws.scloud", "implicitGlobalRegion": "us-isob-east-1", "name": "aws-iso-b", "supportsDualStack": true, "supportsFIPS": true }, "regionRegex": "^us\\-isob\\-\\w+\\-\\d+$", "regions": { "aws-iso-b-global": { "description": "aws-iso-b global region" }, "us-isob-east-1": { "description": "US ISOB East (Ohio)" }, "us-isob-west-1": { "description": "US ISOB West" } } }, { "id": "aws-iso-e", "outputs": { "dnsSuffix": "cloud.adc-e.uk", "dualStackDnsSuffix": "api.cloud-aws.adc-e.uk", "implicitGlobalRegion": "eu-isoe-west-1", "name": "aws-iso-e", "supportsDualStack": true, "supportsFIPS": true }, "regionRegex": "^eu\\-isoe\\-\\w+\\-\\d+$", "regions": { "aws-iso-e-global": { "description": "aws-iso-e global region" }, "eu-isoe-west-1": { "description": "EU ISOE West" } } }, { "id": "aws-iso-f", "outputs": { "dnsSuffix": "csp.hci.ic.gov", "dualStackDnsSuffix": "api.aws.hci.ic.gov", "implicitGlobalRegion": "us-isof-south-1", "name": "aws-iso-f", "supportsDualStack": true, "supportsFIPS": true }, "regionRegex": "^us\\-isof\\-\\w+\\-\\d+$", "regions": { "aws-iso-f-global": { "description": "aws-iso-f global region" }, "us-isof-east-1": { "description": "US ISOF EAST" }, "us-isof-south-1": { "description": "US ISOF SOUTH" } } }, { "id": "aws-us-gov", "outputs": { "dnsSuffix": "amazonaws.com", "dualStackDnsSuffix": "api.aws", "implicitGlobalRegion": "us-gov-west-1", "name": "aws-us-gov", "supportsDualStack": true, "supportsFIPS": true }, "regionRegex": "^us\\-gov\\-\\w+\\-\\d+$", "regions": { "aws-us-gov-global": { "description": "aws-us-gov global region" }, "us-gov-east-1": { "description": "AWS GovCloud (US-East)" }, "us-gov-west-1": { "description": "AWS GovCloud (US-West)" } } }], "version": "1.1" };
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/util-endpoints/lib/aws/partition.js
+var selectedPartitionsInfo = partitionsInfo;
+var selectedUserAgentPrefix = "";
+var partition = (value2) => {
+  const { partitions } = selectedPartitionsInfo;
+  for (const partition2 of partitions) {
+    const { regions, outputs } = partition2;
+    for (const [region, regionData] of Object.entries(regions)) {
+      if (region === value2) {
+        return {
+          ...outputs,
+          ...regionData
+        };
+      }
+    }
+  }
+  for (const partition2 of partitions) {
+    const { regionRegex, outputs } = partition2;
+    if (new RegExp(regionRegex).test(value2)) {
+      return {
+        ...outputs
+      };
+    }
+  }
+  const DEFAULT_PARTITION = partitions.find((partition2) => partition2.id === "aws");
+  if (!DEFAULT_PARTITION) {
+    throw new Error("Provided region was not found in the partition array or regex, and default partition with id 'aws' doesn't exist.");
+  }
+  return {
+    ...DEFAULT_PARTITION.outputs
+  };
+};
+var getUserAgentPrefix = () => selectedUserAgentPrefix;
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/middleware-user-agent/check-features.js
+var ACCOUNT_ID_ENDPOINT_REGEX = /\d{12}\.ddb/;
+async function checkFeatures(context, config, args) {
+  var _a3, _b2, _c2, _d, _e2, _f2;
+  const request = args.request;
+  if (((_a3 = request == null ? void 0 : request.headers) == null ? void 0 : _a3["smithy-protocol"]) === "rpc-v2-cbor") {
+    setFeature2(context, "PROTOCOL_RPC_V2_CBOR", "M");
+  }
+  if (typeof config.retryStrategy === "function") {
+    const retryStrategy = await config.retryStrategy();
+    if (typeof retryStrategy.mode === "string") {
+      switch (retryStrategy.mode) {
+        case RETRY_MODES.ADAPTIVE:
+          setFeature2(context, "RETRY_MODE_ADAPTIVE", "F");
+          break;
+        case RETRY_MODES.STANDARD:
+          setFeature2(context, "RETRY_MODE_STANDARD", "E");
+          break;
+      }
+    }
+  }
+  if (typeof config.accountIdEndpointMode === "function") {
+    const endpointV2 = context.endpointV2;
+    if (String((_b2 = endpointV2 == null ? void 0 : endpointV2.url) == null ? void 0 : _b2.hostname).match(ACCOUNT_ID_ENDPOINT_REGEX)) {
+      setFeature2(context, "ACCOUNT_ID_ENDPOINT", "O");
+    }
+    switch (await ((_c2 = config.accountIdEndpointMode) == null ? void 0 : _c2.call(config))) {
+      case "disabled":
+        setFeature2(context, "ACCOUNT_ID_MODE_DISABLED", "Q");
+        break;
+      case "preferred":
+        setFeature2(context, "ACCOUNT_ID_MODE_PREFERRED", "P");
+        break;
+      case "required":
+        setFeature2(context, "ACCOUNT_ID_MODE_REQUIRED", "R");
+        break;
+    }
+  }
+  const identity = (_e2 = (_d = context.__smithy_context) == null ? void 0 : _d.selectedHttpAuthScheme) == null ? void 0 : _e2.identity;
+  if (identity == null ? void 0 : identity.$source) {
+    const credentials = identity;
+    if (credentials.accountId) {
+      setFeature2(context, "RESOLVED_ACCOUNT_ID", "T");
+    }
+    for (const [key, value2] of Object.entries((_f2 = credentials.$source) != null ? _f2 : {})) {
+      setFeature2(context, key, value2);
+    }
+  }
+}
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/middleware-user-agent/constants.js
+var USER_AGENT = "user-agent";
+var X_AMZ_USER_AGENT = "x-amz-user-agent";
+var SPACE = " ";
+var UA_NAME_SEPARATOR = "/";
+var UA_NAME_ESCAPE_REGEX = /[^!$%&'*+\-.^_`|~\w]/g;
+var UA_VALUE_ESCAPE_REGEX = /[^!$%&'*+\-.^_`|~\w#]/g;
+var UA_ESCAPE_CHAR = "-";
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/middleware-user-agent/encode-features.js
+var BYTE_LIMIT = 1024;
+function encodeFeatures(features) {
+  let buffer = "";
+  for (const key in features) {
+    const val = features[key];
+    if (buffer.length + val.length + 1 <= BYTE_LIMIT) {
+      if (buffer.length) {
+        buffer += "," + val;
+      } else {
+        buffer += val;
+      }
+      continue;
+    }
+    break;
+  }
+  return buffer;
+}
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/middleware-user-agent/user-agent-middleware.js
+var userAgentMiddleware = (options) => (next, context) => async (args) => {
+  var _a3, _b2, _c2, _d;
+  const { request } = args;
+  if (!HttpRequest.isInstance(request)) {
+    return next(args);
+  }
+  const { headers } = request;
+  const userAgent = ((_a3 = context == null ? void 0 : context.userAgent) == null ? void 0 : _a3.map(escapeUserAgent)) || [];
+  const defaultUserAgent2 = (await options.defaultUserAgentProvider()).map(escapeUserAgent);
+  await checkFeatures(context, options, args);
+  const awsContext = context;
+  defaultUserAgent2.push(`m/${encodeFeatures(Object.assign({}, (_b2 = context.__smithy_context) == null ? void 0 : _b2.features, (_c2 = awsContext.__aws_sdk_context) == null ? void 0 : _c2.features))}`);
+  const customUserAgent = ((_d = options == null ? void 0 : options.customUserAgent) == null ? void 0 : _d.map(escapeUserAgent)) || [];
+  const appId = await options.userAgentAppId();
+  if (appId) {
+    defaultUserAgent2.push(escapeUserAgent([`app`, `${appId}`]));
+  }
+  const prefix = getUserAgentPrefix();
+  const sdkUserAgentValue = (prefix ? [prefix] : []).concat([...defaultUserAgent2, ...userAgent, ...customUserAgent]).join(SPACE);
+  const normalUAValue = [
+    ...defaultUserAgent2.filter((section) => section.startsWith("aws-sdk-")),
+    ...customUserAgent
+  ].join(SPACE);
+  if (options.runtime !== "browser") {
+    if (normalUAValue) {
+      headers[X_AMZ_USER_AGENT] = headers[X_AMZ_USER_AGENT] ? `${headers[USER_AGENT]} ${normalUAValue}` : normalUAValue;
+    }
+    headers[USER_AGENT] = sdkUserAgentValue;
+  } else {
+    headers[X_AMZ_USER_AGENT] = sdkUserAgentValue;
+  }
+  return next({
+    ...args,
+    request
+  });
+};
+var escapeUserAgent = (userAgentPair) => {
+  var _a3;
+  const name = userAgentPair[0].split(UA_NAME_SEPARATOR).map((part) => part.replace(UA_NAME_ESCAPE_REGEX, UA_ESCAPE_CHAR)).join(UA_NAME_SEPARATOR);
+  const version = (_a3 = userAgentPair[1]) == null ? void 0 : _a3.replace(UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR);
+  const prefixSeparatorIndex = name.indexOf(UA_NAME_SEPARATOR);
+  const prefix = name.substring(0, prefixSeparatorIndex);
+  let uaName = name.substring(prefixSeparatorIndex + 1);
+  if (prefix === "api") {
+    uaName = uaName.toLowerCase();
+  }
+  return [prefix, uaName, version].filter((item) => item && item.length > 0).reduce((acc, item, index2) => {
+    switch (index2) {
+      case 0:
+        return item;
+      case 1:
+        return `${acc}/${item}`;
+      default:
+        return `${acc}#${item}`;
+    }
+  }, "");
+};
+var getUserAgentMiddlewareOptions = {
+  name: "getUserAgentMiddleware",
+  step: "build",
+  priority: "low",
+  tags: ["SET_USER_AGENT", "USER_AGENT"],
+  override: true
+};
+var getUserAgentPlugin = (config) => ({
+  applyToStack: (clientStack) => {
+    clientStack.add(userAgentMiddleware(config), getUserAgentMiddlewareOptions);
+  }
+});
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/util-user-agent-browser/defaultUserAgent.js
+var createDefaultUserAgentProvider = ({ serviceId, clientVersion }) => async (config) => {
+  var _a3, _b2, _c2, _d, _e2, _f2, _g, _h2, _i, _j;
+  const navigator = typeof window !== "undefined" ? window.navigator : void 0;
+  const uaString = (_a3 = navigator == null ? void 0 : navigator.userAgent) != null ? _a3 : "";
+  const osName = (_d = (_c2 = (_b2 = navigator == null ? void 0 : navigator.userAgentData) == null ? void 0 : _b2.platform) != null ? _c2 : fallback.os(uaString)) != null ? _d : "other";
+  const osVersion = void 0;
+  const brands = (_f2 = (_e2 = navigator == null ? void 0 : navigator.userAgentData) == null ? void 0 : _e2.brands) != null ? _f2 : [];
+  const brand = brands[brands.length - 1];
+  const browserName = (_h2 = (_g = brand == null ? void 0 : brand.brand) != null ? _g : fallback.browser(uaString)) != null ? _h2 : "unknown";
+  const browserVersion = (_i = brand == null ? void 0 : brand.version) != null ? _i : "unknown";
+  const sections = [
+    ["aws-sdk-js", clientVersion],
+    ["ua", "2.1"],
+    [`os/${osName}`, osVersion],
+    ["lang/js"],
+    ["md/browser", `${browserName}_${browserVersion}`]
+  ];
+  if (serviceId) {
+    sections.push([`api/${serviceId}`, clientVersion]);
+  }
+  const appId = await ((_j = config == null ? void 0 : config.userAgentAppId) == null ? void 0 : _j.call(config));
+  if (appId) {
+    sections.push([`app/${appId}`]);
+  }
+  return sections;
+};
+var fallback = {
+  os(ua) {
+    if (/iPhone|iPad|iPod/.test(ua))
+      return "iOS";
+    if (/Macintosh|Mac OS X/.test(ua))
+      return "macOS";
+    if (/Windows NT/.test(ua))
+      return "Windows";
+    if (/Android/.test(ua))
+      return "Android";
+    if (/Linux/.test(ua))
+      return "Linux";
+    return void 0;
+  },
+  browser(ua) {
+    if (/EdgiOS|EdgA|Edg\//.test(ua))
+      return "Microsoft Edge";
+    if (/Firefox\//.test(ua))
+      return "Firefox";
+    if (/Chrome\//.test(ua))
+      return "Chrome";
+    if (/Safari\//.test(ua))
+      return "Safari";
+    return void 0;
+  }
+};
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/util-endpoints/aws.js
+init_index_browser();
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/util-endpoints/lib/aws/isVirtualHostableS3Bucket.js
+init_index_browser();
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/util-endpoints/lib/isIpAddress.js
+init_index_browser();
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/util-endpoints/lib/aws/isVirtualHostableS3Bucket.js
+var isVirtualHostableS3Bucket = (value2, allowSubDomains = false) => {
+  if (allowSubDomains) {
+    for (const label of value2.split(".")) {
+      if (!isVirtualHostableS3Bucket(label)) {
+        return false;
+      }
+    }
+    return true;
+  }
+  if (!isValidHostLabel(value2)) {
+    return false;
+  }
+  if (value2.length < 3 || value2.length > 63) {
+    return false;
+  }
+  if (value2 !== value2.toLowerCase()) {
+    return false;
+  }
+  if (isIpAddress(value2)) {
+    return false;
+  }
+  return true;
+};
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/util-endpoints/lib/aws/parseArn.js
+var ARN_DELIMITER = ":";
+var RESOURCE_DELIMITER = "/";
+var parseArn = (value2) => {
+  const segments = value2.split(ARN_DELIMITER);
+  if (segments.length < 6)
+    return null;
+  const [arn, partition2, service, region, accountId, ...resourcePath] = segments;
+  if (arn !== "arn" || partition2 === "" || service === "" || resourcePath.join(ARN_DELIMITER) === "")
+    return null;
+  const resourceId = resourcePath.map((resource) => resource.split(RESOURCE_DELIMITER)).flat();
+  return {
+    partition: partition2,
+    service,
+    region,
+    accountId,
+    resourceId
+  };
+};
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/util-endpoints/aws.js
+var awsEndpointFunctions = {
+  isVirtualHostableS3Bucket,
+  parseArn,
+  partition
+};
+customEndpointFunctions.aws = awsEndpointFunctions;
+
+// node_modules/@smithy/core/dist-es/submodules/config/property-provider/memoize.js
+var memoize = (provider, isExpired, requiresRefresh) => {
+  let resolved;
+  let pending;
+  let hasResult;
+  let isConstant = false;
+  const coalesceProvider = async () => {
+    if (!pending) {
+      pending = provider();
+    }
+    try {
+      resolved = await pending;
+      hasResult = true;
+      isConstant = false;
+    } finally {
+      pending = void 0;
+    }
+    return resolved;
+  };
+  if (isExpired === void 0) {
+    return async (options) => {
+      if (!hasResult || (options == null ? void 0 : options.forceRefresh)) {
+        resolved = await coalesceProvider();
+      }
+      return resolved;
+    };
+  }
+  return async (options) => {
+    if (!hasResult || (options == null ? void 0 : options.forceRefresh)) {
+      resolved = await coalesceProvider();
+    }
+    if (isConstant) {
+      return resolved;
+    }
+    if (requiresRefresh && !requiresRefresh(resolved)) {
+      isConstant = true;
+      return resolved;
+    }
+    if (isExpired(resolved)) {
+      await coalesceProvider();
+      return resolved;
+    }
+    return resolved;
+  };
+};
+
+// node_modules/@smithy/core/dist-es/submodules/config/config-resolver/regionConfig/checkRegion.js
+init_transport();
+var validRegions = /* @__PURE__ */ new Set();
+var checkRegion = (region, check = isValidHostLabel) => {
+  if (!validRegions.has(region) && !check(region)) {
+    if (region === "*") {
+      console.warn(`@smithy/config-resolver WARN - Please use the caller region instead of "*". See "sigv4a" in https://github.com/aws/aws-sdk-js-v3/blob/main/supplemental-docs/CLIENTS.md.`);
+    } else {
+      throw new Error(`Region not accepted: region="${region}" is not a valid hostname component.`);
+    }
+  } else {
+    validRegions.add(region);
+  }
+};
+
+// node_modules/@smithy/core/dist-es/submodules/config/config-resolver/regionConfig/isFipsRegion.js
+var isFipsRegion = (region) => typeof region === "string" && (region.startsWith("fips-") || region.endsWith("-fips"));
+
+// node_modules/@smithy/core/dist-es/submodules/config/config-resolver/regionConfig/getRealRegion.js
+var getRealRegion = (region) => isFipsRegion(region) ? ["fips-aws-global", "aws-fips"].includes(region) ? "us-east-1" : region.replace(/fips-(dkr-|prod-)?|-fips/, "") : region;
+
+// node_modules/@smithy/core/dist-es/submodules/config/config-resolver/regionConfig/resolveRegionConfig.js
+var resolveRegionConfig = (input) => {
+  const { region, useFipsEndpoint } = input;
+  if (!region) {
+    throw new Error("Region is missing");
+  }
+  return Object.assign(input, {
+    region: async () => {
+      const providedRegion = typeof region === "function" ? await region() : region;
+      const realRegion = getRealRegion(providedRegion);
+      checkRegion(realRegion);
+      return realRegion;
+    },
+    useFipsEndpoint: async () => {
+      const providedRegion = typeof region === "string" ? region : await region();
+      if (isFipsRegion(providedRegion)) {
+        return true;
+      }
+      return typeof useFipsEndpoint !== "function" ? Promise.resolve(!!useFipsEndpoint) : useFipsEndpoint();
+    }
+  });
+};
+
+// node_modules/@smithy/core/dist-es/submodules/config/defaults-mode/constants.js
+var DEFAULTS_MODE_OPTIONS = ["in-region", "cross-region", "mobile", "standard", "legacy"];
+
+// node_modules/@smithy/core/dist-es/submodules/config/defaults-mode/resolveDefaultsModeConfig.browser.js
+var resolveDefaultsModeConfig = ({ defaultsMode } = {}) => memoize(async () => {
+  const mode = typeof defaultsMode === "function" ? await defaultsMode() : defaultsMode;
+  switch (mode == null ? void 0 : mode.toLowerCase()) {
+    case "auto":
+      return Promise.resolve(useMobileConfiguration() ? "mobile" : "standard");
+    case "mobile":
+    case "in-region":
+    case "cross-region":
+    case "standard":
+    case "legacy":
+      return Promise.resolve(mode == null ? void 0 : mode.toLocaleLowerCase());
+    case void 0:
+      return Promise.resolve("legacy");
+    default:
+      throw new Error(`Invalid parameter for "defaultsMode", expect ${DEFAULTS_MODE_OPTIONS.join(", ")}, got ${mode}`);
+  }
+});
+var useMobileConfiguration = () => {
+  var _a3;
+  const navigator = window == null ? void 0 : window.navigator;
+  if (navigator == null ? void 0 : navigator.connection) {
+    const { effectiveType, rtt, downlink } = navigator == null ? void 0 : navigator.connection;
+    const slow = typeof effectiveType === "string" && effectiveType !== "4g" || Number(rtt) > 100 || Number(downlink) < 10;
+    if (slow) {
+      return true;
+    }
+  }
+  return ((_a3 = navigator == null ? void 0 : navigator.userAgentData) == null ? void 0 : _a3.mobile) || typeof (navigator == null ? void 0 : navigator.maxTouchPoints) === "number" && (navigator == null ? void 0 : navigator.maxTouchPoints) > 1;
+};
+
+// node_modules/@smithy/core/dist-es/submodules/config/index.browser.js
+var DEFAULT_USE_DUALSTACK_ENDPOINT = false;
+var DEFAULT_USE_FIPS_ENDPOINT = false;
+
+// node_modules/@aws-sdk/core/dist-es/submodules/client/region-config-resolver/extensions.js
+var getAwsRegionExtensionConfiguration = (runtimeConfig) => {
+  return {
+    setRegion(region) {
+      runtimeConfig.region = region;
+    },
+    region() {
+      return runtimeConfig.region;
+    }
+  };
+};
+var resolveAwsRegionExtensionConfiguration = (awsRegionExtensionConfiguration) => {
+  return {
+    region: awsRegionExtensionConfiguration.region()
+  };
+};
+
+// node_modules/@aws-sdk/middleware-eventstream/dist-es/eventStreamConfiguration.js
+function resolveEventStreamConfig(input) {
+  const eventSigner = input.signer;
+  const messageSigner = input.signer;
+  const newInput = Object.assign(input, {
+    eventSigner,
+    messageSigner
+  });
+  const eventStreamPayloadHandler = newInput.eventStreamPayloadHandlerProvider(newInput);
+  return Object.assign(newInput, {
+    eventStreamPayloadHandler
+  });
+}
+
+// node_modules/@aws-sdk/client-polly/dist-es/PollyClient.js
+init_client3();
+init_index_browser();
+init_index_browser3();
+init_schema2();
+
+// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js
+var getDateHeader = (response) => {
+  var _a3, _b2, _c2;
+  return HttpResponse.isInstance(response) ? (_c2 = (_a3 = response.headers) == null ? void 0 : _a3.date) != null ? _c2 : (_b2 = response.headers) == null ? void 0 : _b2.Date : void 0;
+};
+
+// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js
+var getSkewCorrectedDate = (systemClockOffset) => new Date(Date.now() + systemClockOffset);
+
+// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js
+var isClockSkewed = (clockTime, systemClockOffset) => Math.abs(getSkewCorrectedDate(systemClockOffset).getTime() - clockTime) >= 3e5;
+
+// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js
+var getUpdatedSystemClockOffset = (clockTime, currentSystemClockOffset) => {
+  const clockTimeInMs = Date.parse(clockTime);
+  if (isClockSkewed(clockTimeInMs, currentSystemClockOffset)) {
+    return clockTimeInMs - Date.now();
+  }
+  return currentSystemClockOffset;
+};
+
+// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js
+var throwSigningPropertyError = (name, property) => {
+  if (!property) {
+    throw new Error(`Property \`${name}\` is not resolved for AWS SDK SigV4Auth`);
+  }
+  return property;
+};
+var validateSigningProperties = async (signingProperties) => {
+  var _a3, _b2, _c2;
+  const context = throwSigningPropertyError("context", signingProperties.context);
+  const config = throwSigningPropertyError("config", signingProperties.config);
+  const authScheme = (_c2 = (_b2 = (_a3 = context.endpointV2) == null ? void 0 : _a3.properties) == null ? void 0 : _b2.authSchemes) == null ? void 0 : _c2[0];
+  const signerFunction = throwSigningPropertyError("signer", config.signer);
+  const signer = await signerFunction(authScheme);
+  const signingRegion = signingProperties == null ? void 0 : signingProperties.signingRegion;
+  const signingRegionSet = signingProperties == null ? void 0 : signingProperties.signingRegionSet;
+  const signingName = signingProperties == null ? void 0 : signingProperties.signingName;
+  return {
+    config,
+    signer,
+    signingRegion,
+    signingRegionSet,
+    signingName
+  };
+};
+var AwsSdkSigV4Signer = class {
+  async sign(httpRequest, identity, signingProperties) {
+    var _a3, _b2, _c2, _d;
+    if (!HttpRequest.isInstance(httpRequest)) {
+      throw new Error("The request is not an instance of `HttpRequest` and cannot be signed");
+    }
+    const validatedProps = await validateSigningProperties(signingProperties);
+    const { config, signer } = validatedProps;
+    let { signingRegion, signingName } = validatedProps;
+    const handlerExecutionContext = signingProperties.context;
+    if ((_b2 = (_a3 = handlerExecutionContext == null ? void 0 : handlerExecutionContext.authSchemes) == null ? void 0 : _a3.length) != null ? _b2 : 0 > 1) {
+      const [first, second] = handlerExecutionContext.authSchemes;
+      if ((first == null ? void 0 : first.name) === "sigv4a" && (second == null ? void 0 : second.name) === "sigv4") {
+        signingRegion = (_c2 = second == null ? void 0 : second.signingRegion) != null ? _c2 : signingRegion;
+        signingName = (_d = second == null ? void 0 : second.signingName) != null ? _d : signingName;
+      }
+    }
+    signingProperties._preRequestSystemClockOffset = config.systemClockOffset;
+    const signedRequest = await signer.sign(httpRequest, {
+      signingDate: getSkewCorrectedDate(config.systemClockOffset),
+      signingRegion,
+      signingService: signingName
+    });
+    return signedRequest;
+  }
+  errorHandler(signingProperties) {
+    return (error) => {
+      var _a3;
+      const errorException = error;
+      const serverTime = (_a3 = errorException.ServerTime) != null ? _a3 : getDateHeader(errorException.$response);
+      if (serverTime) {
+        const config = throwSigningPropertyError("config", signingProperties.config);
+        const preRequestOffset = signingProperties._preRequestSystemClockOffset;
+        const newOffset = getUpdatedSystemClockOffset(serverTime, config.systemClockOffset);
+        const isLocalCorrection = newOffset !== config.systemClockOffset;
+        const isConcurrentCorrection = preRequestOffset !== void 0 && preRequestOffset !== newOffset;
+        const clockSkewCorrected = isLocalCorrection || isConcurrentCorrection;
+        if (clockSkewCorrected && errorException.$metadata) {
+          config.systemClockOffset = newOffset;
+          errorException.$metadata.clockSkewCorrected = true;
+        }
+      }
+      throw error;
+    };
+  }
+  successHandler(httpResponse, signingProperties) {
+    const dateHeader = getDateHeader(httpResponse);
+    if (dateHeader) {
+      const config = throwSigningPropertyError("config", signingProperties.config);
+      config.systemClockOffset = getUpdatedSystemClockOffset(dateHeader, config.systemClockOffset);
+    }
+  }
+};
+
+// node_modules/@smithy/signature-v4/dist-es/SignatureV4.js
+init_index_browser2();
+
+// node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js
+init_index_browser2();
+var HeaderFormatter = class {
+  format(headers) {
+    const chunks = [];
+    for (const headerName of Object.keys(headers)) {
+      const bytes = fromUtf8(headerName);
+      chunks.push(Uint8Array.from([bytes.byteLength]), bytes, this.formatHeaderValue(headers[headerName]));
+    }
+    const out = new Uint8Array(chunks.reduce((carry, bytes) => carry + bytes.byteLength, 0));
+    let position2 = 0;
+    for (const chunk of chunks) {
+      out.set(chunk, position2);
+      position2 += chunk.byteLength;
+    }
+    return out;
+  }
+  formatHeaderValue(header) {
+    switch (header.type) {
+      case "boolean":
+        return Uint8Array.from([header.value ? 0 : 1]);
+      case "byte":
+        return Uint8Array.from([2, header.value]);
+      case "short":
+        const shortView = new DataView(new ArrayBuffer(3));
+        shortView.setUint8(0, 3);
+        shortView.setInt16(1, header.value, false);
+        return new Uint8Array(shortView.buffer);
+      case "integer":
+        const intView = new DataView(new ArrayBuffer(5));
+        intView.setUint8(0, 4);
+        intView.setInt32(1, header.value, false);
+        return new Uint8Array(intView.buffer);
+      case "long":
+        const longBytes = new Uint8Array(9);
+        longBytes[0] = 5;
+        longBytes.set(header.value.bytes, 1);
+        return longBytes;
+      case "binary":
+        const binView = new DataView(new ArrayBuffer(3 + header.value.byteLength));
+        binView.setUint8(0, 6);
+        binView.setUint16(1, header.value.byteLength, false);
+        const binBytes = new Uint8Array(binView.buffer);
+        binBytes.set(header.value, 3);
+        return binBytes;
+      case "string":
+        const utf8Bytes = fromUtf8(header.value);
+        const strView = new DataView(new ArrayBuffer(3 + utf8Bytes.byteLength));
+        strView.setUint8(0, 7);
+        strView.setUint16(1, utf8Bytes.byteLength, false);
+        const strBytes = new Uint8Array(strView.buffer);
+        strBytes.set(utf8Bytes, 3);
+        return strBytes;
+      case "timestamp":
+        const tsBytes = new Uint8Array(9);
+        tsBytes[0] = 8;
+        tsBytes.set(Int642.fromNumber(header.value.valueOf()).bytes, 1);
+        return tsBytes;
+      case "uuid":
+        if (!UUID_PATTERN2.test(header.value)) {
+          throw new Error(`Invalid UUID received: ${header.value}`);
+        }
+        const uuidBytes = new Uint8Array(17);
+        uuidBytes[0] = 9;
+        uuidBytes.set(fromHex(header.value.replace(/\-/g, "")), 1);
+        return uuidBytes;
+    }
+  }
+};
+var HEADER_VALUE_TYPE2;
+(function(HEADER_VALUE_TYPE3) {
+  HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["boolTrue"] = 0] = "boolTrue";
+  HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["boolFalse"] = 1] = "boolFalse";
+  HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["byte"] = 2] = "byte";
+  HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["short"] = 3] = "short";
+  HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["integer"] = 4] = "integer";
+  HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["long"] = 5] = "long";
+  HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["byteArray"] = 6] = "byteArray";
+  HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["string"] = 7] = "string";
+  HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["timestamp"] = 8] = "timestamp";
+  HEADER_VALUE_TYPE3[HEADER_VALUE_TYPE3["uuid"] = 9] = "uuid";
+})(HEADER_VALUE_TYPE2 || (HEADER_VALUE_TYPE2 = {}));
+var UUID_PATTERN2 = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
+var Int642 = class _Int64 {
+  constructor(bytes) {
+    __publicField(this, "bytes");
+    this.bytes = bytes;
+    if (bytes.byteLength !== 8) {
+      throw new Error("Int64 buffers must be exactly 8 bytes");
+    }
+  }
+  static fromNumber(number) {
+    if (number > 9223372036854776e3 || number < -9223372036854776e3) {
+      throw new Error(`${number} is too large (or, if negative, too small) to represent as an Int64`);
+    }
+    const bytes = new Uint8Array(8);
+    for (let i2 = 7, remaining = Math.abs(Math.round(number)); i2 > -1 && remaining > 0; i2--, remaining /= 256) {
+      bytes[i2] = remaining;
+    }
+    if (number < 0) {
+      negate2(bytes);
+    }
+    return new _Int64(bytes);
+  }
+  valueOf() {
+    const bytes = this.bytes.slice(0);
+    const negative = bytes[0] & 128;
+    if (negative) {
+      negate2(bytes);
+    }
+    return parseInt(toHex(bytes), 16) * (negative ? -1 : 1);
+  }
+  toString() {
+    return String(this.valueOf());
+  }
+};
+function negate2(bytes) {
+  for (let i2 = 0; i2 < 8; i2++) {
+    bytes[i2] ^= 255;
+  }
+  for (let i2 = 7; i2 > -1; i2--) {
+    bytes[i2]++;
+    if (bytes[i2] !== 0)
+      break;
+  }
+}
+
+// node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js
+init_client3();
+init_index_browser2();
+
+// node_modules/@smithy/signature-v4/dist-es/constants.js
+var ALGORITHM_QUERY_PARAM = "X-Amz-Algorithm";
+var CREDENTIAL_QUERY_PARAM = "X-Amz-Credential";
+var AMZ_DATE_QUERY_PARAM = "X-Amz-Date";
+var SIGNED_HEADERS_QUERY_PARAM = "X-Amz-SignedHeaders";
+var EXPIRES_QUERY_PARAM = "X-Amz-Expires";
+var SIGNATURE_QUERY_PARAM = "X-Amz-Signature";
+var TOKEN_QUERY_PARAM = "X-Amz-Security-Token";
+var AUTH_HEADER = "authorization";
+var AMZ_DATE_HEADER = AMZ_DATE_QUERY_PARAM.toLowerCase();
+var DATE_HEADER = "date";
+var GENERATED_HEADERS = [AUTH_HEADER, AMZ_DATE_HEADER, DATE_HEADER];
+var SIGNATURE_HEADER = SIGNATURE_QUERY_PARAM.toLowerCase();
+var SHA256_HEADER = "x-amz-content-sha256";
+var TOKEN_HEADER = TOKEN_QUERY_PARAM.toLowerCase();
+var ALWAYS_UNSIGNABLE_HEADERS = {
+  authorization: true,
+  "cache-control": true,
+  connection: true,
+  expect: true,
+  from: true,
+  "keep-alive": true,
+  "max-forwards": true,
+  pragma: true,
+  referer: true,
+  te: true,
+  trailer: true,
+  "transfer-encoding": true,
+  upgrade: true,
+  "user-agent": true,
+  "x-amzn-trace-id": true
+};
+var PROXY_HEADER_PATTERN = /^proxy-/;
+var SEC_HEADER_PATTERN = /^sec-/;
+var ALGORITHM_IDENTIFIER = "AWS4-HMAC-SHA256";
+var EVENT_ALGORITHM_IDENTIFIER = "AWS4-HMAC-SHA256-PAYLOAD";
+var UNSIGNED_PAYLOAD = "UNSIGNED-PAYLOAD";
+var MAX_CACHE_SIZE = 50;
+var KEY_TYPE_IDENTIFIER = "aws4_request";
+var MAX_PRESIGNED_TTL = 60 * 60 * 24 * 7;
+
+// node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js
+var getCanonicalQuery = ({ query = {} }) => {
+  const keys = [];
+  const serialized = {};
+  for (const key of Object.keys(query)) {
+    if (key.toLowerCase() === SIGNATURE_HEADER) {
+      continue;
+    }
+    const encodedKey = escapeUri(key);
+    keys.push(encodedKey);
+    const value2 = query[key];
+    if (typeof value2 === "string") {
+      serialized[encodedKey] = `${encodedKey}=${escapeUri(value2)}`;
+    } else if (Array.isArray(value2)) {
+      serialized[encodedKey] = value2.slice(0).reduce((encoded, value3) => encoded.concat([`${encodedKey}=${escapeUri(value3)}`]), []).sort().join("&");
+    }
+  }
+  return keys.sort().map((key) => serialized[key]).filter((serialized2) => serialized2).join("&");
+};
+
+// node_modules/@smithy/signature-v4/dist-es/utilDate.js
+var iso8601 = (time2) => toDate(time2).toISOString().replace(/\.\d{3}Z$/, "Z");
+var toDate = (time2) => {
+  if (typeof time2 === "number") {
+    return new Date(time2 * 1e3);
+  }
+  if (typeof time2 === "string") {
+    if (Number(time2)) {
+      return new Date(Number(time2) * 1e3);
+    }
+    return new Date(time2);
+  }
+  return time2;
+};
+
+// node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js
+var SignatureV4Base = class {
+  constructor({ applyChecksum, credentials, region, service, sha256, uriEscapePath = true }) {
+    __publicField(this, "service");
+    __publicField(this, "regionProvider");
+    __publicField(this, "credentialProvider");
+    __publicField(this, "sha256");
+    __publicField(this, "uriEscapePath");
+    __publicField(this, "applyChecksum");
+    this.service = service;
+    this.sha256 = sha256;
+    this.uriEscapePath = uriEscapePath;
+    this.applyChecksum = typeof applyChecksum === "boolean" ? applyChecksum : true;
+    this.regionProvider = normalizeProvider(region);
+    this.credentialProvider = normalizeProvider(credentials);
+  }
+  createCanonicalRequest(request, canonicalHeaders, payloadHash) {
+    const sortedHeaders = Object.keys(canonicalHeaders).sort();
+    return `${request.method}
+${this.getCanonicalPath(request)}
+${getCanonicalQuery(request)}
+${sortedHeaders.map((name) => `${name}:${canonicalHeaders[name]}`).join("\n")}
+
+${sortedHeaders.join(";")}
+${payloadHash}`;
+  }
+  async createStringToSign(longDate, credentialScope, canonicalRequest, algorithmIdentifier) {
+    const hash = new this.sha256();
+    hash.update(toUint8Array(canonicalRequest));
+    const hashedRequest = await hash.digest();
+    return `${algorithmIdentifier}
+${longDate}
+${credentialScope}
+${toHex(hashedRequest)}`;
+  }
+  getCanonicalPath({ path: path2 }) {
+    if (this.uriEscapePath) {
+      const normalizedPathSegments = [];
+      for (const pathSegment of path2.split("/")) {
+        if ((pathSegment == null ? void 0 : pathSegment.length) === 0)
+          continue;
+        if (pathSegment === ".")
+          continue;
+        if (pathSegment === "..") {
+          normalizedPathSegments.pop();
+        } else {
+          normalizedPathSegments.push(pathSegment);
+        }
+      }
+      const normalizedPath = `${(path2 == null ? void 0 : path2.startsWith("/")) ? "/" : ""}${normalizedPathSegments.join("/")}${normalizedPathSegments.length > 0 && (path2 == null ? void 0 : path2.endsWith("/")) ? "/" : ""}`;
+      const doubleEncoded = escapeUri(normalizedPath);
+      return doubleEncoded.replace(/%2F/g, "/");
+    }
+    return path2;
+  }
+  validateResolvedCredentials(credentials) {
+    if (typeof credentials !== "object" || typeof credentials.accessKeyId !== "string" || typeof credentials.secretAccessKey !== "string") {
+      throw new Error("Resolved credential object is not valid");
+    }
+  }
+  formatDate(now) {
+    const longDate = iso8601(now).replace(/[\-:]/g, "");
+    return {
+      longDate,
+      shortDate: longDate.slice(0, 8)
+    };
+  }
+  getCanonicalHeaderList(headers) {
+    return Object.keys(headers).sort().join(";");
+  }
+};
+
+// node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js
+init_index_browser2();
+var signingKeyCache = {};
+var cacheQueue = [];
+var createScope = (shortDate, region, service) => `${shortDate}/${region}/${service}/${KEY_TYPE_IDENTIFIER}`;
+var getSigningKey = async (sha256Constructor, credentials, shortDate, region, service) => {
+  const credsHash = await hmac(sha256Constructor, credentials.secretAccessKey, credentials.accessKeyId);
+  const cacheKey = `${shortDate}:${region}:${service}:${toHex(credsHash)}:${credentials.sessionToken}`;
+  if (cacheKey in signingKeyCache) {
+    return signingKeyCache[cacheKey];
+  }
+  cacheQueue.push(cacheKey);
+  while (cacheQueue.length > MAX_CACHE_SIZE) {
+    delete signingKeyCache[cacheQueue.shift()];
+  }
+  let key = `AWS4${credentials.secretAccessKey}`;
+  for (const signable of [shortDate, region, service, KEY_TYPE_IDENTIFIER]) {
+    key = await hmac(sha256Constructor, key, signable);
+  }
+  return signingKeyCache[cacheKey] = key;
+};
+var hmac = (ctor, secret, data) => {
+  const hash = new ctor(secret);
+  hash.update(toUint8Array(data));
+  return hash.digest();
+};
+
+// node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js
+var getCanonicalHeaders = ({ headers }, unsignableHeaders, signableHeaders) => {
+  const canonical = {};
+  for (const headerName of Object.keys(headers).sort()) {
+    if (headers[headerName] == void 0) {
+      continue;
+    }
+    const canonicalHeaderName = headerName.toLowerCase();
+    if (canonicalHeaderName in ALWAYS_UNSIGNABLE_HEADERS || (unsignableHeaders == null ? void 0 : unsignableHeaders.has(canonicalHeaderName)) || PROXY_HEADER_PATTERN.test(canonicalHeaderName) || SEC_HEADER_PATTERN.test(canonicalHeaderName)) {
+      if (!signableHeaders || signableHeaders && !signableHeaders.has(canonicalHeaderName)) {
+        continue;
+      }
+    }
+    canonical[canonicalHeaderName] = headers[headerName].trim().replace(/\s+/g, " ");
+  }
+  return canonical;
+};
+
+// node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js
+init_index_browser2();
+var getPayloadHash = async ({ headers, body }, hashConstructor) => {
+  for (const headerName of Object.keys(headers)) {
+    if (headerName.toLowerCase() === SHA256_HEADER) {
+      return headers[headerName];
+    }
+  }
+  if (body == void 0) {
+    return "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
+  } else if (typeof body === "string" || ArrayBuffer.isView(body) || isArrayBuffer(body)) {
+    const hashCtor = new hashConstructor();
+    hashCtor.update(toUint8Array(body));
+    return toHex(await hashCtor.digest());
+  }
+  return UNSIGNED_PAYLOAD;
+};
+
+// node_modules/@smithy/signature-v4/dist-es/headerUtil.js
+var hasHeader = (soughtHeader, headers) => {
+  soughtHeader = soughtHeader.toLowerCase();
+  for (const headerName of Object.keys(headers)) {
+    if (soughtHeader === headerName.toLowerCase()) {
+      return true;
+    }
+  }
+  return false;
+};
+
+// node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js
+var moveHeadersToQuery = (request, options = {}) => {
+  var _a3, _b2;
+  const { headers, query = {} } = HttpRequest.clone(request);
+  for (const name of Object.keys(headers)) {
+    const lname = name.toLowerCase();
+    if (lname.slice(0, 6) === "x-amz-" && !((_a3 = options.unhoistableHeaders) == null ? void 0 : _a3.has(lname)) || ((_b2 = options.hoistableHeaders) == null ? void 0 : _b2.has(lname))) {
+      query[name] = headers[name];
+      delete headers[name];
+    }
+  }
+  return {
+    ...request,
+    headers,
+    query
+  };
+};
+
+// node_modules/@smithy/signature-v4/dist-es/prepareRequest.js
+var prepareRequest = (request) => {
+  request = HttpRequest.clone(request);
+  for (const headerName of Object.keys(request.headers)) {
+    if (GENERATED_HEADERS.indexOf(headerName.toLowerCase()) > -1) {
+      delete request.headers[headerName];
+    }
+  }
+  return request;
+};
+
+// node_modules/@smithy/signature-v4/dist-es/SignatureV4.js
+var SignatureV4 = class extends SignatureV4Base {
+  constructor({ applyChecksum, credentials, region, service, sha256, uriEscapePath = true }) {
+    super({
+      applyChecksum,
+      credentials,
+      region,
+      service,
+      sha256,
+      uriEscapePath
+    });
+    __publicField(this, "headerFormatter", new HeaderFormatter());
+  }
+  async presign(originalRequest, options = {}) {
+    const { signingDate = /* @__PURE__ */ new Date(), expiresIn = 3600, unsignableHeaders, unhoistableHeaders, signableHeaders, hoistableHeaders, signingRegion, signingService } = options;
+    const credentials = await this.credentialProvider();
+    this.validateResolvedCredentials(credentials);
+    const region = signingRegion != null ? signingRegion : await this.regionProvider();
+    const { longDate, shortDate } = this.formatDate(signingDate);
+    if (expiresIn > MAX_PRESIGNED_TTL) {
+      return Promise.reject("Signature version 4 presigned URLs must have an expiration date less than one week in the future");
+    }
+    const scope = createScope(shortDate, region, signingService != null ? signingService : this.service);
+    const request = moveHeadersToQuery(prepareRequest(originalRequest), { unhoistableHeaders, hoistableHeaders });
+    if (credentials.sessionToken) {
+      request.query[TOKEN_QUERY_PARAM] = credentials.sessionToken;
+    }
+    request.query[ALGORITHM_QUERY_PARAM] = ALGORITHM_IDENTIFIER;
+    request.query[CREDENTIAL_QUERY_PARAM] = `${credentials.accessKeyId}/${scope}`;
+    request.query[AMZ_DATE_QUERY_PARAM] = longDate;
+    request.query[EXPIRES_QUERY_PARAM] = expiresIn.toString(10);
+    const canonicalHeaders = getCanonicalHeaders(request, unsignableHeaders, signableHeaders);
+    request.query[SIGNED_HEADERS_QUERY_PARAM] = this.getCanonicalHeaderList(canonicalHeaders);
+    request.query[SIGNATURE_QUERY_PARAM] = await this.getSignature(longDate, scope, this.getSigningKey(credentials, region, shortDate, signingService), this.createCanonicalRequest(request, canonicalHeaders, await getPayloadHash(originalRequest, this.sha256)));
+    return request;
+  }
+  async sign(toSign, options) {
+    if (typeof toSign === "string") {
+      return this.signString(toSign, options);
+    } else if (toSign.headers && toSign.payload) {
+      return this.signEvent(toSign, options);
+    } else if (toSign.message) {
+      return this.signMessage(toSign, options);
+    } else {
+      return this.signRequest(toSign, options);
+    }
+  }
+  async signEvent({ headers, payload }, { signingDate = /* @__PURE__ */ new Date(), priorSignature, signingRegion, signingService, eventStreamCredentials }) {
+    const region = signingRegion != null ? signingRegion : await this.regionProvider();
+    const { shortDate, longDate } = this.formatDate(signingDate);
+    const scope = createScope(shortDate, region, signingService != null ? signingService : this.service);
+    const hashedPayload = await getPayloadHash({ headers: {}, body: payload }, this.sha256);
+    const hash = new this.sha256();
+    hash.update(headers);
+    const hashedHeaders = toHex(await hash.digest());
+    const stringToSign = [
+      EVENT_ALGORITHM_IDENTIFIER,
+      longDate,
+      scope,
+      priorSignature,
+      hashedHeaders,
+      hashedPayload
+    ].join("\n");
+    return this.signString(stringToSign, {
+      signingDate,
+      signingRegion: region,
+      signingService,
+      eventStreamCredentials
+    });
+  }
+  async signMessage(signableMessage, { signingDate = /* @__PURE__ */ new Date(), signingRegion, signingService, eventStreamCredentials }) {
+    const promise = this.signEvent({
+      headers: this.headerFormatter.format(signableMessage.message.headers),
+      payload: signableMessage.message.body
+    }, {
+      signingDate,
+      signingRegion,
+      signingService,
+      priorSignature: signableMessage.priorSignature,
+      eventStreamCredentials
+    });
+    return promise.then((signature) => {
+      return { message: signableMessage.message, signature };
+    });
+  }
+  async signString(stringToSign, { signingDate = /* @__PURE__ */ new Date(), signingRegion, signingService, eventStreamCredentials } = {}) {
+    const credentials = eventStreamCredentials != null ? eventStreamCredentials : await this.credentialProvider();
+    this.validateResolvedCredentials(credentials);
+    const region = signingRegion != null ? signingRegion : await this.regionProvider();
+    const { shortDate } = this.formatDate(signingDate);
+    const hash = new this.sha256(await this.getSigningKey(credentials, region, shortDate, signingService));
+    hash.update(toUint8Array(stringToSign));
+    return toHex(await hash.digest());
+  }
+  async signRequest(requestToSign, { signingDate = /* @__PURE__ */ new Date(), signableHeaders, unsignableHeaders, signingRegion, signingService } = {}) {
+    const credentials = await this.credentialProvider();
+    this.validateResolvedCredentials(credentials);
+    const region = signingRegion != null ? signingRegion : await this.regionProvider();
+    const request = prepareRequest(requestToSign);
+    const { longDate, shortDate } = this.formatDate(signingDate);
+    const scope = createScope(shortDate, region, signingService != null ? signingService : this.service);
+    request.headers[AMZ_DATE_HEADER] = longDate;
+    if (credentials.sessionToken) {
+      request.headers[TOKEN_HEADER] = credentials.sessionToken;
+    }
+    const payloadHash = await getPayloadHash(request, this.sha256);
+    if (!hasHeader(SHA256_HEADER, request.headers) && this.applyChecksum) {
+      request.headers[SHA256_HEADER] = payloadHash;
+    }
+    const canonicalHeaders = getCanonicalHeaders(request, unsignableHeaders, signableHeaders);
+    const signature = await this.getSignature(longDate, scope, this.getSigningKey(credentials, region, shortDate, signingService), this.createCanonicalRequest(request, canonicalHeaders, payloadHash));
+    request.headers[AUTH_HEADER] = `${ALGORITHM_IDENTIFIER} Credential=${credentials.accessKeyId}/${scope}, SignedHeaders=${this.getCanonicalHeaderList(canonicalHeaders)}, Signature=${signature}`;
+    return request;
+  }
+  async getSignature(longDate, credentialScope, keyPromise, canonicalRequest) {
+    const stringToSign = await this.createStringToSign(longDate, credentialScope, canonicalRequest, ALGORITHM_IDENTIFIER);
+    const hash = new this.sha256(await keyPromise);
+    hash.update(toUint8Array(stringToSign));
+    return toHex(await hash.digest());
+  }
+  getSigningKey(credentials, region, shortDate, service) {
+    return getSigningKey(this.sha256, credentials, shortDate, region, service || this.service);
+  }
+};
+
+// node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js
+var resolveAwsSdkSigV4Config = (config) => {
+  let inputCredentials = config.credentials;
+  let isUserSupplied = !!config.credentials;
+  let resolvedCredentials = void 0;
+  Object.defineProperty(config, "credentials", {
+    set(credentials) {
+      if (credentials && credentials !== inputCredentials && credentials !== resolvedCredentials) {
+        isUserSupplied = true;
+      }
+      inputCredentials = credentials;
+      const memoizedProvider = normalizeCredentialProvider(config, {
+        credentials: inputCredentials,
+        credentialDefaultProvider: config.credentialDefaultProvider
+      });
+      const boundProvider = bindCallerConfig(config, memoizedProvider);
+      if (isUserSupplied && !boundProvider.attributed) {
+        const isCredentialObject = typeof inputCredentials === "object" && inputCredentials !== null;
+        resolvedCredentials = async (options) => {
+          const creds = await boundProvider(options);
+          const attributedCreds = creds;
+          if (isCredentialObject && (!attributedCreds.$source || Object.keys(attributedCreds.$source).length === 0)) {
+            return setCredentialFeature(attributedCreds, "CREDENTIALS_CODE", "e");
+          }
+          return attributedCreds;
+        };
+        resolvedCredentials.memoized = boundProvider.memoized;
+        resolvedCredentials.configBound = boundProvider.configBound;
+        resolvedCredentials.attributed = true;
+      } else {
+        resolvedCredentials = boundProvider;
+      }
+    },
+    get() {
+      return resolvedCredentials;
+    },
+    enumerable: true,
+    configurable: true
+  });
+  config.credentials = inputCredentials;
+  const { signingEscapePath = true, systemClockOffset = config.systemClockOffset || 0, sha256 } = config;
+  let signer;
+  if (config.signer) {
+    signer = normalizeProvider2(config.signer);
+  } else if (config.regionInfoProvider) {
+    signer = () => normalizeProvider2(config.region)().then(async (region) => [
+      await config.regionInfoProvider(region, {
+        useFipsEndpoint: await config.useFipsEndpoint(),
+        useDualstackEndpoint: await config.useDualstackEndpoint()
+      }) || {},
+      region
+    ]).then(([regionInfo, region]) => {
+      const { signingRegion, signingService } = regionInfo;
+      config.signingRegion = config.signingRegion || signingRegion || region;
+      config.signingName = config.signingName || signingService || config.serviceId;
+      const params = {
+        ...config,
+        credentials: config.credentials,
+        region: config.signingRegion,
+        service: config.signingName,
+        sha256,
+        uriEscapePath: signingEscapePath
+      };
+      const SignerCtor = config.signerConstructor || SignatureV4;
+      return new SignerCtor(params);
+    });
+  } else {
+    signer = async (authScheme) => {
+      authScheme = Object.assign({}, {
+        name: "sigv4",
+        signingName: config.signingName || config.defaultSigningName,
+        signingRegion: await normalizeProvider2(config.region)(),
+        properties: {}
+      }, authScheme);
+      const signingRegion = authScheme.signingRegion;
+      const signingService = authScheme.signingName;
+      config.signingRegion = config.signingRegion || signingRegion;
+      config.signingName = config.signingName || signingService || config.serviceId;
+      const params = {
+        ...config,
+        credentials: config.credentials,
+        region: config.signingRegion,
+        service: config.signingName,
+        sha256,
+        uriEscapePath: signingEscapePath
+      };
+      const SignerCtor = config.signerConstructor || SignatureV4;
+      return new SignerCtor(params);
+    };
+  }
+  const resolvedConfig = Object.assign(config, {
+    systemClockOffset,
+    signingEscapePath,
+    signer
+  });
+  return resolvedConfig;
+};
+function normalizeCredentialProvider(config, { credentials, credentialDefaultProvider }) {
+  let credentialsProvider;
+  if (credentials) {
+    if (!(credentials == null ? void 0 : credentials.memoized)) {
+      credentialsProvider = memoizeIdentityProvider(credentials, isIdentityExpired, doesIdentityRequireRefresh);
+    } else {
+      credentialsProvider = credentials;
+    }
+  } else {
+    if (credentialDefaultProvider) {
+      credentialsProvider = normalizeProvider2(credentialDefaultProvider(Object.assign({}, config, {
+        parentClientConfig: config
+      })));
+    } else {
+      credentialsProvider = async () => {
+        throw new Error("@aws-sdk/core::resolveAwsSdkSigV4Config - `credentials` not provided and no credentialDefaultProvider was configured.");
+      };
+    }
+  }
+  credentialsProvider.memoized = true;
+  return credentialsProvider;
+}
+function bindCallerConfig(config, credentialsProvider) {
+  if (credentialsProvider.configBound) {
+    return credentialsProvider;
+  }
+  const fn = async (options) => credentialsProvider({ ...options, callerClientConfig: config });
+  fn.memoized = credentialsProvider.memoized;
+  fn.configBound = true;
+  return fn;
+}
+
+// node_modules/@aws-sdk/client-polly/dist-es/auth/httpAuthSchemeProvider.js
+init_client3();
+var defaultPollyHttpAuthSchemeParametersProvider = async (config, context, input) => {
+  return {
+    operation: getSmithyContext(context).operation,
+    region: await normalizeProvider(config.region)() || (() => {
+      throw new Error("expected `region` to be configured for `aws.auth#sigv4`");
+    })()
+  };
+};
+function createAwsAuthSigv4HttpAuthOption(authParameters) {
+  return {
+    schemeId: "aws.auth#sigv4",
+    signingProperties: {
+      name: "polly",
+      region: authParameters.region
+    },
+    propertiesExtractor: (config, context) => ({
+      signingProperties: {
+        config,
+        context
+      }
+    })
+  };
+}
+var defaultPollyHttpAuthSchemeProvider = (authParameters) => {
+  const options = [];
+  switch (authParameters.operation) {
+    default: {
+      options.push(createAwsAuthSigv4HttpAuthOption(authParameters));
+    }
+  }
+  return options;
+};
+var resolveHttpAuthSchemeConfig = (config) => {
+  var _a3;
+  const config_0 = resolveAwsSdkSigV4Config(config);
+  return Object.assign(config_0, {
+    authSchemePreference: normalizeProvider((_a3 = config.authSchemePreference) != null ? _a3 : [])
+  });
+};
+
+// node_modules/@aws-sdk/client-polly/dist-es/endpoint/EndpointParameters.js
+var resolveClientEndpointParameters = (options) => {
+  var _a3, _b2;
+  return Object.assign(options, {
+    useDualstackEndpoint: (_a3 = options.useDualstackEndpoint) != null ? _a3 : false,
+    useFipsEndpoint: (_b2 = options.useFipsEndpoint) != null ? _b2 : false,
+    defaultSigningName: "polly"
+  });
+};
+var commonParams = {
+  UseFIPS: { type: "builtInParams", name: "useFipsEndpoint" },
+  Endpoint: { type: "builtInParams", name: "endpoint" },
+  Region: { type: "builtInParams", name: "region" },
+  UseDualStack: { type: "builtInParams", name: "useDualstackEndpoint" }
+};
+
+// node_modules/@aws-sdk/client-polly/package.json
+var package_default = {
+  name: "@aws-sdk/client-polly",
+  description: "AWS SDK for JavaScript Polly Client for Node.js, Browser and React Native",
+  version: "3.1068.0",
+  scripts: {
+    build: "concurrently 'yarn:build:types' 'yarn:build:es' && yarn build:cjs",
+    "build:cjs": "node ../../scripts/compilation/inline",
+    "build:es": "tsc -p tsconfig.es.json",
+    "build:include:deps": 'yarn g:turbo run build -F="$npm_package_name"',
+    "build:types": "tsc -p tsconfig.types.json",
+    "build:types:downlevel": "downlevel-dts dist-types dist-types/ts3.4",
+    clean: "premove dist-cjs dist-es dist-types tsconfig.cjs.tsbuildinfo tsconfig.es.tsbuildinfo tsconfig.types.tsbuildinfo",
+    "extract:docs": "api-extractor run --local",
+    "generate:client": "node ../../scripts/generate-clients/single-service --solo polly",
+    test: "yarn g:vitest run --passWithNoTests",
+    "test:index": "tsc --noEmit ./test/index-types.ts && node ./test/index-objects.spec.mjs",
+    "test:integration": "yarn g:vitest run --passWithNoTests -c vitest.config.integ.mts",
+    "test:integration:watch": "yarn g:vitest watch --passWithNoTests -c vitest.config.integ.mts",
+    "test:watch": "yarn g:vitest watch --passWithNoTests"
+  },
+  main: "./dist-cjs/index.js",
+  types: "./dist-types/index.d.ts",
+  module: "./dist-es/index.js",
+  sideEffects: false,
+  dependencies: {
+    "@aws-crypto/sha256-browser": "5.2.0",
+    "@aws-crypto/sha256-js": "5.2.0",
+    "@aws-sdk/core": "^3.974.20",
+    "@aws-sdk/credential-provider-node": "^3.972.55",
+    "@aws-sdk/eventstream-handler-node": "^3.972.21",
+    "@aws-sdk/middleware-eventstream": "^3.972.17",
+    "@aws-sdk/types": "^3.973.12",
+    "@smithy/core": "^3.24.6",
+    "@smithy/fetch-http-handler": "^5.4.6",
+    "@smithy/node-http-handler": "^4.7.6",
+    "@smithy/types": "^4.14.3",
+    tslib: "^2.6.2"
+  },
+  devDependencies: {
+    "@smithy/snapshot-testing": "^2.1.7",
+    "@tsconfig/node20": "20.1.8",
+    "@types/node": "^20.14.8",
+    concurrently: "7.0.0",
+    "downlevel-dts": "0.10.1",
+    premove: "4.0.0",
+    typescript: "~5.8.3",
+    vitest: "^4.0.17"
+  },
+  engines: {
+    node: ">=20.0.0"
+  },
+  typesVersions: {
+    "<4.5": {
+      "dist-types/*": [
+        "dist-types/ts3.4/*"
+      ]
+    }
+  },
+  files: [
+    "dist-*/**"
+  ],
+  author: {
+    name: "AWS SDK for JavaScript Team",
+    url: "https://aws.amazon.com/sdk-for-javascript/"
+  },
+  license: "Apache-2.0",
+  browser: {
+    "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
+  },
+  "react-native": {
+    "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.native"
+  },
+  homepage: "https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-polly",
+  repository: {
+    type: "git",
+    url: "https://github.com/aws/aws-sdk-js-v3.git",
+    directory: "clients/client-polly"
+  }
+};
+
+// node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js
+init_module();
+
+// node_modules/@aws-crypto/sha256-browser/build/module/constants.js
+var SHA_256_HASH = { name: "SHA-256" };
+var SHA_256_HMAC_ALGO = {
+  name: "HMAC",
+  hash: SHA_256_HASH
+};
+var EMPTY_DATA_SHA_256 = new Uint8Array([
+  227,
+  176,
+  196,
+  66,
+  152,
+  252,
+  28,
+  20,
+  154,
+  251,
+  244,
+  200,
+  153,
+  111,
+  185,
+  36,
+  39,
+  174,
+  65,
+  228,
+  100,
+  155,
+  147,
+  76,
+  164,
+  149,
+  153,
+  27,
+  120,
+  82,
+  184,
+  85
+]);
+
+// node_modules/@aws-sdk/util-locate-window/dist-es/index.js
+var fallbackWindow = {};
+function locateWindow() {
+  if (typeof window !== "undefined") {
+    return window;
+  } else if (typeof self !== "undefined") {
+    return self;
+  }
+  return fallbackWindow;
+}
+
+// node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js
+var Sha256 = (
+  /** @class */
+  (function() {
+    function Sha2564(secret) {
+      this.toHash = new Uint8Array(0);
+      this.secret = secret;
+      this.reset();
+    }
+    Sha2564.prototype.update = function(data) {
+      if (isEmptyData(data)) {
+        return;
+      }
+      var update = convertToBuffer(data);
+      var typedArray = new Uint8Array(this.toHash.byteLength + update.byteLength);
+      typedArray.set(this.toHash, 0);
+      typedArray.set(update, this.toHash.byteLength);
+      this.toHash = typedArray;
+    };
+    Sha2564.prototype.digest = function() {
+      var _this = this;
+      if (this.key) {
+        return this.key.then(function(key) {
+          return locateWindow().crypto.subtle.sign(SHA_256_HMAC_ALGO, key, _this.toHash).then(function(data) {
+            return new Uint8Array(data);
+          });
+        });
+      }
+      if (isEmptyData(this.toHash)) {
+        return Promise.resolve(EMPTY_DATA_SHA_256);
+      }
+      return Promise.resolve().then(function() {
+        return locateWindow().crypto.subtle.digest(SHA_256_HASH, _this.toHash);
+      }).then(function(data) {
+        return Promise.resolve(new Uint8Array(data));
+      });
+    };
+    Sha2564.prototype.reset = function() {
+      var _this = this;
+      this.toHash = new Uint8Array(0);
+      if (this.secret && this.secret !== void 0) {
+        this.key = new Promise(function(resolve, reject) {
+          locateWindow().crypto.subtle.importKey("raw", convertToBuffer(_this.secret), SHA_256_HMAC_ALGO, false, ["sign"]).then(resolve, reject);
+        });
+        this.key.catch(function() {
+        });
+      }
+    };
+    return Sha2564;
+  })()
+);
+
+// node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js
+init_tslib_es6();
+
+// node_modules/@aws-crypto/sha256-js/build/module/constants.js
+var BLOCK_SIZE = 64;
+var DIGEST_LENGTH = 32;
+var KEY = new Uint32Array([
+  1116352408,
+  1899447441,
+  3049323471,
+  3921009573,
+  961987163,
+  1508970993,
+  2453635748,
+  2870763221,
+  3624381080,
+  310598401,
+  607225278,
+  1426881987,
+  1925078388,
+  2162078206,
+  2614888103,
+  3248222580,
+  3835390401,
+  4022224774,
+  264347078,
+  604807628,
+  770255983,
+  1249150122,
+  1555081692,
+  1996064986,
+  2554220882,
+  2821834349,
+  2952996808,
+  3210313671,
+  3336571891,
+  3584528711,
+  113926993,
+  338241895,
+  666307205,
+  773529912,
+  1294757372,
+  1396182291,
+  1695183700,
+  1986661051,
+  2177026350,
+  2456956037,
+  2730485921,
+  2820302411,
+  3259730800,
+  3345764771,
+  3516065817,
+  3600352804,
+  4094571909,
+  275423344,
+  430227734,
+  506948616,
+  659060556,
+  883997877,
+  958139571,
+  1322822218,
+  1537002063,
+  1747873779,
+  1955562222,
+  2024104815,
+  2227730452,
+  2361852424,
+  2428436474,
+  2756734187,
+  3204031479,
+  3329325298
+]);
+var INIT = [
+  1779033703,
+  3144134277,
+  1013904242,
+  2773480762,
+  1359893119,
+  2600822924,
+  528734635,
+  1541459225
+];
+var MAX_HASHABLE_LENGTH = Math.pow(2, 53) - 1;
+
+// node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js
+var RawSha256 = (
+  /** @class */
+  (function() {
+    function RawSha2562() {
+      this.state = Int32Array.from(INIT);
+      this.temp = new Int32Array(64);
+      this.buffer = new Uint8Array(64);
+      this.bufferLength = 0;
+      this.bytesHashed = 0;
+      this.finished = false;
+    }
+    RawSha2562.prototype.update = function(data) {
+      if (this.finished) {
+        throw new Error("Attempted to update an already finished hash.");
+      }
+      var position2 = 0;
+      var byteLength = data.byteLength;
+      this.bytesHashed += byteLength;
+      if (this.bytesHashed * 8 > MAX_HASHABLE_LENGTH) {
+        throw new Error("Cannot hash more than 2^53 - 1 bits");
+      }
+      while (byteLength > 0) {
+        this.buffer[this.bufferLength++] = data[position2++];
+        byteLength--;
+        if (this.bufferLength === BLOCK_SIZE) {
+          this.hashBuffer();
+          this.bufferLength = 0;
+        }
+      }
+    };
+    RawSha2562.prototype.digest = function() {
+      if (!this.finished) {
+        var bitsHashed = this.bytesHashed * 8;
+        var bufferView = new DataView(this.buffer.buffer, this.buffer.byteOffset, this.buffer.byteLength);
+        var undecoratedLength = this.bufferLength;
+        bufferView.setUint8(this.bufferLength++, 128);
+        if (undecoratedLength % BLOCK_SIZE >= BLOCK_SIZE - 8) {
+          for (var i2 = this.bufferLength; i2 < BLOCK_SIZE; i2++) {
+            bufferView.setUint8(i2, 0);
+          }
+          this.hashBuffer();
+          this.bufferLength = 0;
+        }
+        for (var i2 = this.bufferLength; i2 < BLOCK_SIZE - 8; i2++) {
+          bufferView.setUint8(i2, 0);
+        }
+        bufferView.setUint32(BLOCK_SIZE - 8, Math.floor(bitsHashed / 4294967296), true);
+        bufferView.setUint32(BLOCK_SIZE - 4, bitsHashed);
+        this.hashBuffer();
+        this.finished = true;
+      }
+      var out = new Uint8Array(DIGEST_LENGTH);
+      for (var i2 = 0; i2 < 8; i2++) {
+        out[i2 * 4] = this.state[i2] >>> 24 & 255;
+        out[i2 * 4 + 1] = this.state[i2] >>> 16 & 255;
+        out[i2 * 4 + 2] = this.state[i2] >>> 8 & 255;
+        out[i2 * 4 + 3] = this.state[i2] >>> 0 & 255;
+      }
+      return out;
+    };
+    RawSha2562.prototype.hashBuffer = function() {
+      var _a3 = this, buffer = _a3.buffer, state = _a3.state;
+      var state0 = state[0], state1 = state[1], state2 = state[2], state3 = state[3], state4 = state[4], state5 = state[5], state6 = state[6], state7 = state[7];
+      for (var i2 = 0; i2 < BLOCK_SIZE; i2++) {
+        if (i2 < 16) {
+          this.temp[i2] = (buffer[i2 * 4] & 255) << 24 | (buffer[i2 * 4 + 1] & 255) << 16 | (buffer[i2 * 4 + 2] & 255) << 8 | buffer[i2 * 4 + 3] & 255;
+        } else {
+          var u = this.temp[i2 - 2];
+          var t1_1 = (u >>> 17 | u << 15) ^ (u >>> 19 | u << 13) ^ u >>> 10;
+          u = this.temp[i2 - 15];
+          var t2_1 = (u >>> 7 | u << 25) ^ (u >>> 18 | u << 14) ^ u >>> 3;
+          this.temp[i2] = (t1_1 + this.temp[i2 - 7] | 0) + (t2_1 + this.temp[i2 - 16] | 0);
+        }
+        var t1 = (((state4 >>> 6 | state4 << 26) ^ (state4 >>> 11 | state4 << 21) ^ (state4 >>> 25 | state4 << 7)) + (state4 & state5 ^ ~state4 & state6) | 0) + (state7 + (KEY[i2] + this.temp[i2] | 0) | 0) | 0;
+        var t2 = ((state0 >>> 2 | state0 << 30) ^ (state0 >>> 13 | state0 << 19) ^ (state0 >>> 22 | state0 << 10)) + (state0 & state1 ^ state0 & state2 ^ state1 & state2) | 0;
+        state7 = state6;
+        state6 = state5;
+        state5 = state4;
+        state4 = state3 + t1 | 0;
+        state3 = state2;
+        state2 = state1;
+        state1 = state0;
+        state0 = t1 + t2 | 0;
+      }
+      state[0] += state0;
+      state[1] += state1;
+      state[2] += state2;
+      state[3] += state3;
+      state[4] += state4;
+      state[5] += state5;
+      state[6] += state6;
+      state[7] += state7;
+    };
+    return RawSha2562;
+  })()
+);
+
+// node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js
+init_module();
+var Sha2562 = (
+  /** @class */
+  (function() {
+    function Sha2564(secret) {
+      this.secret = secret;
+      this.hash = new RawSha256();
+      this.reset();
+    }
+    Sha2564.prototype.update = function(toHash) {
+      if (isEmptyData(toHash) || this.error) {
+        return;
+      }
+      try {
+        this.hash.update(convertToBuffer(toHash));
+      } catch (e2) {
+        this.error = e2;
+      }
+    };
+    Sha2564.prototype.digestSync = function() {
+      if (this.error) {
+        throw this.error;
+      }
+      if (this.outer) {
+        if (!this.outer.finished) {
+          this.outer.update(this.hash.digest());
+        }
+        return this.outer.digest();
+      }
+      return this.hash.digest();
+    };
+    Sha2564.prototype.digest = function() {
+      return __awaiter(this, void 0, void 0, function() {
+        return __generator(this, function(_a3) {
+          return [2, this.digestSync()];
+        });
+      });
+    };
+    Sha2564.prototype.reset = function() {
+      this.hash = new RawSha256();
+      if (this.secret) {
+        this.outer = new RawSha256();
+        var inner = bufferFromSecret(this.secret);
+        var outer = new Uint8Array(BLOCK_SIZE);
+        outer.set(inner);
+        for (var i2 = 0; i2 < BLOCK_SIZE; i2++) {
+          inner[i2] ^= 54;
+          outer[i2] ^= 92;
+        }
+        this.hash.update(inner);
+        this.outer.update(outer);
+        for (var i2 = 0; i2 < inner.byteLength; i2++) {
+          inner[i2] = 0;
+        }
+      }
+    };
+    return Sha2564;
+  })()
+);
+function bufferFromSecret(secret) {
+  var input = convertToBuffer(secret);
+  if (input.byteLength > BLOCK_SIZE) {
+    var bufferHash = new RawSha256();
+    bufferHash.update(input);
+    input = bufferHash.digest();
+  }
+  var buffer = new Uint8Array(BLOCK_SIZE);
+  buffer.set(input);
+  return buffer;
+}
+
+// node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js
+var subtleCryptoMethods = [
+  "decrypt",
+  "digest",
+  "encrypt",
+  "exportKey",
+  "generateKey",
+  "importKey",
+  "sign",
+  "verify"
+];
+function supportsWebCrypto(window2) {
+  if (supportsSecureRandom(window2) && typeof window2.crypto.subtle === "object") {
+    var subtle = window2.crypto.subtle;
+    return supportsSubtleCrypto(subtle);
+  }
+  return false;
+}
+function supportsSecureRandom(window2) {
+  if (typeof window2 === "object" && typeof window2.crypto === "object") {
+    var getRandomValues = window2.crypto.getRandomValues;
+    return typeof getRandomValues === "function";
+  }
+  return false;
+}
+function supportsSubtleCrypto(subtle) {
+  return subtle && subtleCryptoMethods.every(function(methodName) {
+    return typeof subtle[methodName] === "function";
+  });
+}
+
+// node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js
+init_module();
+var Sha2563 = (
+  /** @class */
+  (function() {
+    function Sha2564(secret) {
+      if (supportsWebCrypto(locateWindow())) {
+        this.hash = new Sha256(secret);
+      } else {
+        this.hash = new Sha2562(secret);
+      }
+    }
+    Sha2564.prototype.update = function(data, encoding) {
+      this.hash.update(convertToBuffer(data));
+    };
+    Sha2564.prototype.digest = function() {
+      return this.hash.digest();
+    };
+    Sha2564.prototype.reset = function() {
+      this.hash.reset();
+    };
+    return Sha2564;
+  })()
+);
+
+// node_modules/@aws-sdk/client-polly/dist-es/runtimeConfig.browser.js
+init_client3();
+init_index_browser3();
+init_index_browser2();
+
+// node_modules/@smithy/fetch-http-handler/dist-es/create-request.js
+function createRequest(url, requestOptions) {
+  return new Request(url, requestOptions);
+}
+
+// node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js
+function requestTimeout(timeoutInMs = 0) {
+  return new Promise((resolve, reject) => {
+    if (timeoutInMs) {
+      setTimeout(() => {
+        const timeoutError = new Error(`Request did not complete within ${timeoutInMs} ms`);
+        timeoutError.name = "TimeoutError";
+        reject(timeoutError);
+      }, timeoutInMs);
+    }
+  });
+}
+
+// node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js
+var keepAliveSupport = {
+  supported: void 0
+};
+var FetchHttpHandler = class _FetchHttpHandler {
+  constructor(options) {
+    __publicField(this, "config");
+    __publicField(this, "configProvider");
+    if (typeof options === "function") {
+      this.configProvider = options().then((opts) => opts || {});
+    } else {
+      this.config = options != null ? options : {};
+      this.configProvider = Promise.resolve(this.config);
+    }
+    if (keepAliveSupport.supported === void 0) {
+      keepAliveSupport.supported = Boolean(typeof Request !== "undefined" && "keepalive" in createRequest("https://[::1]"));
+    }
+  }
+  static create(instanceOrOptions) {
+    if (typeof (instanceOrOptions == null ? void 0 : instanceOrOptions.handle) === "function") {
+      return instanceOrOptions;
+    }
+    return new _FetchHttpHandler(instanceOrOptions);
+  }
+  destroy() {
+  }
+  async handle(request, { abortSignal, requestTimeout: requestTimeout2 } = {}) {
+    var _a3, _b2, _c2;
+    if (!this.config) {
+      this.config = await this.configProvider;
+    }
+    const requestTimeoutInMs = requestTimeout2 != null ? requestTimeout2 : this.config.requestTimeout;
+    const keepAlive = this.config.keepAlive === true;
+    const credentials = this.config.credentials;
+    if (abortSignal == null ? void 0 : abortSignal.aborted) {
+      const abortError = buildAbortError(abortSignal);
+      return Promise.reject(abortError);
+    }
+    let path2 = request.path;
+    const queryString = buildQueryString(request.query || {});
+    if (queryString) {
+      path2 += `?${queryString}`;
+    }
+    if (request.fragment) {
+      path2 += `#${request.fragment}`;
+    }
+    let auth = "";
+    if (request.username != null || request.password != null) {
+      const username = (_a3 = request.username) != null ? _a3 : "";
+      const password = (_b2 = request.password) != null ? _b2 : "";
+      auth = `${username}:${password}@`;
+    }
+    const { port, method } = request;
+    const url = `${request.protocol}//${auth}${request.hostname}${port ? `:${port}` : ""}${path2}`;
+    const body = method === "GET" || method === "HEAD" ? void 0 : request.body;
+    const requestOptions = {
+      body,
+      headers: new Headers(request.headers),
+      method,
+      credentials
+    };
+    if ((_c2 = this.config) == null ? void 0 : _c2.cache) {
+      requestOptions.cache = this.config.cache;
+    }
+    if (body) {
+      requestOptions.duplex = "half";
+    }
+    if (typeof AbortController !== "undefined") {
+      requestOptions.signal = abortSignal;
+    }
+    if (keepAliveSupport.supported) {
+      requestOptions.keepalive = keepAlive;
+    }
+    if (typeof this.config.requestInit === "function") {
+      Object.assign(requestOptions, this.config.requestInit(request));
+    }
+    let removeSignalEventListener = () => {
+    };
+    const fetchRequest = createRequest(url, requestOptions);
+    const raceOfPromises = [
+      fetch(fetchRequest).then((response) => {
+        const fetchHeaders = response.headers;
+        const transformedHeaders = {};
+        for (const pair of fetchHeaders.entries()) {
+          transformedHeaders[pair[0]] = pair[1];
+        }
+        const hasReadableStream = response.body != void 0;
+        if (!hasReadableStream) {
+          return response.blob().then((body2) => ({
+            response: new HttpResponse({
+              headers: transformedHeaders,
+              reason: response.statusText,
+              statusCode: response.status,
+              body: body2
+            })
+          }));
+        }
+        return {
+          response: new HttpResponse({
+            headers: transformedHeaders,
+            reason: response.statusText,
+            statusCode: response.status,
+            body: response.body
+          })
+        };
+      }),
+      requestTimeout(requestTimeoutInMs)
+    ];
+    if (abortSignal) {
+      raceOfPromises.push(new Promise((resolve, reject) => {
+        const onAbort = () => {
+          const abortError = buildAbortError(abortSignal);
+          reject(abortError);
+        };
+        if (typeof abortSignal.addEventListener === "function") {
+          const signal = abortSignal;
+          signal.addEventListener("abort", onAbort, { once: true });
+          removeSignalEventListener = () => signal.removeEventListener("abort", onAbort);
+        } else {
+          abortSignal.onabort = onAbort;
+        }
+      }));
+    }
+    return Promise.race(raceOfPromises).finally(removeSignalEventListener);
+  }
+  updateHttpClientConfig(key, value2) {
+    this.config = void 0;
+    this.configProvider = this.configProvider.then((config) => {
+      config[key] = value2;
+      return config;
+    });
+  }
+  httpHandlerConfigs() {
+    var _a3;
+    return (_a3 = this.config) != null ? _a3 : {};
+  }
+};
+function buildAbortError(abortSignal) {
+  const reason = abortSignal && typeof abortSignal === "object" && "reason" in abortSignal ? abortSignal.reason : void 0;
+  if (reason) {
+    if (reason instanceof Error) {
+      const abortError3 = new Error("Request aborted");
+      abortError3.name = "AbortError";
+      abortError3.cause = reason;
+      return abortError3;
+    }
+    const abortError2 = new Error(String(reason));
+    abortError2.name = "AbortError";
+    return abortError2;
+  }
+  const abortError = new Error("Request aborted");
+  abortError.name = "AbortError";
+  return abortError;
+}
+
+// node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js
+init_index_browser2();
+var streamCollector2 = async (stream) => {
+  var _a3;
+  if (typeof Blob === "function" && stream instanceof Blob || ((_a3 = stream.constructor) == null ? void 0 : _a3.name) === "Blob") {
+    if (Blob.prototype.arrayBuffer !== void 0) {
+      return new Uint8Array(await stream.arrayBuffer());
+    }
+    return collectBlob2(stream);
+  }
+  return collectStream2(stream);
+};
+async function collectBlob2(blob) {
+  const base64 = await readToBase642(blob);
+  const arrayBuffer = fromBase64(base64);
+  return new Uint8Array(arrayBuffer);
+}
+async function collectStream2(stream) {
+  const chunks = [];
+  const reader = stream.getReader();
+  let isDone = false;
+  let length = 0;
+  while (!isDone) {
+    const { done, value: value2 } = await reader.read();
+    if (value2) {
+      chunks.push(value2);
+      length += value2.length;
+    }
+    isDone = done;
+  }
+  const collected = new Uint8Array(length);
+  let offset = 0;
+  for (const chunk of chunks) {
+    collected.set(chunk, offset);
+    offset += chunk.length;
+  }
+  return collected;
+}
+function readToBase642(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      var _a3;
+      if (reader.readyState !== 2) {
+        return reject(new Error("Reader aborted too early"));
+      }
+      const result = (_a3 = reader.result) != null ? _a3 : "";
+      const commaIndex = result.indexOf(",");
+      const dataOffset = commaIndex > -1 ? commaIndex + 1 : result.length;
+      resolve(result.substring(dataOffset));
+    };
+    reader.onabort = () => reject(new Error("Read aborted"));
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+
+// node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js
+init_client3();
+init_schema2();
+var ProtocolLib = class {
+  constructor(queryCompat = false) {
+    __publicField(this, "queryCompat");
+    __publicField(this, "errorRegistry");
+    this.queryCompat = queryCompat;
+  }
+  resolveRestContentType(defaultContentType, inputSchema) {
+    const members = inputSchema.getMemberSchemas();
+    const httpPayloadMember = Object.values(members).find((m) => {
+      return !!m.getMergedTraits().httpPayload;
+    });
+    if (httpPayloadMember) {
+      const mediaType = httpPayloadMember.getMergedTraits().mediaType;
+      if (mediaType) {
+        return mediaType;
+      } else if (httpPayloadMember.isStringSchema()) {
+        return "text/plain";
+      } else if (httpPayloadMember.isBlobSchema()) {
+        return "application/octet-stream";
+      } else {
+        return defaultContentType;
+      }
+    } else if (!inputSchema.isUnitSchema()) {
+      const hasBody = Object.values(members).find((m) => {
+        const { httpQuery, httpQueryParams, httpHeader, httpLabel, httpPrefixHeaders } = m.getMergedTraits();
+        const noPrefixHeaders = httpPrefixHeaders === void 0;
+        return !httpQuery && !httpQueryParams && !httpHeader && !httpLabel && noPrefixHeaders;
+      });
+      if (hasBody) {
+        return defaultContentType;
+      }
+    }
+  }
+  async getErrorSchemaOrThrowBaseException(errorIdentifier, defaultNamespace, response, dataObject, metadata, getErrorSchema) {
+    var _a3, _b2, _c2, _d, _e2, _f2, _g, _h2, _i;
+    let errorName = errorIdentifier;
+    if (errorIdentifier.includes("#")) {
+      [, errorName] = errorIdentifier.split("#");
+    }
+    const errorMetadata = {
+      $metadata: metadata,
+      $fault: response.statusCode < 500 ? "client" : "server"
+    };
+    if (!this.errorRegistry) {
+      throw new Error("@aws-sdk/core/protocols - error handler not initialized.");
+    }
+    try {
+      const errorSchema = (_a3 = getErrorSchema == null ? void 0 : getErrorSchema(this.errorRegistry, errorName)) != null ? _a3 : this.errorRegistry.getSchema(errorIdentifier);
+      return { errorSchema, errorMetadata };
+    } catch (e2) {
+      dataObject.message = (_c2 = (_b2 = dataObject.message) != null ? _b2 : dataObject.Message) != null ? _c2 : "UnknownError";
+      const synthetic = this.errorRegistry;
+      const baseExceptionSchema = synthetic.getBaseException();
+      if (baseExceptionSchema) {
+        const ErrorCtor = (_d = synthetic.getErrorCtor(baseExceptionSchema)) != null ? _d : Error;
+        throw this.decorateServiceException(Object.assign(new ErrorCtor({ name: errorName }), errorMetadata), dataObject);
+      }
+      const d2 = dataObject;
+      const message = (_i = (_g = (_e2 = d2 == null ? void 0 : d2.message) != null ? _e2 : d2 == null ? void 0 : d2.Message) != null ? _g : (_f2 = d2 == null ? void 0 : d2.Error) == null ? void 0 : _f2.Message) != null ? _i : (_h2 = d2 == null ? void 0 : d2.Error) == null ? void 0 : _h2.message;
+      throw this.decorateServiceException(Object.assign(new Error(message), {
+        name: errorName
+      }, errorMetadata), dataObject);
+    }
+  }
+  compose(composite, errorIdentifier, defaultNamespace) {
+    let namespace = defaultNamespace;
+    if (errorIdentifier.includes("#")) {
+      [namespace] = errorIdentifier.split("#");
+    }
+    const staticRegistry = TypeRegistry.for(namespace);
+    const defaultSyntheticRegistry = TypeRegistry.for("smithy.ts.sdk.synthetic." + defaultNamespace);
+    composite.copyFrom(staticRegistry);
+    composite.copyFrom(defaultSyntheticRegistry);
+    this.errorRegistry = composite;
+  }
+  decorateServiceException(exception, additions = {}) {
+    var _a3, _b2, _c2, _d, _e2, _f2, _g, _h2;
+    if (this.queryCompat) {
+      const msg = (_a3 = exception.Message) != null ? _a3 : additions.Message;
+      const error = decorateServiceException(exception, additions);
+      if (msg) {
+        error.message = msg;
+      }
+      const errorObj = (_b2 = error.Error) != null ? _b2 : {};
+      errorObj.Type = (_c2 = error.Error) == null ? void 0 : _c2.Type;
+      errorObj.Code = (_d = error.Error) == null ? void 0 : _d.Code;
+      errorObj.Message = (_h2 = (_g = (_e2 = error.Error) == null ? void 0 : _e2.message) != null ? _g : (_f2 = error.Error) == null ? void 0 : _f2.Message) != null ? _h2 : msg;
+      error.Error = errorObj;
+      const reqId = error.$metadata.requestId;
+      if (reqId) {
+        error.RequestId = reqId;
+      }
+      return error;
+    }
+    return decorateServiceException(exception, additions);
+  }
+  setQueryCompatError(output, response) {
+    var _a3;
+    const queryErrorHeader = (_a3 = response.headers) == null ? void 0 : _a3["x-amzn-query-error"];
+    if (output !== void 0 && queryErrorHeader != null) {
+      const [Code, Type] = queryErrorHeader.split(";");
+      const keys = Object.keys(output);
+      const Error2 = {
+        Code,
+        Type
+      };
+      output.Code = Code;
+      output.Type = Type;
+      for (let i2 = 0; i2 < keys.length; i2++) {
+        const k2 = keys[i2];
+        Error2[k2 === "message" ? "Message" : k2] = output[k2];
+      }
+      delete Error2.__type;
+      output.Error = Error2;
+    }
+  }
+  queryCompatOutput(queryCompatErrorData, errorData) {
+    if (queryCompatErrorData.Error) {
+      errorData.Error = queryCompatErrorData.Error;
+    }
+    if (queryCompatErrorData.Type) {
+      errorData.Type = queryCompatErrorData.Type;
+    }
+    if (queryCompatErrorData.Code) {
+      errorData.Code = queryCompatErrorData.Code;
+    }
+  }
+  findQueryCompatibleError(registry, errorName) {
+    try {
+      return registry.getSchema(errorName);
+    } catch (e2) {
+      return registry.find((schema) => {
+        var _a3;
+        return ((_a3 = NormalizedSchema.of(schema).getMergedTraits().awsQueryError) == null ? void 0 : _a3[0]) === errorName;
+      });
+    }
+  }
+};
+
+// node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js
+var SerdeContextConfig = class {
+  constructor() {
+    __publicField(this, "serdeContext");
+  }
+  setSerdeContext(serdeContext) {
+    this.serdeContext = serdeContext;
+  }
+};
+
+// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js
+init_schema2();
+init_index_browser2();
+init_index_browser2();
+
+// node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js
+var UnionSerde = class {
+  constructor(from, to) {
+    __publicField(this, "from");
+    __publicField(this, "to");
+    __publicField(this, "keys");
+    this.from = from;
+    this.to = to;
+    const keys = Object.keys(this.from);
+    const set = new Set(keys);
+    set.delete("__type");
+    this.keys = set;
+  }
+  mark(key) {
+    this.keys.delete(key);
+  }
+  hasUnknown() {
+    return this.keys.size === 1 && Object.keys(this.to).length === 0;
+  }
+  writeUnknown() {
+    if (this.hasUnknown()) {
+      const k2 = this.keys.values().next().value;
+      const v = this.from[k2];
+      this.to.$unknown = [k2, v];
+    }
+  }
+};
+
+// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/jsonReviver.js
+init_index_browser2();
+function jsonReviver(key, value2, context) {
+  if (context == null ? void 0 : context.source) {
+    const numericString = context.source;
+    if (typeof value2 === "number") {
+      if (value2 > Number.MAX_SAFE_INTEGER || value2 < Number.MIN_SAFE_INTEGER || numericString !== String(value2)) {
+        const isFractional = numericString.includes(".");
+        if (isFractional) {
+          return new NumericValue(numericString, "bigDecimal");
+        } else {
+          return BigInt(numericString);
+        }
+      }
+    }
+  }
+  return value2;
+}
+
+// node_modules/@aws-sdk/core/dist-es/submodules/protocols/common.js
+init_index_browser2();
+var collectBodyString = (streamBody, context) => collectBody(streamBody, context).then((body) => {
+  var _a3;
+  return ((_a3 = context == null ? void 0 : context.utf8Encoder) != null ? _a3 : toUtf8)(body);
+});
+
+// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js
+var parseJsonBody = (streamBody, context) => collectBodyString(streamBody, context).then((encoded) => {
+  if (encoded.length) {
+    try {
+      return JSON.parse(encoded);
+    } catch (e2) {
+      if ((e2 == null ? void 0 : e2.name) === "SyntaxError") {
+        Object.defineProperty(e2, "$responseBodyText", {
+          value: encoded
+        });
+      }
+      throw e2;
+    }
+  }
+  return {};
+});
+var findKey = (object, key) => Object.keys(object).find((k2) => k2.toLowerCase() === key.toLowerCase());
+var sanitizeErrorCode = (rawValue) => {
+  let cleanValue = rawValue;
+  if (typeof cleanValue === "number") {
+    cleanValue = cleanValue.toString();
+  }
+  if (cleanValue.indexOf(",") >= 0) {
+    cleanValue = cleanValue.split(",")[0];
+  }
+  if (cleanValue.indexOf(":") >= 0) {
+    cleanValue = cleanValue.split(":")[0];
+  }
+  if (cleanValue.indexOf("#") >= 0) {
+    cleanValue = cleanValue.split("#")[1];
+  }
+  return cleanValue;
+};
+var loadRestJsonErrorCode = (output, data) => {
+  return loadErrorCode(output, data, ["header", "code", "type"]);
+};
+var loadErrorCode = ({ headers }, data, order2) => {
+  while (order2.length > 0) {
+    const location = order2.shift();
+    switch (location) {
+      case "header":
+        const headerKey = findKey(headers != null ? headers : {}, "x-amzn-errortype");
+        if (headerKey !== void 0) {
+          return sanitizeErrorCode(headers[headerKey]);
+        }
+        break;
+      case "code":
+        const codeKey = findKey(data != null ? data : {}, "code");
+        if (codeKey && data[codeKey] !== void 0) {
+          return sanitizeErrorCode(data[codeKey]);
+        }
+        break;
+      case "type":
+        if ((data == null ? void 0 : data.__type) !== void 0) {
+          return sanitizeErrorCode(data.__type);
+        }
+        break;
+    }
+  }
+};
+
+// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js
+var JsonShapeDeserializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    __publicField(this, "settings");
+    this.settings = settings;
+  }
+  async read(schema, data) {
+    return this._read(schema, typeof data === "string" ? JSON.parse(data, jsonReviver) : await parseJsonBody(data, this.serdeContext));
+  }
+  readObject(schema, data) {
+    return this._read(schema, data);
+  }
+  _read(schema, value2) {
+    var _a3, _b2;
+    const isObject = value2 !== null && typeof value2 === "object";
+    const ns = NormalizedSchema.of(schema);
+    if (isObject) {
+      if (ns.isStructSchema()) {
+        const record = value2;
+        const union = ns.isUnionSchema();
+        const out = {};
+        let nameMap = void 0;
+        const { jsonName } = this.settings;
+        if (jsonName) {
+          nameMap = {};
+        }
+        let unionSerde;
+        if (union) {
+          unionSerde = new UnionSerde(record, out);
+        }
+        for (const [memberName, memberSchema] of ns.structIterator()) {
+          let fromKey = memberName;
+          if (jsonName) {
+            fromKey = (_a3 = memberSchema.getMergedTraits().jsonName) != null ? _a3 : fromKey;
+            nameMap[fromKey] = memberName;
+          }
+          if (union) {
+            unionSerde.mark(fromKey);
+          }
+          if (record[fromKey] != null) {
+            out[memberName] = this._read(memberSchema, record[fromKey]);
+          }
+        }
+        if (union) {
+          unionSerde.writeUnknown();
+        } else if (typeof record.__type === "string") {
+          for (const k2 in record) {
+            const v = record[k2];
+            const t = jsonName ? (_b2 = nameMap[k2]) != null ? _b2 : k2 : k2;
+            if (!(t in out)) {
+              out[t] = v;
+            }
+          }
+        }
+        return out;
+      }
+      if (Array.isArray(value2) && ns.isListSchema()) {
+        const listMember = ns.getValueSchema();
+        const out = [];
+        for (const item of value2) {
+          out.push(this._read(listMember, item));
+        }
+        return out;
+      }
+      if (ns.isMapSchema()) {
+        const mapMember = ns.getValueSchema();
+        const out = {};
+        for (const _k in value2) {
+          out[_k] = this._read(mapMember, value2[_k]);
+        }
+        return out;
+      }
+    }
+    if (ns.isBlobSchema() && typeof value2 === "string") {
+      return fromBase64(value2);
+    }
+    const mediaType = ns.getMergedTraits().mediaType;
+    if (ns.isStringSchema() && typeof value2 === "string" && mediaType) {
+      const isJson = mediaType === "application/json" || mediaType.endsWith("+json");
+      if (isJson) {
+        return LazyJsonString.from(value2);
+      }
+      return value2;
+    }
+    if (ns.isTimestampSchema() && value2 != null) {
+      const format2 = determineTimestampFormat(ns, this.settings);
+      switch (format2) {
+        case 5:
+          return parseRfc3339DateTimeWithOffset(value2);
+        case 6:
+          return parseRfc7231DateTime(value2);
+        case 7:
+          return parseEpochTimestamp(value2);
+        default:
+          console.warn("Missing timestamp format, parsing value with Date constructor:", value2);
+          return new Date(value2);
+      }
+    }
+    if (ns.isBigIntegerSchema() && (typeof value2 === "number" || typeof value2 === "string")) {
+      return BigInt(value2);
+    }
+    if (ns.isBigDecimalSchema() && value2 != void 0) {
+      if (value2 instanceof NumericValue) {
+        return value2;
+      }
+      const untyped = value2;
+      if (untyped.type === "bigDecimal" && "string" in untyped) {
+        return new NumericValue(untyped.string, untyped.type);
+      }
+      return new NumericValue(String(value2), "bigDecimal");
+    }
+    if (ns.isNumericSchema() && typeof value2 === "string") {
+      switch (value2) {
+        case "Infinity":
+          return Infinity;
+        case "-Infinity":
+          return -Infinity;
+        case "NaN":
+          return NaN;
+      }
+      return value2;
+    }
+    if (ns.isDocumentSchema()) {
+      if (isObject) {
+        const out = Array.isArray(value2) ? [] : {};
+        for (const k2 in value2) {
+          const v = value2[k2];
+          if (v instanceof NumericValue) {
+            out[k2] = v;
+          } else {
+            out[k2] = this._read(ns, v);
+          }
+        }
+        return out;
+      } else {
+        return structuredClone(value2);
+      }
+    }
+    return value2;
+  }
+};
+
+// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js
+init_schema2();
+init_index_browser2();
+
+// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/jsonReplacer.js
+init_index_browser2();
+var NUMERIC_CONTROL_CHAR = String.fromCharCode(925);
+var JsonReplacer = class {
+  constructor() {
+    __publicField(this, "values", /* @__PURE__ */ new Map());
+    __publicField(this, "counter", 0);
+    __publicField(this, "stage", 0);
+  }
+  createReplacer() {
+    if (this.stage === 1) {
+      throw new Error("@aws-sdk/core/protocols - JsonReplacer already created.");
+    }
+    if (this.stage === 2) {
+      throw new Error("@aws-sdk/core/protocols - JsonReplacer exhausted.");
+    }
+    this.stage = 1;
+    return (key, value2) => {
+      if (value2 instanceof NumericValue) {
+        const v = `${NUMERIC_CONTROL_CHAR + "nv" + this.counter++}_` + value2.string;
+        this.values.set(`"${v}"`, value2.string);
+        return v;
+      }
+      if (typeof value2 === "bigint") {
+        const s = value2.toString();
+        const v = `${NUMERIC_CONTROL_CHAR + "b" + this.counter++}_` + s;
+        this.values.set(`"${v}"`, s);
+        return v;
+      }
+      return value2;
+    };
+  }
+  replaceInJson(json) {
+    if (this.stage === 0) {
+      throw new Error("@aws-sdk/core/protocols - JsonReplacer not created yet.");
+    }
+    if (this.stage === 2) {
+      throw new Error("@aws-sdk/core/protocols - JsonReplacer exhausted.");
+    }
+    this.stage = 2;
+    if (this.counter === 0) {
+      return json;
+    }
+    for (const [key, value2] of this.values) {
+      json = json.replace(key, value2);
+    }
+    return json;
+  }
+};
+
+// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js
+var JsonShapeSerializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    __publicField(this, "settings");
+    __publicField(this, "buffer");
+    __publicField(this, "useReplacer", false);
+    __publicField(this, "rootSchema");
+    this.settings = settings;
+  }
+  write(schema, value2) {
+    this.rootSchema = NormalizedSchema.of(schema);
+    this.buffer = this._write(this.rootSchema, value2);
+  }
+  flush() {
+    const { rootSchema, useReplacer } = this;
+    this.rootSchema = void 0;
+    this.useReplacer = false;
+    if ((rootSchema == null ? void 0 : rootSchema.isStructSchema()) || (rootSchema == null ? void 0 : rootSchema.isDocumentSchema())) {
+      if (!useReplacer) {
+        return JSON.stringify(this.buffer);
+      }
+      const replacer = new JsonReplacer();
+      return replacer.replaceInJson(JSON.stringify(this.buffer, replacer.createReplacer(), 0));
+    }
+    return this.buffer;
+  }
+  writeDiscriminatedDocument(schema, value2) {
+    this.write(schema, value2);
+    if (typeof this.buffer === "object") {
+      this.buffer.__type = NormalizedSchema.of(schema).getName(true);
+    }
+  }
+  _write(schema, value2, container) {
+    var _a3, _b2, _c2, _d, _e2, _f2;
+    const isObject = value2 !== null && typeof value2 === "object";
+    const ns = NormalizedSchema.of(schema);
+    if (isObject) {
+      if (ns.isStructSchema()) {
+        const record = value2;
+        const out = {};
+        const { jsonName } = this.settings;
+        let nameMap = void 0;
+        if (jsonName) {
+          nameMap = {};
+        }
+        let outCount = 0;
+        for (const [memberName, memberSchema] of ns.structIterator()) {
+          const serializableValue = this._write(memberSchema, record[memberName], ns);
+          if (serializableValue !== void 0) {
+            let targetKey = memberName;
+            if (jsonName) {
+              targetKey = (_a3 = memberSchema.getMergedTraits().jsonName) != null ? _a3 : memberName;
+              nameMap[memberName] = targetKey;
+            }
+            out[targetKey] = serializableValue;
+            outCount++;
+          }
+        }
+        if (ns.isUnionSchema() && outCount === 0) {
+          const { $unknown } = record;
+          if (Array.isArray($unknown)) {
+            const [k2, v] = $unknown;
+            out[k2] = this._write(15, v);
+          }
+        } else if (typeof record.__type === "string") {
+          for (const k2 in record) {
+            const v = record[k2];
+            const targetKey = jsonName ? (_b2 = nameMap[k2]) != null ? _b2 : k2 : k2;
+            if (!(targetKey in out)) {
+              out[targetKey] = this._write(15, v);
+            }
+          }
+        }
+        return out;
+      }
+      if (Array.isArray(value2) && ns.isListSchema()) {
+        const listMember = ns.getValueSchema();
+        const out = [];
+        const sparse = !!ns.getMergedTraits().sparse;
+        for (const item of value2) {
+          if (sparse || item != null) {
+            out.push(this._write(listMember, item));
+          }
+        }
+        return out;
+      }
+      if (ns.isMapSchema()) {
+        const mapMember = ns.getValueSchema();
+        const out = {};
+        const sparse = !!ns.getMergedTraits().sparse;
+        for (const _k in value2) {
+          const _v = value2[_k];
+          if (sparse || _v != null) {
+            out[_k] = this._write(mapMember, _v);
+          }
+        }
+        return out;
+      }
+      if (value2 instanceof Uint8Array && (ns.isBlobSchema() || ns.isDocumentSchema())) {
+        if (ns === this.rootSchema) {
+          return value2;
+        }
+        return ((_d = (_c2 = this.serdeContext) == null ? void 0 : _c2.base64Encoder) != null ? _d : toBase64)(value2);
+      }
+      if (value2 instanceof Date && (ns.isTimestampSchema() || ns.isDocumentSchema())) {
+        const format2 = determineTimestampFormat(ns, this.settings);
+        switch (format2) {
+          case 5:
+            return value2.toISOString().replace(".000Z", "Z");
+          case 6:
+            return dateToUtcString(value2);
+          case 7:
+            return value2.getTime() / 1e3;
+          default:
+            console.warn("Missing timestamp format, using epoch seconds", value2);
+            return value2.getTime() / 1e3;
+        }
+      }
+      if (value2 instanceof NumericValue) {
+        this.useReplacer = true;
+      }
+    }
+    if (value2 === null && (container == null ? void 0 : container.isStructSchema())) {
+      return void 0;
+    }
+    if (ns.isStringSchema()) {
+      if (typeof value2 === "undefined" && ns.isIdempotencyToken()) {
+        return generateIdempotencyToken();
+      }
+      const mediaType = ns.getMergedTraits().mediaType;
+      if (value2 != null && mediaType) {
+        const isJson = mediaType === "application/json" || mediaType.endsWith("+json");
+        if (isJson) {
+          return LazyJsonString.from(value2);
+        }
+      }
+      return value2;
+    }
+    if (typeof value2 === "number" && ns.isNumericSchema()) {
+      if (Math.abs(value2) === Infinity || isNaN(value2)) {
+        return String(value2);
+      }
+      return value2;
+    }
+    if (typeof value2 === "string" && ns.isBlobSchema()) {
+      if (ns === this.rootSchema) {
+        return value2;
+      }
+      return ((_f2 = (_e2 = this.serdeContext) == null ? void 0 : _e2.base64Encoder) != null ? _f2 : toBase64)(value2);
+    }
+    if (typeof value2 === "bigint") {
+      this.useReplacer = true;
+    }
+    if (ns.isDocumentSchema()) {
+      if (isObject) {
+        const out = Array.isArray(value2) ? [] : {};
+        for (const k2 in value2) {
+          const v = value2[k2];
+          if (v instanceof NumericValue) {
+            this.useReplacer = true;
+            out[k2] = v;
+          } else {
+            out[k2] = this._write(ns, v);
+          }
+        }
+        return out;
+      } else {
+        return structuredClone(value2);
+      }
+    }
+    return value2;
+  }
+};
+
+// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js
+var JsonCodec = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    __publicField(this, "settings");
+    this.settings = settings;
+  }
+  createSerializer() {
+    const serializer = new JsonShapeSerializer(this.settings);
+    serializer.setSerdeContext(this.serdeContext);
+    return serializer;
+  }
+  createDeserializer() {
+    const deserializer = new JsonShapeDeserializer(this.settings);
+    deserializer.setSerdeContext(this.serdeContext);
+    return deserializer;
+  }
+};
+
+// node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js
+init_schema2();
+var AwsRestJsonProtocol = class extends HttpBindingProtocol {
+  constructor({ defaultNamespace, errorTypeRegistries: errorTypeRegistries2 }) {
+    super({
+      defaultNamespace,
+      errorTypeRegistries: errorTypeRegistries2
+    });
+    __publicField(this, "serializer");
+    __publicField(this, "deserializer");
+    __publicField(this, "codec");
+    __publicField(this, "mixin", new ProtocolLib());
+    const settings = {
+      timestampFormat: {
+        useTrait: true,
+        default: 7
+      },
+      httpBindings: true,
+      jsonName: true
+    };
+    this.codec = new JsonCodec(settings);
+    this.serializer = new HttpInterceptingShapeSerializer(this.codec.createSerializer(), settings);
+    this.deserializer = new HttpInterceptingShapeDeserializer(this.codec.createDeserializer(), settings);
+  }
+  getShapeId() {
+    return "aws.protocols#restJson1";
+  }
+  getPayloadCodec() {
+    return this.codec;
+  }
+  setSerdeContext(serdeContext) {
+    this.codec.setSerdeContext(serdeContext);
+    super.setSerdeContext(serdeContext);
+  }
+  async serializeRequest(operationSchema, input, context) {
+    const request = await super.serializeRequest(operationSchema, input, context);
+    const inputSchema = NormalizedSchema.of(operationSchema.input);
+    if (!request.headers["content-type"]) {
+      const contentType = this.mixin.resolveRestContentType(this.getDefaultContentType(), inputSchema);
+      if (contentType) {
+        request.headers["content-type"] = contentType;
+      }
+    }
+    if (request.body == null && request.headers["content-type"] === this.getDefaultContentType()) {
+      request.body = "{}";
+    }
+    return request;
+  }
+  async deserializeResponse(operationSchema, context, response) {
+    const output = await super.deserializeResponse(operationSchema, context, response);
+    const outputSchema = NormalizedSchema.of(operationSchema.output);
+    for (const [name, member2] of outputSchema.structIterator()) {
+      if (member2.getMemberTraits().httpPayload && !(name in output)) {
+        output[name] = null;
+      }
+    }
+    return output;
+  }
+  async handleError(operationSchema, context, response, dataObject, metadata) {
+    var _a3, _b2, _c2, _d, _e2;
+    const errorIdentifier = (_a3 = loadRestJsonErrorCode(response, dataObject)) != null ? _a3 : "Unknown";
+    this.mixin.compose(this.compositeErrorRegistry, errorIdentifier, this.options.defaultNamespace);
+    const { errorSchema, errorMetadata } = await this.mixin.getErrorSchemaOrThrowBaseException(errorIdentifier, this.options.defaultNamespace, response, dataObject, metadata);
+    const ns = NormalizedSchema.of(errorSchema);
+    const message = (_c2 = (_b2 = dataObject.message) != null ? _b2 : dataObject.Message) != null ? _c2 : "UnknownError";
+    const ErrorCtor = (_d = this.compositeErrorRegistry.getErrorCtor(errorSchema)) != null ? _d : Error;
+    const exception = new ErrorCtor({});
+    await this.deserializeHttpMessage(errorSchema, context, response, dataObject);
+    const output = {};
+    const errorDeserializer = this.codec.createDeserializer();
+    for (const [name, member2] of ns.structIterator()) {
+      const target = (_e2 = member2.getMergedTraits().jsonName) != null ? _e2 : name;
+      output[name] = errorDeserializer.readObject(member2, dataObject[target]);
+    }
+    throw this.mixin.decorateServiceException(Object.assign(exception, errorMetadata, {
+      $fault: ns.getMergedTraits().error,
+      message
+    }, output), dataObject);
+  }
+  getDefaultContentType() {
+    return "application/json";
+  }
+};
+
+// node_modules/@aws-sdk/client-polly/dist-es/runtimeConfig.shared.js
+init_client3();
+init_index_browser2();
+
+// node_modules/@aws-sdk/client-polly/dist-es/endpoint/endpointResolver.js
+init_index_browser();
+
+// node_modules/@aws-sdk/client-polly/dist-es/endpoint/bdd.js
+init_index_browser();
+var k = "ref";
+var a = -1;
+var b = true;
+var c = "isSet";
+var d = "PartitionResult";
+var e = "booleanEquals";
+var f = "getAttr";
+var g = { [k]: "Endpoint" };
+var h = { [k]: d };
+var i = {};
+var j = [{ [k]: "Region" }];
+var _data = {
+  conditions: [
+    [c, [g]],
+    [c, j],
+    ["aws.partition", j, d],
+    [e, [{ [k]: "UseFIPS" }, b]],
+    [e, [{ [k]: "UseDualStack" }, b]],
+    [e, [{ fn: f, argv: [h, "supportsDualStack"] }, b]],
+    [e, [{ fn: f, argv: [h, "supportsFIPS"] }, b]]
+  ],
+  results: [
+    [a],
+    [a, "Invalid Configuration: FIPS and custom endpoint are not supported"],
+    [a, "Invalid Configuration: Dualstack and custom endpoint are not supported"],
+    [g, i],
+    ["https://polly-fips.{Region}.{PartitionResult#dualStackDnsSuffix}", i],
+    [a, "FIPS and DualStack are enabled, but this partition does not support one or both"],
+    ["https://polly-fips.{Region}.{PartitionResult#dnsSuffix}", i],
+    [a, "FIPS is enabled but this partition does not support FIPS"],
+    ["https://polly.{Region}.{PartitionResult#dualStackDnsSuffix}", i],
+    [a, "DualStack is enabled but this partition does not support DualStack"],
+    ["https://polly.{Region}.{PartitionResult#dnsSuffix}", i],
+    [a, "Invalid Configuration: Missing Region"]
+  ]
+};
+var root = 2;
+var r = 1e8;
+var nodes = new Int32Array([
+  -1,
+  1,
+  -1,
+  0,
+  12,
+  3,
+  1,
+  4,
+  r + 11,
+  2,
+  5,
+  r + 11,
+  3,
+  8,
+  6,
+  4,
+  7,
+  r + 10,
+  5,
+  r + 8,
+  r + 9,
+  4,
+  10,
+  9,
+  6,
+  r + 6,
+  r + 7,
+  5,
+  11,
+  r + 5,
+  6,
+  r + 4,
+  r + 5,
+  3,
+  r + 1,
+  13,
+  4,
+  r + 2,
+  r + 3
+]);
+var bdd = BinaryDecisionDiagram.from(nodes, root, _data.conditions, _data.results);
+
+// node_modules/@aws-sdk/client-polly/dist-es/endpoint/endpointResolver.js
+var cache = new EndpointCache({
+  size: 50,
+  params: ["Endpoint", "Region", "UseDualStack", "UseFIPS"]
+});
+var defaultEndpointResolver = (endpointParams, context = {}) => {
+  return cache.get(endpointParams, () => decideEndpoint(bdd, {
+    endpointParams,
+    logger: context.logger
+  }));
+};
+customEndpointFunctions.aws = awsEndpointFunctions;
+
+// node_modules/@aws-sdk/client-polly/dist-es/schemas/schemas_0.js
+init_schema2();
+
+// node_modules/@aws-sdk/client-polly/dist-es/models/PollyServiceException.js
+init_client3();
+var PollyServiceException = class _PollyServiceException extends ServiceException {
+  constructor(options) {
+    super(options);
+    Object.setPrototypeOf(this, _PollyServiceException.prototype);
+  }
+};
+
+// node_modules/@aws-sdk/client-polly/dist-es/models/errors.js
+var LexiconNotFoundException = class _LexiconNotFoundException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "LexiconNotFoundException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "LexiconNotFoundException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _LexiconNotFoundException.prototype);
+  }
+};
+var ServiceFailureException = class _ServiceFailureException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "ServiceFailureException",
+      $fault: "server",
+      ...opts
+    });
+    __publicField(this, "name", "ServiceFailureException");
+    __publicField(this, "$fault", "server");
+    Object.setPrototypeOf(this, _ServiceFailureException.prototype);
+  }
+};
+var InvalidNextTokenException = class _InvalidNextTokenException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "InvalidNextTokenException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "InvalidNextTokenException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _InvalidNextTokenException.prototype);
+  }
+};
+var EngineNotSupportedException = class _EngineNotSupportedException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "EngineNotSupportedException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "EngineNotSupportedException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _EngineNotSupportedException.prototype);
+  }
+};
+var InvalidTaskIdException = class _InvalidTaskIdException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "InvalidTaskIdException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "InvalidTaskIdException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _InvalidTaskIdException.prototype);
+  }
+};
+var SynthesisTaskNotFoundException = class _SynthesisTaskNotFoundException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "SynthesisTaskNotFoundException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "SynthesisTaskNotFoundException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _SynthesisTaskNotFoundException.prototype);
+  }
+};
+var InvalidLexiconException = class _InvalidLexiconException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "InvalidLexiconException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "InvalidLexiconException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _InvalidLexiconException.prototype);
+  }
+};
+var InvalidS3BucketException = class _InvalidS3BucketException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "InvalidS3BucketException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "InvalidS3BucketException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _InvalidS3BucketException.prototype);
+  }
+};
+var InvalidS3KeyException = class _InvalidS3KeyException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "InvalidS3KeyException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "InvalidS3KeyException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _InvalidS3KeyException.prototype);
+  }
+};
+var InvalidSampleRateException = class _InvalidSampleRateException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "InvalidSampleRateException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "InvalidSampleRateException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _InvalidSampleRateException.prototype);
+  }
+};
+var InvalidSnsTopicArnException = class _InvalidSnsTopicArnException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "InvalidSnsTopicArnException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "InvalidSnsTopicArnException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _InvalidSnsTopicArnException.prototype);
+  }
+};
+var InvalidSsmlException = class _InvalidSsmlException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "InvalidSsmlException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "InvalidSsmlException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _InvalidSsmlException.prototype);
+  }
+};
+var LanguageNotSupportedException = class _LanguageNotSupportedException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "LanguageNotSupportedException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "LanguageNotSupportedException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _LanguageNotSupportedException.prototype);
+  }
+};
+var LexiconSizeExceededException = class _LexiconSizeExceededException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "LexiconSizeExceededException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "LexiconSizeExceededException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _LexiconSizeExceededException.prototype);
+  }
+};
+var MarksNotSupportedForFormatException = class _MarksNotSupportedForFormatException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "MarksNotSupportedForFormatException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "MarksNotSupportedForFormatException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _MarksNotSupportedForFormatException.prototype);
+  }
+};
+var MaxLexemeLengthExceededException = class _MaxLexemeLengthExceededException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "MaxLexemeLengthExceededException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "MaxLexemeLengthExceededException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _MaxLexemeLengthExceededException.prototype);
+  }
+};
+var MaxLexiconsNumberExceededException = class _MaxLexiconsNumberExceededException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "MaxLexiconsNumberExceededException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "MaxLexiconsNumberExceededException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _MaxLexiconsNumberExceededException.prototype);
+  }
+};
+var UnsupportedPlsAlphabetException = class _UnsupportedPlsAlphabetException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "UnsupportedPlsAlphabetException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "UnsupportedPlsAlphabetException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _UnsupportedPlsAlphabetException.prototype);
+  }
+};
+var UnsupportedPlsLanguageException = class _UnsupportedPlsLanguageException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "UnsupportedPlsLanguageException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "UnsupportedPlsLanguageException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _UnsupportedPlsLanguageException.prototype);
+  }
+};
+var ServiceQuotaExceededException = class _ServiceQuotaExceededException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "ServiceQuotaExceededException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "ServiceQuotaExceededException");
+    __publicField(this, "$fault", "client");
+    __publicField(this, "quotaCode");
+    __publicField(this, "serviceCode");
+    Object.setPrototypeOf(this, _ServiceQuotaExceededException.prototype);
+    this.quotaCode = opts.quotaCode;
+    this.serviceCode = opts.serviceCode;
+  }
+};
+var ThrottlingException = class _ThrottlingException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "ThrottlingException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "ThrottlingException");
+    __publicField(this, "$fault", "client");
+    __publicField(this, "throttlingReasons");
+    Object.setPrototypeOf(this, _ThrottlingException.prototype);
+    this.throttlingReasons = opts.throttlingReasons;
+  }
+};
+var ValidationException = class _ValidationException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "ValidationException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "ValidationException");
+    __publicField(this, "$fault", "client");
+    __publicField(this, "reason");
+    __publicField(this, "fields");
+    Object.setPrototypeOf(this, _ValidationException.prototype);
+    this.reason = opts.reason;
+    this.fields = opts.fields;
+  }
+};
+var SsmlMarksNotSupportedForTextTypeException = class _SsmlMarksNotSupportedForTextTypeException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "SsmlMarksNotSupportedForTextTypeException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "SsmlMarksNotSupportedForTextTypeException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _SsmlMarksNotSupportedForTextTypeException.prototype);
+  }
+};
+var TextLengthExceededException = class _TextLengthExceededException extends PollyServiceException {
+  constructor(opts) {
+    super({
+      name: "TextLengthExceededException",
+      $fault: "client",
+      ...opts
+    });
+    __publicField(this, "name", "TextLengthExceededException");
+    __publicField(this, "$fault", "client");
+    Object.setPrototypeOf(this, _TextLengthExceededException.prototype);
+  }
+};
+
+// node_modules/@aws-sdk/client-polly/dist-es/schemas/schemas_0.js
+var _A = "Alphabet";
+var _AC = "AudioChunk";
+var _AE = "AudioEvent";
+var _ALC = "AdditionalLanguageCodes";
+var _AS = "AudioStream";
+var _ASc = "ActionStream";
+var _At = "Attributes";
+var _C = "Content";
+var _CSE = "CloseStreamEvent";
+var _CT = "CreationTime";
+var _CT_ = "Content-Type";
+var _CTo = "ContentType";
+var _DL = "DeleteLexicon";
+var _DLI = "DeleteLexiconInput";
+var _DLO = "DeleteLexiconOutput";
+var _DV = "DescribeVoices";
+var _DVI = "DescribeVoicesInput";
+var _DVO = "DescribeVoicesOutput";
+var _E = "Engine";
+var _ENSE = "EngineNotSupportedException";
+var _ES = "EventStream";
+var _F = "Force";
+var _FSC = "FlushStreamConfiguration";
+var _G = "Gender";
+var _GL = "GetLexicon";
+var _GLI = "GetLexiconInput";
+var _GLO = "GetLexiconOutput";
+var _GSST = "GetSpeechSynthesisTask";
+var _GSSTI = "GetSpeechSynthesisTaskInput";
+var _GSSTO = "GetSpeechSynthesisTaskOutput";
+var _I = "Id";
+var _IALC = "IncludeAdditionalLanguageCodes";
+var _ILE = "InvalidLexiconException";
+var _INTE = "InvalidNextTokenException";
+var _ISBE = "InvalidS3BucketException";
+var _ISE = "InvalidSsmlException";
+var _ISKE = "InvalidS3KeyException";
+var _ISRE = "InvalidSampleRateException";
+var _ISTAE = "InvalidSnsTopicArnException";
+var _ITIE = "InvalidTaskIdException";
+var _L = "Lexicon";
+var _LA = "LexiconAttributes";
+var _LAe = "LexiconArn";
+var _LC = "LexiconContent";
+var _LCa = "LanguageCode";
+var _LCe = "LexemesCount";
+var _LD = "LexiconDescription";
+var _LDL = "LexiconDescriptionList";
+var _LL = "ListLexicons";
+var _LLI = "ListLexiconsInput";
+var _LLO = "ListLexiconsOutput";
+var _LM = "LastModified";
+var _LN = "LexiconNames";
+var _LNFE = "LexiconNotFoundException";
+var _LNSE = "LanguageNotSupportedException";
+var _LNa = "LanguageName";
+var _LSEE = "LexiconSizeExceededException";
+var _LSST = "ListSpeechSynthesisTasks";
+var _LSSTI = "ListSpeechSynthesisTasksInput";
+var _LSSTO = "ListSpeechSynthesisTasksOutput";
+var _Le = "Lexicons";
+var _MLLEE = "MaxLexemeLengthExceededException";
+var _MLNEE = "MaxLexiconsNumberExceededException";
+var _MNSFFE = "MarksNotSupportedForFormatException";
+var _MR = "MaxResults";
+var _N = "Name";
+var _NT = "NextToken";
+var _OF = "OutputFormat";
+var _OSBN = "OutputS3BucketName";
+var _OSKP = "OutputS3KeyPrefix";
+var _OU = "OutputUri";
+var _PL = "PutLexicon";
+var _PLI = "PutLexiconInput";
+var _PLO = "PutLexiconOutput";
+var _RC = "RequestCharacters";
+var _S = "Size";
+var _SCE = "StreamClosedEvent";
+var _SE = "SupportedEngines";
+var _SFE = "ServiceFailureException";
+var _SMNSFTTE = "SsmlMarksNotSupportedForTextTypeException";
+var _SMT = "SpeechMarkTypes";
+var _SQEE = "ServiceQuotaExceededException";
+var _SR = "SampleRate";
+var _SS = "SynthesizeSpeech";
+var _SSI = "SynthesizeSpeechInput";
+var _SSO = "SynthesizeSpeechOutput";
+var _SSSS = "StartSpeechSynthesisStream";
+var _SSSSAS = "StartSpeechSynthesisStreamActionStream";
+var _SSSSES = "StartSpeechSynthesisStreamEventStream";
+var _SSSSI = "StartSpeechSynthesisStreamInput";
+var _SSSSO = "StartSpeechSynthesisStreamOutput";
+var _SSST = "StartSpeechSynthesisTask";
+var _SSSTI = "StartSpeechSynthesisTaskInput";
+var _SSSTO = "StartSpeechSynthesisTaskOutput";
+var _ST = "SynthesisTask";
+var _STA = "SnsTopicArn";
+var _STNFE = "SynthesisTaskNotFoundException";
+var _STy = "SynthesisTasks";
+var _St = "Status";
+var _T = "Text";
+var _TE = "ThrottlingException";
+var _TEe = "TextEvent";
+var _TI = "TaskId";
+var _TLEE = "TextLengthExceededException";
+var _TR = "ThrottlingReason";
+var _TRL = "ThrottlingReasonList";
+var _TS = "TaskStatus";
+var _TSR = "TaskStatusReason";
+var _TT = "TextType";
+var _UPAE = "UnsupportedPlsAlphabetException";
+var _UPLE = "UnsupportedPlsLanguageException";
+var _V = "Voices";
+var _VE = "ValidationException";
+var _VEF = "ValidationExceptionField";
+var _VEFL = "ValidationExceptionFieldList";
+var _VI = "VoiceId";
+var _VL = "VoiceList";
+var _Vo = "Voice";
+var _aQE = "awsQueryError";
+var _c = "client";
+var _e = "error";
+var _eP = "eventPayload";
+var _f = "fields";
+var _h = "http";
+var _hE = "httpError";
+var _hH = "httpHeader";
+var _hQ = "httpQuery";
+var _m = "message";
+var _n = "name";
+var _qC = "quotaCode";
+var _r = "reason";
+var _re = "resource";
+var _s = "smithy.ts.sdk.synthetic.com.amazonaws.polly";
+var _sC = "serviceCode";
+var _se = "server";
+var _st = "streaming";
+var _tR = "throttlingReasons";
+var _xaE = "x-amzn-Engine";
+var _xaL = "x-amzn-LanguageCode";
+var _xaL_ = "x-amzn-LexiconNames";
+var _xaO = "x-amzn-OutputFormat";
+var _xaR = "x-amzn-RequestCharacters";
+var _xaS = "x-amzn-SampleRate";
+var _xaV = "x-amzn-VoiceId";
+var n0 = "com.amazonaws.polly";
+var _s_registry = TypeRegistry.for(_s);
+var PollyServiceException$ = [-3, _s, "PollyServiceException", 0, [], []];
+_s_registry.registerError(PollyServiceException$, PollyServiceException);
+var n0_registry = TypeRegistry.for(n0);
+var EngineNotSupportedException$ = [
+  -3,
+  n0,
+  _ENSE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(EngineNotSupportedException$, EngineNotSupportedException);
+var InvalidLexiconException$ = [
+  -3,
+  n0,
+  _ILE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(InvalidLexiconException$, InvalidLexiconException);
+var InvalidNextTokenException$ = [
+  -3,
+  n0,
+  _INTE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(InvalidNextTokenException$, InvalidNextTokenException);
+var InvalidS3BucketException$ = [
+  -3,
+  n0,
+  _ISBE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(InvalidS3BucketException$, InvalidS3BucketException);
+var InvalidS3KeyException$ = [
+  -3,
+  n0,
+  _ISKE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(InvalidS3KeyException$, InvalidS3KeyException);
+var InvalidSampleRateException$ = [
+  -3,
+  n0,
+  _ISRE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(InvalidSampleRateException$, InvalidSampleRateException);
+var InvalidSnsTopicArnException$ = [
+  -3,
+  n0,
+  _ISTAE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(InvalidSnsTopicArnException$, InvalidSnsTopicArnException);
+var InvalidSsmlException$ = [
+  -3,
+  n0,
+  _ISE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(InvalidSsmlException$, InvalidSsmlException);
+var InvalidTaskIdException$ = [
+  -3,
+  n0,
+  _ITIE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(InvalidTaskIdException$, InvalidTaskIdException);
+var LanguageNotSupportedException$ = [
+  -3,
+  n0,
+  _LNSE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(LanguageNotSupportedException$, LanguageNotSupportedException);
+var LexiconNotFoundException$ = [
+  -3,
+  n0,
+  _LNFE,
+  { [_e]: _c, [_hE]: 404 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(LexiconNotFoundException$, LexiconNotFoundException);
+var LexiconSizeExceededException$ = [
+  -3,
+  n0,
+  _LSEE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(LexiconSizeExceededException$, LexiconSizeExceededException);
+var MarksNotSupportedForFormatException$ = [
+  -3,
+  n0,
+  _MNSFFE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(MarksNotSupportedForFormatException$, MarksNotSupportedForFormatException);
+var MaxLexemeLengthExceededException$ = [
+  -3,
+  n0,
+  _MLLEE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(MaxLexemeLengthExceededException$, MaxLexemeLengthExceededException);
+var MaxLexiconsNumberExceededException$ = [
+  -3,
+  n0,
+  _MLNEE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(MaxLexiconsNumberExceededException$, MaxLexiconsNumberExceededException);
+var ServiceFailureException$ = [
+  -3,
+  n0,
+  _SFE,
+  { [_e]: _se, [_hE]: 500 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(ServiceFailureException$, ServiceFailureException);
+var ServiceQuotaExceededException$ = [
+  -3,
+  n0,
+  _SQEE,
+  { [_e]: _c, [_hE]: 402 },
+  [_m, _qC, _sC],
+  [0, 0, 0],
+  3
+];
+n0_registry.registerError(ServiceQuotaExceededException$, ServiceQuotaExceededException);
+var SsmlMarksNotSupportedForTextTypeException$ = [
+  -3,
+  n0,
+  _SMNSFTTE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(SsmlMarksNotSupportedForTextTypeException$, SsmlMarksNotSupportedForTextTypeException);
+var SynthesisTaskNotFoundException$ = [
+  -3,
+  n0,
+  _STNFE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(SynthesisTaskNotFoundException$, SynthesisTaskNotFoundException);
+var TextLengthExceededException$ = [
+  -3,
+  n0,
+  _TLEE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(TextLengthExceededException$, TextLengthExceededException);
+var ThrottlingException$ = [
+  -3,
+  n0,
+  _TE,
+  { [_aQE]: [`Throttling`, 400], [_e]: _c, [_hE]: 400 },
+  [_m, _tR],
+  [0, () => ThrottlingReasonList]
+];
+n0_registry.registerError(ThrottlingException$, ThrottlingException);
+var UnsupportedPlsAlphabetException$ = [
+  -3,
+  n0,
+  _UPAE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(UnsupportedPlsAlphabetException$, UnsupportedPlsAlphabetException);
+var UnsupportedPlsLanguageException$ = [
+  -3,
+  n0,
+  _UPLE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m],
+  [0]
+];
+n0_registry.registerError(UnsupportedPlsLanguageException$, UnsupportedPlsLanguageException);
+var ValidationException$ = [
+  -3,
+  n0,
+  _VE,
+  { [_e]: _c, [_hE]: 400 },
+  [_m, _r, _f],
+  [0, 0, () => ValidationExceptionFieldList],
+  2
+];
+n0_registry.registerError(ValidationException$, ValidationException);
+var errorTypeRegistries = [
+  _s_registry,
+  n0_registry
+];
+var AudioStream = [0, n0, _AS, { [_st]: 1 }, 42];
+var LexiconContent = [0, n0, _LC, 8, 0];
+var AudioEvent$ = [
+  3,
+  n0,
+  _AE,
+  0,
+  [_AC],
+  [[21, { [_eP]: 1 }]]
+];
+var CloseStreamEvent$ = [
+  3,
+  n0,
+  _CSE,
+  0,
+  [],
+  []
+];
+var DeleteLexiconInput$ = [
+  3,
+  n0,
+  _DLI,
+  0,
+  [_N],
+  [[0, 1]],
+  1
+];
+var DeleteLexiconOutput$ = [
+  3,
+  n0,
+  _DLO,
+  0,
+  [],
+  []
+];
+var DescribeVoicesInput$ = [
+  3,
+  n0,
+  _DVI,
+  0,
+  [_E, _LCa, _IALC, _NT],
+  [[0, { [_hQ]: _E }], [0, { [_hQ]: _LCa }], [2, { [_hQ]: _IALC }], [0, { [_hQ]: _NT }]]
+];
+var DescribeVoicesOutput$ = [
+  3,
+  n0,
+  _DVO,
+  0,
+  [_V, _NT],
+  [() => VoiceList, 0]
+];
+var FlushStreamConfiguration$ = [
+  3,
+  n0,
+  _FSC,
+  0,
+  [_F],
+  [2]
+];
+var GetLexiconInput$ = [
+  3,
+  n0,
+  _GLI,
+  0,
+  [_N],
+  [[0, 1]],
+  1
+];
+var GetLexiconOutput$ = [
+  3,
+  n0,
+  _GLO,
+  0,
+  [_L, _LA],
+  [[() => Lexicon$, 0], () => LexiconAttributes$]
+];
+var GetSpeechSynthesisTaskInput$ = [
+  3,
+  n0,
+  _GSSTI,
+  0,
+  [_TI],
+  [[0, 1]],
+  1
+];
+var GetSpeechSynthesisTaskOutput$ = [
+  3,
+  n0,
+  _GSSTO,
+  0,
+  [_ST],
+  [() => SynthesisTask$]
+];
+var Lexicon$ = [
+  3,
+  n0,
+  _L,
+  0,
+  [_C, _N],
+  [[() => LexiconContent, 0], 0]
+];
+var LexiconAttributes$ = [
+  3,
+  n0,
+  _LA,
+  0,
+  [_A, _LCa, _LM, _LAe, _LCe, _S],
+  [0, 0, 4, 0, 1, 1]
+];
+var LexiconDescription$ = [
+  3,
+  n0,
+  _LD,
+  0,
+  [_N, _At],
+  [0, () => LexiconAttributes$]
+];
+var ListLexiconsInput$ = [
+  3,
+  n0,
+  _LLI,
+  0,
+  [_NT],
+  [[0, { [_hQ]: _NT }]]
+];
+var ListLexiconsOutput$ = [
+  3,
+  n0,
+  _LLO,
+  0,
+  [_Le, _NT],
+  [() => LexiconDescriptionList, 0]
+];
+var ListSpeechSynthesisTasksInput$ = [
+  3,
+  n0,
+  _LSSTI,
+  0,
+  [_MR, _NT, _St],
+  [[1, { [_hQ]: _MR }], [0, { [_hQ]: _NT }], [0, { [_hQ]: _St }]]
+];
+var ListSpeechSynthesisTasksOutput$ = [
+  3,
+  n0,
+  _LSSTO,
+  0,
+  [_NT, _STy],
+  [0, () => SynthesisTasks]
+];
+var PutLexiconInput$ = [
+  3,
+  n0,
+  _PLI,
+  0,
+  [_N, _C],
+  [[0, 1], [() => LexiconContent, 0]],
+  2
+];
+var PutLexiconOutput$ = [
+  3,
+  n0,
+  _PLO,
+  0,
+  [],
+  []
+];
+var StartSpeechSynthesisStreamInput$ = [
+  3,
+  n0,
+  _SSSSI,
+  0,
+  [_E, _OF, _VI, _LCa, _LN, _SR, _ASc],
+  [[0, { [_hH]: _xaE }], [0, { [_hH]: _xaO }], [0, { [_hH]: _xaV }], [0, { [_hH]: _xaL }], [64 | 0, { [_hH]: _xaL_ }], [0, { [_hH]: _xaS }], [() => StartSpeechSynthesisStreamActionStream$, 16]],
+  3
+];
+var StartSpeechSynthesisStreamOutput$ = [
+  3,
+  n0,
+  _SSSSO,
+  0,
+  [_ES],
+  [[() => StartSpeechSynthesisStreamEventStream$, 16]]
+];
+var StartSpeechSynthesisTaskInput$ = [
+  3,
+  n0,
+  _SSSTI,
+  0,
+  [_OF, _OSBN, _T, _VI, _E, _LCa, _LN, _OSKP, _SR, _STA, _SMT, _TT],
+  [0, 0, 0, 0, 0, 0, 64 | 0, 0, 0, 0, 64 | 0, 0],
+  4
+];
+var StartSpeechSynthesisTaskOutput$ = [
+  3,
+  n0,
+  _SSSTO,
+  0,
+  [_ST],
+  [() => SynthesisTask$]
+];
+var StreamClosedEvent$ = [
+  3,
+  n0,
+  _SCE,
+  0,
+  [_RC],
+  [1]
+];
+var SynthesisTask$ = [
+  3,
+  n0,
+  _ST,
+  0,
+  [_E, _TI, _TS, _TSR, _OU, _CT, _RC, _STA, _LN, _OF, _SR, _SMT, _TT, _VI, _LCa],
+  [0, 0, 0, 0, 0, 4, 1, 0, 64 | 0, 0, 0, 64 | 0, 0, 0, 0]
+];
+var SynthesizeSpeechInput$ = [
+  3,
+  n0,
+  _SSI,
+  0,
+  [_OF, _T, _VI, _E, _LCa, _LN, _SR, _SMT, _TT],
+  [0, 0, 0, 0, 0, 64 | 0, 0, 64 | 0, 0],
+  3
+];
+var SynthesizeSpeechOutput$ = [
+  3,
+  n0,
+  _SSO,
+  0,
+  [_AS, _CTo, _RC],
+  [[() => AudioStream, 16], [0, { [_hH]: _CT_ }], [1, { [_hH]: _xaR }]]
+];
+var TextEvent$ = [
+  3,
+  n0,
+  _TEe,
+  0,
+  [_T, _TT, _FSC],
+  [0, 0, () => FlushStreamConfiguration$],
+  1
+];
+var ThrottlingReason$ = [
+  3,
+  n0,
+  _TR,
+  0,
+  [_r, _re],
+  [0, 0]
+];
+var ValidationExceptionField$ = [
+  3,
+  n0,
+  _VEF,
+  0,
+  [_n, _m],
+  [0, 0],
+  2
+];
+var Voice$ = [
+  3,
+  n0,
+  _Vo,
+  0,
+  [_G, _I, _LCa, _LNa, _N, _ALC, _SE],
+  [0, 0, 0, 0, 0, 64 | 0, 64 | 0]
+];
+var EngineList = 64 | 0;
+var LanguageCodeList = 64 | 0;
+var LexiconDescriptionList = [
+  1,
+  n0,
+  _LDL,
+  0,
+  () => LexiconDescription$
+];
+var LexiconNameList = 64 | 0;
+var SpeechMarkTypeList = 64 | 0;
+var SynthesisTasks = [
+  1,
+  n0,
+  _STy,
+  0,
+  () => SynthesisTask$
+];
+var ThrottlingReasonList = [
+  1,
+  n0,
+  _TRL,
+  0,
+  () => ThrottlingReason$
+];
+var ValidationExceptionFieldList = [
+  1,
+  n0,
+  _VEFL,
+  0,
+  () => ValidationExceptionField$
+];
+var VoiceList = [
+  1,
+  n0,
+  _VL,
+  0,
+  () => Voice$
+];
+var StartSpeechSynthesisStreamActionStream$ = [
+  4,
+  n0,
+  _SSSSAS,
+  { [_st]: 1 },
+  [_TEe, _CSE],
+  [() => TextEvent$, () => CloseStreamEvent$]
+];
+var StartSpeechSynthesisStreamEventStream$ = [
+  4,
+  n0,
+  _SSSSES,
+  { [_st]: 1 },
+  [_AE, _SCE, _VE, _SQEE, _SFE, _TE],
+  [[() => AudioEvent$, 0], () => StreamClosedEvent$, [() => ValidationException$, 0], [() => ServiceQuotaExceededException$, 0], [() => ServiceFailureException$, 0], [() => ThrottlingException$, 0]]
+];
+var DeleteLexicon$ = [
+  9,
+  n0,
+  _DL,
+  { [_h]: ["DELETE", "/v1/lexicons/{Name}", 200] },
+  () => DeleteLexiconInput$,
+  () => DeleteLexiconOutput$
+];
+var DescribeVoices$ = [
+  9,
+  n0,
+  _DV,
+  { [_h]: ["GET", "/v1/voices", 200] },
+  () => DescribeVoicesInput$,
+  () => DescribeVoicesOutput$
+];
+var GetLexicon$ = [
+  9,
+  n0,
+  _GL,
+  { [_h]: ["GET", "/v1/lexicons/{Name}", 200] },
+  () => GetLexiconInput$,
+  () => GetLexiconOutput$
+];
+var GetSpeechSynthesisTask$ = [
+  9,
+  n0,
+  _GSST,
+  { [_h]: ["GET", "/v1/synthesisTasks/{TaskId}", 200] },
+  () => GetSpeechSynthesisTaskInput$,
+  () => GetSpeechSynthesisTaskOutput$
+];
+var ListLexicons$ = [
+  9,
+  n0,
+  _LL,
+  { [_h]: ["GET", "/v1/lexicons", 200] },
+  () => ListLexiconsInput$,
+  () => ListLexiconsOutput$
+];
+var ListSpeechSynthesisTasks$ = [
+  9,
+  n0,
+  _LSST,
+  { [_h]: ["GET", "/v1/synthesisTasks", 200] },
+  () => ListSpeechSynthesisTasksInput$,
+  () => ListSpeechSynthesisTasksOutput$
+];
+var PutLexicon$ = [
+  9,
+  n0,
+  _PL,
+  { [_h]: ["PUT", "/v1/lexicons/{Name}", 200] },
+  () => PutLexiconInput$,
+  () => PutLexiconOutput$
+];
+var StartSpeechSynthesisStream$ = [
+  9,
+  n0,
+  _SSSS,
+  { [_h]: ["POST", "/v1/synthesisStream", 200] },
+  () => StartSpeechSynthesisStreamInput$,
+  () => StartSpeechSynthesisStreamOutput$
+];
+var StartSpeechSynthesisTask$ = [
+  9,
+  n0,
+  _SSST,
+  { [_h]: ["POST", "/v1/synthesisTasks", 200] },
+  () => StartSpeechSynthesisTaskInput$,
+  () => StartSpeechSynthesisTaskOutput$
+];
+var SynthesizeSpeech$ = [
+  9,
+  n0,
+  _SS,
+  { [_h]: ["POST", "/v1/speech", 200] },
+  () => SynthesizeSpeechInput$,
+  () => SynthesizeSpeechOutput$
+];
+
+// node_modules/@aws-sdk/client-polly/dist-es/runtimeConfig.shared.js
+var getRuntimeConfig = (config) => {
+  var _a3, _b2, _c2, _d, _e2, _f2, _g, _h2, _i, _j, _k, _l, _m2, _n2, _o;
+  return {
+    apiVersion: "2016-06-10",
+    base64Decoder: (_a3 = config == null ? void 0 : config.base64Decoder) != null ? _a3 : fromBase64,
+    base64Encoder: (_b2 = config == null ? void 0 : config.base64Encoder) != null ? _b2 : toBase64,
+    disableHostPrefix: (_c2 = config == null ? void 0 : config.disableHostPrefix) != null ? _c2 : false,
+    endpointProvider: (_d = config == null ? void 0 : config.endpointProvider) != null ? _d : defaultEndpointResolver,
+    extensions: (_e2 = config == null ? void 0 : config.extensions) != null ? _e2 : [],
+    httpAuthSchemeProvider: (_f2 = config == null ? void 0 : config.httpAuthSchemeProvider) != null ? _f2 : defaultPollyHttpAuthSchemeProvider,
+    httpAuthSchemes: (_g = config == null ? void 0 : config.httpAuthSchemes) != null ? _g : [
+      {
+        schemeId: "aws.auth#sigv4",
+        identityProvider: (ipc) => ipc.getIdentityProvider("aws.auth#sigv4"),
+        signer: new AwsSdkSigV4Signer()
+      }
+    ],
+    logger: (_h2 = config == null ? void 0 : config.logger) != null ? _h2 : new NoOpLogger(),
+    protocol: (_i = config == null ? void 0 : config.protocol) != null ? _i : AwsRestJsonProtocol,
+    protocolSettings: (_j = config == null ? void 0 : config.protocolSettings) != null ? _j : {
+      defaultNamespace: "com.amazonaws.polly",
+      errorTypeRegistries,
+      xmlNamespace: "http://polly.amazonaws.com/doc/v1",
+      version: "2016-06-10",
+      serviceTarget: "Parrot_v1"
+    },
+    sdkStreamMixin: (_k = config == null ? void 0 : config.sdkStreamMixin) != null ? _k : sdkStreamMixin,
+    serviceId: (_l = config == null ? void 0 : config.serviceId) != null ? _l : "Polly",
+    urlParser: (_m2 = config == null ? void 0 : config.urlParser) != null ? _m2 : parseUrl,
+    utf8Decoder: (_n2 = config == null ? void 0 : config.utf8Decoder) != null ? _n2 : fromUtf8,
+    utf8Encoder: (_o = config == null ? void 0 : config.utf8Encoder) != null ? _o : toUtf8
+  };
+};
+
+// node_modules/@aws-sdk/client-polly/dist-es/runtimeConfig.browser.js
+var getRuntimeConfig2 = (config) => {
+  var _a3, _b2, _c2, _d, _e2, _f2, _g, _h2, _i, _j, _k, _l, _m2;
+  const defaultsMode = resolveDefaultsModeConfig(config);
+  const defaultConfigProvider = () => defaultsMode().then(loadConfigsForDefaultMode);
+  const clientSharedValues = getRuntimeConfig(config);
+  return {
+    ...clientSharedValues,
+    ...config,
+    runtime: "browser",
+    defaultsMode,
+    bodyLengthChecker: (_a3 = config == null ? void 0 : config.bodyLengthChecker) != null ? _a3 : calculateBodyLength,
+    credentialDefaultProvider: (_b2 = config == null ? void 0 : config.credentialDefaultProvider) != null ? _b2 : ((_) => () => Promise.reject(new Error("Credential is missing"))),
+    defaultUserAgentProvider: (_c2 = config == null ? void 0 : config.defaultUserAgentProvider) != null ? _c2 : createDefaultUserAgentProvider({ serviceId: clientSharedValues.serviceId, clientVersion: package_default.version }),
+    eventStreamPayloadHandlerProvider: (_d = config == null ? void 0 : config.eventStreamPayloadHandlerProvider) != null ? _d : (() => ({
+      handle: invalidFunction("event stream request is not supported in browser.")
+    })),
+    eventStreamSerdeProvider: (_e2 = config == null ? void 0 : config.eventStreamSerdeProvider) != null ? _e2 : eventStreamSerdeProvider2,
+    maxAttempts: (_f2 = config == null ? void 0 : config.maxAttempts) != null ? _f2 : DEFAULT_MAX_ATTEMPTS,
+    region: (_g = config == null ? void 0 : config.region) != null ? _g : invalidProvider("Region is missing"),
+    requestHandler: FetchHttpHandler.create((_h2 = config == null ? void 0 : config.requestHandler) != null ? _h2 : defaultConfigProvider),
+    retryMode: (_i = config == null ? void 0 : config.retryMode) != null ? _i : (async () => (await defaultConfigProvider()).retryMode || DEFAULT_RETRY_MODE),
+    sha256: (_j = config == null ? void 0 : config.sha256) != null ? _j : Sha2563,
+    streamCollector: (_k = config == null ? void 0 : config.streamCollector) != null ? _k : streamCollector2,
+    useDualstackEndpoint: (_l = config == null ? void 0 : config.useDualstackEndpoint) != null ? _l : (() => Promise.resolve(DEFAULT_USE_DUALSTACK_ENDPOINT)),
+    useFipsEndpoint: (_m2 = config == null ? void 0 : config.useFipsEndpoint) != null ? _m2 : (() => Promise.resolve(DEFAULT_USE_FIPS_ENDPOINT))
+  };
+};
+
+// node_modules/@aws-sdk/client-polly/dist-es/runtimeExtensions.js
+init_client3();
+
+// node_modules/@aws-sdk/client-polly/dist-es/auth/httpAuthExtensionConfiguration.js
+var getHttpAuthExtensionConfiguration = (runtimeConfig) => {
+  const _httpAuthSchemes = runtimeConfig.httpAuthSchemes;
+  let _httpAuthSchemeProvider = runtimeConfig.httpAuthSchemeProvider;
+  let _credentials = runtimeConfig.credentials;
+  return {
+    setHttpAuthScheme(httpAuthScheme) {
+      const index2 = _httpAuthSchemes.findIndex((scheme) => scheme.schemeId === httpAuthScheme.schemeId);
+      if (index2 === -1) {
+        _httpAuthSchemes.push(httpAuthScheme);
+      } else {
+        _httpAuthSchemes.splice(index2, 1, httpAuthScheme);
+      }
+    },
+    httpAuthSchemes() {
+      return _httpAuthSchemes;
+    },
+    setHttpAuthSchemeProvider(httpAuthSchemeProvider) {
+      _httpAuthSchemeProvider = httpAuthSchemeProvider;
+    },
+    httpAuthSchemeProvider() {
+      return _httpAuthSchemeProvider;
+    },
+    setCredentials(credentials) {
+      _credentials = credentials;
+    },
+    credentials() {
+      return _credentials;
+    }
+  };
+};
+var resolveHttpAuthRuntimeConfig = (config) => {
+  return {
+    httpAuthSchemes: config.httpAuthSchemes(),
+    httpAuthSchemeProvider: config.httpAuthSchemeProvider(),
+    credentials: config.credentials()
+  };
+};
+
+// node_modules/@aws-sdk/client-polly/dist-es/runtimeExtensions.js
+var resolveRuntimeExtensions = (runtimeConfig, extensions) => {
+  const extensionConfiguration = Object.assign(getAwsRegionExtensionConfiguration(runtimeConfig), getDefaultExtensionConfiguration(runtimeConfig), getHttpHandlerExtensionConfiguration(runtimeConfig), getHttpAuthExtensionConfiguration(runtimeConfig));
+  extensions.forEach((extension2) => extension2.configure(extensionConfiguration));
+  return Object.assign(runtimeConfig, resolveAwsRegionExtensionConfiguration(extensionConfiguration), resolveDefaultRuntimeConfig(extensionConfiguration), resolveHttpHandlerRuntimeConfig(extensionConfiguration), resolveHttpAuthRuntimeConfig(extensionConfiguration));
+};
+
+// node_modules/@aws-sdk/client-polly/dist-es/PollyClient.js
+var PollyClient = class extends Client {
+  constructor(...[configuration]) {
+    const _config_0 = getRuntimeConfig2(configuration || {});
+    super(_config_0);
+    __publicField(this, "config");
+    this.initConfig = _config_0;
+    const _config_1 = resolveClientEndpointParameters(_config_0);
+    const _config_2 = resolveUserAgentConfig(_config_1);
+    const _config_3 = resolveRetryConfig(_config_2);
+    const _config_4 = resolveRegionConfig(_config_3);
+    const _config_5 = resolveHostHeaderConfig(_config_4);
+    const _config_6 = resolveEndpointConfig(_config_5);
+    const _config_7 = resolveEventStreamSerdeConfig(_config_6);
+    const _config_8 = resolveHttpAuthSchemeConfig(_config_7);
+    const _config_9 = resolveEventStreamConfig(_config_8);
+    const _config_10 = resolveRuntimeExtensions(_config_9, (configuration == null ? void 0 : configuration.extensions) || []);
+    this.config = _config_10;
+    this.middlewareStack.use(getSchemaSerdePlugin(this.config));
+    this.middlewareStack.use(getUserAgentPlugin(this.config));
+    this.middlewareStack.use(getRetryPlugin(this.config));
+    this.middlewareStack.use(getContentLengthPlugin(this.config));
+    this.middlewareStack.use(getHostHeaderPlugin(this.config));
+    this.middlewareStack.use(getLoggerPlugin(this.config));
+    this.middlewareStack.use(getRecursionDetectionPlugin(this.config));
+    this.middlewareStack.use(getHttpAuthSchemeEndpointRuleSetPlugin(this.config, {
+      httpAuthSchemeParametersProvider: defaultPollyHttpAuthSchemeParametersProvider,
+      identityProviderConfigProvider: async (config) => new DefaultIdentityProviderConfig({
+        "aws.auth#sigv4": config.credentials
+      })
+    }));
+    this.middlewareStack.use(getHttpSigningPlugin(this.config));
+  }
+  destroy() {
+    super.destroy();
+  }
+};
+
+// node_modules/@aws-sdk/client-polly/dist-es/commands/DescribeVoicesCommand.js
+init_client3();
+init_index_browser();
+var DescribeVoicesCommand = class extends Command.classBuilder().ep(commonParams).m(function(Command2, cs, config, o) {
+  return [getEndpointPlugin(config, Command2.getEndpointParameterInstructions())];
+}).s("Parrot_v1", "DescribeVoices", {}).n("PollyClient", "DescribeVoicesCommand").sc(DescribeVoices$).build() {
+};
+
+// node_modules/@aws-sdk/client-polly/dist-es/commands/SynthesizeSpeechCommand.js
+init_client3();
+init_index_browser();
+var SynthesizeSpeechCommand = class extends Command.classBuilder().ep(commonParams).m(function(Command2, cs, config, o) {
+  return [getEndpointPlugin(config, Command2.getEndpointParameterInstructions())];
+}).s("Parrot_v1", "SynthesizeSpeech", {}).n("PollyClient", "SynthesizeSpeechCommand").sc(SynthesizeSpeech$).build() {
+};
+
+// src/service/BaseSpeechService.ts
+var BaseSpeechService = class {
+  constructor(voice, speed) {
+    this.isLoading = false;
+    this.lastGeneratedAudio = null;
+    this.lastGeneratedAudioFilePath = null;
+    // Request lock mechanism - prevents concurrent operations
+    this.currentRequestId = null;
+    // How many seconds the rewind / fast-forward controls jump
+    this.rewindSeconds = DEFAULT_SKIP_SECONDS;
+    this.forwardSeconds = DEFAULT_SKIP_SECONDS;
+    this.voice = voice;
+    this.speed = speed || 1;
+    this.audio = new Audio();
+    this.audio.src = "";
+  }
+  /**
+   * Map a thrown error to a user-friendly message. Providers override this to
+   * translate their own API errors; the base provides a generic fallback.
+   */
+  getErrorMessage(error) {
+    if (error instanceof Error && error.message) {
+      return error.message;
+    }
+    return "An error occurred. Please try again.";
+  }
+  // --- Shared playback helper for subclasses ---
+  /**
+   * Cache the freshly synthesized audio, wire it to the audio element, and
+   * start playback. Used by providers once a final audio Blob is ready.
+   */
+  playBlob(blob, speed, filePath) {
+    this.lastGeneratedAudio = blob;
+    if (filePath) {
+      this.lastGeneratedAudioFilePath = filePath;
+    }
+    this.audio.src = URL.createObjectURL(blob);
+    this.reportProgress(1, 1);
+    void this.playAudio(speed);
+  }
+  // --- Playback controls ---
+  async playAudio(speed) {
+    let fSpeed = typeof speed === "number" ? parseFloat(speed.toFixed(2)) : this.speed;
+    if (fSpeed < 0.5) {
+      fSpeed = 0.5;
+    } else if (fSpeed > 2) {
+      fSpeed = 2;
+    }
+    this.audio.playbackRate = fSpeed;
+    void this.audio.play();
+  }
+  pauseAudio() {
+    this.audio.pause();
+  }
+  stopAudio() {
+    this.audio.pause();
+    this.audio.currentTime = 0;
+  }
+  isPlaying() {
+    return !this.audio.paused;
+  }
+  hasEnded() {
+    return this.audio.ended;
+  }
+  rewindAudio() {
+    if (this.audio && !isNaN(this.audio.duration)) {
+      this.audio.currentTime = Math.max(
+        0,
+        this.audio.currentTime - this.rewindSeconds
+      );
+    }
+  }
+  fastForwardAudio() {
+    if (this.audio && !isNaN(this.audio.duration)) {
+      this.audio.currentTime = Math.min(
+        this.audio.duration,
+        this.audio.currentTime + this.forwardSeconds
+      );
+    }
+  }
+  // --- Skip interval (rewind / fast-forward) ---
+  setRewindSeconds(seconds) {
+    this.rewindSeconds = this.clampSkipSeconds(seconds);
+  }
+  setForwardSeconds(seconds) {
+    this.forwardSeconds = this.clampSkipSeconds(seconds);
+  }
+  getRewindSeconds() {
+    return this.rewindSeconds;
+  }
+  getForwardSeconds() {
+    return this.forwardSeconds;
+  }
+  clampSkipSeconds(seconds) {
+    if (!Number.isFinite(seconds)) {
+      return DEFAULT_SKIP_SECONDS;
+    }
+    return Math.min(
+      MAX_SKIP_SECONDS,
+      Math.max(MIN_SKIP_SECONDS, Math.round(seconds))
+    );
+  }
+  // --- Speed ---
+  setSpeed(speed) {
+    this.speed = speed;
+    this.updatePlaybackRate(speed);
+    return this.speed;
+  }
+  getSpeed() {
+    return this.speed;
+  }
+  updatePlaybackRate(speed) {
+    if (this.audio && this.audio.src) {
+      let fSpeed = typeof speed === "number" ? parseFloat(speed.toFixed(2)) : this.speed;
+      if (fSpeed < 0.5) {
+        fSpeed = 0.5;
+      } else if (fSpeed > 2) {
+        fSpeed = 2;
+      }
+      this.audio.playbackRate = fSpeed;
+    }
+  }
+  // --- Voice ---
+  setVoice(voice) {
+    this.voice = voice;
+  }
+  getVoice() {
+    return this.voice;
+  }
+  // --- Audio element + state ---
+  getAudio() {
+    return this.audio;
+  }
+  getDuration() {
+    return this.audio.duration;
+  }
+  getCurrentTime() {
+    return this.audio.currentTime;
+  }
+  getVolume() {
+    return this.audio.volume;
+  }
+  // --- Operation lifecycle ---
+  isOperationInProgress() {
+    return this.currentRequestId !== null;
+  }
+  startOperation() {
+    if (this.currentRequestId !== null) {
+      throw new Error(
+        `Operation already in progress: ${this.currentRequestId}`
+      );
+    }
+    const requestId = `req_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+    this.currentRequestId = requestId;
+    this.abortController = new AbortController();
+    return requestId;
+  }
+  isCurrentRequest(requestId) {
+    return this.currentRequestId === requestId;
+  }
+  cancelOperation() {
+    if (this.currentRequestId && this.abortController) {
+      this.abortController.abort();
+      this.currentRequestId = null;
+      this.isLoading = false;
+      this.abortController = void 0;
+      this.reportProgress(0, 1);
+    }
+  }
+  endOperation(requestId) {
+    if (this.currentRequestId === requestId) {
+      this.currentRequestId = null;
+      this.isLoading = false;
+      this.abortController = void 0;
+    } else if (this.currentRequestId !== null) {
+      console.warn(
+        `[Voice] Attempted to end operation ${requestId} but current is ${this.currentRequestId}`
+      );
+    }
+  }
+  /**
+   * @deprecated Use isOperationInProgress() instead
+   */
+  isLoadingInProgress() {
+    return this.isOperationInProgress();
+  }
+  /**
+   * @deprecated Use cancelOperation() instead
+   */
+  cancelLoading() {
+    this.cancelOperation();
+  }
+  // --- Callbacks ---
+  setProgressCallback(callback) {
+    this.progressCallback = callback;
+  }
+  setErrorCallback(callback) {
+    this.errorCallback = callback;
+  }
+  reportProgress(current, total) {
+    if (this.progressCallback) {
+      const progress = total > 0 ? current / total : 0;
+      this.progressCallback(Math.min(1, Math.max(0, progress)));
+    }
+  }
+  reportError(error) {
+    if (this.errorCallback) {
+      this.errorCallback(this.getErrorMessage(error));
+    }
+  }
+  // --- Caching / download ---
+  /**
+   * Get the last generated audio blob for download
+   * @param filePath - Path of the current file to validate cache
+   */
+  getLastGeneratedAudio(filePath) {
+    if (filePath && this.lastGeneratedAudioFilePath !== filePath) {
+      return null;
+    }
+    return this.lastGeneratedAudio;
+  }
+  clearCachedAudio() {
+    this.lastGeneratedAudio = null;
+    this.lastGeneratedAudioFilePath = null;
+  }
+  setCachedAudio(audioBlob, filePath) {
+    this.lastGeneratedAudio = audioBlob;
+    this.lastGeneratedAudioFilePath = filePath;
+  }
+};
+
+// src/service/AwsPollyService.ts
+var AwsPollyService = class extends BaseSpeechService {
+  constructor(awsConfig, voice, speed) {
+    super(voice, speed);
+    this.inputFormat = "ssml";
+    // Flag to track if PollyClient has been initialized with valid credentials
+    this.pollyClientInitialized = false;
+    this.voiceChanged = false;
+    this.currentCredentials = {
+      accessKeyId: awsConfig.credentials.accessKeyId,
+      secretAccessKey: awsConfig.credentials.secretAccessKey,
+      region: awsConfig.region
+    };
+    const engine = false ? "standard" : "neural";
+    this.synthesizeInput = {
+      Engine: engine,
+      SampleRate: "24000",
+      TextType: "text",
+      OutputFormat: "mp3",
+      LanguageCode: this.getLanguageCode(voice),
+      VoiceId: voice || "Stephen",
+      Text: "No document selected."
+    };
+    if (this.hasValidCredentials()) {
+      this.initializePollyClient();
+    }
+  }
+  getVoiceOptions() {
+    return VOICES;
+  }
+  /**
+   * Synthesize and play pre-generated SSML.
+   */
+  async speak(content3, speed, filePath) {
+    await this.playSSMLAudio(content3, speed, filePath);
+  }
+  /**
+   * Check if credentials are non-empty and valid
+   */
+  hasValidCredentials() {
+    return this.currentCredentials.accessKeyId !== "" && this.currentCredentials.secretAccessKey !== "" && this.currentCredentials.region !== "";
+  }
+  /**
+   * Initialize or reinitialize the PollyClient with credential provider function
+   */
+  initializePollyClient() {
+    this.pollyClient = new PollyClient({
+      credentials: async () => {
+        return {
+          accessKeyId: this.currentCredentials.accessKeyId,
+          secretAccessKey: this.currentCredentials.secretAccessKey
+        };
+      },
+      region: this.currentCredentials.region
+    });
+    this.pollyClientInitialized = true;
+  }
+  /**
+   * Validates AWS credentials by attempting to call DescribeVoices
+   */
+  async validateCredentials() {
+    var _a3;
+    try {
+      const command = new DescribeVoicesCommand({
+        Engine: "neural",
+        IncludeAdditionalLanguageCodes: false
+      });
+      const response = await this.pollyClient.send(command);
+      return {
+        isValid: true,
+        voiceCount: ((_a3 = response.Voices) == null ? void 0 : _a3.length) || 0
+      };
+    } catch (error) {
+      let errorMessage = "Unknown error occurred";
+      if (error && typeof error === "object" && "name" in error) {
+        const awsError = error;
+        if (awsError.name === "InvalidSignatureException") {
+          errorMessage = "Invalid AWS credentials - please check your Access Key ID and Secret Access Key";
+        } else if (awsError.name === "SignatureDoesNotMatchException") {
+          errorMessage = "AWS Secret Access Key does not match the Access Key ID";
+        } else if (awsError.name === "AccessDeniedException") {
+          errorMessage = "Access denied - your AWS credentials don't have permission to use Polly";
+        } else if (awsError.name === "UnrecognizedClientException") {
+          errorMessage = "Invalid AWS Access Key ID format";
+        } else if (awsError.name === "NetworkingError" || awsError.code === "NetworkingError") {
+          errorMessage = "Network error - please check your internet connection";
+        } else if (awsError.name === "InvalidParameterValueException") {
+          errorMessage = "Invalid AWS region specified";
+        } else if (awsError.message) {
+          errorMessage = awsError.message;
+        }
+      }
+      return {
+        isValid: false,
+        error: errorMessage
+      };
+    }
+  }
+  /**
+   * Update AWS credentials from settings and reinitialize the Polly client.
+   * Uses credential provider function to avoid AWS SDK credential caching issues.
+   */
+  updateCredentials(settings) {
+    this.currentCredentials = {
+      accessKeyId: String(settings.AWS_ACCESS_KEY_ID),
+      secretAccessKey: String(settings.AWS_SECRET_ACCESS_KEY),
+      region: String(settings.AWS_REGION)
+    };
+    if (this.hasValidCredentials()) {
+      this.initializePollyClient();
+    }
+  }
+  /**
+   * Play pre-generated SSML audio with automatic chunking
+   */
+  async playSSMLAudio(ssml, speed, filePath) {
+    try {
+      const { chunkSSML: chunkSSML2, validateChunks: validateChunks2 } = await Promise.resolve().then(() => (init_SSMLChunker(), SSMLChunker_exports));
+      if (ssml.length > 2500) {
+        const chunks = chunkSSML2(ssml, 2500);
+        const validation = validateChunks2(chunks);
+        if (!validation.isValid) {
+          console.error("Chunk validation errors:", validation.errors);
+          throw new Error(
+            `SSML chunking failed: ${validation.errors.join(", ")}`
+          );
+        }
+        await this.playSSMLChunks(chunks, speed, filePath);
+      } else {
+        if (ssml === this.synthesizeInput.Text && !this.voiceChanged) {
+          void this.playAudio(speed);
+        } else {
+          this.synthesizeInput.Text = ssml;
+          await this.callPollySSML(ssml, speed, filePath);
+        }
+      }
+      this.voiceChanged = false;
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") {
+        return;
+      }
+      console.error("Error in playSSMLAudio:", error);
+      this.reportError(error);
+      throw error;
+    }
+  }
+  /**
+   * Play multiple SSML chunks in sequence
+   */
+  async playSSMLChunks(chunks, speed, filePath) {
+    var _a3;
+    const audioBlobs = [];
+    for (const chunk of chunks) {
+      if ((_a3 = this.abortController) == null ? void 0 : _a3.signal.aborted) {
+        throw new Error("AbortError");
+      }
+      const blob = await this.synthesizeSSMLChunk(
+        chunk.ssml,
+        chunk.index,
+        chunk.total
+      );
+      audioBlobs.push(blob);
+    }
+    const finalBlob = new Blob(audioBlobs, { type: "audio/mpeg" });
+    this.lastGeneratedAudio = finalBlob;
+    if (filePath) {
+      this.lastGeneratedAudioFilePath = filePath;
+    }
+    this.audio.src = URL.createObjectURL(finalBlob);
+    this.reportProgress(1, 1);
+    void this.playAudio(speed);
+  }
+  /**
+   * Synthesize a single SSML chunk and return the audio blob
+   */
+  async synthesizeSSMLChunk(ssml, chunkIndex, totalChunks) {
+    var _a3, _b2, _c2;
+    this.setLanguageCode(this.getLanguageCode(this.synthesizeInput.VoiceId));
+    const input = {
+      Engine: this.synthesizeInput.Engine,
+      LanguageCode: this.synthesizeInput.LanguageCode,
+      SampleRate: this.synthesizeInput.SampleRate,
+      TextType: "ssml",
+      OutputFormat: this.synthesizeInput.OutputFormat,
+      Text: ssml,
+      VoiceId: this.synthesizeInput.VoiceId
+    };
+    const command = new SynthesizeSpeechCommand(input);
+    const data = await this.pollyClient.send(command, {
+      abortSignal: (_a3 = this.abortController) == null ? void 0 : _a3.signal
+    });
+    if (!data || !data.AudioStream) {
+      throw new Error("Invalid response from Polly");
+    }
+    const audioStream = data.AudioStream;
+    if (typeof audioStream === "object" && audioStream !== null && "getReader" in audioStream) {
+      const readableStream = audioStream;
+      const reader = readableStream.getReader();
+      const blobParts = [];
+      const baseProgress = chunkIndex / totalChunks;
+      const chunkProgress = 1 / totalChunks;
+      while (true) {
+        if ((_b2 = this.abortController) == null ? void 0 : _b2.signal.aborted) {
+          void reader.cancel();
+          throw new Error("AbortError");
+        }
+        const { done, value: value2 } = await reader.read();
+        if (done) break;
+        const chunk = new Uint8Array(value2.length);
+        chunk.set(value2);
+        blobParts.push(chunk);
+        const progress = baseProgress + chunkProgress * 0.9;
+        this.reportProgress(progress, 1);
+      }
+      return new Blob(blobParts, { type: "audio/mpeg" });
+    }
+    if (Symbol.asyncIterator in audioStream) {
+      const chunks = [];
+      const asyncIterable = audioStream;
+      for await (const chunk of asyncIterable) {
+        if ((_c2 = this.abortController) == null ? void 0 : _c2.signal.aborted) {
+          throw new Error("AbortError");
+        }
+        chunks.push(Buffer.from(chunk));
+      }
+      const audioBuffer = Buffer.concat(chunks);
+      return new Blob([audioBuffer], { type: "audio/mpeg" });
+    }
+    throw new Error("Unsupported audio stream format");
+  }
+  /**
+   * Call Polly with pre-generated SSML (no chunking, SSML is already prepared)
+   */
+  async callPollySSML(ssml, speed, filePath) {
+    var _a3, _b2, _c2;
+    if (this.isLoading) {
+      throw new Error(
+        "AWS Polly call already in progress. This should not happen if startOperation() guard is working."
+      );
+    }
+    this.isLoading = true;
+    try {
+      this.setLanguageCode(this.getLanguageCode(this.synthesizeInput.VoiceId));
+      this.reportProgress(0, 1);
+      const input = {
+        Engine: this.synthesizeInput.Engine,
+        LanguageCode: this.synthesizeInput.LanguageCode,
+        SampleRate: this.synthesizeInput.SampleRate,
+        TextType: "ssml",
+        OutputFormat: this.synthesizeInput.OutputFormat,
+        Text: ssml,
+        VoiceId: this.synthesizeInput.VoiceId
+      };
+      const command = new SynthesizeSpeechCommand(input);
+      const data = await this.pollyClient.send(command, {
+        abortSignal: (_a3 = this.abortController) == null ? void 0 : _a3.signal
+      });
+      if ((_b2 = this.abortController) == null ? void 0 : _b2.signal.aborted) {
+        throw new Error("AbortError");
+      }
+      if (!data || !data.AudioStream) {
+        throw new Error("Invalid response from Polly");
+      }
+      const audioStream = data.AudioStream;
+      if (typeof audioStream === "object" && audioStream !== null) {
+        if ("getReader" in audioStream) {
+          const readableStream = audioStream;
+          const reader = readableStream.getReader();
+          const blobParts = [];
+          let bytesReceived = 0;
+          let progressReported = 0;
+          while (true) {
+            if ((_c2 = this.abortController) == null ? void 0 : _c2.signal.aborted) {
+              void reader.cancel();
+              throw new Error("AbortError");
+            }
+            const { done, value: value2 } = await reader.read();
+            if (done) break;
+            const chunk = new Uint8Array(value2.length);
+            chunk.set(value2);
+            blobParts.push(chunk);
+            bytesReceived += value2.length;
+            const newProgress = Math.min(0.95, bytesReceived / 5e5);
+            if (newProgress - progressReported > 0.1) {
+              this.reportProgress(newProgress, 1);
+              progressReported = newProgress;
+            }
+          }
+          const audioBlob = new Blob(blobParts, { type: "audio/mpeg" });
+          this.lastGeneratedAudio = audioBlob;
+          if (filePath) {
+            this.lastGeneratedAudioFilePath = filePath;
+          }
+          this.audio.src = URL.createObjectURL(audioBlob);
+          this.reportProgress(1, 1);
+          void this.playAudio(speed);
+        }
+      }
+    } finally {
+      this.isLoading = false;
+      this.abortController = void 0;
+    }
+  }
+  /**
+   * Map AWS errors to user-friendly messages.
+   */
+  getErrorMessage(error) {
+    let errorMessage = "Network error. Please try again.";
+    if (error && typeof error === "object" && "message" in error) {
+      const errorObj = error;
+      if (errorObj.message.includes("NetworkingError")) {
+        errorMessage = "Connection failed. Check your internet.";
+      } else if (errorObj.message.includes("InvalidAccessKeyId")) {
+        errorMessage = "Invalid AWS credentials.";
+      } else if (errorObj.message.includes("ThrottlingException")) {
+        errorMessage = "Rate limited. Please wait and try again.";
+      } else if (errorObj.message.includes("TextLengthExceededException")) {
+        errorMessage = "Text too long. Try shorter content.";
+      } else {
+        errorMessage = `AWS Error: ${errorObj.message}`;
+      }
+    }
+    return errorMessage;
+  }
+  setSynthesizeInput(synthesizeInput) {
+    this.synthesizeInput = {
+      ...this.synthesizeInput,
+      ...synthesizeInput
+    };
+  }
+  setAudio(text5) {
+    this.synthesizeInput.Text = text5;
+  }
+  setVoice(voice) {
+    super.setVoice(voice);
+    this.synthesizeInput.VoiceId = voice;
+    this.synthesizeInput.LanguageCode = this.getLanguageCode(
+      voice
+    );
+    this.voiceChanged = true;
+  }
+  setLanguageCode(language) {
+    this.synthesizeInput.LanguageCode = language;
+    this.voiceChanged = true;
+  }
+  getLanguageCode(voice) {
+    const voiceOption = VOICES.find((v) => v.id === voice);
+    return voiceOption ? voiceOption.lang : "en-US";
+  }
+  getContent() {
+    return this.synthesizeInput.Text;
+  }
+};
+
+// src/service/ElevenLabsService.ts
 var import_obsidian = require("obsidian");
-init_VoiceSettings();
-var VoiceSettingTab = class extends import_obsidian.PluginSettingTab {
+
+// src/service/textChunker.ts
+function chunkPlainText(text5, maxLen) {
+  var _a3;
+  if (text5.length <= maxLen) {
+    return [text5];
+  }
+  const chunks = [];
+  let current = "";
+  const flush = () => {
+    const trimmed = current.trim();
+    if (trimmed) {
+      chunks.push(trimmed);
+    }
+    current = "";
+  };
+  const addPiece = (piece, separator) => {
+    if (!piece) return;
+    if (current && (current + separator + piece).length > maxLen) {
+      flush();
+    }
+    current = current ? current + separator + piece : piece;
+  };
+  const paragraphs = text5.split(/\n{2,}/);
+  for (const paragraph2 of paragraphs) {
+    if (paragraph2.length <= maxLen) {
+      addPiece(paragraph2, "\n\n");
+      continue;
+    }
+    flush();
+    const sentences = (_a3 = paragraph2.match(/[^.!?]+[.!?]*\s*/g)) != null ? _a3 : [paragraph2];
+    for (const sentence of sentences) {
+      if (sentence.length <= maxLen) {
+        addPiece(sentence, " ");
+        continue;
+      }
+      flush();
+      const words = sentence.split(/\s+/);
+      for (const word of words) {
+        if (current && (current + " " + word).length > maxLen) {
+          flush();
+        }
+        current = current ? current + " " + word : word;
+      }
+    }
+  }
+  flush();
+  return chunks.length ? chunks : [text5];
+}
+
+// src/service/ElevenLabsService.ts
+var ELEVENLABS_BASE_URL = "https://api.elevenlabs.io";
+var OUTPUT_FORMAT = "mp3_44100_128";
+var MAX_CHUNK_CHARS = 3e3;
+var ElevenLabsService = class extends BaseSpeechService {
+  constructor(apiKey, voice, model, speed) {
+    super(voice, speed);
+    this.inputFormat = "text";
+    this.apiKey = apiKey;
+    this.model = model || "eleven_multilingual_v2";
+  }
+  getVoiceOptions() {
+    return ELEVENLABS_VOICES;
+  }
+  updateCredentials(settings) {
+    this.apiKey = settings.ELEVENLABS_API_KEY;
+    this.model = settings.ELEVENLABS_MODEL || "eleven_multilingual_v2";
+  }
+  /**
+   * Synthesize and play plain text via ElevenLabs.
+   */
+  async speak(content3, speed, filePath) {
+    var _a3, _b2;
+    if (this.isLoading) {
+      throw new Error("ElevenLabs call already in progress.");
+    }
+    if (!this.apiKey) {
+      const error = new Error("Missing ElevenLabs API key");
+      this.reportError(error);
+      throw error;
+    }
+    const text5 = content3.trim();
+    if (!text5) {
+      return;
+    }
+    this.isLoading = true;
+    try {
+      this.reportProgress(0, 1);
+      const chunks = chunkPlainText(text5, MAX_CHUNK_CHARS);
+      const audioBlobs = [];
+      for (let i2 = 0; i2 < chunks.length; i2++) {
+        if ((_a3 = this.abortController) == null ? void 0 : _a3.signal.aborted) {
+          throw new Error("AbortError");
+        }
+        const blob = await this.synthesizeChunk(chunks[i2]);
+        if ((_b2 = this.abortController) == null ? void 0 : _b2.signal.aborted) {
+          throw new Error("AbortError");
+        }
+        audioBlobs.push(blob);
+        this.reportProgress((i2 + 1) / chunks.length * 0.95, 1);
+      }
+      const finalBlob = new Blob(audioBlobs, { type: "audio/mpeg" });
+      this.playBlob(finalBlob, speed, filePath);
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") {
+        return;
+      }
+      console.error("Error in ElevenLabs speak:", error);
+      this.reportError(error);
+      throw error;
+    } finally {
+      this.isLoading = false;
+      this.abortController = void 0;
+    }
+  }
+  /**
+   * Synthesize a single text chunk and return the MP3 blob.
+   */
+  async synthesizeChunk(text5) {
+    const voiceId = this.voice;
+    const url = `${ELEVENLABS_BASE_URL}/v1/text-to-speech/${encodeURIComponent(
+      voiceId
+    )}?output_format=${OUTPUT_FORMAT}`;
+    const response = await (0, import_obsidian.requestUrl)({
+      url,
+      method: "POST",
+      headers: {
+        "xi-api-key": this.apiKey,
+        "Content-Type": "application/json",
+        Accept: "audio/mpeg"
+      },
+      body: JSON.stringify({
+        text: text5,
+        model_id: this.model
+      }),
+      throw: false
+    });
+    if (response.status === 401) {
+      throw new Error("ElevenLabs: invalid or expired API key (401)");
+    }
+    if (response.status === 429) {
+      throw new Error("ElevenLabs: rate or concurrency limit reached (429)");
+    }
+    if (response.status >= 400) {
+      throw new Error(`ElevenLabs API error (HTTP ${response.status})`);
+    }
+    const arrayBuffer = response.arrayBuffer;
+    if (!arrayBuffer || arrayBuffer.byteLength === 0) {
+      throw new Error("ElevenLabs returned an empty audio response");
+    }
+    return new Blob([arrayBuffer], { type: "audio/mpeg" });
+  }
+  /**
+   * Validate the API key by listing the account's voices.
+   */
+  async validateCredentials() {
+    var _a3, _b2;
+    if (!this.apiKey) {
+      return { isValid: false, error: "Please enter your ElevenLabs API key." };
+    }
+    try {
+      const response = await (0, import_obsidian.requestUrl)({
+        url: `${ELEVENLABS_BASE_URL}/v1/voices`,
+        method: "GET",
+        headers: { "xi-api-key": this.apiKey },
+        throw: false
+      });
+      if (response.status === 200) {
+        const voices = (_b2 = (_a3 = response.json) == null ? void 0 : _a3.voices) != null ? _b2 : [];
+        return { isValid: true, voiceCount: voices.length };
+      }
+      if (response.status === 401) {
+        return {
+          isValid: false,
+          error: "Invalid or expired ElevenLabs API key."
+        };
+      }
+      return {
+        isValid: false,
+        error: `Validation failed (HTTP ${response.status}).`
+      };
+    } catch (error) {
+      console.error("ElevenLabs credential validation error:", error);
+      return {
+        isValid: false,
+        error: "Network error during validation. Please try again."
+      };
+    }
+  }
+  getErrorMessage(error) {
+    if (error && typeof error === "object" && "message" in error) {
+      const message = String(error.message);
+      if (message.includes("401")) {
+        return "Invalid ElevenLabs API key.";
+      }
+      if (message.includes("429")) {
+        return "ElevenLabs rate limit reached. Please wait and try again.";
+      }
+      if (message.includes("Missing ElevenLabs API key")) {
+        return "Add your ElevenLabs API key in settings.";
+      }
+      if (message.includes("empty audio")) {
+        return "ElevenLabs returned no audio. Try a different voice or model.";
+      }
+      if (message.toLowerCase().includes("network")) {
+        return "Connection failed. Check your internet.";
+      }
+      return `ElevenLabs error: ${message}`;
+    }
+    return "ElevenLabs error. Please try again.";
+  }
+};
+
+// src/service/GoogleTtsService.ts
+var import_obsidian2 = require("obsidian");
+var GOOGLE_BASE_URL = "https://texttospeech.googleapis.com/v1";
+var MAX_SSML_CHUNK_CHARS = 2500;
+function base64ToBytes(base64) {
+  const binary = typeof atob === "function" ? atob(base64) : Buffer.from(base64, "base64").toString("binary");
+  const bytes = new Uint8Array(binary.length);
+  for (let i2 = 0; i2 < binary.length; i2++) {
+    bytes[i2] = binary.charCodeAt(i2);
+  }
+  return bytes;
+}
+var GoogleTtsService = class extends BaseSpeechService {
+  constructor(apiKey, voice, speed) {
+    super(voice, speed);
+    this.inputFormat = "ssml";
+    this.apiKey = apiKey;
+  }
+  getVoiceOptions() {
+    return GOOGLE_VOICES;
+  }
+  updateCredentials(settings) {
+    this.apiKey = settings.GOOGLE_API_KEY;
+  }
+  /**
+   * Synthesize and play SSML via Google Cloud TTS.
+   */
+  async speak(content3, speed, filePath) {
+    var _a3, _b2;
+    if (this.isLoading) {
+      throw new Error("Google TTS call already in progress.");
+    }
+    if (!this.apiKey) {
+      const error = new Error("Missing Google Cloud API key");
+      this.reportError(error);
+      throw error;
+    }
+    const ssml = content3.trim();
+    if (!ssml) {
+      return;
+    }
+    this.isLoading = true;
+    try {
+      this.reportProgress(0, 1);
+      const chunks = await this.chunkSsml(ssml);
+      const audioBlobs = [];
+      for (let i2 = 0; i2 < chunks.length; i2++) {
+        if ((_a3 = this.abortController) == null ? void 0 : _a3.signal.aborted) {
+          throw new Error("AbortError");
+        }
+        const blob = await this.synthesizeChunk(chunks[i2]);
+        if ((_b2 = this.abortController) == null ? void 0 : _b2.signal.aborted) {
+          throw new Error("AbortError");
+        }
+        audioBlobs.push(blob);
+        this.reportProgress((i2 + 1) / chunks.length * 0.95, 1);
+      }
+      const finalBlob = new Blob(audioBlobs, { type: "audio/mpeg" });
+      this.playBlob(finalBlob, speed, filePath);
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") {
+        return;
+      }
+      console.error("Error in Google TTS speak:", error);
+      this.reportError(error);
+      throw error;
+    } finally {
+      this.isLoading = false;
+      this.abortController = void 0;
+    }
+  }
+  /**
+   * Split the SSML into request-sized chunks (reusing the SSML chunker so each
+   * chunk stays a well-formed <speak> document).
+   */
+  async chunkSsml(ssml) {
+    if (ssml.length <= MAX_SSML_CHUNK_CHARS) {
+      return [ssml];
+    }
+    const { chunkSSML: chunkSSML2, validateChunks: validateChunks2 } = await Promise.resolve().then(() => (init_SSMLChunker(), SSMLChunker_exports));
+    const chunks = chunkSSML2(ssml, MAX_SSML_CHUNK_CHARS);
+    const validation = validateChunks2(chunks);
+    if (!validation.isValid) {
+      throw new Error(`SSML chunking failed: ${validation.errors.join(", ")}`);
+    }
+    return chunks.map((chunk) => chunk.ssml);
+  }
+  /**
+   * Synthesize a single SSML chunk and return the MP3 blob.
+   */
+  async synthesizeChunk(ssml) {
+    var _a3, _b2, _c2;
+    const body = {
+      input: { ssml: this.toGoogleSsml(ssml) },
+      voice: {
+        languageCode: this.languageCode(),
+        name: this.voice
+      },
+      audioConfig: { audioEncoding: "MP3" }
+    };
+    const response = await (0, import_obsidian2.requestUrl)({
+      url: `${GOOGLE_BASE_URL}/text:synthesize`,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": this.apiKey
+      },
+      body: JSON.stringify(body),
+      throw: false
+    });
+    if (response.status === 400 || response.status === 403) {
+      const message = (_b2 = (_a3 = response.json) == null ? void 0 : _a3.error) == null ? void 0 : _b2.message;
+      throw new Error(
+        `Google TTS rejected the request (HTTP ${response.status})${message ? `: ${message}` : ""}`
+      );
+    }
+    if (response.status === 429) {
+      throw new Error("Google TTS: rate or quota limit reached (429)");
+    }
+    if (response.status >= 400) {
+      throw new Error(`Google TTS API error (HTTP ${response.status})`);
+    }
+    const audioContent = (_c2 = response.json) == null ? void 0 : _c2.audioContent;
+    if (!audioContent) {
+      throw new Error("Google TTS returned an empty audio response");
+    }
+    return new Blob([base64ToBytes(audioContent)], {
+      type: "audio/mpeg"
+    });
+  }
+  /**
+   * Validate the API key by listing voices.
+   */
+  async validateCredentials() {
+    var _a3, _b2;
+    if (!this.apiKey) {
+      return {
+        isValid: false,
+        error: "Please enter your Google Cloud API key."
+      };
+    }
+    try {
+      const response = await (0, import_obsidian2.requestUrl)({
+        url: `${GOOGLE_BASE_URL}/voices`,
+        method: "GET",
+        headers: { "X-Goog-Api-Key": this.apiKey },
+        throw: false
+      });
+      if (response.status === 200) {
+        const voices = (_b2 = (_a3 = response.json) == null ? void 0 : _a3.voices) != null ? _b2 : [];
+        return { isValid: true, voiceCount: voices.length };
+      }
+      if (response.status === 400 || response.status === 403) {
+        return {
+          isValid: false,
+          error: "Invalid API key, or the Cloud Text-to-Speech API is not enabled for this key/project."
+        };
+      }
+      return {
+        isValid: false,
+        error: `Validation failed (HTTP ${response.status}).`
+      };
+    } catch (error) {
+      console.error("Google TTS credential validation error:", error);
+      return {
+        isValid: false,
+        error: "Network error during validation. Please try again."
+      };
+    }
+  }
+  getErrorMessage(error) {
+    if (error && typeof error === "object" && "message" in error) {
+      const message = String(error.message);
+      if (message.includes("Missing Google Cloud API key")) {
+        return "Add your Google Cloud API key in settings.";
+      }
+      if (message.includes("403") || message.includes("400")) {
+        return "Invalid Google Cloud API key or the Text-to-Speech API is not enabled.";
+      }
+      if (message.includes("429")) {
+        return "Google TTS quota or rate limit reached. Please wait and try again.";
+      }
+      if (message.includes("empty audio")) {
+        return "Google TTS returned no audio. Try a different voice.";
+      }
+      if (message.toLowerCase().includes("network")) {
+        return "Connection failed. Check your internet.";
+      }
+      return `Google TTS error: ${message}`;
+    }
+    return "Google TTS error. Please try again.";
+  }
+  /**
+   * Adjust Polly-style SSML to Google's accepted vocabulary. Google's
+   * say-as uses "cardinal" where Polly uses "number"; everything else in the
+   * pipeline's output (prosody/break/characters/sub) is valid Google SSML.
+   */
+  toGoogleSsml(ssml) {
+    return ssml.replace(/interpret-as="number"/g, 'interpret-as="cardinal"');
+  }
+  /**
+   * Derive the BCP-47 languageCode from the voice name (its first two
+   * hyphen-delimited segments, e.g. "en-US-Neural2-C" → "en-US").
+   */
+  languageCode() {
+    const parts = this.voice.split("-");
+    if (parts.length >= 2) {
+      return `${parts[0]}-${parts[1]}`;
+    }
+    return "en-US";
+  }
+};
+
+// src/service/AzureSpeechService.ts
+var import_obsidian3 = require("obsidian");
+var OUTPUT_FORMAT2 = "audio-24khz-48kbitrate-mono-mp3";
+var MAX_SSML_CHUNK_CHARS2 = 2500;
+var AzureSpeechService = class extends BaseSpeechService {
+  constructor(apiKey, region, voice, speed) {
+    super(voice, speed);
+    this.inputFormat = "ssml";
+    this.apiKey = apiKey;
+    this.region = region;
+  }
+  getVoiceOptions() {
+    return AZURE_VOICES;
+  }
+  updateCredentials(settings) {
+    this.apiKey = settings.AZURE_API_KEY;
+    this.region = settings.AZURE_REGION;
+  }
+  /**
+   * Synthesize and play SSML via Azure AI Speech.
+   */
+  async speak(content3, speed, filePath) {
+    var _a3, _b2;
+    if (this.isLoading) {
+      throw new Error("Azure Speech call already in progress.");
+    }
+    if (!this.apiKey || !this.region) {
+      const error = new Error("Missing Azure Speech key or region");
+      this.reportError(error);
+      throw error;
+    }
+    const ssml = content3.trim();
+    if (!ssml) {
+      return;
+    }
+    this.isLoading = true;
+    try {
+      this.reportProgress(0, 1);
+      const chunks = await this.chunkSsml(ssml);
+      const audioBlobs = [];
+      for (let i2 = 0; i2 < chunks.length; i2++) {
+        if ((_a3 = this.abortController) == null ? void 0 : _a3.signal.aborted) {
+          throw new Error("AbortError");
+        }
+        const blob = await this.synthesizeChunk(chunks[i2]);
+        if ((_b2 = this.abortController) == null ? void 0 : _b2.signal.aborted) {
+          throw new Error("AbortError");
+        }
+        audioBlobs.push(blob);
+        this.reportProgress((i2 + 1) / chunks.length * 0.95, 1);
+      }
+      const finalBlob = new Blob(audioBlobs, { type: "audio/mpeg" });
+      this.playBlob(finalBlob, speed, filePath);
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") {
+        return;
+      }
+      console.error("Error in Azure Speech speak:", error);
+      this.reportError(error);
+      throw error;
+    } finally {
+      this.isLoading = false;
+      this.abortController = void 0;
+    }
+  }
+  /**
+   * Split the SSML into request-sized chunks (each a well-formed <speak>).
+   */
+  async chunkSsml(ssml) {
+    if (ssml.length <= MAX_SSML_CHUNK_CHARS2) {
+      return [ssml];
+    }
+    const { chunkSSML: chunkSSML2, validateChunks: validateChunks2 } = await Promise.resolve().then(() => (init_SSMLChunker(), SSMLChunker_exports));
+    const chunks = chunkSSML2(ssml, MAX_SSML_CHUNK_CHARS2);
+    const validation = validateChunks2(chunks);
+    if (!validation.isValid) {
+      throw new Error(`SSML chunking failed: ${validation.errors.join(", ")}`);
+    }
+    return chunks.map((chunk) => chunk.ssml);
+  }
+  /**
+   * Synthesize a single SSML chunk and return the MP3 blob.
+   */
+  async synthesizeChunk(ssml) {
+    const response = await (0, import_obsidian3.requestUrl)({
+      url: `https://${this.region}.tts.speech.microsoft.com/cognitiveservices/v1`,
+      method: "POST",
+      headers: {
+        "Ocp-Apim-Subscription-Key": this.apiKey,
+        "Content-Type": "application/ssml+xml",
+        "X-Microsoft-OutputFormat": OUTPUT_FORMAT2,
+        "User-Agent": "obsidian-voice"
+      },
+      body: this.toAzureSsml(ssml),
+      throw: false
+    });
+    if (response.status === 401) {
+      throw new Error("Azure Speech: invalid key or region (401)");
+    }
+    if (response.status === 429) {
+      throw new Error("Azure Speech: rate or quota limit reached (429)");
+    }
+    if (response.status >= 400) {
+      throw new Error(`Azure Speech API error (HTTP ${response.status})`);
+    }
+    const arrayBuffer = response.arrayBuffer;
+    if (!arrayBuffer || arrayBuffer.byteLength === 0) {
+      throw new Error("Azure Speech returned an empty audio response");
+    }
+    return new Blob([arrayBuffer], { type: "audio/mpeg" });
+  }
+  /**
+   * Validate the key + region by listing voices.
+   */
+  async validateCredentials() {
+    var _a3;
+    if (!this.apiKey || !this.region) {
+      return {
+        isValid: false,
+        error: "Please enter your Azure Speech key and region."
+      };
+    }
+    try {
+      const response = await (0, import_obsidian3.requestUrl)({
+        url: `https://${this.region}.tts.speech.microsoft.com/cognitiveservices/voices/list`,
+        method: "GET",
+        headers: { "Ocp-Apim-Subscription-Key": this.apiKey },
+        throw: false
+      });
+      if (response.status === 200) {
+        const voices = (_a3 = response.json) != null ? _a3 : [];
+        return {
+          isValid: true,
+          voiceCount: Array.isArray(voices) ? voices.length : void 0
+        };
+      }
+      if (response.status === 401 || response.status === 403) {
+        return {
+          isValid: false,
+          error: "Invalid Azure Speech key, or it doesn't match the region."
+        };
+      }
+      return {
+        isValid: false,
+        error: `Validation failed (HTTP ${response.status}).`
+      };
+    } catch (error) {
+      console.error("Azure Speech credential validation error:", error);
+      return {
+        isValid: false,
+        error: "Network error during validation. Please try again."
+      };
+    }
+  }
+  getErrorMessage(error) {
+    if (error && typeof error === "object" && "message" in error) {
+      const message = String(error.message);
+      if (message.includes("Missing Azure Speech key")) {
+        return "Add your Azure Speech key and region in settings.";
+      }
+      if (message.includes("401")) {
+        return "Invalid Azure Speech key or region.";
+      }
+      if (message.includes("429")) {
+        return "Azure Speech quota or rate limit reached. Please wait and try again.";
+      }
+      if (message.includes("empty audio")) {
+        return "Azure Speech returned no audio. Try a different voice.";
+      }
+      if (message.toLowerCase().includes("network")) {
+        return "Connection failed. Check your internet.";
+      }
+      return `Azure Speech error: ${message}`;
+    }
+    return "Azure Speech error. Please try again.";
+  }
+  /**
+   * Wrap the pipeline's inner SSML in Azure's required envelope and adjust the
+   * one incompatible attribute: Azure prosody volume does not accept decibels,
+   * so map `volume="±NdB"` to a bounded relative percentage.
+   */
+  toAzureSsml(ssml) {
+    const inner = ssml.replace(/^\s*<speak[^>]*>/, "").replace(/<\/speak>\s*$/, "").replace(/volume="([+-]?\d+(?:\.\d+)?)dB"/g, (_match, db) => {
+      const pct = Math.max(
+        -50,
+        Math.min(50, Math.round(parseFloat(db) * 10))
+      );
+      const sign = pct >= 0 ? "+" : "";
+      return `volume="${sign}${pct}%"`;
+    });
+    const locale = this.languageCode();
+    return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="${locale}"><voice name="${this.voice}">${inner}</voice></speak>`;
+  }
+  /**
+   * Derive the locale from the voice ShortName (its first two hyphen-delimited
+   * segments, e.g. "en-US-JennyNeural" → "en-US").
+   */
+  languageCode() {
+    const parts = this.voice.split("-");
+    if (parts.length >= 2) {
+      return `${parts[0]}-${parts[1]}`;
+    }
+    return "en-US";
+  }
+};
+
+// src/service/OpenAiSpeechService.ts
+var import_obsidian4 = require("obsidian");
+var OPENAI_BASE_URL = "https://api.openai.com/v1";
+var MAX_CHUNK_CHARS2 = 2e3;
+var OpenAiSpeechService = class extends BaseSpeechService {
+  constructor(apiKey, voice, model, speed) {
+    super(voice, speed);
+    this.inputFormat = "text";
+    this.apiKey = apiKey;
+    this.model = model || "gpt-4o-mini-tts";
+  }
+  getVoiceOptions() {
+    return OPENAI_VOICES;
+  }
+  updateCredentials(settings) {
+    this.apiKey = settings.OPENAI_API_KEY;
+    this.model = settings.OPENAI_MODEL || "gpt-4o-mini-tts";
+  }
+  /**
+   * Synthesize and play plain text via OpenAI.
+   */
+  async speak(content3, speed, filePath) {
+    var _a3, _b2;
+    if (this.isLoading) {
+      throw new Error("OpenAI call already in progress.");
+    }
+    if (!this.apiKey) {
+      const error = new Error("Missing OpenAI API key");
+      this.reportError(error);
+      throw error;
+    }
+    const text5 = content3.trim();
+    if (!text5) {
+      return;
+    }
+    this.isLoading = true;
+    try {
+      this.reportProgress(0, 1);
+      const chunks = chunkPlainText(text5, MAX_CHUNK_CHARS2);
+      const audioBlobs = [];
+      for (let i2 = 0; i2 < chunks.length; i2++) {
+        if ((_a3 = this.abortController) == null ? void 0 : _a3.signal.aborted) {
+          throw new Error("AbortError");
+        }
+        const blob = await this.synthesizeChunk(chunks[i2]);
+        if ((_b2 = this.abortController) == null ? void 0 : _b2.signal.aborted) {
+          throw new Error("AbortError");
+        }
+        audioBlobs.push(blob);
+        this.reportProgress((i2 + 1) / chunks.length * 0.95, 1);
+      }
+      const finalBlob = new Blob(audioBlobs, { type: "audio/mpeg" });
+      this.playBlob(finalBlob, speed, filePath);
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") {
+        return;
+      }
+      console.error("Error in OpenAI speak:", error);
+      this.reportError(error);
+      throw error;
+    } finally {
+      this.isLoading = false;
+      this.abortController = void 0;
+    }
+  }
+  /**
+   * Synthesize a single text chunk and return the MP3 blob.
+   */
+  async synthesizeChunk(text5) {
+    var _a3, _b2;
+    const response = await (0, import_obsidian4.requestUrl)({
+      url: `${OPENAI_BASE_URL}/audio/speech`,
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${this.apiKey}`,
+        "Content-Type": "application/json",
+        Accept: "audio/mpeg"
+      },
+      body: JSON.stringify({
+        model: this.model,
+        input: text5,
+        voice: this.voice,
+        response_format: "mp3"
+      }),
+      throw: false
+    });
+    if (response.status === 401) {
+      throw new Error("OpenAI: invalid or expired API key (401)");
+    }
+    if (response.status === 429) {
+      throw new Error("OpenAI: rate limit or quota reached (429)");
+    }
+    if (response.status >= 400) {
+      const message = (_b2 = (_a3 = response.json) == null ? void 0 : _a3.error) == null ? void 0 : _b2.message;
+      throw new Error(
+        `OpenAI API error (HTTP ${response.status})${message ? `: ${message}` : ""}`
+      );
+    }
+    const arrayBuffer = response.arrayBuffer;
+    if (!arrayBuffer || arrayBuffer.byteLength === 0) {
+      throw new Error("OpenAI returned an empty audio response");
+    }
+    return new Blob([arrayBuffer], { type: "audio/mpeg" });
+  }
+  /**
+   * Validate the API key. OpenAI has no list-voices endpoint, so we probe the
+   * models endpoint; a 200 means the key works. The voice count reflects the
+   * built-in catalog.
+   */
+  async validateCredentials() {
+    if (!this.apiKey) {
+      return { isValid: false, error: "Please enter your OpenAI API key." };
+    }
+    try {
+      const response = await (0, import_obsidian4.requestUrl)({
+        url: `${OPENAI_BASE_URL}/models`,
+        method: "GET",
+        headers: { Authorization: `Bearer ${this.apiKey}` },
+        throw: false
+      });
+      if (response.status === 200) {
+        return { isValid: true, voiceCount: OPENAI_VOICES.length };
+      }
+      if (response.status === 401) {
+        return { isValid: false, error: "Invalid or expired OpenAI API key." };
+      }
+      return {
+        isValid: false,
+        error: `Validation failed (HTTP ${response.status}).`
+      };
+    } catch (error) {
+      console.error("OpenAI credential validation error:", error);
+      return {
+        isValid: false,
+        error: "Network error during validation. Please try again."
+      };
+    }
+  }
+  getErrorMessage(error) {
+    if (error && typeof error === "object" && "message" in error) {
+      const message = String(error.message);
+      if (message.includes("401")) {
+        return "Invalid OpenAI API key.";
+      }
+      if (message.includes("429")) {
+        return "OpenAI rate limit or quota reached. Please wait and try again.";
+      }
+      if (message.includes("Missing OpenAI API key")) {
+        return "Add your OpenAI API key in settings.";
+      }
+      if (message.includes("empty audio")) {
+        return "OpenAI returned no audio. Try a different voice or model.";
+      }
+      if (message.toLowerCase().includes("network")) {
+        return "Connection failed. Check your internet.";
+      }
+      return `OpenAI error: ${message}`;
+    }
+    return "OpenAI error. Please try again.";
+  }
+};
+
+// src/service/SpeechProviderFactory.ts
+function createSpeechProvider(settings) {
+  let provider;
+  if (settings.TTS_PROVIDER === "elevenlabs") {
+    provider = new ElevenLabsService(
+      settings.ELEVENLABS_API_KEY,
+      settings.ELEVENLABS_VOICE,
+      settings.ELEVENLABS_MODEL,
+      Number(settings.SPEED)
+    );
+  } else if (settings.TTS_PROVIDER === "google") {
+    provider = new GoogleTtsService(
+      settings.GOOGLE_API_KEY,
+      settings.GOOGLE_VOICE,
+      Number(settings.SPEED)
+    );
+  } else if (settings.TTS_PROVIDER === "azure") {
+    provider = new AzureSpeechService(
+      settings.AZURE_API_KEY,
+      settings.AZURE_REGION,
+      settings.AZURE_VOICE,
+      Number(settings.SPEED)
+    );
+  } else if (settings.TTS_PROVIDER === "openai") {
+    provider = new OpenAiSpeechService(
+      settings.OPENAI_API_KEY,
+      settings.OPENAI_VOICE,
+      settings.OPENAI_MODEL,
+      Number(settings.SPEED)
+    );
+  } else {
+    provider = new AwsPollyService(
+      {
+        credentials: {
+          accessKeyId: String(settings.AWS_ACCESS_KEY_ID),
+          secretAccessKey: String(settings.AWS_SECRET_ACCESS_KEY)
+        },
+        region: String(settings.AWS_REGION)
+      },
+      settings.VOICE,
+      Number(settings.SPEED)
+    );
+  }
+  provider.setRewindSeconds(settings.rewindSeconds);
+  provider.setForwardSeconds(settings.forwardSeconds);
+  return provider;
+}
+
+// src/settings/VoiceSettingTab.ts
+var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
     this.plugin = plugin;
@@ -11283,79 +13465,121 @@ var VoiceSettingTab = class extends import_obsidian.PluginSettingTab {
       return `${percentage}% slower`;
     }
   }
+  /** Human-readable tempo label, e.g. "1.0× · normal" or "1.3× · 30% faster". */
+  formatTempoValue(speed) {
+    const rounded = Math.round(speed * 10) / 10;
+    return `${rounded.toFixed(1)}\xD7 \xB7 ${this.formatSpeedText(rounded)}`;
+  }
+  /** Seconds label, e.g. "3s". */
+  formatSecondsValue(seconds) {
+    return `${seconds}s`;
+  }
+  /** Append a live value readout to a slider setting's control row. */
+  appendSliderValue(setting, text5) {
+    const valueEl = setting.controlEl.createSpan({ cls: "voice-slider-value" });
+    valueEl.setText(text5);
+    return valueEl;
+  }
   addSliderDirectionalIndicators(sliderEl) {
     const sliderContainer = sliderEl.parentElement;
     if (!sliderContainer) return;
-    const sliderWrapper = sliderContainer.createDiv();
-    sliderWrapper.style.display = "flex";
-    sliderWrapper.style.alignItems = "center";
-    sliderWrapper.style.gap = "8px";
-    sliderWrapper.style.width = "100%";
-    const leftIndicator = sliderWrapper.createSpan();
-    leftIndicator.style.fontSize = "12px";
-    leftIndicator.style.color = "var(--text-muted)";
-    leftIndicator.style.fontWeight = "500";
-    leftIndicator.style.minWidth = "50px";
-    leftIndicator.style.textAlign = "right";
+    const sliderWrapper = sliderContainer.createDiv({
+      cls: "voice-slider-wrapper"
+    });
+    const leftIndicator = sliderWrapper.createSpan({
+      cls: "voice-slider-indicator left"
+    });
     leftIndicator.textContent = "\u2212 slower";
     leftIndicator.title = "Move left to decrease speed (slower playback)";
     sliderWrapper.appendChild(sliderEl);
-    const rightIndicator = sliderWrapper.createSpan();
-    rightIndicator.style.fontSize = "12px";
-    rightIndicator.style.color = "var(--text-muted)";
-    rightIndicator.style.fontWeight = "500";
-    rightIndicator.style.minWidth = "50px";
-    rightIndicator.style.textAlign = "left";
+    const rightIndicator = sliderWrapper.createSpan({
+      cls: "voice-slider-indicator right"
+    });
     rightIndicator.textContent = "faster +";
     rightIndicator.title = "Move right to increase speed (faster playback)";
-    sliderEl.style.flex = "1";
   }
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    new import_obsidian.Setting(containerEl).setName("Voice").setDesc(
-      "Choose a voice tone, gender, and language for a personalized audio experience."
+    new import_obsidian5.Setting(containerEl).setName("Speech Provider").setDesc(
+      "Choose which text-to-speech engine to use. AWS Polly, ElevenLabs, and Google Cloud offer the same plugin features; each uses its own credentials and voices."
     ).addDropdown((dropdown) => {
-      VOICES.forEach((voice) => {
-        dropdown.addOption(voice.id, voice.label);
-      });
-      dropdown.setValue(
-        this.plugin.getPollyService().getVoice() || this.plugin.settings.VOICE
-      ).onChange(async (value2) => {
-        this.plugin.settings.VOICE = value2;
+      dropdown.addOption("polly", "AWS Polly").addOption("elevenlabs", "ElevenLabs").addOption("google", "Google Cloud").addOption("azure", "Azure Speech").addOption("openai", "OpenAI").setValue(this.plugin.settings.TTS_PROVIDER).onChange(async (value2) => {
+        this.plugin.settings.TTS_PROVIDER = value2;
         await this.plugin.saveSettings();
-        this.plugin.getPollyService().setVoice(value2);
-        this.plugin.iconEventHandler.updateVoiceDisplay();
+        this.plugin.reinitializeProvider();
+        this.display();
       });
     });
-    new import_obsidian.Setting(containerEl).setName("Tempo").setDesc(
+    const provider = this.plugin.getSpeechProvider();
+    new import_obsidian5.Setting(containerEl).setName("Voice").setDesc(
+      "Choose a voice tone, gender, and language for a personalized audio experience."
+    ).addDropdown((dropdown) => {
+      provider.getVoiceOptions().forEach((voice) => {
+        dropdown.addOption(voice.id, voice.label);
+      });
+      dropdown.setValue(provider.getVoice()).onChange(async (value2) => {
+        await this.plugin.persistActiveVoice(value2);
+      });
+    });
+    const tempoSetting = new import_obsidian5.Setting(containerEl).setName("Tempo").setDesc(
       "Set a preferred reading tempo for pleasant and comfortable audio playback."
-    ).addSlider(
+    );
+    let tempoValueEl;
+    tempoSetting.addSlider(
       (slider) => slider.setLimits(0.5, 1.9, 0.1).setValue(
-        this.plugin.settings.SPEED || this.plugin.getPollyService().getSpeed()
-      ).setDynamicTooltip().onChange(async (value2) => {
+        this.plugin.settings.SPEED || this.plugin.getSpeechProvider().getSpeed()
+      ).onChange(async (value2) => {
         const roundedValue = Math.round(value2 * 10) / 10;
         this.plugin.settings.SPEED = roundedValue;
         await this.plugin.saveSettings();
-        this.plugin.getPollyService().setSpeed(roundedValue);
+        this.plugin.getSpeechProvider().setSpeed(roundedValue);
         this.plugin.iconEventHandler.updateSpeedDisplayFromSettings();
-        const speedText = this.formatSpeedText(roundedValue);
-        slider.sliderEl.setAttribute(
-          "title",
-          `${roundedValue}x - ${speedText}`
-        );
+        tempoValueEl.setText(this.formatTempoValue(roundedValue));
       }).then((slider2) => {
-        const currentSpeed = this.plugin.settings.SPEED || this.plugin.getPollyService().getSpeed();
-        const speedText = this.formatSpeedText(currentSpeed);
-        slider2.sliderEl.setAttribute(
-          "title",
-          `${currentSpeed}x - ${speedText}`
-        );
         this.addSliderDirectionalIndicators(slider2.sliderEl);
       })
     );
-    new import_obsidian.Setting(containerEl).setName("Spell Out Acronyms").setDesc(
-      "When enabled, uppercase words like NASA or API are spelled out letter by letter. Disable this if you want uppercase words to be pronounced normally."
+    tempoValueEl = this.appendSliderValue(
+      tempoSetting,
+      this.formatTempoValue(
+        this.plugin.settings.SPEED || this.plugin.getSpeechProvider().getSpeed()
+      )
+    );
+    const rewindSetting = new import_obsidian5.Setting(containerEl).setName("Rewind interval").setDesc(
+      `How many seconds the rewind control jumps back (${MIN_SKIP_SECONDS}\u2013${MAX_SKIP_SECONDS}s).`
+    );
+    let rewindValueEl;
+    rewindSetting.addSlider(
+      (slider) => slider.setLimits(MIN_SKIP_SECONDS, MAX_SKIP_SECONDS, 1).setValue(this.plugin.settings.rewindSeconds).onChange(async (value2) => {
+        this.plugin.settings.rewindSeconds = value2;
+        await this.plugin.saveSettings();
+        this.plugin.updateSkipIntervals();
+        rewindValueEl.setText(this.formatSecondsValue(value2));
+      })
+    );
+    rewindValueEl = this.appendSliderValue(
+      rewindSetting,
+      this.formatSecondsValue(this.plugin.settings.rewindSeconds)
+    );
+    const forwardSetting = new import_obsidian5.Setting(containerEl).setName("Fast-forward interval").setDesc(
+      `How many seconds the fast-forward control jumps ahead (${MIN_SKIP_SECONDS}\u2013${MAX_SKIP_SECONDS}s).`
+    );
+    let forwardValueEl;
+    forwardSetting.addSlider(
+      (slider) => slider.setLimits(MIN_SKIP_SECONDS, MAX_SKIP_SECONDS, 1).setValue(this.plugin.settings.forwardSeconds).onChange(async (value2) => {
+        this.plugin.settings.forwardSeconds = value2;
+        await this.plugin.saveSettings();
+        this.plugin.updateSkipIntervals();
+        forwardValueEl.setText(this.formatSecondsValue(value2));
+      })
+    );
+    forwardValueEl = this.appendSliderValue(
+      forwardSetting,
+      this.formatSecondsValue(this.plugin.settings.forwardSeconds)
+    );
+    new import_obsidian5.Setting(containerEl).setName("Spell Out Acronyms").setDesc(
+      "When enabled, uppercase words like NASA or API are spelled out letter by letter. Disable this if you want uppercase words to be pronounced normally. (Applies to AWS Polly.)"
     ).addToggle(
       (toggle) => toggle.setValue(this.plugin.settings.spellOutAcronyms).onChange(async (value2) => {
         this.plugin.settings.spellOutAcronyms = value2;
@@ -11363,178 +13587,331 @@ var VoiceSettingTab = class extends import_obsidian.PluginSettingTab {
         this.plugin.reinitializeTextSpeaker();
       })
     );
-    containerEl.createEl("h2", { text: "AWS" });
-    new import_obsidian.Setting(containerEl).setName("AWS Region").setDesc("The AWS Region for the Polly service.").addDropdown((dropdown) => {
+    new import_obsidian5.Setting(containerEl).setName("Read Code Blocks").setDesc(
+      "When enabled, fenced code blocks (such as Mermaid, YAML, or other code) are read aloud. Disable this to skip code blocks and announce them as a short placeholder instead."
+    ).addToggle(
+      (toggle) => toggle.setValue(this.plugin.settings.readCodeBlocks).onChange(async (value2) => {
+        this.plugin.settings.readCodeBlocks = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeTextSpeaker();
+      })
+    );
+    new import_obsidian5.Setting(containerEl).setName("Skip Website URLs").setDesc(
+      "When enabled, website URLs (such as https://example.com or www.example.com) are removed and not read aloud. Disabled by default."
+    ).addToggle(
+      (toggle) => toggle.setValue(this.plugin.settings.skipUrls).onChange(async (value2) => {
+        this.plugin.settings.skipUrls = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeTextSpeaker();
+      })
+    );
+    new import_obsidian5.Setting(containerEl).setName("Auto-Save Audio to Note").setDesc(
+      "When enabled, the generated MP3 is automatically saved next to the note after each successful playback\u2014no need to press the download button. Disabled by default."
+    ).addToggle(
+      (toggle) => toggle.setValue(this.plugin.settings.autoDownloadAudio).onChange(async (value2) => {
+        this.plugin.settings.autoDownloadAudio = value2;
+        await this.plugin.saveSettings();
+      })
+    );
+    new import_obsidian5.Setting(containerEl).setName("Embed Audio in Note").setDesc(
+      "When enabled, saving an MP3 also inserts an audio embed in the note. This applies to both the download button and auto-save. Turn it off to download the MP3 without embedding it. Enabled by default."
+    ).addToggle(
+      (toggle) => toggle.setValue(this.plugin.settings.autoEmbedAudio).onChange(async (value2) => {
+        this.plugin.settings.autoEmbedAudio = value2;
+        await this.plugin.saveSettings();
+      })
+    );
+    new import_obsidian5.Setting(containerEl).setName("Folder Picker Follows Active Note").setDesc(
+      "When enabled, the player's folder picker automatically switches to the folder of the note you are viewing. Disable it to keep the folder you selected in the player when you switch notes. Enabled by default."
+    ).addToggle(
+      (toggle) => toggle.setValue(this.plugin.settings.folderSelectorFollowsNote).onChange(async (value2) => {
+        this.plugin.settings.folderSelectorFollowsNote = value2;
+        await this.plugin.saveSettings();
+      })
+    );
+    if (this.plugin.settings.TTS_PROVIDER === "elevenlabs") {
+      this.displayElevenLabsSettings(containerEl);
+    } else if (this.plugin.settings.TTS_PROVIDER === "google") {
+      this.displayGoogleSettings(containerEl);
+    } else if (this.plugin.settings.TTS_PROVIDER === "azure") {
+      this.displayAzureSettings(containerEl);
+    } else if (this.plugin.settings.TTS_PROVIDER === "openai") {
+      this.displayOpenAISettings(containerEl);
+    } else {
+      this.displayPollySettings(containerEl);
+    }
+  }
+  displayOpenAISettings(containerEl) {
+    new import_obsidian5.Setting(containerEl).setName("OpenAI").setHeading();
+    new import_obsidian5.Setting(containerEl).setName("Model").setDesc(
+      "The OpenAI text-to-speech model. GPT-4o mini TTS is recommended; TTS-1 favours latency and TTS-1 HD favours quality."
+    ).addDropdown((dropdown) => {
+      OPENAI_MODELS.forEach((model) => {
+        dropdown.addOption(model.id, model.label);
+      });
+      dropdown.setValue(this.plugin.settings.OPENAI_MODEL).onChange(async (value2) => {
+        this.plugin.settings.OPENAI_MODEL = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+      });
+    });
+    this.addPasswordSetting(
+      containerEl,
+      "OpenAI API Key",
+      "Your OpenAI API key (from the OpenAI dashboard \u2192 API keys).",
+      "Enter your OpenAI API key",
+      this.plugin.settings.OPENAI_API_KEY,
+      async (value2) => {
+        this.plugin.settings.OPENAI_API_KEY = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+      }
+    );
+    this.renderCredentialValidation(containerEl, {
+      providerName: "OpenAI",
+      isConfigured: () => !!this.plugin.settings.OPENAI_API_KEY,
+      missingMessage: "Please enter your OpenAI API key before testing.",
+      promptMessage: "Enter your OpenAI API key above, then click 'Test Credentials' to validate",
+      helpText: "Need an OpenAI API key? ",
+      helpUrl: "https://platform.openai.com/api-keys"
+    });
+  }
+  displayAzureSettings(containerEl) {
+    new import_obsidian5.Setting(containerEl).setName("Azure Speech").setHeading();
+    new import_obsidian5.Setting(containerEl).setName("Region").setDesc("The Azure region of your Speech resource (must match the key).").addDropdown((dropdown) => {
+      AZURE_REGIONS.forEach((region) => {
+        dropdown.addOption(region.id, region.label);
+      });
+      dropdown.setValue(this.plugin.settings.AZURE_REGION).onChange(async (value2) => {
+        this.plugin.settings.AZURE_REGION = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+      });
+    });
+    this.addPasswordSetting(
+      containerEl,
+      "Azure Speech Key",
+      "A key for your Azure AI Speech resource (Azure portal \u2192 your Speech resource \u2192 Keys and Endpoint).",
+      "Enter your Azure Speech key",
+      this.plugin.settings.AZURE_API_KEY,
+      async (value2) => {
+        this.plugin.settings.AZURE_API_KEY = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+      }
+    );
+    this.renderCredentialValidation(containerEl, {
+      providerName: "Azure Speech",
+      isConfigured: () => !!this.plugin.settings.AZURE_API_KEY && !!this.plugin.settings.AZURE_REGION,
+      missingMessage: "Please enter your Azure Speech key and choose a region before testing.",
+      promptMessage: "Enter your Azure Speech key and region above, then click 'Test Credentials' to validate",
+      helpText: "Need an Azure Speech resource? ",
+      helpUrl: "https://learn.microsoft.com/azure/ai-services/speech-service/get-started-text-to-speech"
+    });
+  }
+  displayGoogleSettings(containerEl) {
+    new import_obsidian5.Setting(containerEl).setName("Google Cloud").setHeading();
+    this.addPasswordSetting(
+      containerEl,
+      "Google Cloud API Key",
+      "An API key for the Cloud Text-to-Speech API. Restrict it to that API only (no HTTP-referrer restriction) so it works from the desktop app.",
+      "Enter your Google Cloud API key",
+      this.plugin.settings.GOOGLE_API_KEY,
+      async (value2) => {
+        this.plugin.settings.GOOGLE_API_KEY = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+      }
+    );
+    this.renderCredentialValidation(containerEl, {
+      providerName: "Google Cloud",
+      isConfigured: () => !!this.plugin.settings.GOOGLE_API_KEY,
+      missingMessage: "Please enter your Google Cloud API key before testing.",
+      promptMessage: "Enter your Google Cloud API key above, then click 'Test Credentials' to validate",
+      helpText: "Need a Google Cloud API key? ",
+      helpUrl: "https://console.cloud.google.com/apis/credentials"
+    });
+  }
+  displayPollySettings(containerEl) {
+    new import_obsidian5.Setting(containerEl).setName("AWS").setHeading();
+    new import_obsidian5.Setting(containerEl).setName("AWS Region").setDesc("The AWS Region for the Polly service.").addDropdown((dropdown) => {
       dropdown.addOption("us-east-2", "US East (Ohio)").addOption("us-east-1", "US East (N. Virginia)").addOption("us-west-1", "US West (N. California)").addOption("us-west-2", "US West (Oregon)").addOption("af-south-1", "Africa (Cape Town)").addOption("ap-east-1", "Asia Pacific (Hong Kong)").addOption("ap-south-2", "Asia Pacific (Hyderabad)").addOption("ap-southeast-3", "Asia Pacific (Jakarta)").addOption("ap-southeast-4", "Asia Pacific (Melbourne)").addOption("ap-south-1", "Asia Pacific (Mumbai)").addOption("ap-northeast-3", "Asia Pacific (Osaka)").addOption("ap-northeast-2", "Asia Pacific (Seoul)").addOption("ap-southeast-1", "Asia Pacific (Singapore)").addOption("ap-southeast-2", "Asia Pacific (Sydney)").addOption("ap-northeast-1", "Asia Pacific (Tokyo)").addOption("ca-central-1", "Canada (Central)").addOption("eu-central-1", "Europe (Frankfurt)").addOption("eu-west-1", "Europe (Ireland)").addOption("eu-west-2", "Europe (London)").addOption("eu-south-1", "Europe (Milan)").addOption("eu-west-3", "Europe (Paris)").addOption("eu-south-2", "Europe (Spain)").addOption("eu-north-1", "Europe (Stockholm)").addOption("eu-central-2", "Europe (Zurich)").addOption("me-south-1", "Middle East (Bahrain)").addOption("me-central-1", "Middle East (UAE)").addOption("sa-east-1", "South America (S\xE3o Paulo)").setValue(this.plugin.settings.AWS_REGION).onChange(async (value2) => {
         this.plugin.settings.AWS_REGION = value2;
         await this.plugin.saveSettings();
-        this.plugin.reinitializePollyService();
+        this.plugin.reinitializeProviderCredentials();
       });
     });
-    let isAccessKeyVisible = false;
-    new import_obsidian.Setting(containerEl).setName("AWS Access Key ID").setDesc("The AWS Access Key ID for the Polly service.").addText((text5) => {
-      text5.setPlaceholder("Enter your AWS Access Key ID").setValue(this.plugin.settings.AWS_ACCESS_KEY_ID).onChange(async (value2) => {
+    this.addPasswordSetting(
+      containerEl,
+      "AWS Access Key ID",
+      "The AWS Access Key ID for the Polly service.",
+      "Enter your AWS Access Key ID",
+      this.plugin.settings.AWS_ACCESS_KEY_ID,
+      async (value2) => {
         this.plugin.settings.AWS_ACCESS_KEY_ID = value2;
         await this.plugin.saveSettings();
-        this.plugin.reinitializePollyService();
-      });
-      text5.inputEl.type = "password";
-    }).addExtraButton((button) => {
-      button.setIcon("eye").setTooltip("Show").onClick(() => {
-        var _a;
-        isAccessKeyVisible = !isAccessKeyVisible;
-        const inputEl = (_a = button.extraSettingsEl.parentElement) == null ? void 0 : _a.querySelector("input");
-        if (inputEl) {
-          inputEl.type = isAccessKeyVisible ? "text" : "password";
-          button.setIcon(isAccessKeyVisible ? "eye-off" : "eye");
-          button.setTooltip(isAccessKeyVisible ? "Hide" : "Show");
-        }
-      });
-    });
-    let isSecretKeyVisible = false;
-    new import_obsidian.Setting(containerEl).setName("AWS Secret Access Key").setDesc("The AWS Secret Access Key for the Polly service.").addText((text5) => {
-      text5.setPlaceholder("Enter your AWS Secret Access Key").setValue(this.plugin.settings.AWS_SECRET_ACCESS_KEY).onChange(async (value2) => {
+        this.plugin.reinitializeProviderCredentials();
+      }
+    );
+    this.addPasswordSetting(
+      containerEl,
+      "AWS Secret Access Key",
+      "The AWS Secret Access Key for the Polly service.",
+      "Enter your AWS Secret Access Key",
+      this.plugin.settings.AWS_SECRET_ACCESS_KEY,
+      async (value2) => {
         this.plugin.settings.AWS_SECRET_ACCESS_KEY = value2;
         await this.plugin.saveSettings();
-        this.plugin.reinitializePollyService();
+        this.plugin.reinitializeProviderCredentials();
+      }
+    );
+    this.renderCredentialValidation(containerEl, {
+      providerName: "AWS",
+      isConfigured: () => !!this.plugin.settings.AWS_ACCESS_KEY_ID && !!this.plugin.settings.AWS_SECRET_ACCESS_KEY && !!this.plugin.settings.AWS_REGION,
+      missingMessage: "Please fill in all AWS credentials (Access Key ID, Secret Access Key, and Region) before testing.",
+      promptMessage: "Enter your AWS credentials above, then click 'Test Credentials' to validate",
+      helpText: "Need help with creating AWS credentials? ",
+      helpUrl: "https://github.com/chrisurf/obsidian-voice?tab=readme-ov-file#setting-up-your-aws-account-required"
+    });
+  }
+  displayElevenLabsSettings(containerEl) {
+    new import_obsidian5.Setting(containerEl).setName("ElevenLabs").setHeading();
+    new import_obsidian5.Setting(containerEl).setName("Model").setDesc(
+      "The ElevenLabs model used for synthesis. Multilingual v2 offers the best quality; Flash v2.5 is the fastest."
+    ).addDropdown((dropdown) => {
+      ELEVENLABS_MODELS.forEach((model) => {
+        dropdown.addOption(model.id, model.label);
       });
+      dropdown.setValue(this.plugin.settings.ELEVENLABS_MODEL).onChange(async (value2) => {
+        this.plugin.settings.ELEVENLABS_MODEL = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+      });
+    });
+    this.addPasswordSetting(
+      containerEl,
+      "ElevenLabs API Key",
+      "Your ElevenLabs API key (from the ElevenLabs dashboard).",
+      "Enter your ElevenLabs API key",
+      this.plugin.settings.ELEVENLABS_API_KEY,
+      async (value2) => {
+        this.plugin.settings.ELEVENLABS_API_KEY = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+      }
+    );
+    this.renderCredentialValidation(containerEl, {
+      providerName: "ElevenLabs",
+      isConfigured: () => !!this.plugin.settings.ELEVENLABS_API_KEY,
+      missingMessage: "Please enter your ElevenLabs API key before testing.",
+      promptMessage: "Enter your ElevenLabs API key above, then click 'Test Credentials' to validate",
+      helpText: "Need an ElevenLabs API key? ",
+      helpUrl: "https://elevenlabs.io/app/settings/api-keys"
+    });
+  }
+  /**
+   * Render a password text setting with a show/hide toggle button.
+   */
+  addPasswordSetting(containerEl, name, desc, placeholder, value2, onChange) {
+    let isVisible = false;
+    new import_obsidian5.Setting(containerEl).setName(name).setDesc(desc).addText((text5) => {
+      text5.setPlaceholder(placeholder).setValue(value2).onChange(onChange);
       text5.inputEl.type = "password";
     }).addExtraButton((button) => {
       button.setIcon("eye").setTooltip("Show").onClick(() => {
-        var _a;
-        isSecretKeyVisible = !isSecretKeyVisible;
-        const inputEl = (_a = button.extraSettingsEl.parentElement) == null ? void 0 : _a.querySelector("input");
+        var _a3;
+        isVisible = !isVisible;
+        const inputEl = (_a3 = button.extraSettingsEl.parentElement) == null ? void 0 : _a3.querySelector("input");
         if (inputEl) {
-          inputEl.type = isSecretKeyVisible ? "text" : "password";
-          button.setIcon(isSecretKeyVisible ? "eye-off" : "eye");
-          button.setTooltip(isSecretKeyVisible ? "Hide" : "Show");
+          inputEl.type = isVisible ? "text" : "password";
+          button.setIcon(isVisible ? "eye-off" : "eye");
+          button.setTooltip(isVisible ? "Hide" : "Show");
         }
       });
     });
-    const validationContainer = containerEl.createDiv();
-    validationContainer.style.marginTop = "16px";
-    validationContainer.style.padding = "12px 16px";
-    validationContainer.style.backgroundColor = "var(--background-secondary)";
-    validationContainer.style.borderRadius = "6px";
-    validationContainer.style.border = "1px solid var(--background-modifier-border)";
-    const headerRow = validationContainer.createDiv();
-    headerRow.style.display = "flex";
-    headerRow.style.alignItems = "center";
-    headerRow.style.justifyContent = "space-between";
-    headerRow.style.marginBottom = "8px";
-    const validationHeader = headerRow.createEl("h3", {
+  }
+  /**
+   * Render the credential validation panel for the active provider (styling
+   * lives in styles.css). Uses the provider factory to build a temporary
+   * instance and call validateCredentials.
+   */
+  renderCredentialValidation(containerEl, opts) {
+    const validationContainer = containerEl.createDiv({
+      cls: "voice-validation-container"
+    });
+    const headerRow = validationContainer.createDiv({
+      cls: "voice-validation-header-row"
+    });
+    headerRow.createDiv({
+      cls: "voice-validation-title",
       text: "Credential Validation"
     });
-    validationHeader.style.margin = "0";
-    validationHeader.style.color = "var(--text-normal)";
-    validationHeader.style.fontSize = "13px";
-    validationHeader.style.fontWeight = "600";
     const testButton = headerRow.createEl("button", {
+      cls: "voice-validation-test-button",
       text: "Test Credentials"
     });
-    testButton.style.padding = "6px 12px";
-    testButton.style.backgroundColor = "var(--interactive-accent)";
-    testButton.style.color = "var(--text-on-accent)";
-    testButton.style.border = "none";
-    testButton.style.borderRadius = "4px";
-    testButton.style.cursor = "pointer";
-    testButton.style.fontSize = "12px";
-    testButton.style.fontWeight = "500";
-    const statusContainer = validationContainer.createDiv();
-    statusContainer.style.display = "flex";
-    statusContainer.style.alignItems = "center";
-    statusContainer.style.gap = "10px";
-    const statusIndicator = statusContainer.createSpan();
-    statusIndicator.style.width = "10px";
-    statusIndicator.style.height = "10px";
-    statusIndicator.style.borderRadius = "50%";
-    statusIndicator.style.backgroundColor = "var(--text-muted)";
-    statusIndicator.style.flexShrink = "0";
-    const statusText = statusContainer.createSpan();
-    statusText.textContent = "Click 'Test Credentials' to verify your AWS setup";
-    statusText.style.color = "var(--text-muted)";
-    statusText.style.fontSize = "12px";
-    statusText.style.lineHeight = "1.3";
-    const helpContainer = validationContainer.createDiv();
-    helpContainer.style.marginTop = "8px";
-    helpContainer.style.display = "none";
-    const helpText = helpContainer.createSpan();
-    helpText.textContent = "Need help with creating AWS credentials? ";
-    helpText.style.color = "var(--text-muted)";
-    helpText.style.fontSize = "11px";
-    const helpLink = helpContainer.createEl("a");
-    helpLink.textContent = "View setup guide";
-    helpLink.href = "https://github.com/chrisurf/obsidian-voice?tab=readme-ov-file#setting-up-your-aws-account-required";
-    helpLink.style.color = "var(--link-color)";
-    helpLink.style.fontSize = "11px";
-    helpLink.style.textDecoration = "none";
+    const statusContainer = validationContainer.createDiv({
+      cls: "voice-validation-status"
+    });
+    const statusIndicator = statusContainer.createSpan({
+      cls: "voice-validation-indicator"
+    });
+    const statusText = statusContainer.createSpan({
+      cls: "voice-validation-text"
+    });
+    statusText.textContent = `Click 'Test Credentials' to verify your ${opts.providerName} setup`;
+    const helpContainer = validationContainer.createDiv({
+      cls: "voice-validation-help"
+    });
+    helpContainer.createSpan({
+      cls: "voice-validation-help-text",
+      text: opts.helpText
+    });
+    const helpLink = helpContainer.createEl("a", {
+      cls: "voice-validation-help-link",
+      text: "View setup guide"
+    });
+    helpLink.href = opts.helpUrl;
     helpLink.target = "_blank";
-    helpLink.addEventListener("mouseover", () => {
-      helpLink.style.textDecoration = "underline";
-    });
-    helpLink.addEventListener("mouseout", () => {
-      helpLink.style.textDecoration = "none";
-    });
+    const stateClasses = ["is-loading", "is-valid", "is-invalid"];
     const updateStatus = (isValid, message, isLoading = false, voiceCount) => {
+      statusIndicator.removeClass(...stateClasses);
+      statusText.removeClass(...stateClasses);
       if (isLoading) {
-        statusIndicator.style.backgroundColor = "var(--color-orange)";
-        statusIndicator.style.animation = "pulse 1.5s ease-in-out infinite";
+        statusIndicator.addClass("is-loading");
+        statusText.addClass("is-loading");
         statusText.textContent = "Testing credentials...";
-        statusText.style.color = "var(--color-orange)";
         testButton.disabled = true;
         testButton.textContent = "Testing...";
-        testButton.style.opacity = "0.6";
-        testButton.style.cursor = "not-allowed";
-        helpContainer.style.display = "none";
+        helpContainer.removeClass("is-visible");
+        return;
+      }
+      testButton.disabled = false;
+      testButton.textContent = "Test Credentials";
+      if (isValid === true) {
+        statusIndicator.addClass("is-valid");
+        statusText.addClass("is-valid");
+        statusText.textContent = voiceCount ? `\u2713 Credentials valid! Found ${voiceCount} voices available.` : "\u2713 Credentials are valid!";
+        helpContainer.removeClass("is-visible");
+      } else if (isValid === false) {
+        statusIndicator.addClass("is-invalid");
+        statusText.addClass("is-invalid");
+        statusText.textContent = `\u2717 ${message}`;
+        helpContainer.addClass("is-visible");
       } else {
-        statusIndicator.style.animation = "none";
-        testButton.disabled = false;
-        testButton.textContent = "Test Credentials";
-        testButton.style.opacity = "1";
-        testButton.style.cursor = "pointer";
-        if (isValid === true) {
-          statusIndicator.style.backgroundColor = "var(--color-green)";
-          statusText.textContent = voiceCount ? `\u2713 Credentials valid! Found ${voiceCount} voices available.` : "\u2713 Credentials are valid!";
-          statusText.style.color = "var(--color-green)";
-          helpContainer.style.display = "none";
-        } else if (isValid === false) {
-          statusIndicator.style.backgroundColor = "var(--color-red)";
-          statusText.textContent = `\u2717 ${message}`;
-          statusText.style.color = "var(--color-red)";
-          helpContainer.style.display = "block";
-        } else {
-          statusIndicator.style.backgroundColor = "var(--text-muted)";
-          statusText.textContent = message;
-          statusText.style.color = "var(--text-muted)";
-          helpContainer.style.display = "none";
-        }
+        statusText.textContent = message;
+        helpContainer.removeClass("is-visible");
       }
     };
     const validateCredentials = async () => {
-      const accessKeyId = this.plugin.settings.AWS_ACCESS_KEY_ID;
-      const secretAccessKey = this.plugin.settings.AWS_SECRET_ACCESS_KEY;
-      const region = this.plugin.settings.AWS_REGION;
-      if (!accessKeyId || !secretAccessKey || !region) {
-        updateStatus(
-          false,
-          "Please fill in all AWS credentials (Access Key ID, Secret Access Key, and Region) before testing."
-        );
+      if (!opts.isConfigured()) {
+        updateStatus(false, opts.missingMessage);
         return;
       }
       updateStatus(null, "", true);
       try {
-        const tempService = new (await Promise.resolve().then(() => (init_AwsPollyService(), AwsPollyService_exports))).AwsPollyService(
-          {
-            credentials: {
-              accessKeyId,
-              secretAccessKey
-            },
-            region
-          },
-          this.plugin.settings.VOICE,
-          this.plugin.settings.SPEED
-        );
-        const result = await tempService.validateCredentials();
+        const tempProvider = createSpeechProvider(this.plugin.settings);
+        const result = await tempProvider.validateCredentials();
         if (result.isValid) {
           updateStatus(true, "", false, result.voiceCount);
         } else {
@@ -11548,40 +13925,21 @@ var VoiceSettingTab = class extends import_obsidian.PluginSettingTab {
         );
       }
     };
-    const performAutoValidation = async () => {
-      const accessKeyId = this.plugin.settings.AWS_ACCESS_KEY_ID;
-      const secretAccessKey = this.plugin.settings.AWS_SECRET_ACCESS_KEY;
-      const region = this.plugin.settings.AWS_REGION;
-      if (accessKeyId && secretAccessKey && region) {
-        setTimeout(() => {
-          validateCredentials();
-        }, 100);
-      } else {
-        updateStatus(
-          null,
-          "Enter your AWS credentials above, then click 'Test Credentials' to validate"
-        );
-      }
-    };
-    testButton.addEventListener("click", validateCredentials);
-    performAutoValidation();
-    const style = document.createElement("style");
-    style.textContent = `
-      @keyframes pulse {
-        0% { opacity: 1; }
-        50% { opacity: 0.5; }
-        100% { opacity: 1; }
-      }
-    `;
-    document.head.appendChild(style);
+    testButton.addEventListener("click", () => void validateCredentials());
+    if (opts.isConfigured()) {
+      window.setTimeout(() => {
+        void validateCredentials();
+      }, 100);
+    } else {
+      updateStatus(null, opts.promptMessage);
+    }
   }
 };
 
 // src/settings/HotkeySettings.ts
 var HotkeySettings = class {
-  constructor(voice, pollyService) {
+  constructor(voice) {
     this.voice = voice;
-    this.pollyService = pollyService;
   }
   initHotkeys() {
     this.voice.addCommand({
@@ -11592,22 +13950,42 @@ var HotkeySettings = class {
     this.voice.addCommand({
       id: "pause-audio",
       name: "Pause reading the current document.",
-      callback: () => this.pollyService.pauseAudio()
+      callback: () => this.voice.getSpeechProvider().pauseAudio()
     });
     this.voice.addCommand({
       id: "stop-audio",
       name: "Stop reading the current document.",
-      callback: () => this.pollyService.stopAudio()
+      callback: () => this.voice.getSpeechProvider().stopAudio()
     });
     this.voice.addCommand({
       id: "rewind-audio",
       name: "Rewind by few seconds reading the current document.",
-      callback: () => this.pollyService.rewindAudio()
+      callback: () => this.voice.getSpeechProvider().rewindAudio()
     });
     this.voice.addCommand({
       id: "fast-forward-audio",
       name: "Fast-Forward by few seconds reading the current document.",
-      callback: () => this.pollyService.fastForwardAudio()
+      callback: () => this.voice.getSpeechProvider().fastForwardAudio()
+    });
+    this.voice.addCommand({
+      id: "increase-speed",
+      name: "Increase the reading speed by 0.1x.",
+      callback: () => this.voice.iconEventHandler.increaseSpeed()
+    });
+    this.voice.addCommand({
+      id: "decrease-speed",
+      name: "Decrease the reading speed by 0.1x.",
+      callback: () => this.voice.iconEventHandler.decreaseSpeed()
+    });
+    this.voice.addCommand({
+      id: "download-audio",
+      name: "Save the current audio as an MP3 and embed it in the note.",
+      callback: () => void this.voice.iconEventHandler.handleDownloadAudio()
+    });
+    this.voice.addCommand({
+      id: "next-speaker",
+      name: "Switch to the next speaker.",
+      callback: () => void this.voice.cycleVoice()
     });
     this.voice.addCommand({
       id: "play-or-stop-audio",
@@ -11638,17 +14016,16 @@ var HotkeySettings = class {
 };
 
 // src/utils/VoicePlugin.ts
-init_AwsPollyService();
-var import_obsidian7 = require("obsidian");
+var import_obsidian13 = require("obsidian");
 
 // src/utils/MarkdownHelper.ts
-var import_obsidian2 = require("obsidian");
+var import_obsidian6 = require("obsidian");
 var MarkdownHelper = class {
   constructor(app) {
     this.app = app;
   }
   async getMarkdownView() {
-    const activeView = this.app.workspace.getActiveViewOfType(import_obsidian2.MarkdownView);
+    const activeView = this.app.workspace.getActiveViewOfType(import_obsidian6.MarkdownView);
     let content3 = "";
     if (activeView) {
       const editor = activeView.editor;
@@ -11661,7 +14038,7 @@ var MarkdownHelper = class {
       return content3;
     }
     const activeFile = this.app.workspace.getActiveFile();
-    if (activeFile && activeFile instanceof import_obsidian2.TFile) {
+    if (activeFile && activeFile instanceof import_obsidian6.TFile) {
       try {
         content3 = await this.app.vault.cachedRead(activeFile);
         return content3;
@@ -11679,13 +14056,13 @@ var MarkdownHelper = class {
 };
 
 // src/utils/IconEventHandler.ts
-var import_obsidian5 = require("obsidian");
+var import_obsidian10 = require("obsidian");
 
 // src/utils/MobileControlBar.ts
-var import_obsidian4 = require("obsidian");
+var import_obsidian9 = require("obsidian");
 
 // src/utils/AudioFileManager.ts
-var import_obsidian3 = require("obsidian");
+var import_obsidian7 = require("obsidian");
 var AudioFileManager = class {
   constructor(app) {
     this.app = app;
@@ -11696,37 +14073,37 @@ var AudioFileManager = class {
    * @returns The created/modified TFile or null on error
    */
   async saveAudioFile(audioBlob) {
-    var _a;
+    var _a3;
     try {
       const activeFile = this.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian3.Notice("No active file found");
+        new import_obsidian7.Notice("No active file found");
         return null;
       }
       const fileName = activeFile.basename;
-      const fileDir = ((_a = activeFile.parent) == null ? void 0 : _a.path) || "";
+      const fileDir = ((_a3 = activeFile.parent) == null ? void 0 : _a3.path) || "";
       const audioFileName = `${fileName}.mp3`;
-      const audioFilePath = (0, import_obsidian3.normalizePath)(
+      const audioFilePath = (0, import_obsidian7.normalizePath)(
         fileDir ? `${fileDir}/${audioFileName}` : audioFileName
       );
       const arrayBuffer = await audioBlob.arrayBuffer();
       const existingFile = this.app.vault.getAbstractFileByPath(audioFilePath);
       let audioFile;
-      if (existingFile instanceof import_obsidian3.TFile) {
+      if (existingFile instanceof import_obsidian7.TFile) {
         await this.app.vault.modifyBinary(existingFile, arrayBuffer);
         audioFile = existingFile;
-        new import_obsidian3.Notice(`Updated: ${audioFileName}`);
+        new import_obsidian7.Notice(`Updated: ${audioFileName}`);
       } else {
         audioFile = await this.app.vault.createBinary(
           audioFilePath,
           arrayBuffer
         );
-        new import_obsidian3.Notice(`Created: ${audioFileName}`);
+        new import_obsidian7.Notice(`Created: ${audioFileName}`);
       }
       return audioFile;
     } catch (error) {
       console.error("Error saving audio file:", error);
-      new import_obsidian3.Notice(`Error saving audio file: ${error.message}`);
+      new import_obsidian7.Notice(`Error saving audio file: ${error.message}`);
       return null;
     }
   }
@@ -11739,7 +14116,7 @@ var AudioFileManager = class {
     try {
       const activeFile = this.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian3.Notice("No active file found");
+        new import_obsidian7.Notice("No active file found");
         return;
       }
       const content3 = await this.app.vault.read(activeFile);
@@ -11752,7 +14129,7 @@ var AudioFileManager = class {
       await this.app.vault.modify(activeFile, newContent);
     } catch (error) {
       console.error("Error inserting audio embed:", error);
-      new import_obsidian3.Notice(`Error inserting audio embed: ${error.message}`);
+      new import_obsidian7.Notice(`Error inserting audio embed: ${error.message}`);
     }
   }
   /**
@@ -11771,14 +14148,16 @@ var AudioFileManager = class {
     return 0;
   }
   /**
-   * Download audio file and insert embed in one operation
+   * Download audio file and, when requested, insert the embed tag.
    * @param audioBlob - The audio data to save
+   * @param embed - Whether to also insert the `![[file.mp3]]` embed in the
+   *   note. Defaults to true to preserve the legacy save-and-embed behaviour.
    */
-  async downloadAndEmbed(audioBlob) {
+  async downloadAndEmbed(audioBlob, embed = true) {
     try {
       const activeFile = this.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian3.Notice("No active file found");
+        new import_obsidian7.Notice("No active file found");
         return;
       }
       const fileName = activeFile.basename;
@@ -11787,16 +14166,632 @@ var AudioFileManager = class {
       if (!savedFile) {
         return;
       }
-      await this.insertAudioEmbed(audioFileName);
+      if (embed) {
+        await this.insertAudioEmbed(audioFileName);
+      }
     } catch (error) {
       console.error("Error in downloadAndEmbed:", error);
-      new import_obsidian3.Notice(`Error downloading audio: ${error.message}`);
+      new import_obsidian7.Notice(`Error downloading audio: ${error.message}`);
     }
   }
 };
 
+// src/ui/VoicePlayerView.ts
+var import_obsidian8 = require("obsidian");
+
+// src/utils/chapters.ts
+function normalizeFolderPath(path2) {
+  return path2 === "" ? "/" : path2;
+}
+function folderDisplayName(path2) {
+  var _a3;
+  const normalized = normalizeFolderPath(path2);
+  if (normalized === "/") {
+    return "/";
+  }
+  return (_a3 = normalized.split("/").pop()) != null ? _a3 : normalized;
+}
+function listMp3Folders(mp3Paths) {
+  const folderPaths = /* @__PURE__ */ new Set();
+  for (const path2 of mp3Paths) {
+    const slash = path2.lastIndexOf("/");
+    const folder = slash === -1 ? "/" : path2.slice(0, slash);
+    folderPaths.add(normalizeFolderPath(folder));
+  }
+  return [...folderPaths].map((path2) => ({ path: path2, name: folderDisplayName(path2) })).sort(
+    (a2, b2) => a2.name.localeCompare(b2.name, void 0, {
+      numeric: true,
+      sensitivity: "base"
+    })
+  );
+}
+function chapterName(path2) {
+  var _a3;
+  const file = (_a3 = path2.split("/").pop()) != null ? _a3 : path2;
+  return file.replace(/\.mp3$/i, "");
+}
+function listChapters(mp3Paths) {
+  return [...mp3Paths].sort(
+    (a2, b2) => a2.localeCompare(b2, void 0, { numeric: true, sensitivity: "base" })
+  ).map((path2) => ({ path: path2, name: chapterName(path2) }));
+}
+
+// src/ui/VoicePlayerView.ts
+var VIEW_TYPE_VOICE_PLAYER = "voice-player-view";
+var MIN_SPEED = 0.5;
+var MAX_SPEED = 2;
+var PROVIDERS = [
+  { id: "polly", label: "AWS Polly" },
+  { id: "elevenlabs", label: "ElevenLabs" },
+  { id: "google", label: "Google Cloud" },
+  { id: "azure", label: "Azure Speech" },
+  { id: "openai", label: "OpenAI" }
+];
+var VoicePlayerView = class extends import_obsidian8.ItemView {
+  constructor(leaf, plugin) {
+    super(leaf);
+    this.isScrubbing = false;
+    this.currentChapterPath = null;
+    this.chapters = [];
+    // Folders in the vault that contain at least one MP3, and the one currently
+    // selected in the folder picker (drives the chapter list).
+    this.folders = [];
+    this.selectedFolderPath = null;
+    this.repeatMode = "none";
+    this.endedHandled = false;
+    // The generated-audio blob that has already been saved via the download
+    // button. Used to disable download once the current audio is saved, while
+    // re-enabling it as soon as a fresh synthesis produces new audio.
+    this.lastDownloadedBlob = null;
+    this.plugin = plugin;
+  }
+  getViewType() {
+    return VIEW_TYPE_VOICE_PLAYER;
+  }
+  getDisplayText() {
+    return "Voice player";
+  }
+  getIcon() {
+    return "audio-lines";
+  }
+  async onOpen() {
+    this.buildUi();
+    this.refreshContext();
+    this.registerInterval(window.setInterval(() => this.update(), 250));
+    this.registerEvent(
+      this.app.workspace.on("active-leaf-change", () => this.refreshContext())
+    );
+    const refreshOnMp3 = (file) => {
+      if (file.path.toLowerCase().endsWith(".mp3")) {
+        this.refreshContext();
+      }
+    };
+    this.registerEvent(this.app.vault.on("create", refreshOnMp3));
+    this.registerEvent(this.app.vault.on("delete", refreshOnMp3));
+    this.registerEvent(this.app.vault.on("rename", refreshOnMp3));
+  }
+  provider() {
+    return this.plugin.getSpeechProvider();
+  }
+  audio() {
+    return this.provider().getAudio();
+  }
+  buildUi() {
+    const root3 = this.contentEl;
+    root3.empty();
+    root3.addClass("voice-player");
+    const header = root3.createDiv({ cls: "voice-player-header" });
+    this.titleEl = header.createDiv({ cls: "voice-player-title" });
+    this.subtitleEl = header.createDiv({ cls: "voice-player-subtitle" });
+    const seek = root3.createDiv({ cls: "voice-player-seek" });
+    this.currentTimeEl = seek.createSpan({ cls: "voice-player-time" });
+    this.currentTimeEl.setText("0:00");
+    this.scrubberEl = seek.createEl("input", {
+      cls: "voice-player-scrubber",
+      attr: { type: "range", min: "0", max: "0", value: "0", step: "1" }
+    });
+    this.durationEl = seek.createSpan({ cls: "voice-player-time" });
+    this.durationEl.setText("0:00");
+    this.registerDomEvent(this.scrubberEl, "input", () => {
+      this.isScrubbing = true;
+      this.currentTimeEl.setText(formatTime(Number(this.scrubberEl.value)));
+    });
+    this.registerDomEvent(this.scrubberEl, "change", () => {
+      const audio = this.audio();
+      if (!isNaN(audio.duration)) {
+        audio.currentTime = Number(this.scrubberEl.value);
+      }
+      this.isScrubbing = false;
+    });
+    const transport = root3.createDiv({ cls: "voice-player-transport" });
+    this.prevTrackBtn = transport.createDiv({
+      cls: "voice-player-btn voice-player-track",
+      attr: { "aria-label": "Previous track" }
+    });
+    (0, import_obsidian8.setIcon)(this.prevTrackBtn, "skip-back");
+    this.registerDomEvent(
+      this.prevTrackBtn,
+      "click",
+      () => this.playPrevTrack()
+    );
+    const rewindBtn = transport.createDiv({
+      cls: "voice-player-btn voice-player-skip"
+    });
+    (0, import_obsidian8.setIcon)(rewindBtn, "rewind");
+    rewindBtn.createSpan({ cls: "voice-player-skip-label" }).setText(`${this.plugin.settings.rewindSeconds}`);
+    this.registerDomEvent(
+      rewindBtn,
+      "click",
+      () => this.provider().rewindAudio()
+    );
+    this.playPauseBtn = transport.createDiv({
+      cls: "voice-player-btn voice-player-play"
+    });
+    (0, import_obsidian8.setIcon)(this.playPauseBtn, "play");
+    this.registerDomEvent(this.playPauseBtn, "click", () => this.togglePlay());
+    const forwardBtn = transport.createDiv({
+      cls: "voice-player-btn voice-player-skip"
+    });
+    (0, import_obsidian8.setIcon)(forwardBtn, "fast-forward");
+    forwardBtn.createSpan({ cls: "voice-player-skip-label" }).setText(`${this.plugin.settings.forwardSeconds}`);
+    this.registerDomEvent(
+      forwardBtn,
+      "click",
+      () => this.provider().fastForwardAudio()
+    );
+    this.nextTrackBtn = transport.createDiv({
+      cls: "voice-player-btn voice-player-track",
+      attr: { "aria-label": "Next track" }
+    });
+    (0, import_obsidian8.setIcon)(this.nextTrackBtn, "skip-forward");
+    this.registerDomEvent(
+      this.nextTrackBtn,
+      "click",
+      () => this.playNextTrack()
+    );
+    const secondary = root3.createDiv({ cls: "voice-player-secondary" });
+    this.readBtn = secondary.createEl("button", {
+      cls: "voice-player-read",
+      text: "Read this note"
+    });
+    this.registerDomEvent(this.readBtn, "click", () => this.handleReadClick());
+    this.downloadBtn = secondary.createEl("button", {
+      cls: "voice-player-download",
+      attr: { "aria-label": "Download as MP3" }
+    });
+    (0, import_obsidian8.setIcon)(this.downloadBtn, "download");
+    this.registerDomEvent(
+      this.downloadBtn,
+      "click",
+      () => void this.downloadAudio()
+    );
+    this.repeatBtn = secondary.createEl("button", {
+      cls: "voice-player-repeat"
+    });
+    this.registerDomEvent(this.repeatBtn, "click", () => this.cycleRepeat());
+    this.updateRepeatButton();
+    const speedGroup = secondary.createDiv({ cls: "voice-player-speed" });
+    const slower = speedGroup.createDiv({ cls: "voice-player-speed-btn" });
+    (0, import_obsidian8.setIcon)(slower, "minus");
+    this.registerDomEvent(slower, "click", () => this.changeSpeed(-0.1));
+    this.speedEl = speedGroup.createSpan({ cls: "voice-player-speed-value" });
+    const faster = speedGroup.createDiv({ cls: "voice-player-speed-btn" });
+    (0, import_obsidian8.setIcon)(faster, "plus");
+    this.registerDomEvent(faster, "click", () => this.changeSpeed(0.1));
+    const options = root3.createDiv({ cls: "voice-player-options" });
+    this.providerSelect = options.createEl("select", {
+      cls: "voice-player-select dropdown",
+      attr: { "aria-label": "Speech provider" }
+    });
+    PROVIDERS.forEach(
+      (p) => this.providerSelect.createEl("option", { value: p.id, text: p.label })
+    );
+    this.registerDomEvent(
+      this.providerSelect,
+      "change",
+      () => this.changeProvider(this.providerSelect.value)
+    );
+    this.voiceSelect = options.createEl("select", {
+      cls: "voice-player-select dropdown",
+      attr: { "aria-label": "Voice" }
+    });
+    this.registerDomEvent(
+      this.voiceSelect,
+      "change",
+      () => this.changeVoice(this.voiceSelect.value)
+    );
+    this.codeBtn = options.createEl("button", {
+      cls: "voice-player-code"
+    });
+    (0, import_obsidian8.setIcon)(this.codeBtn, "code");
+    this.registerDomEvent(this.codeBtn, "click", () => this.toggleCodeBlocks());
+    const folderRow = root3.createDiv({ cls: "voice-player-folder" });
+    this.folderSelect = folderRow.createEl("select", {
+      cls: "voice-player-select voice-player-folder-select dropdown",
+      attr: { "aria-label": "Audio folder" }
+    });
+    this.registerDomEvent(
+      this.folderSelect,
+      "change",
+      () => this.changeFolder(this.folderSelect.value)
+    );
+    const chapters = root3.createDiv({ cls: "voice-player-chapters" });
+    chapters.createDiv({ cls: "voice-player-chapters-title" }).setText("Chapters");
+    this.chaptersListEl = chapters.createDiv({
+      cls: "voice-player-chapters-list"
+    });
+    this.loadingBarEl = root3.createDiv({ cls: "voice-player-loading" });
+    this.loadingBarEl.createDiv({ cls: "voice-player-loading-fill" });
+    this.refreshControls();
+  }
+  togglePlay() {
+    const provider = this.provider();
+    if (provider.isPlaying()) {
+      provider.pauseAudio();
+    } else if (this.audio().currentSrc) {
+      void provider.playAudio();
+    } else {
+      void this.plugin.speakText();
+    }
+  }
+  /**
+   * Persist the generated audio for the active note as an MP3 in its folder
+   * and embed it, then refresh so it appears in the chapter list. Reuses the
+   * shared download flow so behaviour matches the status bar / mobile button.
+   */
+  async downloadAudio() {
+    const active = this.app.workspace.getActiveFile();
+    const blob = active ? this.provider().getLastGeneratedAudio(active.path) : null;
+    await this.plugin.iconEventHandler.handleDownloadAudio();
+    if (blob) {
+      this.lastDownloadedBlob = blob;
+    }
+    this.refreshContext();
+  }
+  /** Read the current note. Ignored while a synthesis is already running. */
+  handleReadClick() {
+    if (this.provider().isOperationInProgress()) {
+      return;
+    }
+    void this.plugin.speakText();
+  }
+  /** Switch the active TTS provider and resync the voice list. */
+  changeProvider(provider) {
+    if (provider === this.plugin.settings.TTS_PROVIDER) {
+      return;
+    }
+    this.plugin.settings.TTS_PROVIDER = provider;
+    void this.plugin.saveSettings();
+    this.plugin.reinitializeProvider();
+    this.refreshControls();
+  }
+  /** Persist and apply the chosen voice for the active provider. */
+  changeVoice(voiceId) {
+    if (voiceId === this.provider().getVoice()) {
+      return;
+    }
+    void this.plugin.persistActiveVoice(voiceId);
+  }
+  /** Toggle whether code blocks are read aloud. */
+  toggleCodeBlocks() {
+    this.plugin.settings.readCodeBlocks = !this.plugin.settings.readCodeBlocks;
+    void this.plugin.saveSettings();
+    this.plugin.reinitializeTextSpeaker();
+    this.updateCodeButton();
+  }
+  /** Resync the provider/voice selectors and the code-blocks toggle. */
+  refreshControls() {
+    if (!this.providerSelect) {
+      return;
+    }
+    this.providerSelect.value = this.plugin.settings.TTS_PROVIDER;
+    this.populateVoiceOptions();
+    this.updateCodeButton();
+    this.updateDownloadButton();
+  }
+  /** Rebuild the voice dropdown from the active provider's catalog. */
+  populateVoiceOptions() {
+    this.voiceSelect.empty();
+    const provider = this.provider();
+    provider.getVoiceOptions().forEach((voice) => {
+      this.voiceSelect.createEl("option", {
+        value: voice.id,
+        text: voice.label
+      });
+    });
+    this.voiceSelect.value = provider.getVoice();
+  }
+  updateCodeButton() {
+    if (!this.codeBtn) {
+      return;
+    }
+    const on = this.plugin.settings.readCodeBlocks;
+    this.codeBtn.toggleClass("is-active", on);
+    this.codeBtn.setAttribute(
+      "aria-label",
+      on ? "Read code blocks: on" : "Read code blocks: off"
+    );
+  }
+  /**
+   * Enable the download button only when there is freshly generated audio for
+   * the active note that has not already been saved via this button. A new
+   * synthesis produces a new blob, which re-enables the button; saving it
+   * disables it again.
+   */
+  updateDownloadButton() {
+    if (!this.downloadBtn) {
+      return;
+    }
+    let enabled = false;
+    const active = this.app.workspace.getActiveFile();
+    if (active) {
+      const cached = this.provider().getLastGeneratedAudio(active.path);
+      enabled = cached !== null && cached !== this.lastDownloadedBlob;
+    }
+    this.downloadBtn.disabled = !enabled;
+    this.downloadBtn.toggleClass("is-disabled", !enabled);
+  }
+  changeSpeed(delta) {
+    const current = this.provider().getSpeed();
+    const next = Math.min(
+      MAX_SPEED,
+      Math.max(MIN_SPEED, Math.round((current + delta) * 10) / 10)
+    );
+    if (next !== current) {
+      this.provider().setSpeed(next);
+      this.plugin.settings.SPEED = next;
+      void this.plugin.saveSettings();
+      this.plugin.iconEventHandler.updateSpeedDisplayFromSettings();
+    }
+  }
+  /**
+   * Refresh the title, the folder picker, and the chapter list. The folder
+   * picker lists every vault folder that holds MP3s; the selected folder drives
+   * the chapter list.
+   */
+  refreshContext() {
+    if (!this.titleEl) {
+      return;
+    }
+    const active = this.app.workspace.getActiveFile();
+    this.titleEl.setText(active ? active.basename : "Voice player");
+    const mp3Files = this.app.vault.getFiles().filter((f2) => f2.extension === "mp3");
+    this.folders = listMp3Folders(mp3Files.map((f2) => f2.path));
+    this.selectedFolderPath = this.resolveSelectedFolder(active);
+    this.renderFolderOptions();
+    this.renderSelectedFolderChapters();
+  }
+  /**
+   * Decide which folder the chapter list should show. When "follow note" is on
+   * (and the active note's folder has audio) we track the note; otherwise we
+   * keep the user's manual choice, falling back to the active note's folder or
+   * the first available folder when the previous selection no longer exists.
+   */
+  resolveSelectedFolder(active) {
+    if (this.folders.length === 0) {
+      return null;
+    }
+    const activeFolder = (active == null ? void 0 : active.parent) != null ? normalizeFolderPath(active.parent.path) : null;
+    const hasFolder = (path2) => path2 !== null && this.folders.some((f2) => f2.path === path2);
+    if (this.plugin.settings.folderSelectorFollowsNote && hasFolder(activeFolder)) {
+      return activeFolder;
+    }
+    if (hasFolder(this.selectedFolderPath)) {
+      return this.selectedFolderPath;
+    }
+    return hasFolder(activeFolder) ? activeFolder : this.folders[0].path;
+  }
+  /** Rebuild the folder dropdown from the discovered MP3 folders. */
+  renderFolderOptions() {
+    this.folderSelect.empty();
+    if (this.folders.length === 0) {
+      const placeholder = this.folderSelect.createEl("option", {
+        value: "",
+        text: "No audio folders"
+      });
+      placeholder.disabled = true;
+      this.folderSelect.disabled = true;
+      return;
+    }
+    this.folderSelect.disabled = false;
+    this.folders.forEach((folder) => {
+      this.folderSelect.createEl("option", {
+        value: folder.path,
+        text: folder.name
+      });
+    });
+    if (this.selectedFolderPath !== null) {
+      this.folderSelect.value = this.selectedFolderPath;
+    }
+  }
+  /** Switch the folder whose tracks are listed as chapters. */
+  changeFolder(folderPath) {
+    if (folderPath === this.selectedFolderPath) {
+      return;
+    }
+    this.selectedFolderPath = folderPath;
+    this.renderSelectedFolderChapters();
+  }
+  /** Render the chapters (MP3s) that live in the selected folder. */
+  renderSelectedFolderChapters() {
+    const folderPath = this.selectedFolderPath;
+    const mp3Paths = folderPath === null ? [] : this.app.vault.getFiles().filter(
+      (f2) => {
+        var _a3, _b2;
+        return f2.extension === "mp3" && normalizeFolderPath((_b2 = (_a3 = f2.parent) == null ? void 0 : _a3.path) != null ? _b2 : "/") === folderPath;
+      }
+    ).map((f2) => f2.path);
+    this.chapters = listChapters(mp3Paths);
+    this.subtitleEl.setText(
+      this.chapters.length === 1 ? "1 chapter" : `${this.chapters.length} chapters`
+    );
+    this.renderChapters(this.chapters);
+    this.updateDownloadButton();
+  }
+  renderChapters(chapters) {
+    this.chaptersListEl.empty();
+    if (chapters.length === 0) {
+      this.chaptersListEl.createDiv({ cls: "voice-player-chapters-empty" }).setText("No audio files in this folder yet.");
+      return;
+    }
+    chapters.forEach((chapter, index2) => {
+      const item = this.chaptersListEl.createDiv({
+        cls: "voice-player-chapter",
+        attr: { "data-path": chapter.path }
+      });
+      item.createSpan({ cls: "voice-player-chapter-index" }).setText(`${index2 + 1}`);
+      item.createSpan({ cls: "voice-player-chapter-name" }).setText(chapter.name);
+      this.registerDomEvent(
+        item,
+        "click",
+        () => this.playChapter(chapter.path)
+      );
+    });
+    this.highlightCurrentChapter();
+  }
+  playChapter(path2) {
+    const file = this.app.vault.getAbstractFileByPath(path2);
+    if (!(file instanceof import_obsidian8.TFile)) {
+      return;
+    }
+    const audio = this.audio();
+    audio.src = this.app.vault.getResourcePath(file);
+    this.currentChapterPath = path2;
+    void this.provider().playAudio();
+    this.highlightCurrentChapter();
+  }
+  highlightCurrentChapter() {
+    this.chaptersListEl.querySelectorAll(".voice-player-chapter").forEach((el) => {
+      const isCurrent = el.getAttribute("data-path") === this.currentChapterPath;
+      el.toggleClass("is-current", isCurrent);
+    });
+    this.updateTrackButtons();
+  }
+  /** Index of the playing chapter in the list, or -1 if none is selected. */
+  currentChapterIndex() {
+    return this.chapters.findIndex((c2) => c2.path === this.currentChapterPath);
+  }
+  /** Play the chapter before the current one, if any. */
+  playPrevTrack() {
+    const index2 = this.currentChapterIndex();
+    if (index2 > 0) {
+      this.playChapter(this.chapters[index2 - 1].path);
+    }
+  }
+  /**
+   * Play the chapter after the current one. When nothing is selected yet
+   * (index -1) this starts the first chapter.
+   */
+  playNextTrack() {
+    const next = this.currentChapterIndex() + 1;
+    if (next < this.chapters.length) {
+      this.playChapter(this.chapters[next].path);
+    }
+  }
+  /** Enable/disable the prev/next buttons at the list boundaries. */
+  updateTrackButtons() {
+    if (!this.prevTrackBtn) {
+      return;
+    }
+    const index2 = this.currentChapterIndex();
+    this.prevTrackBtn.toggleClass("is-disabled", index2 <= 0);
+    this.nextTrackBtn.toggleClass(
+      "is-disabled",
+      this.chapters.length === 0 || index2 >= this.chapters.length - 1
+    );
+  }
+  /** Cycle the repeat mode: off → repeat one → repeat all → off. */
+  cycleRepeat() {
+    this.repeatMode = this.repeatMode === "none" ? "one" : this.repeatMode === "one" ? "all" : "none";
+    this.updateRepeatButton();
+  }
+  updateRepeatButton() {
+    if (!this.repeatBtn) {
+      return;
+    }
+    const icon = this.repeatMode === "one" ? "repeat-1" : "repeat";
+    (0, import_obsidian8.setIcon)(this.repeatBtn, icon);
+    this.repeatBtn.toggleClass("is-active", this.repeatMode !== "none");
+    const label = this.repeatMode === "one" ? "Repeat one" : this.repeatMode === "all" ? "Repeat all" : "Repeat off";
+    this.repeatBtn.setAttribute("aria-label", label);
+  }
+  /**
+   * Called when the current audio finishes. Honors the repeat mode and
+   * auto-advances through the chapter list.
+   */
+  handleEnded() {
+    if (this.repeatMode === "one") {
+      const audio = this.audio();
+      audio.currentTime = 0;
+      void this.provider().playAudio();
+      return;
+    }
+    const index2 = this.currentChapterIndex();
+    if (index2 < 0) {
+      return;
+    }
+    const next = index2 + 1;
+    if (next < this.chapters.length) {
+      this.playChapter(this.chapters[next].path);
+    } else if (this.repeatMode === "all" && this.chapters.length > 0) {
+      this.playChapter(this.chapters[0].path);
+    }
+  }
+  /** Sync the transport with the live audio element. */
+  update() {
+    if (!this.playPauseBtn) {
+      return;
+    }
+    const provider = this.provider();
+    const audio = this.audio();
+    const duration = isNaN(audio.duration) ? 0 : audio.duration;
+    const currentTime = isNaN(audio.currentTime) ? 0 : audio.currentTime;
+    if (!this.isScrubbing) {
+      this.scrubberEl.max = `${Math.floor(duration)}`;
+      this.scrubberEl.value = `${Math.floor(currentTime)}`;
+      this.currentTimeEl.setText(formatTime(currentTime));
+    }
+    this.durationEl.setText(formatTime(duration));
+    (0, import_obsidian8.setIcon)(this.playPauseBtn, provider.isPlaying() ? "pause" : "play");
+    this.speedEl.setText(`${provider.getSpeed().toFixed(1)}\xD7`);
+    const loading = provider.isOperationInProgress();
+    this.loadingBarEl.toggleClass("is-visible", loading);
+    this.readBtn.toggleClass("is-loading", loading);
+    this.readBtn.disabled = loading;
+    this.readBtn.setText(loading ? "Reading\u2026" : "Read this note");
+    if (this.providerSelect.value !== this.plugin.settings.TTS_PROVIDER) {
+      this.refreshControls();
+    } else {
+      this.voiceSelect.value = provider.getVoice();
+      this.updateCodeButton();
+    }
+    this.updateDownloadButton();
+    if (audio.ended) {
+      if (!this.endedHandled) {
+        this.endedHandled = true;
+        this.handleEnded();
+      }
+    } else {
+      this.endedHandled = false;
+    }
+  }
+};
+function formatTime(seconds) {
+  if (!isFinite(seconds) || seconds < 0) {
+    return "0:00";
+  }
+  const total = Math.floor(seconds);
+  const h2 = Math.floor(total / 3600);
+  const m = Math.floor(total % 3600 / 60);
+  const s = total % 60;
+  const ss = `${s}`.padStart(2, "0");
+  if (h2 > 0) {
+    return `${h2}:${`${m}`.padStart(2, "0")}:${ss}`;
+  }
+  return `${m}:${ss}`;
+}
+
 // src/utils/MobileControlBar.ts
-init_VoiceSettings();
 var MobileControlBar = class {
   constructor(app, plugin, pollyService) {
     this.containerEl = null;
@@ -11818,15 +14813,14 @@ var MobileControlBar = class {
     });
   }
   createOverlayBar() {
-    this.containerEl = document.body.createDiv({
+    this.containerEl = activeDocument.body.createDiv({
       cls: "voice-mobile-overlay"
     });
     this.addControlButtons();
     this.hide();
-    this.addMobileOverlayStyles();
   }
   addControlButtons() {
-    var _a;
+    var _a3;
     if (!this.containerEl) return;
     this.createProgressBar();
     const controlsWrapper = this.containerEl.createDiv({
@@ -11834,18 +14828,19 @@ var MobileControlBar = class {
     });
     this.createControlButton(
       controlsWrapper,
+      "audio-lines",
+      "Open player",
+      () => void this.plugin.activatePlayerView()
+    );
+    this.createControlButton(
+      controlsWrapper,
       "mic",
       "Change Voice",
       (event) => {
-        const menu = new import_obsidian4.Menu();
-        VOICES.forEach((voice) => {
+        const menu = new import_obsidian9.Menu();
+        this.pollyService.getVoiceOptions().forEach((voice) => {
           menu.addItem(
-            (item) => item.setTitle(voice.label).setChecked(voice.id === this.pollyService.getVoice()).onClick(async () => {
-              this.plugin.settings.VOICE = voice.id;
-              await this.plugin.saveSettings();
-              this.pollyService.setVoice(voice.id);
-              this.plugin.iconEventHandler.updateVoiceDisplay();
-            })
+            (item) => item.setTitle(voice.label).setChecked(voice.id === this.pollyService.getVoice()).onClick(() => void this.selectVoice(voice.id))
           );
         });
         menu.showAtMouseEvent(event);
@@ -11855,13 +14850,13 @@ var MobileControlBar = class {
       controlsWrapper,
       "download",
       "Download Audio",
-      () => this.handleDownloadAudio()
+      () => void this.handleDownloadAudio()
     );
-    this.downloadIconEl.style.display = "none";
+    this.downloadIconEl.addClass("voice-hidden");
     this.createControlButton(
       controlsWrapper,
       "rewind",
-      "Rewind",
+      `Rewind ${this.plugin.settings.rewindSeconds} seconds`,
       () => this.pollyService.rewindAudio()
     );
     this.createControlButton(controlsWrapper, "square", "Stop", () => {
@@ -11869,11 +14864,11 @@ var MobileControlBar = class {
         this.pollyService.cancelOperation();
         this.resetToPlayState();
         this.hideProgressBar();
-        setTimeout(() => this.hide(), 3e3);
+        window.setTimeout(() => this.hide(), 3e3);
         return;
       }
       this.pollyService.stopAudio();
-      setTimeout(() => this.hide(), 3e3);
+      window.setTimeout(() => this.hide(), 3e3);
     });
     const speedGroup = controlsWrapper.createDiv({
       cls: "voice-mobile-speed-group"
@@ -11908,23 +14903,26 @@ var MobileControlBar = class {
         if (!this.pollyService.isPlaying()) {
           this.showLoadingState();
         }
-        this.plugin.speakText();
+        void this.plugin.speakText();
       }
     );
-    (_a = this.playPauseIconEl) == null ? void 0 : _a.addClass("voice-mobile-primary-btn");
+    (_a3 = this.playPauseIconEl) == null ? void 0 : _a3.addClass("voice-mobile-primary-btn");
     this.createControlButton(
       controlsWrapper,
       "fast-forward",
-      "Fast Forward",
+      `Fast-forward ${this.plugin.settings.forwardSeconds} seconds`,
       () => this.pollyService.fastForwardAudio()
     );
+  }
+  async selectVoice(voiceId) {
+    await this.plugin.persistActiveVoice(voiceId);
   }
   createControlButton(parent, icon, title, onClick) {
     const button = parent.createEl("button", {
       cls: "voice-mobile-control-btn",
       attr: { title }
     });
-    (0, import_obsidian4.setIcon)(button, icon);
+    (0, import_obsidian9.setIcon)(button, icon);
     button.addEventListener("click", onClick);
     return button;
   }
@@ -11950,7 +14948,7 @@ var MobileControlBar = class {
     if (newSpeed !== currentSpeed) {
       this.pollyService.setSpeed(newSpeed);
       this.plugin.settings.SPEED = newSpeed;
-      this.plugin.saveSettings();
+      void this.plugin.saveSettings();
       this.updateSpeedDisplay();
     }
   }
@@ -11960,14 +14958,14 @@ var MobileControlBar = class {
     if (newSpeed !== currentSpeed) {
       this.pollyService.setSpeed(newSpeed);
       this.plugin.settings.SPEED = newSpeed;
-      this.plugin.saveSettings();
+      void this.plugin.saveSettings();
       this.updateSpeedDisplay();
     }
   }
   showLoadingState() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.addClass("rotating-icon");
-      (0, import_obsidian4.setIcon)(this.playPauseIconEl, "refresh-ccw");
+      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "refresh-ccw");
     }
     this.showProgressBar();
     this.updateProgressBar(0);
@@ -11975,7 +14973,7 @@ var MobileControlBar = class {
   resetToPlayState() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian4.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "play");
     }
   }
   showProgressBar() {
@@ -12002,7 +15000,7 @@ var MobileControlBar = class {
   updateProgressBar(progress) {
     if (this.progressBar && !this.isErrorState) {
       const percentage = Math.min(100, Math.max(0, progress * 100));
-      this.progressBar.style.width = `${percentage}%`;
+      this.progressBar.setCssProps({ "--voice-progress": `${percentage}%` });
     }
   }
   initializeEventListeners() {
@@ -12015,7 +15013,7 @@ var MobileControlBar = class {
   onPlay() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian4.setIcon)(this.playPauseIconEl, "pause");
+      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "pause");
     }
     this.hideProgressBar();
     this.show();
@@ -12024,10 +15022,10 @@ var MobileControlBar = class {
   onPause() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian4.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "play");
     }
     this.hideProgressBar();
-    setTimeout(() => {
+    window.setTimeout(() => {
       if (!this.pollyService.isPlaying()) {
         this.hide();
       }
@@ -12039,27 +15037,37 @@ var MobileControlBar = class {
   onEnded() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian4.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "play");
     }
     this.hideProgressBar();
-    setTimeout(() => this.hide(), 3e3);
+    window.setTimeout(() => this.hide(), 3e3);
   }
   handleError() {
     this.showErrorState();
     this.resetToPlayState();
-    setTimeout(() => {
+    window.setTimeout(() => {
       this.hideProgressBar();
     }, 3e3);
   }
+  /**
+   * Whether the new player view is currently open. When it is, this compact
+   * bar must stay hidden so the two control surfaces never show at once.
+   */
+  isPlayerViewOpen() {
+    return this.app.workspace.getLeavesOfType(VIEW_TYPE_VOICE_PLAYER).length > 0;
+  }
   show() {
+    if (this.isPlayerViewOpen()) {
+      return;
+    }
     if (this.containerEl && !this.isVisible) {
-      this.containerEl.style.display = "flex";
+      this.containerEl.addClass("is-visible");
       this.isVisible = true;
     }
   }
   hide() {
     if (this.containerEl && this.isVisible) {
-      this.containerEl.style.display = "none";
+      this.containerEl.removeClass("is-visible");
       this.isVisible = false;
     }
   }
@@ -12078,7 +15086,7 @@ var MobileControlBar = class {
    */
   showDownloadButton() {
     if (this.downloadIconEl) {
-      this.downloadIconEl.style.display = "";
+      this.downloadIconEl.removeClass("voice-hidden");
     }
   }
   /**
@@ -12086,7 +15094,7 @@ var MobileControlBar = class {
    */
   hideDownloadButton() {
     if (this.downloadIconEl) {
-      this.downloadIconEl.style.display = "none";
+      this.downloadIconEl.addClass("voice-hidden");
     }
   }
   /**
@@ -12112,228 +15120,26 @@ var MobileControlBar = class {
     try {
       const activeFile = this.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian4.Notice("No active file found");
+        new import_obsidian9.Notice("No active file found");
         return;
       }
       const audioBlob = this.pollyService.getLastGeneratedAudio(
         activeFile.path
       );
       if (!audioBlob) {
-        new import_obsidian4.Notice(
+        new import_obsidian9.Notice(
           "No audio available for this file. Please generate audio first."
         );
         return;
       }
-      await this.audioFileManager.downloadAndEmbed(audioBlob);
+      await this.audioFileManager.downloadAndEmbed(
+        audioBlob,
+        this.plugin.settings.autoEmbedAudio
+      );
     } catch (error) {
       console.error("Error downloading audio:", error);
-      new import_obsidian4.Notice(`Failed to download audio: ${error.message}`);
+      new import_obsidian9.Notice(`Failed to download audio: ${error.message}`);
     }
-  }
-  addMobileOverlayStyles() {
-    if (document.getElementById("voice-mobile-overlay-styles")) return;
-    const style = document.createElement("style");
-    style.id = "voice-mobile-overlay-styles";
-    style.textContent = `
-      .voice-mobile-overlay {
-        position: fixed;
-        bottom: calc(var(--safe-area-inset-bottom, 0px) + var(--mobile-navbar-height, 58px));
-        left: 0;
-        right: 0;
-        background: var(--background-primary);
-        border-top: none;
-        border-radius: 0;
-        padding: 8px 12px;
-        display: none;
-        flex-direction: column;
-        gap: 6px;
-        z-index: 999;
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        margin: 0;
-        max-width: 100vw;
-        transform: translateY(2px);
-      }
-      
-      .voice-mobile-controls {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 6px;
-      }
-      
-      .voice-mobile-speed-group {
-        display: flex;
-        align-items: center;
-        gap: 2px;
-        background: var(--nav-item-background);
-        border: none !important;
-        padding: 1px;
-      }
-      
-      .voice-mobile-control-btn {
-        background: var(--background-primary) !important;
-        background-color: var(--background-primary) !important;
-        border: none;
-        color: var(--interactive-accent);
-        padding: 6px;
-        border-radius: var(--radius-s);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 66px;
-        min-height: 36px;
-        transition: all 0.15s ease;
-        opacity: 1;
-      }
-
-      .voice-mobile-control-btn svg {
-        color: var(--interactive-accent);
-        fill: currentColor;
-        stroke: currentColor;
-      }
-      
-      .voice-mobile-control-btn:hover {
-        background: var(--background-modifier-hover) !important;
-        color: var(--interactive-accent);
-        opacity: 1;
-        transform: scale(1.05);
-      }
-
-      .voice-mobile-control-btn:hover svg {
-        color: var(--interactive-accent);
-        fill: currentColor;
-        stroke: currentColor;
-      }
-      
-      .voice-mobile-control-btn:active {
-        background: var(--background-modifier-active);
-        color: var(--interactive-accent);
-        transform: scale(0.98);
-        opacity: 1;
-      }
-
-      .voice-mobile-control-btn:active svg {
-        color: var(--interactive-accent);
-        fill: currentColor;
-        stroke: currentColor;
-      }
-      
-      .voice-mobile-primary-btn {
-        background: var(--interactive-accent);
-        color: var(--text-on-accent);
-        border-radius: 50%;
-        min-width: 36px;
-        min-height: 36px;
-        opacity: 1;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-      }
-      
-      .voice-mobile-primary-btn:hover {
-        background: var(--interactive-accent-hover);
-        transform: scale(1.08);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16), 0 2px 4px rgba(0, 0, 0, 0.32);
-      }
-      
-      .voice-mobile-primary-btn:active {
-        background: var(--interactive-accent);
-        transform: scale(0.95);
-      }
-      
-      .voice-mobile-speed-display {
-        background: transparent;
-        color: var(--interactive-accent);
-        padding: 4px 8px;
-        border-radius: var(--radius-s);
-        font-size: 11px;
-        font-weight: 500;
-        min-width: 36px;
-        text-align: center;
-        font-variant-numeric: tabular-nums;
-        line-height: 1.2;
-        opacity: 0.9;
-      }
-      
-      .voice-mobile-progress-container {
-        display: none;
-        width: 100%;
-        height: 3px;
-        background: var(--background-modifier-border);
-        border-radius: var(--radius-xs);
-        overflow: hidden;
-        position: relative;
-        margin-bottom: 4px;
-      }
-      
-      .voice-mobile-progress-bar {
-        height: 100%;
-        width: 0%;
-        background: var(--interactive-accent);
-        border-radius: var(--radius-xs);
-        transition: width 0.3s ease;
-      }
-      
-      .voice-mobile-progress-container.visible {
-        display: block;
-      }
-      
-      .voice-mobile-progress-container.error {
-        background: var(--color-red);
-      }
-      
-      .voice-mobile-progress-container.error .voice-mobile-progress-bar {
-        background: var(--text-error);
-        width: 100% !important;
-      }
-      
-      /* Responsive adjustments for smaller screens */
-      @media (max-width: 480px) {
-        .voice-mobile-overlay {
-          padding: 6px 8px;
-          margin: 0 2px;
-          border-radius: var(--radius-s) var(--radius-s) 0 0;
-        }
-        
-        .voice-mobile-controls {
-          gap: 4px;
-        }
-        
-        .voice-mobile-control-btn {
-          min-width: 32px;
-          min-height: 32px;
-          padding: 4px;
-        }
-        
-        .voice-mobile-primary-btn {
-          min-width: 38px;
-          min-height: 38px;
-        }
-        
-        .voice-mobile-speed-display {
-          padding: 3px 6px;
-          font-size: 10px;
-          min-width: 32px;
-        }
-        
-        .voice-mobile-speed-group {
-          gap: 1px;
-        }
-      }
-      
-      /* Dark theme adjustments */
-      .theme-dark .voice-mobile-overlay {
-        box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.2), 0 -2px 8px rgba(0, 0, 0, 0.15);
-      }
-      
-      /* Ensure the overlay doesn't interfere with system navigation */
-      @supports (bottom: env(safe-area-inset-bottom)) {
-        .voice-mobile-overlay {
-          bottom: max(80px, calc(env(safe-area-inset-bottom) + 60px));
-        }
-      }
-    `;
-    document.head.appendChild(style);
   }
   destroy() {
     const audio = this.pollyService.getAudio();
@@ -12345,15 +15151,10 @@ var MobileControlBar = class {
       this.containerEl.remove();
       this.containerEl = null;
     }
-    const styleEl = document.getElementById("voice-mobile-overlay-styles");
-    if (styleEl) {
-      styleEl.remove();
-    }
   }
 };
 
 // src/utils/IconEventHandler.ts
-init_VoiceSettings();
 var IconEventHandler = class {
   constructor(plugin, voice, pollyService) {
     this.isErrorState = false;
@@ -12364,8 +15165,6 @@ var IconEventHandler = class {
     this.voice = voice;
     this.pollyService = pollyService;
     this.audioFileManager = new AudioFileManager(plugin.app);
-    this.addSpeedControlStyles();
-    this.addProgressBarStyles();
     this.initStatusBarItem();
     this.initRibbonIcon();
     if (this.voice.isMobile()) {
@@ -12375,6 +15174,18 @@ var IconEventHandler = class {
         this.pollyService
       );
     }
+    this.registerProviderCallbacks();
+    this.plugin.registerEvent(
+      this.plugin.app.workspace.on("active-leaf-change", () => {
+        this.updateDownloadButtonVisibility();
+      })
+    );
+  }
+  /**
+   * Register progress and error callbacks on the active provider. Called on
+   * construction and whenever the provider is swapped.
+   */
+  registerProviderCallbacks() {
     this.pollyService.setProgressCallback((progress) => {
       this.updateProgressBar(progress);
       if (this.mobileControlBar) {
@@ -12387,33 +15198,38 @@ var IconEventHandler = class {
         this.mobileControlBar.handleErrorFromExternal();
       }
     });
-    this.plugin.registerEvent(
-      this.plugin.app.workspace.on("active-leaf-change", () => {
-        this.updateDownloadButtonVisibility();
-      })
-    );
+  }
+  /**
+   * Swap the active speech provider (e.g. when the user changes the TTS
+   * provider in settings). Re-attaches audio listeners, callbacks, and the
+   * mobile control bar to the new provider's audio element.
+   */
+  setProvider(provider) {
+    this.removeEventListeners();
+    this.pollyService = provider;
+    this.initializeEventListeners();
+    this.registerProviderCallbacks();
+    if (this.voice.isMobile()) {
+      this.mobileControlBar = new MobileControlBar(
+        this.plugin.app,
+        this.voice,
+        this.pollyService
+      );
+    }
+    this.updateVoiceDisplay();
   }
   createVoiceSwitcher() {
-    this.voiceDisplayEl = this.statusBarItem.createEl("span", {
+    this.voiceDisplayEl = this.statusBarItem.createSpan({
       cls: "voice-statusbar-voice-switcher"
     });
-    this.voiceDisplayEl.style.marginRight = "10px";
-    this.voiceDisplayEl.style.cursor = "pointer";
-    this.voiceDisplayEl.style.fontWeight = "bold";
-    this.voiceDisplayEl.style.fontSize = "0.9em";
     this.voiceDisplayEl.setAttribute("aria-label", "Change Voice");
     this.voiceDisplayEl.setAttribute("aria-label-position", "top");
     this.updateVoiceDisplay();
     this.voiceDisplayEl.addEventListener("click", (event) => {
-      const menu = new import_obsidian5.Menu();
-      VOICES.forEach((voice) => {
+      const menu = new import_obsidian10.Menu();
+      this.pollyService.getVoiceOptions().forEach((voice) => {
         menu.addItem(
-          (item) => item.setTitle(voice.label).setChecked(voice.id === this.pollyService.getVoice()).onClick(async () => {
-            this.voice.settings.VOICE = voice.id;
-            await this.voice.saveSettings();
-            this.pollyService.setVoice(voice.id);
-            this.updateVoiceDisplay();
-          })
+          (item) => item.setTitle(voice.label).setChecked(voice.id === this.pollyService.getVoice()).onClick(() => void this.voice.persistActiveVoice(voice.id))
         );
       });
       menu.showAtMouseEvent(event);
@@ -12421,20 +15237,44 @@ var IconEventHandler = class {
   }
   updateVoiceDisplay() {
     if (this.voiceDisplayEl) {
-      this.voiceDisplayEl.setText(this.pollyService.getVoice() || "Stephen");
+      this.voiceDisplayEl.setText(this.getActiveVoiceLabel());
     }
+  }
+  /**
+   * Refresh the rewind/fast-forward control tooltips to reflect the currently
+   * configured skip intervals.
+   */
+  updateSkipTooltips() {
+    if (this.rewindIconEl) {
+      this.rewindIconEl.title = `Rewind ${this.voice.settings.rewindSeconds} seconds`;
+    }
+    if (this.fastForwardIconEl) {
+      this.fastForwardIconEl.title = `Fast-forward ${this.voice.settings.forwardSeconds} seconds`;
+    }
+  }
+  /**
+   * Short display name for the current voice (provider-aware). Falls back to
+   * the raw voice id when no catalog label is available.
+   */
+  getActiveVoiceLabel() {
+    const id = this.pollyService.getVoice();
+    const option = this.pollyService.getVoiceOptions().find((v) => v.id === id);
+    if (option) {
+      return option.label.split(" (")[0];
+    }
+    return id || "";
   }
   initStatusBarItem() {
     this.statusBarItem = this.plugin.addStatusBarItem();
     this.addVoiceControlsSeparator();
     this.createVoiceSwitcher();
     this.createProgressBar();
-    this.createStatusBarIcon(
+    this.rewindIconEl = this.createStatusBarIcon(
       "rewind",
       "rewind",
       () => this.pollyService.rewindAudio(),
       false,
-      "Rewind 3 seconds"
+      `Rewind ${this.voice.settings.rewindSeconds} seconds`
     );
     this.createStatusBarIcon(
       "square",
@@ -12464,39 +15304,38 @@ var IconEventHandler = class {
         }
         if (!this.pollyService.isPlaying()) {
           this.playPauseIconEl.addClass("rotating-icon");
-          (0, import_obsidian5.setIcon)(this.playPauseIconEl, "refresh-ccw");
+          (0, import_obsidian10.setIcon)(this.playPauseIconEl, "refresh-ccw");
         }
-        this.voice.speakText();
+        void this.voice.speakText();
       },
       true,
       "Play / Pause"
     );
-    this.createStatusBarIcon(
+    this.fastForwardIconEl = this.createStatusBarIcon(
       "fast-forward",
       "fast-forward",
       () => this.pollyService.fastForwardAudio(),
       false,
-      "Fast-forward 3 seconds"
+      `Fast-forward ${this.voice.settings.forwardSeconds} seconds`
     );
     this.downloadIconEl = this.createStatusBarIcon(
       "download",
       "download-audio",
-      () => this.handleDownloadAudio(),
+      () => void this.handleDownloadAudio(),
       false,
       "Download audio as MP3"
     );
-    this.downloadIconEl.style.display = "none";
+    this.downloadIconEl.addClass("voice-hidden");
     this.addVoiceControlsSeparator();
-    setTimeout(() => {
+    window.setTimeout(() => {
       this.updateSpeedDisplay();
     }, 100);
   }
   createStatusBarIcon(icon, cls, onClick, isPlayPauseIcon = false, tooltip) {
-    const iconEl = this.statusBarItem.createEl("span", {
+    const iconEl = this.statusBarItem.createSpan({
       cls: "status-bar-icon " + cls
     });
-    iconEl.style.marginRight = "5px";
-    (0, import_obsidian5.setIcon)(iconEl, icon);
+    (0, import_obsidian10.setIcon)(iconEl, icon);
     iconEl.addEventListener("click", onClick);
     if (tooltip) {
       iconEl.title = tooltip;
@@ -12523,7 +15362,7 @@ var IconEventHandler = class {
         if (!this.pollyService.isPlaying()) {
           this.ribbonIconHandler();
         }
-        this.voice.speakText();
+        void this.voice.speakText();
       }
     );
     this.initializeEventListeners();
@@ -12549,6 +15388,15 @@ var IconEventHandler = class {
     if (this.mobileControlBar) {
     }
   }
+  /**
+   * Hide the mobile control bar, if present. Used when opening the player view
+   * so the compact bar and the player are never shown at the same time.
+   */
+  hideMobileControlBar() {
+    if (this.mobileControlBar) {
+      this.mobileControlBar.hide();
+    }
+  }
   ribbonIconHandler() {
     if (!this.ribbonIconEl) {
       console.error("Ribbon icon element is not initialized.");
@@ -12558,8 +15406,8 @@ var IconEventHandler = class {
       this.isErrorState = false;
       this.ribbonIconEl.addClass("rotating-icon");
       this.playPauseIconEl.addClass("rotating-icon");
-      (0, import_obsidian5.setIcon)(this.ribbonIconEl, "refresh-ccw");
-      (0, import_obsidian5.setIcon)(this.playPauseIconEl, "refresh-ccw");
+      (0, import_obsidian10.setIcon)(this.ribbonIconEl, "refresh-ccw");
+      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "refresh-ccw");
       if (this.mobileControlBar) {
         this.mobileControlBar.showLoadingStateFromExternal();
       } else {
@@ -12571,11 +15419,11 @@ var IconEventHandler = class {
   onPlay() {
     if (this.ribbonIconEl) {
       this.ribbonIconEl.removeClass("rotating-icon");
-      (0, import_obsidian5.setIcon)(this.ribbonIconEl, "pause-circle");
+      (0, import_obsidian10.setIcon)(this.ribbonIconEl, "pause-circle");
     }
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian5.setIcon)(this.playPauseIconEl, "pause");
+      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "pause");
     }
     this.hideProgressBar();
     this.showDownloadButton();
@@ -12583,11 +15431,11 @@ var IconEventHandler = class {
   onPause() {
     if (this.ribbonIconEl) {
       this.ribbonIconEl.removeClass("rotating-icon");
-      (0, import_obsidian5.setIcon)(this.ribbonIconEl, "play-circle");
+      (0, import_obsidian10.setIcon)(this.ribbonIconEl, "play-circle");
     }
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian5.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "play");
     }
     this.hideProgressBar();
   }
@@ -12599,16 +15447,9 @@ var IconEventHandler = class {
       false,
       "Decrease speed"
     );
-    this.speedDisplayEl = this.statusBarItem.createEl("span", {
+    this.speedDisplayEl = this.statusBarItem.createSpan({
       cls: "status-bar-speed-display"
     });
-    this.speedDisplayEl.style.marginLeft = "4px";
-    this.speedDisplayEl.style.marginRight = "4px";
-    this.speedDisplayEl.style.minWidth = "30px";
-    this.speedDisplayEl.style.textAlign = "center";
-    this.speedDisplayEl.style.fontSize = "11px";
-    this.speedDisplayEl.style.fontWeight = "500";
-    this.speedDisplayEl.style.color = "var(--text-normal)";
     this.updateSpeedDisplay();
     this.createStatusBarIcon(
       "plus",
@@ -12631,7 +15472,7 @@ var IconEventHandler = class {
     if (newSpeed !== currentSpeed) {
       this.pollyService.setSpeed(newSpeed);
       this.voice.settings.SPEED = newSpeed;
-      this.voice.saveSettings();
+      void this.voice.saveSettings();
       this.updateSpeedDisplay();
     }
   }
@@ -12641,103 +15482,21 @@ var IconEventHandler = class {
     if (newSpeed !== currentSpeed) {
       this.pollyService.setSpeed(newSpeed);
       this.voice.settings.SPEED = newSpeed;
-      this.voice.saveSettings();
+      void this.voice.saveSettings();
       this.updateSpeedDisplay();
     }
   }
   addVoiceControlsSeparator() {
-    const separator = this.statusBarItem.createEl("span", {
+    const separator = this.statusBarItem.createSpan({
       cls: "status-bar-separator"
     });
-    separator.style.marginLeft = "8px";
-    separator.style.marginRight = "8px";
-    separator.style.color = "var(--text-muted)";
     separator.textContent = "|";
   }
-  addSpeedControlStyles() {
-    if (document.getElementById("voice-speed-control-styles")) return;
-    const style = document.createElement("style");
-    style.id = "voice-speed-control-styles";
-    style.textContent = `
-      .status-bar-speed-display {
-        background: var(--background-modifier-hover);
-        border-radius: 3px;
-        padding: 2px 6px;
-        font-variant-numeric: tabular-nums;
-        transition: background-color 0.2s ease;
-      }
-      
-      .status-bar-speed-display:hover {
-        background: var(--background-modifier-active-hover);
-      }
-      
-      .status-bar-icon.speed-decrease,
-      .status-bar-icon.speed-increase {
-        opacity: 0.8;
-        transition: opacity 0.2s ease, transform 0.1s ease;
-      }
-      
-      .status-bar-icon.speed-decrease:hover,
-      .status-bar-icon.speed-increase:hover {
-        opacity: 1;
-        transform: scale(1.1);
-      }
-      
-      .status-bar-icon.speed-decrease:active,
-      .status-bar-icon.speed-increase:active {
-        transform: scale(0.95);
-      }
-      
-      .status-bar-separator {
-        opacity: 0.3;
-        user-select: none;
-      }
-    `;
-    document.head.appendChild(style);
-  }
-  addProgressBarStyles() {
-    const style = document.createElement("style");
-    style.textContent = `
-      .voice-progress-bar-container {
-        display: none;
-        width: 100px;
-        height: 4px;
-        background: var(--background-modifier-border);
-        border-radius: 2px;
-        margin: 0 8px;
-        overflow: hidden;
-        position: relative;
-        align-self: center;
-      }
-      
-      .voice-progress-bar {
-        height: 100%;
-        width: 0%;
-        background: var(--interactive-accent);
-        border-radius: 2px;
-        transition: width 0.3s ease, background-color 0.3s ease;
-      }
-      
-      .voice-progress-bar-container.visible {
-        display: block;
-      }
-      
-      .voice-progress-bar-container.error {
-        background: var(--background-modifier-error);
-      }
-      
-      .voice-progress-bar-container.error .voice-progress-bar {
-        background: var(--text-error);
-        width: 100% !important;
-      }
-    `;
-    document.head.appendChild(style);
-  }
   createProgressBar() {
-    this.progressBarContainer = this.statusBarItem.createEl("div", {
+    this.progressBarContainer = this.statusBarItem.createDiv({
       cls: "voice-progress-bar-container"
     });
-    this.progressBar = this.progressBarContainer.createEl("div", {
+    this.progressBar = this.progressBarContainer.createDiv({
       cls: "voice-progress-bar"
     });
     this.hideProgressBar();
@@ -12766,25 +15525,25 @@ var IconEventHandler = class {
   updateProgressBar(progress) {
     if (this.progressBar && !this.isErrorState) {
       const percentage = Math.min(100, Math.max(0, progress * 100));
-      this.progressBar.style.width = `${percentage}%`;
+      this.progressBar.setCssProps({ "--voice-progress": `${percentage}%` });
     }
   }
   handleError(errorMessage) {
     this.showErrorState();
     this.resetIconsToPlayState();
-    new import_obsidian5.Notice(`\u{1F50A} Voice Plugin: ${errorMessage}`, 5e3);
-    setTimeout(() => {
+    new import_obsidian10.Notice(`\u{1F50A} Voice Plugin: ${errorMessage}`, 5e3);
+    window.setTimeout(() => {
       this.hideProgressBar();
     }, 3e3);
   }
   resetIconsToPlayState() {
     if (this.ribbonIconEl) {
       this.ribbonIconEl.removeClass("rotating-icon");
-      (0, import_obsidian5.setIcon)(this.ribbonIconEl, "play-circle");
+      (0, import_obsidian10.setIcon)(this.ribbonIconEl, "play-circle");
     }
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian5.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "play");
     }
   }
   onCanPlayThrough() {
@@ -12795,7 +15554,7 @@ var IconEventHandler = class {
    */
   showDownloadButton() {
     if (this.downloadIconEl) {
-      this.downloadIconEl.style.display = "";
+      this.downloadIconEl.removeClass("voice-hidden");
     }
   }
   /**
@@ -12803,7 +15562,7 @@ var IconEventHandler = class {
    */
   hideDownloadButton() {
     if (this.downloadIconEl) {
-      this.downloadIconEl.style.display = "none";
+      this.downloadIconEl.addClass("voice-hidden");
     }
   }
   /**
@@ -12823,29 +15582,56 @@ var IconEventHandler = class {
     }
   }
   /**
-   * Handle download audio button click
-   * Retrieves cached audio blob and saves it as MP3 file
+   * Automatically save the generated audio after a successful synthesis, and
+   * embed it in the note when the separate auto-embed setting is enabled.
+   * Only acts when the user enabled the auto-download setting. Stays silent on
+   * edge cases (no active file or no cached audio) to avoid noisy notices
+   * during automatic playback.
+   */
+  async maybeAutoDownloadAudio() {
+    if (!this.voice.settings.autoDownloadAudio) {
+      return;
+    }
+    const activeFile = this.plugin.app.workspace.getActiveFile();
+    if (!activeFile) {
+      return;
+    }
+    const audioBlob = this.pollyService.getLastGeneratedAudio(activeFile.path);
+    if (!audioBlob) {
+      return;
+    }
+    await this.audioFileManager.downloadAndEmbed(
+      audioBlob,
+      this.voice.settings.autoEmbedAudio
+    );
+  }
+  /**
+   * Handle download audio button click (also exposed as a command).
+   * Retrieves cached audio blob and saves it as MP3 file.
    */
   async handleDownloadAudio() {
     try {
       const activeFile = this.plugin.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian5.Notice("No active file found");
+        new import_obsidian10.Notice("No active file found");
         return;
       }
       const audioBlob = this.pollyService.getLastGeneratedAudio(
         activeFile.path
       );
       if (!audioBlob) {
-        new import_obsidian5.Notice(
+        new import_obsidian10.Notice(
           "No audio available for this file. Please generate audio first."
         );
         return;
       }
-      await this.audioFileManager.downloadAndEmbed(audioBlob);
+      await this.audioFileManager.downloadAndEmbed(
+        audioBlob,
+        this.voice.settings.autoEmbedAudio
+      );
     } catch (error) {
       console.error("Error downloading audio:", error);
-      new import_obsidian5.Notice(`Failed to download audio: ${error.message}`);
+      new import_obsidian10.Notice(`Failed to download audio: ${error.message}`);
     }
   }
 };
@@ -14979,7 +17765,7 @@ var attention = {
 function resolveAllAttention(events, context) {
   let index2 = -1;
   let open;
-  let group4;
+  let group3;
   let text5;
   let openingSequence;
   let closingSequence;
@@ -15027,7 +17813,7 @@ function resolveAllAttention(events, context) {
               ...events[index2][1].start
             }
           };
-          group4 = {
+          group3 = {
             type: use > 1 ? "strong" : "emphasis",
             start: {
               ...openingSequence.start
@@ -15046,9 +17832,9 @@ function resolveAllAttention(events, context) {
           if (events[open][1].end.offset - events[open][1].start.offset) {
             nextEvents = push(nextEvents, [["enter", events[open][1], context], ["exit", events[open][1], context]]);
           }
-          nextEvents = push(nextEvents, [["enter", group4, context], ["enter", openingSequence, context], ["exit", openingSequence, context], ["enter", text5, context]]);
+          nextEvents = push(nextEvents, [["enter", group3, context], ["enter", openingSequence, context], ["exit", openingSequence, context], ["enter", text5, context]]);
           nextEvents = push(nextEvents, resolveAll(context.parser.constructs.insideSpan.null, events.slice(open + 1, index2), context));
-          nextEvents = push(nextEvents, [["exit", text5, context], ["enter", closingSequence, context], ["exit", closingSequence, context], ["exit", group4, context]]);
+          nextEvents = push(nextEvents, [["exit", text5, context], ["enter", closingSequence, context], ["exit", closingSequence, context], ["exit", group3, context]]);
           if (events[index2][1].end.offset - events[index2][1].start.offset) {
             offset = 2;
             nextEvents = push(nextEvents, [["enter", events[index2][1], context], ["exit", events[index2][1], context]]);
@@ -15898,13 +18684,13 @@ var SpliceBuffer = class {
    * @return {undefined}
    *   Nothing.
    */
-  setCursor(n2) {
-    if (n2 === this.left.length || n2 > this.left.length && this.right.length === 0 || n2 < 0 && this.left.length === 0) return;
-    if (n2 < this.left.length) {
-      const removed = this.left.splice(n2, Number.POSITIVE_INFINITY);
+  setCursor(n) {
+    if (n === this.left.length || n > this.left.length && this.right.length === 0 || n < 0 && this.left.length === 0) return;
+    if (n < this.left.length) {
+      const removed = this.left.splice(n, Number.POSITIVE_INFINITY);
       chunkedPush(this.right, removed.reverse());
     } else {
-      const removed = this.right.splice(this.left.length + this.right.length - n2, Number.POSITIVE_INFINITY);
+      const removed = this.right.splice(this.left.length + this.right.length - n, Number.POSITIVE_INFINITY);
       chunkedPush(this.left, removed.reverse());
     }
   }
@@ -17390,7 +20176,7 @@ function resolveToLabelEnd(events, context) {
       close2 = index2;
     }
   }
-  const group4 = {
+  const group3 = {
     type: events[open][1].type === "labelLink" ? "link" : "image",
     start: {
       ...events[open][1].start
@@ -17417,13 +20203,13 @@ function resolveToLabelEnd(events, context) {
       ...events[close2 - 2][1].start
     }
   };
-  media = [["enter", group4, context], ["enter", label, context]];
+  media = [["enter", group3, context], ["enter", label, context]];
   media = push(media, events.slice(open + 1, open + offset + 3));
   media = push(media, [["enter", text5, context]]);
   media = push(media, resolveAll(context.parser.constructs.insideSpan.null, events.slice(open + offset + 4, close2 - 3), context));
   media = push(media, [["exit", text5, context], events[close2 - 2], events[close2 - 1], ["exit", label, context]]);
   media = push(media, events.slice(close2 + 1));
-  media = push(media, [["exit", group4, context]]);
+  media = push(media, [["exit", group3, context]]);
   splice(events, open, events.length, media);
   return events;
 }
@@ -18298,11 +21084,11 @@ function createTokenizer(parser, initialize, from) {
           constructs2
         ])
       ) : handleMapOfConstructs(constructs2);
-      function handleMapOfConstructs(map4) {
+      function handleMapOfConstructs(map3) {
         return start;
         function start(code3) {
-          const left = code3 !== null && map4[code3];
-          const all2 = code3 !== null && map4.null;
+          const left = code3 !== null && map3[code3];
+          const all2 = code3 !== null && map3.null;
           const list3 = [
             // To do: add more extension tests.
             /* c8 ignore next 2 */
@@ -19555,7 +22341,7 @@ function findAndReplace(tree, list3, options) {
     const siblings = parent.children;
     const index2 = siblings.indexOf(node2);
     let change = false;
-    let nodes = [];
+    let nodes2 = [];
     find.lastIndex = 0;
     let match = find.exec(node2.value);
     while (match) {
@@ -19573,15 +22359,15 @@ function findAndReplace(tree, list3, options) {
         find.lastIndex = position2 + 1;
       } else {
         if (start !== position2) {
-          nodes.push({
+          nodes2.push({
             type: "text",
             value: node2.value.slice(start, position2)
           });
         }
         if (Array.isArray(value2)) {
-          nodes.push(...value2);
+          nodes2.push(...value2);
         } else if (value2) {
-          nodes.push(value2);
+          nodes2.push(value2);
         }
         start = position2 + match[0].length;
         change = true;
@@ -19593,13 +22379,13 @@ function findAndReplace(tree, list3, options) {
     }
     if (change) {
       if (start < node2.value.length) {
-        nodes.push({ type: "text", value: node2.value.slice(start) });
+        nodes2.push({ type: "text", value: node2.value.slice(start) });
       }
-      parent.children.splice(index2, 1, ...nodes);
+      parent.children.splice(index2, 1, ...nodes2);
     } else {
-      nodes = [node2];
+      nodes2 = [node2];
     }
-    return index2 + nodes.length;
+    return index2 + nodes2.length;
   }
 }
 function toPairs(tupleOrList) {
@@ -20088,12 +22874,12 @@ function blockquote(node2, _, state, info) {
   tracker.shift(2);
   const value2 = state.indentLines(
     state.containerFlow(node2, tracker.current()),
-    map2
+    map
   );
   exit3();
   return value2;
 }
-function map2(line, _, blank) {
+function map(line, _, blank) {
   return ">" + (blank ? "" : " ") + line;
 }
 
@@ -20180,7 +22966,7 @@ function code(node2, _, state, info) {
   const suffix = marker === "`" ? "GraveAccent" : "Tilde";
   if (formatCodeAsIndented(node2, state)) {
     const exit4 = state.enter("codeIndented");
-    const value3 = state.indentLines(raw, map3);
+    const value3 = state.indentLines(raw, map2);
     exit4();
     return value3;
   }
@@ -20221,7 +23007,7 @@ function code(node2, _, state, info) {
   exit3();
   return value2;
 }
-function map3(line, _, blank) {
+function map2(line, _, blank) {
   return (blank ? "" : "    ") + line;
 }
 
@@ -20859,11 +23645,11 @@ function listItem(node2, parent, state, info) {
   const exit3 = state.enter("listItem");
   const value2 = state.indentLines(
     state.containerFlow(node2, tracker.current()),
-    map4
+    map3
   );
   exit3();
   return value2;
-  function map4(line, index2, blank) {
+  function map3(line, index2, blank) {
     if (index2) {
       return (blank ? "" : " ".repeat(size)) + line;
     }
@@ -20910,7 +23696,7 @@ var phrasing = (
 );
 
 // node_modules/mdast-util-to-markdown/lib/handle/root.js
-function root(node2, _, state, info) {
+function root2(node2, _, state, info) {
   const hasPhrasing = node2.children.some(function(d2) {
     return phrasing(d2);
   });
@@ -21009,7 +23795,7 @@ var handle = {
   list: list2,
   listItem,
   paragraph,
-  root,
+  root: root2,
   strong,
   text: text3,
   thematicBreak: thematicBreak2
@@ -22318,7 +25104,7 @@ function resolveTable(events, context) {
   let currentTable;
   let currentBody;
   let currentCell;
-  const map4 = new EditMap();
+  const map3 = new EditMap();
   while (++index2 < events.length) {
     const event = events[index2];
     const token = event[1];
@@ -22326,7 +25112,7 @@ function resolveTable(events, context) {
       if (token.type === "tableHead") {
         afterHeadAwaitingFirstBodyRow = false;
         if (lastTableEnd !== 0) {
-          flushTableEnd(map4, context, lastTableEnd, currentTable, currentBody);
+          flushTableEnd(map3, context, lastTableEnd, currentTable, currentBody);
           currentBody = void 0;
           lastTableEnd = 0;
         }
@@ -22336,7 +25122,7 @@ function resolveTable(events, context) {
           // Note: correct end is set later.
           end: Object.assign({}, token.end)
         };
-        map4.add(index2, 0, [["enter", currentTable, context]]);
+        map3.add(index2, 0, [["enter", currentTable, context]]);
       } else if (token.type === "tableRow" || token.type === "tableDelimiterRow") {
         inFirstCellAwaitingPipe = true;
         currentCell = void 0;
@@ -22350,7 +25136,7 @@ function resolveTable(events, context) {
             // Note: correct end is set later.
             end: Object.assign({}, token.end)
           };
-          map4.add(index2, 0, [["enter", currentBody, context]]);
+          map3.add(index2, 0, [["enter", currentBody, context]]);
         }
         rowKind = token.type === "tableDelimiterRow" ? 2 : currentBody ? 3 : 1;
       } else if (rowKind && (token.type === "data" || token.type === "tableDelimiterMarker" || token.type === "tableDelimiterFiller")) {
@@ -22358,7 +25144,7 @@ function resolveTable(events, context) {
         if (cell[2] === 0) {
           if (lastCell[1] !== 0) {
             cell[0] = cell[1];
-            currentCell = flushCell(map4, context, lastCell, rowKind, void 0, currentCell);
+            currentCell = flushCell(map3, context, lastCell, rowKind, void 0, currentCell);
             lastCell = [0, 0, 0, 0];
           }
           cell[2] = index2;
@@ -22369,7 +25155,7 @@ function resolveTable(events, context) {
         } else {
           if (lastCell[1] !== 0) {
             cell[0] = cell[1];
-            currentCell = flushCell(map4, context, lastCell, rowKind, void 0, currentCell);
+            currentCell = flushCell(map3, context, lastCell, rowKind, void 0, currentCell);
           }
           lastCell = cell;
           cell = [lastCell[1], index2, 0, 0];
@@ -22382,9 +25168,9 @@ function resolveTable(events, context) {
       lastTableEnd = index2;
       if (lastCell[1] !== 0) {
         cell[0] = cell[1];
-        currentCell = flushCell(map4, context, lastCell, rowKind, index2, currentCell);
+        currentCell = flushCell(map3, context, lastCell, rowKind, index2, currentCell);
       } else if (cell[1] !== 0) {
-        currentCell = flushCell(map4, context, cell, rowKind, index2, currentCell);
+        currentCell = flushCell(map3, context, cell, rowKind, index2, currentCell);
       }
       rowKind = 0;
     } else if (rowKind && (token.type === "data" || token.type === "tableDelimiterMarker" || token.type === "tableDelimiterFiller")) {
@@ -22392,9 +25178,9 @@ function resolveTable(events, context) {
     }
   }
   if (lastTableEnd !== 0) {
-    flushTableEnd(map4, context, lastTableEnd, currentTable, currentBody);
+    flushTableEnd(map3, context, lastTableEnd, currentTable, currentBody);
   }
-  map4.consume(context.events);
+  map3.consume(context.events);
   index2 = -1;
   while (++index2 < context.events.length) {
     const event = context.events[index2];
@@ -22404,52 +25190,52 @@ function resolveTable(events, context) {
   }
   return events;
 }
-function flushCell(map4, context, range, rowKind, rowEnd, previousCell) {
+function flushCell(map3, context, range2, rowKind, rowEnd, previousCell) {
   const groupName = rowKind === 1 ? "tableHeader" : rowKind === 2 ? "tableDelimiter" : "tableData";
   const valueName = "tableContent";
-  if (range[0] !== 0) {
-    previousCell.end = Object.assign({}, getPoint(context.events, range[0]));
-    map4.add(range[0], 0, [["exit", previousCell, context]]);
+  if (range2[0] !== 0) {
+    previousCell.end = Object.assign({}, getPoint(context.events, range2[0]));
+    map3.add(range2[0], 0, [["exit", previousCell, context]]);
   }
-  const now = getPoint(context.events, range[1]);
+  const now = getPoint(context.events, range2[1]);
   previousCell = {
     type: groupName,
     start: Object.assign({}, now),
     // Note: correct end is set later.
     end: Object.assign({}, now)
   };
-  map4.add(range[1], 0, [["enter", previousCell, context]]);
-  if (range[2] !== 0) {
-    const relatedStart = getPoint(context.events, range[2]);
-    const relatedEnd = getPoint(context.events, range[3]);
+  map3.add(range2[1], 0, [["enter", previousCell, context]]);
+  if (range2[2] !== 0) {
+    const relatedStart = getPoint(context.events, range2[2]);
+    const relatedEnd = getPoint(context.events, range2[3]);
     const valueToken = {
       type: valueName,
       start: Object.assign({}, relatedStart),
       end: Object.assign({}, relatedEnd)
     };
-    map4.add(range[2], 0, [["enter", valueToken, context]]);
+    map3.add(range2[2], 0, [["enter", valueToken, context]]);
     if (rowKind !== 2) {
-      const start = context.events[range[2]];
-      const end = context.events[range[3]];
+      const start = context.events[range2[2]];
+      const end = context.events[range2[3]];
       start[1].end = Object.assign({}, end[1].end);
       start[1].type = "chunkText";
       start[1].contentType = "text";
-      if (range[3] > range[2] + 1) {
-        const a2 = range[2] + 1;
-        const b2 = range[3] - range[2] - 1;
-        map4.add(a2, b2, []);
+      if (range2[3] > range2[2] + 1) {
+        const a2 = range2[2] + 1;
+        const b2 = range2[3] - range2[2] - 1;
+        map3.add(a2, b2, []);
       }
     }
-    map4.add(range[3] + 1, 0, [["exit", valueToken, context]]);
+    map3.add(range2[3] + 1, 0, [["exit", valueToken, context]]);
   }
   if (rowEnd !== void 0) {
     previousCell.end = Object.assign({}, getPoint(context.events, rowEnd));
-    map4.add(rowEnd, 0, [["exit", previousCell, context]]);
+    map3.add(rowEnd, 0, [["exit", previousCell, context]]);
     previousCell = void 0;
   }
   return previousCell;
 }
-function flushTableEnd(map4, context, index2, table, tableBody) {
+function flushTableEnd(map3, context, index2, table, tableBody) {
   const exits = [];
   const related = getPoint(context.events, index2);
   if (tableBody) {
@@ -22458,7 +25244,7 @@ function flushTableEnd(map4, context, index2, table, tableBody) {
   }
   table.end = Object.assign({}, related);
   exits.push(["exit", table, context]);
-  map4.add(index2 + 1, 0, exits);
+  map3.add(index2 + 1, 0, exits);
 }
 function getPoint(events, index2) {
   const event = events[index2];
@@ -22581,8 +25367,8 @@ var fault = Object.assign(create(Error), {
 function create(Constructor) {
   FormattedError.displayName = Constructor.displayName || Constructor.name;
   return FormattedError;
-  function FormattedError(format, ...values) {
-    const reason = format ? (0, import_format.default)(format, ...values) : format;
+  function FormattedError(format2, ...values) {
+    const reason = format2 ? (0, import_format.default)(format2, ...values) : format2;
     return new Constructor(reason);
   }
 }
@@ -22902,6 +25688,8 @@ var DEFAULT_CONFIG = {
   preserveLinkText: true,
   removeFrontmatter: true,
   removeHTML: true,
+  skipUrls: false,
+  // Read website URLs aloud by default; enable to skip them
   // Enhancement options
   addHeadingEmphasis: true,
   headingBreakTimes: [800, 700, 600, 500, 400, 300],
@@ -22919,8 +25707,8 @@ var DEFAULT_CONFIG = {
   // Special handling
   expandAbbreviations: true,
   // Convert "Dr." to "Doctor", etc.
-  spellOutAcronyms: true,
-  // Spell out "NASA", "FBI", etc.
+  spellOutAcronyms: false,
+  // Pronounce "NASA", "FBI" naturally instead of letter by letter
   formatNumbers: true,
   // Format numbers for proper pronunciation
   // Validation
@@ -22975,19 +25763,21 @@ function cleanProcessor(options) {
       if (index2 === void 0 || !parent) {
         return;
       }
-      if (options.removeCodeBlocks && node2.type === "code") {
-        const placeholderNode = {
-          type: "text",
-          value: "Code snippet."
-        };
-        parent.children[index2] = placeholderNode;
+      if (node2.type === "code") {
+        const codeNode = node2;
+        let codeValue = codeNode.value;
+        if (options.skipUrls) {
+          codeValue = removeUrls(codeValue);
+        }
+        const replacement = options.removeCodeBlocks ? { type: "text", value: "Code snippet." } : { type: "text", value: codeValue };
+        parent.children[index2] = replacement;
         return SKIP;
       }
-      if (options.removeCodeBlocks && node2.type === "inlineCode") {
+      if (node2.type === "inlineCode") {
         const inlineCodeNode = node2;
         const textNode = {
           type: "text",
-          value: inlineCodeNode.value
+          value: options.skipUrls ? removeUrls(inlineCodeNode.value) : inlineCodeNode.value
         };
         parent.children[index2] = textNode;
         return SKIP;
@@ -23037,6 +25827,9 @@ function cleanProcessor(options) {
         textNode.value = removeAudioEmbeds(textNode.value);
         textNode.value = cleanWikiLinks(textNode.value);
         textNode.value = removeEmojis(textNode.value);
+        if (options.skipUrls) {
+          textNode.value = removeUrls(textNode.value);
+        }
       }
     });
   };
@@ -23052,6 +25845,9 @@ function removeAudioEmbeds(text5) {
     /!\[\[([^\]]+)\.(mp3|wav|ogg|m4a|flac|aac|wma)\]\]/gi,
     ""
   );
+}
+function removeUrls(text5) {
+  return text5.replace(/(?:https?:\/\/|www\.)[^\s]+/gi, "").replace(/[ \t]{2,}/g, " ");
 }
 function removeEmojis(text5) {
   return text5.replace(
@@ -23075,7 +25871,7 @@ var ABBREVIATIONS = {
   "vs.": "versus"
 };
 var ACRONYM_PATTERN = /\b[A-Z]{2,}\b/g;
-var NUMBER_PATTERN = /\b\d+([,\.]\d+)*\b/g;
+var NUMBER_PATTERN = /\b\d+([,.]\d+)*\b/g;
 function enhanceProcessor(options) {
   return function transformer(tree) {
     let listItemIndex = 0;
@@ -23387,10 +26183,10 @@ function serializeProsody(node2) {
   return `<prosody${attrString}>${children}</prosody>`;
 }
 function serializeSayAs(node2) {
-  const { interpretAs, format } = node2.data;
+  const { interpretAs, format: format2 } = node2.data;
   let attrString = `interpret-as="${interpretAs}"`;
-  if (format) {
-    attrString += ` format="${format}"`;
+  if (format2) {
+    attrString += ` format="${format2}"`;
   }
   const children = node2.children.map((child) => serializeNode(child)).join("");
   return `<say-as ${attrString}>${children}</say-as>`;
@@ -23466,7 +26262,7 @@ function checkXMLWellFormedness(xml) {
     }
   }
   if (tagStack.length > 0) {
-    errors.push(`Unclosed tags: ${tagStack.map((t2) => `<${t2}>`).join(", ")}`);
+    errors.push(`Unclosed tags: ${tagStack.map((t) => `<${t}>`).join(", ")}`);
   }
   return errors;
 }
@@ -23492,7 +26288,8 @@ var MarkdownToSSMLProcessor = class {
         removeImages: this.config.removeImages,
         preserveLinkText: this.config.preserveLinkText,
         removeFrontmatter: this.config.removeFrontmatter,
-        removeHTML: this.config.removeHTML
+        removeHTML: this.config.removeHTML,
+        skipUrls: this.config.skipUrls
       };
       cleanProcessor(cleanOptions)(ast);
       const enhanceOptions = {
@@ -23553,103 +26350,361 @@ var MarkdownToSSMLProcessor = class {
   }
 };
 
+// src/processors/pipeline/TextSerializer.ts
+var BREAK_HEADING = "0.5s";
+var BREAK_PARAGRAPH = "0.35s";
+var BREAK_LIST_ITEM = "0.2s";
+var BREAK_RULE = "0.8s";
+function serializeToText(tree, options = {}) {
+  var _a3;
+  const pauseTags = (_a3 = options.pauseTags) != null ? _a3 : false;
+  const raw = serializeNode2(tree, pauseTags);
+  if (pauseTags) {
+    return raw.replace(/\s+/g, " ").replace(
+      /(?:<break time="[^"]+"\s*\/>\s*){2,}/g,
+      '<break time="0.4s" /> '
+    ).trim();
+  }
+  return raw.replace(/[ \t]+/g, " ").replace(/ *\n */g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+}
+function breakTag(time2) {
+  return ` <break time="${time2}" /> `;
+}
+function serializeNode2(node2, pauseTags) {
+  switch (node2.type) {
+    case "text":
+      return node2.value;
+    case "inlineCode":
+      return node2.value;
+    case "code":
+      return node2.value;
+    case "heading": {
+      const text5 = serializeChildren(node2, pauseTags).trim();
+      if (!text5) {
+        return "";
+      }
+      const stop = /[.!?:]$/.test(text5) ? "" : ".";
+      return `${text5}${stop}${pauseTags ? breakTag(BREAK_HEADING) : "\n\n"}`;
+    }
+    case "paragraph":
+      return `${serializeChildren(node2, pauseTags)}${pauseTags ? breakTag(BREAK_PARAGRAPH) : "\n\n"}`;
+    case "blockquote":
+      return `${serializeChildren(node2, pauseTags)}${pauseTags ? breakTag(BREAK_PARAGRAPH) : "\n\n"}`;
+    case "listItem":
+      return `${serializeChildren(node2, pauseTags).trim()}${pauseTags ? breakTag(BREAK_LIST_ITEM) : "\n"}`;
+    case "list":
+      return `${serializeChildren(node2, pauseTags)}${pauseTags ? "" : "\n"}`;
+    case "tableCell":
+      return `${serializeChildren(node2, pauseTags)}, `;
+    case "tableRow":
+      return `${serializeChildren(node2, pauseTags).trim()}${pauseTags ? breakTag(BREAK_LIST_ITEM) : "\n"}`;
+    case "table":
+      return `${serializeChildren(node2, pauseTags)}${pauseTags ? "" : "\n"}`;
+    case "break":
+      return " ";
+    // Horizontal rules become ssmlBreak in the cleaner; treat as a longer pause.
+    case "thematicBreak":
+    case "ssmlBreak":
+      return pauseTags ? breakTag(BREAK_RULE) : "\n\n";
+    default:
+      return serializeChildren(node2, pauseTags);
+  }
+}
+function serializeChildren(node2, pauseTags) {
+  if ("children" in node2 && Array.isArray(node2.children)) {
+    return node2.children.map((child) => serializeNode2(child, pauseTags)).join("");
+  }
+  return "";
+}
+
+// src/processors/MarkdownToTextProcessor.ts
+var MarkdownToTextProcessor = class {
+  constructor(config, options = {}) {
+    var _a3;
+    this.config = {
+      ...DEFAULT_CONFIG,
+      ...config
+    };
+    this.pauseTags = (_a3 = options.pauseTags) != null ? _a3 : true;
+  }
+  /**
+   * Process markdown text to plain spoken text
+   */
+  async process(markdown) {
+    const processor = unified().use(remarkParse).use(remarkGfm).use(remarkFrontmatter, ["yaml", "toml"]);
+    const ast = processor.parse(markdown);
+    const cleanOptions = {
+      removeCodeBlocks: this.config.removeCodeBlocks,
+      removeImages: this.config.removeImages,
+      preserveLinkText: this.config.preserveLinkText,
+      removeFrontmatter: this.config.removeFrontmatter,
+      removeHTML: this.config.removeHTML,
+      skipUrls: this.config.skipUrls
+    };
+    cleanProcessor(cleanOptions)(ast);
+    return serializeToText(ast, { pauseTags: this.pauseTags });
+  }
+  updateConfig(config) {
+    this.config = {
+      ...this.config,
+      ...config
+    };
+  }
+  getConfig() {
+    return { ...this.config };
+  }
+};
+
 // src/utils/TextSpeaker.ts
-var import_obsidian6 = require("obsidian");
+var import_obsidian11 = require("obsidian");
 var TextSpeaker = class {
-  constructor(pollyService, markdownHelper, iconEventHandler, spellOutAcronyms = true) {
-    this.pollyService = pollyService;
+  constructor(provider, markdownHelper, iconEventHandler, spellOutAcronyms = false, readCodeBlocks = false, skipUrls = false) {
+    this.provider = provider;
     this.markdownHelper = markdownHelper;
     this.iconEventHandler = iconEventHandler;
     this.spellOutAcronyms = spellOutAcronyms;
+    this.readCodeBlocks = readCodeBlocks;
+    this.skipUrls = skipUrls;
+    const contentOptions = {
+      removeCodeBlocks: !this.readCodeBlocks,
+      skipUrls: this.skipUrls
+    };
     this.ssmlProcessor = new MarkdownToSSMLProcessor({
       voiceType: "neural",
       // TODO: Make this configurable from settings
-      spellOutAcronyms: this.spellOutAcronyms
+      spellOutAcronyms: this.spellOutAcronyms,
+      ...contentOptions
     });
+    this.textProcessor = new MarkdownToTextProcessor(contentOptions);
   }
   async speakText(speed) {
     this.iconEventHandler.ribbonIconHandler();
-    if (this.pollyService.isPlaying()) {
-      this.pollyService.pauseAudio();
+    if (this.provider.isPlaying()) {
+      this.provider.pauseAudio();
       return;
     }
-    if (this.pollyService.isOperationInProgress()) {
+    if (this.provider.isOperationInProgress()) {
       return;
     }
-    const requestId = this.pollyService.startOperation();
+    const requestId = this.provider.startOperation();
     try {
       const rawText = await this.markdownHelper.getMarkdownView();
-      if (!this.pollyService.isCurrentRequest(requestId)) {
+      if (!this.provider.isCurrentRequest(requestId)) {
         return;
       }
-      const processingNotice = new import_obsidian6.Notice("Processing text...", 2e3);
-      const result = await this.ssmlProcessor.process(rawText);
+      const processingNotice = new import_obsidian11.Notice("Processing text...", 2e3);
+      const content3 = await this.processContent(rawText);
       processingNotice.hide();
-      if (!this.pollyService.isCurrentRequest(requestId)) {
+      if (!this.provider.isCurrentRequest(requestId)) {
         return;
       }
-      if (!result.isValid) {
-        console.error("SSML validation errors:", result.errors);
-        new import_obsidian6.Notice(
-          `Voice Plugin: SSML validation failed
-${result.errors.join("\n")}`
-        );
+      if (content3 === null) {
         return;
-      }
-      if (result.warnings.length > 0) {
-        console.warn("SSML warnings:", result.warnings);
       }
       const activeFilePath = this.markdownHelper.getActiveFilePath();
-      await this.pollyService.playSSMLAudio(
-        result.ssml,
-        speed,
-        activeFilePath || void 0
-      );
+      await this.provider.speak(content3, speed, activeFilePath || void 0);
+      await this.iconEventHandler.maybeAutoDownloadAudio();
     } catch (error) {
       if (error instanceof Error && error.name === "AbortError") {
         return;
       }
       console.error("Error in text-to-speech processing:", error);
       const errorMessage = error instanceof Error ? error.message : String(error);
-      new import_obsidian6.Notice(`Voice Plugin Error: ${errorMessage}`);
+      new import_obsidian11.Notice(`Voice Plugin Error: ${errorMessage}`);
     } finally {
-      this.pollyService.endOperation(requestId);
+      this.provider.endOperation(requestId);
     }
+  }
+  /**
+   * Produce the content string the active provider expects, or null if
+   * processing failed (a user notice is shown in that case).
+   */
+  async processContent(rawText) {
+    if (this.provider.inputFormat === "text") {
+      return this.textProcessor.process(rawText);
+    }
+    const result = await this.ssmlProcessor.process(rawText);
+    if (!result.isValid) {
+      console.error("SSML validation errors:", result.errors);
+      new import_obsidian11.Notice(
+        `Voice Plugin: SSML validation failed
+${result.errors.join("\n")}`
+      );
+      return null;
+    }
+    if (result.warnings.length > 0) {
+      console.warn("SSML warnings:", result.warnings);
+    }
+    return result.ssml;
+  }
+};
+
+// src/ui/WhatsNewModal.ts
+var import_obsidian12 = require("obsidian");
+
+// src/utils/whatsNew.ts
+var HERO_IMAGE_URL = "https://raw.githubusercontent.com/chrisurf/obsidian-voice/main/assets/hero.png";
+var WHATS_NEW = `## \u{1F50A} The Voice player is here
+
+Voice now has a full **audiobook-style player** \u2014 and it lives in the right sidebar (next to Backlinks and Outline) by default, so it is always one click away. If you have not updated in a while, this is the big one.
+
+- **Play your notes like chapters** \u2014 every MP3 in a folder shows up as a numbered chapter you can play, skip, and repeat.
+- **Browse audio across your vault** \u2014 a folder picker lets you jump between any folders that contain audio, right from the player.
+- **Transport controls** \u2014 play / pause, previous / next, rewind, fast-forward, a draggable progress bar, and on-the-fly speed.
+- **Read this note & download** \u2014 generate speech and save an MP3 without leaving the player.
+- **Switch provider & voice** \u2014 change between AWS Polly, ElevenLabs, Google Cloud, Azure Speech, and OpenAI directly in the player.
+
+## \u2728 Everything you need to know
+
+**Player & playback**
+
+- **Voice player shows by default** in the right sidebar, with a **folder picker** to browse audio across the vault.
+- **In-player controls**: switch provider, voice, and read-code-blocks, with live loading feedback while a note is synthesized.
+- **Collapsible, audiobook-style player** with chapters, transport controls, scrubber, and repeat modes (off / one / all).
+- **Configurable rewind & fast-forward** intervals (1\u201360 seconds each).
+
+**More engines, more voices**
+
+- **ElevenLabs** support \u2014 premade & multilingual voices.
+- **Google Cloud Text-to-Speech** support, plus extra hotkey commands.
+- **Azure AI Speech** support \u2014 neural voices across many languages.
+- **OpenAI** support \u2014 built-in voices (Alloy, Nova, \u2026) with GPT-4o mini TTS.
+
+**Your audio files**
+
+- **Separate "Auto-Save" and "Embed" toggles** \u2014 download MP3s with or without embedding them into the note.
+- **Skip website URLs** and **read code blocks** content toggles.
+
+Open the player from the **audio-waveform ribbon icon**, the **"Open the player."** command, or the button below.`;
+function shouldShowWhatsNew(currentVersion, lastSeenVersion) {
+  return currentVersion !== "" && currentVersion !== lastSeenVersion;
+}
+
+// src/ui/WhatsNewModal.ts
+var WhatsNewModal = class extends import_obsidian12.Modal {
+  constructor(app, version, component, onOpenPlayer) {
+    super(app);
+    this.version = version;
+    this.component = component;
+    this.onOpenPlayer = onOpenPlayer;
+  }
+  onOpen() {
+    const { contentEl, titleEl, modalEl } = this;
+    modalEl.addClass("voice-whats-new-modal");
+    titleEl.setText(`What's new in Voice ${this.version}`);
+    const hero = contentEl.createEl("img", {
+      cls: "voice-whats-new-hero",
+      attr: { alt: "Obsidian Voice", src: HERO_IMAGE_URL }
+    });
+    hero.addEventListener("error", () => hero.hide());
+    const body = contentEl.createDiv({ cls: "voice-whats-new-body" });
+    void import_obsidian12.MarkdownRenderer.render(this.app, WHATS_NEW, body, "", this.component);
+    new import_obsidian12.Setting(contentEl).addButton(
+      (btn) => btn.setButtonText("Open Voice player").setCta().onClick(() => {
+        this.onOpenPlayer();
+        this.close();
+      })
+    ).addButton(
+      (btn) => btn.setButtonText("Close").onClick(() => this.close())
+    );
+  }
+  onClose() {
+    this.contentEl.empty();
   }
 };
 
 // src/utils/VoicePlugin.ts
-var Voice = class extends import_obsidian7.Plugin {
+var Voice = class extends import_obsidian13.Plugin {
   async onload() {
     await this.loadSettings();
     this.addSettingTab(new VoiceSettingTab(this.app, this));
     this.markdownHelper = new MarkdownHelper(this.app);
-    this.pollyService = new AwsPollyService(
-      {
-        credentials: {
-          accessKeyId: String(this.settings.AWS_ACCESS_KEY_ID),
-          secretAccessKey: String(this.settings.AWS_SECRET_ACCESS_KEY)
-        },
-        region: String(this.settings.AWS_REGION)
-      },
-      this.settings.VOICE,
-      Number(this.settings.SPEED)
+    this.speechProvider = createSpeechProvider(this.settings);
+    this.iconEventHandler = new IconEventHandler(
+      this,
+      this,
+      this.speechProvider
     );
-    this.iconEventHandler = new IconEventHandler(this, this, this.pollyService);
     this.textSpeaker = new TextSpeaker(
-      this.pollyService,
+      this.speechProvider,
       this.markdownHelper,
       this.iconEventHandler,
-      this.settings.spellOutAcronyms
+      this.settings.spellOutAcronyms,
+      this.settings.readCodeBlocks,
+      this.settings.skipUrls
     );
-    this.hotkeySettings = new HotkeySettings(this, this.pollyService);
+    this.hotkeySettings = new HotkeySettings(this);
     this.hotkeySettings.initHotkeys();
+    this.registerView(
+      VIEW_TYPE_VOICE_PLAYER,
+      (leaf) => new VoicePlayerView(leaf, this)
+    );
+    this.addRibbonIcon("audio-lines", "Open Voice player", () => {
+      void this.activatePlayerView();
+    });
+    this.addCommand({
+      id: "open-player",
+      name: "Open the player.",
+      callback: () => void this.activatePlayerView()
+    });
+    this.addCommand({
+      id: "show-whats-new",
+      name: "Show what's new.",
+      callback: () => this.showWhatsNew()
+    });
+    this.app.workspace.onLayoutReady(() => {
+      void this.placeDefaultPlayerPane();
+      this.maybeShowWhatsNew();
+    });
+  }
+  /** Open the "What's New" modal for the current version. */
+  showWhatsNew() {
+    new WhatsNewModal(
+      this.app,
+      this.manifest.version,
+      this,
+      () => void this.activatePlayerView()
+    ).open();
+  }
+  /**
+   * Show the "What's New" note once after a fresh install or an update, then
+   * remember the version so it is not shown again until the next upgrade.
+   */
+  maybeShowWhatsNew() {
+    const current = this.manifest.version;
+    if (!shouldShowWhatsNew(current, this.settings.lastWhatsNewVersion)) {
+      return;
+    }
+    this.settings.lastWhatsNewVersion = current;
+    void this.saveSettings();
+    this.showWhatsNew();
+  }
+  /**
+   * One-time placement of the player in the right sidebar so it shows up by
+   * default (desktop and mobile). The tab is added without revealing it, so it
+   * does not steal focus from the user's current pane.
+   */
+  async placeDefaultPlayerPane() {
+    if (this.settings.playerPanePlaced) {
+      return;
+    }
+    this.settings.playerPanePlaced = true;
+    await this.saveSettings();
+    const { workspace } = this.app;
+    if (workspace.getLeavesOfType(VIEW_TYPE_VOICE_PLAYER).length > 0) {
+      return;
+    }
+    const right = workspace.getRightLeaf(false);
+    if (!right) {
+      return;
+    }
+    await right.setViewState({ type: VIEW_TYPE_VOICE_PLAYER });
   }
   async speakText(speed) {
     await this.textSpeaker.speakText(speed);
   }
   isMobile() {
-    return import_obsidian7.Platform.isMobile;
+    return import_obsidian13.Platform.isMobile;
   }
   onunload() {
     if (this.iconEventHandler) {
@@ -23658,31 +26713,122 @@ var Voice = class extends import_obsidian7.Plugin {
   }
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    if (!this.settings.acronymDefaultMigrated) {
+      this.settings.spellOutAcronyms = false;
+      this.settings.acronymDefaultMigrated = true;
+      await this.saveSettings();
+    }
   }
   async saveSettings() {
     await this.saveData(this.settings);
   }
+  /**
+   * Update the active provider's credentials in place (no audio interruption).
+   * Called when the user edits AWS or ElevenLabs credentials in settings.
+   */
+  reinitializeProviderCredentials() {
+    this.speechProvider.updateCredentials(this.settings);
+  }
+  /**
+   * Backwards-compatible alias for AWS credential updates.
+   */
   reinitializePollyService() {
-    if (this.settings.AWS_ACCESS_KEY_ID && this.settings.AWS_SECRET_ACCESS_KEY && this.settings.AWS_REGION) {
-      this.pollyService.updateCredentials({
-        credentials: {
-          accessKeyId: String(this.settings.AWS_ACCESS_KEY_ID),
-          secretAccessKey: String(this.settings.AWS_SECRET_ACCESS_KEY)
-        },
-        region: String(this.settings.AWS_REGION)
-      });
-    }
+    this.reinitializeProviderCredentials();
+  }
+  /**
+   * Switch the active TTS provider (e.g. Polly ↔ ElevenLabs). Rewires the UI
+   * (status bar, mobile control bar) and orchestration to the new provider.
+   */
+  reinitializeProvider() {
+    this.speechProvider.stopAudio();
+    this.speechProvider = createSpeechProvider(this.settings);
+    this.iconEventHandler.setProvider(this.speechProvider);
+    this.reinitializeTextSpeaker();
   }
   reinitializeTextSpeaker() {
     this.textSpeaker = new TextSpeaker(
-      this.pollyService,
+      this.speechProvider,
       this.markdownHelper,
       this.iconEventHandler,
-      this.settings.spellOutAcronyms
+      this.settings.spellOutAcronyms,
+      this.settings.readCodeBlocks,
+      this.settings.skipUrls
     );
   }
+  /**
+   * Persist the chosen voice to the correct settings key for the active
+   * provider, apply it to the running provider, and refresh the display.
+   */
+  async persistActiveVoice(voiceId) {
+    if (this.settings.TTS_PROVIDER === "elevenlabs") {
+      this.settings.ELEVENLABS_VOICE = voiceId;
+    } else if (this.settings.TTS_PROVIDER === "google") {
+      this.settings.GOOGLE_VOICE = voiceId;
+    } else if (this.settings.TTS_PROVIDER === "azure") {
+      this.settings.AZURE_VOICE = voiceId;
+    } else if (this.settings.TTS_PROVIDER === "openai") {
+      this.settings.OPENAI_VOICE = voiceId;
+    } else {
+      this.settings.VOICE = voiceId;
+    }
+    await this.saveSettings();
+    this.speechProvider.setVoice(voiceId);
+    this.iconEventHandler.updateVoiceDisplay();
+  }
+  /**
+   * Apply the configured rewind/fast-forward skip intervals to the running
+   * provider and refresh the control tooltips. Called when the user changes
+   * the interval in settings (no audio interruption).
+   */
+  updateSkipIntervals() {
+    this.speechProvider.setRewindSeconds(this.settings.rewindSeconds);
+    this.speechProvider.setForwardSeconds(this.settings.forwardSeconds);
+    this.iconEventHandler.updateSkipTooltips();
+  }
+  /**
+   * Switch to the next voice in the active provider's catalog (wraps around).
+   * Backs the "Switch to the next voice" command.
+   */
+  async cycleVoice() {
+    const options = this.speechProvider.getVoiceOptions();
+    if (options.length === 0) {
+      return;
+    }
+    const currentId = this.speechProvider.getVoice();
+    const currentIndex = options.findIndex((v) => v.id === currentId);
+    const next = options[(currentIndex + 1) % options.length];
+    await this.persistActiveVoice(next.id);
+    new import_obsidian13.Notice(`Voice: ${next.label}`);
+  }
+  /**
+   * Open the Voice player and reveal it (right sidebar on desktop, full-screen
+   * pane on mobile). Reuses an existing player leaf if one is already open.
+   */
+  async activatePlayerView() {
+    const { workspace } = this.app;
+    let leaf = workspace.getLeavesOfType(VIEW_TYPE_VOICE_PLAYER)[0];
+    if (!leaf) {
+      const right = workspace.getRightLeaf(false);
+      if (!right) {
+        return;
+      }
+      leaf = right;
+      await leaf.setViewState({
+        type: VIEW_TYPE_VOICE_PLAYER,
+        active: true
+      });
+    }
+    await workspace.revealLeaf(leaf);
+    this.iconEventHandler.hideMobileControlBar();
+  }
+  getSpeechProvider() {
+    return this.speechProvider;
+  }
+  /**
+   * @deprecated Use getSpeechProvider() instead.
+   */
   getPollyService() {
-    return this.pollyService;
+    return this.speechProvider;
   }
 };
 
