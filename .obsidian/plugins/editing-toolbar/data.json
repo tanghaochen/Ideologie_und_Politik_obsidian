@@ -228,6 +228,12 @@
       "icon": "lucide-copy"
     },
     {
+      "id": "SubmenuCommands-mqnmzjka6",
+      "name": "submenu",
+      "icon": "paste-text",
+      "SubmenuCommands": []
+    },
+    {
       "id": "obsidian-linter:lint-file",
       "name": "Linter: 格式化当前文件",
       "icon": "lint-file"
