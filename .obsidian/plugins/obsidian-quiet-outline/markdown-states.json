@@ -2572,12 +2572,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 0,
-        "ch": 0
+        "line": 2,
+        "ch": 63
       },
       "to": {
-        "line": 0,
-        "ch": 0
+        "line": 2,
+        "ch": 63
       }
     },
     "expandedKeys": []
@@ -15143,6 +15143,62 @@
       "to": {
         "line": 3,
         "ch": 18
+      }
+    },
+    "expandedKeys": []
+  },
+  "思想思维心理哲学/个人问题处理/诫子书.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 5
+      },
+      "to": {
+        "line": 0,
+        "ch": 5
+      }
+    },
+    "expandedKeys": []
+  },
+  "OBSetting/templater/每日总结复盘.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 18,
+        "ch": 0
+      },
+      "to": {
+        "line": 18,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "OBSetting/未命名.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "expandedKeys": []
+  },
+  "OBSetting/口号.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 2
+      },
+      "to": {
+        "line": 0,
+        "ch": 2
       }
     },
     "expandedKeys": []

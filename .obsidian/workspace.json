@@ -79,6 +79,21 @@
         "dimension": 51.10533159947984,
         "children": [
           {
+            "id": "4d1ec2ee319e1365",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "OBSetting/templater/每日总结复盘.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "每日总结复盘"
+            }
+          },
+          {
             "id": "d4eee0dd1bbabdcb",
             "type": "leaf",
             "state": {
@@ -341,10 +356,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "语言学习/德语/公共知识语法/2动词/功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）.md"
+                "file": "OBSetting/templater/每日总结复盘.md"
               },
               "icon": "lucide-info",
-              "title": "功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）的笔记属性"
+              "title": "每日总结复盘的笔记属性"
             }
           },
           {
@@ -368,7 +383,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 10
       },
       {
         "id": "28e75bfc7e894da7",
@@ -395,7 +410,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "思想思维心理哲学/个人问题处理/对精彩人生的定义.md"
+                "file": "OBSetting/templater/每日总结复盘.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -443,9 +458,16 @@
       "obsidian-livesync:显示自定义同步": true
     }
   },
-  "active": "445d092abb89eabd",
+  "active": "7492b847e238b9e1",
   "lastOpenFiles": [
     "语言学习/德语/单词/生词/2026年6月.md",
+    "OBSetting/templater/每日总结复盘.md",
+    "OBSetting/口号.md",
+    "思想思维心理哲学/个人人生思想架构.md",
+    "思想思维心理哲学/过度劳累.md",
+    "思想思维心理哲学/个人问题处理/诫子书.md",
+    "assets/Pasted Image 20260621190210_120.png",
+    "思想思维心理哲学/个人问题处理/对精彩人生的定义.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
     "OBSetting/templater/生词表格-anki.md",
     "语言学习/德语/单词/动词.md",
@@ -459,9 +481,7 @@
     "语言学习/德语/公共知识语法/10句型/zu的不定式.md",
     "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/5介词/表信息来源与参照的介词.md",
-    "思想思维心理哲学/个人人生思想架构.md",
     "语言学习/德语/公共知识语法/5介词/表因果的介词.md",
-    "思想思维心理哲学/过度劳累.md",
     "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
     "语言学习/德语/公共知识语法/10句型/第二虚拟式.md",
     "语言学习/德语/公共知识语法/2动词/汇总所有动词变化.md",
@@ -470,11 +490,7 @@
     "思想思维心理哲学/自制.md",
     "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/单词/国家.md",
-    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
-    "经济学/术语/PSR; Price-to-Sales Ratio; 市销率.md",
-    "语言学习/德语/公共知识语法/时态.md",
-    "语言学习/德语/公共知识语法/2动词/情态动词表可能性.md",
     "assets/image-355.png",
     "assets/PixPin_2026-06-16_18-33-34.png",
     "assets/ChatGPT Image 2026年6月16日 17_50_32.png",
@@ -486,7 +502,6 @@
     "assets/image-352.png",
     "assets/PixPin_2026-06-15_14-01-51.png",
     "assets/PixPin_2026-06-15_14-01-19.png",
-    "assets/PixPin_2026-06-15_14-00-44.png",
     "网络/Excalidraw2URI.js",
     "语言学习/德语/学习记录日记-技巧/Wortwahl und Beispielsätze",
     "语言学习/德语/教材/其他/德语活学活用B2-C1.pdf",
