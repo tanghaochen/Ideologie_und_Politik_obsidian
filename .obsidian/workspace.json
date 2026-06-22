@@ -150,16 +150,6 @@
             }
           },
           {
-            "id": "80277af3735ca63b",
-            "type": "leaf",
-            "state": {
-              "type": "highlights-sidebar",
-              "state": {},
-              "icon": "highlighter",
-              "title": "Highlights"
-            }
-          },
-          {
             "id": "14d0006259a2f607",
             "type": "leaf",
             "state": {
@@ -272,7 +262,8 @@
               "title": "Mxmind"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "28e75bfc7e894da7",
