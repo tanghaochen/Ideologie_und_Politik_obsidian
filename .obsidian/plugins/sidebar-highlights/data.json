@@ -3223,7 +3223,24 @@
         "type": "html"
       }
     ],
-    "语言学习/德语/公共知识语法/时态/动词的过去时.md": []
+    "语言学习/德语/公共知识语法/时态/动词的过去时.md": [],
+    "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md": [
+      {
+        "id": "63giv8v5e",
+        "text": "非常有把握的预测",
+        "tags": [],
+        "line": 24,
+        "startOffset": 455,
+        "endOffset": 492,
+        "filePath": "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1782136435084,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
+    ]
   },
   "collections": {},
   "groupingMode": "none",
