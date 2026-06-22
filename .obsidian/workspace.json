@@ -95,13 +95,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/单词/生词/2026年6月.md",
+                "file": "语言学习/德语/公共知识语法/10句型/代词/Irgend 做代词.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "2026年6月"
+              "title": "Irgend 做代词"
             }
           },
           {
@@ -156,8 +156,7 @@
               "title": "新标签页"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -341,10 +340,10 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "语言学习/德语/单词/生词/2026年6月.md"
+                "file": "语言学习/德语/公共知识语法/从句.md"
               },
               "icon": "lucide-info",
-              "title": "2026年6月的笔记属性"
+              "title": "从句的笔记属性"
             }
           },
           {
@@ -394,7 +393,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/单词/生词/2026年6月.md"
+                "file": "语言学习/德语/公共知识语法/从句.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -447,8 +446,11 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "d4eee0dd1bbabdcb",
+  "active": "1fe5a9401ee07d12",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/10句型/代词/Irgend 做代词.md",
+    "语言学习/德语/公共知识语法/10句型/代词/es.md",
+    "语言学习/德语/公共知识语法/10句型/代词/da-构成的代副词.md",
     "语言学习/德语/单词/生词/2026年6月.md",
     "语言学习/德语/公共知识语法/10句型/代词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
     "语言学习/德语/公共知识语法/5介词/介词的位置 在名词之前、之后和围绕着它.md",
@@ -480,9 +482,6 @@
     "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/5介词/表信息来源与参照的介词.md",
     "语言学习/德语/公共知识语法/5介词/表因果的介词.md",
-    "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
-    "语言学习/德语/公共知识语法/10句型/第二虚拟式.md",
-    "语言学习/德语/公共知识语法/2动词/汇总所有动词变化.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "assets/image-355.png",
     "assets/PixPin_2026-06-16_18-33-34.png",
