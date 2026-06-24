@@ -9,21 +9,6 @@
         "dimension": 49.4148244473342,
         "children": [
           {
-            "id": "a2bdf45a80b17ff6",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "农业/未命名.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "未命名"
-            }
-          },
-          {
             "id": "814bf3e4edd62ad4",
             "type": "leaf",
             "pinned": true,
@@ -39,8 +24,21 @@
               "icon": "lucide-file",
               "title": "⭐必背所有知识点整理考察整理"
             }
+          },
+          {
+            "id": "0b359238faf8aba9",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "思想思维心理哲学/个人人生思想架构.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "个人人生思想架构"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "66514ff393b45104",
@@ -289,7 +287,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/单词/动词.md"
+                "file": "思想思维心理哲学/个人人生思想架构.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -334,12 +332,17 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "7eb86337b96ccd4e",
+  "active": "0b359238faf8aba9",
   "lastOpenFiles": [
-    "农业/未命名.md",
+    "思想思维心理哲学/个人问题处理/承认生活是匮乏的.md",
+    "思想思维心理哲学/个人人生思想架构.md",
+    "思想思维心理哲学/过度劳累.md",
+    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
+    "思想思维心理哲学/个人问题处理/PUBG戒毒.md",
+    "农业/农资产品使用介绍.md",
+    "语言学习/德语/单词/动词.md",
     "语言学习/德语/公共知识语法/动词.md",
     "农业",
-    "语言学习/德语/单词/动词.md",
     "语言学习/德语/公共知识语法/时态.md",
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/时态/现在时.md",
@@ -359,15 +362,10 @@
     "语言学习/德语/公共知识语法/10句型/代词/Irgend 做代词.md",
     "语言学习/德语/公共知识语法/10句型/代词/es.md",
     "语言学习/德语/公共知识语法/10句型/代词/da-构成的代副词.md",
-    "语言学习/德语/公共知识语法/5介词/介词的位置 在名词之前、之后和围绕着它.md",
-    "2026-03-21.md",
     "assets/PixPin_2026-06-21_21-19-09-3.png",
     "assets/PixPin_2026-06-21_21-19-09-2.png",
     "assets/PixPin_2026-06-21_21-19-09-1.png",
     "assets/PixPin_2026-06-21_21-19-09.png",
-    "2026-06-21.md",
-    "2026-W25.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
     "assets/Pasted Image 20260621190210_120.png",
     "OBSetting/templater",
     "OBSetting",
