@@ -1,16 +1,28 @@
 {
   "recentFiles": [
     {
+      "basename": "动词",
+      "path": "语言学习/德语/公共知识语法/动词.md"
+    },
+    {
+      "basename": "动词",
+      "path": "语言学习/德语/单词/动词.md"
+    },
+    {
+      "basename": "时态",
+      "path": "语言学习/德语/公共知识语法/时态.md"
+    },
+    {
+      "basename": "名词：性的规律, 不背词性，一眼识别词性",
+      "path": "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md"
+    },
+    {
       "basename": "现在时",
       "path": "语言学习/德语/公共知识语法/时态/现在时.md"
     },
     {
       "basename": "第一将来时",
       "path": "语言学习/德语/公共知识语法/时态/第一将来时.md"
-    },
-    {
-      "basename": "时态",
-      "path": "语言学习/德语/公共知识语法/时态.md"
     },
     {
       "basename": "werden所有变化合集",
@@ -117,16 +129,8 @@
       "path": "OBSetting/templater/生词表格-anki.md"
     },
     {
-      "basename": "动词",
-      "path": "语言学习/德语/单词/动词.md"
-    },
-    {
       "basename": "阳性弱变化动词",
       "path": "语言学习/德语/公共知识语法/2动词/阳性弱变化动词.md"
-    },
-    {
-      "basename": "动词",
-      "path": "语言学习/德语/公共知识语法/动词.md"
     },
     {
       "basename": "阳性弱变化名词",
@@ -195,10 +199,6 @@
     {
       "basename": "短语",
       "path": "语言学习/德语/公共知识语法/1词/短语/短语.md"
-    },
-    {
-      "basename": "条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen.",
-      "path": "语言学习/德语/公共知识语法/10句型/从句合集/条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen..md"
     }
   ],
   "omittedPaths": [],
