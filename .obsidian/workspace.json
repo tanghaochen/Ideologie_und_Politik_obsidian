@@ -12,12 +12,15 @@
             "id": "a2bdf45a80b17ff6",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/动词.md"
+                "file": "农业/未命名.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "excalidraw-icon",
-              "title": "动词"
+              "icon": "lucide-file",
+              "title": "未命名"
             }
           },
           {
@@ -286,7 +289,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/动词.md"
+                "file": "农业/未命名.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -327,13 +330,16 @@
       "darlal-switcher-plus:Open Symbols for the active editor": true,
       "command-palette:打开命令面板": true,
       "daily-notes:打开/创建今天的日记": false,
-      "obsidian-excalidraw-plugin:新建绘图文件": false
+      "obsidian-excalidraw-plugin:新建绘图文件": false,
+      "periodic-notes:Open today": false
     }
   },
-  "active": "a2bdf45a80b17ff6",
+  "active": "ff36fbbbf55f4934",
   "lastOpenFiles": [
-    "语言学习/德语/单词/动词.md",
     "语言学习/德语/公共知识语法/动词.md",
+    "农业/未命名.md",
+    "农业",
+    "语言学习/德语/单词/动词.md",
     "语言学习/德语/公共知识语法/时态.md",
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/时态/现在时.md",
@@ -362,7 +368,6 @@
     "2026-06-21.md",
     "2026-W25.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md",
-    "OBSetting/templater/每日总结复盘.md",
     "assets/Pasted Image 20260621190210_120.png",
     "OBSetting/templater",
     "OBSetting",
@@ -377,7 +382,6 @@
     "assets/image-354.png",
     "网络/Excalidraw2URI.js",
     "语言学习/德语/学习记录日记-技巧/Wortwahl und Beispielsätze",
-    "语言学习/德语/教材/其他/德语活学活用B2-C1.pdf",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "网络/简述软路由网络逻辑.canvas",
     "未命名.canvas",
