@@ -29,12 +29,15 @@
             "id": "0b359238faf8aba9",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "思想思维心理哲学/个人人生思想架构.md"
+                "file": "思想思维心理哲学/个人问题处理/未命名.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "excalidraw-icon",
-              "title": "个人人生思想架构"
+              "icon": "lucide-file",
+              "title": "未命名"
             }
           }
         ],
@@ -56,8 +59,21 @@
               "icon": "excalidraw-icon",
               "title": "介词"
             }
+          },
+          {
+            "id": "fd3c6699f44fc11d",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "思想思维心理哲学/个人人生思想架构.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "个人人生思想架构"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -284,7 +300,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/介词.md"
+                "file": "思想思维心理哲学/个人问题处理/未命名.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -329,10 +345,15 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "7eb86337b96ccd4e",
+  "active": "0b359238faf8aba9",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
+    "思想思维心理哲学/个人问题处理/破妄笃行力.md",
+    "思想思维心理哲学/个人问题处理/未命名.md",
     "思想思维心理哲学/个人人生思想架构.md",
+    "assets/PixPin_2026-06-25_19-58-43-1.png",
+    "assets/PixPin_2026-06-25_19-58-43.png",
+    "语言学习/德语/公共知识语法/介词.md",
+    "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
     "语言学习/德语/公共知识语法/10句型/zu的不定式.md",
     "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
     "语言学习/德语/公共知识语法/从句.md",
@@ -355,9 +376,6 @@
     "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/10句型/第一虚拟式转述对话、传闻和自述.md",
     "语言学习/德语/单词/生词/2026年6月.md",
-    "语言学习/德语/公共知识语法/10句型/第一，二 虚拟式.md",
-    "语言学习/德语/公共知识语法/时态/动词的过去时.md",
-    "思想思维心理哲学/学习研究/如何专注.md",
     "思想思维心理哲学/学习研究",
     "assets/PixPin_2026-06-21_21-19-09-3.png",
     "assets/PixPin_2026-06-21_21-19-09-2.png",
@@ -373,8 +391,6 @@
     "assets/ChatGPT Image 2026年6月16日 17_50_32.png",
     "语言学习/德语/教材/其他/标准德语语法：精解与练习B2-C1.pdf",
     "语言学习/德语/教材/其他/德语语法表解.pdf",
-    "assets/PixPin_2026-06-16_15-07-31.png",
-    "assets/image-354.png",
     "网络/Excalidraw2URI.js",
     "语言学习/德语/学习记录日记-技巧/Wortwahl und Beispielsätze",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",

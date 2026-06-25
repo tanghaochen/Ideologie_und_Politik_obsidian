@@ -2569,18 +2569,20 @@
     ]
   },
   "思想思维心理哲学/个人问题处理/未命名.md": {
-    "scroll": 0,
+    "scroll": 6.155634532805598,
     "cursor": {
       "from": {
-        "line": 0,
-        "ch": 17
+        "line": 21,
+        "ch": 6
       },
       "to": {
-        "line": 0,
-        "ch": 17
+        "line": 21,
+        "ch": 6
       }
     },
-    "expandedKeys": []
+    "expandedKeys": [
+      "item-2-1"
+    ]
   },
   "思想思维心理哲学/个人问题处理/是否要回家.md": {
     "scroll": 37.828787978232334,
@@ -15439,6 +15441,23 @@
     },
     "expandedKeys": [
       "item-1-0"
+    ]
+  },
+  "思想思维心理哲学/个人问题处理/破妄笃行力.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 8,
+        "ch": 18
+      },
+      "to": {
+        "line": 8,
+        "ch": 18
+      }
+    },
+    "expandedKeys": [
+      "item-1-0",
+      "item-2-2"
     ]
   }
 }
