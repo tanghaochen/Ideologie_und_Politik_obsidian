@@ -171,7 +171,8 @@
               "title": "时态"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -398,7 +399,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/形容词.md"
+                "file": "语言学习/德语/公共知识语法/介词.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -443,8 +444,9 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "6e97a1afbff9af28",
+  "active": "7eb86337b96ccd4e",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
     "语言学习/德语/公共知识语法/2动词/系动词.md",
@@ -470,7 +472,6 @@
     "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/公共知识语法/2动词/情态动词表可能性.md",
     "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
-    "语言学习/德语/单词/疑问.md",
     "assets/PixPin_2026-06-25_19-58-43-1.png",
     "assets/PixPin_2026-06-25_19-58-43.png",
     "农业",
