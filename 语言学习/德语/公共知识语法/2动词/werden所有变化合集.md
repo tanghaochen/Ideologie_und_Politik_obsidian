@@ -13,18 +13,45 @@ aliases:
 
 ### 🧱 矩阵一：`werden` 核心变位全家福 (按人称与核心语式)
 
-这是所有语法的基石。请特别注意**现在时**的特殊不规则变位（du/er），以及**第一虚拟式**和**第二虚拟式**之间的细微差别（有无变音符号 Umlaut）。
-
-| **人称代词**      | **现在时 (Präsens)(客观事实)** | **过去时 (Präteritum)(过去事实)** | **第一虚拟式 (Konjunktiv I)(客观转述)** | **第二虚拟式 (Konjunktiv II)(假设/愿望)** |
-| ------------- | ----------------------- | -------------------------- | ------------------------------ | -------------------------------- |
-| **ich**       | **werde**               | wurde                      | werde                          | **würde**                        |
-| **du**        | **wirst**               | wurdest                    | werdest                        | **würdest**                      |
-| **er/sie/es** | **wird**                | wurde                      | **werde**                      | **würde**                        |
-| **wir**       | **werden**              | wurden                     | werden                         | **würden**                       |
-| **ihr**       | **werdet**              | wurdet                     | werdet                         | **würdet**                       |
-| **sie/Sie**   | **werden**              | wurden                     | werden                         | **würden**                       |
+#### . 直陈式 (Indikativ) —— 表达“客观存在的事实”
 
 > 💡 **大师提示**：除了现在时变化 du/第三行 er/sie/es，其他都是词干变化 u / e / ü + 固定后缀变化。
+
+
+|**人称**|**现在时 (Präsens)(当下)**|**过去时 (Präteritum)(过去)**|**现在完成时 (Perfekt)(过去已发生)**|**过去完成时 (Plusquamperfekt)(过去的过去)**|**第一将来时 (Futur I)(将来/猜测)**|**第二将来时 (Futur II)(将来已完成)**|
+|---|---|---|---|---|---|---|
+|**ich**|werde|wurde|bin geworden|war geworden|werde werden|werde geworden sein|
+|**du**|wirst|wurdest|bist geworden|warst geworden|wirst werden|wirst geworden sein|
+|**er/sie/es**|wird|wurde|ist geworden|war geworden|wird werden|wird geworden sein|
+|**wir**|werden|wurden|sind geworden|waren geworden|werden werden|werden geworden sein|
+|**ihr**|werdet|wurdet|seid geworden|wart geworden|werdet werden|werdet geworden sein|
+|**sie/Sie**|werden|wurden|sind geworden|waren geworden|werden werden|werden geworden sein|
+
+#### 2. 第一虚拟式 (Konjunktiv I) —— B2核心：“新闻发言人”与“客观转述”
+
+_绝对不能漏掉的重头戏！它专门用于转述别人的话（Indirekte Rede）。_
+
+|**人称**|**K1: 表达当下 (Gegenwart)(对应直陈式的 Präsens)**|**K1: 表达过去 (Vergangenheit)(对应直陈式的 Perfekt/Präteritum)**|**K1: 表达将来 (Zukunft)(对应直陈式的 Futur I)**|
+|---|---|---|---|
+|**ich**|werde|sei geworden|werde werden|
+|**du**|**werdest**|**seiest** geworden|**werdest** werden|
+|**er/sie/es**|**werde**|**sei** geworden|**werde** werden|
+|**wir**|werden|seien geworden|werden werden|
+|**ihr**|**werdet**|**seiet** geworden|**werdet** werden|
+|**sie/Sie**|werden|seien geworden|werden werden|
+
+#### 3. 第二虚拟式 (Konjunktiv II) —— “非真实假设”与“委婉客气”
+
+_用于表达遗憾、如果、愿望，或者极其礼貌的请求。_
+
+|**人称**|**K2: 表达当下的假设 (Gegenwart)(由 Präteritum 变音而来)**|**K2: 表达过去的假设 (Vergangenheit)(由 Plusquamperfekt 变音而来)**|
+|---|---|---|
+|**ich**|würde|wäre geworden|
+|**du**|würdest|wärest geworden|
+|**er/sie/es**|würde|wäre geworden|
+|**wir**|würden|wären geworden|
+|**ihr**|würdet|wäret geworden|
+|**sie/Sie**|würden|wären geworden|
 
 ### 🌐 矩阵二：`werden` 语法功能与时态大通关
 
