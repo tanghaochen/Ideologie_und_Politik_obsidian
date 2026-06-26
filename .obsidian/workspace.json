@@ -9,18 +9,45 @@
         "dimension": 49.4148244473342,
         "children": [
           {
-            "id": "3f27317d2d765d00",
+            "id": "810273c00a93c409",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/2动词/汇总所有动词变化.md",
+                "file": "语言学习/德语/公共知识语法/2动词/系动词.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "汇总所有动词变化"
+              "title": "系动词"
+            }
+          },
+          {
+            "id": "6a0df8c493103f61",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/从句.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "从句"
+            }
+          },
+          {
+            "id": "3f27317d2d765d00",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/第二虚拟式.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "第二虚拟式"
             }
           },
           {
@@ -46,13 +73,28 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/单词/A1 1 问候与告别.md",
+                "file": "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "A1 1 问候与告别"
+              "title": "名词：性的规律, 不背词性，一眼识别词性"
+            }
+          },
+          {
+            "id": "f846cd34a7e568c5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/0格/第二格.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "第二格"
             }
           }
         ]
@@ -62,6 +104,21 @@
         "type": "tabs",
         "dimension": 50.585175552665795,
         "children": [
+          {
+            "id": "6e97a1afbff9af28",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "werden所有变化合集"
+            }
+          },
           {
             "id": "4912e906e30e59e0",
             "type": "leaf",
@@ -108,19 +165,15 @@
             "id": "5020aaaf9601f734",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/单词/生词/2026年6月.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "语言学习/德语/公共知识语法/时态.md"
               },
-              "icon": "lucide-file",
-              "title": "2026年6月"
+              "icon": "excalidraw-icon",
+              "title": "时态"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -347,7 +400,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md"
+                "file": "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -392,36 +445,36 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "dd8c0de9236cf3b8",
+  "active": "6e97a1afbff9af28",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/2动词/系动词.md",
+    "语言学习/德语/公共知识语法/时态.md",
+    "语言学习/德语/公共知识语法/10句型/第二虚拟式.md",
+    "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/公共知识语法/时态/第一将来时, 第二将来时.md",
+    "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
+    "语言学习/德语/公共知识语法/1名词/记忆词性技巧缩减版本.md",
+    "语言学习/德语/公共知识语法/2动词/第二分词.md",
+    "语言学习/德语/公共知识语法/其他句式.md",
+    "语言学习/德语/单词/生词/2026年6月.md",
+    "语言学习/德语/公共知识语法/介词.md",
+    "语言学习/德语/单词/A1 1 问候与告别.md",
+    "语言学习/德语/公共知识语法/0格/第二格.md",
     "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
-    "语言学习/德语/公共知识语法/时态/现在时.md",
+    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
+    "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
+    "语言学习/德语/公共知识语法/时态/动词的过去时.md",
     "语言学习/德语/公共知识语法/2动词/汇总所有动词变化.md",
+    "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
+    "语言学习/德语/公共知识语法/时态/现在时.md",
     "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
     "语言学习/德语/公共知识语法/动词.md",
-    "语言学习/德语/公共知识语法/10句型/第二虚拟式.md",
     "语言学习/德语/公共知识语法/2动词/情态动词表可能性.md",
-    "语言学习/德语/公共知识语法/2动词/第二分词.md",
-    "语言学习/德语/公共知识语法/时态/动词的过去时.md",
     "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
-    "语言学习/德语/单词/A1 1 问候与告别.md",
     "语言学习/德语/单词/疑问.md",
     "语言学习/德语/单词/动词.md",
-    "语言学习/德语/单词/生词/2026年6月.md",
-    "电脑、软件、系统/obsidian plugin/Anki.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "思想思维心理哲学/个人问题处理/破妄笃行力.md",
-    "思想思维心理哲学/个人人生思想架构.md",
-    "思想思维心理哲学/个人问题处理/生死、执念与放下.md",
     "assets/PixPin_2026-06-25_19-58-43-1.png",
     "assets/PixPin_2026-06-25_19-58-43.png",
-    "语言学习/德语/公共知识语法/介词.md",
-    "语言学习/德语/公共知识语法/10句型/zu的不定式.md",
-    "语言学习/德语/公共知识语法/从句.md",
-    "语言学习/德语/公共知识语法/2动词/阳性弱变化动词.md",
-    "语言学习/德语/公共知识语法/5介词/见字知义 的介词.md",
-    "思想思维心理哲学/个人问题处理/承认生活是匮乏的.md",
-    "思想思维心理哲学/过度劳累.md",
     "农业",
     "思想思维心理哲学/学习研究",
     "assets/PixPin_2026-06-21_21-19-09-3.png",
