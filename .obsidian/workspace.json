@@ -14,13 +14,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
+                "file": "语言学习/德语/柏林广场视频笔记/A1/34 时间相关.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "22 冠词"
+              "title": "34 时间相关"
             }
           },
           {
@@ -110,13 +110,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/同位语.md",
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/前置定语、后置定语以及扩展的分词定语.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "同位语"
+              "title": "前置定语、后置定语以及扩展的分词定语"
             }
           },
           {
@@ -413,7 +413,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md"
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/前置定语、后置定语以及扩展的分词定语.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -458,9 +458,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "2bdbb354e1190468",
+  "active": "bba04e97590d9565",
   "lastOpenFiles": [
     "语言学习/德语/柏林广场视频笔记/A1/34 时间相关.md",
+    "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
     "语言学习/德语/公共知识语法/同位语.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/前置定语、后置定语以及扩展的分词定语.md",
     "语言学习/德语/公共知识语法/从句.md",
@@ -487,7 +488,6 @@
     "语言学习/德语/公共知识语法/时态/动词的过去时.md",
     "语言学习/德语/公共知识语法/2动词/汇总所有动词变化.md",
     "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
-    "语言学习/德语/公共知识语法/时态/现在时.md",
     "assets/PixPin_2026-06-25_19-58-43-1.png",
     "assets/PixPin_2026-06-25_19-58-43.png",
     "农业",
