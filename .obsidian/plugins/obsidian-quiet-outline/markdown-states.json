@@ -14678,20 +14678,15 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 1,
-        "ch": 11
+        "line": 37,
+        "ch": 101
       },
       "to": {
-        "line": 1,
-        "ch": 11
+        "line": 37,
+        "ch": 101
       }
     },
-    "expandedKeys": [
-      "item-1-0",
-      "item-2-1",
-      "item-1-6",
-      "item-3-9"
-    ]
+    "expandedKeys": []
   },
   "思想思维心理哲学/电钻冲击钻使用记录.md": {
     "scroll": 0.08575466493209227,
@@ -15546,6 +15541,23 @@
       "item-1-0",
       "item-3-2",
       "item-3-8"
+    ]
+  },
+  "思想思维心理哲学/反内卷、反焦虑的生命视角.md": {
+    "scroll": 28.177457469170466,
+    "cursor": {
+      "from": {
+        "line": 35,
+        "ch": 0
+      },
+      "to": {
+        "line": 35,
+        "ch": 0
+      }
+    },
+    "expandedKeys": [
+      "item-1-0",
+      "item-3-3"
     ]
   }
 }
