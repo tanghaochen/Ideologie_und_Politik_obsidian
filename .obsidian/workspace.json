@@ -149,19 +149,9 @@
               "icon": "lucide-file",
               "title": "前置定语、后置定语以及扩展的分词定语"
             }
-          },
-          {
-            "id": "6756f2dbfbb516a1",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "新标签页"
-            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -388,7 +378,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/被动态.md"
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/前置定语、后置定语以及扩展的分词定语.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -433,10 +423,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "a9da048c4835a931",
+  "active": "ade446ff7eebc1cf",
   "lastOpenFiles": [
-    "语言学习/德语/柏林广场视频笔记/A1/34 时间相关.md",
     "语言学习/德语/公共知识语法/10句型/被动态.md",
+    "语言学习/德语/柏林广场视频笔记/A1/34 时间相关.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/前置定语、后置定语以及扩展的分词定语.md",
     "语言学习/德语/公共知识语法/时态/第一将来时, 第二将来时.md",
     "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
