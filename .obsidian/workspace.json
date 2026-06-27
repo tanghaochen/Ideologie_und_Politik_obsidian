@@ -9,6 +9,21 @@
         "dimension": 49.4148244473342,
         "children": [
           {
+            "id": "a9da048c4835a931",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/被动态.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "被动态"
+            }
+          },
+          {
             "id": "0368f2f35e5f1d79",
             "type": "leaf",
             "state": {
@@ -97,8 +112,7 @@
               "title": "从句"
             }
           }
-        ],
-        "currentTab": 4
+        ]
       },
       {
         "id": "66514ff393b45104",
@@ -106,18 +120,33 @@
         "dimension": 50.585175552665795,
         "children": [
           {
-            "id": "dc5e796f3817071b",
+            "id": "ca23415da04e681a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "思想思维心理哲学/反内卷、反焦虑的生命视角.md",
+                "file": "语言学习/德语/公共知识语法/时态/第一将来时, 第二将来时.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "反内卷、反焦虑的生命视角"
+              "title": "第一将来时, 第二将来时"
+            }
+          },
+          {
+            "id": "dc5e796f3817071b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/副词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "副词"
             }
           },
           {
@@ -428,7 +457,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "思想思维心理哲学/反内卷、反焦虑的生命视角.md"
+                "file": "语言学习/德语/公共知识语法/时态/第一将来时, 第二将来时.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -469,12 +498,17 @@
       "darlal-switcher-plus:Open Symbols for the active editor": true,
       "command-palette:打开命令面板": true,
       "daily-notes:打开/创建今天的日记": false,
-      "obsidian-excalidraw-plugin:新建绘图文件": false
+      "obsidian-excalidraw-plugin:新建绘图文件": false,
+      "periodic-notes:Open today": false
     }
   },
-  "active": "dc5e796f3817071b",
+  "active": "ca23415da04e681a",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/10句型/被动态.md",
     "语言学习/德语/公共知识语法/副词.md",
+    "语言学习/德语/公共知识语法/2动词/第二分词.md",
+    "语言学习/德语/公共知识语法/2动词/汇总所有动词变化.md",
+    "语言学习/德语/公共知识语法/时态/动词的过去时.md",
     "思想思维心理哲学/反内卷、反焦虑的生命视角.md",
     "语言学习/德语/公共知识语法/时态/时态介绍总结.md",
     "语言学习/德语/公共知识语法/从句.md",
@@ -495,13 +529,9 @@
     "语言学习/德语/公共知识语法/时态/第一将来时, 第二将来时.md",
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/1名词/记忆词性技巧缩减版本.md",
-    "语言学习/德语/公共知识语法/2动词/第二分词.md",
     "语言学习/德语/公共知识语法/其他句式.md",
     "语言学习/德语/单词/A1 1 问候与告别.md",
     "语言学习/德语/公共知识语法/0格/第二格.md",
-    "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
-    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
-    "语言学习/德语/公共知识语法/时态/动词的过去时.md",
     "assets/PixPin_2026-06-25_19-58-43-1.png",
     "assets/PixPin_2026-06-25_19-58-43.png",
     "农业",
