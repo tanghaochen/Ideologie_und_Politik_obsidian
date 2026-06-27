@@ -136,22 +136,7 @@
             }
           },
           {
-            "id": "dc5e796f3817071b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/副词.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "副词"
-            }
-          },
-          {
-            "id": "bba04e97590d9565",
+            "id": "ade446ff7eebc1cf",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -164,74 +149,9 @@
               "icon": "lucide-file",
               "title": "前置定语、后置定语以及扩展的分词定语"
             }
-          },
-          {
-            "id": "6e97a1afbff9af28",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/形容词.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "形容词"
-            }
-          },
-          {
-            "id": "4912e906e30e59e0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/时态/现在时.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "现在时"
-            }
-          },
-          {
-            "id": "87e32949d9647966",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "背单词-数量与范围频率可能性确定性程度必要性重要性"
-            }
-          },
-          {
-            "id": "7eb86337b96ccd4e",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/介词.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "介词"
-            }
-          },
-          {
-            "id": "5020aaaf9601f734",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/时态.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "时态"
-            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -458,7 +378,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/34 时间相关.md"
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/前置定语、后置定语以及扩展的分词定语.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -503,9 +423,12 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "0368f2f35e5f1d79",
+  "active": "ade446ff7eebc1cf",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/时态/第一将来时, 第二将来时.md",
+    "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
+    "语言学习/德语/公共知识语法/2动词/阳性弱变化动词.md",
+    "语言学习/德语/柏林广场视频笔记/A1/34 时间相关.md",
     "语言学习/德语/公共知识语法/10句型/被动态.md",
     "语言学习/德语/公共知识语法/副词.md",
     "语言学习/德语/公共知识语法/2动词/第二分词.md",
@@ -516,7 +439,6 @@
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/单词/生词/2026年6月.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/前置定语、后置定语以及扩展的分词定语.md",
-    "语言学习/德语/柏林广场视频笔记/A1/34 时间相关.md",
     "语言学习/德语/柏林广场视频笔记/A1/22 冠词.md",
     "语言学习/德语/公共知识语法/同位语.md",
     "assets/PixPin_2026-06-26_19-58-09.png",
@@ -531,8 +453,6 @@
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/1名词/记忆词性技巧缩减版本.md",
     "语言学习/德语/公共知识语法/其他句式.md",
-    "语言学习/德语/单词/A1 1 问候与告别.md",
-    "语言学习/德语/公共知识语法/0格/第二格.md",
     "assets/PixPin_2026-06-25_19-58-43-1.png",
     "assets/PixPin_2026-06-25_19-58-43.png",
     "农业",
