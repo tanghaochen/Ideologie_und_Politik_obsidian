@@ -1564,8 +1564,8 @@
         "text": "聚光灯死死地打在**“承受动作的人/物”**或者**“动作本身”上！",
         "tags": [],
         "line": 256,
-        "startOffset": 7858,
-        "endOffset": 7921,
+        "startOffset": 7844,
+        "endOffset": 7907,
         "filePath": "语言学习/德语/公共知识语法/10句型/被动态.md",
         "footnoteCount": 0,
         "footnoteContents": [],
@@ -1579,8 +1579,8 @@
         "text": "当动作本身就是全部的焦点",
         "tags": [],
         "line": 288,
-        "startOffset": 9010,
-        "endOffset": 9051,
+        "startOffset": 8996,
+        "endOffset": 9037,
         "filePath": "语言学习/德语/公共知识语法/10句型/被动态.md",
         "footnoteCount": 0,
         "footnoteContents": [],
@@ -1594,8 +1594,8 @@
         "text": "礼貌、委婉或者推卸责任",
         "tags": [],
         "line": 300,
-        "startOffset": 9435,
-        "endOffset": 9475,
+        "startOffset": 9421,
+        "endOffset": 9461,
         "filePath": "语言学习/德语/公共知识语法/10句型/被动态.md",
         "footnoteCount": 0,
         "footnoteContents": [],
@@ -3162,23 +3162,6 @@
         "type": "html"
       }
     ],
-    "语言学习/德语/公共知识语法/2动词/情态动词表可能性.md": [
-      {
-        "id": "t1fzq7rti",
-        "text": "动词原形",
-        "tags": [],
-        "line": 6,
-        "startOffset": 167,
-        "endOffset": 200,
-        "filePath": "语言学习/德语/公共知识语法/2动词/情态动词表可能性.md",
-        "footnoteCount": 0,
-        "footnoteContents": [],
-        "createdAt": 1781700676480,
-        "isNativeComment": false,
-        "color": "#d83931",
-        "type": "html"
-      }
-    ],
     "语言学习/德语/公共知识语法/时态/动词的过去时.md": [],
     "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md": [
       {
@@ -3209,6 +3192,23 @@
         "footnoteCount": 0,
         "footnoteContents": [],
         "createdAt": 1782292296372,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
+    ],
+    "语言学习/德语/公共知识语法/2动词/情态动词.md": [
+      {
+        "id": "t1fzq7rti",
+        "text": "动词原形",
+        "tags": [],
+        "line": 125,
+        "startOffset": 5470,
+        "endOffset": 5503,
+        "filePath": "语言学习/德语/公共知识语法/2动词/情态动词.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1781700676480,
         "isNativeComment": false,
         "color": "#d83931",
         "type": "html"
