@@ -9,6 +9,48 @@
         "dimension": 49.4148244473342,
         "children": [
           {
+            "id": "351168fddad9a60d",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/时态.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "时态"
+            }
+          },
+          {
+            "id": "da7530de518f0556",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/2动词/阳性弱变化动词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "阳性弱变化动词"
+            }
+          },
+          {
+            "id": "e57662ca1cf97bf8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/2动词/第二分词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "第二分词"
+            }
+          },
+          {
             "id": "fc67e589d59bd4df",
             "type": "leaf",
             "state": {
@@ -85,13 +127,29 @@
               "title": "被动态"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       },
       {
         "id": "66514ff393b45104",
         "type": "tabs",
         "dimension": 50.585175552665795,
         "children": [
+          {
+            "id": "1d5b1bf117cd0102",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/代词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "冠词类限定词（Artikelwörter）及其形容词词尾变化"
+            }
+          },
           {
             "id": "7bc168e747a17151",
             "type": "leaf",
@@ -138,9 +196,21 @@
               "icon": "lucide-file",
               "title": "各种主义"
             }
+          },
+          {
+            "id": "5930caa52644d2fa",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/动词.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "动词"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -367,7 +437,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md"
+                "file": "语言学习/德语/公共知识语法/2动词/第二分词.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -412,8 +482,15 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "fc67e589d59bd4df",
+  "active": "e57662ca1cf97bf8",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/时态.md",
+    "语言学习/德语/公共知识语法/形容词.md",
+    "语言学习/德语/公共知识语法/动词.md",
+    "语言学习/德语/公共知识语法/2动词/第二分词.md",
+    "语言学习/德语/公共知识语法/2动词/阳性弱变化动词.md",
+    "语言学习/德语/公共知识语法/10句型/代词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
+    "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
     "语言学习/德语/单词/生词/2026年6月.md",
     "语言学习/德语/公共知识语法/10句型/第二虚拟式.md",
     "语言学习/德语/公共知识语法/2动词/汇总所有动词变化.md",
@@ -428,19 +505,12 @@
     "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
     "农业/农资产品使用介绍.md",
     "语言学习/德语/公共知识语法/时态/时态介绍总结.md",
-    "语言学习/德语/公共知识语法/时态.md",
     "语言学习/德语/公共知识语法/10句型/被动态.md",
-    "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
-    "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/公共知识语法/2动词/系动词.md",
     "语言学习/德语/公共知识语法/从句.md",
     "电脑、软件、系统/ps-tang.md",
     "思想思维心理哲学/修仙映射现实/凡人修仙 修仙与现实.md",
     "思想思维心理哲学/修仙映射现实",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-    "语言学习/德语/公共知识语法/2动词/动词变名词化.md",
-    "经济学/术语/PSR; Price-to-Sales Ratio; 市销率.md",
-    "思想思维心理哲学/个人问题处理/PUBG戒毒.md",
     "assets/PixPin_2026-06-26_19-58-09.png",
     "assets/PixPin_2026-05-21_17-21-00.png",
     "assets/PixPin_2026-06-25_19-58-43-1.png",

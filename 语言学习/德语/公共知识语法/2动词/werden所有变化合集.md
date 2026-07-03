@@ -31,14 +31,14 @@ aliases:
 
 _绝对不能漏掉的重头戏！它专门用于转述别人的话（Indirekte Rede）。_
 
-|**人称**|**K1: 表达当下 (Gegenwart)(对应直陈式的 Präsens)**|**K1: 表达过去 (Vergangenheit)(对应直陈式的 Perfekt/Präteritum)**|**K1: 表达将来 (Zukunft)(对应直陈式的 Futur I)**|
-|---|---|---|---|
-|**ich**|werde|sei geworden|werde werden|
-|**du**|**werdest**|**seiest** geworden|**werdest** werden|
-|**er/sie/es**|**werde**|**sei** geworden|**werde** werden|
-|**wir**|werden|seien geworden|werden werden|
-|**ihr**|**werdet**|**seiet** geworden|**werdet** werden|
-|**sie/Sie**|werden|seien geworden|werden werden|
+| **人称**        | **K1: 表达当下 (Gegenwart)(对应直陈式的 Präsens)** | **K1: 表达过去 (Vergangenheit)(对应直陈式的 Perfekt/Präteritum)** | **K1: 表达将来 (Zukunft)(对应直陈式的 Futur I)** |
+| ------------- | ---------------------------------------- | ------------------------------------------------------- | -------------------------------------- |
+| **ich**       | werde                                    | sei geworden                                            | werde werden                           |
+| **du**        | **werdest**                              | **seiest** geworden                                     | **werdest** werden                     |
+| **er/sie/es** | **werde**                                | **sei** geworden                                        | **werde** werden                       |
+| **wir**       | werden                                   | seien geworden                                          | werden werden                          |
+| **ihr**       | **werdet**                               | **seiet** geworden                                      | **werdet** werden                      |
+| **sie/Sie**   | werden                                   | seien geworden                                          | werden werden                          |
 
 #### 3. 第二虚拟式 (Konjunktiv II) —— “非真实假设”与“委婉客气”
 
