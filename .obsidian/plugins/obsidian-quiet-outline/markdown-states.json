@@ -2573,16 +2573,14 @@
     "cursor": {
       "from": {
         "line": 0,
-        "ch": 60
+        "ch": 0
       },
       "to": {
         "line": 0,
-        "ch": 67
+        "ch": 0
       }
     },
-    "expandedKeys": [
-      "item-2-1"
-    ]
+    "expandedKeys": []
   },
   "思想思维心理哲学/个人问题处理/是否要回家.md": {
     "scroll": 37.828787978232334,
@@ -12646,15 +12644,15 @@
     ]
   },
   "语言学习/德语/公共知识语法/10句型/第一分词作定语.md": {
-    "scroll": 5.976875243067726,
+    "scroll": 23.484226106660262,
     "cursor": {
       "from": {
-        "line": 6,
-        "ch": 0
+        "line": 27,
+        "ch": 13
       },
       "to": {
-        "line": 6,
-        "ch": 0
+        "line": 27,
+        "ch": 13
       }
     },
     "expandedKeys": [
@@ -15705,6 +15703,41 @@
       "item-2-9",
       "item-2-13",
       "item-2-16"
+    ]
+  },
+  "思想思维心理哲学/个人问题处理/优绩主义.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 6
+      },
+      "to": {
+        "line": 0,
+        "ch": 2
+      }
+    },
+    "expandedKeys": [
+      "item-2-1",
+      "item-1-7",
+      "item-2-10",
+      "item-1-14"
+    ]
+  },
+  "思想思维心理哲学/个人问题处理/各种主义.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 6
+      },
+      "to": {
+        "line": 0,
+        "ch": 6
+      }
+    },
+    "expandedKeys": [
+      "item-1-0"
     ]
   }
 }
