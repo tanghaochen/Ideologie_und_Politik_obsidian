@@ -7,7 +7,7 @@ aliases:
   - würde
 ---
 
-# werden 所有变化合集
+# werden 所有变化 . 用法： [[语言学习/德语/公共知识语法/动词.md#^lwYndODE|100%]]
 
 ^0ynl3x
 
