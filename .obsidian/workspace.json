@@ -61,13 +61,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/时态/现在时.md",
+                "file": "语言学习/德语/公共知识语法/时态/动词现在时.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "现在时"
+              "title": "动词现在时"
             }
           }
         ],
@@ -381,7 +381,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/时态/现在时.md"
+                "file": "语言学习/德语/公共知识语法/时态/动词现在时.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -429,6 +429,9 @@
   "active": "dbf323179c8b69e7",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/动词.md",
+    "语言学习/德语/公共知识语法/时态/动词现在时.md",
+    "assets/PixPin_2026-07-04_10-29-13-1.png",
+    "assets/PixPin_2026-07-04_10-29-13.png",
     "语言学习/德语/公共知识语法/2动词/第二分词;过去分词.md",
     "语言学习/德语/公共知识语法/时态/动词的过去时.md",
     "语言学习/德语/柏林广场视频笔记/A2/116 过去式 时态.md",
@@ -453,7 +456,6 @@
     "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
     "语言学习/德语/公共知识语法/10句型/zu的不定式.md",
     "思想思维心理哲学/个人问题处理/各种主义.md",
-    "思想思维心理哲学/个人问题处理/优绩主义.md",
     "思想思维心理哲学/修仙映射现实",
     "assets/PixPin_2026-06-26_19-58-09.png",
     "assets/PixPin_2026-05-21_17-21-00.png",
@@ -465,12 +467,10 @@
     "assets/PixPin_2026-06-21_21-19-09-2.png",
     "assets/PixPin_2026-06-21_21-19-09-1.png",
     "assets/PixPin_2026-06-21_21-19-09.png",
-    "assets/Pasted Image 20260621190210_120.png",
     "OBSetting/templater",
     "OBSetting",
     "语言学习/德语/单词/生词",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
-    "assets/image-355.png",
     "语言学习/德语/教材/其他/标准德语语法：精解与练习B2-C1.pdf",
     "语言学习/德语/教材/其他/德语语法表解.pdf",
     "网络/Excalidraw2URI.js",
