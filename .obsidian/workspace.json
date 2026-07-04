@@ -208,8 +208,7 @@
               "title": "动词"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -436,7 +435,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/被动态.md"
+                "file": "语言学习/德语/公共知识语法/时态.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -481,10 +480,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "31e8b31b8a8793ef",
+  "active": "8cf267aca4ec0f07",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/时态.md",
     "语言学习/德语/公共知识语法/10句型/被动态.md",
+    "语言学习/德语/公共知识语法/时态.md",
     "assets/image-356.png",
     "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
     "语言学习/德语/公共知识语法/2动词/系动词.md",
