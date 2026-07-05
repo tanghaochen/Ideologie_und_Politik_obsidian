@@ -297,5 +297,11 @@
     }
   ],
   "obsidian-editor-shortcuts:deleteLine": [],
-  "switcher:open": []
+  "switcher:open": [],
+  "workspace:toggle-pin": [
+    {
+      "modifiers": [],
+      "key": "F12"
+    }
+  ]
 }
