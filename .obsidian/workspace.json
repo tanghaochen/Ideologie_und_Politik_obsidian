@@ -6,7 +6,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 49.4148244473342,
+        "dimension": 87.85310734463276,
         "children": [
           {
             "id": "814bf3e4edd62ad4",
@@ -46,13 +46,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/时态/动词现在时.md",
+                "file": "语言学习/德语/公共知识语法/10句型/被动态.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "动词现在时"
+              "title": "被动态"
             }
           },
           {
@@ -76,7 +76,7 @@
       {
         "id": "66514ff393b45104",
         "type": "tabs",
-        "dimension": 50.585175552665795,
+        "dimension": 12.146892655367232,
         "children": [
           {
             "id": "8cf267aca4ec0f07",
@@ -407,7 +407,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/时态/动词现在时.md"
+                "file": "语言学习/德语/公共知识语法/10句型/被动态.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -454,10 +454,10 @@
   },
   "active": "9a1703fc0b0e93d4",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/时态/动词现在时.md",
     "语言学习/德语/公共知识语法/2动词/lassen.md",
     "语言学习/德语/公共知识语法/10句型/zu的不定式.md",
     "语言学习/德语/公共知识语法/10句型/被动态.md",
-    "语言学习/德语/公共知识语法/时态/动词现在时.md",
     "语言学习/德语/公共知识语法/1词/名词化.md",
     "语言学习/德语/公共知识语法/2动词/第二分词;过去分词.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
