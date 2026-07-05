@@ -3082,22 +3082,7 @@
         "type": "html"
       }
     ],
-    "语言学习/德语/公共知识语法/3形容词/形容词名词化.md": [
-      {
-        "id": "fv8e2fp6d",
-        "text": "_Das Programmieren_",
-        "tags": [],
-        "line": 223,
-        "startOffset": 6908,
-        "endOffset": 6931,
-        "filePath": "语言学习/德语/公共知识语法/3形容词/形容词名词化.md",
-        "footnoteCount": 0,
-        "footnoteContents": [],
-        "createdAt": 1775312814306,
-        "isNativeComment": false,
-        "type": "highlight"
-      }
-    ],
+    "语言学习/德语/公共知识语法/3形容词/形容词名词化.md": [],
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md": [],
     "语言学习/德语/公共知识语法/副词.md": [
       {
@@ -3231,6 +3216,22 @@
         "isNativeComment": false,
         "color": "#d83931",
         "type": "html"
+      }
+    ],
+    "语言学习/德语/公共知识语法/2动词/动词变名词化.md": [
+      {
+        "id": "pvjzytzm9",
+        "text": "_Das Programmieren_",
+        "tags": [],
+        "line": 53,
+        "startOffset": 1358,
+        "endOffset": 1381,
+        "filePath": "语言学习/德语/公共知识语法/2动词/动词变名词化.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1783234733567,
+        "isNativeComment": false,
+        "type": "highlight"
       }
     ]
   },

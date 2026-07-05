@@ -156,9 +156,20 @@
               "icon": "lucide-file",
               "title": "第一分词作定语"
             }
+          },
+          {
+            "id": "7f56e0dfe9172552",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/形容词.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "形容词"
+            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -385,7 +396,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/3形容词/形容词名词化.md"
+                "file": "语言学习/德语/公共知识语法/1词/名词化.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -430,8 +441,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "c8dcf7b97ab6a16c",
+  "active": "3bf19f32f56d95c8",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/2动词/动词变名词化.md",
+    "语言学习/德语/公共知识语法/3形容词/形容词名词化.md",
+    "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/公共知识语法/1词/名词化.md",
     "语言学习/德语/学习记录日记-技巧/Autobiogragie und Tagebuch/Meine Familienzusammensetzung.md",
     "语言学习/德语/公共知识语法/0格/第二格.md",
@@ -456,11 +470,8 @@
     "语言学习/德语/公共知识语法/2动词/werden.md",
     "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
-    "语言学习/德语/公共知识语法/时态/时态介绍总结.md",
     "assets/PixPin_2026-07-04_10-29-13-1.png",
     "assets/PixPin_2026-07-04_10-29-13.png",
-    "语言学习/德语/柏林广场视频笔记/A2/116 过去式 时态.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "思想思维心理哲学/修仙映射现实",
     "assets/PixPin_2026-06-26_19-58-09.png",
     "assets/PixPin_2026-05-21_17-21-00.png",
