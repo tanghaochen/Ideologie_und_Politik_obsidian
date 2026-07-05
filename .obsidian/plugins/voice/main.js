@@ -6197,6 +6197,10 @@ var DEFAULT_SETTINGS = {
   rewindSeconds: DEFAULT_SKIP_SECONDS,
   forwardSeconds: DEFAULT_SKIP_SECONDS,
   folderSelectorFollowsNote: true,
+  playNoteSavedAudio: true,
+  defaultAudioFolder: "",
+  favoriteAudioFolders: [],
+  audioFolderMigrated: false,
   acronymDefaultMigrated: false,
   playerPanePlaced: false,
   lastWhatsNewVersion: ""
@@ -12030,6 +12034,9 @@ var BaseSpeechService = class {
     // How many seconds the rewind / fast-forward controls jump
     this.rewindSeconds = DEFAULT_SKIP_SECONDS;
     this.forwardSeconds = DEFAULT_SKIP_SECONDS;
+    // Last reported synthesis progress (0..1), exposed via getProgress() for
+    // pollers such as the Voice player's loading bar.
+    this.lastProgress = 0;
     this.voice = voice;
     this.speed = speed || 1;
     this.audio = new Audio();
@@ -12174,6 +12181,7 @@ var BaseSpeechService = class {
     const requestId = `req_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
     this.currentRequestId = requestId;
     this.abortController = new AbortController();
+    this.lastProgress = 0;
     return requestId;
   }
   isCurrentRequest(requestId) {
@@ -12219,10 +12227,14 @@ var BaseSpeechService = class {
     this.errorCallback = callback;
   }
   reportProgress(current, total) {
+    const progress = total > 0 ? current / total : 0;
+    this.lastProgress = Math.min(1, Math.max(0, progress));
     if (this.progressCallback) {
-      const progress = total > 0 ? current / total : 0;
-      this.progressCallback(Math.min(1, Math.max(0, progress)));
+      this.progressCallback(this.lastProgress);
     }
+  }
+  getProgress() {
+    return this.lastProgress;
   }
   reportError(error) {
     if (this.errorCallback) {
@@ -13034,21 +13046,81 @@ var GoogleTtsService = class extends BaseSpeechService {
 
 // src/service/AzureSpeechService.ts
 var import_obsidian3 = require("obsidian");
+
+// src/service/voiceCatalog.ts
+function mapAzureVoices(raw) {
+  if (!Array.isArray(raw)) {
+    return [];
+  }
+  const seen = /* @__PURE__ */ new Set();
+  const voices = [];
+  for (const entry of raw) {
+    const id = entry == null ? void 0 : entry.ShortName;
+    const locale = entry == null ? void 0 : entry.Locale;
+    if (!id || !locale || entry.VoiceType !== "Neural" || seen.has(id)) {
+      continue;
+    }
+    seen.add(id);
+    const name = entry.DisplayName || entry.LocalName || id;
+    const gender = entry.Gender ? ` (${entry.Gender})` : "";
+    voices.push({
+      id,
+      label: `${name}${gender}`,
+      lang: locale,
+      group: entry.LocaleName || void 0
+    });
+  }
+  return voices;
+}
+function localeDisplayName(locale) {
+  var _a3;
+  try {
+    const dn = new Intl.DisplayNames(["en"], { type: "language" });
+    return (_a3 = dn.of(locale)) != null ? _a3 : locale;
+  } catch (e2) {
+    return locale;
+  }
+}
+function groupVoicesByLanguage(voices) {
+  const collator = new Intl.Collator(void 0, {
+    numeric: true,
+    sensitivity: "base"
+  });
+  const groups = /* @__PURE__ */ new Map();
+  for (const voice of voices) {
+    const label = voice.group && voice.group.trim() ? voice.group : localeDisplayName(voice.lang);
+    const bucket = groups.get(label);
+    if (bucket) {
+      bucket.push(voice);
+    } else {
+      groups.set(label, [voice]);
+    }
+  }
+  return [...groups.entries()].map(([label, vs]) => ({
+    label,
+    voices: vs.slice().sort((a2, b2) => collator.compare(a2.label, b2.label))
+  })).sort((a2, b2) => collator.compare(a2.label, b2.label));
+}
+
+// src/service/AzureSpeechService.ts
 var OUTPUT_FORMAT2 = "audio-24khz-48kbitrate-mono-mp3";
 var MAX_SSML_CHUNK_CHARS2 = 2500;
 var AzureSpeechService = class extends BaseSpeechService {
-  constructor(apiKey, region, voice, speed) {
+  constructor(apiKey, region, voice, speed, voiceCatalog) {
     super(voice, speed);
     this.inputFormat = "ssml";
     this.apiKey = apiKey;
     this.region = region;
+    this.dynamicVoices = voiceCatalog && voiceCatalog.length > 0 ? voiceCatalog : null;
   }
   getVoiceOptions() {
-    return AZURE_VOICES;
+    var _a3;
+    return (_a3 = this.dynamicVoices) != null ? _a3 : AZURE_VOICES;
   }
   updateCredentials(settings) {
     this.apiKey = settings.AZURE_API_KEY;
     this.region = settings.AZURE_REGION;
+    this.dynamicVoices = settings.azureVoiceCatalog && settings.azureVoiceCatalog.length > 0 ? settings.azureVoiceCatalog : null;
   }
   /**
    * Synthesize and play SSML via Azure AI Speech.
@@ -13147,7 +13219,6 @@ var AzureSpeechService = class extends BaseSpeechService {
    * Validate the key + region by listing voices.
    */
   async validateCredentials() {
-    var _a3;
     if (!this.apiKey || !this.region) {
       return {
         isValid: false,
@@ -13162,10 +13233,11 @@ var AzureSpeechService = class extends BaseSpeechService {
         throw: false
       });
       if (response.status === 200) {
-        const voices = (_a3 = response.json) != null ? _a3 : [];
+        const mapped = mapAzureVoices(response.json);
         return {
           isValid: true,
-          voiceCount: Array.isArray(voices) ? voices.length : void 0
+          voiceCount: mapped.length,
+          voices: mapped
         };
       }
       if (response.status === 401 || response.status === 403) {
@@ -13421,7 +13493,8 @@ function createSpeechProvider(settings) {
       settings.AZURE_API_KEY,
       settings.AZURE_REGION,
       settings.AZURE_VOICE,
-      Number(settings.SPEED)
+      Number(settings.SPEED),
+      settings.azureVoiceCatalog
     );
   } else if (settings.TTS_PROVIDER === "openai") {
     provider = new OpenAiSpeechService(
@@ -13454,22 +13527,6 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
     super(app, plugin);
     this.plugin = plugin;
   }
-  formatSpeedText(speed) {
-    if (speed === 1) {
-      return "normal";
-    } else if (speed > 1) {
-      const percentage = Math.round((speed - 1) * 100);
-      return `${percentage}% faster`;
-    } else {
-      const percentage = Math.round((1 - speed) * 100);
-      return `${percentage}% slower`;
-    }
-  }
-  /** Human-readable tempo label, e.g. "1.0× · normal" or "1.3× · 30% faster". */
-  formatTempoValue(speed) {
-    const rounded = Math.round(speed * 10) / 10;
-    return `${rounded.toFixed(1)}\xD7 \xB7 ${this.formatSpeedText(rounded)}`;
-  }
   /** Seconds label, e.g. "3s". */
   formatSecondsValue(seconds) {
     return `${seconds}s`;
@@ -13480,23 +13537,14 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
     valueEl.setText(text5);
     return valueEl;
   }
-  addSliderDirectionalIndicators(sliderEl) {
-    const sliderContainer = sliderEl.parentElement;
-    if (!sliderContainer) return;
-    const sliderWrapper = sliderContainer.createDiv({
-      cls: "voice-slider-wrapper"
-    });
-    const leftIndicator = sliderWrapper.createSpan({
-      cls: "voice-slider-indicator left"
-    });
-    leftIndicator.textContent = "\u2212 slower";
-    leftIndicator.title = "Move left to decrease speed (slower playback)";
-    sliderWrapper.appendChild(sliderEl);
-    const rightIndicator = sliderWrapper.createSpan({
-      cls: "voice-slider-indicator right"
-    });
-    rightIndicator.textContent = "faster +";
-    rightIndicator.title = "Move right to increase speed (faster playback)";
+  /**
+   * Platform-aware, read-only description for the "Save location" info row. It
+   * states where MP3s currently go and how to pick a default folder.
+   */
+  audioSaveLocationDesc() {
+    const hold = this.plugin.isMobile() ? "touch & hold" : "hold (or right-click)";
+    const current = this.plugin.settings.defaultAudioFolder.trim() === "" ? "MP3s are saved next to the note." : `MP3s are saved to \u201C${this.plugin.settings.defaultAudioFolder}\u201D.`;
+    return `${current} To set a default folder, ${hold} the save button to open the folder picker, then tap the pin on a folder (tap it again to clear).`;
   }
   display() {
     const { containerEl } = this;
@@ -13511,41 +13559,7 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
         this.display();
       });
     });
-    const provider = this.plugin.getSpeechProvider();
-    new import_obsidian5.Setting(containerEl).setName("Voice").setDesc(
-      "Choose a voice tone, gender, and language for a personalized audio experience."
-    ).addDropdown((dropdown) => {
-      provider.getVoiceOptions().forEach((voice) => {
-        dropdown.addOption(voice.id, voice.label);
-      });
-      dropdown.setValue(provider.getVoice()).onChange(async (value2) => {
-        await this.plugin.persistActiveVoice(value2);
-      });
-    });
-    const tempoSetting = new import_obsidian5.Setting(containerEl).setName("Tempo").setDesc(
-      "Set a preferred reading tempo for pleasant and comfortable audio playback."
-    );
-    let tempoValueEl;
-    tempoSetting.addSlider(
-      (slider) => slider.setLimits(0.5, 1.9, 0.1).setValue(
-        this.plugin.settings.SPEED || this.plugin.getSpeechProvider().getSpeed()
-      ).onChange(async (value2) => {
-        const roundedValue = Math.round(value2 * 10) / 10;
-        this.plugin.settings.SPEED = roundedValue;
-        await this.plugin.saveSettings();
-        this.plugin.getSpeechProvider().setSpeed(roundedValue);
-        this.plugin.iconEventHandler.updateSpeedDisplayFromSettings();
-        tempoValueEl.setText(this.formatTempoValue(roundedValue));
-      }).then((slider2) => {
-        this.addSliderDirectionalIndicators(slider2.sliderEl);
-      })
-    );
-    tempoValueEl = this.appendSliderValue(
-      tempoSetting,
-      this.formatTempoValue(
-        this.plugin.settings.SPEED || this.plugin.getSpeechProvider().getSpeed()
-      )
-    );
+    new import_obsidian5.Setting(containerEl).setName("Playback").setHeading();
     const rewindSetting = new import_obsidian5.Setting(containerEl).setName("Rewind interval").setDesc(
       `How many seconds the rewind control jumps back (${MIN_SKIP_SECONDS}\u2013${MAX_SKIP_SECONDS}s).`
     );
@@ -13578,51 +13592,25 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
       forwardSetting,
       this.formatSecondsValue(this.plugin.settings.forwardSeconds)
     );
-    new import_obsidian5.Setting(containerEl).setName("Spell Out Acronyms").setDesc(
-      "When enabled, uppercase words like NASA or API are spelled out letter by letter. Disable this if you want uppercase words to be pronounced normally. (Applies to AWS Polly.)"
-    ).addToggle(
-      (toggle) => toggle.setValue(this.plugin.settings.spellOutAcronyms).onChange(async (value2) => {
-        this.plugin.settings.spellOutAcronyms = value2;
-        await this.plugin.saveSettings();
-        this.plugin.reinitializeTextSpeaker();
-      })
-    );
-    new import_obsidian5.Setting(containerEl).setName("Read Code Blocks").setDesc(
-      "When enabled, fenced code blocks (such as Mermaid, YAML, or other code) are read aloud. Disable this to skip code blocks and announce them as a short placeholder instead."
-    ).addToggle(
-      (toggle) => toggle.setValue(this.plugin.settings.readCodeBlocks).onChange(async (value2) => {
-        this.plugin.settings.readCodeBlocks = value2;
-        await this.plugin.saveSettings();
-        this.plugin.reinitializeTextSpeaker();
-      })
-    );
-    new import_obsidian5.Setting(containerEl).setName("Skip Website URLs").setDesc(
-      "When enabled, website URLs (such as https://example.com or www.example.com) are removed and not read aloud. Disabled by default."
-    ).addToggle(
-      (toggle) => toggle.setValue(this.plugin.settings.skipUrls).onChange(async (value2) => {
-        this.plugin.settings.skipUrls = value2;
-        await this.plugin.saveSettings();
-        this.plugin.reinitializeTextSpeaker();
-      })
-    );
-    new import_obsidian5.Setting(containerEl).setName("Auto-Save Audio to Note").setDesc(
-      "When enabled, the generated MP3 is automatically saved next to the note after each successful playback\u2014no need to press the download button. Disabled by default."
-    ).addToggle(
+    new import_obsidian5.Setting(containerEl).setName("Saving audio").setHeading();
+    new import_obsidian5.Setting(containerEl).setName("Save location").setDesc(this.audioSaveLocationDesc());
+    new import_obsidian5.Setting(containerEl).setName("Save automatically").setDesc("Save the MP3 after each playback, without pressing save.").addToggle(
       (toggle) => toggle.setValue(this.plugin.settings.autoDownloadAudio).onChange(async (value2) => {
         this.plugin.settings.autoDownloadAudio = value2;
         await this.plugin.saveSettings();
       })
     );
-    new import_obsidian5.Setting(containerEl).setName("Embed Audio in Note").setDesc(
-      "When enabled, saving an MP3 also inserts an audio embed in the note. This applies to both the download button and auto-save. Turn it off to download the MP3 without embedding it. Enabled by default."
+    new import_obsidian5.Setting(containerEl).setName("Player").setHeading();
+    new import_obsidian5.Setting(containerEl).setName("Play the note's saved audio").setDesc(
+      "When you press play, load the MP3 already saved for the note you're viewing (matched by name) instead of re-generating it \u2014 even if another chapter is loaded. Off keeps the loaded chapter playing and always re-generates notes."
     ).addToggle(
-      (toggle) => toggle.setValue(this.plugin.settings.autoEmbedAudio).onChange(async (value2) => {
-        this.plugin.settings.autoEmbedAudio = value2;
+      (toggle) => toggle.setValue(this.plugin.settings.playNoteSavedAudio).onChange(async (value2) => {
+        this.plugin.settings.playNoteSavedAudio = value2;
         await this.plugin.saveSettings();
       })
     );
-    new import_obsidian5.Setting(containerEl).setName("Folder Picker Follows Active Note").setDesc(
-      "When enabled, the player's folder picker automatically switches to the folder of the note you are viewing. Disable it to keep the folder you selected in the player when you switch notes. Enabled by default."
+    new import_obsidian5.Setting(containerEl).setName("Folder list follows note").setDesc(
+      "The player's folder list jumps to the current note's folder. Off keeps your chosen folder."
     ).addToggle(
       (toggle) => toggle.setValue(this.plugin.settings.folderSelectorFollowsNote).onChange(async (value2) => {
         this.plugin.settings.folderSelectorFollowsNote = value2;
@@ -13913,6 +13901,12 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
         const tempProvider = createSpeechProvider(this.plugin.settings);
         const result = await tempProvider.validateCredentials();
         if (result.isValid) {
+          if (result.voices && result.voices.length > 0 && this.plugin.settings.TTS_PROVIDER === "azure") {
+            this.plugin.settings.azureVoiceCatalog = result.voices;
+            await this.plugin.saveSettings();
+            this.plugin.reinitializeProviderCredentials();
+            this.plugin.refreshVoicePlayerControls();
+          }
           updateStatus(true, "", false, result.voiceCount);
         } else {
           updateStatus(false, result.error || "Validation failed", false);
@@ -14016,7 +14010,7 @@ var HotkeySettings = class {
 };
 
 // src/utils/VoicePlugin.ts
-var import_obsidian13 = require("obsidian");
+var import_obsidian15 = require("obsidian");
 
 // src/utils/MarkdownHelper.ts
 var import_obsidian6 = require("obsidian");
@@ -14026,28 +14020,32 @@ var MarkdownHelper = class {
   }
   async getMarkdownView() {
     const activeView = this.app.workspace.getActiveViewOfType(import_obsidian6.MarkdownView);
-    let content3 = "";
     if (activeView) {
-      const editor = activeView.editor;
-      const selectedText = editor.getSelection();
-      if (selectedText) {
-        content3 = selectedText;
-      } else {
-        content3 = editor.getValue();
-      }
-      return content3;
+      const selectedText = activeView.editor.getSelection();
+      return {
+        ok: true,
+        text: selectedText ? selectedText : activeView.editor.getValue()
+      };
     }
     const activeFile = this.app.workspace.getActiveFile();
     if (activeFile && activeFile instanceof import_obsidian6.TFile) {
+      const fileView = this.app.workspace.getLeavesOfType("markdown").map((leaf) => leaf.view).find(
+        (view) => view instanceof import_obsidian6.MarkdownView && view.file === activeFile
+      );
+      if (fileView) {
+        const selectedText = fileView.editor.getSelection();
+        if (selectedText) {
+          return { ok: true, text: selectedText };
+        }
+      }
       try {
-        content3 = await this.app.vault.cachedRead(activeFile);
-        return content3;
+        return { ok: true, text: await this.app.vault.cachedRead(activeFile) };
       } catch (error) {
         console.error("Error reading active file:", error);
-        return "Error reading the active file.";
+        return { ok: false, reason: "read-error" };
       }
     }
-    return "No active file found.";
+    return { ok: false, reason: "no-note" };
   }
   getActiveFilePath() {
     const activeFile = this.app.workspace.getActiveFile();
@@ -14056,140 +14054,24 @@ var MarkdownHelper = class {
 };
 
 // src/utils/IconEventHandler.ts
-var import_obsidian10 = require("obsidian");
+var import_obsidian12 = require("obsidian");
 
 // src/utils/MobileControlBar.ts
-var import_obsidian9 = require("obsidian");
-
-// src/utils/AudioFileManager.ts
-var import_obsidian7 = require("obsidian");
-var AudioFileManager = class {
-  constructor(app) {
-    this.app = app;
-  }
-  /**
-   * Save audio blob as MP3 file in the same directory as the active file
-   * @param audioBlob - The audio data to save
-   * @returns The created/modified TFile or null on error
-   */
-  async saveAudioFile(audioBlob) {
-    var _a3;
-    try {
-      const activeFile = this.app.workspace.getActiveFile();
-      if (!activeFile) {
-        new import_obsidian7.Notice("No active file found");
-        return null;
-      }
-      const fileName = activeFile.basename;
-      const fileDir = ((_a3 = activeFile.parent) == null ? void 0 : _a3.path) || "";
-      const audioFileName = `${fileName}.mp3`;
-      const audioFilePath = (0, import_obsidian7.normalizePath)(
-        fileDir ? `${fileDir}/${audioFileName}` : audioFileName
-      );
-      const arrayBuffer = await audioBlob.arrayBuffer();
-      const existingFile = this.app.vault.getAbstractFileByPath(audioFilePath);
-      let audioFile;
-      if (existingFile instanceof import_obsidian7.TFile) {
-        await this.app.vault.modifyBinary(existingFile, arrayBuffer);
-        audioFile = existingFile;
-        new import_obsidian7.Notice(`Updated: ${audioFileName}`);
-      } else {
-        audioFile = await this.app.vault.createBinary(
-          audioFilePath,
-          arrayBuffer
-        );
-        new import_obsidian7.Notice(`Created: ${audioFileName}`);
-      }
-      return audioFile;
-    } catch (error) {
-      console.error("Error saving audio file:", error);
-      new import_obsidian7.Notice(`Error saving audio file: ${error.message}`);
-      return null;
-    }
-  }
-  /**
-   * Insert audio embed tag into the active document
-   * Handles front matter detection and duplicate checking
-   * @param audioFileName - Name of the audio file (without path)
-   */
-  async insertAudioEmbed(audioFileName) {
-    try {
-      const activeFile = this.app.workspace.getActiveFile();
-      if (!activeFile) {
-        new import_obsidian7.Notice("No active file found");
-        return;
-      }
-      const content3 = await this.app.vault.read(activeFile);
-      const embedTag = `![[${audioFileName}]]`;
-      if (content3.includes(embedTag)) {
-        return;
-      }
-      const insertPosition = this.findInsertPosition(content3);
-      const newContent = content3.slice(0, insertPosition) + embedTag + "\n" + content3.slice(insertPosition);
-      await this.app.vault.modify(activeFile, newContent);
-    } catch (error) {
-      console.error("Error inserting audio embed:", error);
-      new import_obsidian7.Notice(`Error inserting audio embed: ${error.message}`);
-    }
-  }
-  /**
-   * Find the correct position to insert audio embed
-   * Returns position after front matter (if exists) or at start
-   * @param content - Document content
-   * @returns Position index where embed should be inserted
-   */
-  findInsertPosition(content3) {
-    const frontMatterRegex = /^---\n([\s\S]*?)\n---\n/;
-    const match = content3.match(frontMatterRegex);
-    if (match) {
-      const frontMatterEnd = match[0].length;
-      return frontMatterEnd;
-    }
-    return 0;
-  }
-  /**
-   * Download audio file and, when requested, insert the embed tag.
-   * @param audioBlob - The audio data to save
-   * @param embed - Whether to also insert the `![[file.mp3]]` embed in the
-   *   note. Defaults to true to preserve the legacy save-and-embed behaviour.
-   */
-  async downloadAndEmbed(audioBlob, embed = true) {
-    try {
-      const activeFile = this.app.workspace.getActiveFile();
-      if (!activeFile) {
-        new import_obsidian7.Notice("No active file found");
-        return;
-      }
-      const fileName = activeFile.basename;
-      const audioFileName = `${fileName}.mp3`;
-      const savedFile = await this.saveAudioFile(audioBlob);
-      if (!savedFile) {
-        return;
-      }
-      if (embed) {
-        await this.insertAudioEmbed(audioFileName);
-      }
-    } catch (error) {
-      console.error("Error in downloadAndEmbed:", error);
-      new import_obsidian7.Notice(`Error downloading audio: ${error.message}`);
-    }
-  }
-};
+var import_obsidian8 = require("obsidian");
 
 // src/ui/VoicePlayerView.ts
-var import_obsidian8 = require("obsidian");
+var import_obsidian7 = require("obsidian");
 
 // src/utils/chapters.ts
 function normalizeFolderPath(path2) {
   return path2 === "" ? "/" : path2;
 }
-function folderDisplayName(path2) {
-  var _a3;
+function folderPathLabel(path2) {
   const normalized = normalizeFolderPath(path2);
   if (normalized === "/") {
     return "/";
   }
-  return (_a3 = normalized.split("/").pop()) != null ? _a3 : normalized;
+  return normalized.split("/").reverse().join(" / ");
 }
 function listMp3Folders(mp3Paths) {
   const folderPaths = /* @__PURE__ */ new Set();
@@ -14198,8 +14080,8 @@ function listMp3Folders(mp3Paths) {
     const folder = slash === -1 ? "/" : path2.slice(0, slash);
     folderPaths.add(normalizeFolderPath(folder));
   }
-  return [...folderPaths].map((path2) => ({ path: path2, name: folderDisplayName(path2) })).sort(
-    (a2, b2) => a2.name.localeCompare(b2.name, void 0, {
+  return [...folderPaths].map((path2) => ({ path: path2, name: folderPathLabel(path2) })).sort(
+    (a2, b2) => a2.path.localeCompare(b2.path, void 0, {
       numeric: true,
       sensitivity: "base"
     })
@@ -14216,6 +14098,185 @@ function listChapters(mp3Paths) {
   ).map((path2) => ({ path: path2, name: chapterName(path2) }));
 }
 
+// src/utils/pressGesture.ts
+var MOVE_CANCEL_THRESHOLD_PX = 10;
+function attachPressGesture(el, handlers) {
+  var _a3;
+  const holdMs = (_a3 = handlers.holdMs) != null ? _a3 : 1500;
+  let pointerId = null;
+  let startX = 0;
+  let startY = 0;
+  let holdFired = false;
+  let moved = false;
+  let rafId = null;
+  let startTime = 0;
+  const holdEnabled = () => handlers.isHoldEnabled ? handlers.isHoldEnabled() : true;
+  const clearVisual = () => {
+    if (rafId !== null) {
+      window.cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+    el.removeClass("voice-pressing");
+    el.style.removeProperty("--press");
+  };
+  const tick = () => {
+    const fraction = Math.min(1, (performance.now() - startTime) / holdMs);
+    el.setCssProps({ "--press": `${fraction}` });
+    if (fraction >= 1) {
+      holdFired = true;
+      clearVisual();
+      handlers.onHold();
+      return;
+    }
+    rafId = window.requestAnimationFrame(tick);
+  };
+  const reset = () => {
+    pointerId = null;
+    clearVisual();
+  };
+  const onPointerDown = (evt) => {
+    if (evt.button !== 0 || pointerId !== null) {
+      return;
+    }
+    pointerId = evt.pointerId;
+    startX = evt.clientX;
+    startY = evt.clientY;
+    holdFired = false;
+    moved = false;
+    if (holdEnabled()) {
+      try {
+        el.setPointerCapture(evt.pointerId);
+      } catch (e2) {
+      }
+      el.addClass("voice-pressing");
+      startTime = performance.now();
+      el.setCssProps({ "--press": "0" });
+      rafId = window.requestAnimationFrame(tick);
+    }
+  };
+  const onPointerMove = (evt) => {
+    if (evt.pointerId !== pointerId) {
+      return;
+    }
+    if (Math.abs(evt.clientX - startX) > MOVE_CANCEL_THRESHOLD_PX || Math.abs(evt.clientY - startY) > MOVE_CANCEL_THRESHOLD_PX) {
+      moved = true;
+      clearVisual();
+    }
+  };
+  const onPointerUp = (evt) => {
+    if (evt.pointerId !== pointerId) {
+      return;
+    }
+    clearVisual();
+    if (!holdFired && !moved) {
+      handlers.onTap();
+    }
+    pointerId = null;
+  };
+  const onPointerCancel = (evt) => {
+    if (evt.pointerId !== pointerId) {
+      return;
+    }
+    reset();
+  };
+  const onClick = (evt) => {
+    if (holdFired) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      holdFired = false;
+    }
+  };
+  const onContextMenu = (evt) => {
+    if (!holdEnabled()) {
+      return;
+    }
+    evt.preventDefault();
+    reset();
+    handlers.onHold();
+  };
+  el.addEventListener("pointerdown", onPointerDown);
+  el.addEventListener("pointermove", onPointerMove);
+  el.addEventListener("pointerup", onPointerUp);
+  el.addEventListener("pointercancel", onPointerCancel);
+  el.addEventListener("click", onClick);
+  el.addEventListener("contextmenu", onContextMenu);
+  return () => {
+    clearVisual();
+    el.removeEventListener("pointerdown", onPointerDown);
+    el.removeEventListener("pointermove", onPointerMove);
+    el.removeEventListener("pointerup", onPointerUp);
+    el.removeEventListener("pointercancel", onPointerCancel);
+    el.removeEventListener("click", onClick);
+    el.removeEventListener("contextmenu", onContextMenu);
+  };
+}
+
+// src/utils/audioFolders.ts
+function resolveSaveFolder(defaultFolder, noteFolder) {
+  if (defaultFolder.trim() !== "") {
+    return normalizeFolderPath(defaultFolder);
+  }
+  return normalizeFolderPath(noteFolder);
+}
+function noteAudioPath(defaultFolder, noteFolder, baseName) {
+  const folder = resolveSaveFolder(defaultFolder, noteFolder);
+  const dir = folder === "/" ? "" : folder;
+  return dir ? `${dir}/${baseName}.mp3` : `${baseName}.mp3`;
+}
+function isDefaultFolder(defaultFolder, path2) {
+  const target = normalizeFolderPath(path2);
+  return defaultFolder.trim() !== "" && normalizeFolderPath(defaultFolder) === target;
+}
+function toggleDefaultFolder(defaultFolder, path2) {
+  return isDefaultFolder(defaultFolder, path2) ? "" : normalizeFolderPath(path2);
+}
+function isFavoriteFolder(favorites, path2) {
+  const target = normalizeFolderPath(path2);
+  return favorites.some((f2) => normalizeFolderPath(f2) === target);
+}
+function toggleFavorite(favorites, path2) {
+  const target = normalizeFolderPath(path2);
+  if (isFavoriteFolder(favorites, path2)) {
+    return favorites.filter((f2) => normalizeFolderPath(f2) !== target);
+  }
+  return [...favorites, target];
+}
+function suggestFreeBaseName(baseName, takenBaseNames) {
+  const taken = new Set(takenBaseNames.map((n) => n.toLowerCase()));
+  if (!taken.has(baseName.toLowerCase())) {
+    return baseName;
+  }
+  let i2 = 1;
+  while (taken.has(`${baseName} ${i2}`.toLowerCase())) {
+    i2++;
+  }
+  return `${baseName} ${i2}`;
+}
+function orderFoldersForPicker(allFolders, favorites, defaultFolder) {
+  const normalizedAll = [...new Set(allFolders.map(normalizeFolderPath))];
+  const def = defaultFolder.trim() !== "" ? normalizeFolderPath(defaultFolder) : null;
+  const favSet = new Set(favorites.map(normalizeFolderPath));
+  const decorate = (path2) => ({
+    path: path2,
+    isFavorite: favSet.has(path2),
+    isDefault: def === path2
+  });
+  const result = [];
+  if (def !== null && normalizedAll.includes(def)) {
+    result.push(decorate(def));
+  }
+  for (const fav of favorites.map(normalizeFolderPath)) {
+    if (normalizedAll.includes(fav) && fav !== def && !result.some((r2) => r2.path === fav)) {
+      result.push(decorate(fav));
+    }
+  }
+  const placed = new Set(result.map((r2) => r2.path));
+  const rest = normalizedAll.filter((p) => !placed.has(p)).sort(
+    (a2, b2) => a2.localeCompare(b2, void 0, { numeric: true, sensitivity: "base" })
+  ).map(decorate);
+  return [...result, ...rest];
+}
+
 // src/ui/VoicePlayerView.ts
 var VIEW_TYPE_VOICE_PLAYER = "voice-player-view";
 var MIN_SPEED = 0.5;
@@ -14227,9 +14288,12 @@ var PROVIDERS = [
   { id: "azure", label: "Azure Speech" },
   { id: "openai", label: "OpenAI" }
 ];
-var VoicePlayerView = class extends import_obsidian8.ItemView {
+var VoicePlayerView = class extends import_obsidian7.ItemView {
   constructor(leaf, plugin) {
     super(leaf);
+    // Tracks which icon the download button currently shows, so we only swap it
+    // when the save target changes (the update poller runs every 250ms).
+    this.downloadShowsSave = false;
     this.isScrubbing = false;
     this.currentChapterPath = null;
     this.chapters = [];
@@ -14239,10 +14303,10 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
     this.selectedFolderPath = null;
     this.repeatMode = "none";
     this.endedHandled = false;
-    // The generated-audio blob that has already been saved via the download
-    // button. Used to disable download once the current audio is saved, while
-    // re-enabling it as soon as a fresh synthesis produces new audio.
-    this.lastDownloadedBlob = null;
+    // The open per-chapter action bar (Move / Rename / Delete) and a disposer for
+    // its outside-click / Escape listeners, if one is currently shown.
+    this.openActionsEl = null;
+    this.chapterActionsCleanup = null;
     this.plugin = plugin;
   }
   getViewType() {
@@ -14304,66 +14368,80 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
       this.isScrubbing = false;
     });
     const transport = root3.createDiv({ cls: "voice-player-transport" });
-    this.prevTrackBtn = transport.createDiv({
+    this.prevTrackBtn = transport.createEl("button", {
       cls: "voice-player-btn voice-player-track",
       attr: { "aria-label": "Previous track" }
     });
-    (0, import_obsidian8.setIcon)(this.prevTrackBtn, "skip-back");
+    (0, import_obsidian7.setIcon)(this.prevTrackBtn, "skip-back");
     this.registerDomEvent(
       this.prevTrackBtn,
       "click",
       () => this.playPrevTrack()
     );
-    const rewindBtn = transport.createDiv({
-      cls: "voice-player-btn voice-player-skip"
+    const rewindBtn = transport.createEl("button", {
+      cls: "voice-player-btn voice-player-skip",
+      attr: { "aria-label": "Rewind" }
     });
-    (0, import_obsidian8.setIcon)(rewindBtn, "rewind");
+    (0, import_obsidian7.setIcon)(rewindBtn, "rewind");
     rewindBtn.createSpan({ cls: "voice-player-skip-label" }).setText(`${this.plugin.settings.rewindSeconds}`);
     this.registerDomEvent(
       rewindBtn,
       "click",
       () => this.provider().rewindAudio()
     );
-    this.playPauseBtn = transport.createDiv({
-      cls: "voice-player-btn voice-player-play"
+    this.playPauseBtn = transport.createEl("button", {
+      cls: "voice-player-btn voice-player-play",
+      attr: {
+        "aria-label": "Tap: play, pause or cancel \xB7 Hold: regenerate from scratch"
+      }
     });
-    (0, import_obsidian8.setIcon)(this.playPauseBtn, "play");
-    this.registerDomEvent(this.playPauseBtn, "click", () => this.togglePlay());
-    const forwardBtn = transport.createDiv({
-      cls: "voice-player-btn voice-player-skip"
+    (0, import_obsidian7.setIcon)(this.playPauseBtn, "play");
+    attachPressGesture(this.playPauseBtn, {
+      onTap: () => this.togglePlay(),
+      onHold: () => this.regenerate()
     });
-    (0, import_obsidian8.setIcon)(forwardBtn, "fast-forward");
+    const forwardBtn = transport.createEl("button", {
+      cls: "voice-player-btn voice-player-skip",
+      attr: { "aria-label": "Fast-forward" }
+    });
+    (0, import_obsidian7.setIcon)(forwardBtn, "fast-forward");
     forwardBtn.createSpan({ cls: "voice-player-skip-label" }).setText(`${this.plugin.settings.forwardSeconds}`);
     this.registerDomEvent(
       forwardBtn,
       "click",
       () => this.provider().fastForwardAudio()
     );
-    this.nextTrackBtn = transport.createDiv({
+    this.nextTrackBtn = transport.createEl("button", {
       cls: "voice-player-btn voice-player-track",
       attr: { "aria-label": "Next track" }
     });
-    (0, import_obsidian8.setIcon)(this.nextTrackBtn, "skip-forward");
+    (0, import_obsidian7.setIcon)(this.nextTrackBtn, "skip-forward");
     this.registerDomEvent(
       this.nextTrackBtn,
       "click",
       () => this.playNextTrack()
     );
     const secondary = root3.createDiv({ cls: "voice-player-secondary" });
-    this.readBtn = secondary.createEl("button", {
-      cls: "voice-player-read",
-      text: "Read this note"
-    });
-    this.registerDomEvent(this.readBtn, "click", () => this.handleReadClick());
     this.downloadBtn = secondary.createEl("button", {
       cls: "voice-player-download",
       attr: { "aria-label": "Download as MP3" }
     });
-    (0, import_obsidian8.setIcon)(this.downloadBtn, "download");
+    (0, import_obsidian7.setIcon)(this.downloadBtn, "download");
+    attachPressGesture(this.downloadBtn, {
+      onTap: () => void this.downloadAudio(),
+      onHold: () => void this.downloadAudio({ forcePicker: true })
+    });
+    this.folderBtn = secondary.createEl("button", {
+      cls: "voice-player-folder-btn",
+      attr: {
+        "aria-label": "Save or move audio to a folder you choose (optionally pin it as your default)"
+      }
+    });
+    (0, import_obsidian7.setIcon)(this.folderBtn, "folder-open");
     this.registerDomEvent(
-      this.downloadBtn,
+      this.folderBtn,
       "click",
-      () => void this.downloadAudio()
+      () => this.saveToCustomFolder()
     );
     this.repeatBtn = secondary.createEl("button", {
       cls: "voice-player-repeat"
@@ -14371,13 +14449,41 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
     this.registerDomEvent(this.repeatBtn, "click", () => this.cycleRepeat());
     this.updateRepeatButton();
     const speedGroup = secondary.createDiv({ cls: "voice-player-speed" });
-    const slower = speedGroup.createDiv({ cls: "voice-player-speed-btn" });
-    (0, import_obsidian8.setIcon)(slower, "minus");
+    const slower = speedGroup.createEl("button", {
+      cls: "voice-player-speed-btn",
+      attr: { "aria-label": "Slower" }
+    });
+    (0, import_obsidian7.setIcon)(slower, "minus");
     this.registerDomEvent(slower, "click", () => this.changeSpeed(-0.1));
     this.speedEl = speedGroup.createSpan({ cls: "voice-player-speed-value" });
-    const faster = speedGroup.createDiv({ cls: "voice-player-speed-btn" });
-    (0, import_obsidian8.setIcon)(faster, "plus");
+    const faster = speedGroup.createEl("button", {
+      cls: "voice-player-speed-btn",
+      attr: { "aria-label": "Faster" }
+    });
+    (0, import_obsidian7.setIcon)(faster, "plus");
     this.registerDomEvent(faster, "click", () => this.changeSpeed(0.1));
+    this.codeBtn = secondary.createEl("button", { cls: "voice-player-toggle" });
+    (0, import_obsidian7.setIcon)(this.codeBtn, "code");
+    this.registerDomEvent(this.codeBtn, "click", () => this.toggleCodeBlocks());
+    this.acronymBtn = secondary.createEl("button", {
+      cls: "voice-player-toggle"
+    });
+    (0, import_obsidian7.setIcon)(this.acronymBtn, "case-sensitive");
+    this.registerDomEvent(
+      this.acronymBtn,
+      "click",
+      () => this.toggleAcronyms()
+    );
+    this.urlBtn = secondary.createEl("button", {
+      cls: "voice-player-toggle"
+    });
+    (0, import_obsidian7.setIcon)(this.urlBtn, "unlink");
+    this.registerDomEvent(this.urlBtn, "click", () => this.toggleSkipUrls());
+    this.embedBtn = secondary.createEl("button", {
+      cls: "voice-player-toggle"
+    });
+    (0, import_obsidian7.setIcon)(this.embedBtn, "paperclip");
+    this.registerDomEvent(this.embedBtn, "click", () => this.toggleEmbed());
     const options = root3.createDiv({ cls: "voice-player-options" });
     this.providerSelect = options.createEl("select", {
       cls: "voice-player-select dropdown",
@@ -14400,11 +14506,6 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
       "change",
       () => this.changeVoice(this.voiceSelect.value)
     );
-    this.codeBtn = options.createEl("button", {
-      cls: "voice-player-code"
-    });
-    (0, import_obsidian8.setIcon)(this.codeBtn, "code");
-    this.registerDomEvent(this.codeBtn, "click", () => this.toggleCodeBlocks());
     const folderRow = root3.createDiv({ cls: "voice-player-folder" });
     this.folderSelect = folderRow.createEl("select", {
       cls: "voice-player-select voice-player-folder-select dropdown",
@@ -14421,38 +14522,137 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
       cls: "voice-player-chapters-list"
     });
     this.loadingBarEl = root3.createDiv({ cls: "voice-player-loading" });
-    this.loadingBarEl.createDiv({ cls: "voice-player-loading-fill" });
+    this.loadingFillEl = this.loadingBarEl.createDiv({
+      cls: "voice-player-loading-fill"
+    });
     this.refreshControls();
   }
   togglePlay() {
     const provider = this.provider();
-    if (provider.isPlaying()) {
-      provider.pauseAudio();
-    } else if (this.audio().currentSrc) {
-      void provider.playAudio();
-    } else {
-      void this.plugin.speakText();
-    }
-  }
-  /**
-   * Persist the generated audio for the active note as an MP3 in its folder
-   * and embed it, then refresh so it appears in the chapter list. Reuses the
-   * shared download flow so behaviour matches the status bar / mobile button.
-   */
-  async downloadAudio() {
-    const active = this.app.workspace.getActiveFile();
-    const blob = active ? this.provider().getLastGeneratedAudio(active.path) : null;
-    await this.plugin.iconEventHandler.handleDownloadAudio();
-    if (blob) {
-      this.lastDownloadedBlob = blob;
-    }
-    this.refreshContext();
-  }
-  /** Read the current note. Ignored while a synthesis is already running. */
-  handleReadClick() {
-    if (this.provider().isOperationInProgress()) {
+    if (provider.isOperationInProgress()) {
+      provider.cancelOperation();
       return;
     }
+    if (provider.isPlaying()) {
+      provider.pauseAudio();
+      return;
+    }
+    const active = this.app.workspace.getActiveFile();
+    const activeNote = active && active.extension === "md" ? active : null;
+    if (this.plugin.settings.playNoteSavedAudio && activeNote) {
+      this.playActiveNote(activeNote);
+      return;
+    }
+    if (this.audio().currentSrc && !this.loadedAudioIsStale()) {
+      void provider.playAudio();
+      return;
+    }
+    this.readActiveNoteFresh();
+  }
+  /**
+   * Play the note the user is viewing: resume it if its audio is already
+   * loaded, reuse its saved MP3 when one exists on disk, otherwise synthesize.
+   * Used by the play-button tap when "Play the note's saved audio" is on, so
+   * switching notes always plays the note in front of you.
+   */
+  playActiveNote(activeNote) {
+    const provider = this.provider();
+    const existing = this.existingNoteAudio(activeNote);
+    if (existing) {
+      if (this.currentChapterPath === existing.path && this.audio().currentSrc) {
+        void provider.playAudio();
+      } else {
+        this.playChapter(existing.path);
+      }
+      return;
+    }
+    if (this.currentChapterPath === null && provider.getLastGeneratedAudio(activeNote.path) !== null && this.audio().currentSrc) {
+      void provider.playAudio();
+      return;
+    }
+    this.readActiveNoteFresh();
+  }
+  /** Drop any loaded chapter and synthesize the active note from scratch. */
+  readActiveNoteFresh() {
+    this.currentChapterPath = null;
+    this.highlightCurrentChapter();
+    this.updateTitle();
+    void this.plugin.speakText();
+  }
+  /**
+   * The MP3 already saved for the active note, if any: a file named after the
+   * note in the folder where a tap-save would write it (the default folder when
+   * set, otherwise next to the note). Returns null when no such file exists, so
+   * the player falls back to synthesizing.
+   */
+  existingNoteAudio(active) {
+    var _a3, _b2;
+    const path2 = (0, import_obsidian7.normalizePath)(
+      noteAudioPath(
+        this.plugin.settings.defaultAudioFolder,
+        (_b2 = (_a3 = active.parent) == null ? void 0 : _a3.path) != null ? _b2 : "",
+        active.basename
+      )
+    );
+    const file = this.app.vault.getAbstractFileByPath(path2);
+    return file instanceof import_obsidian7.TFile ? file : null;
+  }
+  /**
+   * Whether the audio currently loaded in the player no longer matches the
+   * active note. A chapter the user explicitly picked is never treated as
+   * stale; synthesized note audio is stale once the active note differs from
+   * the note it was generated for, so pressing play reads the new note rather
+   * than resuming the previously rendered one.
+   */
+  loadedAudioIsStale() {
+    if (this.currentChapterPath) {
+      return false;
+    }
+    const active = this.app.workspace.getActiveFile();
+    if (!active || active.extension !== "md") {
+      return false;
+    }
+    return this.provider().getLastGeneratedAudio(active.path) === null;
+  }
+  /**
+   * Persist the generated audio for the active note as an MP3 and embed it,
+   * then refresh so it appears in the chapter list. Reuses the shared download
+   * flow so behaviour matches the status bar / mobile button.
+   * @param options.forcePicker - Open the folder picker (the hold/right-click
+   *   gesture) so the audio can be saved to a different folder.
+   */
+  async downloadAudio(options) {
+    const moveFromPath = (options == null ? void 0 : options.forcePicker) && this.currentChapterPath ? this.currentChapterPath : void 0;
+    await this.plugin.iconEventHandler.handleDownloadAudio({
+      ...options,
+      moveFromPath
+    });
+    this.refreshContext();
+  }
+  /**
+   * Save the current audio to a folder chosen in the picker (the dedicated
+   * folder button) — a one-click "Save to custom folder". Reuses the shared
+   * download flow, so choosing a folder saves there and pinning sets the
+   * default.
+   */
+  saveToCustomFolder() {
+    void this.downloadAudio({ forcePicker: true });
+  }
+  /**
+   * Regenerate the current note from scratch (the play button's hold). Always
+   * uses the currently selected voice and settings. Cancels any in-progress
+   * synthesis and stops playback first, so speakText performs a fresh render
+   * instead of just pausing the audio that is already playing.
+   */
+  regenerate() {
+    const provider = this.provider();
+    if (provider.isOperationInProgress()) {
+      provider.cancelOperation();
+    }
+    provider.stopAudio();
+    this.currentChapterPath = null;
+    this.highlightCurrentChapter();
+    this.updateTitle();
     void this.plugin.speakText();
   }
   /** Switch the active TTS provider and resync the voice list. */
@@ -14479,7 +14679,27 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
     this.plugin.reinitializeTextSpeaker();
     this.updateCodeButton();
   }
-  /** Resync the provider/voice selectors and the code-blocks toggle. */
+  /** Toggle whether acronyms (NASA, API) are spelled out letter by letter. */
+  toggleAcronyms() {
+    this.plugin.settings.spellOutAcronyms = !this.plugin.settings.spellOutAcronyms;
+    void this.plugin.saveSettings();
+    this.plugin.reinitializeTextSpeaker();
+    this.updateAcronymButton();
+  }
+  /** Toggle whether website URLs are skipped (link labels are kept). */
+  toggleSkipUrls() {
+    this.plugin.settings.skipUrls = !this.plugin.settings.skipUrls;
+    void this.plugin.saveSettings();
+    this.plugin.reinitializeTextSpeaker();
+    this.updateUrlButton();
+  }
+  /** Toggle whether saving an MP3 also embeds an audio player in the note. */
+  toggleEmbed() {
+    this.plugin.settings.autoEmbedAudio = !this.plugin.settings.autoEmbedAudio;
+    void this.plugin.saveSettings();
+    this.updateEmbedButton();
+  }
+  /** Resync the provider/voice selectors and the toggle buttons. */
   refreshControls() {
     if (!this.providerSelect) {
       return;
@@ -14487,19 +14707,36 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
     this.providerSelect.value = this.plugin.settings.TTS_PROVIDER;
     this.populateVoiceOptions();
     this.updateCodeButton();
+    this.updateAcronymButton();
+    this.updateUrlButton();
+    this.updateEmbedButton();
     this.updateDownloadButton();
   }
-  /** Rebuild the voice dropdown from the active provider's catalog. */
+  /**
+   * Rebuild the voice dropdown from the active provider's catalog, grouped by
+   * language into <optgroup>s so large catalogs (e.g. Azure's full voice list)
+   * stay navigable.
+   */
   populateVoiceOptions() {
     this.voiceSelect.empty();
     const provider = this.provider();
-    provider.getVoiceOptions().forEach((voice) => {
-      this.voiceSelect.createEl("option", {
-        value: voice.id,
-        text: voice.label
+    groupVoicesByLanguage(provider.getVoiceOptions()).forEach((group3) => {
+      const optgroup = this.voiceSelect.createEl("optgroup", {
+        attr: { label: group3.label }
+      });
+      group3.voices.forEach((voice) => {
+        optgroup.createEl("option", { value: voice.id, text: voice.label });
       });
     });
     this.voiceSelect.value = provider.getVoice();
+  }
+  /**
+   * Public hook so the plugin can resync the player's selectors/toggles after
+   * settings change elsewhere (e.g. a freshly fetched voice catalog from the
+   * settings tab's "Test Credentials").
+   */
+  syncControls() {
+    this.refreshControls();
   }
   updateCodeButton() {
     if (!this.codeBtn) {
@@ -14512,24 +14749,67 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
       on ? "Read code blocks: on" : "Read code blocks: off"
     );
   }
+  updateAcronymButton() {
+    if (!this.acronymBtn) {
+      return;
+    }
+    const on = this.plugin.settings.spellOutAcronyms;
+    this.acronymBtn.toggleClass("is-active", on);
+    this.acronymBtn.setAttribute(
+      "aria-label",
+      on ? "Spell out acronyms: on" : "Spell out acronyms: off"
+    );
+  }
+  updateUrlButton() {
+    if (!this.urlBtn) {
+      return;
+    }
+    const on = this.plugin.settings.skipUrls;
+    this.urlBtn.toggleClass("is-active", on);
+    this.urlBtn.setAttribute(
+      "aria-label",
+      on ? "Skip website URLs: on" : "Skip website URLs: off"
+    );
+  }
+  updateEmbedButton() {
+    if (!this.embedBtn) {
+      return;
+    }
+    const on = this.plugin.settings.autoEmbedAudio;
+    this.embedBtn.toggleClass("is-active", on);
+    this.embedBtn.setAttribute(
+      "aria-label",
+      on ? "Embed MP3 in note: on" : "Embed MP3 in note: off"
+    );
+  }
   /**
-   * Enable the download button only when there is freshly generated audio for
-   * the active note that has not already been saved via this button. A new
-   * synthesis produces a new blob, which re-enables the button; saving it
-   * disables it again.
+   * Enable the download button when there is generated audio for the active
+   * note (its tap saves that audio). The folder button is also enabled when a
+   * saved chapter is loaded, so that chapter can be moved to another folder.
+   * Both grey out when there's nothing to act on.
    */
   updateDownloadButton() {
     if (!this.downloadBtn) {
       return;
     }
-    let enabled = false;
     const active = this.app.workspace.getActiveFile();
-    if (active) {
-      const cached = this.provider().getLastGeneratedAudio(active.path);
-      enabled = cached !== null && cached !== this.lastDownloadedBlob;
+    const hasGeneratedAudio = active ? this.provider().getLastGeneratedAudio(active.path) !== null : false;
+    const hasLoadedChapter = this.currentChapterPath !== null;
+    this.downloadBtn.disabled = !hasGeneratedAudio;
+    this.downloadBtn.toggleClass("is-disabled", !hasGeneratedAudio);
+    const folderEnabled = hasGeneratedAudio || hasLoadedChapter;
+    this.folderBtn.disabled = !folderEnabled;
+    this.folderBtn.toggleClass("is-disabled", !folderEnabled);
+    const hasDefault = this.plugin.settings.defaultAudioFolder.trim() !== "";
+    if (hasDefault !== this.downloadShowsSave) {
+      this.downloadShowsSave = hasDefault;
+      (0, import_obsidian7.setIcon)(this.downloadBtn, hasDefault ? "save" : "download");
     }
-    this.downloadBtn.disabled = !enabled;
-    this.downloadBtn.toggleClass("is-disabled", !enabled);
+    this.downloadBtn.setAttribute(
+      "aria-label",
+      hasDefault ? `Save to default folder (${this.plugin.settings.defaultAudioFolder})` : "Save next to the note"
+    );
+    this.folderBtn.toggleClass("is-active", hasDefault);
   }
   changeSpeed(delta) {
     const current = this.provider().getSpeed();
@@ -14553,8 +14833,8 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
     if (!this.titleEl) {
       return;
     }
+    this.updateTitle();
     const active = this.app.workspace.getActiveFile();
-    this.titleEl.setText(active ? active.basename : "Voice player");
     const mp3Files = this.app.vault.getFiles().filter((f2) => f2.extension === "mp3");
     this.folders = listMp3Folders(mp3Files.map((f2) => f2.path));
     this.selectedFolderPath = this.resolveSelectedFolder(active);
@@ -14629,6 +14909,7 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
     this.updateDownloadButton();
   }
   renderChapters(chapters) {
+    this.closeChapterActions();
     this.chaptersListEl.empty();
     if (chapters.length === 0) {
       this.chaptersListEl.createDiv({ cls: "voice-player-chapters-empty" }).setText("No audio files in this folder yet.");
@@ -14646,12 +14927,209 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
         "click",
         () => this.playChapter(chapter.path)
       );
+      const actionsBtn = item.createDiv({
+        cls: "voice-player-chapter-edit",
+        attr: { "aria-label": "Track actions" }
+      });
+      (0, import_obsidian7.setIcon)(actionsBtn, "more-vertical");
+      this.registerDomEvent(actionsBtn, "click", (evt) => {
+        evt.stopPropagation();
+        this.openChapterActions(item, chapter);
+      });
     });
     this.highlightCurrentChapter();
   }
+  /**
+   * Show a small action bar laid over the chapter row with Delete / Move /
+   * Rename for that track, so the actions clearly belong to that file. Only one
+   * bar is open at a time; clicking elsewhere or pressing Escape closes it.
+   */
+  openChapterActions(item, chapter) {
+    this.closeChapterActions();
+    const bar = item.createDiv({ cls: "voice-player-chapter-actions" });
+    const addBtn = (label, onClick) => {
+      const btn = bar.createEl("button", {
+        cls: "voice-player-chapter-action",
+        text: label
+      });
+      this.registerDomEvent(btn, "click", (evt) => {
+        evt.stopPropagation();
+        onClick();
+      });
+      return btn;
+    };
+    addBtn("Delete", () => this.showDeleteConfirm(bar, chapter)).addClass(
+      "mod-warning"
+    );
+    addBtn("Move", () => {
+      this.closeChapterActions();
+      void this.moveChapter(chapter);
+    });
+    addBtn("Rename", () => {
+      this.closeChapterActions();
+      this.beginRenameChapter(item, chapter);
+    });
+    this.openActionsEl = bar;
+    const onDocClick = (evt) => {
+      if (!bar.contains(evt.target)) {
+        this.closeChapterActions();
+      }
+    };
+    const onKey = (evt) => {
+      if (evt.key === "Escape") {
+        this.closeChapterActions();
+      }
+    };
+    window.setTimeout(() => {
+      activeDocument.addEventListener("click", onDocClick, true);
+      activeDocument.addEventListener("keydown", onKey, true);
+    }, 0);
+    this.chapterActionsCleanup = () => {
+      activeDocument.removeEventListener("click", onDocClick, true);
+      activeDocument.removeEventListener("keydown", onKey, true);
+    };
+  }
+  /** Remove the open chapter action bar and its listeners, if any. */
+  closeChapterActions() {
+    var _a3;
+    if (this.chapterActionsCleanup) {
+      this.chapterActionsCleanup();
+      this.chapterActionsCleanup = null;
+    }
+    (_a3 = this.openActionsEl) == null ? void 0 : _a3.remove();
+    this.openActionsEl = null;
+  }
+  /** Replace the action bar with a short "Delete this track?" confirmation. */
+  showDeleteConfirm(bar, chapter) {
+    bar.empty();
+    bar.createSpan({
+      cls: "voice-player-chapter-confirm",
+      text: "Delete this track?"
+    });
+    const del = bar.createEl("button", {
+      cls: "voice-player-chapter-action",
+      text: "Delete"
+    });
+    del.addClass("mod-warning");
+    this.registerDomEvent(del, "click", (evt) => {
+      evt.stopPropagation();
+      this.closeChapterActions();
+      void this.deleteChapter(chapter);
+    });
+    const cancel = bar.createEl("button", {
+      cls: "voice-player-chapter-action",
+      text: "Cancel"
+    });
+    this.registerDomEvent(cancel, "click", (evt) => {
+      evt.stopPropagation();
+      this.closeChapterActions();
+    });
+  }
+  /** Open the folder picker for a single chapter and move it there. */
+  async moveChapter(chapter) {
+    await this.plugin.iconEventHandler.handleDownloadAudio({
+      forcePicker: true,
+      moveFromPath: chapter.path
+    });
+    this.refreshContext();
+  }
+  /** Delete a chapter's MP3 (after confirmation) and refresh the list. */
+  async deleteChapter(chapter) {
+    const file = this.app.vault.getAbstractFileByPath(chapter.path);
+    if (file instanceof import_obsidian7.TFile) {
+      try {
+        await this.app.vault.delete(file);
+        new import_obsidian7.Notice(`Deleted: ${chapter.name}`);
+      } catch (error) {
+        new import_obsidian7.Notice(
+          `Could not delete: ${error instanceof Error ? error.message : String(error)}`
+        );
+      }
+    }
+    if (this.currentChapterPath === chapter.path) {
+      this.currentChapterPath = null;
+      this.updateTitle();
+    }
+    this.refreshContext();
+  }
+  /**
+   * Replace a chapter's name with an inline text field so the user can rename
+   * the underlying MP3. Enter/blur commits, Escape cancels.
+   */
+  beginRenameChapter(item, chapter) {
+    const nameEl = item.querySelector(
+      ".voice-player-chapter-name"
+    );
+    if (!nameEl) {
+      return;
+    }
+    const input = createEl("input", {
+      cls: "voice-player-chapter-rename",
+      attr: { type: "text" }
+    });
+    input.value = chapter.name;
+    nameEl.replaceWith(input);
+    input.focus();
+    input.select();
+    let settled = false;
+    const commit = () => {
+      if (settled) return;
+      settled = true;
+      void this.commitRenameChapter(chapter, input.value);
+    };
+    const cancel = () => {
+      if (settled) return;
+      settled = true;
+      this.refreshContext();
+    };
+    this.registerDomEvent(input, "click", (evt) => evt.stopPropagation());
+    this.registerDomEvent(input, "keydown", (evt) => {
+      if (evt.key === "Enter") {
+        evt.preventDefault();
+        commit();
+      } else if (evt.key === "Escape") {
+        evt.preventDefault();
+        cancel();
+      }
+    });
+    this.registerDomEvent(input, "blur", () => commit());
+  }
+  /**
+   * Rename the chapter's MP3 on disk to the new base name, keeping it in the
+   * same folder and preserving the .mp3 extension. Uses fileManager so embeds
+   * in notes are updated automatically.
+   */
+  async commitRenameChapter(chapter, rawName) {
+    var _a3, _b2;
+    const file = this.app.vault.getAbstractFileByPath(chapter.path);
+    const newBase = rawName.trim();
+    if (!(file instanceof import_obsidian7.TFile) || !newBase || newBase === chapter.name) {
+      this.refreshContext();
+      return;
+    }
+    if (/[\\/:*?"<>|]/.test(newBase)) {
+      new import_obsidian7.Notice("That file name contains characters that aren't allowed.");
+      this.refreshContext();
+      return;
+    }
+    const folder = normalizeFolderPath((_b2 = (_a3 = file.parent) == null ? void 0 : _a3.path) != null ? _b2 : "/");
+    const dir = folder === "/" ? "" : `${folder}/`;
+    const newPath = (0, import_obsidian7.normalizePath)(`${dir}${newBase}.${file.extension}`);
+    try {
+      await this.app.fileManager.renameFile(file, newPath);
+      if (this.currentChapterPath === chapter.path) {
+        this.currentChapterPath = newPath;
+      }
+    } catch (error) {
+      new import_obsidian7.Notice(
+        `Could not rename: ${error instanceof Error ? error.message : String(error)}`
+      );
+    }
+    this.refreshContext();
+  }
   playChapter(path2) {
     const file = this.app.vault.getAbstractFileByPath(path2);
-    if (!(file instanceof import_obsidian8.TFile)) {
+    if (!(file instanceof import_obsidian7.TFile)) {
       return;
     }
     const audio = this.audio();
@@ -14659,6 +15137,22 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
     this.currentChapterPath = path2;
     void this.provider().playAudio();
     this.highlightCurrentChapter();
+    this.updateTitle();
+  }
+  /**
+   * Title shows the loaded chapter's name while one is playing, otherwise the
+   * active note (or a placeholder when none is open).
+   */
+  updateTitle() {
+    if (!this.titleEl) {
+      return;
+    }
+    if (this.currentChapterPath) {
+      this.titleEl.setText(chapterName(this.currentChapterPath));
+      return;
+    }
+    const active = this.app.workspace.getActiveFile();
+    this.titleEl.setText(active ? active.basename : "Voice player");
   }
   highlightCurrentChapter() {
     this.chaptersListEl.querySelectorAll(".voice-player-chapter").forEach((el) => {
@@ -14710,7 +15204,7 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
       return;
     }
     const icon = this.repeatMode === "one" ? "repeat-1" : "repeat";
-    (0, import_obsidian8.setIcon)(this.repeatBtn, icon);
+    (0, import_obsidian7.setIcon)(this.repeatBtn, icon);
     this.repeatBtn.toggleClass("is-active", this.repeatMode !== "none");
     const label = this.repeatMode === "one" ? "Repeat one" : this.repeatMode === "all" ? "Repeat all" : "Repeat off";
     this.repeatBtn.setAttribute("aria-label", label);
@@ -14752,18 +15246,27 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
       this.currentTimeEl.setText(formatTime(currentTime));
     }
     this.durationEl.setText(formatTime(duration));
-    (0, import_obsidian8.setIcon)(this.playPauseBtn, provider.isPlaying() ? "pause" : "play");
     this.speedEl.setText(`${provider.getSpeed().toFixed(1)}\xD7`);
     const loading = provider.isOperationInProgress();
     this.loadingBarEl.toggleClass("is-visible", loading);
-    this.readBtn.toggleClass("is-loading", loading);
-    this.readBtn.disabled = loading;
-    this.readBtn.setText(loading ? "Reading\u2026" : "Read this note");
+    if (loading) {
+      const pct = Math.round(provider.getProgress() * 100);
+      this.loadingFillEl.setCssProps({ "--voice-progress": `${pct}%` });
+      if (!this.playPauseBtn.hasClass("rotating-icon")) {
+        this.playPauseBtn.addClass("rotating-icon");
+        (0, import_obsidian7.setIcon)(this.playPauseBtn, "refresh-ccw");
+      }
+    } else {
+      this.playPauseBtn.removeClass("rotating-icon");
+      (0, import_obsidian7.setIcon)(this.playPauseBtn, provider.isPlaying() ? "pause" : "play");
+    }
     if (this.providerSelect.value !== this.plugin.settings.TTS_PROVIDER) {
       this.refreshControls();
     } else {
       this.voiceSelect.value = provider.getVoice();
       this.updateCodeButton();
+      this.updateAcronymButton();
+      this.updateEmbedButton();
     }
     this.updateDownloadButton();
     if (audio.ended) {
@@ -14802,10 +15305,11 @@ var MobileControlBar = class {
     this.progressBarContainer = null;
     this.progressBar = null;
     this.isErrorState = false;
+    // Tracks whether the download icon currently shows the save (floppy) glyph.
+    this.downloadShowsSave = false;
     this.app = app;
     this.plugin = plugin;
     this.pollyService = pollyService;
-    this.audioFileManager = new AudioFileManager(app);
     this.createOverlayBar();
     this.initializeEventListeners();
     this.app.workspace.on("active-leaf-change", () => {
@@ -14837,7 +15341,7 @@ var MobileControlBar = class {
       "mic",
       "Change Voice",
       (event) => {
-        const menu = new import_obsidian9.Menu();
+        const menu = new import_obsidian8.Menu();
         this.pollyService.getVoiceOptions().forEach((voice) => {
           menu.addItem(
             (item) => item.setTitle(voice.label).setChecked(voice.id === this.pollyService.getVoice()).onClick(() => void this.selectVoice(voice.id))
@@ -14850,9 +15354,16 @@ var MobileControlBar = class {
       controlsWrapper,
       "download",
       "Download Audio",
-      () => void this.handleDownloadAudio()
+      () => {
+      }
     );
     this.downloadIconEl.addClass("voice-hidden");
+    attachPressGesture(this.downloadIconEl, {
+      onTap: () => void this.plugin.iconEventHandler.handleDownloadAudio(),
+      onHold: () => void this.plugin.iconEventHandler.handleDownloadAudio({
+        forcePicker: true
+      })
+    });
     this.createControlButton(
       controlsWrapper,
       "rewind",
@@ -14922,7 +15433,7 @@ var MobileControlBar = class {
       cls: "voice-mobile-control-btn",
       attr: { title }
     });
-    (0, import_obsidian9.setIcon)(button, icon);
+    (0, import_obsidian8.setIcon)(button, icon);
     button.addEventListener("click", onClick);
     return button;
   }
@@ -14965,7 +15476,7 @@ var MobileControlBar = class {
   showLoadingState() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.addClass("rotating-icon");
-      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "refresh-ccw");
+      (0, import_obsidian8.setIcon)(this.playPauseIconEl, "refresh-ccw");
     }
     this.showProgressBar();
     this.updateProgressBar(0);
@@ -14973,7 +15484,7 @@ var MobileControlBar = class {
   resetToPlayState() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian8.setIcon)(this.playPauseIconEl, "play");
     }
   }
   showProgressBar() {
@@ -15013,7 +15524,7 @@ var MobileControlBar = class {
   onPlay() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "pause");
+      (0, import_obsidian8.setIcon)(this.playPauseIconEl, "pause");
     }
     this.hideProgressBar();
     this.show();
@@ -15022,7 +15533,7 @@ var MobileControlBar = class {
   onPause() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian8.setIcon)(this.playPauseIconEl, "play");
     }
     this.hideProgressBar();
     window.setTimeout(() => {
@@ -15037,7 +15548,7 @@ var MobileControlBar = class {
   onEnded() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian8.setIcon)(this.playPauseIconEl, "play");
     }
     this.hideProgressBar();
     window.setTimeout(() => this.hide(), 3e3);
@@ -15101,6 +15612,7 @@ var MobileControlBar = class {
    * Update download button visibility based on cached audio
    */
   updateDownloadButtonVisibility() {
+    this.updateSaveIcon();
     const activeFile = this.app.workspace.getActiveFile();
     if (!activeFile) {
       this.hideDownloadButton();
@@ -15114,32 +15626,19 @@ var MobileControlBar = class {
     }
   }
   /**
-   * Handle download audio button click
+   * Show a floppy-disk (save) glyph when a default folder is set, otherwise the
+   * download arrow — mirroring the player and status bar. Only swaps on change.
    */
-  async handleDownloadAudio() {
-    try {
-      const activeFile = this.app.workspace.getActiveFile();
-      if (!activeFile) {
-        new import_obsidian9.Notice("No active file found");
-        return;
-      }
-      const audioBlob = this.pollyService.getLastGeneratedAudio(
-        activeFile.path
-      );
-      if (!audioBlob) {
-        new import_obsidian9.Notice(
-          "No audio available for this file. Please generate audio first."
-        );
-        return;
-      }
-      await this.audioFileManager.downloadAndEmbed(
-        audioBlob,
-        this.plugin.settings.autoEmbedAudio
-      );
-    } catch (error) {
-      console.error("Error downloading audio:", error);
-      new import_obsidian9.Notice(`Failed to download audio: ${error.message}`);
+  updateSaveIcon() {
+    if (!this.downloadIconEl) {
+      return;
     }
+    const hasDefault = this.plugin.settings.defaultAudioFolder.trim() !== "";
+    if (hasDefault === this.downloadShowsSave) {
+      return;
+    }
+    this.downloadShowsSave = hasDefault;
+    (0, import_obsidian8.setIcon)(this.downloadIconEl, hasDefault ? "save" : "download");
   }
   destroy() {
     const audio = this.pollyService.getAudio();
@@ -15154,10 +15653,490 @@ var MobileControlBar = class {
   }
 };
 
+// src/utils/AudioFileManager.ts
+var import_obsidian9 = require("obsidian");
+var AudioFileManager = class {
+  constructor(app) {
+    this.app = app;
+  }
+  /**
+   * Save a freshly generated blob to a folder, or move an existing MP3 into it,
+   * prompting via `resolveConflict` when a file of the same name already exists.
+   * Used by the folder picker: synthesized audio is saved (and embedded when
+   * requested); an already-saved file (a loaded chapter) is moved with its
+   * embeds/links updated.
+   */
+  async saveOrMove(params) {
+    var _a3;
+    try {
+      const dir = this.resolveSaveDir(params.folder, "");
+      await this.ensureFolderExists(dir);
+      const pathFor = (base) => (0, import_obsidian9.normalizePath)(dir ? `${dir}/${base}.mp3` : `${base}.mp3`);
+      const sourcePath = (_a3 = params.sourceFile) == null ? void 0 : _a3.path;
+      let baseName = params.baseName;
+      for (; ; ) {
+        const existing = this.app.vault.getAbstractFileByPath(
+          pathFor(baseName)
+        );
+        const collides = existing instanceof import_obsidian9.TFile && existing.path !== sourcePath;
+        if (!collides) {
+          break;
+        }
+        const choice = await params.resolveConflict({
+          fileName: `${baseName}.mp3`,
+          folder: dir === "" ? "the vault root" : dir,
+          suggested: suggestFreeBaseName(
+            baseName,
+            this.mp3BaseNamesInFolder(dir)
+          )
+        });
+        if (choice.action === "cancel") {
+          return;
+        }
+        if (choice.action === "rename") {
+          baseName = choice.baseName;
+          continue;
+        }
+        break;
+      }
+      const finalPath = pathFor(baseName);
+      if (params.kind === "move") {
+        await this.performMove(params.sourceFile, finalPath);
+        return;
+      }
+      await this.writeBlob(params.blob, finalPath);
+      if (params.embed) {
+        await this.insertAudioEmbed(`${baseName}.mp3`);
+      }
+    } catch (error) {
+      console.error("Error saving/moving audio:", error);
+      new import_obsidian9.Notice(`Error saving audio: ${error.message}`);
+    }
+  }
+  /** Move an existing file to finalPath, replacing any file already there. */
+  async performMove(source, finalPath) {
+    if (!source || source.path === finalPath) {
+      return;
+    }
+    const existing = this.app.vault.getAbstractFileByPath(finalPath);
+    if (existing instanceof import_obsidian9.TFile && existing.path !== source.path) {
+      await this.app.vault.delete(existing);
+    }
+    await this.app.fileManager.renameFile(source, finalPath);
+    new import_obsidian9.Notice(`Moved: ${finalPath}`);
+  }
+  /** Create or overwrite the MP3 at finalPath with the blob's bytes. */
+  async writeBlob(blob, finalPath) {
+    if (!blob) {
+      return;
+    }
+    const arrayBuffer = await blob.arrayBuffer();
+    const existing = this.app.vault.getAbstractFileByPath(finalPath);
+    if (existing instanceof import_obsidian9.TFile) {
+      await this.app.vault.modifyBinary(existing, arrayBuffer);
+      new import_obsidian9.Notice(`Updated: ${finalPath}`);
+    } else {
+      await this.app.vault.createBinary(finalPath, arrayBuffer);
+      new import_obsidian9.Notice(`Created: ${finalPath}`);
+    }
+  }
+  /** Base names (no extension) of the MP3s already in a vault folder. */
+  mp3BaseNamesInFolder(dir) {
+    const target = normalizeFolderPath(dir === "" ? "/" : dir);
+    return this.app.vault.getFiles().filter(
+      (f2) => {
+        var _a3, _b2;
+        return f2.extension === "mp3" && normalizeFolderPath((_b2 = (_a3 = f2.parent) == null ? void 0 : _a3.path) != null ? _b2 : "/") === target;
+      }
+    ).map((f2) => f2.basename);
+  }
+  /**
+   * Save audio blob as an MP3 file.
+   * @param audioBlob - The audio data to save
+   * @param targetFolder - Vault-relative folder to save into ("/" or "" = vault
+   *   root). When omitted, the MP3 is saved next to the active note, preserving
+   *   the original behaviour.
+   * @returns The created/modified TFile or null on error
+   */
+  async saveAudioFile(audioBlob, targetFolder) {
+    var _a3;
+    try {
+      const activeFile = this.app.workspace.getActiveFile();
+      if (!activeFile) {
+        new import_obsidian9.Notice("No active file found");
+        return null;
+      }
+      const fileName = activeFile.basename;
+      const fileDir = this.resolveSaveDir(
+        targetFolder,
+        ((_a3 = activeFile.parent) == null ? void 0 : _a3.path) || ""
+      );
+      const audioFileName = `${fileName}.mp3`;
+      const audioFilePath = (0, import_obsidian9.normalizePath)(
+        fileDir ? `${fileDir}/${audioFileName}` : audioFileName
+      );
+      await this.ensureFolderExists(fileDir);
+      const arrayBuffer = await audioBlob.arrayBuffer();
+      const existingFile = this.app.vault.getAbstractFileByPath(audioFilePath);
+      let audioFile;
+      if (existingFile instanceof import_obsidian9.TFile) {
+        await this.app.vault.modifyBinary(existingFile, arrayBuffer);
+        audioFile = existingFile;
+        new import_obsidian9.Notice(`Updated: ${audioFilePath}`);
+      } else {
+        audioFile = await this.app.vault.createBinary(
+          audioFilePath,
+          arrayBuffer
+        );
+        new import_obsidian9.Notice(`Created: ${audioFilePath}`);
+      }
+      return audioFile;
+    } catch (error) {
+      console.error("Error saving audio file:", error);
+      new import_obsidian9.Notice(`Error saving audio file: ${error.message}`);
+      return null;
+    }
+  }
+  /**
+   * Resolve the destination folder for a save.
+   * - `undefined` target → next to the active note (original behaviour).
+   * - "/" or "" target → the vault root.
+   * - otherwise → the given vault-relative folder.
+   */
+  resolveSaveDir(targetFolder, noteFolder) {
+    const dir = targetFolder === void 0 ? noteFolder : targetFolder;
+    const trimmed = dir.trim();
+    return trimmed === "/" ? "" : trimmed;
+  }
+  /**
+   * Create the destination folder (and any missing parents) if it does not
+   * already exist. No-op for the vault root.
+   */
+  async ensureFolderExists(folderPath) {
+    if (!folderPath) {
+      return;
+    }
+    const existing = this.app.vault.getAbstractFileByPath(folderPath);
+    if (existing) {
+      return;
+    }
+    await this.app.vault.createFolder(folderPath);
+  }
+  /**
+   * Insert audio embed tag into the active document
+   * Handles front matter detection and duplicate checking
+   * @param audioFileName - Name of the audio file (without path)
+   */
+  async insertAudioEmbed(audioFileName) {
+    try {
+      const activeFile = this.app.workspace.getActiveFile();
+      if (!activeFile) {
+        new import_obsidian9.Notice("No active file found");
+        return;
+      }
+      const content3 = await this.app.vault.read(activeFile);
+      const embedTag = `![[${audioFileName}]]`;
+      if (content3.includes(embedTag)) {
+        return;
+      }
+      const insertPosition = this.findInsertPosition(content3);
+      const newContent = content3.slice(0, insertPosition) + embedTag + "\n" + content3.slice(insertPosition);
+      await this.app.vault.modify(activeFile, newContent);
+    } catch (error) {
+      console.error("Error inserting audio embed:", error);
+      new import_obsidian9.Notice(`Error inserting audio embed: ${error.message}`);
+    }
+  }
+  /**
+   * Find the correct position to insert audio embed
+   * Returns position after front matter (if exists) or at start
+   * @param content - Document content
+   * @returns Position index where embed should be inserted
+   */
+  findInsertPosition(content3) {
+    const frontMatterRegex = /^---\n([\s\S]*?)\n---\n/;
+    const match = content3.match(frontMatterRegex);
+    if (match) {
+      const frontMatterEnd = match[0].length;
+      return frontMatterEnd;
+    }
+    return 0;
+  }
+  /**
+   * Download audio file and, when requested, insert the embed tag.
+   * @param audioBlob - The audio data to save
+   * @param embed - Whether to also insert the `![[file.mp3]]` embed in the
+   *   note. Defaults to true to preserve the legacy save-and-embed behaviour.
+   * @param targetFolder - Vault-relative folder to save into. When omitted, the
+   *   MP3 is saved next to the active note. The embed still resolves by file
+   *   name, so it works regardless of the folder.
+   */
+  async downloadAndEmbed(audioBlob, embed = true, targetFolder) {
+    try {
+      const activeFile = this.app.workspace.getActiveFile();
+      if (!activeFile) {
+        new import_obsidian9.Notice("No active file found");
+        return;
+      }
+      const fileName = activeFile.basename;
+      const audioFileName = `${fileName}.mp3`;
+      const savedFile = await this.saveAudioFile(audioBlob, targetFolder);
+      if (!savedFile) {
+        return;
+      }
+      if (embed) {
+        await this.insertAudioEmbed(audioFileName);
+      }
+    } catch (error) {
+      console.error("Error in downloadAndEmbed:", error);
+      new import_obsidian9.Notice(`Error downloading audio: ${error.message}`);
+    }
+  }
+};
+
+// src/ui/FolderPickerModal.ts
+var import_obsidian10 = require("obsidian");
+var FolderPickerModal = class _FolderPickerModal extends import_obsidian10.SuggestModal {
+  constructor(app, plugin) {
+    super(app);
+    this.resolve = () => {
+    };
+    this.settled = false;
+    this.plugin = plugin;
+    this.allFolders = app.vault.getAllLoadedFiles().filter((f2) => f2 instanceof import_obsidian10.TFolder).map((f2) => normalizeFolderPath(f2.path));
+    this.setPlaceholder("Search folders to save / move audio\u2026");
+    this.setInstructions([
+      { command: "\u21B5", purpose: "save / move here" },
+      { command: "\u{1F4CC}", purpose: "set default" },
+      { command: "\u2605", purpose: "favorite" },
+      { command: "esc", purpose: "cancel" }
+    ]);
+  }
+  /**
+   * Open the picker and resolve with the chosen folder path, or null if the
+   * user cancels.
+   */
+  static open(app, plugin) {
+    const modal = new _FolderPickerModal(app, plugin);
+    return new Promise((resolve) => {
+      modal.resolve = resolve;
+      modal.open();
+    });
+  }
+  getSuggestions(query) {
+    const { favoriteAudioFolders, defaultAudioFolder } = this.plugin.settings;
+    const ordered = orderFoldersForPicker(
+      this.allFolders,
+      favoriteAudioFolders,
+      defaultAudioFolder
+    );
+    const q = query.trim().toLowerCase();
+    const matches = (q === "" ? ordered : ordered.filter((f2) => f2.path.toLowerCase().includes(q))).map(
+      (f2) => ({
+        kind: "folder",
+        path: f2.path,
+        isFavorite: f2.isFavorite,
+        isDefault: f2.isDefault
+      })
+    );
+    const firstOther = matches.findIndex(
+      (m) => m.kind === "folder" && !m.isFavorite && !m.isDefault
+    );
+    if (firstOther > 0) {
+      const item = matches[firstOther];
+      if (item.kind === "folder") {
+        item.sectionStart = true;
+      }
+    }
+    const normalizedQuery = normalizeFolderPath(query.trim());
+    if (q !== "" && !this.allFolders.some((p) => p.toLowerCase() === q)) {
+      matches.push({ kind: "create", path: normalizedQuery });
+    }
+    return matches;
+  }
+  renderSuggestion(item, el) {
+    el.addClass("voice-folder-suggestion");
+    if (item.kind === "create") {
+      const icon2 = el.createSpan({ cls: "voice-folder-suggestion-icon" });
+      (0, import_obsidian10.setIcon)(icon2, "folder-plus");
+      el.createSpan({
+        cls: "voice-folder-suggestion-name",
+        text: `Create folder \u201C${item.path}\u201D`
+      });
+      return;
+    }
+    el.toggleClass("is-default", item.isDefault);
+    el.toggleClass("is-favorite", item.isFavorite);
+    el.toggleClass("is-section-start", !!item.sectionStart);
+    const icon = el.createSpan({ cls: "voice-folder-suggestion-icon" });
+    (0, import_obsidian10.setIcon)(icon, item.path === "/" ? "home" : "folder");
+    el.createSpan({
+      cls: "voice-folder-suggestion-name",
+      text: item.path === "/" ? "Vault root" : item.path
+    });
+    if (item.isDefault) {
+      el.createSpan({
+        cls: "voice-folder-suggestion-badge",
+        text: "Default"
+      });
+    }
+    const pin = el.createSpan({ cls: "voice-folder-suggestion-pin" });
+    (0, import_obsidian10.setIcon)(pin, item.isDefault ? "pin" : "pin-off");
+    pin.toggleClass("is-default", item.isDefault);
+    pin.setAttribute(
+      "aria-label",
+      item.isDefault ? "Clear default folder" : "Set as default folder"
+    );
+    pin.addEventListener("click", (evt) => {
+      evt.stopPropagation();
+      evt.preventDefault();
+      void this.toggleDefaultFor(item.path);
+    });
+    const star = el.createSpan({ cls: "voice-folder-suggestion-star" });
+    (0, import_obsidian10.setIcon)(star, item.isFavorite ? "star" : "star-off");
+    star.toggleClass("is-favorite", item.isFavorite);
+    star.setAttribute(
+      "aria-label",
+      item.isFavorite ? "Remove from favorites" : "Add to favorites"
+    );
+    star.addEventListener("click", (evt) => {
+      evt.stopPropagation();
+      evt.preventDefault();
+      void this.toggleFavoriteFor(item.path);
+    });
+  }
+  onChooseSuggestion(item) {
+    this.settle(item.path);
+  }
+  onClose() {
+    super.onClose();
+    window.setTimeout(() => this.settle(null), 0);
+  }
+  /** Resolve the open() promise exactly once with the first settled value. */
+  settle(value2) {
+    if (this.settled) {
+      return;
+    }
+    this.settled = true;
+    this.resolve(value2);
+  }
+  /** Star/unstar a folder and re-render the list in place. */
+  async toggleFavoriteFor(path2) {
+    this.plugin.settings.favoriteAudioFolders = toggleFavorite(
+      this.plugin.settings.favoriteAudioFolders,
+      path2
+    );
+    await this.plugin.saveSettings();
+    this.refreshList();
+  }
+  /** Set/clear the default folder (only one at a time) and re-render. */
+  async toggleDefaultFor(path2) {
+    this.plugin.settings.defaultAudioFolder = toggleDefaultFolder(
+      this.plugin.settings.defaultAudioFolder,
+      path2
+    );
+    await this.plugin.saveSettings();
+    this.refreshList();
+  }
+  /** Re-run getSuggestions so icons and ordering refresh immediately. */
+  refreshList() {
+    this.inputEl.dispatchEvent(new Event("input"));
+  }
+};
+
+// src/ui/FileConflictModal.ts
+var import_obsidian11 = require("obsidian");
+var FileConflictModal = class _FileConflictModal extends import_obsidian11.Modal {
+  constructor(app, fileName, folderLabel, suggested) {
+    super(app);
+    this.resolve = () => {
+    };
+    this.settled = false;
+    this.fileName = fileName;
+    this.folderLabel = folderLabel;
+    this.suggested = suggested;
+  }
+  /**
+   * Open the modal and resolve with the chosen action.
+   * @param suggested A free base name (no extension) to pre-fill the rename box.
+   */
+  static open(app, fileName, folderLabel, suggested) {
+    const modal = new _FileConflictModal(app, fileName, folderLabel, suggested);
+    return new Promise((resolve) => {
+      modal.resolve = resolve;
+      modal.open();
+    });
+  }
+  onOpen() {
+    const { contentEl } = this;
+    this.titleEl.setText("File already exists");
+    contentEl.createEl("p", {
+      text: `\u201C${this.fileName}\u201D already exists in ${this.folderLabel}. Replace it, or save under a new name?`
+    });
+    let newBaseName = this.suggested;
+    const nameSetting = new import_obsidian11.Setting(contentEl).setName("New name").addText((text5) => {
+      text5.setValue(this.suggested).onChange((value2) => {
+        newBaseName = value2;
+      });
+      text5.inputEl.addEventListener("keydown", (evt) => {
+        if (evt.key === "Enter") {
+          evt.preventDefault();
+          this.settle({ action: "rename", baseName: newBaseName.trim() });
+        }
+      });
+    });
+    nameSetting.controlEl.createSpan({
+      cls: "voice-conflict-ext",
+      text: ".mp3"
+    });
+    new import_obsidian11.Setting(contentEl).addButton((btn) => {
+      btn.setButtonText("Replace").onClick(() => this.settle({ action: "replace" }));
+      btn.buttonEl.addClass("mod-warning");
+    }).addButton(
+      (btn) => btn.setButtonText("Save as new").setCta().onClick(
+        () => this.settle({ action: "rename", baseName: newBaseName.trim() })
+      )
+    ).addButton(
+      (btn) => btn.setButtonText("Cancel").onClick(() => this.settle({ action: "cancel" }))
+    );
+  }
+  onClose() {
+    super.onClose();
+    window.setTimeout(() => this.settle({ action: "cancel" }), 0);
+  }
+  /** Resolve exactly once and close. */
+  settle(choice) {
+    if (this.settled) {
+      return;
+    }
+    if (choice.action === "rename" && choice.baseName === "") {
+      return;
+    }
+    this.settled = true;
+    this.resolve(choice);
+    this.close();
+  }
+};
+
+// src/utils/speechFeedback.ts
+var NO_NOTE_MESSAGE = "No note open \u2014 open a note to read it aloud.";
+var EMPTY_NOTE_MESSAGE = "This note has no text to read.";
+var READ_ERROR_MESSAGE = "Couldn't read the active note. Please try again.";
+var PREPARE_ERROR_MESSAGE = "Couldn't prepare this note for speech. It may contain unusual formatting \u2014 try again or simplify the note.";
+function friendlySpeechError(raw) {
+  if (/ssml\s+(chunking|validation)|unbalanced tag/i.test(raw)) {
+    return PREPARE_ERROR_MESSAGE;
+  }
+  return raw;
+}
+
 // src/utils/IconEventHandler.ts
 var IconEventHandler = class {
   constructor(plugin, voice, pollyService) {
     this.isErrorState = false;
+    // Tracks whether the status-bar download icon currently shows the save
+    // (floppy) glyph, so it is only swapped when the default folder changes.
+    this.downloadShowsSave = false;
     this.onPlayListener = () => this.onPlay();
     this.onPauseListener = () => this.onPause();
     this.onCanPlayThroughListener = () => this.onCanPlayThrough();
@@ -15226,7 +16205,7 @@ var IconEventHandler = class {
     this.voiceDisplayEl.setAttribute("aria-label-position", "top");
     this.updateVoiceDisplay();
     this.voiceDisplayEl.addEventListener("click", (event) => {
-      const menu = new import_obsidian10.Menu();
+      const menu = new import_obsidian12.Menu();
       this.pollyService.getVoiceOptions().forEach((voice) => {
         menu.addItem(
           (item) => item.setTitle(voice.label).setChecked(voice.id === this.pollyService.getVoice()).onClick(() => void this.voice.persistActiveVoice(voice.id))
@@ -15304,7 +16283,7 @@ var IconEventHandler = class {
         }
         if (!this.pollyService.isPlaying()) {
           this.playPauseIconEl.addClass("rotating-icon");
-          (0, import_obsidian10.setIcon)(this.playPauseIconEl, "refresh-ccw");
+          (0, import_obsidian12.setIcon)(this.playPauseIconEl, "refresh-ccw");
         }
         void this.voice.speakText();
       },
@@ -15321,11 +16300,13 @@ var IconEventHandler = class {
     this.downloadIconEl = this.createStatusBarIcon(
       "download",
       "download-audio",
-      () => void this.handleDownloadAudio(),
+      () => {
+      },
       false,
       "Download audio as MP3"
     );
     this.downloadIconEl.addClass("voice-hidden");
+    this.attachSaveGesture(this.downloadIconEl);
     this.addVoiceControlsSeparator();
     window.setTimeout(() => {
       this.updateSpeedDisplay();
@@ -15335,7 +16316,7 @@ var IconEventHandler = class {
     const iconEl = this.statusBarItem.createSpan({
       cls: "status-bar-icon " + cls
     });
-    (0, import_obsidian10.setIcon)(iconEl, icon);
+    (0, import_obsidian12.setIcon)(iconEl, icon);
     iconEl.addEventListener("click", onClick);
     if (tooltip) {
       iconEl.title = tooltip;
@@ -15406,8 +16387,8 @@ var IconEventHandler = class {
       this.isErrorState = false;
       this.ribbonIconEl.addClass("rotating-icon");
       this.playPauseIconEl.addClass("rotating-icon");
-      (0, import_obsidian10.setIcon)(this.ribbonIconEl, "refresh-ccw");
-      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "refresh-ccw");
+      (0, import_obsidian12.setIcon)(this.ribbonIconEl, "refresh-ccw");
+      (0, import_obsidian12.setIcon)(this.playPauseIconEl, "refresh-ccw");
       if (this.mobileControlBar) {
         this.mobileControlBar.showLoadingStateFromExternal();
       } else {
@@ -15419,11 +16400,11 @@ var IconEventHandler = class {
   onPlay() {
     if (this.ribbonIconEl) {
       this.ribbonIconEl.removeClass("rotating-icon");
-      (0, import_obsidian10.setIcon)(this.ribbonIconEl, "pause-circle");
+      (0, import_obsidian12.setIcon)(this.ribbonIconEl, "pause-circle");
     }
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "pause");
+      (0, import_obsidian12.setIcon)(this.playPauseIconEl, "pause");
     }
     this.hideProgressBar();
     this.showDownloadButton();
@@ -15431,11 +16412,11 @@ var IconEventHandler = class {
   onPause() {
     if (this.ribbonIconEl) {
       this.ribbonIconEl.removeClass("rotating-icon");
-      (0, import_obsidian10.setIcon)(this.ribbonIconEl, "play-circle");
+      (0, import_obsidian12.setIcon)(this.ribbonIconEl, "play-circle");
     }
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian12.setIcon)(this.playPauseIconEl, "play");
     }
     this.hideProgressBar();
   }
@@ -15531,7 +16512,7 @@ var IconEventHandler = class {
   handleError(errorMessage) {
     this.showErrorState();
     this.resetIconsToPlayState();
-    new import_obsidian10.Notice(`\u{1F50A} Voice Plugin: ${errorMessage}`, 5e3);
+    new import_obsidian12.Notice(`\u{1F50A} Voice Plugin: ${friendlySpeechError(errorMessage)}`, 5e3);
     window.setTimeout(() => {
       this.hideProgressBar();
     }, 3e3);
@@ -15539,11 +16520,11 @@ var IconEventHandler = class {
   resetIconsToPlayState() {
     if (this.ribbonIconEl) {
       this.ribbonIconEl.removeClass("rotating-icon");
-      (0, import_obsidian10.setIcon)(this.ribbonIconEl, "play-circle");
+      (0, import_obsidian12.setIcon)(this.ribbonIconEl, "play-circle");
     }
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian12.setIcon)(this.playPauseIconEl, "play");
     }
   }
   onCanPlayThrough() {
@@ -15569,6 +16550,7 @@ var IconEventHandler = class {
    * Update download button visibility based on whether cached audio exists for current file
    */
   updateDownloadButtonVisibility() {
+    this.refreshSaveAffordances();
     const activeFile = this.plugin.app.workspace.getActiveFile();
     if (!activeFile) {
       this.hideDownloadButton();
@@ -15589,6 +16571,7 @@ var IconEventHandler = class {
    * during automatic playback.
    */
   async maybeAutoDownloadAudio() {
+    var _a3;
     if (!this.voice.settings.autoDownloadAudio) {
       return;
     }
@@ -15600,39 +16583,150 @@ var IconEventHandler = class {
     if (!audioBlob) {
       return;
     }
+    const folder = resolveSaveFolder(
+      this.voice.settings.defaultAudioFolder,
+      ((_a3 = activeFile.parent) == null ? void 0 : _a3.path) || ""
+    );
     await this.audioFileManager.downloadAndEmbed(
       audioBlob,
-      this.voice.settings.autoEmbedAudio
+      this.voice.settings.autoEmbedAudio,
+      folder
     );
   }
   /**
    * Handle download audio button click (also exposed as a command).
-   * Retrieves cached audio blob and saves it as MP3 file.
+   * Retrieves cached audio blob and saves it as an MP3 file in the resolved
+   * folder.
+   * @param options.forcePicker - Open the folder picker (the "hold"/right-click
+   *   gesture) and save to the chosen folder for this one save.
    */
-  async handleDownloadAudio() {
+  async handleDownloadAudio(options) {
+    var _a3;
     try {
+      const resolveConflict = (info) => FileConflictModal.open(
+        this.plugin.app,
+        info.fileName,
+        info.folder,
+        info.suggested
+      );
+      if ((options == null ? void 0 : options.forcePicker) && options.moveFromPath) {
+        const folder2 = await FolderPickerModal.open(
+          this.plugin.app,
+          this.voice
+        );
+        this.refreshSaveAffordances();
+        if (folder2 === null) {
+          return;
+        }
+        const file = this.plugin.app.vault.getAbstractFileByPath(
+          options.moveFromPath
+        );
+        if (file instanceof import_obsidian12.TFile) {
+          await this.audioFileManager.saveOrMove({
+            kind: "move",
+            sourceFile: file,
+            baseName: file.basename,
+            folder: folder2,
+            embed: false,
+            resolveConflict
+          });
+        }
+        return;
+      }
       const activeFile = this.plugin.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian10.Notice("No active file found");
+        new import_obsidian12.Notice("No active file found");
         return;
       }
       const audioBlob = this.pollyService.getLastGeneratedAudio(
         activeFile.path
       );
       if (!audioBlob) {
-        new import_obsidian10.Notice(
+        new import_obsidian12.Notice(
           "No audio available for this file. Please generate audio first."
         );
         return;
       }
-      await this.audioFileManager.downloadAndEmbed(
-        audioBlob,
-        this.voice.settings.autoEmbedAudio
-      );
+      if (!(options == null ? void 0 : options.forcePicker)) {
+        const folder2 = resolveSaveFolder(
+          this.voice.settings.defaultAudioFolder,
+          ((_a3 = activeFile.parent) == null ? void 0 : _a3.path) || ""
+        );
+        await this.audioFileManager.downloadAndEmbed(
+          audioBlob,
+          this.voice.settings.autoEmbedAudio,
+          folder2
+        );
+        return;
+      }
+      const folder = await FolderPickerModal.open(this.plugin.app, this.voice);
+      this.refreshSaveAffordances();
+      if (folder === null) {
+        return;
+      }
+      await this.audioFileManager.saveOrMove({
+        kind: "save",
+        blob: audioBlob,
+        baseName: activeFile.basename,
+        folder,
+        embed: this.voice.settings.autoEmbedAudio,
+        resolveConflict
+      });
     } catch (error) {
       console.error("Error downloading audio:", error);
-      new import_obsidian10.Notice(`Failed to download audio: ${error.message}`);
+      new import_obsidian12.Notice(`Failed to download audio: ${error.message}`);
     }
+  }
+  /**
+   * Wire the tap-vs-hold gesture onto a save button: tap saves (to the default
+   * folder, or next to the note), hold (or right-click) opens the folder picker.
+   */
+  attachSaveGesture(el) {
+    attachPressGesture(el, {
+      onTap: () => void this.handleDownloadAudio(),
+      onHold: () => void this.handleDownloadAudio({ forcePicker: true })
+    });
+  }
+  /**
+   * Sync the save button's tooltip and icon (status bar + mobile) with the
+   * current default folder.
+   */
+  refreshSaveAffordances() {
+    var _a3;
+    this.updateSaveTooltip();
+    this.updateSaveIcon();
+    (_a3 = this.mobileControlBar) == null ? void 0 : _a3.updateSaveIcon();
+  }
+  /**
+   * Show a floppy-disk (save) glyph when a default folder is set, otherwise the
+   * download arrow — so the status bar mirrors the player. Only swaps on change.
+   */
+  updateSaveIcon() {
+    if (!this.downloadIconEl) {
+      return;
+    }
+    const hasDefault = this.voice.settings.defaultAudioFolder.trim() !== "";
+    if (hasDefault === this.downloadShowsSave) {
+      return;
+    }
+    this.downloadShowsSave = hasDefault;
+    (0, import_obsidian12.setIcon)(this.downloadIconEl, hasDefault ? "save" : "download");
+  }
+  /**
+   * Refresh the download button's tooltip to reflect the current default folder,
+   * with a platform-appropriate hint about the hold gesture.
+   */
+  updateSaveTooltip() {
+    if (!this.downloadIconEl) {
+      return;
+    }
+    this.downloadIconEl.title = this.saveTooltip();
+  }
+  saveTooltip() {
+    const def = this.voice.settings.defaultAudioFolder.trim();
+    const target = def === "" ? "the note's folder" : def;
+    const hint = this.voice.isMobile() ? "touch & hold to choose a folder" : "hold (or right-click) to choose a folder";
+    return `Save to ${target} \u2014 ${hint}`;
   }
 };
 
@@ -25856,6 +26950,15 @@ function removeEmojis(text5) {
   );
 }
 
+// src/processors/pipeline/acronyms.ts
+var ACRONYM_PATTERN = /\b[A-Z]{2,}\b/g;
+function toTitleCaseAcronym(word) {
+  return word.charAt(0) + word.slice(1).toLowerCase();
+}
+function titleCaseAcronyms(text5) {
+  return text5.replace(ACRONYM_PATTERN, (match) => toTitleCaseAcronym(match));
+}
+
 // src/processors/pipeline/EnhanceProcessor.ts
 var ABBREVIATIONS = {
   "Dr.": "Doctor",
@@ -25870,7 +26973,6 @@ var ABBREVIATIONS = {
   "i.e.": "that is",
   "vs.": "versus"
 };
-var ACRONYM_PATTERN = /\b[A-Z]{2,}\b/g;
 var NUMBER_PATTERN = /\b\d+([,.]\d+)*\b/g;
 function enhanceProcessor(options) {
   return function transformer(tree) {
@@ -25994,6 +27096,9 @@ function enhanceProcessor(options) {
   };
 }
 function enhanceText(textNode, options) {
+  if (!options.spellOutAcronyms) {
+    textNode.value = titleCaseAcronyms(textNode.value);
+  }
   const text5 = textNode.value;
   const segments = [];
   if (options.expandAbbreviations) {
@@ -26442,7 +27547,8 @@ var MarkdownToTextProcessor = class {
       skipUrls: this.config.skipUrls
     };
     cleanProcessor(cleanOptions)(ast);
-    return serializeToText(ast, { pauseTags: this.pauseTags });
+    const text5 = serializeToText(ast, { pauseTags: this.pauseTags });
+    return this.config.spellOutAcronyms ? text5 : titleCaseAcronyms(text5);
   }
   updateConfig(config) {
     this.config = {
@@ -26456,7 +27562,7 @@ var MarkdownToTextProcessor = class {
 };
 
 // src/utils/TextSpeaker.ts
-var import_obsidian11 = require("obsidian");
+var import_obsidian13 = require("obsidian");
 var TextSpeaker = class {
   constructor(provider, markdownHelper, iconEventHandler, spellOutAcronyms = false, readCodeBlocks = false, skipUrls = false) {
     this.provider = provider;
@@ -26475,7 +27581,10 @@ var TextSpeaker = class {
       spellOutAcronyms: this.spellOutAcronyms,
       ...contentOptions
     });
-    this.textProcessor = new MarkdownToTextProcessor(contentOptions);
+    this.textProcessor = new MarkdownToTextProcessor({
+      ...contentOptions,
+      spellOutAcronyms: this.spellOutAcronyms
+    });
   }
   async speakText(speed) {
     this.iconEventHandler.ribbonIconHandler();
@@ -26488,11 +27597,22 @@ var TextSpeaker = class {
     }
     const requestId = this.provider.startOperation();
     try {
-      const rawText = await this.markdownHelper.getMarkdownView();
+      const read = await this.markdownHelper.getMarkdownView();
       if (!this.provider.isCurrentRequest(requestId)) {
         return;
       }
-      const processingNotice = new import_obsidian11.Notice("Processing text...", 2e3);
+      if (!read.ok) {
+        new import_obsidian13.Notice(
+          read.reason === "no-note" ? NO_NOTE_MESSAGE : READ_ERROR_MESSAGE
+        );
+        return;
+      }
+      const rawText = read.text;
+      if (rawText.trim() === "") {
+        new import_obsidian13.Notice(EMPTY_NOTE_MESSAGE);
+        return;
+      }
+      const processingNotice = new import_obsidian13.Notice("Processing text...", 2e3);
       const content3 = await this.processContent(rawText);
       processingNotice.hide();
       if (!this.provider.isCurrentRequest(requestId)) {
@@ -26502,7 +27622,15 @@ var TextSpeaker = class {
         return;
       }
       const activeFilePath = this.markdownHelper.getActiveFilePath();
-      await this.provider.speak(content3, speed, activeFilePath || void 0);
+      try {
+        await this.provider.speak(content3, speed, activeFilePath || void 0);
+      } catch (speakError) {
+        if (speakError instanceof Error && speakError.name === "AbortError") {
+          return;
+        }
+        console.error("Speech synthesis failed:", speakError);
+        return;
+      }
       await this.iconEventHandler.maybeAutoDownloadAudio();
     } catch (error) {
       if (error instanceof Error && error.name === "AbortError") {
@@ -26510,7 +27638,7 @@ var TextSpeaker = class {
       }
       console.error("Error in text-to-speech processing:", error);
       const errorMessage = error instanceof Error ? error.message : String(error);
-      new import_obsidian11.Notice(`Voice Plugin Error: ${errorMessage}`);
+      new import_obsidian13.Notice(friendlySpeechError(errorMessage));
     } finally {
       this.provider.endOperation(requestId);
     }
@@ -26526,9 +27654,10 @@ var TextSpeaker = class {
     const result = await this.ssmlProcessor.process(rawText);
     if (!result.isValid) {
       console.error("SSML validation errors:", result.errors);
-      new import_obsidian11.Notice(
-        `Voice Plugin: SSML validation failed
-${result.errors.join("\n")}`
+      new import_obsidian13.Notice(
+        friendlySpeechError(
+          `SSML validation failed: ${result.errors.join("; ")}`
+        )
       );
       return null;
     }
@@ -26540,35 +27669,64 @@ ${result.errors.join("\n")}`
 };
 
 // src/ui/WhatsNewModal.ts
-var import_obsidian12 = require("obsidian");
+var import_obsidian14 = require("obsidian");
 
 // src/utils/whatsNew.ts
 var HERO_IMAGE_URL = "https://raw.githubusercontent.com/chrisurf/obsidian-voice/main/assets/hero.png";
-var WHATS_NEW = `## \u{1F50A} The Voice player is here
+var WHATS_NEW = `## \u25B6\uFE0F One play button, less clutter
+
+Playback is simpler now \u2014 the play button does everything, so the separate Regenerate button is gone. Open the Voice player (the audio-waveform ribbon icon) and use the big play button:
+
+- **Tap** \u25B6\uFE0F to play, pause, or cancel a generation that is in progress.
+- **Press and hold** to regenerate the current note from scratch \u2014 always with your current voice and settings. A ring fills around the button as you hold.
+
+And new **quick toggles** sit right in the player \u2014 flip **Read code blocks** (\`</>\`), **Spell out acronyms** (\`Aa\`), **Skip website URLs** (\u{1F517}), and **Embed MP3 in note** (\u{1F4CE}) with one click. The settings tab is leaner now, because the things you change while listening live in the player.
+
+## \u{1F4C1} Save audio where you want
+
+The save button (the download arrow) now has two simple gestures, and you can pick a **default folder** so every save lands in the same place.
+
+- \u{1F446} **Tap** to save now \u2014 next to your note, or in your default folder if you've set one.
+- \u270B **Press and hold** the save button (or right-click on desktop) to open the folder picker. In the player you can also just click the new **folder button** (\u{1F4C2}) to **save to a custom folder** in one click.
+- \u{1F4CC} In the picker, **pin** a folder to make it your default (only one at a time; tap the pin again to clear it). \u2B50 **Star** folders for quick access, or type to create a new folder.
+- \u{1F500} Picking a folder **saves** new audio there, or **moves** an already-saved recording (a chapter) into it \u2014 no duplicates. If a file with the same name exists, you can **Replace**, **Save as new**, or **Cancel**.
+- \u{1F4BE} When a default folder is set, the save button shows a **floppy-disk** icon so you can tell at a glance where a tap will save.
+- \u{1F5C2}\uFE0F Manage a saved track from its **\u22EE** menu in the player: **Move** it to another folder, **Rename** it, or **Delete** it (with a quick confirmation).
+
+## \u{1F50A} The Voice player is here
 
 Voice now has a full **audiobook-style player** \u2014 and it lives in the right sidebar (next to Backlinks and Outline) by default, so it is always one click away. If you have not updated in a while, this is the big one.
 
 - **Play your notes like chapters** \u2014 every MP3 in a folder shows up as a numbered chapter you can play, skip, and repeat.
 - **Browse audio across your vault** \u2014 a folder picker lets you jump between any folders that contain audio, right from the player.
-- **Transport controls** \u2014 play / pause, previous / next, rewind, fast-forward, a draggable progress bar, and on-the-fly speed.
-- **Read this note & download** \u2014 generate speech and save an MP3 without leaving the player.
-- **Switch provider & voice** \u2014 change between AWS Polly, ElevenLabs, Google Cloud, Azure Speech, and OpenAI directly in the player.
+- **Bring your own provider** \u2014 pick AWS Polly, ElevenLabs, OpenAI, Google Cloud, or Azure Speech (and the voice) right in the player.
+
+**Know your buttons** \u2014 every control is one button; a few do double duty (tap vs. press & hold):
+
+- \u25B6\uFE0F **Play** \u2014 tap to play / pause; **hold** to regenerate.
+- \u23EE \u23ED **Prev / next** \xB7 \u23EA \u23E9 **rewind / forward** \xB7 \u{1F501} **repeat** \xB7 **\u2212 / +** **speed**.
+- \u2B07\uFE0F **Save** \u2014 tap to save; **hold** for the folder picker. (Shows \u{1F4BE} when a default folder is set.)
+- \u{1F4C2} **Folder** \u2014 save into a folder you pick, in one click.
+- \u22EE **Track menu** \u2014 move, rename, or delete a saved chapter.
+- Toggles that light up when on: \`</>\` **code** \xB7 \`Aa\` **acronyms** \xB7 \u{1F517} **skip URLs** \xB7 \u{1F4CE} **embed**.
 
 ## \u2728 Everything you need to know
 
 **Player & playback**
 
 - **Voice player shows by default** in the right sidebar, with a **folder picker** to browse audio across the vault.
-- **In-player controls**: switch provider, voice, and read-code-blocks, with live loading feedback while a note is synthesized.
+- **In-player controls**: switch provider and voice, and flip the content toggles, with live loading feedback while a note is synthesized.
 - **Collapsible, audiobook-style player** with chapters, transport controls, scrubber, and repeat modes (off / one / all).
 - **Configurable rewind & fast-forward** intervals (1\u201360 seconds each).
 
-**More engines, more voices**
+**Bring your own provider**
 
-- **ElevenLabs** support \u2014 premade & multilingual voices.
-- **Google Cloud Text-to-Speech** support, plus extra hotkey commands.
-- **Azure AI Speech** support \u2014 neural voices across many languages.
-- **OpenAI** support \u2014 built-in voices (Alloy, Nova, \u2026) with GPT-4o mini TTS.
+Voice started out as AWS Polly only \u2014 now it supports all the major engines, so you can listen with the provider you already use:
+
+- **ElevenLabs** \u2014 premade & multilingual voices.
+- **OpenAI** \u2014 built-in voices (Alloy, Nova, \u2026) with GPT-4o mini TTS.
+- **Google Cloud Text-to-Speech** \u2014 plus extra hotkey commands.
+- **Azure AI Speech** \u2014 neural voices across many languages. **New:** press **Test Credentials** and Voice loads your account's full Azure catalog (hundreds of voices), grouped by language in the picker.
 
 **Your audio files**
 
@@ -26581,7 +27739,7 @@ function shouldShowWhatsNew(currentVersion, lastSeenVersion) {
 }
 
 // src/ui/WhatsNewModal.ts
-var WhatsNewModal = class extends import_obsidian12.Modal {
+var WhatsNewModal = class extends import_obsidian14.Modal {
   constructor(app, version, component, onOpenPlayer) {
     super(app);
     this.version = version;
@@ -26598,8 +27756,8 @@ var WhatsNewModal = class extends import_obsidian12.Modal {
     });
     hero.addEventListener("error", () => hero.hide());
     const body = contentEl.createDiv({ cls: "voice-whats-new-body" });
-    void import_obsidian12.MarkdownRenderer.render(this.app, WHATS_NEW, body, "", this.component);
-    new import_obsidian12.Setting(contentEl).addButton(
+    void import_obsidian14.MarkdownRenderer.render(this.app, WHATS_NEW, body, "", this.component);
+    new import_obsidian14.Setting(contentEl).addButton(
       (btn) => btn.setButtonText("Open Voice player").setCta().onClick(() => {
         this.onOpenPlayer();
         this.close();
@@ -26614,7 +27772,7 @@ var WhatsNewModal = class extends import_obsidian12.Modal {
 };
 
 // src/utils/VoicePlugin.ts
-var Voice = class extends import_obsidian13.Plugin {
+var Voice = class extends import_obsidian15.Plugin {
   async onload() {
     await this.loadSettings();
     this.addSettingTab(new VoiceSettingTab(this.app, this));
@@ -26704,7 +27862,7 @@ var Voice = class extends import_obsidian13.Plugin {
     await this.textSpeaker.speakText(speed);
   }
   isMobile() {
-    return import_obsidian13.Platform.isMobile;
+    return import_obsidian15.Platform.isMobile;
   }
   onunload() {
     if (this.iconEventHandler) {
@@ -26716,6 +27874,13 @@ var Voice = class extends import_obsidian13.Plugin {
     if (!this.settings.acronymDefaultMigrated) {
       this.settings.spellOutAcronyms = false;
       this.settings.acronymDefaultMigrated = true;
+      await this.saveSettings();
+    }
+    if (!this.settings.audioFolderMigrated) {
+      if (this.settings.audioSaveMode === "custom" && this.settings.lastAudioFolder) {
+        this.settings.defaultAudioFolder = this.settings.lastAudioFolder;
+      }
+      this.settings.audioFolderMigrated = true;
       await this.saveSettings();
     }
   }
@@ -26744,6 +27909,18 @@ var Voice = class extends import_obsidian13.Plugin {
     this.speechProvider = createSpeechProvider(this.settings);
     this.iconEventHandler.setProvider(this.speechProvider);
     this.reinitializeTextSpeaker();
+  }
+  /**
+   * Resync any open Voice player panes with the current settings/provider —
+   * used after the settings tab changes something the player shows (e.g. a
+   * freshly fetched voice catalog), so its voice picker updates immediately.
+   */
+  refreshVoicePlayerControls() {
+    this.app.workspace.getLeavesOfType(VIEW_TYPE_VOICE_PLAYER).forEach((leaf) => {
+      if (leaf.view instanceof VoicePlayerView) {
+        leaf.view.syncControls();
+      }
+    });
   }
   reinitializeTextSpeaker() {
     this.textSpeaker = new TextSpeaker(
@@ -26798,7 +27975,7 @@ var Voice = class extends import_obsidian13.Plugin {
     const currentIndex = options.findIndex((v) => v.id === currentId);
     const next = options[(currentIndex + 1) % options.length];
     await this.persistActiveVoice(next.id);
-    new import_obsidian13.Notice(`Voice: ${next.label}`);
+    new import_obsidian15.Notice(`Voice: ${next.label}`);
   }
   /**
    * Open the Voice player and reveal it (right sidebar on desktop, full-screen

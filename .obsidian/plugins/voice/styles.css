@@ -561,6 +561,14 @@
   cursor: pointer;
   color: var(--text-normal);
   border-radius: 50%;
+  /* Reset native <button> styling so these match their previous div look. */
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  box-shadow: none;
+  appearance: none;
   transition:
     transform 0.1s ease,
     background-color 0.15s ease;
@@ -617,14 +625,33 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 6px;
 }
 
-.voice-player-read {
+/* On/off icon toggles in the controls row (code / acronyms / embed). */
+.voice-player-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: var(--radius-s);
   cursor: pointer;
+  color: var(--text-muted);
 }
 
-.voice-player-download {
+.voice-player-toggle:hover {
+  color: var(--text-normal);
+}
+
+.voice-player-toggle.is-active {
+  color: var(--interactive-accent);
+}
+
+.voice-player-download,
+.voice-player-folder-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -636,12 +663,20 @@
   color: var(--text-muted);
 }
 
-.voice-player-download:hover {
+.voice-player-download:hover,
+.voice-player-folder-btn:hover {
   color: var(--text-normal);
 }
 
+/* Tinted when a default folder is set, so a tap clearly saves into it. */
+.voice-player-folder-btn.is-active {
+  color: var(--interactive-accent);
+}
+
 .voice-player-download:disabled,
-.voice-player-download.is-disabled {
+.voice-player-download.is-disabled,
+.voice-player-folder-btn:disabled,
+.voice-player-folder-btn.is-disabled {
   opacity: 0.3;
   cursor: default;
   pointer-events: none;
@@ -682,6 +717,14 @@
   border-radius: var(--radius-s);
   cursor: pointer;
   color: var(--text-muted);
+  /* Reset native <button> styling so these match their previous div look. */
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  box-shadow: none;
+  appearance: none;
 }
 
 .voice-player-speed-btn:hover {
@@ -715,12 +758,72 @@
 }
 
 .voice-player-chapter {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 8px 8px;
   border-radius: var(--radius-s);
   cursor: pointer;
+}
+
+/* Action bar over a chapter row: Delete / Move / Rename. Right-aligned and only
+   as wide as its buttons, with the background fading out to the left so the
+   start of the file name stays readable underneath. The buttons share the bar's
+   surface as flat text labels (no separate button pills), so nothing spills
+   outside the bar. */
+.voice-player-chapter-actions {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 4px 0 32px;
+  border-radius: var(--radius-s);
+  background: linear-gradient(
+    to right,
+    transparent 0,
+    var(--background-secondary-alt) 32px
+  );
+}
+
+.voice-player-chapter-action {
+  flex: 0 0 auto;
+  padding: 4px 9px;
+  height: auto;
+  font-size: var(--font-ui-smaller);
+  line-height: 1.2;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+}
+
+.voice-player-chapter-action:hover {
+  color: var(--text-normal);
+  background: var(--background-modifier-hover);
+}
+
+.voice-player-chapter-action.mod-warning {
+  color: var(--text-error);
+  background: transparent;
+  box-shadow: none;
+}
+
+.voice-player-chapter-action.mod-warning:hover {
+  color: var(--text-error);
+  background: var(--background-modifier-hover);
+}
+
+.voice-player-chapter-confirm {
+  margin-right: 4px;
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
 }
 
 .voice-player-chapter:hover {
@@ -753,6 +856,36 @@
   font-weight: 600;
 }
 
+/* Rename control on each chapter row */
+.voice-player-chapter-edit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  color: var(--text-faint);
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+.voice-player-chapter:hover .voice-player-chapter-edit {
+  opacity: 1;
+}
+
+.voice-player-chapter-edit:hover {
+  color: var(--text-normal);
+  background: var(--background-modifier-hover);
+}
+
+.voice-player-chapter-rename {
+  flex: 1;
+  min-width: 0;
+  font-size: inherit;
+}
+
 /* Provider / voice selectors + read-code-blocks toggle */
 .voice-player-options {
   display: flex;
@@ -764,27 +897,6 @@
   flex: 1 1 0;
   min-width: 0;
   max-width: 100%;
-}
-
-.voice-player-code {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border-radius: var(--radius-s);
-  cursor: pointer;
-  color: var(--text-muted);
-}
-
-.voice-player-code:hover {
-  color: var(--text-normal);
-}
-
-.voice-player-code.is-active {
-  color: var(--interactive-accent);
 }
 
 /* Folder picker: choose which folder's MP3s show up as chapters */
@@ -825,24 +937,8 @@
   margin-top: 0;
 }
 
-/* "Read this note" loading animation */
-.voice-player-read.is-loading {
-  opacity: 0.85;
-  cursor: default;
-  animation: voice-player-pulse 1.2s ease-in-out infinite;
-}
-
-@keyframes voice-player-pulse {
-  0%,
-  100% {
-    opacity: 0.55;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-/* Indeterminate loading bar, pinned to the bottom of the panel */
+/* Determinate loading bar, pinned to the bottom of the panel. The fill grows
+   to the real synthesis progress via the --voice-progress custom property. */
 .voice-player-loading {
   margin-top: auto;
   height: 3px;
@@ -858,18 +954,126 @@
 }
 
 .voice-player-loading-fill {
-  width: 40%;
+  width: var(--voice-progress, 0%);
   height: 100%;
   border-radius: 3px;
   background: var(--interactive-accent);
-  animation: voice-player-indeterminate 1.1s ease-in-out infinite;
+  transition: width 0.2s ease;
 }
 
-@keyframes voice-player-indeterminate {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(350%);
-  }
+/* Tap-vs-hold save gesture (issue #57): a ring fills around the save button
+   while it is held, signalling that the folder picker is about to open. The
+   --press custom property (0→1) is driven from pressGesture.ts. */
+.voice-pressing {
+  position: relative;
+}
+
+.voice-pressing::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--interactive-accent) calc(var(--press, 0) * 360deg),
+    transparent 0deg
+  );
+  -webkit-mask: radial-gradient(closest-side, transparent 68%, #000 70%);
+  mask: radial-gradient(closest-side, transparent 68%, #000 70%);
+  pointer-events: none;
+}
+
+/* File-conflict modal: the ".mp3" suffix shown next to the rename field. */
+.voice-conflict-ext {
+  margin-left: 6px;
+  color: var(--text-muted);
+}
+
+/* Folder picker (custom audio-folder feature) */
+.voice-folder-suggestion {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.voice-folder-suggestion-icon {
+  display: inline-flex;
+  color: var(--text-muted);
+}
+
+.voice-folder-suggestion .svg-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.voice-folder-suggestion-name {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* The active default folder is highlighted and carries a "Default" chip. */
+.voice-folder-suggestion.is-default {
+  border-left: 2px solid var(--interactive-accent);
+  background: var(--background-modifier-hover);
+}
+
+.voice-folder-suggestion.is-default .voice-folder-suggestion-icon {
+  color: var(--text-accent);
+}
+
+.voice-folder-suggestion-badge {
+  flex-shrink: 0;
+  padding: 1px 6px;
+  border-radius: var(--radius-s);
+  font-size: var(--font-ui-smaller);
+  color: var(--text-on-accent);
+  background: var(--interactive-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.voice-folder-suggestion-pin,
+.voice-folder-suggestion-star {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--text-faint);
+  cursor: pointer;
+}
+
+.voice-folder-suggestion-pin:hover,
+.voice-folder-suggestion-pin.is-default,
+.voice-folder-suggestion-star:hover {
+  color: var(--text-accent);
+}
+
+/* Favorites use a distinct gold accent so they read differently from the
+   purple default: the star and the folder icon on the left both pick it up.
+   The default (purple) wins on the icon when a folder is both. */
+.voice-folder-suggestion-star.is-favorite {
+  color: var(--color-yellow);
+}
+
+.voice-folder-suggestion.is-favorite:not(.is-default)
+  .voice-folder-suggestion-icon {
+  color: var(--color-yellow);
+}
+
+/* Visual break between the default/favorite block at the top and all other
+   folders, with a small caption so the two sections read distinctly. */
+.voice-folder-suggestion.is-section-start {
+  position: relative;
+  margin-top: 22px;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.voice-folder-suggestion.is-section-start::before {
+  content: "Other folders";
+  position: absolute;
+  left: 0;
+  top: -18px;
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
