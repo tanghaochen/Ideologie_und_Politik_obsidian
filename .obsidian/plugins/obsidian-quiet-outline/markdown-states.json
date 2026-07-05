@@ -9779,12 +9779,12 @@
     "scroll": 65.67686915446332,
     "cursor": {
       "from": {
-        "line": 103,
-        "ch": 8
+        "line": 106,
+        "ch": 6
       },
       "to": {
-        "line": 102,
-        "ch": 9
+        "line": 106,
+        "ch": 6
       }
     },
     "expandedKeys": [
