@@ -109,6 +109,16 @@
               "icon": "lucide-file",
               "title": "全面讲解否定，nein,kein,nicht等"
             }
+          },
+          {
+            "id": "5d651e2192f13c13",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
+            }
           }
         ],
         "currentTab": 1
@@ -379,14 +389,13 @@
       "darlal-switcher-plus:Open Symbols for the active editor": true,
       "command-palette:打开命令面板": true,
       "daily-notes:打开/创建今天的日记": false,
-      "obsidian-excalidraw-plugin:新建绘图文件": false,
-      "periodic-notes:Open today": false
+      "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
   "active": "f2c3dab2f640421d",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/2动词/系动词.md",
     "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
+    "语言学习/德语/公共知识语法/2动词/系动词.md",
     "语言学习/德语/公共知识语法/时态/动词现在时.md",
     "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
     "语言学习/德语/公共知识语法/2动词/动词变名词化.md",
