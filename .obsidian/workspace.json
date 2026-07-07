@@ -198,7 +198,8 @@
               "title": "名词：性的规律, 不背词性，一眼识别词性"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -425,7 +426,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "思想思维心理哲学/健身/减脂.md"
+                "file": "语言学习/德语/公共知识语法/从句.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -470,10 +471,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "de286bf2212851d8",
+  "active": "a7f6dd8481849667",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/10句型/介词一副词一连词.md",
     "思想思维心理哲学/健身/减脂.md",
+    "语言学习/德语/公共知识语法/10句型/介词一副词一连词.md",
     "思想思维心理哲学/健身",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/介词.md",
