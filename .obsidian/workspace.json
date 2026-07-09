@@ -502,11 +502,11 @@
           }
         ],
         "direction": "vertical",
-        "x": 2670,
-        "y": 84,
-        "width": 1052,
-        "height": 1392,
-        "maximize": true,
+        "x": 3584,
+        "y": 0,
+        "width": 1024,
+        "height": 1232,
+        "maximize": false,
         "zoom": -1
       }
     ]
