@@ -6,7 +6,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 50.42372881355932,
+        "dimension": 34.12856196156395,
         "children": [
           {
             "id": "bfe861c192fc359f",
@@ -77,38 +77,8 @@
       {
         "id": "66514ff393b45104",
         "type": "tabs",
-        "dimension": 49.57627118644068,
+        "dimension": 65.87143803843605,
         "children": [
-          {
-            "id": "d40c285baa2c8d1d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "农业/农资产品使用介绍.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "农资产品使用介绍"
-            }
-          },
-          {
-            "id": "de286bf2212851d8",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/健身/减脂.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "减脂"
-            }
-          },
           {
             "id": "a7f6dd8481849667",
             "type": "leaf",
@@ -121,18 +91,6 @@
               "pinned": true,
               "icon": "excalidraw-icon",
               "title": "从句"
-            }
-          },
-          {
-            "id": "05eb63e2c0ae4f9b",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/介词.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "介词"
             }
           },
           {
@@ -153,46 +111,22 @@
             }
           },
           {
-            "id": "5d651e2192f13c13",
+            "id": "c239b722d18d29fa",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/代词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
+                "file": "语言学习/德语/单词/生词/2026年6月.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "冠词类限定词（Artikelwörter）及其形容词词尾变化"
-            }
-          },
-          {
-            "id": "b960bb2006ab08d2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "名词：性的规律, 不背词性，一眼识别词性"
-            }
-          },
-          {
-            "id": "3796331cc9b0c2c5",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "2026年6月"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -419,7 +353,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "农业/农资产品使用介绍.md"
+                "file": "语言学习/德语/单词/生词/2026年6月.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -464,12 +398,12 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "d40c285baa2c8d1d",
+  "active": "c239b722d18d29fa",
   "lastOpenFiles": [
+    "农业/农资产品使用介绍.md",
     "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
     "语言学习/德语/单词/生词/2026年6月.md",
-    "农业/农资产品使用介绍.md",
     "语言学习/德语/公共知识语法/0格/不知道词性的备用方案.md",
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
