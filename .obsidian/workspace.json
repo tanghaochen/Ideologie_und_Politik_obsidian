@@ -390,7 +390,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/0格/不知道词性的备用方案.md"
+                "file": "语言学习/德语/单词/生词/2026年6月.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -431,8 +431,7 @@
       "darlal-switcher-plus:Open Symbols for the active editor": true,
       "command-palette:打开命令面板": true,
       "daily-notes:打开/创建今天的日记": false,
-      "obsidian-excalidraw-plugin:新建绘图文件": false,
-      "periodic-notes:Open today": false
+      "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
   "floating": {
@@ -468,14 +467,14 @@
         "direction": "vertical",
         "x": 3584,
         "y": 0,
-        "width": 1024,
-        "height": 1232,
+        "width": 1280,
+        "height": 1540,
         "maximize": false,
         "zoom": -1
       }
     ]
   },
-  "active": "54234f3722e1bfa3",
+  "active": "8251b269c209ae29",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/单词/生词/2026年6月.md",
