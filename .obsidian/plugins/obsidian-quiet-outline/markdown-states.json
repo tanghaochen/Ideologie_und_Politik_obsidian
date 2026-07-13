@@ -14684,12 +14684,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 37,
-        "ch": 101
+        "line": 6,
+        "ch": 92
       },
       "to": {
-        "line": 37,
-        "ch": 101
+        "line": 6,
+        "ch": 92
       }
     },
     "expandedKeys": []
