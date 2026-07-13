@@ -129,10 +129,15 @@
             "id": "2eaaee7096b2bd95",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "网络/项目服务器/CF节点搭建相关.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "CF节点搭建相关"
             }
           }
         ],
@@ -362,7 +367,9 @@
             "type": "leaf",
             "state": {
               "type": "footnotes",
-              "state": {},
+              "state": {
+                "file": "网络/项目服务器/CF节点搭建相关.md"
+              },
               "icon": "lucide-file-signature",
               "title": "脚注"
             }
@@ -408,6 +415,7 @@
   },
   "active": "2eaaee7096b2bd95",
   "lastOpenFiles": [
+    "网络/项目服务器/googlecloud已有节点.md",
     "语言学习/德语/单词/生词/2026年6月.md",
     "农业/农资产品使用介绍.md",
     "电脑、软件、系统/ps-tang.md",
@@ -436,7 +444,6 @@
     "语言学习/德语/公共知识语法/2动词/系动词.md",
     "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
     "语言学习/德语/公共知识语法/2动词/动词变名词化.md",
-    "语言学习/德语/公共知识语法/3形容词/形容词名词化.md",
     "思想思维心理哲学/思想",
     "assets/image-357.png",
     "思想思维心理哲学/个人问题处理/原生家庭",

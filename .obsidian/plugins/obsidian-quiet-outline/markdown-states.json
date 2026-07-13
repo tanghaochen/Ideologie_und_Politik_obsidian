@@ -11526,15 +11526,15 @@
     "expandedKeys": []
   },
   "网络/项目服务器/CF节点搭建相关.md": {
-    "scroll": 26.799573157099463,
+    "scroll": 26.159208675648447,
     "cursor": {
       "from": {
-        "line": 29,
-        "ch": 82
+        "line": 17,
+        "ch": 0
       },
       "to": {
-        "line": 29,
-        "ch": 82
+        "line": 17,
+        "ch": 0
       }
     },
     "expandedKeys": [
@@ -16095,5 +16095,19 @@
       "item-1-22"
     ],
     "scroll": 28.77673578262329
+  },
+  "网络/项目服务器/googlecloud已有节点.md": {
+    "expandedKeys": [],
+    "cursor": {
+      "from": {
+        "line": 1,
+        "ch": 4
+      },
+      "to": {
+        "line": 1,
+        "ch": 4
+      }
+    },
+    "scroll": 0
   }
 }
