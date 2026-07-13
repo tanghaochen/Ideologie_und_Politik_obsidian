@@ -14685,11 +14685,11 @@
     "cursor": {
       "from": {
         "line": 6,
-        "ch": 92
+        "ch": 213
       },
       "to": {
         "line": 6,
-        "ch": 92
+        "ch": 213
       }
     },
     "expandedKeys": []
@@ -16115,5 +16115,18 @@
       }
     },
     "scroll": 0
+  },
+  "思想思维心理哲学/知足, 不能既要又要.md": {
+    "cursor": {
+      "from": {
+        "line": 6,
+        "ch": 328
+      },
+      "to": {
+        "line": 6,
+        "ch": 328
+      }
+    },
+    "expandedKeys": []
   }
 }
