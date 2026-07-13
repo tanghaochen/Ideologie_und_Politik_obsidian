@@ -6,7 +6,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 34.12856196156395,
+        "dimension": 20.715630885122415,
         "children": [
           {
             "id": "bfe861c192fc359f",
@@ -77,7 +77,7 @@
       {
         "id": "66514ff393b45104",
         "type": "tabs",
-        "dimension": 65.87143803843605,
+        "dimension": 79.28436911487759,
         "children": [
           {
             "id": "a7f6dd8481849667",
@@ -124,9 +124,19 @@
               "icon": "lucide-file",
               "title": "2026年6月"
             }
+          },
+          {
+            "id": "2eaaee7096b2bd95",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -352,9 +362,7 @@
             "type": "leaf",
             "state": {
               "type": "footnotes",
-              "state": {
-                "file": "语言学习/德语/单词/生词/2026年6月.md"
-              },
+              "state": {},
               "icon": "lucide-file-signature",
               "title": "脚注"
             }
@@ -398,12 +406,12 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "c239b722d18d29fa",
+  "active": "2eaaee7096b2bd95",
   "lastOpenFiles": [
+    "语言学习/德语/单词/生词/2026年6月.md",
     "农业/农资产品使用介绍.md",
     "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
-    "语言学习/德语/单词/生词/2026年6月.md",
     "语言学习/德语/公共知识语法/0格/不知道词性的备用方案.md",
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
