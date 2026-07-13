@@ -6,36 +6,18 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 46.93973634651601,
+        "dimension": 62.0527306967985,
         "children": [
           {
-            "id": "f4fccabb1fb1aec9",
+            "id": "22effc3c2715ed4d",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "网络/项目服务器/CF节点搭建相关.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
               },
-              "icon": "lucide-file",
-              "title": "CF节点搭建相关"
-            }
-          },
-          {
-            "id": "bfe861c192fc359f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "电脑、软件、系统/ps-tang.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "ps-tang"
+              "icon": "excalidraw-icon",
+              "title": "格; 限定词"
             }
           },
           {
@@ -92,8 +74,23 @@
       {
         "id": "66514ff393b45104",
         "type": "tabs",
-        "dimension": 53.060263653484,
+        "dimension": 37.94726930320151,
         "children": [
+          {
+            "id": "1e8ebe4bc261fb21",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/2动词/汇总所有动词变化.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "汇总所有动词变化"
+            }
+          },
           {
             "id": "a7f6dd8481849667",
             "type": "leaf",
@@ -152,8 +149,7 @@
               "title": "时态"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -380,7 +376,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/时态.md"
+                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -425,8 +421,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "991c7a6c522598b4",
+  "active": "22effc3c2715ed4d",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/时态/动词现在时.md",
+    "语言学习/德语/公共知识语法/2动词/汇总所有动词变化.md",
+    "语言学习/德语/公共知识语法/0格/不知道词性的备用方案.md",
+    "电脑、软件、系统/ps-tang.md",
+    "语言学习/德语/公共知识语法/时态.md",
     "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
     "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
     "语言学习/德语/公共知识语法/10句型/第一虚拟式转述对话、传闻和自述.md",
@@ -434,9 +435,7 @@
     "网络/项目服务器/googlecloud已有节点.md",
     "语言学习/德语/单词/生词/2026年6月.md",
     "农业/农资产品使用介绍.md",
-    "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
-    "语言学习/德语/公共知识语法/0格/不知道词性的备用方案.md",
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
     "语言学习/德语/公共知识语法/时态/动词的过去时.md",
@@ -447,15 +446,12 @@
     "思想思维心理哲学/健身",
     "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/不占位.md",
-    "语言学习/德语/公共知识语法/时态/动词现在时.md",
     "语言学习/德语/公共知识语法/1名词/❌/名词化 t5.md",
     "assets/image-358.png",
     "语言学习/德语/公共知识语法/1名词/❌",
     "语言学习/德语/公共知识语法/0格/第二格.md",
     "语言学习/德语/公共知识语法/10句型/代词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
     "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
-    "思想思维心理哲学/个人人生思想架构.md",
-    "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "思想思维心理哲学/思想",
     "assets/image-357.png",
     "思想思维心理哲学/个人问题处理/原生家庭",
