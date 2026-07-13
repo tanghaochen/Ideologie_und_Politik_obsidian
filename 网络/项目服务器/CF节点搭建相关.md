@@ -13,9 +13,7 @@ cloudflare worker 部署代码：
 
 ## 已搭建完成，导入链接：
 [aaa.installguider.dpdns.org/95550bdb-cf38-464c-b05c-4d2757b43083](http://aaa.installguider.dpdns.org/95550bdb-cf38-464c-b05c-4d2757b43083)
-
-
-# GoogleCoud 搭建
+didy# GoogleCoud 搭建
 [永久“白嫖”谷歌云服务器 | 更新整合版 | 创建永久免费VPS、搭建科学上网 | 如何避免反撸扣费 | 每月200G流量 | 试用期过后如何重新激活 - YouTube](https://www.youtube.com/watch?v=12goOU6jG9w)
 
 

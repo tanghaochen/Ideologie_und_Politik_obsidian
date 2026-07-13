@@ -1,6 +1,22 @@
 {
   "recentFiles": [
     {
+      "basename": "时态",
+      "path": "语言学习/德语/公共知识语法/时态.md"
+    },
+    {
+      "basename": "第一将来时和第一虚拟式的区别",
+      "path": "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md"
+    },
+    {
+      "basename": "第一分词作定语",
+      "path": "语言学习/德语/公共知识语法/10句型/第一分词作定语.md"
+    },
+    {
+      "basename": "第一虚拟式转述对话、传闻和自述",
+      "path": "语言学习/德语/公共知识语法/10句型/第一虚拟式转述对话、传闻和自述.md"
+    },
+    {
       "basename": "CF节点搭建相关",
       "path": "网络/项目服务器/CF节点搭建相关.md"
     },
@@ -113,10 +129,6 @@
       "path": "语言学习/德语/公共知识语法/3形容词/形容词名词化.md"
     },
     {
-      "basename": "第一分词作定语",
-      "path": "语言学习/德语/公共知识语法/10句型/第一分词作定语.md"
-    },
-    {
       "basename": "第二分词;过去分词",
       "path": "语言学习/德语/公共知识语法/2动词/第二分词;过去分词.md"
     },
@@ -187,18 +199,6 @@
     {
       "basename": "形容词",
       "path": "语言学习/德语/公共知识语法/形容词.md"
-    },
-    {
-      "basename": "Meine Familienzusammensetzung",
-      "path": "语言学习/德语/学习记录日记-技巧/Autobiogragie und Tagebuch/Meine Familienzusammensetzung.md"
-    },
-    {
-      "basename": "Boden  Erdkultur, Hydrokultur, Halbbodenkultur",
-      "path": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md"
-    },
-    {
-      "basename": "阳性弱变化动词",
-      "path": "语言学习/德语/公共知识语法/2动词/阳性弱变化动词.md"
     }
   ],
   "omittedPaths": [],
