@@ -6,18 +6,21 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 62.0527306967985,
+        "dimension": 55.037664783427495,
         "children": [
           {
             "id": "22effc3c2715ed4d",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
+                "file": "语言学习/德语/公共知识语法/时态/动词现在时.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "excalidraw-icon",
-              "title": "格; 限定词"
+              "icon": "lucide-file",
+              "title": "动词现在时"
             }
           },
           {
@@ -74,7 +77,7 @@
       {
         "id": "66514ff393b45104",
         "type": "tabs",
-        "dimension": 37.94726930320151,
+        "dimension": 44.962335216572505,
         "children": [
           {
             "id": "1e8ebe4bc261fb21",
@@ -376,7 +379,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
+                "file": "语言学习/德语/公共知识语法/时态/动词现在时.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -423,6 +426,9 @@
   },
   "active": "22effc3c2715ed4d",
   "lastOpenFiles": [
+    "语言学习/德语/柏林广场视频笔记/B1/30 形容词比较级和最高级.md",
+    "语言学习/德语/公共知识语法/2动词/lassen.md",
+    "语言学习/德语/公共知识语法/格; 限定词.md",
     "语言学习/德语/公共知识语法/时态/动词现在时.md",
     "语言学习/德语/公共知识语法/2动词/汇总所有动词变化.md",
     "语言学习/德语/公共知识语法/0格/不知道词性的备用方案.md",
@@ -449,9 +455,6 @@
     "语言学习/德语/公共知识语法/1名词/❌/名词化 t5.md",
     "assets/image-358.png",
     "语言学习/德语/公共知识语法/1名词/❌",
-    "语言学习/德语/公共知识语法/0格/第二格.md",
-    "语言学习/德语/公共知识语法/10句型/代词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
-    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "思想思维心理哲学/思想",
     "assets/image-357.png",
     "思想思维心理哲学/个人问题处理/原生家庭",
