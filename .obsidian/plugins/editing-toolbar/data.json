@@ -369,12 +369,12 @@
         "supporter": false
       }
     },
-    "enableCustomModel": false,
+    "enableCustomModel": true,
     "customModel": {
       "apiFormat": "openai-compatible",
-      "baseUrl": "",
+      "baseUrl": "https://zhi-api.com/v1",
       "apiKey": "",
-      "model": "",
+      "model": "gpt-5.4-mini",
       "temperature": 0.2
     },
     "customPromptHistory": [
