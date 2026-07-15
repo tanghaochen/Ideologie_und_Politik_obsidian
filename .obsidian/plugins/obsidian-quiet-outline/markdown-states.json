@@ -6185,12 +6185,12 @@
     "scroll": 144.67082057502617,
     "cursor": {
       "from": {
-        "line": 155,
-        "ch": 25
+        "line": 154,
+        "ch": 0
       },
       "to": {
-        "line": 155,
-        "ch": 25
+        "line": 154,
+        "ch": 0
       }
     },
     "expandedKeys": [
@@ -15150,12 +15150,12 @@
     "scroll": 80.61029121822672,
     "cursor": {
       "from": {
-        "line": 96,
-        "ch": 677
+        "line": 100,
+        "ch": 0
       },
       "to": {
-        "line": 96,
-        "ch": 677
+        "line": 100,
+        "ch": 0
       }
     },
     "expandedKeys": [
