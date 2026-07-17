@@ -6,7 +6,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 57.39171374764596,
+        "dimension": 57.39171374764595,
         "children": [
           {
             "id": "cbd0f5a80949862e",
@@ -90,7 +90,7 @@
       {
         "id": "66514ff393b45104",
         "type": "tabs",
-        "dimension": 42.60828625235405,
+        "dimension": 42.60828625235404,
         "children": [
           {
             "id": "de741a968d498c0b",
@@ -395,9 +395,7 @@
             "type": "leaf",
             "state": {
               "type": "footnotes",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/动词.md"
-              },
+              "state": {},
               "icon": "lucide-file-signature",
               "title": "脚注"
             }
@@ -437,14 +435,13 @@
       "darlal-switcher-plus:Open Symbols for the active editor": true,
       "command-palette:打开命令面板": true,
       "daily-notes:打开/创建今天的日记": false,
-      "obsidian-excalidraw-plugin:新建绘图文件": false,
-      "periodic-notes:Open today": false
+      "obsidian-excalidraw-plugin:新建绘图文件": false
     }
   },
-  "active": "be73b89bf7f102ca",
+  "active": "05d69b1ddc28b0c3",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
     "语言学习/德语/公共知识语法/时态/第一将来时, 第二将来时.md",
+    "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
     "语言学习/德语/单词/生词/2026年6月.md",
     "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
