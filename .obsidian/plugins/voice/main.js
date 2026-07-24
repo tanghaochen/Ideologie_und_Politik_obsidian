@@ -4255,30 +4255,30 @@ var init_tslib_es6 = __esm({
   }
 });
 
-// node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
+// node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
 var fromUtf82;
 var init_fromUtf8_browser2 = __esm({
-  "node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
+  "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
     fromUtf82 = (input) => new TextEncoder().encode(input);
   }
 });
 
-// node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
+// node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
 var init_toUint8Array = __esm({
-  "node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
+  "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
     init_fromUtf8_browser2();
   }
 });
 
-// node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
+// node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
 var init_toUtf8_browser2 = __esm({
-  "node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
+  "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
   }
 });
 
-// node_modules/@smithy/util-utf8/dist-es/index.js
+// node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js
 var init_dist_es2 = __esm({
-  "node_modules/@smithy/util-utf8/dist-es/index.js"() {
+  "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js"() {
     init_fromUtf8_browser2();
     init_toUint8Array();
     init_toUtf8_browser2();
@@ -13547,6 +13547,9 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
     return `${current} To set a default folder, ${hold} the save button to open the folder picker, then tap the pin on a folder (tap it again to clear).`;
   }
   display() {
+    this.render();
+  }
+  render() {
     const { containerEl } = this;
     containerEl.empty();
     new import_obsidian5.Setting(containerEl).setName("Speech Provider").setDesc(
@@ -13556,7 +13559,7 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
         this.plugin.settings.TTS_PROVIDER = value2;
         await this.plugin.saveSettings();
         this.plugin.reinitializeProvider();
-        this.display();
+        this.render();
       });
     });
     new import_obsidian5.Setting(containerEl).setName("Playback").setHeading();
@@ -14010,7 +14013,7 @@ var HotkeySettings = class {
 };
 
 // src/utils/VoicePlugin.ts
-var import_obsidian15 = require("obsidian");
+var import_obsidian16 = require("obsidian");
 
 // src/utils/MarkdownHelper.ts
 var import_obsidian6 = require("obsidian");
@@ -14054,12 +14057,15 @@ var MarkdownHelper = class {
 };
 
 // src/utils/IconEventHandler.ts
-var import_obsidian12 = require("obsidian");
+var import_obsidian13 = require("obsidian");
 
 // src/utils/MobileControlBar.ts
-var import_obsidian8 = require("obsidian");
+var import_obsidian9 = require("obsidian");
 
 // src/ui/VoicePlayerView.ts
+var import_obsidian8 = require("obsidian");
+
+// src/utils/folderAudio.ts
 var import_obsidian7 = require("obsidian");
 
 // src/utils/chapters.ts
@@ -14096,6 +14102,18 @@ function listChapters(mp3Paths) {
   return [...mp3Paths].sort(
     (a2, b2) => a2.localeCompare(b2, void 0, { numeric: true, sensitivity: "base" })
   ).map((path2) => ({ path: path2, name: chapterName(path2) }));
+}
+
+// src/utils/folderAudio.ts
+function mp3FilesInFolder(vault, folderPath) {
+  const normalized = normalizeFolderPath(folderPath);
+  const folder = normalized === "/" ? vault.getRoot() : vault.getAbstractFileByPath(normalized);
+  if (!(folder instanceof import_obsidian7.TFolder)) {
+    return [];
+  }
+  return folder.children.filter(
+    (child) => child instanceof import_obsidian7.TFile && child.extension === "mp3"
+  );
 }
 
 // src/utils/pressGesture.ts
@@ -14288,7 +14306,7 @@ var PROVIDERS = [
   { id: "azure", label: "Azure Speech" },
   { id: "openai", label: "OpenAI" }
 ];
-var VoicePlayerView = class extends import_obsidian7.ItemView {
+var VoicePlayerView = class extends import_obsidian8.ItemView {
   constructor(leaf, plugin) {
     super(leaf);
     // Tracks which icon the download button currently shows, so we only swap it
@@ -14372,7 +14390,7 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
       cls: "voice-player-btn voice-player-track",
       attr: { "aria-label": "Previous track" }
     });
-    (0, import_obsidian7.setIcon)(this.prevTrackBtn, "skip-back");
+    (0, import_obsidian8.setIcon)(this.prevTrackBtn, "skip-back");
     this.registerDomEvent(
       this.prevTrackBtn,
       "click",
@@ -14382,7 +14400,7 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
       cls: "voice-player-btn voice-player-skip",
       attr: { "aria-label": "Rewind" }
     });
-    (0, import_obsidian7.setIcon)(rewindBtn, "rewind");
+    (0, import_obsidian8.setIcon)(rewindBtn, "rewind");
     rewindBtn.createSpan({ cls: "voice-player-skip-label" }).setText(`${this.plugin.settings.rewindSeconds}`);
     this.registerDomEvent(
       rewindBtn,
@@ -14395,7 +14413,7 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
         "aria-label": "Tap: play, pause or cancel \xB7 Hold: regenerate from scratch"
       }
     });
-    (0, import_obsidian7.setIcon)(this.playPauseBtn, "play");
+    (0, import_obsidian8.setIcon)(this.playPauseBtn, "play");
     attachPressGesture(this.playPauseBtn, {
       onTap: () => this.togglePlay(),
       onHold: () => this.regenerate()
@@ -14404,7 +14422,7 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
       cls: "voice-player-btn voice-player-skip",
       attr: { "aria-label": "Fast-forward" }
     });
-    (0, import_obsidian7.setIcon)(forwardBtn, "fast-forward");
+    (0, import_obsidian8.setIcon)(forwardBtn, "fast-forward");
     forwardBtn.createSpan({ cls: "voice-player-skip-label" }).setText(`${this.plugin.settings.forwardSeconds}`);
     this.registerDomEvent(
       forwardBtn,
@@ -14415,7 +14433,7 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
       cls: "voice-player-btn voice-player-track",
       attr: { "aria-label": "Next track" }
     });
-    (0, import_obsidian7.setIcon)(this.nextTrackBtn, "skip-forward");
+    (0, import_obsidian8.setIcon)(this.nextTrackBtn, "skip-forward");
     this.registerDomEvent(
       this.nextTrackBtn,
       "click",
@@ -14426,7 +14444,7 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
       cls: "voice-player-download",
       attr: { "aria-label": "Download as MP3" }
     });
-    (0, import_obsidian7.setIcon)(this.downloadBtn, "download");
+    (0, import_obsidian8.setIcon)(this.downloadBtn, "download");
     attachPressGesture(this.downloadBtn, {
       onTap: () => void this.downloadAudio(),
       onHold: () => void this.downloadAudio({ forcePicker: true })
@@ -14437,7 +14455,7 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
         "aria-label": "Save or move audio to a folder you choose (optionally pin it as your default)"
       }
     });
-    (0, import_obsidian7.setIcon)(this.folderBtn, "folder-open");
+    (0, import_obsidian8.setIcon)(this.folderBtn, "folder-open");
     this.registerDomEvent(
       this.folderBtn,
       "click",
@@ -14453,22 +14471,22 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
       cls: "voice-player-speed-btn",
       attr: { "aria-label": "Slower" }
     });
-    (0, import_obsidian7.setIcon)(slower, "minus");
+    (0, import_obsidian8.setIcon)(slower, "minus");
     this.registerDomEvent(slower, "click", () => this.changeSpeed(-0.1));
     this.speedEl = speedGroup.createSpan({ cls: "voice-player-speed-value" });
     const faster = speedGroup.createEl("button", {
       cls: "voice-player-speed-btn",
       attr: { "aria-label": "Faster" }
     });
-    (0, import_obsidian7.setIcon)(faster, "plus");
+    (0, import_obsidian8.setIcon)(faster, "plus");
     this.registerDomEvent(faster, "click", () => this.changeSpeed(0.1));
     this.codeBtn = secondary.createEl("button", { cls: "voice-player-toggle" });
-    (0, import_obsidian7.setIcon)(this.codeBtn, "code");
+    (0, import_obsidian8.setIcon)(this.codeBtn, "code");
     this.registerDomEvent(this.codeBtn, "click", () => this.toggleCodeBlocks());
     this.acronymBtn = secondary.createEl("button", {
       cls: "voice-player-toggle"
     });
-    (0, import_obsidian7.setIcon)(this.acronymBtn, "case-sensitive");
+    (0, import_obsidian8.setIcon)(this.acronymBtn, "case-sensitive");
     this.registerDomEvent(
       this.acronymBtn,
       "click",
@@ -14477,12 +14495,12 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
     this.urlBtn = secondary.createEl("button", {
       cls: "voice-player-toggle"
     });
-    (0, import_obsidian7.setIcon)(this.urlBtn, "unlink");
+    (0, import_obsidian8.setIcon)(this.urlBtn, "unlink");
     this.registerDomEvent(this.urlBtn, "click", () => this.toggleSkipUrls());
     this.embedBtn = secondary.createEl("button", {
       cls: "voice-player-toggle"
     });
-    (0, import_obsidian7.setIcon)(this.embedBtn, "paperclip");
+    (0, import_obsidian8.setIcon)(this.embedBtn, "paperclip");
     this.registerDomEvent(this.embedBtn, "click", () => this.toggleEmbed());
     const options = root3.createDiv({ cls: "voice-player-options" });
     this.providerSelect = options.createEl("select", {
@@ -14587,7 +14605,7 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
    */
   existingNoteAudio(active) {
     var _a3, _b2;
-    const path2 = (0, import_obsidian7.normalizePath)(
+    const path2 = (0, import_obsidian8.normalizePath)(
       noteAudioPath(
         this.plugin.settings.defaultAudioFolder,
         (_b2 = (_a3 = active.parent) == null ? void 0 : _a3.path) != null ? _b2 : "",
@@ -14595,7 +14613,7 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
       )
     );
     const file = this.app.vault.getAbstractFileByPath(path2);
-    return file instanceof import_obsidian7.TFile ? file : null;
+    return file instanceof import_obsidian8.TFile ? file : null;
   }
   /**
    * Whether the audio currently loaded in the player no longer matches the
@@ -14795,15 +14813,15 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
     const active = this.app.workspace.getActiveFile();
     const hasGeneratedAudio = active ? this.provider().getLastGeneratedAudio(active.path) !== null : false;
     const hasLoadedChapter = this.currentChapterPath !== null;
-    this.downloadBtn.disabled = !hasGeneratedAudio;
-    this.downloadBtn.toggleClass("is-disabled", !hasGeneratedAudio);
+    this.downloadBtn.disabled = false;
+    this.downloadBtn.toggleClass("is-muted", !hasGeneratedAudio);
     const folderEnabled = hasGeneratedAudio || hasLoadedChapter;
     this.folderBtn.disabled = !folderEnabled;
     this.folderBtn.toggleClass("is-disabled", !folderEnabled);
     const hasDefault = this.plugin.settings.defaultAudioFolder.trim() !== "";
     if (hasDefault !== this.downloadShowsSave) {
       this.downloadShowsSave = hasDefault;
-      (0, import_obsidian7.setIcon)(this.downloadBtn, hasDefault ? "save" : "download");
+      (0, import_obsidian8.setIcon)(this.downloadBtn, hasDefault ? "save" : "download");
     }
     this.downloadBtn.setAttribute(
       "aria-label",
@@ -14895,12 +14913,7 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
   /** Render the chapters (MP3s) that live in the selected folder. */
   renderSelectedFolderChapters() {
     const folderPath = this.selectedFolderPath;
-    const mp3Paths = folderPath === null ? [] : this.app.vault.getFiles().filter(
-      (f2) => {
-        var _a3, _b2;
-        return f2.extension === "mp3" && normalizeFolderPath((_b2 = (_a3 = f2.parent) == null ? void 0 : _a3.path) != null ? _b2 : "/") === folderPath;
-      }
-    ).map((f2) => f2.path);
+    const mp3Paths = folderPath === null ? [] : mp3FilesInFolder(this.app.vault, folderPath).map((f2) => f2.path);
     this.chapters = listChapters(mp3Paths);
     this.subtitleEl.setText(
       this.chapters.length === 1 ? "1 chapter" : `${this.chapters.length} chapters`
@@ -14931,7 +14944,7 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
         cls: "voice-player-chapter-edit",
         attr: { "aria-label": "Track actions" }
       });
-      (0, import_obsidian7.setIcon)(actionsBtn, "more-vertical");
+      (0, import_obsidian8.setIcon)(actionsBtn, "more-vertical");
       this.registerDomEvent(actionsBtn, "click", (evt) => {
         evt.stopPropagation();
         this.openChapterActions(item, chapter);
@@ -14971,7 +14984,7 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
     });
     this.openActionsEl = bar;
     const onDocClick = (evt) => {
-      if (!bar.contains(evt.target)) {
+      if (!(evt.target instanceof Node) || !bar.contains(evt.target)) {
         this.closeChapterActions();
       }
     };
@@ -15036,12 +15049,12 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
   /** Delete a chapter's MP3 (after confirmation) and refresh the list. */
   async deleteChapter(chapter) {
     const file = this.app.vault.getAbstractFileByPath(chapter.path);
-    if (file instanceof import_obsidian7.TFile) {
+    if (file instanceof import_obsidian8.TFile) {
       try {
-        await this.app.vault.delete(file);
-        new import_obsidian7.Notice(`Deleted: ${chapter.name}`);
+        await this.app.fileManager.trashFile(file);
+        new import_obsidian8.Notice(`Deleted: ${chapter.name}`);
       } catch (error) {
-        new import_obsidian7.Notice(
+        new import_obsidian8.Notice(
           `Could not delete: ${error instanceof Error ? error.message : String(error)}`
         );
       }
@@ -15103,25 +15116,25 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
     var _a3, _b2;
     const file = this.app.vault.getAbstractFileByPath(chapter.path);
     const newBase = rawName.trim();
-    if (!(file instanceof import_obsidian7.TFile) || !newBase || newBase === chapter.name) {
+    if (!(file instanceof import_obsidian8.TFile) || !newBase || newBase === chapter.name) {
       this.refreshContext();
       return;
     }
     if (/[\\/:*?"<>|]/.test(newBase)) {
-      new import_obsidian7.Notice("That file name contains characters that aren't allowed.");
+      new import_obsidian8.Notice("That file name contains characters that aren't allowed.");
       this.refreshContext();
       return;
     }
     const folder = normalizeFolderPath((_b2 = (_a3 = file.parent) == null ? void 0 : _a3.path) != null ? _b2 : "/");
     const dir = folder === "/" ? "" : `${folder}/`;
-    const newPath = (0, import_obsidian7.normalizePath)(`${dir}${newBase}.${file.extension}`);
+    const newPath = (0, import_obsidian8.normalizePath)(`${dir}${newBase}.${file.extension}`);
     try {
       await this.app.fileManager.renameFile(file, newPath);
       if (this.currentChapterPath === chapter.path) {
         this.currentChapterPath = newPath;
       }
     } catch (error) {
-      new import_obsidian7.Notice(
+      new import_obsidian8.Notice(
         `Could not rename: ${error instanceof Error ? error.message : String(error)}`
       );
     }
@@ -15129,7 +15142,7 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
   }
   playChapter(path2) {
     const file = this.app.vault.getAbstractFileByPath(path2);
-    if (!(file instanceof import_obsidian7.TFile)) {
+    if (!(file instanceof import_obsidian8.TFile)) {
       return;
     }
     const audio = this.audio();
@@ -15204,7 +15217,7 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
       return;
     }
     const icon = this.repeatMode === "one" ? "repeat-1" : "repeat";
-    (0, import_obsidian7.setIcon)(this.repeatBtn, icon);
+    (0, import_obsidian8.setIcon)(this.repeatBtn, icon);
     this.repeatBtn.toggleClass("is-active", this.repeatMode !== "none");
     const label = this.repeatMode === "one" ? "Repeat one" : this.repeatMode === "all" ? "Repeat all" : "Repeat off";
     this.repeatBtn.setAttribute("aria-label", label);
@@ -15254,11 +15267,11 @@ var VoicePlayerView = class extends import_obsidian7.ItemView {
       this.loadingFillEl.setCssProps({ "--voice-progress": `${pct}%` });
       if (!this.playPauseBtn.hasClass("rotating-icon")) {
         this.playPauseBtn.addClass("rotating-icon");
-        (0, import_obsidian7.setIcon)(this.playPauseBtn, "refresh-ccw");
+        (0, import_obsidian8.setIcon)(this.playPauseBtn, "refresh-ccw");
       }
     } else {
       this.playPauseBtn.removeClass("rotating-icon");
-      (0, import_obsidian7.setIcon)(this.playPauseBtn, provider.isPlaying() ? "pause" : "play");
+      (0, import_obsidian8.setIcon)(this.playPauseBtn, provider.isPlaying() ? "pause" : "play");
     }
     if (this.providerSelect.value !== this.plugin.settings.TTS_PROVIDER) {
       this.refreshControls();
@@ -15341,7 +15354,7 @@ var MobileControlBar = class {
       "mic",
       "Change Voice",
       (event) => {
-        const menu = new import_obsidian8.Menu();
+        const menu = new import_obsidian9.Menu();
         this.pollyService.getVoiceOptions().forEach((voice) => {
           menu.addItem(
             (item) => item.setTitle(voice.label).setChecked(voice.id === this.pollyService.getVoice()).onClick(() => void this.selectVoice(voice.id))
@@ -15433,7 +15446,7 @@ var MobileControlBar = class {
       cls: "voice-mobile-control-btn",
       attr: { title }
     });
-    (0, import_obsidian8.setIcon)(button, icon);
+    (0, import_obsidian9.setIcon)(button, icon);
     button.addEventListener("click", onClick);
     return button;
   }
@@ -15476,7 +15489,7 @@ var MobileControlBar = class {
   showLoadingState() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.addClass("rotating-icon");
-      (0, import_obsidian8.setIcon)(this.playPauseIconEl, "refresh-ccw");
+      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "refresh-ccw");
     }
     this.showProgressBar();
     this.updateProgressBar(0);
@@ -15484,7 +15497,7 @@ var MobileControlBar = class {
   resetToPlayState() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian8.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "play");
     }
   }
   showProgressBar() {
@@ -15524,7 +15537,7 @@ var MobileControlBar = class {
   onPlay() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian8.setIcon)(this.playPauseIconEl, "pause");
+      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "pause");
     }
     this.hideProgressBar();
     this.show();
@@ -15533,7 +15546,7 @@ var MobileControlBar = class {
   onPause() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian8.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "play");
     }
     this.hideProgressBar();
     window.setTimeout(() => {
@@ -15548,7 +15561,7 @@ var MobileControlBar = class {
   onEnded() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian8.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "play");
     }
     this.hideProgressBar();
     window.setTimeout(() => this.hide(), 3e3);
@@ -15638,7 +15651,7 @@ var MobileControlBar = class {
       return;
     }
     this.downloadShowsSave = hasDefault;
-    (0, import_obsidian8.setIcon)(this.downloadIconEl, hasDefault ? "save" : "download");
+    (0, import_obsidian9.setIcon)(this.downloadIconEl, hasDefault ? "save" : "download");
   }
   destroy() {
     const audio = this.pollyService.getAudio();
@@ -15654,7 +15667,7 @@ var MobileControlBar = class {
 };
 
 // src/utils/AudioFileManager.ts
-var import_obsidian9 = require("obsidian");
+var import_obsidian10 = require("obsidian");
 var AudioFileManager = class {
   constructor(app) {
     this.app = app;
@@ -15671,14 +15684,14 @@ var AudioFileManager = class {
     try {
       const dir = this.resolveSaveDir(params.folder, "");
       await this.ensureFolderExists(dir);
-      const pathFor = (base) => (0, import_obsidian9.normalizePath)(dir ? `${dir}/${base}.mp3` : `${base}.mp3`);
+      const pathFor = (base) => (0, import_obsidian10.normalizePath)(dir ? `${dir}/${base}.mp3` : `${base}.mp3`);
       const sourcePath = (_a3 = params.sourceFile) == null ? void 0 : _a3.path;
       let baseName = params.baseName;
       for (; ; ) {
         const existing = this.app.vault.getAbstractFileByPath(
           pathFor(baseName)
         );
-        const collides = existing instanceof import_obsidian9.TFile && existing.path !== sourcePath;
+        const collides = existing instanceof import_obsidian10.TFile && existing.path !== sourcePath;
         if (!collides) {
           break;
         }
@@ -15710,7 +15723,7 @@ var AudioFileManager = class {
       }
     } catch (error) {
       console.error("Error saving/moving audio:", error);
-      new import_obsidian9.Notice(`Error saving audio: ${error.message}`);
+      new import_obsidian10.Notice(`Error saving audio: ${error.message}`);
     }
   }
   /** Move an existing file to finalPath, replacing any file already there. */
@@ -15719,11 +15732,11 @@ var AudioFileManager = class {
       return;
     }
     const existing = this.app.vault.getAbstractFileByPath(finalPath);
-    if (existing instanceof import_obsidian9.TFile && existing.path !== source.path) {
-      await this.app.vault.delete(existing);
+    if (existing instanceof import_obsidian10.TFile && existing.path !== source.path) {
+      await this.app.fileManager.trashFile(existing);
     }
     await this.app.fileManager.renameFile(source, finalPath);
-    new import_obsidian9.Notice(`Moved: ${finalPath}`);
+    new import_obsidian10.Notice(`Moved: ${finalPath}`);
   }
   /** Create or overwrite the MP3 at finalPath with the blob's bytes. */
   async writeBlob(blob, finalPath) {
@@ -15732,23 +15745,18 @@ var AudioFileManager = class {
     }
     const arrayBuffer = await blob.arrayBuffer();
     const existing = this.app.vault.getAbstractFileByPath(finalPath);
-    if (existing instanceof import_obsidian9.TFile) {
+    if (existing instanceof import_obsidian10.TFile) {
       await this.app.vault.modifyBinary(existing, arrayBuffer);
-      new import_obsidian9.Notice(`Updated: ${finalPath}`);
+      new import_obsidian10.Notice(`Updated: ${finalPath}`);
     } else {
       await this.app.vault.createBinary(finalPath, arrayBuffer);
-      new import_obsidian9.Notice(`Created: ${finalPath}`);
+      new import_obsidian10.Notice(`Created: ${finalPath}`);
     }
   }
   /** Base names (no extension) of the MP3s already in a vault folder. */
   mp3BaseNamesInFolder(dir) {
     const target = normalizeFolderPath(dir === "" ? "/" : dir);
-    return this.app.vault.getFiles().filter(
-      (f2) => {
-        var _a3, _b2;
-        return f2.extension === "mp3" && normalizeFolderPath((_b2 = (_a3 = f2.parent) == null ? void 0 : _a3.path) != null ? _b2 : "/") === target;
-      }
-    ).map((f2) => f2.basename);
+    return mp3FilesInFolder(this.app.vault, target).map((f2) => f2.basename);
   }
   /**
    * Save audio blob as an MP3 file.
@@ -15763,7 +15771,7 @@ var AudioFileManager = class {
     try {
       const activeFile = this.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian9.Notice("No active file found");
+        new import_obsidian10.Notice("No active file found");
         return null;
       }
       const fileName = activeFile.basename;
@@ -15772,28 +15780,28 @@ var AudioFileManager = class {
         ((_a3 = activeFile.parent) == null ? void 0 : _a3.path) || ""
       );
       const audioFileName = `${fileName}.mp3`;
-      const audioFilePath = (0, import_obsidian9.normalizePath)(
+      const audioFilePath = (0, import_obsidian10.normalizePath)(
         fileDir ? `${fileDir}/${audioFileName}` : audioFileName
       );
       await this.ensureFolderExists(fileDir);
       const arrayBuffer = await audioBlob.arrayBuffer();
       const existingFile = this.app.vault.getAbstractFileByPath(audioFilePath);
       let audioFile;
-      if (existingFile instanceof import_obsidian9.TFile) {
+      if (existingFile instanceof import_obsidian10.TFile) {
         await this.app.vault.modifyBinary(existingFile, arrayBuffer);
         audioFile = existingFile;
-        new import_obsidian9.Notice(`Updated: ${audioFilePath}`);
+        new import_obsidian10.Notice(`Updated: ${audioFilePath}`);
       } else {
         audioFile = await this.app.vault.createBinary(
           audioFilePath,
           arrayBuffer
         );
-        new import_obsidian9.Notice(`Created: ${audioFilePath}`);
+        new import_obsidian10.Notice(`Created: ${audioFilePath}`);
       }
       return audioFile;
     } catch (error) {
       console.error("Error saving audio file:", error);
-      new import_obsidian9.Notice(`Error saving audio file: ${error.message}`);
+      new import_obsidian10.Notice(`Error saving audio file: ${error.message}`);
       return null;
     }
   }
@@ -15831,7 +15839,7 @@ var AudioFileManager = class {
     try {
       const activeFile = this.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian9.Notice("No active file found");
+        new import_obsidian10.Notice("No active file found");
         return;
       }
       const content3 = await this.app.vault.read(activeFile);
@@ -15844,7 +15852,7 @@ var AudioFileManager = class {
       await this.app.vault.modify(activeFile, newContent);
     } catch (error) {
       console.error("Error inserting audio embed:", error);
-      new import_obsidian9.Notice(`Error inserting audio embed: ${error.message}`);
+      new import_obsidian10.Notice(`Error inserting audio embed: ${error.message}`);
     }
   }
   /**
@@ -15875,7 +15883,7 @@ var AudioFileManager = class {
     try {
       const activeFile = this.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian9.Notice("No active file found");
+        new import_obsidian10.Notice("No active file found");
         return;
       }
       const fileName = activeFile.basename;
@@ -15889,21 +15897,21 @@ var AudioFileManager = class {
       }
     } catch (error) {
       console.error("Error in downloadAndEmbed:", error);
-      new import_obsidian9.Notice(`Error downloading audio: ${error.message}`);
+      new import_obsidian10.Notice(`Error downloading audio: ${error.message}`);
     }
   }
 };
 
 // src/ui/FolderPickerModal.ts
-var import_obsidian10 = require("obsidian");
-var FolderPickerModal = class _FolderPickerModal extends import_obsidian10.SuggestModal {
+var import_obsidian11 = require("obsidian");
+var FolderPickerModal = class _FolderPickerModal extends import_obsidian11.SuggestModal {
   constructor(app, plugin) {
     super(app);
     this.resolve = () => {
     };
     this.settled = false;
     this.plugin = plugin;
-    this.allFolders = app.vault.getAllLoadedFiles().filter((f2) => f2 instanceof import_obsidian10.TFolder).map((f2) => normalizeFolderPath(f2.path));
+    this.allFolders = app.vault.getAllLoadedFiles().filter((f2) => f2 instanceof import_obsidian11.TFolder).map((f2) => normalizeFolderPath(f2.path));
     this.setPlaceholder("Search folders to save / move audio\u2026");
     this.setInstructions([
       { command: "\u21B5", purpose: "save / move here" },
@@ -15958,7 +15966,7 @@ var FolderPickerModal = class _FolderPickerModal extends import_obsidian10.Sugge
     el.addClass("voice-folder-suggestion");
     if (item.kind === "create") {
       const icon2 = el.createSpan({ cls: "voice-folder-suggestion-icon" });
-      (0, import_obsidian10.setIcon)(icon2, "folder-plus");
+      (0, import_obsidian11.setIcon)(icon2, "folder-plus");
       el.createSpan({
         cls: "voice-folder-suggestion-name",
         text: `Create folder \u201C${item.path}\u201D`
@@ -15969,7 +15977,7 @@ var FolderPickerModal = class _FolderPickerModal extends import_obsidian10.Sugge
     el.toggleClass("is-favorite", item.isFavorite);
     el.toggleClass("is-section-start", !!item.sectionStart);
     const icon = el.createSpan({ cls: "voice-folder-suggestion-icon" });
-    (0, import_obsidian10.setIcon)(icon, item.path === "/" ? "home" : "folder");
+    (0, import_obsidian11.setIcon)(icon, item.path === "/" ? "home" : "folder");
     el.createSpan({
       cls: "voice-folder-suggestion-name",
       text: item.path === "/" ? "Vault root" : item.path
@@ -15981,7 +15989,7 @@ var FolderPickerModal = class _FolderPickerModal extends import_obsidian10.Sugge
       });
     }
     const pin = el.createSpan({ cls: "voice-folder-suggestion-pin" });
-    (0, import_obsidian10.setIcon)(pin, item.isDefault ? "pin" : "pin-off");
+    (0, import_obsidian11.setIcon)(pin, item.isDefault ? "pin" : "pin-off");
     pin.toggleClass("is-default", item.isDefault);
     pin.setAttribute(
       "aria-label",
@@ -15993,7 +16001,7 @@ var FolderPickerModal = class _FolderPickerModal extends import_obsidian10.Sugge
       void this.toggleDefaultFor(item.path);
     });
     const star = el.createSpan({ cls: "voice-folder-suggestion-star" });
-    (0, import_obsidian10.setIcon)(star, item.isFavorite ? "star" : "star-off");
+    (0, import_obsidian11.setIcon)(star, item.isFavorite ? "star" : "star-off");
     star.toggleClass("is-favorite", item.isFavorite);
     star.setAttribute(
       "aria-label",
@@ -16045,8 +16053,8 @@ var FolderPickerModal = class _FolderPickerModal extends import_obsidian10.Sugge
 };
 
 // src/ui/FileConflictModal.ts
-var import_obsidian11 = require("obsidian");
-var FileConflictModal = class _FileConflictModal extends import_obsidian11.Modal {
+var import_obsidian12 = require("obsidian");
+var FileConflictModal = class _FileConflictModal extends import_obsidian12.Modal {
   constructor(app, fileName, folderLabel, suggested) {
     super(app);
     this.resolve = () => {
@@ -16074,7 +16082,7 @@ var FileConflictModal = class _FileConflictModal extends import_obsidian11.Modal
       text: `\u201C${this.fileName}\u201D already exists in ${this.folderLabel}. Replace it, or save under a new name?`
     });
     let newBaseName = this.suggested;
-    const nameSetting = new import_obsidian11.Setting(contentEl).setName("New name").addText((text5) => {
+    const nameSetting = new import_obsidian12.Setting(contentEl).setName("New name").addText((text5) => {
       text5.setValue(this.suggested).onChange((value2) => {
         newBaseName = value2;
       });
@@ -16089,7 +16097,7 @@ var FileConflictModal = class _FileConflictModal extends import_obsidian11.Modal
       cls: "voice-conflict-ext",
       text: ".mp3"
     });
-    new import_obsidian11.Setting(contentEl).addButton((btn) => {
+    new import_obsidian12.Setting(contentEl).addButton((btn) => {
       btn.setButtonText("Replace").onClick(() => this.settle({ action: "replace" }));
       btn.buttonEl.addClass("mod-warning");
     }).addButton(
@@ -16205,7 +16213,7 @@ var IconEventHandler = class {
     this.voiceDisplayEl.setAttribute("aria-label-position", "top");
     this.updateVoiceDisplay();
     this.voiceDisplayEl.addEventListener("click", (event) => {
-      const menu = new import_obsidian12.Menu();
+      const menu = new import_obsidian13.Menu();
       this.pollyService.getVoiceOptions().forEach((voice) => {
         menu.addItem(
           (item) => item.setTitle(voice.label).setChecked(voice.id === this.pollyService.getVoice()).onClick(() => void this.voice.persistActiveVoice(voice.id))
@@ -16283,7 +16291,7 @@ var IconEventHandler = class {
         }
         if (!this.pollyService.isPlaying()) {
           this.playPauseIconEl.addClass("rotating-icon");
-          (0, import_obsidian12.setIcon)(this.playPauseIconEl, "refresh-ccw");
+          (0, import_obsidian13.setIcon)(this.playPauseIconEl, "refresh-ccw");
         }
         void this.voice.speakText();
       },
@@ -16316,7 +16324,7 @@ var IconEventHandler = class {
     const iconEl = this.statusBarItem.createSpan({
       cls: "status-bar-icon " + cls
     });
-    (0, import_obsidian12.setIcon)(iconEl, icon);
+    (0, import_obsidian13.setIcon)(iconEl, icon);
     iconEl.addEventListener("click", onClick);
     if (tooltip) {
       iconEl.title = tooltip;
@@ -16387,8 +16395,8 @@ var IconEventHandler = class {
       this.isErrorState = false;
       this.ribbonIconEl.addClass("rotating-icon");
       this.playPauseIconEl.addClass("rotating-icon");
-      (0, import_obsidian12.setIcon)(this.ribbonIconEl, "refresh-ccw");
-      (0, import_obsidian12.setIcon)(this.playPauseIconEl, "refresh-ccw");
+      (0, import_obsidian13.setIcon)(this.ribbonIconEl, "refresh-ccw");
+      (0, import_obsidian13.setIcon)(this.playPauseIconEl, "refresh-ccw");
       if (this.mobileControlBar) {
         this.mobileControlBar.showLoadingStateFromExternal();
       } else {
@@ -16400,11 +16408,11 @@ var IconEventHandler = class {
   onPlay() {
     if (this.ribbonIconEl) {
       this.ribbonIconEl.removeClass("rotating-icon");
-      (0, import_obsidian12.setIcon)(this.ribbonIconEl, "pause-circle");
+      (0, import_obsidian13.setIcon)(this.ribbonIconEl, "pause-circle");
     }
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian12.setIcon)(this.playPauseIconEl, "pause");
+      (0, import_obsidian13.setIcon)(this.playPauseIconEl, "pause");
     }
     this.hideProgressBar();
     this.showDownloadButton();
@@ -16412,11 +16420,11 @@ var IconEventHandler = class {
   onPause() {
     if (this.ribbonIconEl) {
       this.ribbonIconEl.removeClass("rotating-icon");
-      (0, import_obsidian12.setIcon)(this.ribbonIconEl, "play-circle");
+      (0, import_obsidian13.setIcon)(this.ribbonIconEl, "play-circle");
     }
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian12.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian13.setIcon)(this.playPauseIconEl, "play");
     }
     this.hideProgressBar();
   }
@@ -16512,7 +16520,7 @@ var IconEventHandler = class {
   handleError(errorMessage) {
     this.showErrorState();
     this.resetIconsToPlayState();
-    new import_obsidian12.Notice(`\u{1F50A} Voice Plugin: ${friendlySpeechError(errorMessage)}`, 5e3);
+    new import_obsidian13.Notice(`\u{1F50A} Voice Plugin: ${friendlySpeechError(errorMessage)}`, 5e3);
     window.setTimeout(() => {
       this.hideProgressBar();
     }, 3e3);
@@ -16520,11 +16528,11 @@ var IconEventHandler = class {
   resetIconsToPlayState() {
     if (this.ribbonIconEl) {
       this.ribbonIconEl.removeClass("rotating-icon");
-      (0, import_obsidian12.setIcon)(this.ribbonIconEl, "play-circle");
+      (0, import_obsidian13.setIcon)(this.ribbonIconEl, "play-circle");
     }
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian12.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian13.setIcon)(this.playPauseIconEl, "play");
     }
   }
   onCanPlayThrough() {
@@ -16621,7 +16629,7 @@ var IconEventHandler = class {
         const file = this.plugin.app.vault.getAbstractFileByPath(
           options.moveFromPath
         );
-        if (file instanceof import_obsidian12.TFile) {
+        if (file instanceof import_obsidian13.TFile) {
           await this.audioFileManager.saveOrMove({
             kind: "move",
             sourceFile: file,
@@ -16633,48 +16641,55 @@ var IconEventHandler = class {
         }
         return;
       }
+      if (options == null ? void 0 : options.forcePicker) {
+        const noteFile = this.plugin.app.workspace.getActiveFile();
+        const noteAudio = noteFile ? this.pollyService.getLastGeneratedAudio(noteFile.path) : null;
+        const folder2 = await FolderPickerModal.open(
+          this.plugin.app,
+          this.voice
+        );
+        this.refreshSaveAffordances();
+        if (folder2 === null) {
+          return;
+        }
+        if (noteFile && noteAudio) {
+          await this.audioFileManager.saveOrMove({
+            kind: "save",
+            blob: noteAudio,
+            baseName: noteFile.basename,
+            folder: folder2,
+            embed: this.voice.settings.autoEmbedAudio,
+            resolveConflict
+          });
+        }
+        return;
+      }
       const activeFile = this.plugin.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian12.Notice("No active file found");
+        new import_obsidian13.Notice("No active file found");
         return;
       }
       const audioBlob = this.pollyService.getLastGeneratedAudio(
         activeFile.path
       );
       if (!audioBlob) {
-        new import_obsidian12.Notice(
+        new import_obsidian13.Notice(
           "No audio available for this file. Please generate audio first."
         );
         return;
       }
-      if (!(options == null ? void 0 : options.forcePicker)) {
-        const folder2 = resolveSaveFolder(
-          this.voice.settings.defaultAudioFolder,
-          ((_a3 = activeFile.parent) == null ? void 0 : _a3.path) || ""
-        );
-        await this.audioFileManager.downloadAndEmbed(
-          audioBlob,
-          this.voice.settings.autoEmbedAudio,
-          folder2
-        );
-        return;
-      }
-      const folder = await FolderPickerModal.open(this.plugin.app, this.voice);
-      this.refreshSaveAffordances();
-      if (folder === null) {
-        return;
-      }
-      await this.audioFileManager.saveOrMove({
-        kind: "save",
-        blob: audioBlob,
-        baseName: activeFile.basename,
-        folder,
-        embed: this.voice.settings.autoEmbedAudio,
-        resolveConflict
-      });
+      const folder = resolveSaveFolder(
+        this.voice.settings.defaultAudioFolder,
+        ((_a3 = activeFile.parent) == null ? void 0 : _a3.path) || ""
+      );
+      await this.audioFileManager.downloadAndEmbed(
+        audioBlob,
+        this.voice.settings.autoEmbedAudio,
+        folder
+      );
     } catch (error) {
       console.error("Error downloading audio:", error);
-      new import_obsidian12.Notice(`Failed to download audio: ${error.message}`);
+      new import_obsidian13.Notice(`Failed to download audio: ${error.message}`);
     }
   }
   /**
@@ -16710,7 +16725,7 @@ var IconEventHandler = class {
       return;
     }
     this.downloadShowsSave = hasDefault;
-    (0, import_obsidian12.setIcon)(this.downloadIconEl, hasDefault ? "save" : "download");
+    (0, import_obsidian13.setIcon)(this.downloadIconEl, hasDefault ? "save" : "download");
   }
   /**
    * Refresh the download button's tooltip to reflect the current default folder,
@@ -23210,7 +23225,7 @@ function ccount(value2, character) {
   return count;
 }
 
-// node_modules/escape-string-regexp/index.js
+// node_modules/mdast-util-find-and-replace/node_modules/escape-string-regexp/index.js
 function escapeStringRegexp(string3) {
   if (typeof string3 !== "string") {
     throw new TypeError("Expected a string");
@@ -26690,6 +26705,14 @@ function pick(schema, prop) {
   return typeof schema === "string" ? schema : schema[prop];
 }
 
+// node_modules/mdast-util-frontmatter/node_modules/escape-string-regexp/index.js
+function escapeStringRegexp2(string3) {
+  if (typeof string3 !== "string") {
+    throw new TypeError("Expected a string");
+  }
+  return string3.replace(/[|\\{}()[\]^$+*?.]/g, "\\$&").replace(/-/g, "\\x2d");
+}
+
 // node_modules/mdast-util-frontmatter/lib/index.js
 function frontmatterFromMarkdown(options) {
   const matters = toMatters(options);
@@ -26734,7 +26757,7 @@ function frontmatterToMarkdown(options) {
     unsafe.push({
       atBreak: true,
       character: open.charAt(0),
-      after: escapeStringRegexp(open.charAt(1))
+      after: escapeStringRegexp2(open.charAt(1))
     });
   }
   return { unsafe, handlers };
@@ -27562,7 +27585,7 @@ var MarkdownToTextProcessor = class {
 };
 
 // src/utils/TextSpeaker.ts
-var import_obsidian13 = require("obsidian");
+var import_obsidian14 = require("obsidian");
 var TextSpeaker = class {
   constructor(provider, markdownHelper, iconEventHandler, spellOutAcronyms = false, readCodeBlocks = false, skipUrls = false) {
     this.provider = provider;
@@ -27602,17 +27625,17 @@ var TextSpeaker = class {
         return;
       }
       if (!read.ok) {
-        new import_obsidian13.Notice(
+        new import_obsidian14.Notice(
           read.reason === "no-note" ? NO_NOTE_MESSAGE : READ_ERROR_MESSAGE
         );
         return;
       }
       const rawText = read.text;
       if (rawText.trim() === "") {
-        new import_obsidian13.Notice(EMPTY_NOTE_MESSAGE);
+        new import_obsidian14.Notice(EMPTY_NOTE_MESSAGE);
         return;
       }
-      const processingNotice = new import_obsidian13.Notice("Processing text...", 2e3);
+      const processingNotice = new import_obsidian14.Notice("Processing text...", 2e3);
       const content3 = await this.processContent(rawText);
       processingNotice.hide();
       if (!this.provider.isCurrentRequest(requestId)) {
@@ -27638,7 +27661,7 @@ var TextSpeaker = class {
       }
       console.error("Error in text-to-speech processing:", error);
       const errorMessage = error instanceof Error ? error.message : String(error);
-      new import_obsidian13.Notice(friendlySpeechError(errorMessage));
+      new import_obsidian14.Notice(friendlySpeechError(errorMessage));
     } finally {
       this.provider.endOperation(requestId);
     }
@@ -27654,7 +27677,7 @@ var TextSpeaker = class {
     const result = await this.ssmlProcessor.process(rawText);
     if (!result.isValid) {
       console.error("SSML validation errors:", result.errors);
-      new import_obsidian13.Notice(
+      new import_obsidian14.Notice(
         friendlySpeechError(
           `SSML validation failed: ${result.errors.join("; ")}`
         )
@@ -27669,7 +27692,7 @@ var TextSpeaker = class {
 };
 
 // src/ui/WhatsNewModal.ts
-var import_obsidian14 = require("obsidian");
+var import_obsidian15 = require("obsidian");
 
 // src/utils/whatsNew.ts
 var HERO_IMAGE_URL = "https://raw.githubusercontent.com/chrisurf/obsidian-voice/main/assets/hero.png";
@@ -27739,7 +27762,7 @@ function shouldShowWhatsNew(currentVersion, lastSeenVersion) {
 }
 
 // src/ui/WhatsNewModal.ts
-var WhatsNewModal = class extends import_obsidian14.Modal {
+var WhatsNewModal = class extends import_obsidian15.Modal {
   constructor(app, version, component, onOpenPlayer) {
     super(app);
     this.version = version;
@@ -27756,8 +27779,8 @@ var WhatsNewModal = class extends import_obsidian14.Modal {
     });
     hero.addEventListener("error", () => hero.hide());
     const body = contentEl.createDiv({ cls: "voice-whats-new-body" });
-    void import_obsidian14.MarkdownRenderer.render(this.app, WHATS_NEW, body, "", this.component);
-    new import_obsidian14.Setting(contentEl).addButton(
+    void import_obsidian15.MarkdownRenderer.render(this.app, WHATS_NEW, body, "", this.component);
+    new import_obsidian15.Setting(contentEl).addButton(
       (btn) => btn.setButtonText("Open Voice player").setCta().onClick(() => {
         this.onOpenPlayer();
         this.close();
@@ -27772,7 +27795,7 @@ var WhatsNewModal = class extends import_obsidian14.Modal {
 };
 
 // src/utils/VoicePlugin.ts
-var Voice = class extends import_obsidian15.Plugin {
+var Voice = class extends import_obsidian16.Plugin {
   async onload() {
     await this.loadSettings();
     this.addSettingTab(new VoiceSettingTab(this.app, this));
@@ -27862,7 +27885,7 @@ var Voice = class extends import_obsidian15.Plugin {
     await this.textSpeaker.speakText(speed);
   }
   isMobile() {
-    return import_obsidian15.Platform.isMobile;
+    return import_obsidian16.Platform.isMobile;
   }
   onunload() {
     if (this.iconEventHandler) {
@@ -27975,7 +27998,7 @@ var Voice = class extends import_obsidian15.Plugin {
     const currentIndex = options.findIndex((v) => v.id === currentId);
     const next = options[(currentIndex + 1) % options.length];
     await this.persistActiveVoice(next.id);
-    new import_obsidian15.Notice(`Voice: ${next.label}`);
+    new import_obsidian16.Notice(`Voice: ${next.label}`);
   }
   /**
    * Open the Voice player and reveal it (right sidebar on desktop, full-screen

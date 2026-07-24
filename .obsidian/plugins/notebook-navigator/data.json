@@ -73,7 +73,8 @@
           "transitionStyle": "hue",
           "scope": "root"
         }
-      }
+      },
+      "descendantExcludedFolders": []
     }
   ],
   "vaultProfile": "default",
@@ -234,6 +235,7 @@
   "showSelectedNavigationPills": false,
   "stickyGroupHeaders": true,
   "showFolderGroupPaths": true,
+  "showGroupHeaderItemCounts": false,
   "showCurrentFolderFilesAtBottom": false,
   "filterPinnedByFolder": true,
   "compactItemHeight": 28,
@@ -312,6 +314,7 @@
   "calendarMonthHeadingFormat": "full",
   "calendarHighlightToday": true,
   "calendarShowFeatureImage": true,
+  "calendarShowTasks": true,
   "calendarMonthHighlights": {},
   "calendarShowWeekNumber": true,
   "calendarShowQuarter": false,
@@ -595,7 +598,7 @@
     "#404040",
     "#404040"
   ],
-  "lastShownVersion": "3.2.2",
+  "lastShownVersion": "3.2.4",
   "rootFolderOrder": [],
   "rootTagOrder": [],
   "rootPropertyOrder": []
