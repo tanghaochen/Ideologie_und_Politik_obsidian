@@ -208,13 +208,90 @@ graph TD
 - **etwas zur Verfügung stellen (提供某物给某人使用)**
     - _例句 1 (职场):_ Der Arbeitgeber **stellt** mir einen Dienstwagen **zur Verfügung**. (雇主为我提供了一辆公司配车供我使用。)
     - _例句 2 (行政):_ Bitte **stellen** Sie der Ausländerbehörde alle erforderlichen Dokumente **zur Verfügung**. (请您将所有必要的文件提供给外管局。)
-        
+$1
 
 呼~ 大师这回可是把压箱底的功夫全盘托出了！看到这么多例句，您对功能动词的理解是不是瞬间立体起来了？
 
 为了检验您是否已经将这些知识融会贯通，并且能够应用在真实的移民生活中，大师给您布置一个挑战任务：
 
 **在找工作面试或者和房东沟通时，遇到不利条件，您会如何用今天学到的 `in Kauf nehmen` (接受不利条件) 和 `zur Verfügung stehen` (可供使用 - 动词用 stehen 哦) 各造一个完整的句子？** 请大胆写出来，大师在线为您精批细改！
+
+# 拓展功能动词更明确地意义
+
+### 1、核心痛点解析（为什么必须要有 FVG？）
+
+如果只用普通动词，德语的表达会非常“扁平”。普通动词通常只能描述一个**动作本身**，但如果我们想描述这个动作的**开始**、**持续**、**结束**，或者想要**极其精准地修饰**这个动作，甚至想要**优雅地回避被动语态**，普通动词就显得力不从心了。
+
+FVG 存在的四大核心价值在于：
+
+1. **动作的阶段化（Aktionsart）**：区分动作是“刚开始”、“正在进行”还是“受外力驱使”。
+2. **优雅的被动替代（Passiv-Ersatz）**：让生硬的被动句变得柔和、官方。
+3. **无限的扩写空间（Erweiterbarkeit）**：名词比动词更容易用多个形容词去修饰。
+4. **视角的切换（Perspektivwechsel）**：明确区分“主动施加”和“被动承受”。
+
+### 2、深度教学解析（聚焦：FVG 的多维语义与语用功能）
+
+为了让你直观感受到这种差异，我们来看四个维度的全景对比：
+
+#### 维度一：精准捕捉“动作的阶段”（动词的生命周期）
+
+普通动词往往是一个笼统的状态或动作。而 FVG 像切蛋糕一样，把动作切分成了不同的时间段。
+
+- **普通动词**：_streiken_ (罢工 - 笼统的动作)
+    - Die Arbeiter streiken. (工人们在罢工。—— _只是陈述事实，不知道罢工多久了，也不知道什么时候开始的。_)
+- **FVG 的魔法**：
+    - 强调**动作的爆发/起点 (inchoativ)**：Die Arbeiter **treten in Streik**. (工人们**开始/进入**罢工状态。—— _非常有画面感，仿佛看到工人们刚刚放下工具走出工厂。_)
+    - 强调**动作的终结 (resultativ)**：Der Streik **kommt zum Erliegen**. (罢工**趋于平息/停止**。—— _比直接用 enden 更具过程感。_)
+
+#### 维度二：降维打击——用“名词化”实现疯狂扩写
+
+这是德国人在学术和新闻写作中最爱用 FVG 的原因。在德语中，**用副词修饰动词很局限，但用形容词修饰名词却可以无限叠加**。
+
+- **普通动词**：_kritisieren_ (批评)
+    - Der Chef hat den Mitarbeiter **heftig, öffentlich und wiederholt** kritisiert. (老板激烈地、公开地、反复地批评了这名员工。—— _连用三个副词，显得极其笨重、口语化，像在吵架。_)
+- **FVG 的魔法**：_Kritik üben an + Dat._
+    - Der Chef hat **heftige, öffentliche und wiederholte Kritik** an dem Mitarbeiter **geübt**. (老板对这名员工提出了猛烈的、公开的且再三的批评。—— _副词变成了形容词定语，全部打包在名词 Kritik 前面，句子结构依然稳如泰山，显得极其专业、严谨且掷地有声。_)
+
+#### 维度三：完美替代“被动语态”（新闻与商务最爱）
+
+被动语态（werden + Partizip II）常常显得生硬、冷冰冰或者推卸责任。FVG 可以用主动的句型，表达被动的含义，这就是所谓的“功能动词被动句”。
+
+- **普通被动句**：_anwenden_ (应用)
+    - Das neue Gesetz **wird angewendet**. (新法律被应用了。—— _干巴巴的。_)
+- **FVG 的魔法**：_zur Anwendung kommen_
+    - Das neue Gesetz **kommt zur Anwendung**. (新法律**投入了应用/生效了**。—— _用动词 kommen 赋予了法律一种生命力，仿佛它自己走到了舞台上，非常地道的公文语态。_)
+- **对比拓展**：
+    - _diskutiert werden_ (被讨论) ➡️ **zur Diskussion stehen** (处于被讨论的状态)
+    - _anerkannt werden_ (被认可) ➡️ **Anerkennung finden** (找到了/获得了认可)
+
+#### 维度四：视角的精妙切换（主动 vs. 被动）
+
+同一个名词，搭配不同的功能动词，可以瞬间切换句子的施动者和受动者。我们可以用一个简单的图表来可视化这种奇妙的裂变：
+
+代码段
+
+```mermaid
+graph LR
+    A((核心概念: Bewegung 运动))
+    A -->|强调外界施加/致使 causative| B(etwas in Bewegung setzen)
+    A -->|强调自身状态改变/受动 inchoativ| C(in Bewegung geraten)
+    A -->|强调持续的状态 durativ| D(in Bewegung bleiben)
+    
+    style A fill:#f9d0c4,stroke:#333,stroke-width:2px
+    style B fill:#d4e6f1,stroke:#333
+    style C fill:#d5f5e3,stroke:#333
+    style D fill:#fcf3cf,stroke:#333
+```
+
+- **致使 (Causative)**：Der Wind **setzt** die Mühle **in Bewegung**. (风**驱动**了风车转动。——风是动作发出者。)
+- **状态改变 (Inchoative)**：Die Mühle **gerät in Bewegung**. (风车**运转起来了**。——风车自己进入了状态，不强调谁推的它。)
+
+### 3、总结与回顾
+
+**您的终极学习建议**： 理解了以上四点，你就打通了德语 B 2/C 1 写作的任督二脉。不要把 FVG 当成死记硬背的“固定搭配”，要把它们看作是**给语言调色、加滤镜的工具**。当你需要句子显得更正式（公文语）、需要叠加一堆修饰词、或者想精准表达动作的“起承转合”时，就果断召唤 FVG。
+
+为了检验你对“扩写优势（维度二）”的感受，你能试着用 FVG 结构改写一下这句普通的话，让它听起来更具专业感吗？ **原句**：Das Buch hat mich _sehr stark_ **beeinflusst**. (这本书非常强烈地影响了我。) _(提示：使用 FVG “Einfluss nehmen auf + Akk.”)_
+
 # 这么多单词我们怎么来记忆啊，不可能难道又要被那么多组合吗那这样背下去无穷无尽呢？
 
 ### 🧠 核心思维转换：把 FVG 当作“API 标准库”
@@ -259,11 +336,11 @@ flowchart LR
 以 **Verfügung (支配 / 使用)** 为例，这是一项资源（比如服务器算力或您的个人时间）：
 
 1. **zur Verfügung stehen** (站在可供使用的状态 = **可供使用 / 待命**)
-    
+$1
     - _例句：_ Die neuen Server **stehen** uns ab sofort **zur Verfügung**. (新服务器即日起可供我们使用。—— 状态：资源已就绪)
-        
+$1
 2. **zur Verfügung stellen** (放置入可供使用的状态 = **提供 / 赋予**)
-    
+$1
     - _例句：_ Der IT-Support **stellt** mir einen neuen Zugang **zur Verfügung**. (IT 支持为我提供了一个新账号。—— 动作：给予资源)
 
 您看，`stehen` 表示一种静止的“状态”，而 `stellen` 表示一种施加的“动作”。理解了这层底层逻辑，您就不再是死记硬背，而是像工程师一样在**拼装语言模块**。
@@ -280,7 +357,7 @@ flowchart LR
 
 > [!faq]
 > Um die Lebenshaltungskosten zu senken und in den Genuss von frischem Gemüse zu kommen...
-> 
+>
 > （为了降低生活成本并享受新鲜的蔬菜……）
 
 # 功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）
@@ -322,19 +399,19 @@ graph TD
 **💡 大师类比时间：**
 
 > 我们可以把德语的常规动词（比如 _genießen_ 享受）看作是“单点菜”。
-> 
+>
 > 而功能动词结构（比如 _in den Genuss kommen_）则是高级餐厅里的**“固定套餐”**。
-> 
+>
 > 在“固定套餐”里，动词（_kommen_）已经被抽空了原本“走过来”的意思，沦为了一个端盘子的服务员；真正的主菜是前面的名词短语（_in den Genuss_）。
 
 我们对比一下两种表达方式：
 
 1. **普通版（B 1 级别）：** ... um frisches Gemüse zu **genießen**. (为了享受新鲜蔬菜。)
-    
+$1
     - _frisches Gemüse_ 是直接的第四格（Akk.）宾语，_genießen_ 是及物动词。
-        
+$1
 2. **装 X/正式版（B 2 级别）：** ... um **in den Genuss** von frischem Gemüse zu **kommen**. (为了<font color="#d83931">==进入==一种享受新鲜蔬菜的状态</font>。)
-    
+$1
     - 这里使用了固定套餐：**in den Genuss kommen**。
 
 **深度解析这套“组合拳”的内部构造：**
