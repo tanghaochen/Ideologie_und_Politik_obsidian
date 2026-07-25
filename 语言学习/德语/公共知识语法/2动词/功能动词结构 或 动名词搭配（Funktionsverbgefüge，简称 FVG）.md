@@ -46,7 +46,7 @@ graph TD
     - _例句 1 (职场):_ Für diesen gut bezahlten Job muss ich lange Arbeitszeiten **in Kauf nehmen**. (为了这份高薪工作，我必须接受较长的工作时间。)
     - _例句 2 (租房):_ Als Einwanderer wollen wir die hohe Miete im Stadtzentrum nicht **in Kauf nehmen**. (作为新移民，我们不愿意承受市中心高昂的租金。)
 
-### 第二部分：三大核心构成派系 (参考 "image_44779 a.jpg" 第 78 页)
+### 功能动词结构的主要构成
 
 教材中总结了功能动词结构的三种常见构成方式，我们逐一击破，并结合生活场景进行造句：
 
@@ -80,7 +80,7 @@ graph TD
     - _例句 1 (职场):_ Der arrogante Kollege **rühmt sich** immer **seiner Taten** im Büro. (那个傲慢的同事总是吹嘘自己在办公室里的功绩。)
     - _例句 2 (日常):_ Er **rühmte sich seiner** Erfolge bei der Wohnungssuche. (他吹嘘自己找房子时的成功经历。)
 
-### 第三部分：B 2 考试的致命陷阱——否定形式
+### 狗顶用法
 
 在使用功能动词时，很多同学会把 _nicht_ 和 _kein_ 搞混。请牢记以下三条“铁律”：
 
@@ -107,7 +107,7 @@ graph TD
 - _否定例句 1 (职场):_ Der Vorgesetzte **übt nicht Kritik** an meiner Leistung. (上司没有批评我的表现。)_注：此处强烈推荐用 nicht。_
 - _否定例句 2 (医疗):_ Der Patient **übt nicht Kritik** an dem Krankenhaus. (病人没有对医院提出批评。)
 
-### 第四部分：上帝视角——动态与静态的自由切换 (第 79 页)
+### 动态与静态的自由切换 (第 79 页)
 
 这是这套知识点中最精彩、最能体现德语严谨性的一部分。同一个名词（例如 Aufregung 激动/慌乱），换一个傀儡动词，就能精准表达出“谁导致了它”、“过程是怎样的”以及“最后的状态是什么”。
 
