@@ -383,10 +383,10 @@
           }
         ],
         "direction": "vertical",
-        "x": 2768,
-        "y": 89,
-        "width": 1125,
-        "height": 1393,
+        "x": -10,
+        "y": 30,
+        "width": 1124,
+        "height": 1392,
         "maximize": true,
         "zoom": -1
       }
