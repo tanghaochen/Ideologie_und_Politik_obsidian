@@ -6,7 +6,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 41.80790960451977,
+        "dimension": 53.483992467043315,
         "children": [
           {
             "id": "814bf3e4edd62ad4",
@@ -43,7 +43,7 @@
       {
         "id": "66514ff393b45104",
         "type": "tabs",
-        "dimension": 58.19209039548022,
+        "dimension": 46.516007532956685,
         "children": [
           {
             "id": "9506fdd9c39c48e3",
@@ -277,8 +277,7 @@
               "title": "Mxmind"
             }
           }
-        ],
-        "currentTab": 6
+        ]
       },
       {
         "id": "28e75bfc7e894da7",
@@ -350,7 +349,7 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "215bb5a8a56ed49a",
+  "active": "dd8c0de9236cf3b8",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/格; 限定词.md",
     "语言学习/德语/公共知识语法/动词.md",
