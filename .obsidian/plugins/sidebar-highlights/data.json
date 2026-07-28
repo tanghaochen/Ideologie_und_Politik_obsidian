@@ -3186,38 +3186,6 @@
         "type": "html"
       }
     ],
-    "思想思维心理哲学/个人问题处理/PUBG戒毒.md": [
-      {
-        "id": "e445cauhp",
-        "text": "物理与环境阻断",
-        "tags": [],
-        "line": 34,
-        "startOffset": 1315,
-        "endOffset": 1351,
-        "filePath": "思想思维心理哲学/个人问题处理/PUBG戒毒.md",
-        "footnoteCount": 0,
-        "footnoteContents": [],
-        "createdAt": 1782302253293,
-        "isNativeComment": false,
-        "color": "#d83931",
-        "type": "html"
-      },
-      {
-        "id": "rmufiwzf3",
-        "text": "第一步就是先要戒掉看游戏博主视频的这个习惯，你已经很多次从这个起步，然后重新下载游戏重新浪费时间 了！!!看游戏博主就是你很容易掉进了一个陷阱，以为看一下不下载就不会中招，结果一看就想事就想下载游戏就非常想玩，这一套逻辑行云流水非常丝滑",
-        "tags": [],
-        "line": 39,
-        "startOffset": 1473,
-        "endOffset": 1620,
-        "filePath": "思想思维心理哲学/个人问题处理/PUBG戒毒.md",
-        "footnoteCount": 0,
-        "footnoteContents": [],
-        "createdAt": 1782642577060,
-        "isNativeComment": false,
-        "color": "#d83931",
-        "type": "html"
-      }
-    ],
     "语言学习/德语/公共知识语法/2动词/动词变名词化.md": [
       {
         "id": "pvjzytzm9",
@@ -3355,6 +3323,38 @@
         "footnoteCount": 0,
         "footnoteContents": [],
         "createdAt": 1783932076437,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
+    ],
+    "思想思维心理哲学/个人问题处理/游戏/PUBG戒毒.md": [
+      {
+        "id": "e445cauhp",
+        "text": "物理与环境阻断",
+        "tags": [],
+        "line": 34,
+        "startOffset": 1315,
+        "endOffset": 1351,
+        "filePath": "思想思维心理哲学/个人问题处理/游戏/PUBG戒毒.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1782302253293,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "rmufiwzf3",
+        "text": "第一步就是先要戒掉看游戏博主视频的这个习惯，你已经很多次从这个起步，然后重新下载游戏重新浪费时间 了！!!看游戏博主就是你很容易掉进了一个陷阱，以为看一下不下载就不会中招，结果一看就想事就想下载游戏就非常想玩，这一套逻辑行云流水非常丝滑",
+        "tags": [],
+        "line": 39,
+        "startOffset": 1473,
+        "endOffset": 1620,
+        "filePath": "思想思维心理哲学/个人问题处理/游戏/PUBG戒毒.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1782642577060,
         "isNativeComment": false,
         "color": "#d83931",
         "type": "html"
