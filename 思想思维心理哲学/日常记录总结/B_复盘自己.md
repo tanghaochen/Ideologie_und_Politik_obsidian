@@ -1,5 +1,7 @@
 `<p>{{highlight}} |{{citation}}<br/>[+++]{/{{comment}}/}</p>`
 
+`<p>{{highlight}} |{{citation}}{{if comment}}<br/> > {{comment}}{{endif}}</p>`
+
 “我为什么会有这样的际遇,自己到底有哪些优点,又因何陷入低潮与焦虑? 与他人的关系为什么会这样?自己内心深处真正渴望的是什么?......一连串的思 考帮助我看清了自己,让我开始重新整合自身已有的资源,人生由此开始好转。” |([“复盘自己：从记录到蜕变的行动指南”, p. 6](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=7&annotation=HYHBA2EL))  
 > 作者的困境起源
 
@@ -88,7 +90,126 @@
 
 
 
+## “7 种复盘技巧和 3 类复盘方式” |([“复盘自己：从记录到蜕变的行动指南”, p. 27](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=28&annotation=IEW5FC8E))
+![[image-367.png|2067x2154]]
+“每日复盘” |([“复盘自己：从记录到蜕变的行动指南”, p. 28](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=29&annotation=Z7RRQ9TU))
+![[image-365.png|2135x2762]]
+ ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=30&annotation=RUYZTZMG))  
+([“复盘自己：从记录到蜕变的行动指南”, p. 29](zotero://select/library/items/X743BJHT))
 
+“周度复盘和月度复盘” |([“复盘自己：从记录到蜕变的行动指南”, p. 30](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=31&annotation=IIWV7DZS))
+![[image-366.png|2001x1178]]
+ ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=31&annotation=7NGIWF88))  
+([“复盘自己：从记录到蜕变的行动指南”, p. 30](zotero://select/library/items/X743BJHT))
+
+### “7 种复盘技巧” |([“复盘自己：从记录到蜕变的行动指南”, p. 31](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=32&annotation=RJB47VK3))
+
+#### “切分” |([“复盘自己：从记录到蜕变的行动指南”, p. 32](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=33&annotation=N68DQF5M))
+
+“区分哪些是自己可以改变的事,哪些是自己 无法改变的事” |([“复盘自己：从记录到蜕变的行动指南”, p. 32](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=33&annotation=QNXMUGTA))
+
+“有限的精力集中 在可控的部分,避免精神内耗。” |([“复盘自己：从记录到蜕变的行动指南”, p. 33](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=34&annotation=MU9H5L6Q))
+
+“有时你会分不清自己脑中的想法是他人灌输给自己的,还是自然而然产生 的。有时你会将尚未发生的事情当成已经发生的负面事实,惶恐不安。” |([“复盘自己：从记录到蜕变的行动指南”, p. 33](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=34&annotation=BVBW4HG8))
+
+---
+
+“1 客观事实和主观感受” |([“复盘自己：从记录到蜕变的行动指南”, p. 33](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=34&annotation=Z9JM8YS8))
+
+““客观事实”本身无法改变,但你对这一事实的“主观感受”却可以自由调 整” |([“复盘自己：从记录到蜕变的行动指南”, p. 33](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=34&annotation=RDYATCQY))
+
+ ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=35&annotation=JISUKLB7))  
+([“复盘自己：从记录到蜕变的行动指南”, p. 34](zotero://select/library/items/X743BJHT))
+
+---
+
+“2 他人和自己” |([“复盘自己：从记录到蜕变的行动指南”, p. 34](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=35&annotation=QBA7Q87T))  
+> 课题分离
+
+““他人”和“自己”。我们能控制的只有自己的主观 感受和言行。他人的主观感受和言行,始终是“对方的事”” |([“复盘自己：从记录到蜕变的行动指南”, p. 34](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=35&annotation=STGF42S6))
+
+ ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=36&annotation=R6FHUXJG))  
+([“复盘自己：从记录到蜕变的行动指南”, p. 35](zotero://select/library/items/X743BJHT))
+
+---
+
+“行动和结果” |([“复盘自己：从记录到蜕变的行动指南”, p. 35](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=36&annotation=7RUELRHW))
+
+““行动”可以靠自己完成,但“结果”并非完全取决于自己” |([“复盘自己：从记录到蜕变的行动指南”, p. 35](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=36&annotation=LRYJ59V3))
+
+“只有“行动”是百分之百可控的部分。如果只关注结果而不行动,未免 太过可惜。只有把“行动”和“结果”切分开,才能把精力集中在自己可以改变 的事情上。” |([“复盘自己：从记录到蜕变的行动指南”, p. 36](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=37&annotation=437BFWT5))
+
+ ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=37&annotation=JL5TE5VY))  
+([“复盘自己：从记录到蜕变的行动指南”, p. 36](zotero://select/library/items/X743BJHT))
+
+---
+
+“过去和现在” |([“复盘自己：从记录到蜕变的行动指南”, p. 36](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=37&annotation=MQLWEXNI))
+
+““过去”是无法改变的。因此,我们需要区分这到底是“现在可 以采取的行动”,还是“过去的行动”” |([“复盘自己：从记录到蜕变的行动指南”, p. 36](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=37&annotation=6WEFU5DB))
+
+ ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=37&annotation=TRZUQ42B))  
+([“复盘自己：从记录到蜕变的行动指南”, p. 36](zotero://select/library/items/X743BJHT))
+
+“复盘时,有人可能会使用“当时我要是这么 做就好了”这种描述过去的表达方式。虽然其本意仍” |([“复盘自己：从记录到蜕变的行动指南”, p. 37](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=38&annotation=TLYZBBSU))
+
+“自己真正可以改变的事情并不多。但只要将精 力集中到这些事情上,你的人生就会有天翻地覆的变化。” |([“复盘自己：从记录到蜕变的行动指南”, p. 37](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=38&annotation=A67QL25C))
+
+#### “技巧 2:意义重塑” |([“复盘自己：从记录到蜕变的行动指南”, p. 38](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=39&annotation=UUZUSRML))
+
+“事实无法改变,但是我们却可以自由调整自 己的主观感受。而如何调整我们的主观感受,便是意义重塑的关键。” |([“复盘自己：从记录到蜕变的行动指南”, p. 38](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=39&annotation=XPMSJQ5C))
+
+“当发生某件事情的时候,由于瞬间产生的情绪刺激,我们的大脑会本能地做 出一系列反应。例如,上司用不耐烦的语气下达指令时,我们往往会立刻感到不 悦;而当他人突然夸奖我们时,我们则会生出既自豪又略微羞涩的复杂情绪。” |([“复盘自己：从记录到蜕变的行动指南”, p. 38](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=39&annotation=7PZSK7M2))
+
+“在突遭打击之时,“一切都完了......”与“这是一个成长的契机”, 这两种解读将引发完全不同的行动选择。” |([“复盘自己：从记录到蜕变的行动指南”, p. 40](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=41&annotation=EEIXTI6H))
+
+“即使是容易被忽略的小事或负面事件,也可能蕴藏价值与机会” |([“复盘自己：从记录到蜕变的行动指南”, p. 40](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=41&annotation=RSUD3PXL))
+
+“从客观事实中提炼“发现”“学习”“决心”“快乐”或“预” |([“复盘自己：从记录到蜕变的行动指南”, p. 40](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=41&annotation=BX2DYJUM))
+
+“我是否在其中获得了新 的“发现”?有没有什么值得“学习”的内容?有没有因此下定新的“决心”? 41 是否感到某种“快乐”?又或者,是不是心中隐约浮现出一丝“预感”?只要你 能从该事件中提炼出这五项中的任何一项,这件事就已经拥有了新的意义。” |([“复盘自己：从记录到蜕变的行动指南”, p. 40](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=41&annotation=YG5QC6JD))
+
+“在季度反馈中,你收到公司同事给予的“沟通技巧生硬”的负面评 价(客观事实),虽然有点沮丧,但你决定以此为契机去提升自己(决心)。这 种决心,就是你赋予该事件的新意义。” |([“复盘自己：从记录到蜕变的行动指南”, p. 41](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=42&annotation=RZSM7LLT))
+
+#### “技巧 3:聚焦” |([“复盘自己：从记录到蜕变的行动指南”, p. 42](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=43&annotation=7LTQU7VU))
+“是聚焦单一事件进行复 盘。而后续的周度复盘和月度复盘,则是从一周和一个月的记录中找到重要程度 排名前三的事件,聚焦这些内容进行复盘。” |([“复盘自己：从记录到蜕变的行动指南”, p. 43](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=44&annotation=QNXW6GT2))
+
+“你可以反复问自己:“这一周,什么事对我而言最重要?”通过这种方式, 你能够对所经历的事件进行排序,从而聚焦于真正值得思考与深化的关键事件。 聚焦技巧的提升还会带来另一个好处。那就是,在明确优先事项后,你的大 脑会自动开启“筛选模式”,从而显著提升你对相关信息的敏感度。” |([“复盘自己：从记录到蜕变的行动指南”, p. 43](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=44&annotation=BT66RD6I))
+
+#### “技巧 4:联结” |([“复盘自己：从记录到蜕变的行动指南”, p. 44](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=45&annotation=56TZBJLR))
+
+“事件之间内在联系的能力,能够帮助我们理解当下的事件如 何通往未来,并从中洞察隐藏的机会与价值” |([“复盘自己：从记录到蜕变的行动指南”, p. 44](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=45&annotation=5VMZEIZP))
+
+“培养发现价值的眼力” |([“复盘自己：从记录到蜕变的行动指南”, p. 47](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=48&annotation=XC4YXDIB))
+
+“你不仅能回溯并厘清事件之间的联系,还能练就一双看穿日常、 洞察价值并挖掘可能性的慧眼——它不局限于金钱收益,还包括人际机遇、知识 养分、自我成长等多个维度。因此,从现在开始提升眼力,愿你成为发现“黄金 稻草”的伯乐。” |([“复盘自己：从记录到蜕变的行动指南”, p. 47](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=48&annotation=RJTUL93C))
+
+“怀抱对细微联系的感恩之心” |([“复盘自己：从记录到蜕变的行动指南”, p. 47](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=48&annotation=AXIVKY8N))
+
+“你不复盘、不梳理,往往只会记住最终获得“豪宅”的喜悦,而忽略 了最初那根“稻草”,以及一路上支持你、帮助你的人。到头来,你可能会误以 为一切成就都源自自己,忘记了每一份看似偶然的馈赠都是成就的基石。” |([“复盘自己：从记录到蜕变的行动指南”, p. 47](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=48&annotation=2C45NIWL))
+
+#### “技巧 5:抽象化” |([“复盘自己：从记录到蜕变的行动指南”, p. 48](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=49&annotation=DFS93JSW))
+
+“抽象化指的是将日常经历中的具体事件进行归纳提炼,从中发现自身的特征 和倾向,并将获得的启示提取出来” |([“复盘自己：从记录到蜕变的行动指南”, p. 48](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=49&annotation=FZLTLZSB))
+
+“比如,鲹鱼、金枪鱼、秋刀鱼、鲷鱼、比目鱼 等具体个体可以被统称为“鱼”” |([“复盘自己：从记录到蜕变的行动指南”, p. 48](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=49&annotation=MDAIE3VN))
+
+“抽象化是一种思考方式,即只聚焦于重要的、有价值的 或共通的核心要素,主动舍弃其他不必要的信息。” |([“复盘自己：从记录到蜕变的行动指南”, p. 49](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=50&annotation=FU5D7CBW))
+
+“用语言表达自己的“已有资源”” |([“复盘自己：从记录到蜕变的行动指南”, p. 49](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=50&annotation=WQCMAT5M))
+
+“它包括自己的兴趣、优势、重要的人际关系, 以及思考模式和行为模式,还有这些模式背后的信念(或固有观念)、愿望等。” |([“复盘自己：从记录到蜕变的行动指南”, p. 49](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=50&annotation=9ZWCQMK2))
+
+“将意义重塑带来的价值和可能性迁移到其他场景中” |([“复盘自己：从记录到蜕变的行动指南”, p. 49](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=50&annotation=WVB5MCUM))
+
+“将从某一事件中获得的经验和洞察,迁移并 应用到其他情境中。比如,将与某人沟通的方式,应用到和其他人的交流中。” |([“复盘自己：从记录到蜕变的行动指南”, p. 49](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=50&annotation=4QGCQ5NR))
+![[image-368.png|2195x1243]]
+ ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=51&annotation=NRD9CGY8))  
+([“复盘自己：从记录到蜕变的行动指南”, p. 50](zotero://select/library/items/X743BJHT))
+
+“,越是处于决策高位的管理者,越需要具备抽象化思维,舍弃细枝末 节,抓住事物的本质,做出关键性判断。” |([“复盘自己：从记录到蜕变的行动指南”, p. 50](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=51&annotation=95LFJ2NG))
+
+#### “技巧 6:具体化” |([“复盘自己：从记录到蜕变的行动指南”, p. 51](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=52&annotation=GLFHIUHQ))
 
 
 
