@@ -303,5 +303,13 @@
       "modifiers": [],
       "key": "F12"
     }
+  ],
+  "obsidian-excalidraw-plugin:fullscreen": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "F11"
+    }
   ]
 }
