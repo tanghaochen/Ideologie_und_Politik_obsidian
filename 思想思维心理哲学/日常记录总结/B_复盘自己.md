@@ -2,6 +2,8 @@
 
 `<p>{{highlight}} |{{citation}}{{if comment}}<br/> > {{comment}}{{endif}}</p>`
 
+
+
 “我为什么会有这样的际遇,自己到底有哪些优点,又因何陷入低潮与焦虑? 与他人的关系为什么会这样?自己内心深处真正渴望的是什么?......一连串的思 考帮助我看清了自己,让我开始重新整合自身已有的资源,人生由此开始好转。” |([“复盘自己：从记录到蜕变的行动指南”, p. 6](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=7&annotation=HYHBA2EL))  
 > 作者的困境起源
 
