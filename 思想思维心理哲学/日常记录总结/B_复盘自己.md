@@ -211,7 +211,7 @@
 
 #### “技巧 6:具体化” |([“复盘自己：从记录到蜕变的行动指南”, p. 51](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=52&annotation=GLFHIUHQ))
 
-
+![[image-369.png|683x764]]
 
 
 
