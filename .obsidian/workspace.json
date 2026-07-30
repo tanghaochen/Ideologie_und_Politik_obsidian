@@ -29,12 +29,15 @@
             "id": "9606560e3658e473",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/介词.md"
+                "file": "语言学习/德语/公共知识语法/2动词/第二分词;过去分词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "excalidraw-icon",
-              "title": "介词"
+              "icon": "lucide-file",
+              "title": "第二分词;过去分词"
             }
           }
         ],
@@ -316,7 +319,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/介词.md"
+                "file": "语言学习/德语/公共知识语法/2动词/第二分词;过去分词.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -363,6 +366,7 @@
   },
   "active": "9606560e3658e473",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/介词.md",
     "思想思维心理哲学/日常记录总结/B_复盘自己.md",
     "assets/image-368.png",
     "assets/image-367.png",
