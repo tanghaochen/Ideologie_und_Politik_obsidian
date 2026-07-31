@@ -213,11 +213,98 @@
 
 #### “技巧 6:具体化” |([“复盘自己：从记录到蜕变的行动指南”, p. 51](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=52&annotation=GLFHIUHQ))
 
-![[image-369.png|683x764]]
+
+“无法行动,原因往往不是意志力不够,而是你尚未将目标具体 化。一旦掌握了这项技巧,你马上就会惊讶于自己的行动速度。” |([“复盘自己：从记录到蜕变的行动指南”, p. 51](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=52&annotation=7SZ23BEQ))
+
+““ 何 时 去 ? ”“ 去 哪 里 ? ”“ 住 几 天?”“预算多少?”所有信息都处于模糊状态,结果自然无法推进。 意识到这一点后,我开始尝试将其具体化。“三月安排一次三天两夜的远程 办公旅行,目的地为箱根温泉,预算 3 万日元。”” |([“复盘自己：从记录到蜕变的行动指南”, p. 51](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=52&annotation=FBPNIPUE))
+
+#### “技巧 7:视角切换” |([“复盘自己：从记录到蜕变的行动指南”, p. 53](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=54&annotation=I65GEMZ4))
+
+“1 意识到自己戴着“眼镜”” |([“复盘自己：从记录到蜕变的行动指南”, p. 53](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=54&annotation=YMEUQFP9))
+
+“视角不同,因此对同一件事物的感受截然不同。有人觉得幸运,也 有人觉得遗憾,视角各异,感受自然不同。” |([“复盘自己：从记录到蜕变的行动指南”, p. 53](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=54&annotation=G85DT8SS))
+
+“2 了解自己戴着怎样的“眼镜”” |([“复盘自己：从记录到蜕变的行动指南”, p. 55](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=56&annotation=EG2R8C3B))
+
+“3 换上新的“眼镜”” |([“复盘自己：从记录到蜕变的行动指南”, p. 56](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=57&annotation=CU27YGH9))  
+> 也等于更新更换想法
+
+## 第三章 “如何做好每日复盘” |([“复盘自己：从记录到蜕变的行动指南”, p. 60](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=61&annotation=QS3CJRBM))
+
+“准备每日复盘模板” |([“复盘自己：从记录到蜕变的行动指南”, p. 61](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=62&annotation=4Y2D63AH))
+![[image-369.png]]
+ ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=62&annotation=9R2Z9P4Q))  
+([“复盘自己：从记录到蜕变的行动指南”, p. 61](zotero://select/library/items/X743BJHT))
+
+“在 1 号框中写下主观感受或价值判断,就容易受限于某一种视角。为了 让自己再次以冷静的视角审视事件,请务必在 1 号框中只写“发生的客观事 实”。你可以先尝试完整地写下来,再检查是否夹杂了主观感受或价值判断。如 果有,将这部分内容挪到“当时的想法和感受”框中即可。” |([“复盘自己：从记录到蜕变的行动指南”, p. 65](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=66&annotation=AKN5IY3S)) ^mpzoah
+
+“2 记录当时的想法和感受” |([“复盘自己：从记录到蜕变的行动指南”, p. 65](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=66&annotation=FPGLEYHE))
+
+“发生的瞬间,你产生了怎样的念头?又感受到了什么样的情绪?请将 你当时的想法和感受毫无保留地写进 2 号框中” |([“复盘自己：从记录到蜕变的行动指南”, p. 65](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=66&annotation=Y83KSJTF))
 
 
+“社会规范下 的自我怀疑。先将这些社会规范暂时搁置一边,把脑海中与心中闪现的内容如实 地写下来。如果你在这一环节写出了“并非真心认同的虚假发言”,那么你的思 路可能会被阻断,从而导致复盘难以深入进行。” |([“复盘自己：从记录到蜕变的行动指南”, p. 65](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=66&annotation=UB5CS8BW))
 
+“为什么真心话很重要?” |([“复盘自己：从记录到蜕变的行动指南”, p. 67](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=68&annotation=XTZWG6II))
 
+““有些话还没有说透”,这是 一个信号:提醒你还没有完全写尽、写透。在这个阶段,请你记住,“毫无保留 地写出来”才是最重要的。” |([“复盘自己：从记录到蜕变的行动指南”, p. 67](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=68&annotation=MBYR8QSS))
+
+“”“欸,原来我会 这样想”,以一种轻松自在的态度去面对自己的真实情绪。” |([“复盘自己：从记录到蜕变的行动指南”, p. 67](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=68&annotation=WSDZ85SQ))
+
+“当感受难以表达时” |([“复盘自己：从记录到蜕变的行动指南”, p. 67](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=68&annotation=YJ59HSMD))
+
+ ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=69&annotation=U8ELJPWQ))  
+([“复盘自己：从记录到蜕变的行动指南”, p. 68](zotero://select/library/items/X743BJHT))
+
+“离中心越近表 示情绪越强,离中心越远则表示情绪越弱。” |([“复盘自己：从记录到蜕变的行动指南”, p. 68](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=69&annotation=8596FHB6))
+
+“3 记录当时采取了什么行动” |([“复盘自己：从记录到蜕变的行动指南”, p. 69](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=70&annotation=4QJ55YG6))
+
+“4 写下当时的行动带来了什么结果” |([“复盘自己：从记录到蜕变的行动指南”, p. 69](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=70&annotation=PK4IJV4M))
+
+“写入 4 号框” |([“复盘自己：从记录到蜕变的行动指南”, p. 70](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=71&annotation=BJZMEEDF))
+
+“第二步:复盘记录的内容” |([“复盘自己：从记录到蜕变的行动指南”, p. 73](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=74&annotation=MIX5SGWE))
+
+“1 记录意义重塑过程中的思考” |([“复盘自己：从记录到蜕变的行动指南”, p. 73](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=74&annotation=86CEPZCA))
+
+“在 1-A 处写下你对该事件的新发现” |([“复盘自己：从记录到蜕变的行动指南”, p. 73](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=74&annotation=CG353MBX))
+
+“是否有不同的 看法?”,或者“是否可以尝试新的思考角度?” |([“复盘自己：从记录到蜕变的行动指南”, p. 73](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=74&annotation=CKVBHP6V))
+
+“在 1-B 处写下你对自己的新发现” |([“复盘自己：从记录到蜕变的行动指南”, p. 75](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=76&annotation=NEN96RE2))
+
+“再次回顾你在第一步中填写的“意义重塑”“行动”“结果”三个部分, 思考是否有关于自己的新发” |([“复盘自己：从记录到蜕变的行动指南”, p. 75](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=76&annotation=E3JHHW7V))
+
+“你可以用以下三个问题引导自己思考: • 我的心中为什么会产生那样的想法? 77 • 那一刻,我真正渴望的是什么? • 是否还存在其他可选方式?” |([“复盘自己：从记录到蜕变的行动指南”, p. 76](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=77&annotation=53GHJ4RB))
+
+“案例” |([“复盘自己：从记录到蜕变的行动指南”, p. 77](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=78&annotation=HRVMXUYS))
+
+“不必勉强自己进行正向思考” |([“复盘自己：从记录到蜕变的行动指南”, p. 78](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=79&annotation=4Y2RMTCI))
+
+“如果某个经历对你来说就是一件“糟糕的事”, 那么你无须强迫自己把它当作“好事”来看待。当然,你也可以尝试进行视角切 换,问问自己:“如果这是件好事的话,好在哪里?”这是一个值得推荐的思考 角度,但并非让你强行说服自己,对自己进行洗脑。 比如,你被同事言语中伤,非常难过。这时候,你完全不需要勉强自己写下 “这是我成长的契机”这样的句子。这种强行的正向思考,不仅会让你感到压 抑,还容易让你对复盘产生距离感,逐渐远离它” |([“复盘自己：从记录到蜕变的行动指南”, p. 78](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=79&annotation=PYKG5QR5))
+
+“2 写下从现在开始可以采取的行动” |([“复盘自己：从记录到蜕变的行动指南”, p. 78](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=79&annotation=R4RNYURL))
+
+“真正有意义的记录应该是:“下次遇到类似 情况时,我会提前订票。” |([“复盘自己：从记录到蜕变的行动指南”, p. 80](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=81&annotation=3C74XXDV))
+
+“探索自己可以做到的事” |([“复盘自己：从记录到蜕变的行动指南”, p. 80](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=81&annotation=463RL2CJ))
+
+““我想请对方这样做”或“我计划与对方沟通看看”,这就成 了你自己能够采取的行动。至于对方是否配合,另当别论,但你本人的行动已经 切实发生。” |([“复盘自己：从记录到蜕变的行动指南”, p. 80](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=81&annotation=YVYSLS8K))
+
+“3 记录行动所带来的结果” |([“复盘自己：从记录到蜕变的行动指南”, p. 80](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=81&annotation=YS9Q993Z))
+
+“例如,你给 A 先生发了一条信息,但他并没有回复。那你可以在“结果”栏写 下:“给 A 发了信息,但过了×天都没有回应。”这就是一个明确的结果。这种结 果往往能带来新的启示。” |([“复盘自己：从记录到蜕变的行动指南”, p. 80](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=81&annotation=URUXMGJS))
+
+“每日复盘案例” |([“复盘自己：从记录到蜕变的行动指南”, p. 83](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=84&annotation=QBERQH2B))
+
+“每日复盘,强大内核” |([“复盘自己：从记录到蜕变的行动指南”, p. 90](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=91&annotation=XLBT2WX4))
+
+案例  
+1“事件”部门成员在工作中出现了失误,因此需要在部门例会上向全体成 员报告。
+2“当时的想法和感受”作为团队领导,我一时间不知道该如何应对,但最 后还是决定对其进行严厉的惩戒。  
+3“行动”我表情严肃,听取了那位成员的报告。 
+4“结果”那位成员情绪低落,而我也在反复思考,作为一名领导,这样的 处理方式是否妥当。
 
 
 
