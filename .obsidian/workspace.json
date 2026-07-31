@@ -9,6 +9,18 @@
         "dimension": 23.525513585155732,
         "children": [
           {
+            "id": "9c07b02b849b703c",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.13.4"
+              },
+              "icon": "lucide-book-up",
+              "title": "版本说明 1.13.4"
+            }
+          },
+          {
             "id": "814bf3e4edd62ad4",
             "type": "leaf",
             "pinned": true,
@@ -55,8 +67,7 @@
               "title": "26-8"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       },
       {
         "id": "66514ff393b45104",
