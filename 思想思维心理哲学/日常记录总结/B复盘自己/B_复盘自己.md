@@ -484,7 +484,32 @@
 
 “寻找自己百分百想做的事”
 
+“当面对“你想做什么?”“有没有什么特别想做的事?”等问题时,如果你 脱口而出,“啊......不知道呢”。那么,这就证明你可能已经将“想做的事”与 “必须做的事”混为一谈了。” |([“复盘自己：从记录到蜕变的行动指南”, p. 132](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=133&annotation=AS3FIW3X))
 
+### “月度复盘” |([“复盘自己：从记录到蜕变的行动指南”, p. 133](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=134&annotation=A6VIDYAP))
+
+“通过以月为周期的复盘, 你将看到跨越数周的更大的趋势,这有助于你思考今后的人生方向并做出一些重 大的决策。” |([“复盘自己：从记录到蜕变的行动指南”, p. 133](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=134&annotation=5AZSJPK9))
+
+“将内容分为“内心”“行动”“结果”三个部分” |([“复盘自己：从记录到蜕变的行动指南”, p. 133](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=134&annotation=VSN34CZG))
+- “1 月度复盘第一步:聚焦当月最重要的 1~3 件事”
+- “2 月度复盘第二步:找到“联结”,并用箭头标注” |([“复盘自己：从记录到蜕变的行动指南”, p. 134](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=135&annotation=TAD72VMV))
+- “3 月度复盘第三步:撰写总结” |([“复盘自己：从记录到蜕变的行动指南”, p. 135](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=136&annotation=CNSLSIL6))
+
+“在“抽象化”与“具体化”间切换,让想法落地” |([“复盘自己：从记录到蜕变的行动指南”, p. 138](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=139&annotation=HVVGDLM3))
+
+“如果你 只是一味地进行抽象化,就会变成一个“光说不练”的思考者;如果你只是专注 于具体化,就会像是在盲目进行“千本击球训练”” |([“复盘自己：从记录到蜕变的行动指南”, p. 138](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=139&annotation=CPU46PXM))
+
+““经验学习理论”的模型, 用来解释人们是如何从经验中学习与成长的。该理论将“从经验中学习”的过 程,分为四个阶段(见图 4-9)。“能动性实验”与“具体经验”指的是实际行 动。“反思性观察”与“抽象性概念化”指的是通过这些实际行动带来的经验进 行学习。这两种模式之间形成循环尤为重要。” |([“复盘自己：从记录到蜕变的行动指南”, p. 138](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=139&annotation=8WDPG36A))
+
+ ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=140&annotation=FFIDBCPL))  
+([“复盘自己：从记录到蜕变的行动指南”, p. 139](zotero://select/library/items/X743BJHT))
+
+“就是从行动中学习,再将学到的东西付诸新的行动。 对于从经验中学习,建立起这样的循环是非常重要的。” |([“复盘自己：从记录到蜕变的行动指南”, p. 139](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=140&annotation=XK7Y6RRB))
+
+“复盘一整周的笔记内容时,就会 发现隐藏在其中的个人倾向与特征。将其用语言总结出来(抽象化),然后再把 这些总结转化为可以采取的具体行动(具体化)。不断重复这一过程,你将慢慢 建立起一套属于自己的正向循环机制” |([“复盘自己：从记录到蜕变的行动指南”, p. 141](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=142&annotation=DZ8YKR6S))
+
+ ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=142&annotation=6FKRWLQ2))  
+([“复盘自己：从记录到蜕变的行动指南”, p. 141](zotero://select/library/items/X743BJHT))
 
 
 
