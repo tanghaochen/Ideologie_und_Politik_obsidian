@@ -44,12 +44,15 @@
             "id": "cf59731dc7de7f9b",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md"
+                "file": "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "excalidraw-icon",
-              "title": "从句"
+              "icon": "lucide-file",
+              "title": "格 与 介词 动词的固定搭配"
             }
           }
         ],
@@ -318,7 +321,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md"
+                "file": "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -365,6 +368,8 @@
   },
   "active": "cf59731dc7de7f9b",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/形容词.md",
+    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/2动词/汇总所有动词变化.md",
     "语言学习/德语/单词/生词/2026年6月.md",
     "语言学习/德语/单词/生词/26-8.md",
@@ -379,7 +384,6 @@
     "assets/Pasted Image 20260731225842_303.png",
     "assets/Pasted Image 20260731225726_019.png",
     "assets/Pasted Image 20260731225619_116.png",
-    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/10句型/第二虚拟式.md",
     "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
     "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md",
