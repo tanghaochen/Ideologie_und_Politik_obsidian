@@ -11,7 +11,7 @@
       "hiddenFileTags": [],
       "hiddenFileProperties": [],
       "navigationBanner": null,
-      "periodicNotesFolder": "",
+      "periodicNotesFolder": "Diary",
       "shortcuts": [
         {
           "type": "note",
@@ -151,6 +151,7 @@
       "search": true,
       "reveal": false,
       "descendants": true,
+      "groupExpansion": false,
       "sort": true,
       "appearance": true,
       "newNote": true
@@ -223,7 +224,9 @@
   "defaultListMode": "compact",
   "includeDescendantNotes": false,
   "defaultFolderSort": "modified-desc",
+  "defaultFolderSortPropertyKey": "",
   "propertySortKey": "",
+  "propertyGroupKey": "",
   "propertySortSecondary": "title",
   "manualSortPropertyKey": "sort_index",
   "manualSortGroupHeaderProperty": "group_header",
@@ -255,9 +258,13 @@
   "frontmatterCreatedField": "",
   "frontmatterModifiedField": "",
   "frontmatterDateFormat": "",
-  "showFileIconUnfinishedTask": true,
+  "showFileTaskProgress": true,
+  "showFileTaskProgressBar": true,
+  "showFileTaskProgressCount": true,
+  "hideFileTaskProgressWhenComplete": false,
   "showFileBackgroundUnfinishedTask": false,
   "unfinishedTaskBackgroundColor": "#ef000050",
+  "unfinishedTaskBackgroundColorDark": "#ef000050",
   "showFileIcons": true,
   "useFolderIconForFiles": false,
   "showFilenameMatchIcons": false,
@@ -270,6 +277,7 @@
   "showFilePreview": false,
   "skipHeadingsInPreview": true,
   "skipCodeBlocksInPreview": true,
+  "skipCalloutsInPreview": false,
   "stripHtmlInPreview": true,
   "stripLatexInPreview": true,
   "previewRows": 2,
@@ -307,8 +315,9 @@
   "showParentFolderColor": true,
   "showParentFolderIcon": true,
   "calendarEnabled": true,
-  "calendarPlacement": "left-sidebar",
+  "calendarPlacement": "right-sidebar",
   "calendarConfirmBeforeCreate": true,
+  "calendarShowHiddenItems": false,
   "calendarLocale": "system-default",
   "calendarWeekendDays": "sat-sun",
   "calendarMonthHeadingFormat": "full",
@@ -317,9 +326,9 @@
   "calendarShowTasks": true,
   "calendarMonthHighlights": {},
   "calendarShowWeekNumber": true,
-  "calendarShowQuarter": false,
+  "calendarShowQuarter": true,
   "calendarShowYearCalendar": true,
-  "calendarLeftPlacement": "navigation",
+  "calendarLeftPlacement": "below",
   "calendarWeeksToShow": 6,
   "calendarIntegrationMode": "notebook-navigator",
   "calendarPeriodicNotesLocaleSource": "calendar",
@@ -515,9 +524,7 @@
       "property": false
     }
   },
-  "collapsedPinnedContexts": {},
   "fileIcons": {
-    "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md": "obsidian-new",
     "思想思维心理哲学/个人人生思想架构.md": "excalidraw-icon",
     "经济学/投资方式/投资方法/经济数据.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/句子成分逻辑展示.md": "excalidraw-icon",
@@ -528,7 +535,8 @@
     "语言学习/德语/公共知识语法/动词.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/介词.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/从句.md": "excalidraw-icon",
-    "语言学习/德语/公共知识语法/名词.md": "excalidraw-icon"
+    "语言学习/德语/公共知识语法/名词.md": "excalidraw-icon",
+    "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md": "obsidian-new"
   },
   "fileColors": {},
   "fileBackgroundColors": {},
@@ -552,11 +560,11 @@
   },
   "folderTreeSortOverrides": {},
   "folderAppearances": {
-    "2026": {
-      "previewRows": 1
-    },
     "语言学习/德语": {
       "groupBy": "custom"
+    },
+    "Diary/2026": {
+      "previewRows": 1
     }
   },
   "tagIcons": {},
@@ -598,7 +606,7 @@
     "#404040",
     "#404040"
   ],
-  "lastShownVersion": "3.2.4",
+  "lastShownVersion": "3.3.2",
   "rootFolderOrder": [],
   "rootTagOrder": [],
   "rootPropertyOrder": []
