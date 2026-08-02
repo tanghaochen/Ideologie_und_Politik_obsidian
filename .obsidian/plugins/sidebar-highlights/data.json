@@ -3360,7 +3360,24 @@
         "type": "html"
       }
     ],
-    "语言学习/德语/单词/生词/2026年6月.md": []
+    "语言学习/德语/单词/生词/2026年6月.md": [],
+    "语言学习/德语/公共知识语法/2动词/情态动词表可能性.md": [
+      {
+        "id": "u228pazcx",
+        "text": "动词原形",
+        "tags": [],
+        "line": 6,
+        "startOffset": 168,
+        "endOffset": 201,
+        "filePath": "语言学习/德语/公共知识语法/2动词/情态动词表可能性.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1785643712567,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
+    ]
   },
   "collections": {},
   "groupingMode": "none",
