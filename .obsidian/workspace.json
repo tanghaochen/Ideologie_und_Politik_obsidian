@@ -231,7 +231,7 @@
       {
         "id": "0ed9c27411998641",
         "type": "tabs",
-        "dimension": 66.58491722869405,
+        "dimension": 72.7161250766401,
         "children": [
           {
             "id": "dd8c0de9236cf3b8",
@@ -364,7 +364,7 @@
       {
         "id": "28e75bfc7e894da7",
         "type": "tabs",
-        "dimension": 33.41508277130595,
+        "dimension": 27.283874923359903,
         "children": [
           {
             "id": "c3592eded90586bf",
@@ -440,43 +440,6 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false,
       "periodic-notes:Open today": false
     }
-  },
-  "floating": {
-    "id": "b5c35ea4d0cb5981",
-    "type": "floating",
-    "children": [
-      {
-        "id": "98e8046d5279090a",
-        "type": "window",
-        "children": [
-          {
-            "id": "dfdae41aa018538a",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "2736aa099e82c6bd",
-                "type": "leaf",
-                "state": {
-                  "type": "excalidraw",
-                  "state": {
-                    "file": "思想思维心理哲学/日常记录总结/B复盘自己/B复盘自己canvas.md"
-                  },
-                  "icon": "excalidraw-icon",
-                  "title": "B复盘自己canvas"
-                }
-              }
-            ]
-          }
-        ],
-        "direction": "vertical",
-        "x": 2978,
-        "y": 284,
-        "width": 770,
-        "height": 1393,
-        "maximize": true,
-        "zoom": -1
-      }
-    ]
   },
   "active": "1236850c2d2c5c32",
   "lastOpenFiles": [
