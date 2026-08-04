@@ -85,7 +85,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       },
       {
         "id": "66514ff393b45104",
@@ -384,7 +384,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md"
+                "file": "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -439,10 +439,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "31284e0ed8b49127",
+  "active": "0841ede184a20cc2",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/10句型/代词/es.md",
     "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/公共知识语法/10句型/代词/es.md",
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "语言学习/德语/公共知识语法/10句型/倒装句.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien/难句解析.md",
