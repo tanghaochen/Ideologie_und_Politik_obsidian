@@ -4772,7 +4772,7 @@
     ]
   },
   "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/1 字母表 发音.md": {
-    "scroll": 216.76125585879913,
+    "scroll": 203.19426179027354,
     "cursor": {
       "from": {
         "line": 251,
@@ -6185,12 +6185,12 @@
     "scroll": 144.67082057502617,
     "cursor": {
       "from": {
-        "line": 162,
-        "ch": 17
+        "line": 168,
+        "ch": 6
       },
       "to": {
-        "line": 162,
-        "ch": 17
+        "line": 168,
+        "ch": 6
       }
     },
     "expandedKeys": [
@@ -7503,12 +7503,12 @@
     "scroll": 12.506874751607592,
     "cursor": {
       "from": {
-        "line": 43,
-        "ch": 56
+        "line": 40,
+        "ch": 0
       },
       "to": {
-        "line": 43,
-        "ch": 56
+        "line": 40,
+        "ch": 0
       }
     },
     "expandedKeys": [
@@ -16565,5 +16565,17 @@
       }
     },
     "scroll": 0
+  },
+  "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien/难句解析.md": {
+    "cursor": {
+      "from": {
+        "line": 3,
+        "ch": 2
+      },
+      "to": {
+        "line": 3,
+        "ch": 2
+      }
+    }
   }
 }

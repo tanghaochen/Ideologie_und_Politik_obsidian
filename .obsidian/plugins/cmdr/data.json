@@ -44,6 +44,12 @@
       "icon": "lucide-maximize",
       "name": "将当前标签页移动至新窗口",
       "mode": "any"
+    },
+    {
+      "id": "obsidian-admonition:insert-callout",
+      "icon": "lucide-activity-square",
+      "name": "Admonition: Insert Callout",
+      "mode": "any"
     }
   ],
   "fileMenu": [
@@ -74,6 +80,7 @@
   ],
   "macros": [],
   "explorer": [],
+  "textToolbarCommands": [],
   "hide": {
     "statusbar": [],
     "leftRibbon": [
