@@ -1,24 +1,44 @@
 {
   "recentFiles": [
     {
+      "basename": "难句解析",
+      "path": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien/难句解析.md"
+    },
+    {
+      "basename": "⭐必背所有知识点整理考察整理",
+      "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
+    },
+    {
+      "basename": "关系从句",
+      "path": "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md"
+    },
+    {
+      "basename": "全面讲解否定，nein,kein,nicht等",
+      "path": "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md"
+    },
+    {
+      "basename": "形容词名词化",
+      "path": "语言学习/德语/公共知识语法/3形容词/形容词名词化.md"
+    },
+    {
       "basename": "动词的过去时",
       "path": "语言学习/德语/公共知识语法/时态/动词的过去时.md"
     },
     {
-      "basename": "人称代词; 疑问代词; 指示代词",
-      "path": "语言学习/德语/人称代词; 疑问代词; 指示代词.md"
-    },
-    {
-      "basename": "难句解析",
-      "path": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien/难句解析.md"
+      "basename": "第二分词;过去分词",
+      "path": "语言学习/德语/公共知识语法/2动词/第二分词;过去分词.md"
     },
     {
       "basename": "从句",
       "path": "语言学习/德语/公共知识语法/从句.md"
     },
     {
-      "basename": "关系从句",
-      "path": "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md"
+      "basename": "动词",
+      "path": "语言学习/德语/公共知识语法/动词.md"
+    },
+    {
+      "basename": "人称代词; 疑问代词; 指示代词",
+      "path": "语言学习/德语/人称代词; 疑问代词; 指示代词.md"
     },
     {
       "basename": "1 字母表 发音",
@@ -39,10 +59,6 @@
     {
       "basename": "倒装句",
       "path": "语言学习/德语/公共知识语法/10句型/倒装句.md"
-    },
-    {
-      "basename": "全面讲解否定，nein,kein,nicht等",
-      "path": "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md"
     },
     {
       "basename": "Boden  Erdkultur, Hydrokultur, Halbbodenkultur",
@@ -105,10 +121,6 @@
       "path": "语言学习/德语/公共知识语法/10句型/从句合集/目的从句.md"
     },
     {
-      "basename": "⭐必背所有知识点整理考察整理",
-      "path": "语言学习/德语/⭐必背所有知识点整理考察整理.md"
-    },
-    {
       "basename": "介词",
       "path": "语言学习/德语/公共知识语法/介词.md"
     },
@@ -157,10 +169,6 @@
       "path": "思想思维心理哲学/日常记录总结/B复盘自己/普鲁奇克情绪轮盘.md"
     },
     {
-      "basename": "第二分词;过去分词",
-      "path": "语言学习/德语/公共知识语法/2动词/第二分词;过去分词.md"
-    },
-    {
       "basename": "数字 序数词",
       "path": "语言学习/德语/公共知识语法/3形容词/数字 序数词.md"
     },
@@ -191,14 +199,6 @@
     {
       "basename": "第一将来时和第一虚拟式的区别",
       "path": "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md"
-    },
-    {
-      "basename": "阳性弱变化名词",
-      "path": "语言学习/德语/公共知识语法/1名词/阳性弱变化名词.md"
-    },
-    {
-      "basename": "农资产品使用介绍",
-      "path": "农业/农资产品使用介绍.md"
     }
   ],
   "omittedPaths": [],
