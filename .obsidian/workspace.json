@@ -91,6 +91,7 @@
           {
             "id": "fc6eb10a7dec0678",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
@@ -99,6 +100,7 @@
                 "source": false,
                 "backlinks": false
               },
+              "pinned": true,
               "icon": "lucide-file",
               "title": "26-8"
             }
@@ -389,6 +391,11 @@
   },
   "active": "fc6eb10a7dec0678",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/从句.md",
+    "Diary/2026/20260809.md",
+    "语言学习/德语/公共知识语法/时态/动词的过去时.md",
+    "语言学习/德语/公共知识语法/介词.md",
+    "语言学习/德语/单词/生词/26-8.md",
     "思想思维心理哲学/爱情/摄影/第一章框架.md",
     "assets/image-378.png",
     "assets/image-377.png",
@@ -400,16 +407,13 @@
     "思想思维心理哲学/爱情/摄影",
     "思想思维心理哲学/过度劳累.md",
     "思想思维心理哲学/个人人生思想架构.md",
-    "Diary/2026/20260809.md",
     "思想思维心理哲学/只问耕耘，不问收获；尽人事，而后听天命.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien/难句解析.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
     "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
     "语言学习/德语/公共知识语法/3形容词/形容词名词化.md",
-    "语言学习/德语/公共知识语法/时态/动词的过去时.md",
     "语言学习/德语/公共知识语法/2动词/第二分词;过去分词.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/1 字母表 发音.md",
@@ -420,7 +424,6 @@
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
     "语言学习/德语/公共知识语法/句子成分 结构.md",
     "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/不占位连词-主句与主句连接.md",
     "Diary/2026",
     "Diary",
     "assets/image-372.png",
