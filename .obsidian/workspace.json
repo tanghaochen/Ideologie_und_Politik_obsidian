@@ -6,7 +6,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 46.30495790458372,
+        "dimension": 71.74929840972872,
         "children": [
           {
             "id": "c4ec68b056f3901f",
@@ -14,13 +14,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
+                "file": "思想思维心理哲学/爱情/摄影/第一章框架.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "格 与 介词 动词的固定搭配"
+              "title": "第一章框架"
             }
           },
           {
@@ -69,7 +69,7 @@
       {
         "id": "66514ff393b45104",
         "type": "tabs",
-        "dimension": 53.69504209541628,
+        "dimension": 28.250701590271284,
         "children": [
           {
             "id": "b945a75cb7c2be53",
@@ -391,6 +391,7 @@
   },
   "active": "c4ec68b056f3901f",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
     "语言学习/德语/单词/生词/26-8.md",
     "语言学习/德语/单词/生词/2026年6月.md",
     "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
@@ -423,7 +424,6 @@
     "语言学习/德语/公共知识语法/10句型/代词/es.md",
     "语言学习/德语/公共知识语法/10句型/倒装句.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
-    "语言学习/德语/公共知识语法/句子成分 结构.md",
     "Diary/2026",
     "Diary",
     "assets/image-372.png",
