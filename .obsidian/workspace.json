@@ -25,6 +25,7 @@
           {
             "id": "4f0c926c16197207",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
@@ -33,6 +34,7 @@
                 "source": false,
                 "backlinks": false
               },
+              "pinned": true,
               "icon": "lucide-file",
               "title": "难句解析"
             }
@@ -45,6 +47,18 @@
         "type": "tabs",
         "dimension": 48.175865294667915,
         "children": [
+          {
+            "id": "fcf594ded0f4d7af",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "格; 限定词"
+            }
+          },
           {
             "id": "b945a75cb7c2be53",
             "type": "leaf",
@@ -95,7 +109,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -378,8 +392,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "4f0c926c16197207",
+  "active": "ce429b6b2ed7a98e",
   "lastOpenFiles": [
+    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien/难句解析.md",
+    "语言学习/德语/公共知识语法/格; 限定词.md",
+    "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "语言学习/德语/公共知识语法/2动词/lassen.md",
     "语言学习/德语/公共知识语法/时态/第一将来时, 第二将来时.md",
     "语言学习/德语/单词/生词/26-8.md",
@@ -406,17 +423,14 @@
     "思想思维心理哲学/过度劳累.md",
     "思想思维心理哲学/个人人生思想架构.md",
     "思想思维心理哲学/只问耕耘，不问收获；尽人事，而后听天命.md",
-    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien/难句解析.md",
     "语言学习/德语/⭐必背所有知识点整理考察整理.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
     "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
     "语言学习/德语/公共知识语法/3形容词/形容词名词化.md",
     "语言学习/德语/公共知识语法/2动词/第二分词;过去分词.md",
     "语言学习/德语/公共知识语法/动词.md",
-    "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/1 字母表 发音.md",
     "电脑、软件、系统/ps-tang.md",
-    "语言学习/德语/公共知识语法/句子结构：术语，形容词，副词，表语，定语，状语.md",
     "Diary/2026",
     "Diary",
     "语言学习/德语/教材/新求精/新求精德语强化教程 初级 2 第4版.pdf",

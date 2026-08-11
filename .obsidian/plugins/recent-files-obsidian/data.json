@@ -1,12 +1,20 @@
 {
   "recentFiles": [
     {
+      "basename": "lassen",
+      "path": "语言学习/德语/公共知识语法/2动词/lassen.md"
+    },
+    {
       "basename": "难句解析",
       "path": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien/难句解析.md"
     },
     {
-      "basename": "lassen",
-      "path": "语言学习/德语/公共知识语法/2动词/lassen.md"
+      "basename": "格; 限定词",
+      "path": "语言学习/德语/公共知识语法/格; 限定词.md"
+    },
+    {
+      "basename": "人称代词; 疑问代词; 指示代词",
+      "path": "语言学习/德语/人称代词; 疑问代词; 指示代词.md"
     },
     {
       "basename": "第一将来时, 第二将来时",
@@ -87,10 +95,6 @@
     {
       "basename": "动词",
       "path": "语言学习/德语/公共知识语法/动词.md"
-    },
-    {
-      "basename": "人称代词; 疑问代词; 指示代词",
-      "path": "语言学习/德语/人称代词; 疑问代词; 指示代词.md"
     },
     {
       "basename": "1 字母表 发音",
@@ -195,10 +199,6 @@
     {
       "basename": "化教程 初级1 第5版.pdf",
       "path": "化教程 初级1 第5版.pdf.md"
-    },
-    {
-      "basename": "复合动词",
-      "path": "语言学习/德语/公共知识语法/2动词/复合动词.md"
     }
   ],
   "omittedPaths": [],
