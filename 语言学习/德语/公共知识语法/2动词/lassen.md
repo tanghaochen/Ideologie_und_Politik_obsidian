@@ -73,13 +73,34 @@ graph TD
 - **语法重点（现在完成时）：** 和第二层境界一样，带有第二个动词，完成时使用**双不定式**：
     - _Ich habe mein Auto **reparieren lassen**._ (我把车送去修了。)
 
----
+##### 其他时态示例
+2. Präteritum（过去时）
+过去时通常用于书面语，比如你给房东写邮件，或者填写官方表格时。
 
-总结一下，`werden` 和 `lassen` 之所以要单独拎出来，是因为它们有着**改变句子结构**的魔力，尤其是 `lassen` 在完成时里的“双不定式”现象，是打破初学者原有语法认知的一个巨大挑战。
+场景： 租房事务（Mietangelegenheiten）
 
-这三个场景在德国每一天的生活中都会遇到。为了检验你是不是真的掌握了 `lassen` 的“双不定式”魔法，给你布置一个小任务：
+例句： Wir ließen den Mietvertrag vom Mieterverein prüfen.
 
-**如果昨天你的家里水管坏了，你花钱请了一位水管工（Klempner）来修好了它。请你用德语的“现在完成时（Perfekt）”结合 `lassen`，告诉我：“我（昨天）找人修了水管（das Wasserrohr reparieren）”，这句话应该怎么说呢？**
+中文翻译： 我们（过去）让租房协会审查了租房合同。
+
+语法要点： lassen 的过去时词干是 ließ-。这里加上了 vom Mieterverein（由租房协会），用介词 von + Dativ 引出真正干活的“打工人”。
+
+3. Perfekt（现在完成时）—— 【重点与难点警告 ⚠️】
+这是口语中最常用的过去表达方式，也是 B 1 考试中最容易失分的“深水区”。
+
+如果你查字典，你会发现 lassen 的第二分词（Partizip II）是 gelassen。但是！ 当 lassen 搭配另一个实义动词（即“代劳”用法）出现在完成时里时，绝对不能用 gelassen！
+
+这里必须使用德语语法中著名的 “替代不定式”（Ersatzinfinitiv） 原则：当 lassen 和另一个动词原形连用时，它在完成时中也要保持原形！
+
+公式： haben (变位) + 宾语 + 实义动词原形 + lassen (原形)
+
+场景： 医疗（Medizinische Versorgung）
+
+例句： Ich habe mir gestern Blut abnehmen lassen.
+
+中文翻译： 我昨天让人（医生/护士）给我抽血了。
+
+语法要点： 句子第二位是助动词 habe。句尾出现了双原形动词（abnehmen 和 lassen 紧紧挨在一起，lassen 永远在最后）。千万不要说成 ...abnehmen gelassen！
 
 # 关于 lassen 的用法有 3 种用法其中有两个结构都很一样，，那怎么区分代劳和允许
 
