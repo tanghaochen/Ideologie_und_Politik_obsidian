@@ -12659,11 +12659,11 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 0,
+        "line": 4,
         "ch": 0
       },
       "to": {
-        "line": 0,
+        "line": 4,
         "ch": 0
       }
     },
@@ -13147,14 +13147,14 @@
     "expandedKeys": []
   },
   "语言学习/德语/公共知识语法/2动词/系动词.md": {
-    "scroll": 528.9981554318559,
+    "scroll": 522.0096872005662,
     "cursor": {
       "from": {
-        "line": 494,
+        "line": 541,
         "ch": 0
       },
       "to": {
-        "line": 494,
+        "line": 541,
         "ch": 0
       }
     },
@@ -16569,7 +16569,7 @@
   "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien/难句解析.md": {
     "cursor": {
       "from": {
-        "line": 198,
+        "line": 180,
         "ch": 0
       },
       "to": {
@@ -16630,5 +16630,17 @@
       }
     },
     "scroll": 157.51894527950634
+  },
+  "语言学习/德语/公共知识语法/2动词/助动词.md": {
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    }
   }
 }
