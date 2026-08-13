@@ -9,6 +9,21 @@
         "dimension": 46.135721017907635,
         "children": [
           {
+            "id": "39d80f02236fc7e0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "关系从句"
+            }
+          },
+          {
             "id": "31284e0ed8b49127",
             "type": "leaf",
             "pinned": true,
@@ -85,7 +100,8 @@
               "title": "新标签页"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -316,7 +332,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -371,8 +387,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "fcf594ded0f4d7af",
+  "active": "39d80f02236fc7e0",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
+    "语言学习/德语/公共知识语法/格; 限定词.md",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/2动词/lassen.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/汇总对比从句.md",
@@ -384,7 +402,6 @@
     "语言学习/德语/柏林广场视频笔记/A1/40 第四格补足语及定冠词的变化.md",
     "2026-08-13.md",
     "思想思维心理哲学/爱情/摄影/第一章框架.md",
-    "语言学习/德语/公共知识语法/格; 限定词.md",
     "思想思维心理哲学/爱情/摄影/第二章“设计基础”.md",
     "assets/image-392.png",
     "assets/image-391.png",
@@ -397,7 +414,6 @@
     "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
     "语言学习/德语/公共知识语法/2动词/助动词.md",
     "思想思维心理哲学/个人问题处理/芜湖.md",
-    "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
     "语言学习/德语/公共知识语法/2动词/系动词.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien/难句解析.md",
     "语言学习/德语/单词/生词/2026年6月.md",
