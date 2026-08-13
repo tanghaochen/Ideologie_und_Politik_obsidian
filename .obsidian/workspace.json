@@ -6,7 +6,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 56.08044901777362,
+        "dimension": 46.135721017907635,
         "children": [
           {
             "id": "31284e0ed8b49127",
@@ -44,18 +44,21 @@
       {
         "id": "66514ff393b45104",
         "type": "tabs",
-        "dimension": 43.91955098222638,
+        "dimension": 53.86427898209236,
         "children": [
           {
             "id": "fcf594ded0f4d7af",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
+                "file": "语言学习/德语/单词/生词/26-8.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "excalidraw-icon",
-              "title": "格; 限定词"
+              "icon": "lucide-file",
+              "title": "26-8"
             }
           },
           {
@@ -321,7 +324,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md"
+                "file": "语言学习/德语/单词/生词/26-8.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -376,8 +379,9 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "7a0c69bed4b31f8a",
+  "active": "fcf594ded0f4d7af",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/疑难杂症/短音就是重读吗？.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/1 字母表 发音.md",
     "语言学习/英语/未命名/未命名.md",
@@ -395,7 +399,6 @@
     "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
     "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
     "assets/PixPin_2026-05-21_20-22-08.png",
-    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
     "语言学习/德语/公共知识语法/2动词/助动词.md",
     "思想思维心理哲学/个人问题处理/芜湖.md",
