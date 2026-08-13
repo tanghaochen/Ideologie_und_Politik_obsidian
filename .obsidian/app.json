@@ -19,5 +19,6 @@
   "openBehavior": "",
   "showUnsupportedFiles": true,
   "focusNewTab": false,
-  "newFileLocation": "current"
+  "newFileLocation": "current",
+  "uriCallbacks": true
 }

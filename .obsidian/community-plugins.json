@@ -51,7 +51,6 @@
   "obsidian-git",
   "open-tab-settings",
   "pexels-banner",
-  "notebook-navigator",
   "file-explorer-plus",
   "cursor-position-history",
   "obsidian-chat-view",
@@ -70,5 +69,7 @@
   "obsidian-image-toolkit",
   "periodic-notes",
   "excalidraw-extras",
-  "obsidian-excalidraw-plugin"
+  "obsidian-excalidraw-plugin",
+  "novel-word-count",
+  "notebook-navigator"
 ]
