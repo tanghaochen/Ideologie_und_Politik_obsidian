@@ -3422,6 +3422,23 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "Diary/2026/20260814.md": [
+      {
+        "id": "kacfvnhbc",
+        "text": "如果再有感觉应该立刻用清水冷水冲洗冲洗自己的脸或者洗个冷水澡，让自己清醒，或者做下俯卧撑释放一下自己的感官压力导航明天要继续努力可能会有新的挑战",
+        "tags": [],
+        "line": 5,
+        "startOffset": 335,
+        "endOffset": 436,
+        "filePath": "Diary/2026/20260814.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1786721188262,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},
