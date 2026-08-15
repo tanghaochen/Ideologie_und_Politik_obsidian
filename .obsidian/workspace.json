@@ -9,21 +9,6 @@
         "dimension": 51.460885956644674,
         "children": [
           {
-            "id": "39d80f02236fc7e0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "关系从句"
-            }
-          },
-          {
             "id": "31284e0ed8b49127",
             "type": "leaf",
             "pinned": true,
@@ -38,22 +23,22 @@
             }
           },
           {
-            "id": "61610cc1034fc0a7",
+            "id": "e8cc4a526d9c6fd7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/单词/生词/26-8.md",
+                "file": "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "26-8"
+              "title": "第3章 图形和摄影元素"
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       },
       {
         "id": "66514ff393b45104",
@@ -166,7 +151,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -333,7 +318,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/单词/生词/26-8.md"
+                "file": "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -388,17 +373,27 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "61610cc1034fc0a7",
+  "active": "e8cc4a526d9c6fd7",
   "lastOpenFiles": [
+    "assets/image-408.png",
+    "assets/image-407.png",
+    "assets/image-406.png",
+    "assets/image-405.png",
+    "assets/image-404.png",
+    "assets/image-403.png",
+    "assets/image-402.png",
+    "assets/image-401.png",
+    "assets/image-400.png",
+    "assets/image-399.png",
+    "assets/image-398.png",
+    "思想思维心理哲学/爱情/摄影/第二章“设计基础”.md",
+    "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
+    "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/单词/生词/26-8.md",
     "语言学习/德语/公共知识语法/时态/动词的过去时.md",
     "思想思维心理哲学/思想/财富自由_跳出打工思维 技术思维, 用老板思维的视角.md",
     "思想思维心理哲学/决策梳理/未命名.md",
-    "思想思维心理哲学/爱情/摄影/第二章“设计基础”.md",
-    "assets/image-395.png",
-    "assets/image-394.png",
-    "assets/image-393.png",
     "思想思维心理哲学/爱情/摄影/学习图景评价：国家地和摄影图片评赏博主.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien/难句解析.md",
     "思想思维心理哲学/学习本身/学习不需要奖励，学习本身就是奖励.md",
     "Diary/2026/20260814.md",
@@ -406,7 +401,6 @@
     "思想思维心理哲学/日常记录总结/B复盘自己/B复盘自己canvas.md",
     "语言学习/德语/单词/生词/2026年6月.md",
     "语言学习/德语/公共知识语法/5介词/见字知义 的介词.md",
-    "语言学习/德语/单词/生词/26-8.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/关系从句.md",
     "语言学习/德语/公共知识语法/10句型/第一分词作定语.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
@@ -418,15 +412,6 @@
     "电脑、软件、系统/AI提示吃/对话模式.md",
     "语言学习/德语/柏林广场视频笔记/A1/40 第四格补足语及定冠词的变化.md",
     "2026-08-13.md",
-    "思想思维心理哲学/爱情/摄影/第一章框架.md",
-    "assets/image-392.png",
-    "assets/image-391.png",
-    "assets/image-390.png",
-    "assets/image-389.png",
-    "assets/image-388.png",
-    "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
-    "assets/PixPin_2026-05-21_20-22-08.png",
-    "assets/image-387.png",
     "思想思维心理哲学/爱情/摄影",
     "Diary/2026",
     "Diary",
