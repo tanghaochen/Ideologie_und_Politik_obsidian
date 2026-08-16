@@ -16674,12 +16674,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 3,
-        "ch": 2
+        "line": 36,
+        "ch": 8
       },
       "to": {
-        "line": 3,
-        "ch": 2
+        "line": 36,
+        "ch": 8
       }
     }
   },
@@ -16747,29 +16747,29 @@
     "scroll": 338.3490126687574
   },
   "Diary/2026/20260816.md": {
-    "scroll": 0,
+    "scroll": 1.1226053223855357,
     "cursor": {
       "from": {
-        "line": 8,
-        "ch": 4
+        "line": 34,
+        "ch": 8
       },
       "to": {
-        "line": 8,
-        "ch": 36
+        "line": 34,
+        "ch": 8
       }
     }
   },
   "Diary/2026/W33.md": {
     "cursor": {
       "from": {
-        "line": 53,
-        "ch": 14
+        "line": 113,
+        "ch": 19
       },
       "to": {
-        "line": 53,
-        "ch": 14
+        "line": 113,
+        "ch": 19
       }
     },
-    "scroll": 0
+    "scroll": 58.781445726380895
   }
 }
