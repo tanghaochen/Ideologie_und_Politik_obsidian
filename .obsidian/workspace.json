@@ -112,8 +112,7 @@
               "title": "周记-一览视图"
             }
           }
-        ],
-        "currentTab": 6
+        ]
       },
       {
         "id": "66514ff393b45104",
@@ -363,7 +362,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "OBSetting/templater/周记-一览视图.md"
+                "file": "思想思维心理哲学/日常记录总结/B复盘自己/B_复盘自己.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -418,16 +417,18 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "9eea1a2f8947ed5a",
+  "active": "9d8731bed38269ea",
   "lastOpenFiles": [
-    "OBSetting/templater/日记-事件模板.md",
     "思想思维心理哲学/日常记录总结/B复盘自己/B复盘自己canvas.md",
+    "思想思维心理哲学/日常记录总结/B复盘自己/B_复盘自己.md",
+    "OBSetting/templater/日记-事件模板.md",
+    "assets/image-420.png",
+    "assets/Pasted Image 20260801232321_987.png",
     "OBSetting/templater/周记-一览视图.md",
     "assets/image-419.png",
     "Diary/2026/W33.md",
     "Diary/2026/20260817.md",
     "OBSetting/templater/B_ 复盘自己.md",
-    "思想思维心理哲学/日常记录总结/B复盘自己/B_复盘自己.md",
     "Diary/2026/20260816.md",
     "Diary/2026/20260814.md",
     "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
@@ -444,8 +445,6 @@
     "assets/image-414.png",
     "assets/image-413.png",
     "assets/image-412.png",
-    "assets/image-411.png",
-    "assets/image-410.png",
     "语言学习/德语/单词/生词/2026年6月.md",
     "语言学习/德语/公共知识语法/从句.md",
     "思想思维心理哲学/爱情/摄影/第二章“设计基础”.md",

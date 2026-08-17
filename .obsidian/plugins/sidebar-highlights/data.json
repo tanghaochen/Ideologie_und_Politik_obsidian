@@ -3464,8 +3464,8 @@
         "text": " \n[[B_复盘自己#“7 种复盘技巧”|“7 种复盘技巧”]]\n一定要真实，描述日常事件，需要说清楚当时是什么事导航第一时间的真实相反和感受，产生了什么行动，事情发生之后产生了怎样的结果？\n\n",
         "tags": [],
         "line": 11,
-        "startOffset": 65,
-        "endOffset": 166,
+        "startOffset": 87,
+        "endOffset": 188,
         "filePath": "OBSetting/templater/日记-事件模板.md",
         "footnoteCount": 1,
         "footnoteContents": [
@@ -3476,18 +3476,18 @@
         "type": "comment"
       },
       {
-        "id": "ar010c8dv",
-        "text": "\n- 抽象化：\n\t- [[B_复盘自己#“周度复盘第三步 抽象化”|“周度复盘第三步:抽象化”]]\n可以先反思为什么会有那样的想法?当时真正的渴望是什么？是否有更好的方式？\n使用不同的视角来改变第一时间打印和感受\n",
+        "id": "zw6ngy45i",
+        "text": "![[image-420.png]]\n- 抽象化：\n\t- [[B_复盘自己#“周度复盘第三步 抽象化”|“周度复盘第三步:抽象化”]]\n可以先反思为什么会有那样的想法?当时真正的渴望是什么？是否有更好的方式？\n使用不同的视角来改变第一时间打印和感受\n",
         "tags": [],
         "line": 20,
-        "startOffset": 180,
-        "endOffset": 291,
+        "startOffset": 202,
+        "endOffset": 331,
         "filePath": "OBSetting/templater/日记-事件模板.md",
         "footnoteCount": 1,
         "footnoteContents": [
-          "\n- 抽象化：\n\t- [[B_复盘自己#“周度复盘第三步 抽象化”|“周度复盘第三步:抽象化”]]\n可以先反思为什么会有那样的想法?当时真正的渴望是什么？是否有更好的方式？\n使用不同的视角来改变第一时间打印和感受\n"
+          "![[image-420.png]]\n- 抽象化：\n\t- [[B_复盘自己#“周度复盘第三步 抽象化”|“周度复盘第三步:抽象化”]]\n可以先反思为什么会有那样的想法?当时真正的渴望是什么？是否有更好的方式？\n使用不同的视角来改变第一时间打印和感受\n"
         ],
-        "createdAt": 1786983159459,
+        "createdAt": 1786983750981,
         "isNativeComment": true,
         "type": "comment"
       },
@@ -3496,8 +3496,8 @@
         "text": "\n提示：工作事件→用 What/Who/When/Where/How/预算\n下次遇到这种情况怎么做，谁在什么时间什么地点做什么？\n ",
         "tags": [],
         "line": 33,
-        "startOffset": 364,
-        "endOffset": 434,
+        "startOffset": 369,
+        "endOffset": 439,
         "filePath": "OBSetting/templater/日记-事件模板.md",
         "footnoteCount": 1,
         "footnoteContents": [
@@ -3512,8 +3512,8 @@
         "text": " 假如这么做了有样的后果 ",
         "tags": [],
         "line": 41,
-        "startOffset": 448,
-        "endOffset": 465,
+        "startOffset": 453,
+        "endOffset": 470,
         "filePath": "OBSetting/templater/日记-事件模板.md",
         "footnoteCount": 1,
         "footnoteContents": [
@@ -3548,8 +3548,8 @@
         "text": "\n- 抽象化：\n\t- [[B_复盘自己#“周度复盘第三步 抽象化”|“周度复盘第三步:抽象化”]]\n可以先反思为什么会有那样的想法?当时真正的渴望是什么？是否有更好的方式？\n使用不同的视角来改变第一时间打印和感受\n",
         "tags": [],
         "line": 197,
-        "startOffset": 9638,
-        "endOffset": 9749,
+        "startOffset": 9647,
+        "endOffset": 9758,
         "filePath": "OBSetting/templater/周记-一览视图.md",
         "footnoteCount": 1,
         "footnoteContents": [
@@ -3564,8 +3564,8 @@
         "text": "\n提示：工作事件→用 What/Who/When/Where/How/预算\n下次遇到这种情况怎么做，谁在什么时间什么地点做什么？\n ",
         "tags": [],
         "line": 209,
-        "startOffset": 9821,
-        "endOffset": 9891,
+        "startOffset": 9830,
+        "endOffset": 9900,
         "filePath": "OBSetting/templater/周记-一览视图.md",
         "footnoteCount": 1,
         "footnoteContents": [
@@ -3580,8 +3580,8 @@
         "text": " 假如这么做了有样的后果 ",
         "tags": [],
         "line": 215,
-        "startOffset": 9903,
-        "endOffset": 9920,
+        "startOffset": 9912,
+        "endOffset": 9929,
         "filePath": "OBSetting/templater/周记-一览视图.md",
         "footnoteCount": 1,
         "footnoteContents": [
