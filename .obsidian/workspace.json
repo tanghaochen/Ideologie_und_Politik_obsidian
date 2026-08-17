@@ -66,9 +66,19 @@
               "icon": "lucide-file",
               "title": "W33"
             }
+          },
+          {
+            "id": "27a26ccd2ce1d3e2",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 4
       },
       {
         "id": "66514ff393b45104",
@@ -158,7 +168,8 @@
               "title": "B复盘自己canvas"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -389,7 +400,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/3形容词/数字 序数词.md"
+                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -444,8 +455,9 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "aae47cdc236b2e75",
+  "active": "fcf594ded0f4d7af",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/3形容词/数字 序数词.md",
     "Diary/2026/20260814.md",
     "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
     "assets/image-418.png",
