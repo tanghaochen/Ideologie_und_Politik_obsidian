@@ -104,7 +104,7 @@
  ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=31&annotation=7NGIWF88))  
 ([“复盘自己：从记录到蜕变的行动指南”, p. 30](zotero://select/library/items/X743BJHT))
 
-### “7 种复盘技巧” |([“复盘自己：从记录到蜕变的行动指南”, p. 31](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=32&annotation=RJB47VK3))
+### “7 种复盘技巧”
 
 #### “切分” |([“复盘自己：从记录到蜕变的行动指南”, p. 32](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=33&annotation=N68DQF5M))
 

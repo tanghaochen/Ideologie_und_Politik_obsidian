@@ -16414,15 +16414,15 @@
   "思想思维心理哲学/日常记录总结/B复盘自己/B_复盘自己.md": {
     "cursor": {
       "from": {
-        "line": 579,
-        "ch": 9
+        "line": 106,
+        "ch": 162
       },
       "to": {
-        "line": 579,
-        "ch": 9
+        "line": 106,
+        "ch": 13
       }
     },
-    "scroll": 562.3416461734041
+    "scroll": 102.45979366647862
   },
   "思想思维心理哲学/日常记录总结/B复盘自己/未命名.md": {
     "scroll": 0,
@@ -16674,11 +16674,11 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 0,
+        "line": 8,
         "ch": 0
       },
       "to": {
-        "line": 0,
+        "line": 8,
         "ch": 0
       }
     }
@@ -16747,42 +16747,105 @@
     "scroll": 819.6636599749773
   },
   "Diary/2026/20260816.md": {
-    "scroll": 1.1226053223855357,
+    "scroll": 0,
     "cursor": {
       "from": {
-        "line": 34,
-        "ch": 8
+        "line": 7,
+        "ch": 0
       },
       "to": {
-        "line": 34,
-        "ch": 8
+        "line": 39,
+        "ch": 2
       }
     }
   },
   "Diary/2026/W33.md": {
     "cursor": {
       "from": {
-        "line": 113,
-        "ch": 19
+        "line": 187,
+        "ch": 0
       },
       "to": {
-        "line": 113,
-        "ch": 19
+        "line": 187,
+        "ch": 0
       }
     },
-    "scroll": 58.781445726380895
+    "scroll": 0
   },
   "Clippings/德国就业市场预测分析.md": {
     "cursor": {
       "from": {
-        "line": 10,
+        "line": 11,
         "ch": 0
       },
       "to": {
-        "line": 10,
+        "line": 11,
         "ch": 0
       }
     },
     "scroll": 9.6
+  },
+  "OBSetting/templater/生词表格-anki.md": {
+    "cursor": {
+      "from": {
+        "line": 12,
+        "ch": 0
+      },
+      "to": {
+        "line": 12,
+        "ch": 0
+      }
+    }
+  },
+  "OBSetting/templater/日记时间模板.md": {
+    "cursor": {
+      "from": {
+        "line": 4,
+        "ch": 9
+      },
+      "to": {
+        "line": 4,
+        "ch": 9
+      }
+    }
+  },
+  "OBSetting/templater/日记-事件模板.md": {
+    "cursor": {
+      "from": {
+        "line": 18,
+        "ch": 0
+      },
+      "to": {
+        "line": 41,
+        "ch": 17
+      }
+    },
+    "scroll": 1.2333332549201168
+  },
+  "OBSetting/templater/周记-一览视图.md": {
+    "cursor": {
+      "from": {
+        "line": 1,
+        "ch": 3
+      },
+      "to": {
+        "line": 1,
+        "ch": 3
+      }
+    },
+    "scroll": 0
+  },
+  "Diary/2026/20260817.md": {
+    "cursor": {
+      "from": {
+        "line": 24,
+        "ch": 19
+      },
+      "to": {
+        "line": 24,
+        "ch": 19
+      }
+    },
+    "scroll": 7.445488144972298
   }
 }

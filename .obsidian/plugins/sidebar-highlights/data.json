@@ -3457,7 +3457,141 @@
         "type": "html"
       }
     ],
-    "Diary/2026/20260816.md": []
+    "Diary/2026/20260816.md": [],
+    "OBSetting/templater/日记-事件模板.md": [
+      {
+        "id": "rw3itqt31",
+        "text": " \n[[B_复盘自己#“7 种复盘技巧”|“7 种复盘技巧”]]\n一定要真实，描述日常事件，需要说清楚当时是什么事导航第一时间的真实相反和感受，产生了什么行动，事情发生之后产生了怎样的结果？\n\n",
+        "tags": [],
+        "line": 11,
+        "startOffset": 65,
+        "endOffset": 166,
+        "filePath": "OBSetting/templater/日记-事件模板.md",
+        "footnoteCount": 1,
+        "footnoteContents": [
+          " \n[[B_复盘自己#“7 种复盘技巧”|“7 种复盘技巧”]]\n一定要真实，描述日常事件，需要说清楚当时是什么事导航第一时间的真实相反和感受，产生了什么行动，事情发生之后产生了怎样的结果？\n\n"
+        ],
+        "createdAt": 1786983219799,
+        "isNativeComment": true,
+        "type": "comment"
+      },
+      {
+        "id": "ar010c8dv",
+        "text": "\n- 抽象化：\n\t- [[B_复盘自己#“周度复盘第三步 抽象化”|“周度复盘第三步:抽象化”]]\n可以先反思为什么会有那样的想法?当时真正的渴望是什么？是否有更好的方式？\n使用不同的视角来改变第一时间打印和感受\n",
+        "tags": [],
+        "line": 20,
+        "startOffset": 180,
+        "endOffset": 291,
+        "filePath": "OBSetting/templater/日记-事件模板.md",
+        "footnoteCount": 1,
+        "footnoteContents": [
+          "\n- 抽象化：\n\t- [[B_复盘自己#“周度复盘第三步 抽象化”|“周度复盘第三步:抽象化”]]\n可以先反思为什么会有那样的想法?当时真正的渴望是什么？是否有更好的方式？\n使用不同的视角来改变第一时间打印和感受\n"
+        ],
+        "createdAt": 1786983159459,
+        "isNativeComment": true,
+        "type": "comment"
+      },
+      {
+        "id": "gvu8yv4h4",
+        "text": "\n提示：工作事件→用 What/Who/When/Where/How/预算\n下次遇到这种情况怎么做，谁在什么时间什么地点做什么？\n ",
+        "tags": [],
+        "line": 33,
+        "startOffset": 364,
+        "endOffset": 434,
+        "filePath": "OBSetting/templater/日记-事件模板.md",
+        "footnoteCount": 1,
+        "footnoteContents": [
+          "\n提示：工作事件→用 What/Who/When/Where/How/预算\n下次遇到这种情况怎么做，谁在什么时间什么地点做什么？\n "
+        ],
+        "createdAt": 1786982897752,
+        "isNativeComment": true,
+        "type": "comment"
+      },
+      {
+        "id": "i0srmixl7",
+        "text": " 假如这么做了有样的后果 ",
+        "tags": [],
+        "line": 41,
+        "startOffset": 448,
+        "endOffset": 465,
+        "filePath": "OBSetting/templater/日记-事件模板.md",
+        "footnoteCount": 1,
+        "footnoteContents": [
+          " 假如这么做了有样的后果 "
+        ],
+        "createdAt": 1786982795422,
+        "isNativeComment": true,
+        "type": "comment"
+      }
+    ],
+    "Diary/2026/20260817.md": [
+      {
+        "id": "lqh8ty0so",
+        "text": " 字段写一句话结论；长段分析写在下方自由区 ",
+        "tags": [],
+        "line": 13,
+        "startOffset": 225,
+        "endOffset": 251,
+        "filePath": "Diary/2026/20260817.md",
+        "footnoteCount": 1,
+        "footnoteContents": [
+          " 字段写一句话结论；长段分析写在下方自由区 "
+        ],
+        "createdAt": 1786981615325,
+        "isNativeComment": true,
+        "type": "comment"
+      }
+    ],
+    "OBSetting/templater/周记-一览视图.md": [
+      {
+        "id": "n3pqbtkk8",
+        "text": "\n- 抽象化：\n\t- [[B_复盘自己#“周度复盘第三步 抽象化”|“周度复盘第三步:抽象化”]]\n可以先反思为什么会有那样的想法?当时真正的渴望是什么？是否有更好的方式？\n使用不同的视角来改变第一时间打印和感受\n",
+        "tags": [],
+        "line": 197,
+        "startOffset": 9638,
+        "endOffset": 9749,
+        "filePath": "OBSetting/templater/周记-一览视图.md",
+        "footnoteCount": 1,
+        "footnoteContents": [
+          "\n- 抽象化：\n\t- [[B_复盘自己#“周度复盘第三步 抽象化”|“周度复盘第三步:抽象化”]]\n可以先反思为什么会有那样的想法?当时真正的渴望是什么？是否有更好的方式？\n使用不同的视角来改变第一时间打印和感受\n"
+        ],
+        "createdAt": 1786983561383,
+        "isNativeComment": true,
+        "type": "comment"
+      },
+      {
+        "id": "x4musu161",
+        "text": "\n提示：工作事件→用 What/Who/When/Where/How/预算\n下次遇到这种情况怎么做，谁在什么时间什么地点做什么？\n ",
+        "tags": [],
+        "line": 209,
+        "startOffset": 9821,
+        "endOffset": 9891,
+        "filePath": "OBSetting/templater/周记-一览视图.md",
+        "footnoteCount": 1,
+        "footnoteContents": [
+          "\n提示：工作事件→用 What/Who/When/Where/How/预算\n下次遇到这种情况怎么做，谁在什么时间什么地点做什么？\n "
+        ],
+        "createdAt": 1786983561566,
+        "isNativeComment": true,
+        "type": "comment"
+      },
+      {
+        "id": "hzj65k1c9",
+        "text": " 假如这么做了有样的后果 ",
+        "tags": [],
+        "line": 215,
+        "startOffset": 9903,
+        "endOffset": 9920,
+        "filePath": "OBSetting/templater/周记-一览视图.md",
+        "footnoteCount": 1,
+        "footnoteContents": [
+          " 假如这么做了有样的后果 "
+        ],
+        "createdAt": 1786983561648,
+        "isNativeComment": true,
+        "type": "comment"
+      }
+    ]
   },
   "collections": {},
   "groupingMode": "none",
