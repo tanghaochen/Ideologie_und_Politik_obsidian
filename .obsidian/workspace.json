@@ -9,6 +9,21 @@
         "dimension": 51.460885956644674,
         "children": [
           {
+            "id": "58963f67255b8d61",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/被动态.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "被动态"
+            }
+          },
+          {
             "id": "9d8731bed38269ea",
             "type": "leaf",
             "state": {
@@ -123,12 +138,15 @@
             "id": "ae67cf1f6d320164",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "思想思维心理哲学/日常记录总结/B复盘自己/B复盘自己canvas.md"
+                "file": "语言学习/德语/公共知识语法/10句型/代词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "excalidraw-icon",
-              "title": "B复盘自己canvas"
+              "icon": "lucide-file",
+              "title": "冠词类限定词（Artikelwörter）及其形容词词尾变化"
             }
           }
         ]
@@ -362,7 +380,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "思想思维心理哲学/日常记录总结/B复盘自己/B复盘自己canvas.md"
+                "file": "语言学习/德语/公共知识语法/10句型/被动态.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -419,12 +437,14 @@
       "agent-client:Open agent client": false
     }
   },
-  "active": "ae67cf1f6d320164",
+  "active": "58963f67255b8d61",
   "lastOpenFiles": [
-    "Excalidraw/Scripts/Downloaded/ExcaliAI.svg",
-    "Excalidraw/Scripts/Downloaded/ExcaliAI.md",
+    "语言学习/德语/公共知识语法/3形容词/数字 序数词.md",
+    "语言学习/德语/公共知识语法/10句型/代词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
     "思想思维心理哲学/日常记录总结/B复盘自己/B_复盘自己.md",
     "思想思维心理哲学/日常记录总结/B复盘自己/B复盘自己canvas.md",
+    "Excalidraw/Scripts/Downloaded/ExcaliAI.svg",
+    "Excalidraw/Scripts/Downloaded/ExcaliAI.md",
     "OBSetting/templater/日记-事件模板.md",
     "assets/image-420.png",
     "assets/Pasted Image 20260801232321_987.png",
@@ -441,14 +461,12 @@
     "OBSetting/templater/生词表格-anki.md",
     "Clippings/德国就业市场预测分析.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
-    "语言学习/德语/公共知识语法/3形容词/数字 序数词.md",
     "assets/image-418.png",
     "assets/image-417.png",
     "assets/image-416.png",
     "assets/image-415.png",
     "assets/image-414.png",
     "assets/image-413.png",
-    "assets/image-412.png",
     "语言学习/德语/单词/生词/2026年6月.md",
     "语言学习/德语/公共知识语法/从句.md",
     "思想思维心理哲学/爱情/摄影/第二章“设计基础”.md",
