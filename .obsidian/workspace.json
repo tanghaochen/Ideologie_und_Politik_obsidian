@@ -362,7 +362,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "思想思维心理哲学/日常记录总结/B复盘自己/B_复盘自己.md"
+                "file": "思想思维心理哲学/日常记录总结/B复盘自己/B复盘自己canvas.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -414,13 +414,17 @@
       "command-palette:打开命令面板": true,
       "daily-notes:打开/创建今天的日记": false,
       "obsidian-excalidraw-plugin:新建绘图文件": false,
-      "periodic-notes:Open today": false
+      "periodic-notes:Open today": false,
+      "realclaudian:Open Claudian": false,
+      "agent-client:Open agent client": false
     }
   },
-  "active": "9d8731bed38269ea",
+  "active": "ae67cf1f6d320164",
   "lastOpenFiles": [
-    "思想思维心理哲学/日常记录总结/B复盘自己/B复盘自己canvas.md",
+    "Excalidraw/Scripts/Downloaded/ExcaliAI.svg",
+    "Excalidraw/Scripts/Downloaded/ExcaliAI.md",
     "思想思维心理哲学/日常记录总结/B复盘自己/B_复盘自己.md",
+    "思想思维心理哲学/日常记录总结/B复盘自己/B复盘自己canvas.md",
     "OBSetting/templater/日记-事件模板.md",
     "assets/image-420.png",
     "assets/Pasted Image 20260801232321_987.png",
@@ -453,7 +457,6 @@
     "思想思维心理哲学/思想/财富自由_跳出打工思维 技术思维, 用老板思维的视角.md",
     "思想思维心理哲学/决策梳理/未命名.md",
     "思想思维心理哲学/爱情/摄影/学习图景评价：国家地和摄影图片评赏博主.md",
-    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien/难句解析.md",
     "思想思维心理哲学/学习本身",
     "思想思维心理哲学/爱情/摄影",
     "Diary/2026",
