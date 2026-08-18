@@ -224,6 +224,82 @@ flowchart TD
 
 大胆写出你的答案吧！不用怕犯错，我会在这里为你纠正，并提供最地道的改进建议。你想先从哪一题开始？
 
+# auch
+
+### auch 的核心功能图解
+
+为了让你对 `auch` 有一个全景式的认知，我为你绘制了下面这张结构图。请记住，在 B 1-B 2 阶段，我们的重点是突破它作为“情态小品词”和“连词组合”的用法。
+
+代码段
+
+```mermaid
+flowchart LR
+    A((auch)) --> B[1. 作为副词 Adverb]
+    B --> B1("也，同样 (单纯追加信息)")
+
+    A --> C[2. 作为情态小品词 Modalpartikel]
+    C --> C1("辩解 / 寻找借口 (毕竟...嘛)")
+    C --> C2("惊讶 / 怀疑 / 施压 (到底...没有？)")
+    C --> C3("认同 / 印证预期 (果然, 确实)")
+
+    A --> D[3. 连词组合 Konnektor]
+    D --> D1("auch wenn - 即使/就算 (B2让步从句核心)")
+
+    style A fill:#ff9999,stroke:#333,stroke-width:4px
+    style C fill:#99ccff,stroke:#333,stroke-width:2px
+    style D fill:#99ccff,stroke:#333,stroke-width:2px
+```
+
+### auch 核心场景与用法精讲
+
+下面我们结合你马上会遇到的真实移民生活场景，逐一拆解这些用法。
+
+#### 1. 寻找理由与辩解 (Rechtfertigung)
+
+这是 B 等级考试（口语部分）中最容易加分的高频用法。当你想为一个略显遗憾的客观事实、一个错误或者一次失败找个合情合理的借口时，`auch` 简直是完美的护身符。它在中文里的神韵相当于“毕竟……嘛”**或**“本来就……”。
+
+> **场景：找工作 (Jobsuche)** 你去参加了一个德国公司的面试，表现得不太好。你和朋友诉苦。
+>
+> - **Ohne "auch" (没有小品词)**: Ich war beim Vorstellungsgespräch sehr nervös. Es war mein erstes Interview in Deutschland. (我面试很紧张。这是我在德国的第一次面试。—— 听起来像陈述客观事实，有点生硬。)
+>     
+> - **Mit "auch" (加上小品词)**: Ich war beim Vorstellungsgespräch sehr nervös. Es war **auch** mein erstes Interview in Deutschland!
+>     
+> - **潜台词**: 我面试时太紧张了。**毕竟/你要知道**，这可是我在德国的第一次面试**啊**！（用 `auch` 完美地为自己的紧张找到了台阶下，博取对方的同情。）
+
+#### 2. 表达怀疑、确认或轻微的施压 (Zweifel oder Bestätigung)
+
+当 `auch` 被放在**疑问句**（尤其是是非疑问句）中时，它完全失去了“也”的意思。此时，说话人通常对某件事带有一点点怀疑、担心，想要得到确切的保证。中文可以理解为“真的……吗？”**或**“到底……没有？”
+
+> **场景：行政事务 (Behördengang)** 明天一大早你要去外管局（Ausländerbehörde）办理工作签证的延签。你的配偶很担心你丢三落四。
+>
+> - **Ohne "auch"**: Hast du alle Dokumente mitgebracht? (你把所有文件带了吗？—— 普普通通的提问。)
+>     
+> - **Mit "auch"**: Hast du **auch** wirklich alle Dokumente für die Ausländerbehörde mitgebracht?
+>     
+> - **潜台词**: 你**到底/真的**把外管局需要的所有文件都带齐了**没有**？（外管局可是出名难搞的，我有点怀疑你是不是落了什么东西，你给我反复确认一下！）
+
+#### 3. 表达认同与印证预期 (Zustimmung und Bestätigung)
+
+当你之前的某个猜测或预感，被后来的事实或者别人的话印证了的时候。此时你有一种“果然不出我所料”的满足感。中文对应“确实”**、**“果然”。
+
+> **场景：医疗 (Arztbesuch)** 你最近总是头痛，你自己觉得是因为工作压力大、睡眠不足。去看了家庭医生（Hausarzt）后，医生建议你请假休息一周。
+>
+> - **Mit "auch"**: Der Arzt hat **auch** gesagt, dass ich mich ausruhen und weniger arbeiten muss.
+>     
+> - **潜台词**: 医生**确实/果然**也这么说了，我得休息并减少工作。（印证了你对自己身体状况的预期。）
+
+#### 4. B 2 核心进阶：auch wenn (让步从句)
+
+在 B 1-B 2 阶段，你必须熟练掌握各种从句。`auch` 和连词 `wenn` 绑定在一起，构成了一个极其强大的让步连词组合，意思是“即使……就算……”。请注意，这里的 `auch` 不再是散落的调料，而是和 `wenn` 牢牢绑定的固定搭配。
+
+> **场景：租房 (Wohnungssuche)** 在德国大城市（如柏林、慕尼黑）找房极其困难（Wohnungsnot）。
+>
+> - **例句**: **Auch wenn** die Miete für diese Wohnung sehr hoch ist, werde ich den Mietvertrag unterschreiben.
+>     
+> - **解析**: **即使**这个公寓的冷租（Kaltmiete）非常高，我还是会签下这份租房合同。
+>     
+> - **语法注意**: `Auch wenn` 引导的是尾语序从句（动词 `ist` 在句末）。主句紧跟在逗号后面，主句的第一位必须是变位动词（`werde`）。这是 B 2 级别书面表达（Schriftlicher Ausdruck）的拿分利器。
+
 # denn
 
 - (adv)
