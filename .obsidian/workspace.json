@@ -358,12 +358,11 @@
       "command-palette:打开命令面板": true,
       "daily-notes:打开/创建今天的日记": false,
       "obsidian-excalidraw-plugin:新建绘图文件": false,
-      "periodic-notes:Open today": false,
       "realclaudian:Open Claudian": false,
       "agent-client:Open agent client": false
     }
   },
-  "active": "80b477731dc50a02",
+  "active": "ac720dd57e239fc7",
   "lastOpenFiles": [
     "语言学习/德语/单词/生词/26-8.md",
     "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
