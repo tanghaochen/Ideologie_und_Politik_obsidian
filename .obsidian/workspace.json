@@ -6,7 +6,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 50,
+        "dimension": 32.280867106503294,
         "children": [
           {
             "id": "31284e0ed8b49127",
@@ -42,7 +42,7 @@
       {
         "id": "d5a252b342c9ae29",
         "type": "tabs",
-        "dimension": 50,
+        "dimension": 67.7191328934967,
         "children": [
           {
             "id": "22c06bfccc275868",
@@ -50,13 +50,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/单词/生词/26-8.md",
+                "file": "语言学习/德语/单词/生词/新闻高频词.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "26-8"
+              "title": "新闻高频词"
             }
           },
           {
@@ -379,11 +379,12 @@
   },
   "active": "22c06bfccc275868",
   "lastOpenFiles": [
+    "语言学习/德语/单词/生词/26-8.md",
+    "语言学习/德语/单词/生词/新闻高频词.md",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/2026_8/1.md",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/句型语法解析.md",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/2026_8",
     "语言学习/德语/公共知识语法/从句.md",
-    "语言学习/德语/单词/生词/26-8.md",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien/难句解析.md",
     "思想思维心理哲学/爱情/摄影/第4章 用光线与色彩构图.md",
     "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
@@ -417,7 +418,6 @@
     "思想思维心理哲学/爱情/说话聊天",
     "语言学习/德语/公共知识语法/3形容词/数字 序数词.md",
     "思想思维心理哲学/日常记录总结/B复盘自己/B复盘自己canvas.md",
-    "Excalidraw/Scripts/Downloaded/ExcaliAI.md",
     "思想思维心理哲学/学习本身",
     "思想思维心理哲学/爱情/摄影",
     "Diary/2026",
