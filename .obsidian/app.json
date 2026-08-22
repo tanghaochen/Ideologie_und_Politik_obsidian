@@ -2,10 +2,10 @@
   "showLineNumber": true,
   "pdfExportSettings": {
     "includeName": true,
-    "pageSize": "Letter",
+    "pageSize": "A4",
     "landscape": false,
-    "margin": "0",
-    "downscalePercent": 100
+    "margin": "1",
+    "downscalePercent": 69
   },
   "attachmentFolderPath": "/assets",
   "alwaysUpdateLinks": true,

@@ -72,5 +72,6 @@
   "obsidian-excalidraw-plugin",
   "notebook-navigator",
   "realclaudian",
-  "agent-client"
+  "agent-client",
+  "better-export-pdf"
 ]
