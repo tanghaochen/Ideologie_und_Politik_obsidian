@@ -6,7 +6,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 48.68049010367578,
+        "dimension": 48.68049010367579,
         "children": [
           {
             "id": "31284e0ed8b49127",
@@ -43,13 +43,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "思想思维心理哲学/爱情/摄影/第六章处理.md",
+                "file": "语言学习/德语/公共知识语法/2动词/lassen.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "第六章处理"
+              "title": "lassen"
             }
           }
         ],
@@ -58,7 +58,7 @@
       {
         "id": "d5a252b342c9ae29",
         "type": "tabs",
-        "dimension": 51.31950989632422,
+        "dimension": 51.31950989632421,
         "children": [
           {
             "id": "f3226f45dcab147c",
@@ -392,12 +392,12 @@
       "daily-notes:打开/创建今天的日记": false,
       "obsidian-excalidraw-plugin:新建绘图文件": false,
       "realclaudian:Open Claudian": false,
-      "agent-client:Open agent client": false,
-      "periodic-notes:Open today": false
+      "agent-client:Open agent client": false
     }
   },
-  "active": "22c06bfccc275868",
+  "active": "933da71f5a2ee081",
   "lastOpenFiles": [
+    "语言学习/德语/单词/生词/新闻高频词.md",
     "思想思维心理哲学/爱情/摄影/第六章处理.md",
     "assets/image-464.png",
     "assets/image-463.png",
@@ -409,7 +409,6 @@
     "assets/image-457.png",
     "assets/image-456.png",
     "assets/image-455.png",
-    "语言学习/德语/单词/生词/新闻高频词.md",
     "思想思维心理哲学/爱情/摄影/第4章 用光线与色彩构图.md",
     "思想思维心理哲学/个人问题处理/性格行为问题总结/他人 = 危险信号 的条件反射.md",
     "电脑、软件、系统/创业项目/网赚项目想法记录.md",
