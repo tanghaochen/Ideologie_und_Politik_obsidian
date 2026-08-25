@@ -28,13 +28,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "思想思维心理哲学/个人问题处理/性格行为问题总结/他人 = 危险信号 的条件反射.md",
+                "file": "思想思维心理哲学/个人问题处理/游戏与生活/虚无主义的选择_游戏还是学习.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "他人 = 危险信号 的条件反射"
+              "title": "虚无主义的选择_游戏还是学习"
             }
           },
           {
@@ -52,13 +52,29 @@
               "title": "lassen"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "d5a252b342c9ae29",
         "type": "tabs",
         "dimension": 51.31950989632421,
         "children": [
+          {
+            "id": "06e57304fd516b93",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "思想思维心理哲学/个人问题处理/游戏与生活/为什么无法遵从理想自律.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "为什么无法遵从理想自律"
+            }
+          },
           {
             "id": "22c06bfccc275868",
             "type": "leaf",
@@ -379,9 +395,52 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "22c06bfccc275868",
+  "floating": {
+    "id": "dfacf3427f7eb4cc",
+    "type": "floating",
+    "children": [
+      {
+        "id": "e326448cfa7e1539",
+        "type": "window",
+        "children": [
+          {
+            "id": "4033d995dc3d6af2",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "d8cc2f2e5ad82a31",
+                "type": "leaf",
+                "state": {
+                  "type": "excalidraw",
+                  "state": {
+                    "file": "思想思维心理哲学/个人问题处理/游戏与生活/DW_逻辑整理.md"
+                  },
+                  "icon": "excalidraw-icon",
+                  "title": "DW_逻辑整理"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "vertical",
+        "x": 2978,
+        "y": 61,
+        "width": 1033,
+        "height": 1393,
+        "maximize": true,
+        "zoom": -1
+      }
+    ]
+  },
+  "active": "ec4b657a680ee7fb",
   "lastOpenFiles": [
+    "思想思维心理哲学/个人问题处理/游戏与生活/为什么无法遵从理想自律.md",
+    "思想思维心理哲学/个人问题处理/性格行为问题总结/他人 = 危险信号 的条件反射.md",
+    "语言学习/德语/公共知识语法/名词.md",
     "语言学习/德语/公共知识语法/从句.md",
+    "思想思维心理哲学/个人问题处理/游戏与生活/DW_逻辑整理.md",
+    "思想思维心理哲学/个人问题处理/游戏与生活/虚无主义的选择_游戏还是学习.md",
+    "思想思维心理哲学/个人问题处理/游戏与生活/意志力.md",
     "语言学习/德语/单词/生词/新闻高频词.md",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词.md",
     "语言学习/德语/公共知识语法/2动词/lassen.md",
@@ -397,7 +456,6 @@
     "assets/image-456.png",
     "assets/image-455.png",
     "思想思维心理哲学/爱情/摄影/第4章 用光线与色彩构图.md",
-    "思想思维心理哲学/个人问题处理/性格行为问题总结/他人 = 危险信号 的条件反射.md",
     "电脑、软件、系统/创业项目/网赚项目想法记录.md",
     "语言学习/德语/单词/生词/高频形近易错词.md",
     "电脑、软件、系统/创业项目",
@@ -415,11 +473,6 @@
     "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
     "语言学习/德语/人称代词; 疑问代词; 指示代词.md",
     "语言学习/德语/公共知识语法/10句型/第一虚拟式转述对话、传闻和自述.md",
-    "语言学习/德语/单词/生词/2026年6月.md",
-    "电脑、软件、系统/ps-tang.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/小品词示例学习.md",
-    "OBSetting/templater/周记-一览视图.md",
-    "OBSetting/templater/日记-事件模板.md",
     "思想思维心理哲学/爱情/说话聊天/未命名.canvas",
     "思想思维心理哲学/爱情/说话聊天",
     "思想思维心理哲学/学习本身",
