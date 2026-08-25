@@ -16980,7 +16980,7 @@
         "value": true
       },
       "Growth Mode": {
-        "value": "Down-facing",
+        "value": "Right-facing",
         "valueset": [
           "Radial",
           "Right-facing",
@@ -17335,6 +17335,26 @@
       "Branch Scale Style": {
         "value": "Hierarchical",
         "hidden": false
+      },
+      "Active Preset": {
+        "value": "Default",
+        "hidden": false
+      },
+      "Max Text Width": {
+        "value": 450,
+        "hidden": false
+      },
+      "Fill Sweep": {
+        "value": false,
+        "hidden": false
+      },
+      "Custom Palette": {
+        "value": {
+          "enabled": false,
+          "random": false,
+          "colors": []
+        },
+        "hidden": true
       }
     },
     "Downloaded/Excalidraw Writing Machine": {
@@ -17631,7 +17651,9 @@
     "Excalidraw/Scripts/Downloaded/Mindmap Builder.md",
     "Excalidraw/Scripts/Downloaded/ExcalidrawMinimap.md"
   ],
-  "sidepanelTabs": [],
+  "sidepanelTabs": [
+    "{\"script\":\"Downloaded/Mindmap Builder\",\"title\":\"MindMap Builder\"}"
+  ],
   "customPens": [
     {
       "type": "default",
