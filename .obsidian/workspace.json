@@ -292,6 +292,35 @@
               "icon": "network",
               "title": "Mxmind"
             }
+          },
+          {
+            "id": "0f758d49a646ce9e",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "2166e25004a3aa52",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
           }
         ]
       },
@@ -414,7 +443,7 @@
       }
     ]
   },
-  "active": "06e57304fd516b93",
+  "active": "a896c02ff33709d1",
   "lastOpenFiles": [
     "思想思维心理哲学/个人问题处理/游戏与生活/DW_逻辑整理.md",
     "思想思维心理哲学/个人问题处理/游戏与生活/人类决策与行动的鸿沟 动机、情绪调节与神经机制的深度解析与破解之道.md",
