@@ -3728,6 +3728,23 @@
         "color": "#ff0000",
         "type": "html"
       }
+    ],
+    "思想思维心理哲学/个人问题处理/情绪; 欲望/分享欲.md": [
+      {
+        "id": "cypst35ix",
+        "text": "\"说出来\"在冒充\"做到了\"",
+        "tags": [],
+        "line": 11,
+        "startOffset": 307,
+        "endOffset": 349,
+        "filePath": "思想思维心理哲学/个人问题处理/情绪; 欲望/分享欲.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1787726963465,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},
