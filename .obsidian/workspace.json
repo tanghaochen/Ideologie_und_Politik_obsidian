@@ -14,13 +14,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "思想思维心理哲学/爱情/摄影/第4章 用光线与色彩构图.md",
+                "file": "思想思维心理哲学/爱情/摄影/第一章框架.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "第4章 用光线与色彩构图"
+              "title": "第一章框架"
             }
           },
           {
@@ -43,16 +43,17 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "思想思维心理哲学/爱情/摄影/第二章“设计基础”.md",
+                "file": "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "第二章“设计基础”"
+              "title": "第3章 图形和摄影元素"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       },
       {
         "id": "d5a252b342c9ae29",
@@ -164,7 +165,7 @@
               "type": "notebook-navigator",
               "state": {},
               "icon": "notebook-navigator",
-              "title": "笔记本导航器"
+              "title": "Notebook Navigator"
             }
           }
         ],
@@ -203,16 +204,6 @@
               "state": {},
               "icon": "highlighter",
               "title": "HiNote"
-            }
-          },
-          {
-            "id": "4de4b4bac37492cc",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw-sidepanel",
-              "state": {},
-              "icon": "excalidraw-icon",
-              "title": "Excalidraw 侧边面板"
             }
           },
           {
@@ -317,9 +308,19 @@
               "icon": "lucide-archive",
               "title": "添加笔记属性"
             }
+          },
+          {
+            "id": "57a25236f6d7add8",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw-sidepanel",
+              "state": {},
+              "icon": "excalidraw-icon",
+              "title": "Excalidraw 侧边面板"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 11
       },
       {
         "id": "28e75bfc7e894da7",
@@ -385,13 +386,11 @@
       "table-editor-obsidian:Advanced Tables Toolbar": true,
       "mxmind:Mxmind": true,
       "audio-recorder:开始/结束录音": true,
-      "copilot:Open Copilot Chat": true,
       "obsidian-local-images-plus:Local Images Plus  0.16.4\r\nLocalize attachments (plugin folder)": true,
       "markdown-importer:打开 Markdown 格式转换器": true,
       "hi-note:HiNote": true,
       "obsidian-git:Open Git source control": true,
       "pexels-banner:🚩 Pixel Banner Menu": true,
-      "notebook-navigator:笔记本导航器": false,
       "vscode-editor:新建代码文件": true,
       "darlal-switcher-plus:Open in Headings Mode": true,
       "darlal-switcher-plus:Open Symbols for the active editor": true,
@@ -400,39 +399,50 @@
       "obsidian-excalidraw-plugin:新建绘图文件": false,
       "realclaudian:Open Claudian": false,
       "agent-client:Open agent client": false,
+      "copilot:Open Copilot Agent Chat": false,
+      "notebook-navigator:Notebook Navigator": false,
       "periodic-notes:Open today": false
     }
   },
-  "active": "fdd24bd50651afa3",
+  "active": "bd29f852074ad27a",
   "lastOpenFiles": [
-    "思想思维心理哲学/爱情/摄影/第4章 用光线与色彩构图.md",
-    "思想思维心理哲学/爱情/摄影/DW_摄影.md",
-    "思想思维心理哲学/爱情/摄影/艺术.md",
-    "思想思维心理哲学/爱情/摄影/第二章“设计基础”.md",
     "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
-    "assets/Pasted Image 20260829001006_563.png",
-    "思想思维心理哲学/爱情/摄影/第一章框架.md",
-    "思想思维心理哲学/爱情/摄影/学习图景评价：国家地和摄影图片评赏博主.md",
+    "思想思维心理哲学/爱情/摄影/艺术.md",
+    "思想思维心理哲学/爱情/摄影/DW_摄影.md",
+    "copilot/skills/obsidian-cli/SKILL.md",
+    "copilot/skills/obsidian-cli/LICENSE",
+    "copilot/skills/obsidian-cli",
+    "copilot/skills/json-canvas/SKILL.md",
+    "copilot/skills/json-canvas/LICENSE",
+    "copilot/skills/json-canvas/references/EXAMPLES.md",
+    "copilot/skills/json-canvas/references",
+    "copilot/skills/json-canvas",
+    "copilot/skills/obsidian-bases/SKILL.md",
+    "copilot/skills/obsidian-bases/LICENSE",
+    "copilot/skills/obsidian-bases/references/EXAMPLES.md",
+    "copilot/skills/obsidian-bases/references/FUNCTIONS_REFERENCE.md",
+    "copilot/skills/obsidian-bases/references",
+    "copilot/skills/obsidian-bases",
+    "copilot/skills/obsidian-markdown/SKILL.md",
+    "copilot/skills/obsidian-markdown/LICENSE",
+    "copilot/skills/obsidian-markdown/references/PROPERTIES.md",
+    "copilot/skills/obsidian-markdown/references/EMBEDS.md",
+    "copilot/skills/obsidian-markdown/references/CALLOUTS.md",
+    "copilot/skills/obsidian-markdown/references",
+    "copilot/skills/symposium-publish/SKILL.md",
+    "copilot/skills/copilot-fetch-x/SKILL.md",
+    "copilot/skills/copilot-youtube-transcript/SKILL.md",
+    "copilot/skills/copilot-read-pdf/SKILL.md",
+    "copilot/skills/copilot-web-fetch/SKILL.md",
+    "copilot/skills/copilot-web-search/SKILL.md",
     "思想思维心理哲学/爱情/摄影/未命名.md",
+    "思想思维心理哲学/爱情/摄影/第二章“设计基础”.md",
+    "思想思维心理哲学/爱情/摄影/第一章框架.md",
+    "思想思维心理哲学/爱情/摄影/第4章 用光线与色彩构图.md",
+    "assets/Pasted Image 20260829001006_563.png",
+    "思想思维心理哲学/爱情/摄影/学习图景评价：国家地和摄影图片评赏博主.md",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/5介词/in zu nach an auf区别 去往某地.md",
-    "语言学习/德语/公共知识语法/10句型/代词/冠词类限定词（Artikelwörter）及其形容词词尾变化.md",
-    "电脑、软件、系统/AI提示吃/AI德语对话提示词.md",
-    "语言学习/德语/公共知识语法/5介词/auf, von, bei 都表示在某个事物之上，怎么区分它们？.md",
-    "语言学习/德语/单词/生词/新闻高频词.md",
-    "思想思维心理哲学/个人问题处理/游戏与生活/虚无主义的选择_游戏还是学习.md",
-    "思想思维心理哲学/个人问题处理/游戏与生活/DW_逻辑整理.md",
-    "语言学习/德语/公共知识语法/2动词/功能动词结构 或 动名词搭配（Funktionsverbgefüge，简称 FVG）.md",
-    "语言学习/德语/单词/生词/2026年6月.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/汇总对比从句.md",
-    "思想思维心理哲学/爱情/摄影/第六章处理.md",
-    "思想思维心理哲学/个人问题处理/游戏与生活/人类决策与行动的鸿沟 动机、情绪调节与神经机制的深度解析与破解之道.md",
-    "电脑、软件、系统/ps-tang.md",
-    "思想思维心理哲学/个人问题处理/情绪; 欲望/对自己的否定.md",
-    "思想思维心理哲学/个人问题处理/情绪; 欲望/绝对不可错和试错.md",
-    "思想思维心理哲学/个人问题处理/性格行为问题总结/社交过度防范.md",
-    "思想思维心理哲学/个人问题处理/情绪; 欲望/案例合集",
-    "思想思维心理哲学/个人问题处理/情绪; 欲望",
     "assets/image-464.png",
     "assets/image-463.png",
     "assets/image-462.png",
@@ -442,15 +452,7 @@
     "assets/image-458.png",
     "assets/image-457.png",
     "assets/image-456.png",
-    "电脑、软件、系统/创业项目",
-    "思想思维心理哲学/个人问题处理/性格行为问题总结",
-    "语言学习/德语/公共知识语法/10句型/句子解析学习/2026_8",
     "思想思维心理哲学/爱情/说话聊天/未命名.canvas",
-    "思想思维心理哲学/爱情/说话聊天",
-    "思想思维心理哲学/学习本身",
-    "思想思维心理哲学/爱情/摄影",
-    "Diary/2026",
-    "Diary",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "网络/简述软路由网络逻辑.canvas",
     "未命名.canvas",

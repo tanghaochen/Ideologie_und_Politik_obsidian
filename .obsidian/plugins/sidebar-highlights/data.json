@@ -999,7 +999,7 @@
         "footnoteContents": [],
         "createdAt": 1781531752837,
         "isNativeComment": false,
-        "color": "#ffff00",
+        "color": "#d4b106",
         "type": "html"
       },
       {
@@ -1061,7 +1061,7 @@
         "footnoteContents": [],
         "createdAt": 1778060339319,
         "isNativeComment": false,
-        "color": "#ffff00",
+        "color": "#d4b106",
         "type": "html"
       },
       {
@@ -1076,7 +1076,7 @@
         "footnoteContents": [],
         "createdAt": 1778060339437,
         "isNativeComment": false,
-        "color": "#ffff00",
+        "color": "#d4b106",
         "type": "html"
       },
       {
@@ -1507,7 +1507,7 @@
         "footnoteContents": [],
         "createdAt": 1779547973494,
         "isNativeComment": false,
-        "color": "#ffff00",
+        "color": "#d4b106",
         "type": "html"
       },
       {
@@ -2456,7 +2456,7 @@
         "footnoteContents": [],
         "createdAt": 1779124569910,
         "isNativeComment": false,
-        "color": "#ffff00",
+        "color": "#d4b106",
         "type": "html"
       }
     ],
@@ -2675,7 +2675,7 @@
         "footnoteContents": [],
         "createdAt": 1778343883949,
         "isNativeComment": false,
-        "color": "#ffff00",
+        "color": "#d4b106",
         "type": "html"
       }
     ],
@@ -2725,7 +2725,7 @@
         "footnoteContents": [],
         "createdAt": 1780222745897,
         "isNativeComment": false,
-        "color": "#ffff00",
+        "color": "#fff3a3",
         "type": "html"
       },
       {
@@ -2855,7 +2855,7 @@
         "footnoteContents": [],
         "createdAt": 1780158835858,
         "isNativeComment": false,
-        "color": "#ffff00",
+        "color": "#d4b106",
         "type": "html"
       }
     ],
@@ -3745,6 +3745,24 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "copilot/skills/obsidian-markdown/SKILL.md": [
+      {
+        "id": "cj7oiw0w3",
+        "text": "inline comments",
+        "tags": [],
+        "line": 81,
+        "startOffset": 2090,
+        "endOffset": 2109,
+        "filePath": "copilot/skills/obsidian-markdown/SKILL.md",
+        "footnoteCount": 1,
+        "footnoteContents": [
+          "inline comments"
+        ],
+        "createdAt": 1787935728352,
+        "isNativeComment": true,
+        "type": "comment"
+      }
     ]
   },
   "collections": {},
@@ -3759,6 +3777,7 @@
   "autoToggleFold": false,
   "useInlineFootnotes": false,
   "selectTextOnCommentClick": false,
+  "removeCommentsWithHighlight": false,
   "excludeExcalidraw": true,
   "excludedFiles": [],
   "fileFilters": [],
@@ -3788,6 +3807,7 @@
     "green": ""
   },
   "showCurrentNoteTab": true,
+  "showCurrentFolderTab": false,
   "showAllNotesTab": true,
   "showCollectionsTab": true,
   "showTasksTab": false,
@@ -3796,6 +3816,9 @@
   "taskDateFormat": "YYYY-MM-DD",
   "showCurrentNoteTasksSection": true,
   "showOnlyCurrentNoteTasks": false,
+  "hideTasksPluginMetadata": true,
+  "collapsedGroups": [],
   "displayModes": [],
-  "currentDisplayModeId": null
+  "currentDisplayModeId": null,
+  "maxAutomaticBackups": 20
 }

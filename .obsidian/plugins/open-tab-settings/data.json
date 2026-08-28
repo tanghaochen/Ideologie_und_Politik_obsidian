@@ -1,5 +1,6 @@
 {
   "openInNewTab": false,
+  "previewTabs": false,
   "deduplicateTabs": true,
   "deduplicateAcrossTabGroups": true,
   "newTabPlacement": "beginning",

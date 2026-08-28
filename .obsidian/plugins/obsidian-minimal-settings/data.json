@@ -3,7 +3,6 @@
   "darkStyle": "minimal-dark-tonal",
   "lightScheme": "minimal-default-light",
   "darkScheme": "minimal-atom-dark",
-  "editorFont": "20",
   "lineHeight": 1.5,
   "lineWidth": 100,
   "lineWidthWide": 100,
@@ -30,5 +29,6 @@
   "folding": true,
   "lineNumbers": true,
   "readableLineLength": true,
+  "editorFont": "20",
   "devBlockWidth": false
 }

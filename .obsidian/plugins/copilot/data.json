@@ -1,42 +1,37 @@
 {
   "userId": "8b8bfcf0-6cbf-45c9-92cd-dc50f1410b38",
+  "isPaidUser": false,
   "isPlusUser": false,
+  "entitlementToken": "",
+  "entitlementExpiresAt": 0,
   "plusLicenseKey": "",
   "openAIApiKey": "",
   "openAIOrgId": "",
   "huggingfaceApiKey": "",
   "cohereApiKey": "",
   "anthropicApiKey": "",
-  "azureOpenAIApiKey": "",
-  "azureOpenAIApiInstanceName": "",
-  "azureOpenAIApiDeploymentName": "",
-  "azureOpenAIApiVersion": "",
-  "azureOpenAIApiEmbeddingDeploymentName": "",
-  "googleApiKey": "AIzaSyAtLU5xy1N2jFZVdGbgIZERPy0gswq9m4w",
+  "googleApiKey": "",
   "openRouterAiApiKey": "",
   "xaiApiKey": "",
   "mistralApiKey": "",
-  "deepseekApiKey": "sk-ef42c839f36a42ffa7ef3161e2c01d85",
-  "amazonBedrockApiKey": "",
-  "amazonBedrockRegion": "",
+  "deepseekApiKey": "",
   "siliconflowApiKey": "",
-  "githubCopilotAccessToken": "",
-  "githubCopilotToken": "",
-  "githubCopilotTokenExpiresAt": 0,
   "defaultChainType": "copilot_plus",
   "defaultModelKey": "google/gemini-2.5-flash|openrouterai",
   "embeddingModelKey": "text-embedding-3-small|openai",
-  "temperature": 0.1,
-  "maxTokens": 6000,
   "contextTurns": 15,
   "userSystemPrompt": "",
   "openAIProxyBaseUrl": "",
   "openAIEmbeddingProxyBaseUrl": "",
   "stream": true,
+  "copilotFolder": "copilot",
+  "copilotRootHistory": [
+    "copilot"
+  ],
+  "upgradedToV8FromLegacy": false,
   "defaultSaveFolder": "copilot/copilot-conversations",
   "defaultConversationTag": "copilot-conversation",
   "autosaveChat": true,
-  "generateAIChatTitleOnSave": true,
   "autoAddActiveContentToContext": true,
   "defaultOpenArea": "editor",
   "defaultSendShortcut": "enter",
@@ -59,10 +54,11 @@
       "isBuiltIn": true,
       "core": true,
       "plusExclusive": true,
-      "projectEnabled": false,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "projectEnabled": false,
+      "apiKey": ""
     },
     {
       "name": "google/gemini-2.5-flash",
@@ -70,10 +66,11 @@
       "enabled": true,
       "isBuiltIn": true,
       "core": true,
-      "projectEnabled": true,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "projectEnabled": true,
+      "apiKey": ""
     },
     {
       "name": "gpt-5.5",
@@ -83,7 +80,8 @@
       "core": true,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "gpt-5.4-mini",
@@ -93,7 +91,8 @@
       "core": true,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "google/gemini-2.5-flash-lite",
@@ -104,7 +103,8 @@
       "projectEnabled": true,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "google/gemini-2.5-pro",
@@ -115,7 +115,8 @@
       "projectEnabled": true,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "gpt-5",
@@ -125,7 +126,8 @@
       "core": true,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "gpt-5-mini",
@@ -135,7 +137,8 @@
       "core": true,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "gpt-4.1",
@@ -146,7 +149,8 @@
       "projectEnabled": true,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "gpt-4.1-mini",
@@ -157,7 +161,8 @@
       "projectEnabled": true,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "openai/gpt-4.1",
@@ -168,7 +173,8 @@
       "projectEnabled": true,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "openai/gpt-4.1-mini",
@@ -179,7 +185,8 @@
       "projectEnabled": true,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "grok-4-fast",
@@ -190,7 +197,8 @@
       "projectEnabled": true,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "x-ai/grok-4-fast",
@@ -201,7 +209,8 @@
       "projectEnabled": true,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "claude-sonnet-4-20250514",
@@ -211,7 +220,8 @@
       "capabilities": [
         "reasoning",
         "vision"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "gemini-2.5-flash",
@@ -221,7 +231,8 @@
       "projectEnabled": true,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "gemini-2.5-flash-lite",
@@ -231,7 +242,8 @@
       "projectEnabled": true,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "gemini-2.5-pro",
@@ -241,19 +253,15 @@
       "projectEnabled": true,
       "capabilities": [
         "vision"
-      ]
-    },
-    {
-      "name": "azure-openai",
-      "provider": "azure openai",
-      "enabled": true,
-      "isBuiltIn": true
+      ],
+      "apiKey": ""
     },
     {
       "name": "deepseek-chat",
       "provider": "deepseek",
       "enabled": true,
-      "isBuiltIn": true
+      "isBuiltIn": true,
+      "apiKey": ""
     },
     {
       "name": "deepseek-reasoner",
@@ -262,14 +270,16 @@
       "isBuiltIn": true,
       "capabilities": [
         "reasoning"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "deepseek-ai/DeepSeek-V3",
       "provider": "siliconflow",
       "enabled": false,
       "isBuiltIn": false,
-      "baseUrl": "https://api.siliconflow.com/v1"
+      "baseUrl": "https://api.siliconflow.com/v1",
+      "apiKey": ""
     },
     {
       "name": "deepseek-ai/DeepSeek-R1",
@@ -279,17 +289,20 @@
       "baseUrl": "https://api.siliconflow.com/v1",
       "capabilities": [
         "reasoning"
-      ]
+      ],
+      "apiKey": ""
     },
     {
       "name": "deepseek-v4-flash",
       "provider": "deepseek",
-      "enabled": true
+      "enabled": true,
+      "apiKey": ""
     },
     {
       "name": "deepseek-v4-pro",
       "provider": "deepseek",
-      "enabled": true
+      "enabled": true,
+      "apiKey": ""
     }
   ],
   "activeEmbeddingModels": [
@@ -300,7 +313,8 @@
       "isBuiltIn": true,
       "isEmbeddingModel": true,
       "core": true,
-      "plusExclusive": true
+      "plusExclusive": true,
+      "apiKey": ""
     },
     {
       "name": "copilot-plus-large",
@@ -311,7 +325,8 @@
       "core": true,
       "plusExclusive": true,
       "believerExclusive": true,
-      "dimensions": 1024
+      "dimensions": 1024,
+      "apiKey": ""
     },
     {
       "name": "copilot-plus-multilingual",
@@ -321,7 +336,8 @@
       "isEmbeddingModel": true,
       "core": true,
       "plusExclusive": true,
-      "dimensions": 512
+      "dimensions": 512,
+      "apiKey": ""
     },
     {
       "name": "openai/text-embedding-3-small",
@@ -329,7 +345,8 @@
       "enabled": true,
       "isBuiltIn": true,
       "isEmbeddingModel": true,
-      "core": true
+      "core": true,
+      "apiKey": ""
     },
     {
       "name": "text-embedding-3-small",
@@ -337,7 +354,8 @@
       "enabled": true,
       "isBuiltIn": true,
       "isEmbeddingModel": true,
-      "core": true
+      "core": true,
+      "apiKey": ""
     },
     {
       "name": "gemini-embedding-001",
@@ -345,7 +363,8 @@
       "enabled": true,
       "isBuiltIn": true,
       "isEmbeddingModel": true,
-      "core": true
+      "core": true,
+      "apiKey": ""
     },
     {
       "name": "gemini-embedding-2-preview",
@@ -353,7 +372,8 @@
       "enabled": true,
       "isBuiltIn": true,
       "isEmbeddingModel": true,
-      "core": true
+      "core": true,
+      "apiKey": ""
     },
     {
       "name": "Qwen/Qwen3-Embedding-0.6B",
@@ -362,48 +382,42 @@
       "isBuiltIn": true,
       "isEmbeddingModel": true,
       "core": true,
-      "baseUrl": "https://api.siliconflow.com/v1"
+      "baseUrl": "https://api.siliconflow.com/v1",
+      "apiKey": ""
     },
     {
       "name": "text-embedding-3-large",
       "provider": "openai",
       "enabled": true,
       "isBuiltIn": true,
-      "isEmbeddingModel": true
+      "isEmbeddingModel": true,
+      "apiKey": ""
     },
     {
       "name": "embed-multilingual-light-v3.0",
       "provider": "cohereai",
       "enabled": true,
       "isBuiltIn": true,
-      "isEmbeddingModel": true
+      "isEmbeddingModel": true,
+      "apiKey": ""
     },
     {
       "name": "text-embedding-004",
       "provider": "google",
       "enabled": true,
       "isBuiltIn": true,
-      "isEmbeddingModel": true
-    },
-    {
-      "name": "azure-openai",
-      "provider": "azure openai",
-      "enabled": true,
-      "isBuiltIn": true,
-      "isEmbeddingModel": true
+      "isEmbeddingModel": true,
+      "apiKey": ""
     }
   ],
   "embeddingRequestsPerMin": 60,
   "embeddingBatchSize": 16,
   "disableIndexOnMobile": true,
-  "showSuggestedPrompts": true,
-  "showRelevantNotes": true,
   "numPartitions": 1,
   "lexicalSearchRamLimit": 100,
   "promptUsageTimestamps": {},
   "promptSortStrategy": "timestamp",
   "chatHistorySortStrategy": "recent",
-  "projectListSortStrategy": "recent",
   "projectsFolder": "copilot/projects",
   "defaultConversationNoteName": "{$topic}@{$date}_{$time}",
   "inlineEditCommands": [],
@@ -415,16 +429,17 @@
   "enableSemanticSearchV3": false,
   "enableSelfHostMode": false,
   "enableMiyo": false,
+  "enableMiyoSearchSkill": false,
   "miyoSearchAll": false,
-  "selfHostModeValidatedAt": null,
-  "selfHostValidationCount": 0,
-  "selfHostUrl": "",
-  "selfHostApiKey": "",
   "miyoServerUrl": "",
+  "miyoSyncedExclusions": "",
   "selfHostSearchProvider": "firecrawl",
   "firecrawlApiKey": "",
   "perplexityApiKey": "",
+  "parallelApiKey": "",
+  "exaApiKey": "",
   "supadataApiKey": "",
+  "docProcessorBackend": "plus",
   "enableLexicalBoosts": true,
   "suggestedDefaultCommands": true,
   "autonomousAgentMaxIterations": 4,
@@ -453,5 +468,28 @@
   "defaultSystemPromptTitle": "",
   "autoCompactThreshold": 128000,
   "convertedDocOutputFolder": "",
-  "_keychainVaultId": "a637fefa"
+  "agentMode": {
+    "byok": {},
+    "activeBackend": "opencode",
+    "backends": {},
+    "debugFullFrames": true,
+    "welcomeDismissed": false,
+    "skills": {
+      "folder": "copilot/skills"
+    }
+  },
+  "providers": {},
+  "configuredModels": [],
+  "backends": {},
+  "temperature": 0.1,
+  "generateAIChatTitleOnSave": true,
+  "showSuggestedPrompts": true,
+  "showRelevantNotes": true,
+  "projectListSortStrategy": "recent",
+  "selfHostModeValidatedAt": null,
+  "selfHostValidationCount": 0,
+  "selfHostUrl": "",
+  "selfHostApiKey": "",
+  "_keychainVaultId": "a637fefa",
+  "settingsVersion": 12
 }

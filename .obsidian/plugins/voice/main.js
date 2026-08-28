@@ -6169,6 +6169,45 @@ var OPENAI_VOICES = [
   { id: "sage", label: "Sage (Calm)", lang: "en-US" },
   { id: "shimmer", label: "Shimmer (Soft)", lang: "en-US" }
 ];
+var MINIMAX_REGIONS = [
+  { id: "api.minimax.io", label: "Global (api.minimax.io)" },
+  { id: "api.minimaxi.chat", label: "Mainland China (api.minimaxi.chat)" }
+];
+var MINIMAX_MODELS = [
+  { id: "speech-02-hd", label: "Speech 02 HD (quality)" },
+  { id: "speech-02-turbo", label: "Speech 02 Turbo (fast)" },
+  { id: "speech-01-hd", label: "Speech 01 HD" },
+  { id: "speech-01-turbo", label: "Speech 01 Turbo" }
+];
+var MINIMAX_VOICES = [
+  // Newer named Speech-02 voices (multilingual, natural in English).
+  { id: "Wise_Woman", label: "Wise Woman", lang: "en-US" },
+  { id: "Calm_Woman", label: "Calm Woman", lang: "en-US" },
+  { id: "Friendly_Person", label: "Friendly Person", lang: "en-US" },
+  { id: "Inspirational_girl", label: "Inspirational Girl", lang: "en-US" },
+  { id: "Lively_Girl", label: "Lively Girl", lang: "en-US" },
+  { id: "Deep_Voice_Man", label: "Deep Voice Man", lang: "en-US" },
+  { id: "Patient_Man", label: "Patient Man", lang: "en-US" },
+  { id: "Elegant_Man", label: "Elegant Man", lang: "en-US" },
+  { id: "Casual_Guy", label: "Casual Guy", lang: "en-US" },
+  { id: "Young_Knight", label: "Young Knight", lang: "en-US" },
+  // Classic Chinese system voices (also multilingual).
+  { id: "male-qn-qingse", label: "\u9752\u6DA9\u9752\u5E74 (Youthful Male)", lang: "zh-CN" },
+  { id: "male-qn-jingying", label: "\u7CBE\u82F1\u9752\u5E74 (Elite Male)", lang: "zh-CN" },
+  { id: "male-qn-badao", label: "\u9738\u9053\u9752\u5E74 (Domineering Male)", lang: "zh-CN" },
+  { id: "female-shaonv", label: "\u5C11\u5973 (Young Female)", lang: "zh-CN" },
+  { id: "female-yujie", label: "\u5FA1\u59D0 (Mature Female)", lang: "zh-CN" },
+  { id: "female-chengshu", label: "\u6210\u719F\u5973\u6027 (Adult Female)", lang: "zh-CN" },
+  { id: "female-tianmei", label: "\u751C\u7F8E\u5973\u6027 (Sweet Female)", lang: "zh-CN" },
+  { id: "presenter_male", label: "\u4E3B\u6301\u4EBA (Male Presenter)", lang: "zh-CN" },
+  { id: "presenter_female", label: "\u4E3B\u6301\u4EBA (Female Presenter)", lang: "zh-CN" },
+  { id: "audiobook_male_1", label: "\u6709\u58F0\u4E66 (Male Narrator)", lang: "zh-CN" },
+  {
+    id: "audiobook_female_1",
+    label: "\u6709\u58F0\u4E66 (Female Narrator)",
+    lang: "zh-CN"
+  }
+];
 var DEFAULT_SETTINGS = {
   TTS_PROVIDER: "polly",
   VOICE: "Stephen",
@@ -6187,6 +6226,11 @@ var DEFAULT_SETTINGS = {
   OPENAI_API_KEY: "",
   OPENAI_VOICE: "alloy",
   OPENAI_MODEL: "gpt-4o-mini-tts",
+  MINIMAX_API_KEY: "",
+  MINIMAX_GROUP_ID: "",
+  MINIMAX_VOICE: "Wise_Woman",
+  MINIMAX_MODEL: "speech-02-hd",
+  MINIMAX_HOST: "api.minimax.io",
   spellOutAcronyms: false,
   readCodeBlocks: false,
   autoDownloadAudio: false,
@@ -6207,7 +6251,7 @@ var DEFAULT_SETTINGS = {
 };
 
 // src/settings/VoiceSettingTab.ts
-var import_obsidian5 = require("obsidian");
+var import_obsidian6 = require("obsidian");
 
 // node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js
 function setCredentialFeature(credentials, feature, value2) {
@@ -12037,6 +12081,10 @@ var BaseSpeechService = class {
     // Last reported synthesis progress (0..1), exposed via getProgress() for
     // pollers such as the Voice player's loading bar.
     this.lastProgress = 0;
+    // Providers that use structural pause markup override this (ElevenLabs =
+    // "break-tags", MiniMax = "minimax"). Everything else — SSML providers and
+    // engines that read markup literally (OpenAI) — keeps the safe default.
+    this.textPauseStyle = "none";
     this.voice = voice;
     this.speed = speed || 1;
     this.audio = new Audio();
@@ -12676,6 +12724,8 @@ var ElevenLabsService = class extends BaseSpeechService {
   constructor(apiKey, voice, model, speed) {
     super(voice, speed);
     this.inputFormat = "text";
+    // ElevenLabs multilingual_v2 / turbo v2.5 / flash v2.5 understand <break> tags.
+    this.textPauseStyle = "break-tags";
     this.apiKey = apiKey;
     this.model = model || "eleven_multilingual_v2";
   }
@@ -13102,6 +13152,32 @@ function groupVoicesByLanguage(voices) {
   })).sort((a2, b2) => collator.compare(a2.label, b2.label));
 }
 
+// src/service/azureSsml.ts
+var RATE_ATTR = /rate="([^"]*)"/g;
+var VOLUME_DB_ATTR = /volume="([+-]?\d+(?:\.\d+)?)dB"/g;
+var UNSIGNED_PERCENT = /^(\d+(?:\.\d+)?)%$/;
+function azureProsodyRate(value2) {
+  const match = UNSIGNED_PERCENT.exec(value2.trim());
+  if (!match) {
+    return value2;
+  }
+  const relative = Math.round((parseFloat(match[1]) - 100) * 100) / 100;
+  return `${relative >= 0 ? "+" : ""}${relative}%`;
+}
+function azureProsodyVolumeDb(db) {
+  const pct = Math.max(-50, Math.min(50, Math.round(db * 10)));
+  return `${pct >= 0 ? "+" : ""}${pct}%`;
+}
+function adaptProsodyForAzure(inner) {
+  return inner.replace(
+    VOLUME_DB_ATTR,
+    (_match, db) => `volume="${azureProsodyVolumeDb(parseFloat(db))}"`
+  ).replace(
+    RATE_ATTR,
+    (_match, value2) => `rate="${azureProsodyRate(value2)}"`
+  );
+}
+
 // src/service/AzureSpeechService.ts
 var OUTPUT_FORMAT2 = "audio-24khz-48kbitrate-mono-mp3";
 var MAX_SSML_CHUNK_CHARS2 = 2500;
@@ -13281,19 +13357,14 @@ var AzureSpeechService = class extends BaseSpeechService {
     return "Azure Speech error. Please try again.";
   }
   /**
-   * Wrap the pipeline's inner SSML in Azure's required envelope and adjust the
-   * one incompatible attribute: Azure prosody volume does not accept decibels,
-   * so map `volume="±NdB"` to a bounded relative percentage.
+   * Wrap the pipeline's inner SSML in Azure's required envelope and adapt the
+   * prosody attributes Azure interprets differently (rate + volume) — see
+   * adaptProsodyForAzure().
    */
   toAzureSsml(ssml) {
-    const inner = ssml.replace(/^\s*<speak[^>]*>/, "").replace(/<\/speak>\s*$/, "").replace(/volume="([+-]?\d+(?:\.\d+)?)dB"/g, (_match, db) => {
-      const pct = Math.max(
-        -50,
-        Math.min(50, Math.round(parseFloat(db) * 10))
-      );
-      const sign = pct >= 0 ? "+" : "";
-      return `volume="${sign}${pct}%"`;
-    });
+    const inner = adaptProsodyForAzure(
+      ssml.replace(/^\s*<speak[^>]*>/, "").replace(/<\/speak>\s*$/, "")
+    );
     const locale = this.languageCode();
     return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="${locale}"><voice name="${this.voice}">${inner}</voice></speak>`;
   }
@@ -13472,6 +13543,273 @@ var OpenAiSpeechService = class extends BaseSpeechService {
   }
 };
 
+// src/service/MiniMaxSpeechService.ts
+var import_obsidian5 = require("obsidian");
+
+// src/service/minimaxAudio.ts
+function hexToBytes(hex) {
+  const clean = hex.trim();
+  if (clean.length % 2 !== 0) {
+    throw new Error("Invalid hex audio data (odd length).");
+  }
+  const bytes = new Uint8Array(clean.length / 2);
+  for (let i2 = 0; i2 < bytes.length; i2++) {
+    const pair = clean.slice(i2 * 2, i2 * 2 + 2);
+    const byte = Number.parseInt(pair, 16);
+    if (Number.isNaN(byte) || !/^[0-9a-fA-F]{2}$/.test(pair)) {
+      throw new Error("Invalid hex audio data (non-hex characters).");
+    }
+    bytes[i2] = byte;
+  }
+  return bytes;
+}
+function minimaxErrorMessage(code3, msg) {
+  switch (code3) {
+    case 1004:
+      return "MiniMax: authentication failed \u2014 check your API key and Group ID.";
+    case 1002:
+      return "MiniMax: rate limit reached. Please wait and try again.";
+    case 1039:
+      return "MiniMax: token rate limit (TPM) reached. Please wait and try again.";
+    case 1008:
+      return "MiniMax: insufficient account balance.";
+    case 1042:
+      return "MiniMax: the text contains characters the voice cannot read.";
+    case 2013:
+    case 2049:
+      return `MiniMax: invalid request${msg ? ` (${msg})` : ""}.`;
+    default:
+      return `MiniMax error ${code3}${msg ? `: ${msg}` : ""}.`;
+  }
+}
+function extractT2AAudio(resp) {
+  var _a3, _b2, _c2;
+  const code3 = (_a3 = resp.base_resp) == null ? void 0 : _a3.status_code;
+  if (code3 !== void 0 && code3 !== 0) {
+    return {
+      ok: false,
+      error: minimaxErrorMessage(code3, (_b2 = resp.base_resp) == null ? void 0 : _b2.status_msg)
+    };
+  }
+  const audioHex = (_c2 = resp.data) == null ? void 0 : _c2.audio;
+  if (!audioHex) {
+    return { ok: false, error: "MiniMax returned no audio." };
+  }
+  try {
+    const bytes = hexToBytes(audioHex);
+    if (bytes.byteLength === 0) {
+      return { ok: false, error: "MiniMax returned an empty audio response." };
+    }
+    return { ok: true, bytes };
+  } catch (error) {
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : "Invalid audio data."
+    };
+  }
+}
+
+// src/service/MiniMaxSpeechService.ts
+var MAX_CHUNK_CHARS3 = 3e3;
+var MiniMaxSpeechService = class extends BaseSpeechService {
+  constructor(apiKey, groupId, voice, model, host, speed) {
+    super(voice, speed);
+    this.inputFormat = "text";
+    // MiniMax uses native `<#x#>` pause markers; it reads `<break>` tags aloud.
+    this.textPauseStyle = "minimax";
+    this.apiKey = apiKey;
+    this.groupId = groupId;
+    this.model = model || "speech-02-hd";
+    this.host = host || "api.minimax.io";
+  }
+  getVoiceOptions() {
+    return MINIMAX_VOICES;
+  }
+  updateCredentials(settings) {
+    this.apiKey = settings.MINIMAX_API_KEY;
+    this.groupId = settings.MINIMAX_GROUP_ID;
+    this.model = settings.MINIMAX_MODEL || "speech-02-hd";
+    this.host = settings.MINIMAX_HOST || "api.minimax.io";
+  }
+  endpoint() {
+    return `https://${this.host}/v1/t2a_v2?GroupId=${encodeURIComponent(
+      this.groupId
+    )}`;
+  }
+  /**
+   * Synthesize and play plain text via MiniMax.
+   */
+  async speak(content3, speed, filePath) {
+    var _a3, _b2;
+    if (this.isLoading) {
+      throw new Error("MiniMax call already in progress.");
+    }
+    if (!this.apiKey || !this.groupId) {
+      const error = new Error("Missing MiniMax API key or Group ID");
+      this.reportError(error);
+      throw error;
+    }
+    const text5 = content3.trim();
+    if (!text5) {
+      return;
+    }
+    this.isLoading = true;
+    try {
+      this.reportProgress(0, 1);
+      const chunks = chunkPlainText(text5, MAX_CHUNK_CHARS3);
+      const audioBlobs = [];
+      for (let i2 = 0; i2 < chunks.length; i2++) {
+        if ((_a3 = this.abortController) == null ? void 0 : _a3.signal.aborted) {
+          throw new Error("AbortError");
+        }
+        const blob = await this.synthesizeChunk(chunks[i2]);
+        if ((_b2 = this.abortController) == null ? void 0 : _b2.signal.aborted) {
+          throw new Error("AbortError");
+        }
+        audioBlobs.push(blob);
+        this.reportProgress((i2 + 1) / chunks.length * 0.95, 1);
+      }
+      const finalBlob = new Blob(audioBlobs, { type: "audio/mpeg" });
+      this.playBlob(finalBlob, speed, filePath);
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") {
+        return;
+      }
+      console.error("Error in MiniMax speak:", error);
+      this.reportError(error);
+      throw error;
+    } finally {
+      this.isLoading = false;
+      this.abortController = void 0;
+    }
+  }
+  /**
+   * Synthesize a single text chunk and return the MP3 blob.
+   */
+  async synthesizeChunk(text5) {
+    var _a3;
+    const response = await (0, import_obsidian5.requestUrl)({
+      url: this.endpoint(),
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${this.apiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: this.model,
+        text: text5,
+        stream: false,
+        output_format: "hex",
+        language_boost: "auto",
+        voice_setting: {
+          voice_id: this.voice,
+          speed: 1,
+          vol: 1,
+          pitch: 0
+        },
+        audio_setting: {
+          sample_rate: 32e3,
+          bitrate: 128e3,
+          format: "mp3",
+          channel: 1
+        }
+      }),
+      throw: false
+    });
+    if (response.status === 401) {
+      throw new Error("MiniMax: invalid API key (HTTP 401)");
+    }
+    if (response.status >= 400) {
+      throw new Error(`MiniMax API error (HTTP ${response.status})`);
+    }
+    const result = extractT2AAudio((_a3 = response.json) != null ? _a3 : {});
+    if (!result.ok) {
+      throw new Error(result.error);
+    }
+    return new Blob([result.bytes], { type: "audio/mpeg" });
+  }
+  /**
+   * Validate the credentials. MiniMax has no free list endpoint, so we send the
+   * smallest possible synthesis request and check the logical status code — this
+   * confirms the API key, Group ID and host all work together.
+   */
+  async validateCredentials() {
+    var _a3;
+    if (!this.apiKey || !this.groupId) {
+      return {
+        isValid: false,
+        error: "Please enter your MiniMax API key and Group ID."
+      };
+    }
+    try {
+      const response = await (0, import_obsidian5.requestUrl)({
+        url: this.endpoint(),
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.apiKey}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: this.model,
+          text: ".",
+          stream: false,
+          output_format: "hex",
+          voice_setting: { voice_id: this.voice },
+          audio_setting: { format: "mp3" }
+        }),
+        throw: false
+      });
+      if (response.status === 401) {
+        return { isValid: false, error: "Invalid MiniMax API key." };
+      }
+      if (response.status >= 400) {
+        return {
+          isValid: false,
+          error: `Validation failed (HTTP ${response.status}).`
+        };
+      }
+      const result = extractT2AAudio(
+        (_a3 = response.json) != null ? _a3 : {}
+      );
+      if (result.ok) {
+        return { isValid: true, voiceCount: MINIMAX_VOICES.length };
+      }
+      return { isValid: false, error: result.error };
+    } catch (error) {
+      console.error("MiniMax credential validation error:", error);
+      return {
+        isValid: false,
+        error: "Network error during validation. Please try again."
+      };
+    }
+  }
+  getErrorMessage(error) {
+    if (error && typeof error === "object" && "message" in error) {
+      const message = String(error.message);
+      if (message.includes("401") || message.toLowerCase().includes("api key")) {
+        return "Invalid MiniMax API key or Group ID. Check both in settings.";
+      }
+      if (message.includes("Missing MiniMax")) {
+        return "Add your MiniMax API key and Group ID in settings.";
+      }
+      if (message.toLowerCase().includes("balance")) {
+        return "MiniMax account balance is insufficient.";
+      }
+      if (message.toLowerCase().includes("rate limit")) {
+        return "MiniMax rate limit reached. Please wait and try again.";
+      }
+      if (message.toLowerCase().includes("no audio")) {
+        return "MiniMax returned no audio. Try a different voice or model.";
+      }
+      if (message.toLowerCase().includes("network")) {
+        return "Connection failed. Check your internet.";
+      }
+      return `MiniMax error: ${message}`;
+    }
+    return "MiniMax error. Please try again.";
+  }
+};
+
 // src/service/SpeechProviderFactory.ts
 function createSpeechProvider(settings) {
   let provider;
@@ -13503,6 +13841,15 @@ function createSpeechProvider(settings) {
       settings.OPENAI_MODEL,
       Number(settings.SPEED)
     );
+  } else if (settings.TTS_PROVIDER === "minimax") {
+    provider = new MiniMaxSpeechService(
+      settings.MINIMAX_API_KEY,
+      settings.MINIMAX_GROUP_ID,
+      settings.MINIMAX_VOICE,
+      settings.MINIMAX_MODEL,
+      settings.MINIMAX_HOST,
+      Number(settings.SPEED)
+    );
   } else {
     provider = new AwsPollyService(
       {
@@ -13522,9 +13869,16 @@ function createSpeechProvider(settings) {
 }
 
 // src/settings/VoiceSettingTab.ts
-var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
+var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
+    /**
+     * Container holding the active provider's credential section in the
+     * declarative (1.13+) path. Kept so a provider switch can re-render just that
+     * section in place, without the 1.13-only `update()` (which would exceed the
+     * manifest's 1.7.2 minAppVersion).
+     */
+    this.providerSectionEl = null;
     this.plugin = plugin;
   }
   /** Seconds label, e.g. "3s". */
@@ -13549,21 +13903,211 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
   display() {
     this.render();
   }
+  /**
+   * Declarative settings for Obsidian 1.13+. Returning a non-empty array makes
+   * the app render the tab from these definitions — which is what surfaces the
+   * settings in the global settings search — and skip display() entirely.
+   *
+   * The simple settings are plain `control` definitions bound through
+   * get/setControlValue below. The provider-specific credential section stays
+   * imperative (password masking, async validation, provider switching) and is
+   * mounted via a single `render` item that reuses the exact same code path as
+   * the display() fallback — no logic is duplicated between the two.
+   */
+  getSettingDefinitions() {
+    return [
+      {
+        name: "Speech provider",
+        desc: "Choose which text-to-speech engine to use. AWS Polly, ElevenLabs, and Google Cloud offer the same plugin features; each uses its own credentials and voices.",
+        control: {
+          type: "dropdown",
+          key: "TTS_PROVIDER",
+          options: {
+            polly: "AWS Polly",
+            elevenlabs: "ElevenLabs",
+            google: "Google Cloud",
+            azure: "Azure Speech",
+            openai: "OpenAI",
+            minimax: "MiniMax"
+          }
+        }
+      },
+      {
+        type: "group",
+        heading: "Playback",
+        items: [
+          {
+            name: "Rewind interval",
+            desc: `How many seconds the rewind control jumps back (${MIN_SKIP_SECONDS}\u2013${MAX_SKIP_SECONDS}s).`,
+            control: {
+              type: "slider",
+              key: "rewindSeconds",
+              min: MIN_SKIP_SECONDS,
+              max: MAX_SKIP_SECONDS,
+              step: 1,
+              displayFormat: (value2) => this.formatSecondsValue(value2)
+            }
+          },
+          {
+            name: "Fast-forward interval",
+            desc: `How many seconds the fast-forward control jumps ahead (${MIN_SKIP_SECONDS}\u2013${MAX_SKIP_SECONDS}s).`,
+            control: {
+              type: "slider",
+              key: "forwardSeconds",
+              min: MIN_SKIP_SECONDS,
+              max: MAX_SKIP_SECONDS,
+              step: 1,
+              displayFormat: (value2) => this.formatSecondsValue(value2)
+            }
+          }
+        ]
+      },
+      {
+        type: "group",
+        heading: "Saving audio",
+        items: [
+          // Informational only — the save location is managed from the
+          // player's folder picker (no control here).
+          {
+            name: "Save location",
+            desc: this.audioSaveLocationDesc()
+          },
+          {
+            name: "Save automatically",
+            desc: "Save the MP3 after each playback, without pressing save.",
+            control: { type: "toggle", key: "autoDownloadAudio" }
+          }
+        ]
+      },
+      {
+        type: "group",
+        heading: "Player",
+        items: [
+          {
+            name: "Play the note's saved audio",
+            desc: "When you press play, load the MP3 already saved for the note you're viewing (matched by name) instead of re-generating it \u2014 even if another chapter is loaded. Off keeps the loaded chapter playing and always re-generates notes.",
+            control: { type: "toggle", key: "playNoteSavedAudio" }
+          },
+          {
+            name: "Folder list follows note",
+            desc: "The player's folder list jumps to the current note's folder. Off keeps your chosen folder.",
+            control: { type: "toggle", key: "folderSelectorFollowsNote" }
+          }
+        ]
+      },
+      {
+        // Provider-specific credentials. This synthetic row only exists to give
+        // us a mount point; we drop it and render the active provider's full
+        // section (heading + fields) into a dedicated child of the tab
+        // container, reusing the same imperative code the display() fallback
+        // uses. Mounting via plain DOM (rather than the 1.11-only
+        // `SettingGroup.listEl`) keeps us within the 1.7.2 minAppVersion.
+        name: "",
+        searchable: false,
+        render: (setting) => {
+          const el = setting.settingEl;
+          el.empty();
+          el.removeClass("setting-item");
+          this.providerSectionEl = el;
+          this.renderActiveProviderSettings(el);
+        }
+      }
+    ];
+  }
+  /** Read a declarative control's value from the plugin settings. */
+  getControlValue(key) {
+    switch (key) {
+      case "TTS_PROVIDER":
+        return this.plugin.settings.TTS_PROVIDER;
+      case "rewindSeconds":
+        return this.plugin.settings.rewindSeconds;
+      case "forwardSeconds":
+        return this.plugin.settings.forwardSeconds;
+      case "autoDownloadAudio":
+        return this.plugin.settings.autoDownloadAudio;
+      case "playNoteSavedAudio":
+        return this.plugin.settings.playNoteSavedAudio;
+      case "folderSelectorFollowsNote":
+        return this.plugin.settings.folderSelectorFollowsNote;
+      default:
+        return void 0;
+    }
+  }
+  /**
+   * Persist a declarative control's value and run the same side effects the
+   * imperative onChange handlers do (skip intervals, provider re-init). A
+   * provider switch re-renders the credential section in place (see
+   * providerSectionEl) so the right fields show for the new provider.
+   */
+  async setControlValue(key, value2) {
+    switch (key) {
+      case "TTS_PROVIDER":
+        this.plugin.settings.TTS_PROVIDER = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProvider();
+        if (this.providerSectionEl) {
+          this.providerSectionEl.empty();
+          this.renderActiveProviderSettings(this.providerSectionEl);
+        }
+        break;
+      case "rewindSeconds":
+        this.plugin.settings.rewindSeconds = value2;
+        await this.plugin.saveSettings();
+        this.plugin.updateSkipIntervals();
+        break;
+      case "forwardSeconds":
+        this.plugin.settings.forwardSeconds = value2;
+        await this.plugin.saveSettings();
+        this.plugin.updateSkipIntervals();
+        break;
+      case "autoDownloadAudio":
+        this.plugin.settings.autoDownloadAudio = value2;
+        await this.plugin.saveSettings();
+        break;
+      case "playNoteSavedAudio":
+        this.plugin.settings.playNoteSavedAudio = value2;
+        await this.plugin.saveSettings();
+        break;
+      case "folderSelectorFollowsNote":
+        this.plugin.settings.folderSelectorFollowsNote = value2;
+        await this.plugin.saveSettings();
+        break;
+    }
+  }
+  /**
+   * Render the active provider's credential section into `containerEl`. Shared
+   * by the declarative render item (1.13+) and the display() fallback (<1.13).
+   */
+  renderActiveProviderSettings(containerEl) {
+    if (this.plugin.settings.TTS_PROVIDER === "elevenlabs") {
+      this.displayElevenLabsSettings(containerEl);
+    } else if (this.plugin.settings.TTS_PROVIDER === "google") {
+      this.displayGoogleSettings(containerEl);
+    } else if (this.plugin.settings.TTS_PROVIDER === "azure") {
+      this.displayAzureSettings(containerEl);
+    } else if (this.plugin.settings.TTS_PROVIDER === "openai") {
+      this.displayOpenAISettings(containerEl);
+    } else if (this.plugin.settings.TTS_PROVIDER === "minimax") {
+      this.displayMiniMaxSettings(containerEl);
+    } else {
+      this.displayPollySettings(containerEl);
+    }
+  }
   render() {
     const { containerEl } = this;
     containerEl.empty();
-    new import_obsidian5.Setting(containerEl).setName("Speech Provider").setDesc(
+    new import_obsidian6.Setting(containerEl).setName("Speech Provider").setDesc(
       "Choose which text-to-speech engine to use. AWS Polly, ElevenLabs, and Google Cloud offer the same plugin features; each uses its own credentials and voices."
     ).addDropdown((dropdown) => {
-      dropdown.addOption("polly", "AWS Polly").addOption("elevenlabs", "ElevenLabs").addOption("google", "Google Cloud").addOption("azure", "Azure Speech").addOption("openai", "OpenAI").setValue(this.plugin.settings.TTS_PROVIDER).onChange(async (value2) => {
+      dropdown.addOption("polly", "AWS Polly").addOption("elevenlabs", "ElevenLabs").addOption("google", "Google Cloud").addOption("azure", "Azure Speech").addOption("openai", "OpenAI").addOption("minimax", "MiniMax").setValue(this.plugin.settings.TTS_PROVIDER).onChange(async (value2) => {
         this.plugin.settings.TTS_PROVIDER = value2;
         await this.plugin.saveSettings();
         this.plugin.reinitializeProvider();
         this.render();
       });
     });
-    new import_obsidian5.Setting(containerEl).setName("Playback").setHeading();
-    const rewindSetting = new import_obsidian5.Setting(containerEl).setName("Rewind interval").setDesc(
+    new import_obsidian6.Setting(containerEl).setName("Playback").setHeading();
+    const rewindSetting = new import_obsidian6.Setting(containerEl).setName("Rewind interval").setDesc(
       `How many seconds the rewind control jumps back (${MIN_SKIP_SECONDS}\u2013${MAX_SKIP_SECONDS}s).`
     );
     let rewindValueEl;
@@ -13579,7 +14123,7 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
       rewindSetting,
       this.formatSecondsValue(this.plugin.settings.rewindSeconds)
     );
-    const forwardSetting = new import_obsidian5.Setting(containerEl).setName("Fast-forward interval").setDesc(
+    const forwardSetting = new import_obsidian6.Setting(containerEl).setName("Fast-forward interval").setDesc(
       `How many seconds the fast-forward control jumps ahead (${MIN_SKIP_SECONDS}\u2013${MAX_SKIP_SECONDS}s).`
     );
     let forwardValueEl;
@@ -13595,16 +14139,16 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
       forwardSetting,
       this.formatSecondsValue(this.plugin.settings.forwardSeconds)
     );
-    new import_obsidian5.Setting(containerEl).setName("Saving audio").setHeading();
-    new import_obsidian5.Setting(containerEl).setName("Save location").setDesc(this.audioSaveLocationDesc());
-    new import_obsidian5.Setting(containerEl).setName("Save automatically").setDesc("Save the MP3 after each playback, without pressing save.").addToggle(
+    new import_obsidian6.Setting(containerEl).setName("Saving audio").setHeading();
+    new import_obsidian6.Setting(containerEl).setName("Save location").setDesc(this.audioSaveLocationDesc());
+    new import_obsidian6.Setting(containerEl).setName("Save automatically").setDesc("Save the MP3 after each playback, without pressing save.").addToggle(
       (toggle) => toggle.setValue(this.plugin.settings.autoDownloadAudio).onChange(async (value2) => {
         this.plugin.settings.autoDownloadAudio = value2;
         await this.plugin.saveSettings();
       })
     );
-    new import_obsidian5.Setting(containerEl).setName("Player").setHeading();
-    new import_obsidian5.Setting(containerEl).setName("Play the note's saved audio").setDesc(
+    new import_obsidian6.Setting(containerEl).setName("Player").setHeading();
+    new import_obsidian6.Setting(containerEl).setName("Play the note's saved audio").setDesc(
       "When you press play, load the MP3 already saved for the note you're viewing (matched by name) instead of re-generating it \u2014 even if another chapter is loaded. Off keeps the loaded chapter playing and always re-generates notes."
     ).addToggle(
       (toggle) => toggle.setValue(this.plugin.settings.playNoteSavedAudio).onChange(async (value2) => {
@@ -13612,7 +14156,7 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
         await this.plugin.saveSettings();
       })
     );
-    new import_obsidian5.Setting(containerEl).setName("Folder list follows note").setDesc(
+    new import_obsidian6.Setting(containerEl).setName("Folder list follows note").setDesc(
       "The player's folder list jumps to the current note's folder. Off keeps your chosen folder."
     ).addToggle(
       (toggle) => toggle.setValue(this.plugin.settings.folderSelectorFollowsNote).onChange(async (value2) => {
@@ -13620,21 +14164,70 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
         await this.plugin.saveSettings();
       })
     );
-    if (this.plugin.settings.TTS_PROVIDER === "elevenlabs") {
-      this.displayElevenLabsSettings(containerEl);
-    } else if (this.plugin.settings.TTS_PROVIDER === "google") {
-      this.displayGoogleSettings(containerEl);
-    } else if (this.plugin.settings.TTS_PROVIDER === "azure") {
-      this.displayAzureSettings(containerEl);
-    } else if (this.plugin.settings.TTS_PROVIDER === "openai") {
-      this.displayOpenAISettings(containerEl);
-    } else {
-      this.displayPollySettings(containerEl);
-    }
+    this.renderActiveProviderSettings(containerEl);
+  }
+  displayMiniMaxSettings(containerEl) {
+    new import_obsidian6.Setting(containerEl).setName("MiniMax").setHeading();
+    new import_obsidian6.Setting(containerEl).setName("Region").setDesc(
+      "The MiniMax API host. Pick the region where your MiniMax account was created."
+    ).addDropdown((dropdown) => {
+      MINIMAX_REGIONS.forEach((region) => {
+        dropdown.addOption(region.id, region.label);
+      });
+      dropdown.setValue(this.plugin.settings.MINIMAX_HOST).onChange(async (value2) => {
+        this.plugin.settings.MINIMAX_HOST = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+      });
+    });
+    new import_obsidian6.Setting(containerEl).setName("Model").setDesc(
+      "The MiniMax T2A model. HD favours quality; Turbo favours latency and cost."
+    ).addDropdown((dropdown) => {
+      MINIMAX_MODELS.forEach((model) => {
+        dropdown.addOption(model.id, model.label);
+      });
+      dropdown.setValue(this.plugin.settings.MINIMAX_MODEL).onChange(async (value2) => {
+        this.plugin.settings.MINIMAX_MODEL = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+      });
+    });
+    this.addPasswordSetting(
+      containerEl,
+      "MiniMax API Key",
+      "Your MiniMax API key (MiniMax console \u2192 account \u2192 API key).",
+      "Enter your MiniMax API key",
+      this.plugin.settings.MINIMAX_API_KEY,
+      async (value2) => {
+        this.plugin.settings.MINIMAX_API_KEY = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+      }
+    );
+    this.addPasswordSetting(
+      containerEl,
+      "MiniMax Group ID",
+      "Your MiniMax Group ID (shown next to the API key in the MiniMax console).",
+      "Enter your MiniMax Group ID",
+      this.plugin.settings.MINIMAX_GROUP_ID,
+      async (value2) => {
+        this.plugin.settings.MINIMAX_GROUP_ID = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+      }
+    );
+    this.renderCredentialValidation(containerEl, {
+      providerName: "MiniMax",
+      isConfigured: () => !!this.plugin.settings.MINIMAX_API_KEY && !!this.plugin.settings.MINIMAX_GROUP_ID,
+      missingMessage: "Please enter your MiniMax API key and Group ID before testing.",
+      promptMessage: "Enter your MiniMax API key and Group ID above, then click 'Test Credentials' to validate",
+      helpText: "Need a MiniMax API key? ",
+      helpUrl: "https://platform.minimax.io/"
+    });
   }
   displayOpenAISettings(containerEl) {
-    new import_obsidian5.Setting(containerEl).setName("OpenAI").setHeading();
-    new import_obsidian5.Setting(containerEl).setName("Model").setDesc(
+    new import_obsidian6.Setting(containerEl).setName("OpenAI").setHeading();
+    new import_obsidian6.Setting(containerEl).setName("Model").setDesc(
       "The OpenAI text-to-speech model. GPT-4o mini TTS is recommended; TTS-1 favours latency and TTS-1 HD favours quality."
     ).addDropdown((dropdown) => {
       OPENAI_MODELS.forEach((model) => {
@@ -13668,8 +14261,8 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
     });
   }
   displayAzureSettings(containerEl) {
-    new import_obsidian5.Setting(containerEl).setName("Azure Speech").setHeading();
-    new import_obsidian5.Setting(containerEl).setName("Region").setDesc("The Azure region of your Speech resource (must match the key).").addDropdown((dropdown) => {
+    new import_obsidian6.Setting(containerEl).setName("Azure Speech").setHeading();
+    new import_obsidian6.Setting(containerEl).setName("Region").setDesc("The Azure region of your Speech resource (must match the key).").addDropdown((dropdown) => {
       AZURE_REGIONS.forEach((region) => {
         dropdown.addOption(region.id, region.label);
       });
@@ -13701,7 +14294,7 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
     });
   }
   displayGoogleSettings(containerEl) {
-    new import_obsidian5.Setting(containerEl).setName("Google Cloud").setHeading();
+    new import_obsidian6.Setting(containerEl).setName("Google Cloud").setHeading();
     this.addPasswordSetting(
       containerEl,
       "Google Cloud API Key",
@@ -13724,8 +14317,8 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
     });
   }
   displayPollySettings(containerEl) {
-    new import_obsidian5.Setting(containerEl).setName("AWS").setHeading();
-    new import_obsidian5.Setting(containerEl).setName("AWS Region").setDesc("The AWS Region for the Polly service.").addDropdown((dropdown) => {
+    new import_obsidian6.Setting(containerEl).setName("AWS").setHeading();
+    new import_obsidian6.Setting(containerEl).setName("AWS Region").setDesc("The AWS Region for the Polly service.").addDropdown((dropdown) => {
       dropdown.addOption("us-east-2", "US East (Ohio)").addOption("us-east-1", "US East (N. Virginia)").addOption("us-west-1", "US West (N. California)").addOption("us-west-2", "US West (Oregon)").addOption("af-south-1", "Africa (Cape Town)").addOption("ap-east-1", "Asia Pacific (Hong Kong)").addOption("ap-south-2", "Asia Pacific (Hyderabad)").addOption("ap-southeast-3", "Asia Pacific (Jakarta)").addOption("ap-southeast-4", "Asia Pacific (Melbourne)").addOption("ap-south-1", "Asia Pacific (Mumbai)").addOption("ap-northeast-3", "Asia Pacific (Osaka)").addOption("ap-northeast-2", "Asia Pacific (Seoul)").addOption("ap-southeast-1", "Asia Pacific (Singapore)").addOption("ap-southeast-2", "Asia Pacific (Sydney)").addOption("ap-northeast-1", "Asia Pacific (Tokyo)").addOption("ca-central-1", "Canada (Central)").addOption("eu-central-1", "Europe (Frankfurt)").addOption("eu-west-1", "Europe (Ireland)").addOption("eu-west-2", "Europe (London)").addOption("eu-south-1", "Europe (Milan)").addOption("eu-west-3", "Europe (Paris)").addOption("eu-south-2", "Europe (Spain)").addOption("eu-north-1", "Europe (Stockholm)").addOption("eu-central-2", "Europe (Zurich)").addOption("me-south-1", "Middle East (Bahrain)").addOption("me-central-1", "Middle East (UAE)").addOption("sa-east-1", "South America (S\xE3o Paulo)").setValue(this.plugin.settings.AWS_REGION).onChange(async (value2) => {
         this.plugin.settings.AWS_REGION = value2;
         await this.plugin.saveSettings();
@@ -13766,8 +14359,8 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
     });
   }
   displayElevenLabsSettings(containerEl) {
-    new import_obsidian5.Setting(containerEl).setName("ElevenLabs").setHeading();
-    new import_obsidian5.Setting(containerEl).setName("Model").setDesc(
+    new import_obsidian6.Setting(containerEl).setName("ElevenLabs").setHeading();
+    new import_obsidian6.Setting(containerEl).setName("Model").setDesc(
       "The ElevenLabs model used for synthesis. Multilingual v2 offers the best quality; Flash v2.5 is the fastest."
     ).addDropdown((dropdown) => {
       ELEVENLABS_MODELS.forEach((model) => {
@@ -13805,7 +14398,7 @@ var VoiceSettingTab = class extends import_obsidian5.PluginSettingTab {
    */
   addPasswordSetting(containerEl, name, desc, placeholder, value2, onChange) {
     let isVisible = false;
-    new import_obsidian5.Setting(containerEl).setName(name).setDesc(desc).addText((text5) => {
+    new import_obsidian6.Setting(containerEl).setName(name).setDesc(desc).addText((text5) => {
       text5.setPlaceholder(placeholder).setValue(value2).onChange(onChange);
       text5.inputEl.type = "password";
     }).addExtraButton((button) => {
@@ -14013,16 +14606,16 @@ var HotkeySettings = class {
 };
 
 // src/utils/VoicePlugin.ts
-var import_obsidian16 = require("obsidian");
+var import_obsidian17 = require("obsidian");
 
 // src/utils/MarkdownHelper.ts
-var import_obsidian6 = require("obsidian");
+var import_obsidian7 = require("obsidian");
 var MarkdownHelper = class {
   constructor(app) {
     this.app = app;
   }
   async getMarkdownView() {
-    const activeView = this.app.workspace.getActiveViewOfType(import_obsidian6.MarkdownView);
+    const activeView = this.app.workspace.getActiveViewOfType(import_obsidian7.MarkdownView);
     if (activeView) {
       const selectedText = activeView.editor.getSelection();
       return {
@@ -14031,9 +14624,9 @@ var MarkdownHelper = class {
       };
     }
     const activeFile = this.app.workspace.getActiveFile();
-    if (activeFile && activeFile instanceof import_obsidian6.TFile) {
+    if (activeFile && activeFile instanceof import_obsidian7.TFile) {
       const fileView = this.app.workspace.getLeavesOfType("markdown").map((leaf) => leaf.view).find(
-        (view) => view instanceof import_obsidian6.MarkdownView && view.file === activeFile
+        (view) => view instanceof import_obsidian7.MarkdownView && view.file === activeFile
       );
       if (fileView) {
         const selectedText = fileView.editor.getSelection();
@@ -14057,16 +14650,16 @@ var MarkdownHelper = class {
 };
 
 // src/utils/IconEventHandler.ts
-var import_obsidian13 = require("obsidian");
+var import_obsidian14 = require("obsidian");
 
 // src/utils/MobileControlBar.ts
-var import_obsidian9 = require("obsidian");
+var import_obsidian10 = require("obsidian");
 
 // src/ui/VoicePlayerView.ts
-var import_obsidian8 = require("obsidian");
+var import_obsidian9 = require("obsidian");
 
 // src/utils/folderAudio.ts
-var import_obsidian7 = require("obsidian");
+var import_obsidian8 = require("obsidian");
 
 // src/utils/chapters.ts
 function normalizeFolderPath(path2) {
@@ -14108,11 +14701,11 @@ function listChapters(mp3Paths) {
 function mp3FilesInFolder(vault, folderPath) {
   const normalized = normalizeFolderPath(folderPath);
   const folder = normalized === "/" ? vault.getRoot() : vault.getAbstractFileByPath(normalized);
-  if (!(folder instanceof import_obsidian7.TFolder)) {
+  if (!(folder instanceof import_obsidian8.TFolder)) {
     return [];
   }
   return folder.children.filter(
-    (child) => child instanceof import_obsidian7.TFile && child.extension === "mp3"
+    (child) => child instanceof import_obsidian8.TFile && child.extension === "mp3"
   );
 }
 
@@ -14304,9 +14897,10 @@ var PROVIDERS = [
   { id: "elevenlabs", label: "ElevenLabs" },
   { id: "google", label: "Google Cloud" },
   { id: "azure", label: "Azure Speech" },
-  { id: "openai", label: "OpenAI" }
+  { id: "openai", label: "OpenAI" },
+  { id: "minimax", label: "MiniMax" }
 ];
-var VoicePlayerView = class extends import_obsidian8.ItemView {
+var VoicePlayerView = class extends import_obsidian9.ItemView {
   constructor(leaf, plugin) {
     super(leaf);
     // Tracks which icon the download button currently shows, so we only swap it
@@ -14390,7 +14984,7 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
       cls: "voice-player-btn voice-player-track",
       attr: { "aria-label": "Previous track" }
     });
-    (0, import_obsidian8.setIcon)(this.prevTrackBtn, "skip-back");
+    (0, import_obsidian9.setIcon)(this.prevTrackBtn, "skip-back");
     this.registerDomEvent(
       this.prevTrackBtn,
       "click",
@@ -14400,7 +14994,7 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
       cls: "voice-player-btn voice-player-skip",
       attr: { "aria-label": "Rewind" }
     });
-    (0, import_obsidian8.setIcon)(rewindBtn, "rewind");
+    (0, import_obsidian9.setIcon)(rewindBtn, "rewind");
     rewindBtn.createSpan({ cls: "voice-player-skip-label" }).setText(`${this.plugin.settings.rewindSeconds}`);
     this.registerDomEvent(
       rewindBtn,
@@ -14413,7 +15007,7 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
         "aria-label": "Tap: play, pause or cancel \xB7 Hold: regenerate from scratch"
       }
     });
-    (0, import_obsidian8.setIcon)(this.playPauseBtn, "play");
+    (0, import_obsidian9.setIcon)(this.playPauseBtn, "play");
     attachPressGesture(this.playPauseBtn, {
       onTap: () => this.togglePlay(),
       onHold: () => this.regenerate()
@@ -14422,7 +15016,7 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
       cls: "voice-player-btn voice-player-skip",
       attr: { "aria-label": "Fast-forward" }
     });
-    (0, import_obsidian8.setIcon)(forwardBtn, "fast-forward");
+    (0, import_obsidian9.setIcon)(forwardBtn, "fast-forward");
     forwardBtn.createSpan({ cls: "voice-player-skip-label" }).setText(`${this.plugin.settings.forwardSeconds}`);
     this.registerDomEvent(
       forwardBtn,
@@ -14433,7 +15027,7 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
       cls: "voice-player-btn voice-player-track",
       attr: { "aria-label": "Next track" }
     });
-    (0, import_obsidian8.setIcon)(this.nextTrackBtn, "skip-forward");
+    (0, import_obsidian9.setIcon)(this.nextTrackBtn, "skip-forward");
     this.registerDomEvent(
       this.nextTrackBtn,
       "click",
@@ -14444,7 +15038,7 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
       cls: "voice-player-download",
       attr: { "aria-label": "Download as MP3" }
     });
-    (0, import_obsidian8.setIcon)(this.downloadBtn, "download");
+    (0, import_obsidian9.setIcon)(this.downloadBtn, "download");
     attachPressGesture(this.downloadBtn, {
       onTap: () => void this.downloadAudio(),
       onHold: () => void this.downloadAudio({ forcePicker: true })
@@ -14455,7 +15049,7 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
         "aria-label": "Save or move audio to a folder you choose (optionally pin it as your default)"
       }
     });
-    (0, import_obsidian8.setIcon)(this.folderBtn, "folder-open");
+    (0, import_obsidian9.setIcon)(this.folderBtn, "folder-open");
     this.registerDomEvent(
       this.folderBtn,
       "click",
@@ -14471,22 +15065,22 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
       cls: "voice-player-speed-btn",
       attr: { "aria-label": "Slower" }
     });
-    (0, import_obsidian8.setIcon)(slower, "minus");
+    (0, import_obsidian9.setIcon)(slower, "minus");
     this.registerDomEvent(slower, "click", () => this.changeSpeed(-0.1));
     this.speedEl = speedGroup.createSpan({ cls: "voice-player-speed-value" });
     const faster = speedGroup.createEl("button", {
       cls: "voice-player-speed-btn",
       attr: { "aria-label": "Faster" }
     });
-    (0, import_obsidian8.setIcon)(faster, "plus");
+    (0, import_obsidian9.setIcon)(faster, "plus");
     this.registerDomEvent(faster, "click", () => this.changeSpeed(0.1));
     this.codeBtn = secondary.createEl("button", { cls: "voice-player-toggle" });
-    (0, import_obsidian8.setIcon)(this.codeBtn, "code");
+    (0, import_obsidian9.setIcon)(this.codeBtn, "code");
     this.registerDomEvent(this.codeBtn, "click", () => this.toggleCodeBlocks());
     this.acronymBtn = secondary.createEl("button", {
       cls: "voice-player-toggle"
     });
-    (0, import_obsidian8.setIcon)(this.acronymBtn, "case-sensitive");
+    (0, import_obsidian9.setIcon)(this.acronymBtn, "case-sensitive");
     this.registerDomEvent(
       this.acronymBtn,
       "click",
@@ -14495,12 +15089,12 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
     this.urlBtn = secondary.createEl("button", {
       cls: "voice-player-toggle"
     });
-    (0, import_obsidian8.setIcon)(this.urlBtn, "unlink");
+    (0, import_obsidian9.setIcon)(this.urlBtn, "unlink");
     this.registerDomEvent(this.urlBtn, "click", () => this.toggleSkipUrls());
     this.embedBtn = secondary.createEl("button", {
       cls: "voice-player-toggle"
     });
-    (0, import_obsidian8.setIcon)(this.embedBtn, "paperclip");
+    (0, import_obsidian9.setIcon)(this.embedBtn, "paperclip");
     this.registerDomEvent(this.embedBtn, "click", () => this.toggleEmbed());
     const options = root3.createDiv({ cls: "voice-player-options" });
     this.providerSelect = options.createEl("select", {
@@ -14605,7 +15199,7 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
    */
   existingNoteAudio(active) {
     var _a3, _b2;
-    const path2 = (0, import_obsidian8.normalizePath)(
+    const path2 = (0, import_obsidian9.normalizePath)(
       noteAudioPath(
         this.plugin.settings.defaultAudioFolder,
         (_b2 = (_a3 = active.parent) == null ? void 0 : _a3.path) != null ? _b2 : "",
@@ -14613,7 +15207,7 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
       )
     );
     const file = this.app.vault.getAbstractFileByPath(path2);
-    return file instanceof import_obsidian8.TFile ? file : null;
+    return file instanceof import_obsidian9.TFile ? file : null;
   }
   /**
    * Whether the audio currently loaded in the player no longer matches the
@@ -14821,7 +15415,7 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
     const hasDefault = this.plugin.settings.defaultAudioFolder.trim() !== "";
     if (hasDefault !== this.downloadShowsSave) {
       this.downloadShowsSave = hasDefault;
-      (0, import_obsidian8.setIcon)(this.downloadBtn, hasDefault ? "save" : "download");
+      (0, import_obsidian9.setIcon)(this.downloadBtn, hasDefault ? "save" : "download");
     }
     this.downloadBtn.setAttribute(
       "aria-label",
@@ -14944,7 +15538,7 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
         cls: "voice-player-chapter-edit",
         attr: { "aria-label": "Track actions" }
       });
-      (0, import_obsidian8.setIcon)(actionsBtn, "more-vertical");
+      (0, import_obsidian9.setIcon)(actionsBtn, "more-vertical");
       this.registerDomEvent(actionsBtn, "click", (evt) => {
         evt.stopPropagation();
         this.openChapterActions(item, chapter);
@@ -15049,12 +15643,12 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
   /** Delete a chapter's MP3 (after confirmation) and refresh the list. */
   async deleteChapter(chapter) {
     const file = this.app.vault.getAbstractFileByPath(chapter.path);
-    if (file instanceof import_obsidian8.TFile) {
+    if (file instanceof import_obsidian9.TFile) {
       try {
         await this.app.fileManager.trashFile(file);
-        new import_obsidian8.Notice(`Deleted: ${chapter.name}`);
+        new import_obsidian9.Notice(`Deleted: ${chapter.name}`);
       } catch (error) {
-        new import_obsidian8.Notice(
+        new import_obsidian9.Notice(
           `Could not delete: ${error instanceof Error ? error.message : String(error)}`
         );
       }
@@ -15116,25 +15710,25 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
     var _a3, _b2;
     const file = this.app.vault.getAbstractFileByPath(chapter.path);
     const newBase = rawName.trim();
-    if (!(file instanceof import_obsidian8.TFile) || !newBase || newBase === chapter.name) {
+    if (!(file instanceof import_obsidian9.TFile) || !newBase || newBase === chapter.name) {
       this.refreshContext();
       return;
     }
     if (/[\\/:*?"<>|]/.test(newBase)) {
-      new import_obsidian8.Notice("That file name contains characters that aren't allowed.");
+      new import_obsidian9.Notice("That file name contains characters that aren't allowed.");
       this.refreshContext();
       return;
     }
     const folder = normalizeFolderPath((_b2 = (_a3 = file.parent) == null ? void 0 : _a3.path) != null ? _b2 : "/");
     const dir = folder === "/" ? "" : `${folder}/`;
-    const newPath = (0, import_obsidian8.normalizePath)(`${dir}${newBase}.${file.extension}`);
+    const newPath = (0, import_obsidian9.normalizePath)(`${dir}${newBase}.${file.extension}`);
     try {
       await this.app.fileManager.renameFile(file, newPath);
       if (this.currentChapterPath === chapter.path) {
         this.currentChapterPath = newPath;
       }
     } catch (error) {
-      new import_obsidian8.Notice(
+      new import_obsidian9.Notice(
         `Could not rename: ${error instanceof Error ? error.message : String(error)}`
       );
     }
@@ -15142,7 +15736,7 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
   }
   playChapter(path2) {
     const file = this.app.vault.getAbstractFileByPath(path2);
-    if (!(file instanceof import_obsidian8.TFile)) {
+    if (!(file instanceof import_obsidian9.TFile)) {
       return;
     }
     const audio = this.audio();
@@ -15217,7 +15811,7 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
       return;
     }
     const icon = this.repeatMode === "one" ? "repeat-1" : "repeat";
-    (0, import_obsidian8.setIcon)(this.repeatBtn, icon);
+    (0, import_obsidian9.setIcon)(this.repeatBtn, icon);
     this.repeatBtn.toggleClass("is-active", this.repeatMode !== "none");
     const label = this.repeatMode === "one" ? "Repeat one" : this.repeatMode === "all" ? "Repeat all" : "Repeat off";
     this.repeatBtn.setAttribute("aria-label", label);
@@ -15267,11 +15861,11 @@ var VoicePlayerView = class extends import_obsidian8.ItemView {
       this.loadingFillEl.setCssProps({ "--voice-progress": `${pct}%` });
       if (!this.playPauseBtn.hasClass("rotating-icon")) {
         this.playPauseBtn.addClass("rotating-icon");
-        (0, import_obsidian8.setIcon)(this.playPauseBtn, "refresh-ccw");
+        (0, import_obsidian9.setIcon)(this.playPauseBtn, "refresh-ccw");
       }
     } else {
       this.playPauseBtn.removeClass("rotating-icon");
-      (0, import_obsidian8.setIcon)(this.playPauseBtn, provider.isPlaying() ? "pause" : "play");
+      (0, import_obsidian9.setIcon)(this.playPauseBtn, provider.isPlaying() ? "pause" : "play");
     }
     if (this.providerSelect.value !== this.plugin.settings.TTS_PROVIDER) {
       this.refreshControls();
@@ -15354,7 +15948,7 @@ var MobileControlBar = class {
       "mic",
       "Change Voice",
       (event) => {
-        const menu = new import_obsidian9.Menu();
+        const menu = new import_obsidian10.Menu();
         this.pollyService.getVoiceOptions().forEach((voice) => {
           menu.addItem(
             (item) => item.setTitle(voice.label).setChecked(voice.id === this.pollyService.getVoice()).onClick(() => void this.selectVoice(voice.id))
@@ -15446,7 +16040,7 @@ var MobileControlBar = class {
       cls: "voice-mobile-control-btn",
       attr: { title }
     });
-    (0, import_obsidian9.setIcon)(button, icon);
+    (0, import_obsidian10.setIcon)(button, icon);
     button.addEventListener("click", onClick);
     return button;
   }
@@ -15489,7 +16083,7 @@ var MobileControlBar = class {
   showLoadingState() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.addClass("rotating-icon");
-      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "refresh-ccw");
+      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "refresh-ccw");
     }
     this.showProgressBar();
     this.updateProgressBar(0);
@@ -15497,7 +16091,7 @@ var MobileControlBar = class {
   resetToPlayState() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "play");
     }
   }
   showProgressBar() {
@@ -15537,7 +16131,7 @@ var MobileControlBar = class {
   onPlay() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "pause");
+      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "pause");
     }
     this.hideProgressBar();
     this.show();
@@ -15546,7 +16140,7 @@ var MobileControlBar = class {
   onPause() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "play");
     }
     this.hideProgressBar();
     window.setTimeout(() => {
@@ -15561,7 +16155,7 @@ var MobileControlBar = class {
   onEnded() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian9.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "play");
     }
     this.hideProgressBar();
     window.setTimeout(() => this.hide(), 3e3);
@@ -15651,7 +16245,7 @@ var MobileControlBar = class {
       return;
     }
     this.downloadShowsSave = hasDefault;
-    (0, import_obsidian9.setIcon)(this.downloadIconEl, hasDefault ? "save" : "download");
+    (0, import_obsidian10.setIcon)(this.downloadIconEl, hasDefault ? "save" : "download");
   }
   destroy() {
     const audio = this.pollyService.getAudio();
@@ -15667,7 +16261,7 @@ var MobileControlBar = class {
 };
 
 // src/utils/AudioFileManager.ts
-var import_obsidian10 = require("obsidian");
+var import_obsidian11 = require("obsidian");
 var AudioFileManager = class {
   constructor(app) {
     this.app = app;
@@ -15684,14 +16278,14 @@ var AudioFileManager = class {
     try {
       const dir = this.resolveSaveDir(params.folder, "");
       await this.ensureFolderExists(dir);
-      const pathFor = (base) => (0, import_obsidian10.normalizePath)(dir ? `${dir}/${base}.mp3` : `${base}.mp3`);
+      const pathFor = (base) => (0, import_obsidian11.normalizePath)(dir ? `${dir}/${base}.mp3` : `${base}.mp3`);
       const sourcePath = (_a3 = params.sourceFile) == null ? void 0 : _a3.path;
       let baseName = params.baseName;
       for (; ; ) {
         const existing = this.app.vault.getAbstractFileByPath(
           pathFor(baseName)
         );
-        const collides = existing instanceof import_obsidian10.TFile && existing.path !== sourcePath;
+        const collides = existing instanceof import_obsidian11.TFile && existing.path !== sourcePath;
         if (!collides) {
           break;
         }
@@ -15723,7 +16317,7 @@ var AudioFileManager = class {
       }
     } catch (error) {
       console.error("Error saving/moving audio:", error);
-      new import_obsidian10.Notice(`Error saving audio: ${error.message}`);
+      new import_obsidian11.Notice(`Error saving audio: ${error.message}`);
     }
   }
   /** Move an existing file to finalPath, replacing any file already there. */
@@ -15732,11 +16326,11 @@ var AudioFileManager = class {
       return;
     }
     const existing = this.app.vault.getAbstractFileByPath(finalPath);
-    if (existing instanceof import_obsidian10.TFile && existing.path !== source.path) {
+    if (existing instanceof import_obsidian11.TFile && existing.path !== source.path) {
       await this.app.fileManager.trashFile(existing);
     }
     await this.app.fileManager.renameFile(source, finalPath);
-    new import_obsidian10.Notice(`Moved: ${finalPath}`);
+    new import_obsidian11.Notice(`Moved: ${finalPath}`);
   }
   /** Create or overwrite the MP3 at finalPath with the blob's bytes. */
   async writeBlob(blob, finalPath) {
@@ -15745,12 +16339,12 @@ var AudioFileManager = class {
     }
     const arrayBuffer = await blob.arrayBuffer();
     const existing = this.app.vault.getAbstractFileByPath(finalPath);
-    if (existing instanceof import_obsidian10.TFile) {
+    if (existing instanceof import_obsidian11.TFile) {
       await this.app.vault.modifyBinary(existing, arrayBuffer);
-      new import_obsidian10.Notice(`Updated: ${finalPath}`);
+      new import_obsidian11.Notice(`Updated: ${finalPath}`);
     } else {
       await this.app.vault.createBinary(finalPath, arrayBuffer);
-      new import_obsidian10.Notice(`Created: ${finalPath}`);
+      new import_obsidian11.Notice(`Created: ${finalPath}`);
     }
   }
   /** Base names (no extension) of the MP3s already in a vault folder. */
@@ -15771,7 +16365,7 @@ var AudioFileManager = class {
     try {
       const activeFile = this.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian10.Notice("No active file found");
+        new import_obsidian11.Notice("No active file found");
         return null;
       }
       const fileName = activeFile.basename;
@@ -15780,28 +16374,28 @@ var AudioFileManager = class {
         ((_a3 = activeFile.parent) == null ? void 0 : _a3.path) || ""
       );
       const audioFileName = `${fileName}.mp3`;
-      const audioFilePath = (0, import_obsidian10.normalizePath)(
+      const audioFilePath = (0, import_obsidian11.normalizePath)(
         fileDir ? `${fileDir}/${audioFileName}` : audioFileName
       );
       await this.ensureFolderExists(fileDir);
       const arrayBuffer = await audioBlob.arrayBuffer();
       const existingFile = this.app.vault.getAbstractFileByPath(audioFilePath);
       let audioFile;
-      if (existingFile instanceof import_obsidian10.TFile) {
+      if (existingFile instanceof import_obsidian11.TFile) {
         await this.app.vault.modifyBinary(existingFile, arrayBuffer);
         audioFile = existingFile;
-        new import_obsidian10.Notice(`Updated: ${audioFilePath}`);
+        new import_obsidian11.Notice(`Updated: ${audioFilePath}`);
       } else {
         audioFile = await this.app.vault.createBinary(
           audioFilePath,
           arrayBuffer
         );
-        new import_obsidian10.Notice(`Created: ${audioFilePath}`);
+        new import_obsidian11.Notice(`Created: ${audioFilePath}`);
       }
       return audioFile;
     } catch (error) {
       console.error("Error saving audio file:", error);
-      new import_obsidian10.Notice(`Error saving audio file: ${error.message}`);
+      new import_obsidian11.Notice(`Error saving audio file: ${error.message}`);
       return null;
     }
   }
@@ -15839,7 +16433,7 @@ var AudioFileManager = class {
     try {
       const activeFile = this.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian10.Notice("No active file found");
+        new import_obsidian11.Notice("No active file found");
         return;
       }
       const content3 = await this.app.vault.read(activeFile);
@@ -15852,7 +16446,7 @@ var AudioFileManager = class {
       await this.app.vault.modify(activeFile, newContent);
     } catch (error) {
       console.error("Error inserting audio embed:", error);
-      new import_obsidian10.Notice(`Error inserting audio embed: ${error.message}`);
+      new import_obsidian11.Notice(`Error inserting audio embed: ${error.message}`);
     }
   }
   /**
@@ -15883,7 +16477,7 @@ var AudioFileManager = class {
     try {
       const activeFile = this.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian10.Notice("No active file found");
+        new import_obsidian11.Notice("No active file found");
         return;
       }
       const fileName = activeFile.basename;
@@ -15897,21 +16491,21 @@ var AudioFileManager = class {
       }
     } catch (error) {
       console.error("Error in downloadAndEmbed:", error);
-      new import_obsidian10.Notice(`Error downloading audio: ${error.message}`);
+      new import_obsidian11.Notice(`Error downloading audio: ${error.message}`);
     }
   }
 };
 
 // src/ui/FolderPickerModal.ts
-var import_obsidian11 = require("obsidian");
-var FolderPickerModal = class _FolderPickerModal extends import_obsidian11.SuggestModal {
+var import_obsidian12 = require("obsidian");
+var FolderPickerModal = class _FolderPickerModal extends import_obsidian12.SuggestModal {
   constructor(app, plugin) {
     super(app);
     this.resolve = () => {
     };
     this.settled = false;
     this.plugin = plugin;
-    this.allFolders = app.vault.getAllLoadedFiles().filter((f2) => f2 instanceof import_obsidian11.TFolder).map((f2) => normalizeFolderPath(f2.path));
+    this.allFolders = app.vault.getAllLoadedFiles().filter((f2) => f2 instanceof import_obsidian12.TFolder).map((f2) => normalizeFolderPath(f2.path));
     this.setPlaceholder("Search folders to save / move audio\u2026");
     this.setInstructions([
       { command: "\u21B5", purpose: "save / move here" },
@@ -15966,7 +16560,7 @@ var FolderPickerModal = class _FolderPickerModal extends import_obsidian11.Sugge
     el.addClass("voice-folder-suggestion");
     if (item.kind === "create") {
       const icon2 = el.createSpan({ cls: "voice-folder-suggestion-icon" });
-      (0, import_obsidian11.setIcon)(icon2, "folder-plus");
+      (0, import_obsidian12.setIcon)(icon2, "folder-plus");
       el.createSpan({
         cls: "voice-folder-suggestion-name",
         text: `Create folder \u201C${item.path}\u201D`
@@ -15977,7 +16571,7 @@ var FolderPickerModal = class _FolderPickerModal extends import_obsidian11.Sugge
     el.toggleClass("is-favorite", item.isFavorite);
     el.toggleClass("is-section-start", !!item.sectionStart);
     const icon = el.createSpan({ cls: "voice-folder-suggestion-icon" });
-    (0, import_obsidian11.setIcon)(icon, item.path === "/" ? "home" : "folder");
+    (0, import_obsidian12.setIcon)(icon, item.path === "/" ? "home" : "folder");
     el.createSpan({
       cls: "voice-folder-suggestion-name",
       text: item.path === "/" ? "Vault root" : item.path
@@ -15989,7 +16583,7 @@ var FolderPickerModal = class _FolderPickerModal extends import_obsidian11.Sugge
       });
     }
     const pin = el.createSpan({ cls: "voice-folder-suggestion-pin" });
-    (0, import_obsidian11.setIcon)(pin, item.isDefault ? "pin" : "pin-off");
+    (0, import_obsidian12.setIcon)(pin, item.isDefault ? "pin" : "pin-off");
     pin.toggleClass("is-default", item.isDefault);
     pin.setAttribute(
       "aria-label",
@@ -16001,7 +16595,7 @@ var FolderPickerModal = class _FolderPickerModal extends import_obsidian11.Sugge
       void this.toggleDefaultFor(item.path);
     });
     const star = el.createSpan({ cls: "voice-folder-suggestion-star" });
-    (0, import_obsidian11.setIcon)(star, item.isFavorite ? "star" : "star-off");
+    (0, import_obsidian12.setIcon)(star, item.isFavorite ? "star" : "star-off");
     star.toggleClass("is-favorite", item.isFavorite);
     star.setAttribute(
       "aria-label",
@@ -16053,8 +16647,8 @@ var FolderPickerModal = class _FolderPickerModal extends import_obsidian11.Sugge
 };
 
 // src/ui/FileConflictModal.ts
-var import_obsidian12 = require("obsidian");
-var FileConflictModal = class _FileConflictModal extends import_obsidian12.Modal {
+var import_obsidian13 = require("obsidian");
+var FileConflictModal = class _FileConflictModal extends import_obsidian13.Modal {
   constructor(app, fileName, folderLabel, suggested) {
     super(app);
     this.resolve = () => {
@@ -16082,7 +16676,7 @@ var FileConflictModal = class _FileConflictModal extends import_obsidian12.Modal
       text: `\u201C${this.fileName}\u201D already exists in ${this.folderLabel}. Replace it, or save under a new name?`
     });
     let newBaseName = this.suggested;
-    const nameSetting = new import_obsidian12.Setting(contentEl).setName("New name").addText((text5) => {
+    const nameSetting = new import_obsidian13.Setting(contentEl).setName("New name").addText((text5) => {
       text5.setValue(this.suggested).onChange((value2) => {
         newBaseName = value2;
       });
@@ -16097,7 +16691,7 @@ var FileConflictModal = class _FileConflictModal extends import_obsidian12.Modal
       cls: "voice-conflict-ext",
       text: ".mp3"
     });
-    new import_obsidian12.Setting(contentEl).addButton((btn) => {
+    new import_obsidian13.Setting(contentEl).addButton((btn) => {
       btn.setButtonText("Replace").onClick(() => this.settle({ action: "replace" }));
       btn.buttonEl.addClass("mod-warning");
     }).addButton(
@@ -16213,7 +16807,7 @@ var IconEventHandler = class {
     this.voiceDisplayEl.setAttribute("aria-label-position", "top");
     this.updateVoiceDisplay();
     this.voiceDisplayEl.addEventListener("click", (event) => {
-      const menu = new import_obsidian13.Menu();
+      const menu = new import_obsidian14.Menu();
       this.pollyService.getVoiceOptions().forEach((voice) => {
         menu.addItem(
           (item) => item.setTitle(voice.label).setChecked(voice.id === this.pollyService.getVoice()).onClick(() => void this.voice.persistActiveVoice(voice.id))
@@ -16291,7 +16885,7 @@ var IconEventHandler = class {
         }
         if (!this.pollyService.isPlaying()) {
           this.playPauseIconEl.addClass("rotating-icon");
-          (0, import_obsidian13.setIcon)(this.playPauseIconEl, "refresh-ccw");
+          (0, import_obsidian14.setIcon)(this.playPauseIconEl, "refresh-ccw");
         }
         void this.voice.speakText();
       },
@@ -16324,7 +16918,7 @@ var IconEventHandler = class {
     const iconEl = this.statusBarItem.createSpan({
       cls: "status-bar-icon " + cls
     });
-    (0, import_obsidian13.setIcon)(iconEl, icon);
+    (0, import_obsidian14.setIcon)(iconEl, icon);
     iconEl.addEventListener("click", onClick);
     if (tooltip) {
       iconEl.title = tooltip;
@@ -16395,8 +16989,8 @@ var IconEventHandler = class {
       this.isErrorState = false;
       this.ribbonIconEl.addClass("rotating-icon");
       this.playPauseIconEl.addClass("rotating-icon");
-      (0, import_obsidian13.setIcon)(this.ribbonIconEl, "refresh-ccw");
-      (0, import_obsidian13.setIcon)(this.playPauseIconEl, "refresh-ccw");
+      (0, import_obsidian14.setIcon)(this.ribbonIconEl, "refresh-ccw");
+      (0, import_obsidian14.setIcon)(this.playPauseIconEl, "refresh-ccw");
       if (this.mobileControlBar) {
         this.mobileControlBar.showLoadingStateFromExternal();
       } else {
@@ -16408,11 +17002,11 @@ var IconEventHandler = class {
   onPlay() {
     if (this.ribbonIconEl) {
       this.ribbonIconEl.removeClass("rotating-icon");
-      (0, import_obsidian13.setIcon)(this.ribbonIconEl, "pause-circle");
+      (0, import_obsidian14.setIcon)(this.ribbonIconEl, "pause-circle");
     }
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian13.setIcon)(this.playPauseIconEl, "pause");
+      (0, import_obsidian14.setIcon)(this.playPauseIconEl, "pause");
     }
     this.hideProgressBar();
     this.showDownloadButton();
@@ -16420,11 +17014,11 @@ var IconEventHandler = class {
   onPause() {
     if (this.ribbonIconEl) {
       this.ribbonIconEl.removeClass("rotating-icon");
-      (0, import_obsidian13.setIcon)(this.ribbonIconEl, "play-circle");
+      (0, import_obsidian14.setIcon)(this.ribbonIconEl, "play-circle");
     }
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian13.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian14.setIcon)(this.playPauseIconEl, "play");
     }
     this.hideProgressBar();
   }
@@ -16520,7 +17114,7 @@ var IconEventHandler = class {
   handleError(errorMessage) {
     this.showErrorState();
     this.resetIconsToPlayState();
-    new import_obsidian13.Notice(`\u{1F50A} Voice Plugin: ${friendlySpeechError(errorMessage)}`, 5e3);
+    new import_obsidian14.Notice(`\u{1F50A} Voice Plugin: ${friendlySpeechError(errorMessage)}`, 5e3);
     window.setTimeout(() => {
       this.hideProgressBar();
     }, 3e3);
@@ -16528,11 +17122,11 @@ var IconEventHandler = class {
   resetIconsToPlayState() {
     if (this.ribbonIconEl) {
       this.ribbonIconEl.removeClass("rotating-icon");
-      (0, import_obsidian13.setIcon)(this.ribbonIconEl, "play-circle");
+      (0, import_obsidian14.setIcon)(this.ribbonIconEl, "play-circle");
     }
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian13.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian14.setIcon)(this.playPauseIconEl, "play");
     }
   }
   onCanPlayThrough() {
@@ -16629,7 +17223,7 @@ var IconEventHandler = class {
         const file = this.plugin.app.vault.getAbstractFileByPath(
           options.moveFromPath
         );
-        if (file instanceof import_obsidian13.TFile) {
+        if (file instanceof import_obsidian14.TFile) {
           await this.audioFileManager.saveOrMove({
             kind: "move",
             sourceFile: file,
@@ -16666,14 +17260,14 @@ var IconEventHandler = class {
       }
       const activeFile = this.plugin.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian13.Notice("No active file found");
+        new import_obsidian14.Notice("No active file found");
         return;
       }
       const audioBlob = this.pollyService.getLastGeneratedAudio(
         activeFile.path
       );
       if (!audioBlob) {
-        new import_obsidian13.Notice(
+        new import_obsidian14.Notice(
           "No audio available for this file. Please generate audio first."
         );
         return;
@@ -16689,7 +17283,7 @@ var IconEventHandler = class {
       );
     } catch (error) {
       console.error("Error downloading audio:", error);
-      new import_obsidian13.Notice(`Failed to download audio: ${error.message}`);
+      new import_obsidian14.Notice(`Failed to download audio: ${error.message}`);
     }
   }
   /**
@@ -16725,7 +17319,7 @@ var IconEventHandler = class {
       return;
     }
     this.downloadShowsSave = hasDefault;
-    (0, import_obsidian13.setIcon)(this.downloadIconEl, hasDefault ? "save" : "download");
+    (0, import_obsidian14.setIcon)(this.downloadIconEl, hasDefault ? "save" : "download");
   }
   /**
    * Refresh the download button's tooltip to reflect the current default folder,
@@ -27018,9 +27612,7 @@ function enhanceProcessor(options) {
             // Slightly slower for higher headings
           }
         };
-        heading2.children = [
-          prosodyNode
-        ];
+        heading2.children = [prosodyNode];
         const breakNode = {
           type: "ssmlBreak",
           data: { time: `${breakTime}ms` }
@@ -27041,7 +27633,12 @@ function enhanceProcessor(options) {
             volume: options.boldVolumeBoost
           }
         };
-        parent.children[index2] = prosodyNode;
+        modificationsToApply.push({
+          parent,
+          index: index2,
+          action: "replace",
+          nodes: [prosodyNode]
+        });
       }
       if (node2.type === "emphasis") {
         const emphasis2 = node2;
@@ -27052,7 +27649,12 @@ function enhanceProcessor(options) {
             rate: options.italicRateAdjust
           }
         };
-        parent.children[index2] = prosodyNode;
+        modificationsToApply.push({
+          parent,
+          index: index2,
+          action: "replace",
+          nodes: [prosodyNode]
+        });
       }
       if (node2.type === "paragraph") {
         const breakNode = {
@@ -27479,26 +28081,36 @@ var MarkdownToSSMLProcessor = class {
 };
 
 // src/processors/pipeline/TextSerializer.ts
-var BREAK_HEADING = "0.5s";
-var BREAK_PARAGRAPH = "0.35s";
-var BREAK_LIST_ITEM = "0.2s";
-var BREAK_RULE = "0.8s";
+var BREAK_HEADING = 0.5;
+var BREAK_PARAGRAPH = 0.35;
+var BREAK_LIST_ITEM = 0.2;
+var BREAK_RULE = 0.8;
 function serializeToText(tree, options = {}) {
   var _a3;
-  const pauseTags = (_a3 = options.pauseTags) != null ? _a3 : false;
-  const raw = serializeNode2(tree, pauseTags);
-  if (pauseTags) {
+  const style = (_a3 = options.pauseStyle) != null ? _a3 : "none";
+  const raw = serializeNode2(tree, style);
+  if (style === "break-tags") {
     return raw.replace(/\s+/g, " ").replace(
       /(?:<break time="[^"]+"\s*\/>\s*){2,}/g,
       '<break time="0.4s" /> '
     ).trim();
   }
+  if (style === "minimax") {
+    return raw.replace(/\s+/g, " ").replace(/(?:<#[\d.]+#>\s*){2,}/g, "<#0.4#> ").replace(/^\s*(?:<#[\d.]+#>\s*)+/, "").replace(/(?:\s*<#[\d.]+#>)+\s*$/, "").trim();
+  }
   return raw.replace(/[ \t]+/g, " ").replace(/ *\n */g, "\n").replace(/\n{3,}/g, "\n\n").trim();
 }
-function breakTag(time2) {
-  return ` <break time="${time2}" /> `;
+function usesMarkers(style) {
+  return style !== "none";
 }
-function serializeNode2(node2, pauseTags) {
+function pauseMarker(style, seconds) {
+  if (style === "minimax") {
+    return ` <#${seconds}#> `;
+  }
+  return ` <break time="${seconds}s" /> `;
+}
+function serializeNode2(node2, style) {
+  const marked = usesMarkers(style);
   switch (node2.type) {
     case "text":
       return node2.value;
@@ -27507,40 +28119,40 @@ function serializeNode2(node2, pauseTags) {
     case "code":
       return node2.value;
     case "heading": {
-      const text5 = serializeChildren(node2, pauseTags).trim();
+      const text5 = serializeChildren(node2, style).trim();
       if (!text5) {
         return "";
       }
       const stop = /[.!?:]$/.test(text5) ? "" : ".";
-      return `${text5}${stop}${pauseTags ? breakTag(BREAK_HEADING) : "\n\n"}`;
+      return `${text5}${stop}${marked ? pauseMarker(style, BREAK_HEADING) : "\n\n"}`;
     }
     case "paragraph":
-      return `${serializeChildren(node2, pauseTags)}${pauseTags ? breakTag(BREAK_PARAGRAPH) : "\n\n"}`;
+      return `${serializeChildren(node2, style)}${marked ? pauseMarker(style, BREAK_PARAGRAPH) : "\n\n"}`;
     case "blockquote":
-      return `${serializeChildren(node2, pauseTags)}${pauseTags ? breakTag(BREAK_PARAGRAPH) : "\n\n"}`;
+      return `${serializeChildren(node2, style)}${marked ? pauseMarker(style, BREAK_PARAGRAPH) : "\n\n"}`;
     case "listItem":
-      return `${serializeChildren(node2, pauseTags).trim()}${pauseTags ? breakTag(BREAK_LIST_ITEM) : "\n"}`;
+      return `${serializeChildren(node2, style).trim()}${marked ? pauseMarker(style, BREAK_LIST_ITEM) : "\n"}`;
     case "list":
-      return `${serializeChildren(node2, pauseTags)}${pauseTags ? "" : "\n"}`;
+      return `${serializeChildren(node2, style)}${marked ? "" : "\n"}`;
     case "tableCell":
-      return `${serializeChildren(node2, pauseTags)}, `;
+      return `${serializeChildren(node2, style)}, `;
     case "tableRow":
-      return `${serializeChildren(node2, pauseTags).trim()}${pauseTags ? breakTag(BREAK_LIST_ITEM) : "\n"}`;
+      return `${serializeChildren(node2, style).trim()}${marked ? pauseMarker(style, BREAK_LIST_ITEM) : "\n"}`;
     case "table":
-      return `${serializeChildren(node2, pauseTags)}${pauseTags ? "" : "\n"}`;
+      return `${serializeChildren(node2, style)}${marked ? "" : "\n"}`;
     case "break":
       return " ";
     // Horizontal rules become ssmlBreak in the cleaner; treat as a longer pause.
     case "thematicBreak":
     case "ssmlBreak":
-      return pauseTags ? breakTag(BREAK_RULE) : "\n\n";
+      return marked ? pauseMarker(style, BREAK_RULE) : "\n\n";
     default:
-      return serializeChildren(node2, pauseTags);
+      return serializeChildren(node2, style);
   }
 }
-function serializeChildren(node2, pauseTags) {
+function serializeChildren(node2, style) {
   if ("children" in node2 && Array.isArray(node2.children)) {
-    return node2.children.map((child) => serializeNode2(child, pauseTags)).join("");
+    return node2.children.map((child) => serializeNode2(child, style)).join("");
   }
   return "";
 }
@@ -27553,7 +28165,7 @@ var MarkdownToTextProcessor = class {
       ...DEFAULT_CONFIG,
       ...config
     };
-    this.pauseTags = (_a3 = options.pauseTags) != null ? _a3 : true;
+    this.pauseStyle = (_a3 = options.pauseStyle) != null ? _a3 : "none";
   }
   /**
    * Process markdown text to plain spoken text
@@ -27570,7 +28182,7 @@ var MarkdownToTextProcessor = class {
       skipUrls: this.config.skipUrls
     };
     cleanProcessor(cleanOptions)(ast);
-    const text5 = serializeToText(ast, { pauseTags: this.pauseTags });
+    const text5 = serializeToText(ast, { pauseStyle: this.pauseStyle });
     return this.config.spellOutAcronyms ? text5 : titleCaseAcronyms(text5);
   }
   updateConfig(config) {
@@ -27585,7 +28197,7 @@ var MarkdownToTextProcessor = class {
 };
 
 // src/utils/TextSpeaker.ts
-var import_obsidian14 = require("obsidian");
+var import_obsidian15 = require("obsidian");
 var TextSpeaker = class {
   constructor(provider, markdownHelper, iconEventHandler, spellOutAcronyms = false, readCodeBlocks = false, skipUrls = false) {
     this.provider = provider;
@@ -27604,10 +28216,13 @@ var TextSpeaker = class {
       spellOutAcronyms: this.spellOutAcronyms,
       ...contentOptions
     });
-    this.textProcessor = new MarkdownToTextProcessor({
-      ...contentOptions,
-      spellOutAcronyms: this.spellOutAcronyms
-    });
+    this.textProcessor = new MarkdownToTextProcessor(
+      {
+        ...contentOptions,
+        spellOutAcronyms: this.spellOutAcronyms
+      },
+      { pauseStyle: this.provider.textPauseStyle }
+    );
   }
   async speakText(speed) {
     this.iconEventHandler.ribbonIconHandler();
@@ -27625,17 +28240,17 @@ var TextSpeaker = class {
         return;
       }
       if (!read.ok) {
-        new import_obsidian14.Notice(
+        new import_obsidian15.Notice(
           read.reason === "no-note" ? NO_NOTE_MESSAGE : READ_ERROR_MESSAGE
         );
         return;
       }
       const rawText = read.text;
       if (rawText.trim() === "") {
-        new import_obsidian14.Notice(EMPTY_NOTE_MESSAGE);
+        new import_obsidian15.Notice(EMPTY_NOTE_MESSAGE);
         return;
       }
-      const processingNotice = new import_obsidian14.Notice("Processing text...", 2e3);
+      const processingNotice = new import_obsidian15.Notice("Processing text...", 2e3);
       const content3 = await this.processContent(rawText);
       processingNotice.hide();
       if (!this.provider.isCurrentRequest(requestId)) {
@@ -27661,7 +28276,7 @@ var TextSpeaker = class {
       }
       console.error("Error in text-to-speech processing:", error);
       const errorMessage = error instanceof Error ? error.message : String(error);
-      new import_obsidian14.Notice(friendlySpeechError(errorMessage));
+      new import_obsidian15.Notice(friendlySpeechError(errorMessage));
     } finally {
       this.provider.endOperation(requestId);
     }
@@ -27677,7 +28292,7 @@ var TextSpeaker = class {
     const result = await this.ssmlProcessor.process(rawText);
     if (!result.isValid) {
       console.error("SSML validation errors:", result.errors);
-      new import_obsidian14.Notice(
+      new import_obsidian15.Notice(
         friendlySpeechError(
           `SSML validation failed: ${result.errors.join("; ")}`
         )
@@ -27692,11 +28307,23 @@ var TextSpeaker = class {
 };
 
 // src/ui/WhatsNewModal.ts
-var import_obsidian15 = require("obsidian");
+var import_obsidian16 = require("obsidian");
 
 // src/utils/whatsNew.ts
 var HERO_IMAGE_URL = "https://raw.githubusercontent.com/chrisurf/obsidian-voice/main/assets/hero.png";
-var WHATS_NEW = `## \u25B6\uFE0F One play button, less clutter
+var BUY_ME_A_COFFEE_URL = "https://www.buymeacoffee.com/chrisurf";
+var BUY_ME_A_COFFEE_IMAGE_URL = "https://raw.githubusercontent.com/chrisurf/obsidian-voice/main/assets/buymeacoffee.png";
+var WHATS_NEW = `## \u{1F195} New: MiniMax \u2014 text-to-speech that works from China
+
+Voice's **sixth provider** is here: **MiniMax**. It's a great fit for **Chinese-language** notes \u2014 and, crucially, it's reachable from **mainland China**, where the other engines often aren't.
+
+- \u{1F30F} **Choose your region** \u2014 **global** or **mainland China** \u2014 so the API works wherever your account lives.
+- \u{1F5E3}\uFE0F **Natural, multilingual voices** with especially strong Chinese support (Speech 02 HD/Turbo \xB7 Speech 01 HD/Turbo).
+- \u{1F511} Set it up in **Settings \u2192 Voice \u2192 MiniMax**: pick a region and model, paste your **API key** and **Group ID**, then press **Test Credentials**.
+
+Everything else \u2014 chapters, speed, downloads, the content toggles \u2014 works exactly like the other providers.
+
+## \u25B6\uFE0F One play button, less clutter
 
 Playback is simpler now \u2014 the play button does everything, so the separate Regenerate button is gone. Open the Voice player (the audio-waveform ribbon icon) and use the big play button:
 
@@ -27716,45 +28343,25 @@ The save button (the download arrow) now has two simple gestures, and you can pi
 - \u{1F4BE} When a default folder is set, the save button shows a **floppy-disk** icon so you can tell at a glance where a tap will save.
 - \u{1F5C2}\uFE0F Manage a saved track from its **\u22EE** menu in the player: **Move** it to another folder, **Rename** it, or **Delete** it (with a quick confirmation).
 
-## \u{1F50A} The Voice player is here
+## \u{1F50A} The Voice player
 
-Voice now has a full **audiobook-style player** \u2014 and it lives in the right sidebar (next to Backlinks and Outline) by default, so it is always one click away. If you have not updated in a while, this is the big one.
+Voice has a full **audiobook-style player** in the right sidebar (next to Backlinks and Outline) \u2014 always one click away.
 
-- **Play your notes like chapters** \u2014 every MP3 in a folder shows up as a numbered chapter you can play, skip, and repeat.
-- **Browse audio across your vault** \u2014 a folder picker lets you jump between any folders that contain audio, right from the player.
-- **Bring your own provider** \u2014 pick AWS Polly, ElevenLabs, OpenAI, Google Cloud, or Azure Speech (and the voice) right in the player.
+- **Play your notes like chapters** \u2014 every MP3 in a folder becomes a numbered chapter you can play, skip, and repeat.
+- **Browse audio across your vault** with the folder picker.
+- **Switch provider & voice** right in the player.
 
-**Know your buttons** \u2014 every control is one button; a few do double duty (tap vs. press & hold):
+Every control is one button; a few do double duty \u2014 **tap** vs. **press & hold** (a ring fills while you hold). Toggles that light up when on: \`</>\` **code** \xB7 \`Aa\` **acronyms** \xB7 \u{1F517} **skip URLs** \xB7 \u{1F4CE} **embed**.
 
-- \u25B6\uFE0F **Play** \u2014 tap to play / pause; **hold** to regenerate.
-- \u23EE \u23ED **Prev / next** \xB7 \u23EA \u23E9 **rewind / forward** \xB7 \u{1F501} **repeat** \xB7 **\u2212 / +** **speed**.
-- \u2B07\uFE0F **Save** \u2014 tap to save; **hold** for the folder picker. (Shows \u{1F4BE} when a default folder is set.)
-- \u{1F4C2} **Folder** \u2014 save into a folder you pick, in one click.
-- \u22EE **Track menu** \u2014 move, rename, or delete a saved chapter.
-- Toggles that light up when on: \`</>\` **code** \xB7 \`Aa\` **acronyms** \xB7 \u{1F517} **skip URLs** \xB7 \u{1F4CE} **embed**.
+## \u2728 Everything at a glance
 
-## \u2728 Everything you need to know
+**Six providers, your pick** \u2014 bring the engine you already use; every feature works identically on all of them: AWS Polly \xB7 ElevenLabs \xB7 OpenAI \xB7 Google Cloud \xB7 Azure Speech \xB7 **MiniMax**.
 
-**Player & playback**
+**Player & playback** \u2014 chapters, scrubber, speed (0.5\xD7\u20132.0\xD7), and repeat modes (off / one / all), plus configurable rewind & fast-forward (1\u201360 s). Switch provider, voice, and the content toggles without leaving the player \u2014 with live feedback while a note synthesizes.
 
-- **Voice player shows by default** in the right sidebar, with a **folder picker** to browse audio across the vault.
-- **In-player controls**: switch provider and voice, and flip the content toggles, with live loading feedback while a note is synthesized.
-- **Collapsible, audiobook-style player** with chapters, transport controls, scrubber, and repeat modes (off / one / all).
-- **Configurable rewind & fast-forward** intervals (1\u201360 seconds each).
+**Your audio** \u2014 save MP3s next to the note or in a **default folder**, optionally **auto-save** and **embed** them, and **move / rename / delete** saved chapters from the player.
 
-**Bring your own provider**
-
-Voice started out as AWS Polly only \u2014 now it supports all the major engines, so you can listen with the provider you already use:
-
-- **ElevenLabs** \u2014 premade & multilingual voices.
-- **OpenAI** \u2014 built-in voices (Alloy, Nova, \u2026) with GPT-4o mini TTS.
-- **Google Cloud Text-to-Speech** \u2014 plus extra hotkey commands.
-- **Azure AI Speech** \u2014 neural voices across many languages. **New:** press **Test Credentials** and Voice loads your account's full Azure catalog (hundreds of voices), grouped by language in the picker.
-
-**Your audio files**
-
-- **Separate "Auto-Save" and "Embed" toggles** \u2014 download MP3s with or without embedding them into the note.
-- **Skip website URLs** and **read code blocks** content toggles.
+**Reads it your way** \u2014 toggle **read code blocks**, **spell out acronyms**, and **skip website URLs**, all from the player.
 
 Open the player from the **audio-waveform ribbon icon**, the **"Open the player."** command, or the button below.`;
 function shouldShowWhatsNew(currentVersion, lastSeenVersion) {
@@ -27762,7 +28369,7 @@ function shouldShowWhatsNew(currentVersion, lastSeenVersion) {
 }
 
 // src/ui/WhatsNewModal.ts
-var WhatsNewModal = class extends import_obsidian15.Modal {
+var WhatsNewModal = class extends import_obsidian16.Modal {
   constructor(app, version, component, onOpenPlayer) {
     super(app);
     this.version = version;
@@ -27778,9 +28385,23 @@ var WhatsNewModal = class extends import_obsidian15.Modal {
       attr: { alt: "Obsidian Voice", src: HERO_IMAGE_URL }
     });
     hero.addEventListener("error", () => hero.hide());
+    const support = contentEl.createDiv({ cls: "voice-whats-new-support" });
+    const coffeeLink = support.createEl("a", {
+      cls: "voice-bmc-link",
+      attr: {
+        href: BUY_ME_A_COFFEE_URL,
+        target: "_blank",
+        rel: "noopener"
+      }
+    });
+    const coffeeImg = coffeeLink.createEl("img", {
+      cls: "voice-bmc-button",
+      attr: { alt: "Buy me a coffee", src: BUY_ME_A_COFFEE_IMAGE_URL }
+    });
+    coffeeImg.addEventListener("error", () => support.hide());
     const body = contentEl.createDiv({ cls: "voice-whats-new-body" });
-    void import_obsidian15.MarkdownRenderer.render(this.app, WHATS_NEW, body, "", this.component);
-    new import_obsidian15.Setting(contentEl).addButton(
+    void import_obsidian16.MarkdownRenderer.render(this.app, WHATS_NEW, body, "", this.component);
+    new import_obsidian16.Setting(contentEl).addButton(
       (btn) => btn.setButtonText("Open Voice player").setCta().onClick(() => {
         this.onOpenPlayer();
         this.close();
@@ -27795,7 +28416,7 @@ var WhatsNewModal = class extends import_obsidian15.Modal {
 };
 
 // src/utils/VoicePlugin.ts
-var Voice = class extends import_obsidian16.Plugin {
+var Voice = class extends import_obsidian17.Plugin {
   async onload() {
     await this.loadSettings();
     this.addSettingTab(new VoiceSettingTab(this.app, this));
@@ -27885,7 +28506,7 @@ var Voice = class extends import_obsidian16.Plugin {
     await this.textSpeaker.speakText(speed);
   }
   isMobile() {
-    return import_obsidian16.Platform.isMobile;
+    return import_obsidian17.Platform.isMobile;
   }
   onunload() {
     if (this.iconEventHandler) {
@@ -27968,6 +28589,8 @@ var Voice = class extends import_obsidian16.Plugin {
       this.settings.AZURE_VOICE = voiceId;
     } else if (this.settings.TTS_PROVIDER === "openai") {
       this.settings.OPENAI_VOICE = voiceId;
+    } else if (this.settings.TTS_PROVIDER === "minimax") {
+      this.settings.MINIMAX_VOICE = voiceId;
     } else {
       this.settings.VOICE = voiceId;
     }
@@ -27998,7 +28621,7 @@ var Voice = class extends import_obsidian16.Plugin {
     const currentIndex = options.findIndex((v) => v.id === currentId);
     const next = options[(currentIndex + 1) % options.length];
     await this.persistActiveVoice(next.id);
-    new import_obsidian16.Notice(`Voice: ${next.label}`);
+    new import_obsidian17.Notice(`Voice: ${next.label}`);
   }
   /**
    * Open the Voice player and reveal it (right sidebar on desktop, full-screen
