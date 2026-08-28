@@ -17142,6 +17142,15 @@
             "scope": 3
           },
           {
+            "action": "Calendar",
+            "code": "KeyD",
+            "modifiers": [
+              "Alt",
+              "Mod"
+            ],
+            "scope": 3
+          },
+          {
             "action": "Pin/Unpin",
             "code": "KeyP",
             "modifiers": [
@@ -17196,13 +17205,13 @@
             "modifiers": [
               "Alt"
             ],
-            "scope": 3
+            "scope": 2
           },
           {
             "action": "Cut",
             "code": "KeyX",
             "modifiers": [
-              "Alt"
+              "Shift"
             ],
             "scope": 2
           },
