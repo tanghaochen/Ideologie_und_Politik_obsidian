@@ -1,12 +1,16 @@
 {
   "recentFiles": [
     {
-      "basename": "第3章 图形和摄影元素",
-      "path": "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md"
+      "basename": "介词",
+      "path": "语言学习/德语/公共知识语法/介词.md"
     },
     {
       "basename": "DW_摄影",
       "path": "思想思维心理哲学/爱情/摄影/DW_摄影.md"
+    },
+    {
+      "basename": "第3章 图形和摄影元素",
+      "path": "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md"
     },
     {
       "basename": "艺术",
@@ -195,10 +199,6 @@
     {
       "basename": "周记-一览视图",
       "path": "OBSetting/templater/周记-一览视图.md"
-    },
-    {
-      "basename": "日记-事件模板",
-      "path": "OBSetting/templater/日记-事件模板.md"
     }
   ],
   "omittedPaths": [],
