@@ -19,6 +19,7 @@
 | gebieten<br>([pdf](zotero://open-pdf/library/items/8ZUZWLVR?page=1&annotation=3ANIM2PE)) [+++]{/🔤1. 命令；吩咐 2. 要求；规定 3. 需要；迫使🔤/} | Bordeaux<br>([pdf](zotero://open-pdf/library/items/8ZUZWLVR?page=1&annotation=RB9E833G)) [+++]{/🔤1. 波尔多（法国城市或地区） 2. 波尔多葡萄酒 3. 波尔多色（深红紫色）🔤/} | verschafft<br>([pdf](zotero://open-pdf/library/items/8ZUZWLVR?page=1&annotation=37TQEPDK)) [+++]{/🔤1. 获得；取得 2. 提供；带来 3. 设法弄到；为……争取到🔤/} | Lage<br>([pdf](zotero://open-pdf/library/items/8ZUZWLVR?page=1&annotation=XR9A6S4B)) [+++]{/🔤1. 情况；局势 2. 位置；地点 3. 层；层次 4. 能力（常用于“in der Lage sein”）🔤/} | gewaltigen<br>([pdf](zotero://open-pdf/library/items/8ZUZWLVR?page=1&annotation=RNPIBEYZ)) [+++]{/🔤1. 巨大的 2. 庞大的 3. 强大的 4. 惊人的🔤/} |
 |                                                                                                                                 |                                                                                                                                              |                                                                                                                                         |                                                                                                                                                         |                                                                                                                                    |
 
+严格按照上面示例的格式返回。单词表格。规定为最多 5 列。最多 8 行。超过的另外算一个表格。整理的细致要求为，第 1 行。是简单的单词本身，然后第 2 行包含括号的 pdf 链接，以及。使用示例中的格式，将翻译写在中括号中是为了让我方便导入到 obsidian 进行复习。
 
 ### 句子和单词解构
 如果是句子
