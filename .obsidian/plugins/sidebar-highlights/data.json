@@ -3763,6 +3763,38 @@
         "isNativeComment": true,
         "type": "comment"
       }
+    ],
+    "Diary/2026/20260830.md": [
+      {
+        "id": "yy6tw0p2j",
+        "text": "“害怕掉入底层”来逼自己专注，你的大脑会长期处于高度紧绷的应激状态。这恰恰是你现在“无法静下心来”的心理根源——你不是在心平气和地获取知识，你是在绝望地逃命。人在焦虑和恐惧中，是无法进行深度思考和复杂学习的，长期这样极易导致心理耗竭。",
+        "tags": [],
+        "line": 20,
+        "startOffset": 1206,
+        "endOffset": 1352,
+        "filePath": "Diary/2026/20260830.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1788084983721,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "9w7kt4bi4",
+        "text": "。**真正的负面习惯不是没有产出，而是只进行“低质量的消耗”**（比如无意识地刷短视频、无休止的精神内耗），而不懂得如何“高质量地休养生息”。",
+        "tags": [],
+        "line": 24,
+        "startOffset": 1570,
+        "endOffset": 1670,
+        "filePath": "Diary/2026/20260830.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1788085004006,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},

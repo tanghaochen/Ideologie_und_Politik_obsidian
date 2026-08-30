@@ -101,12 +101,15 @@
             "id": "0fa94557d19cbcf5",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
+                "file": "Diary/2026/20260830.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "excalidraw-icon",
-              "title": "格; 限定词"
+              "icon": "lucide-file",
+              "title": "20260830"
             }
           },
           {
@@ -230,7 +233,7 @@
       {
         "id": "0ed9c27411998641",
         "type": "tabs",
-        "dimension": 77.69607843137256,
+        "dimension": 68.73083997547516,
         "children": [
           {
             "id": "dd8c0de9236cf3b8",
@@ -372,7 +375,7 @@
       {
         "id": "28e75bfc7e894da7",
         "type": "tabs",
-        "dimension": 22.30392156862745,
+        "dimension": 31.269160024524833,
         "children": [
           {
             "id": "c3592eded90586bf",
@@ -453,8 +456,9 @@
   },
   "active": "0fa94557d19cbcf5",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
+    "Diary/2026/20260830.md",
+    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/公共知识语法/名词.md",
@@ -484,7 +488,6 @@
     "copilot/skills/json-canvas",
     "copilot/skills/obsidian-bases/SKILL.md",
     "copilot/skills/obsidian-bases/LICENSE",
-    "copilot/skills/obsidian-bases/references/EXAMPLES.md",
     "copilot/skills/obsidian-bases/references",
     "copilot/skills/obsidian-bases",
     "copilot/skills/obsidian-markdown/LICENSE",
