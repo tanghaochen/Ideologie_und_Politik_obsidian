@@ -6,7 +6,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 56.0320452403393,
+        "dimension": 87.04052780395854,
         "children": [
           {
             "id": "36e864eecf69c655",
@@ -51,12 +51,13 @@
               "title": "DW_摄影"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       },
       {
         "id": "d5a252b342c9ae29",
         "type": "tabs",
-        "dimension": 43.9679547596607,
+        "dimension": 12.959472196041471,
         "children": [
           {
             "id": "22c06bfccc275868",
@@ -74,24 +75,8 @@
               "icon": "lucide-file",
               "title": "新闻高频词"
             }
-          },
-          {
-            "id": "ad60290c680c7207",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Diary/2026/20260831.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "20260831"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -389,10 +374,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "36e864eecf69c655",
+  "active": "ac9349e5570dd3f3",
   "lastOpenFiles": [
-    "Diary/2026/20260831.md",
     "语言学习/德语/单词/生词/26-9.md",
+    "Diary/2026/20260831.md",
     "语言学习/德语/单词/生词/26-8.md",
     "思想思维心理哲学/爱情/摄影/DW_摄影.md",
     "assets/Pasted Image 20260901000631_244.png",
