@@ -6,7 +6,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 87.04052780395854,
+        "dimension": 48.750589344648745,
         "children": [
           {
             "id": "36e864eecf69c655",
@@ -57,7 +57,7 @@
       {
         "id": "d5a252b342c9ae29",
         "type": "tabs",
-        "dimension": 12.959472196041471,
+        "dimension": 51.24941065535125,
         "children": [
           {
             "id": "55d6498318f11957",
@@ -65,13 +65,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Diary/2026/20260831.md",
+                "file": "电脑、软件、系统/软件使用记录/zotero.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "20260831"
+              "title": "zotero"
             }
           },
           {
@@ -389,8 +389,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "ac9349e5570dd3f3",
+  "active": "55d6498318f11957",
   "lastOpenFiles": [
+    "assets/image-465.png",
+    "Diary/2026/20260831.md",
+    "电脑、软件、系统/软件使用记录/zotero.md",
+    "电脑、软件、系统/软件使用记录",
+    "思想思维心理哲学/爱情/摄影/DW_摄影.md",
     "assets/Pasted Image 20260901235857_073.png",
     "assets/Pasted Image 20260901235741_419.png",
     "assets/Pasted Image 20260901235644_289.png",
@@ -398,14 +403,11 @@
     "assets/Pasted Image 20260901235540_782.png",
     "assets/Pasted Image 20260901235459_728.png",
     "assets/Pasted Image 20260901235423_843.png",
-    "Diary/2026/20260831.md",
-    "思想思维心理哲学/爱情/摄影/DW_摄影.md",
     "语言学习/德语/单词/生词/26-9.md",
     "语言学习/德语/单词/生词/26-8.md",
     "assets/Pasted Image 20260901000631_244.png",
     "assets/Pasted Image 20260901000547_263.png",
     "assets/Pasted Image 20260831234908_684.png",
-    "assets/Pasted Image 20260831234731_652.png",
     "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
     "语言学习/德语/公共知识语法/从句.md",
     "思想思维心理哲学/爱情/摄影/第二章“设计基础”.md",
@@ -426,7 +428,6 @@
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/1 字母表 发音.md",
     "语言学习/德语/新求精分等级笔记/A1掌握发音规则（见字能读），简单的自我介绍，购物问路。/2 元音, 辅音.md",
     "语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md",
-    "语言学习/德语/柏林广场视频笔记/000 A1知识点 学习路线.md",
     "copilot/skills/obsidian-cli/LICENSE",
     "copilot/skills/obsidian-cli",
     "copilot/skills/json-canvas/LICENSE",
@@ -436,7 +437,6 @@
     "copilot/skills/obsidian-bases/references",
     "copilot/skills/obsidian-bases",
     "copilot/skills/obsidian-markdown/LICENSE",
-    "copilot/skills/obsidian-markdown/references",
     "思想思维心理哲学/爱情/说话聊天/未命名.canvas",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "网络/简述软路由网络逻辑.canvas",
