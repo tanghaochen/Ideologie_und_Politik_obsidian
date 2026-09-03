@@ -3840,6 +3840,53 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "Diary/2026/20260903.md": [
+      {
+        "id": "hfn4a78t0",
+        "text": "- 内耗式退出：心里还在审判队友（\"都怪他，这游戏没法玩了\"）→ 情绪继续发酵。",
+        "tags": [],
+        "line": 87,
+        "startOffset": 2676,
+        "endOffset": 2745,
+        "filePath": "Diary/2026/20260903.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1788401075296,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "p5keplhr2",
+        "text": "- 分离式退出：心里清楚\"他的发挥是他的课题，我不评价也不承接，我选择离开是因为我的体验更重要\" → 情绪在退出的那一刻就结束了。",
+        "tags": [],
+        "line": 88,
+        "startOffset": 2746,
+        "endOffset": 2840,
+        "filePath": "Diary/2026/20260903.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1788401075366,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      },
+      {
+        "id": "inttow3iy",
+        "text": "**检验标准很简单：退出后你还想不想这件事？**如果还在反复想，说明你还没完成课题分离，你人退出了，裁判还坐在席上。",
+        "tags": [],
+        "line": 90,
+        "startOffset": 2842,
+        "endOffset": 2929,
+        "filePath": "Diary/2026/20260903.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1788401075462,
+        "isNativeComment": false,
+        "color": "#d83931",
+        "type": "html"
+      }
     ]
   },
   "collections": {},
