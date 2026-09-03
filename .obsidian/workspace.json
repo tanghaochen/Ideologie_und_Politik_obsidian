@@ -6,7 +6,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 86.94012258368694,
+        "dimension": 45.12022630834512,
         "children": [
           {
             "id": "36e864eecf69c655",
@@ -14,13 +14,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/单词/生词/高频形近易错词.md",
+                "file": "语言学习/德语/单词/生词/26-9.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "高频形近易错词"
+              "title": "26-9"
             }
           },
           {
@@ -36,44 +36,13 @@
               "icon": "excalidraw-icon",
               "title": "从句"
             }
-          },
-          {
-            "id": "ac9349e5570dd3f3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/单词/生词/2026年6月.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "2026年6月"
-            }
-          },
-          {
-            "id": "e62dd20c596a4fb9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/爱情/摄影/一本摄影书/法则.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "法则"
-            }
           }
-        ],
-        "currentTab": 2
+        ]
       },
       {
         "id": "d5a252b342c9ae29",
         "type": "tabs",
-        "dimension": 13.059877416313059,
+        "dimension": 54.879773691654876,
         "children": [
           {
             "id": "22c06bfccc275868",
@@ -91,8 +60,19 @@
               "icon": "lucide-file",
               "title": "新闻高频词"
             }
+          },
+          {
+            "id": "61d6f5f692eeef42",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -390,13 +370,17 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "ac9349e5570dd3f3",
+  "active": "61d6f5f692eeef42",
   "lastOpenFiles": [
+    "语言学习/德语/单词/生词/新闻高频词.md",
+    "语言学习/德语/单词/生词/26-9.md",
+    "语言学习/德语/单词/生词/高频形近易错词.md",
+    "语言学习/德语/公共知识语法/从句.md",
+    "思想思维心理哲学/爱情/摄影/一本摄影书/法则.md",
+    "语言学习/德语/单词/生词/2026年6月.md",
     "电脑、软件、系统/创业项目/网赚项目想法记录.md",
     "Diary/2026/20260903.md",
     "思想思维心理哲学/爱情/摄影/DW_摄影.md",
-    "语言学习/德语/单词/生词/新闻高频词.md",
-    "思想思维心理哲学/爱情/摄影/一本摄影书/法则.md",
     "assets/image-476.png",
     "assets/image-475.png",
     "assets/image-474.png",
@@ -408,18 +392,14 @@
     "assets/image-468.png",
     "assets/image-467.png",
     "思想思维心理哲学/爱情/摄影/一本摄影书",
-    "语言学习/德语/单词/生词/高频形近易错词.md",
-    "语言学习/德语/单词/生词/26-9.md",
     "电脑、软件、系统/软件使用记录/zotero.md",
     "Diary/2026/20260831.md",
     "电脑、软件、系统/软件使用记录",
     "语言学习/德语/单词/生词/26-8.md",
     "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "思想思维心理哲学/爱情/摄影/第二章“设计基础”.md",
     "思想思维心理哲学/爱情/摄影/第一章框架.md",
     "思想思维心理哲学/爱情/摄影/未命名.md",
-    "语言学习/德语/单词/生词/2026年6月.md",
     "Diary/2026/W36.md",
     "Diary/2026/20260830.md",
     "Diary/2026/W33.md",
