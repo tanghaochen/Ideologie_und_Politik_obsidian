@@ -43,13 +43,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
+                "file": "思想思维心理哲学/爱情/摄影/一本摄影书/点线面的运用.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "德语学习规划"
+              "title": "点线面的运用"
             }
           }
         ],
@@ -87,8 +87,7 @@
               "title": "新标签页"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -151,7 +150,8 @@
               "title": "Notebook Navigator"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -385,35 +385,39 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "abbd6433f71b711a",
+  "active": "285d87d5d25da6a6",
   "lastOpenFiles": [
+    "assets/image-489.png",
+    "assets/image-488.png",
+    "assets/image-487.png",
+    "assets/image-486.png",
+    "assets/image-485.png",
+    "assets/image-484.png",
+    "assets/image-483.png",
+    "assets/image-482.png",
+    "assets/image-481.png",
+    "assets/image-480.png",
+    "assets/image-479.png",
+    "思想思维心理哲学/爱情/摄影/一本摄影书/点线面的运用",
+    "思想思维心理哲学/爱情/摄影/一本摄影书/构图法则.md",
+    "思想思维心理哲学/爱情/摄影/一本摄影书/点线面的运用.md",
+    "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
+    "语言学习/德语/单词/生词/新闻高频词.md",
+    "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
     "思想思维心理哲学/爱情/咖啡/咖啡提取.md",
     "语言学习/德语/单词/生词/26-9.md",
     "思想思维心理哲学/爱情/咖啡",
-    "语言学习/德语/单词/生词/新闻高频词.md",
     "语言学习/德语/单词/生词/高频形近易错词.md",
     "语言学习/德语/公共知识语法/从句.md",
-    "思想思维心理哲学/爱情/摄影/一本摄影书/法则.md",
     "语言学习/德语/单词/生词/2026年6月.md",
     "电脑、软件、系统/创业项目/网赚项目想法记录.md",
     "Diary/2026/20260903.md",
     "思想思维心理哲学/爱情/摄影/DW_摄影.md",
-    "assets/image-476.png",
-    "assets/image-475.png",
-    "assets/image-474.png",
-    "assets/image-473.png",
-    "assets/image-472.png",
-    "assets/image-471.png",
-    "assets/image-470.png",
-    "assets/image-469.png",
-    "assets/image-468.png",
-    "assets/image-467.png",
     "思想思维心理哲学/爱情/摄影/一本摄影书",
     "电脑、软件、系统/软件使用记录/zotero.md",
     "Diary/2026/20260831.md",
     "电脑、软件、系统/软件使用记录",
     "语言学习/德语/单词/生词/26-8.md",
-    "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
     "思想思维心理哲学/爱情/摄影/第二章“设计基础”.md",
     "思想思维心理哲学/爱情/摄影/第一章框架.md",
     "思想思维心理哲学/爱情/摄影/未命名.md",
@@ -423,16 +427,12 @@
     "电脑、软件、系统/AI提示吃/AI德语对话提示词.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
     "语言学习/德语/公共知识语法/动词.md",
-    "语言学习/德语/公共知识语法/形容词.md",
-    "语言学习/德语/公共知识语法/名词.md",
-    "语言学习/德语/公共知识语法/时态.md",
     "copilot/skills/obsidian-cli/LICENSE",
     "copilot/skills/obsidian-cli",
     "copilot/skills/json-canvas/LICENSE",
     "copilot/skills/json-canvas/references",
     "copilot/skills/json-canvas",
     "copilot/skills/obsidian-bases/LICENSE",
-    "copilot/skills/obsidian-bases/references",
     "思想思维心理哲学/爱情/说话聊天/未命名.canvas",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "网络/简述软路由网络逻辑.canvas",
