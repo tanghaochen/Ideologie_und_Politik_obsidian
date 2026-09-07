@@ -6,7 +6,7 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 45.12022630834512,
+        "dimension": 55.91702027345592,
         "children": [
           {
             "id": "24de0218e16dad87",
@@ -67,12 +67,13 @@
               "title": "26-9"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       },
       {
         "id": "d5a252b342c9ae29",
         "type": "tabs",
-        "dimension": 54.879773691654876,
+        "dimension": 44.08297972654408,
         "children": [
           {
             "id": "22c06bfccc275868",
@@ -294,16 +295,6 @@
               "icon": "lucide-archive",
               "title": "添加笔记属性"
             }
-          },
-          {
-            "id": "57a25236f6d7add8",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw-sidepanel",
-              "state": {},
-              "icon": "excalidraw-icon",
-              "title": "Excalidraw 侧边面板"
-            }
           }
         ]
       },
@@ -389,11 +380,19 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "24de0218e16dad87",
+  "active": "285d87d5d25da6a6",
   "lastOpenFiles": [
+    "copilot/skills/openartifacts-publish/SKILL.md",
+    "copilot/skills/openartifacts-publish/openartifacts-publish.ps1",
+    "copilot/skills/openartifacts-publish/openartifacts-publish.cmd",
+    "copilot/skills/openartifacts-publish/openartifacts-publish.sh",
+    "copilot/skills/openartifacts-publish/themes/research-memo.md",
+    "copilot/skills/openartifacts-publish/themes",
+    "copilot/skills/openartifacts-publish",
     "语言学习/德语/单词/生词/新闻高频词.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/单词/生词/26-9.md",
+    "语言学习/德语/公共知识语法/5介词/介词的位置 在名词之前、之后和围绕着它.md",
+    "语言学习/德语/公共知识语法/从句.md",
     "思想思维心理哲学/爱情/摄影/一本摄影书/点线面的运用.md",
     "assets/image-489.png",
     "assets/image-488.png",
@@ -428,14 +427,7 @@
     "Diary/2026/20260830.md",
     "Diary/2026/W33.md",
     "电脑、软件、系统/AI提示吃/AI德语对话提示词.md",
-    "语言学习/德语/公共知识语法/格; 限定词.md",
-    "语言学习/德语/公共知识语法/动词.md",
     "copilot/skills/obsidian-cli/LICENSE",
-    "copilot/skills/obsidian-cli",
-    "copilot/skills/json-canvas/LICENSE",
-    "copilot/skills/json-canvas/references",
-    "copilot/skills/json-canvas",
-    "copilot/skills/obsidian-bases/LICENSE",
     "思想思维心理哲学/爱情/说话聊天/未命名.canvas",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "网络/简述软路由网络逻辑.canvas",

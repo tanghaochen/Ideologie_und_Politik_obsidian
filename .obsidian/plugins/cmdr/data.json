@@ -86,7 +86,9 @@
     "leftRibbon": [
       "创建时间戳笔记",
       "打开/创建今天的日记"
-    ]
+    ],
+    "editorMenuItems": [],
+    "fileMenuItems": []
   },
   "spacing": "6",
   "advancedToolbar": {
@@ -98,5 +100,6 @@
     "mappedIcons": [],
     "tooltips": false,
     "heightOffset": 0
-  }
+  },
+  "spacingReset": true
 }

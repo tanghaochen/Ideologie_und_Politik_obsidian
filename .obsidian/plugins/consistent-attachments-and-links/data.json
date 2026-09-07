@@ -2,21 +2,31 @@
   "attachmentUnitFolderPaths": [],
   "collectAttachmentUsedByMultipleNotesMode": "Skip",
   "consistencyReportFile": "consistency-report.md",
-  "emptyFolderBehavior": "DeleteWithEmptyParents",
   "excludePaths": [
     "/consistency-report\\.md$/"
   ],
   "excludePathsFromAttachmentCollecting": [],
   "includePaths": [],
+  "isAdvancedRenameAndDeleteHandlerSuggestionDeclined": false,
   "moveAttachmentToProperFolderUsedByMultipleNotesMode": "CopyAll",
+  "proposedRenameDeleteSettings": {
+    "emptyFolderBehavior": "DeleteWithEmptyParents",
+    "excludePaths": [
+      "/consistency-report\\.md$/"
+    ],
+    "includePaths": [],
+    "shouldDeleteConflictingAttachments": false,
+    "shouldHandleDeletions": false,
+    "shouldHandleRenames": true,
+    "shouldRenameAttachmentFolder": false,
+    "shouldUpdateFileNameAliases": true,
+    "treatAsAttachmentExtensions": [
+      ".excalidraw.md"
+    ]
+  },
   "shouldAddCommandsToFileMenu": true,
-  "shouldChangeNoteBacklinksDisplayText": true,
   "shouldCollectAttachmentsAutomatically": false,
-  "shouldDeleteAttachmentsWithNote": false,
-  "shouldDeleteExistingFilesWhenMovingNote": false,
-  "shouldMoveAttachmentsWithNote": false,
   "shouldShowBackupWarning": false,
-  "shouldUpdateLinks": true,
   "treatAsAttachmentExtensions": [
     ".excalidraw.md"
   ]
