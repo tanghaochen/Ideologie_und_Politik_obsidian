@@ -10,16 +10,10 @@
   "isAdvancedRenameAndDeleteHandlerSuggestionDeclined": false,
   "moveAttachmentToProperFolderUsedByMultipleNotesMode": "CopyAll",
   "proposedRenameDeleteSettings": {
-    "emptyFolderBehavior": "DeleteWithEmptyParents",
     "excludePaths": [
       "/consistency-report\\.md$/"
     ],
     "includePaths": [],
-    "shouldDeleteConflictingAttachments": false,
-    "shouldHandleDeletions": false,
-    "shouldHandleRenames": true,
-    "shouldRenameAttachmentFolder": false,
-    "shouldUpdateFileNameAliases": true,
     "treatAsAttachmentExtensions": [
       ".excalidraw.md"
     ]
