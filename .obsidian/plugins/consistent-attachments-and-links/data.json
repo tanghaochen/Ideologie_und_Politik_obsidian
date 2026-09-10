@@ -9,15 +9,7 @@
   "includePaths": [],
   "isAdvancedRenameAndDeleteHandlerSuggestionDeclined": true,
   "moveAttachmentToProperFolderUsedByMultipleNotesMode": "CopyAll",
-  "proposedRenameDeleteSettings": {
-    "excludePaths": [
-      "/consistency-report\\.md$/"
-    ],
-    "includePaths": [],
-    "treatAsAttachmentExtensions": [
-      ".excalidraw.md"
-    ]
-  },
+  "proposedRenameDeleteSettings": null,
   "shouldAddCommandsToFileMenu": true,
   "shouldCollectAttachmentsAutomatically": false,
   "shouldShowBackupWarning": false,
