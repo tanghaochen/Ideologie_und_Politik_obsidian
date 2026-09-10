@@ -7,7 +7,7 @@
   ],
   "excludePathsFromAttachmentCollecting": [],
   "includePaths": [],
-  "isAdvancedRenameAndDeleteHandlerSuggestionDeclined": false,
+  "isAdvancedRenameAndDeleteHandlerSuggestionDeclined": true,
   "moveAttachmentToProperFolderUsedByMultipleNotesMode": "CopyAll",
   "proposedRenameDeleteSettings": {
     "excludePaths": [

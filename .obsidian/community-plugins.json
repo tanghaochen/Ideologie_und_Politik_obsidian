@@ -73,5 +73,6 @@
   "notebook-navigator",
   "realclaudian",
   "agent-client",
-  "better-export-pdf"
+  "better-export-pdf",
+  "advanced-rename-and-delete-handler"
 ]
