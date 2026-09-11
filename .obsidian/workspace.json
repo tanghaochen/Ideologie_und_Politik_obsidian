@@ -39,20 +39,6 @@
             }
           },
           {
-            "id": "31284e0ed8b49127",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md"
-              },
-              "pinned": true,
-              "icon": "excalidraw-icon",
-              "title": "从句"
-            }
-          },
-          {
             "id": "285d87d5d25da6a6",
             "type": "leaf",
             "state": {
@@ -65,6 +51,18 @@
               },
               "icon": "lucide-file",
               "title": "第一将来时和第一虚拟式的区别"
+            }
+          },
+          {
+            "id": "31284e0ed8b49127",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/从句.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "从句"
             }
           }
         ],
@@ -81,13 +79,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
+                "file": "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "werden所有变化合集"
+              "title": "背单词-数量与范围频率可能性确定性程度必要性重要性"
             }
           },
           {
@@ -410,9 +408,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "53216629ab6d557e",
+  "active": "31284e0ed8b49127",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
+    "assets/萨莉的柠檬水摊.html",
+    "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
+    "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
     "思想思维心理哲学/个人问题处理/情绪; 欲望/系统与架构驱动 计算思维.md",
     "思想思维心理哲学/爱情/咖啡/“极简促智咖啡”实操手册.md",
     "思想思维心理哲学/个人问题处理/情绪; 欲望/不再沉迷游戏 而是将生活 游戏化.md",
@@ -426,7 +428,6 @@
     "copilot/skills/openartifacts-publish/themes",
     "copilot/skills/openartifacts-publish",
     "语言学习/德语/公共知识语法/5介词/介词的位置 在名词之前、之后和围绕着它.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "思想思维心理哲学/爱情/摄影/一本摄影书/点线面的运用.md",
     "assets/image-489.png",
     "assets/image-488.png",
@@ -454,10 +455,6 @@
     "Diary/2026/20260831.md",
     "电脑、软件、系统/软件使用记录",
     "语言学习/德语/单词/生词/26-8.md",
-    "思想思维心理哲学/爱情/摄影/第二章“设计基础”.md",
-    "思想思维心理哲学/爱情/摄影/第一章框架.md",
-    "思想思维心理哲学/爱情/摄影/未命名.md",
-    "copilot/skills/obsidian-cli/LICENSE",
     "思想思维心理哲学/爱情/说话聊天/未命名.canvas",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "网络/简述软路由网络逻辑.canvas",
