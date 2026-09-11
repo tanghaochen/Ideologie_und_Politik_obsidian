@@ -58,13 +58,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "思想思维心理哲学/个人问题处理/情绪; 欲望/系统与架构驱动 计算思维.md",
+                "file": "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "系统与架构驱动 计算思维"
+              "title": "第一将来时和第一虚拟式的区别"
             }
           }
         ],
@@ -75,6 +75,21 @@
         "type": "tabs",
         "dimension": 44.08297972654408,
         "children": [
+          {
+            "id": "53216629ab6d557e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "werden所有变化合集"
+            }
+          },
           {
             "id": "791fc5d2504c0249",
             "type": "leaf",
@@ -395,10 +410,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "285d87d5d25da6a6",
+  "active": "53216629ab6d557e",
   "lastOpenFiles": [
-    "思想思维心理哲学/爱情/咖啡/“极简促智咖啡”实操手册.md",
+    "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
     "思想思维心理哲学/个人问题处理/情绪; 欲望/系统与架构驱动 计算思维.md",
+    "思想思维心理哲学/爱情/咖啡/“极简促智咖啡”实操手册.md",
     "思想思维心理哲学/个人问题处理/情绪; 欲望/不再沉迷游戏 而是将生活 游戏化.md",
     "语言学习/德语/单词/生词/新闻高频词.md",
     "语言学习/德语/单词/生词/26-9.md",
@@ -441,7 +457,6 @@
     "思想思维心理哲学/爱情/摄影/第二章“设计基础”.md",
     "思想思维心理哲学/爱情/摄影/第一章框架.md",
     "思想思维心理哲学/爱情/摄影/未命名.md",
-    "Diary/2026/W36.md",
     "copilot/skills/obsidian-cli/LICENSE",
     "思想思维心理哲学/爱情/说话聊天/未命名.canvas",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
