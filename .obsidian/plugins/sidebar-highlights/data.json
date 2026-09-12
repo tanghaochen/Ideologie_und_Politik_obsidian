@@ -3887,6 +3887,64 @@
         "color": "#d83931",
         "type": "html"
       }
+    ],
+    "语言学习/德语/德国所有历史政治经济等合集/政党/CDU.md": [
+      {
+        "id": "na7bryxnt",
+        "text": "Spaltung",
+        "tags": [],
+        "line": 64,
+        "startOffset": 3490,
+        "endOffset": 3502,
+        "filePath": "语言学习/德语/德国所有历史政治经济等合集/政党/CDU.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1789219904772,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "eepxlvpka",
+        "text": "Protestanten",
+        "tags": [],
+        "line": 64,
+        "startOffset": 3551,
+        "endOffset": 3567,
+        "filePath": "语言学习/德语/德国所有历史政治经济等合集/政党/CDU.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1789222137598,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "tfg81kkzb",
+        "text": "überkonfessionelle",
+        "tags": [],
+        "line": 64,
+        "startOffset": 3601,
+        "endOffset": 3623,
+        "filePath": "语言学习/德语/德国所有历史政治经济等合集/政党/CDU.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1789222191636,
+        "isNativeComment": false,
+        "type": "highlight"
+      },
+      {
+        "id": "k12wvakwe",
+        "text": "Sammelbewegung",
+        "tags": [],
+        "line": 64,
+        "startOffset": 3650,
+        "endOffset": 3668,
+        "filePath": "语言学习/德语/德国所有历史政治经济等合集/政党/CDU.md",
+        "footnoteCount": 0,
+        "footnoteContents": [],
+        "createdAt": 1789222191685,
+        "isNativeComment": false,
+        "type": "highlight"
+      }
     ]
   },
   "collections": {},
