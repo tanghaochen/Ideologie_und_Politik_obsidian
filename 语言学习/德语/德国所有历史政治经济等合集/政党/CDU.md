@@ -65,7 +65,7 @@ Als Experte für vergleichende Politikwissenschaft und Geschichte präsentiere i
 - **Gründungskontext:** Die Partei entstand auf den Trümmern des Zweiten Weltkriegs. Als Lehre aus der Zersplitterung der Weimarer Republik und dem Aufstieg des Nationalsozialismus beschlossen politische Eliten, die historische ==Spaltung== zwischen Katholiken (früher Zentrumspartei) und ==Protestanten== zu überwinden. Die CDU wurde als ==überkonfessionelle==, christlich-demokratische ==Sammelbewegung== gegründet, um eine bürgerliche Bastion gegen den Kommunismus zu bilden und jeden ==totalitären== Rückfall zu verhindern.
 - **Ideologischer Wandel:**
     - **Ära Adenauer:** Verankerung der „Sozialen Marktwirtschaft“ und eine ==kompromisslose== Westbindung (NATO-Beitritt).
-    - **Ära Kohl:** Historischer Moment der Deutschen Wiedervereinigung und maßgebliche Vorantreibung der europäischen Integration (Einführung des Euro).
+    - **Ära Kohl:** Historischer Moment der Deutschen ==Wiedervereinigung== und ==maßgebliche== Vorantreibung der europäischen Integration (Einführung des Euro).
     - **Ära Merkel (Asymmetrische Demobilisierung):** In ihren 16 Regierungsjahren rückte die Partei stark in die politische Mitte. Durch die Übernahme Mitte-links-Themen (Atomausstieg, Mindestlohn, Flüchtlingspolitik 2015, Ehe für alle) gewann sie Wähler der Mitte, entfremdete jedoch ihren konservativen Stamm.
     - **Post-Merkel-Ära (Konservative Korrektur):** Unter dem aktuellen Vorsitzenden Friedrich Merz positioniert sich die Partei wieder deutlich wirtschaftsliberaler und gesellschaftskonservativer, um dem Erstarken der extremen Rechten entgegenzuwirken.
 

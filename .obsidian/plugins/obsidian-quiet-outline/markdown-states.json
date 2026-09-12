@@ -17472,12 +17472,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 66,
-        "ch": 78
+        "line": 67,
+        "ch": 82
       },
       "to": {
-        "line": 66,
-        "ch": 92
+        "line": 67,
+        "ch": 93
       }
     }
   }
