@@ -214,16 +214,6 @@
             }
           },
           {
-            "id": "14d0006259a2f607",
-            "type": "leaf",
-            "state": {
-              "type": "hinote-view",
-              "state": {},
-              "icon": "highlighter",
-              "title": "HiNote"
-            }
-          },
-          {
             "id": "36c96029ae4dd065",
             "type": "leaf",
             "pinned": true,
@@ -232,7 +222,7 @@
               "state": {},
               "pinned": true,
               "icon": "message-square",
-              "title": "Copilot"
+              "title": "Copilot (Quick Chat)"
             }
           },
           {
@@ -326,7 +316,8 @@
               "title": "添加笔记属性"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "28e75bfc7e894da7",
@@ -410,7 +401,7 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e5f22fbaf38c6021",
+  "active": "36c96029ae4dd065",
   "lastOpenFiles": [
     "语言学习/德语/德国所有历史政治经济等合集/政党/CDU.md",
     "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
