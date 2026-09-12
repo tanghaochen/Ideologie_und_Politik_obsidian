@@ -9,6 +9,21 @@
         "dimension": 55.91702027345592,
         "children": [
           {
+            "id": "27d382ae99f8c399",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "电脑、软件、系统/ps-tang.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "ps-tang"
+            }
+          },
+          {
             "id": "24de0218e16dad87",
             "type": "leaf",
             "state": {
@@ -66,7 +81,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       },
       {
         "id": "d5a252b342c9ae29",
@@ -376,12 +391,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "be137f9177c8ee1a",
+  "active": "31284e0ed8b49127",
   "lastOpenFiles": [
+    "电脑、软件、系统/ps-tang.md",
+    "assets/image-490.png",
     "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
     "思想思维心理哲学/爱情/咖啡/“极简促智咖啡”实操手册.md",
     "语言学习/德语/单词/生词/新闻高频词.md",
-    "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
     "assets/萨莉的柠檬水摊.html",
@@ -407,7 +423,6 @@
     "assets/image-483.png",
     "assets/image-482.png",
     "assets/image-481.png",
-    "assets/image-480.png",
     "思想思维心理哲学/爱情/摄影/一本摄影书/点线面的运用",
     "思想思维心理哲学/爱情/摄影/一本摄影书/构图法则.md",
     "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
@@ -423,7 +438,6 @@
     "电脑、软件、系统/软件使用记录/zotero.md",
     "Diary/2026/20260831.md",
     "电脑、软件、系统/软件使用记录",
-    "语言学习/德语/单词/生词/26-8.md",
     "思想思维心理哲学/爱情/说话聊天/未命名.canvas",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "网络/简述软路由网络逻辑.canvas",
