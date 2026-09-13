@@ -6,68 +6,8 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 55.91702027345592,
+        "dimension": 74.25742574257426,
         "children": [
-          {
-            "id": "27d382ae99f8c399",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "电脑、软件、系统/ps-tang.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "ps-tang"
-            }
-          },
-          {
-            "id": "24de0218e16dad87",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/5介词/介词的位置 在名词之前、之后和围绕着它.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "介词的位置 在名词之前、之后和围绕着它"
-            }
-          },
-          {
-            "id": "36e864eecf69c655",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/爱情/咖啡/咖啡提取.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "咖啡提取"
-            }
-          },
-          {
-            "id": "285d87d5d25da6a6",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "第一将来时和第一虚拟式的区别"
-            }
-          },
           {
             "id": "31284e0ed8b49127",
             "type": "leaf",
@@ -82,14 +22,41 @@
               "icon": "lucide-file",
               "title": "CDU"
             }
+          },
+          {
+            "id": "f2c787ef094f470c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "思想思维心理哲学/学习本身/学习情绪问题.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "学习情绪问题"
+            }
+          },
+          {
+            "id": "90407d2e4ef2d407",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "思想思维心理哲学/个人人生思想架构.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "个人人生思想架构"
+            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 2
       },
       {
         "id": "d5a252b342c9ae29",
         "type": "tabs",
-        "dimension": 44.08297972654408,
+        "dimension": 25.742574257425744,
         "children": [
           {
             "id": "53216629ab6d557e",
@@ -199,7 +166,7 @@
       {
         "id": "0ed9c27411998641",
         "type": "tabs",
-        "dimension": 68.73083997547516,
+        "dimension": 75.59779276517474,
         "children": [
           {
             "id": "dd8c0de9236cf3b8",
@@ -316,13 +283,12 @@
               "title": "添加笔记属性"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "28e75bfc7e894da7",
         "type": "tabs",
-        "dimension": 31.26916002452483,
+        "dimension": 24.40220723482526,
         "children": [
           {
             "id": "c3592eded90586bf",
@@ -401,9 +367,14 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "36c96029ae4dd065",
+  "active": "90407d2e4ef2d407",
   "lastOpenFiles": [
+    "思想思维心理哲学/学习本身/学习情绪问题.md",
+    "思想思维心理哲学/个人人生思想架构.md",
     "语言学习/德语/德国所有历史政治经济等合集/政党/CDU.md",
+    "assets/Pasted Image 20260913164152_108.png",
+    "思想思维心理哲学/过度劳累.md",
+    "思想思维心理哲学/日常记录总结/B复盘自己/B复盘自己canvas.md",
     "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
     "语言学习/德语/德国所有历史政治经济等合集/未命名.md",
     "语言学习/德语/德国所有历史政治经济等合集/政党",
@@ -436,7 +407,6 @@
     "assets/image-484.png",
     "assets/image-483.png",
     "assets/image-482.png",
-    "assets/image-481.png",
     "思想思维心理哲学/爱情/摄影/一本摄影书/点线面的运用",
     "思想思维心理哲学/爱情/摄影/一本摄影书/构图法则.md",
     "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
@@ -444,11 +414,6 @@
     "思想思维心理哲学/爱情/咖啡/咖啡提取.md",
     "思想思维心理哲学/爱情/咖啡",
     "语言学习/德语/单词/生词/高频形近易错词.md",
-    "语言学习/德语/单词/生词/2026年6月.md",
-    "电脑、软件、系统/创业项目/网赚项目想法记录.md",
-    "Diary/2026/20260903.md",
-    "思想思维心理哲学/爱情/摄影/DW_摄影.md",
-    "电脑、软件、系统/软件使用记录/zotero.md",
     "思想思维心理哲学/爱情/说话聊天/未命名.canvas",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "网络/简述软路由网络逻辑.canvas",
