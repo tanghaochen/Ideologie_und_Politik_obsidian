@@ -18,7 +18,7 @@
   "tabSize": 4,
   "openBehavior": "",
   "showUnsupportedFiles": true,
-  "focusNewTab": false,
+  "focusNewTab": true,
   "newFileLocation": "current",
   "uriCallbacks": true
 }
