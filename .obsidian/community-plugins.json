@@ -41,7 +41,6 @@
   "obsidian-minimal-settings",
   "arrows-in-md",
   "text-snippets-obsidian",
-  "hover-reveal",
   "media-extended",
   "obsidian-audio-player",
   "obsidian-list-callouts",
@@ -71,5 +70,6 @@
   "realclaudian",
   "agent-client",
   "better-export-pdf",
-  "advanced-rename-and-delete-handler"
+  "advanced-rename-and-delete-handler",
+  "hover-reveal"
 ]

@@ -6,8 +6,23 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 61.810466760961816,
+        "dimension": 54.40829797265441,
         "children": [
+          {
+            "id": "73a0e4cad84f8392",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/句子成分 结构.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "句子成分 结构"
+            }
+          },
           {
             "id": "ad419d8a280d69aa",
             "type": "leaf",
@@ -22,14 +37,45 @@
               "icon": "lucide-file",
               "title": "第一将来时, 第二将来时"
             }
+          },
+          {
+            "id": "e99b35b83e61baff",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/单词/生词/26-9.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "26-9"
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       },
       {
         "id": "d5a252b342c9ae29",
         "type": "tabs",
-        "dimension": 38.189533239038184,
+        "dimension": 45.59170202734559,
         "children": [
+          {
+            "id": "d3c6b002ca72ccbc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "营养学以及养生/工具/电陶炉.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "电陶炉"
+            }
+          },
           {
             "id": "d02256603631a0b3",
             "type": "leaf",
@@ -105,7 +151,8 @@
               "title": "CDU"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -352,7 +399,6 @@
     "hiddenItems": {
       "media-extended:打开媒体库": true,
       "media-extended:打开媒体快速切换器": true,
-      "sidebar-highlights:Open highlights": true,
       "mermaid-tools:Open Mermaid Toolbar": true,
       "canvas:新建白板": true,
       "omnisearch:Omnisearch": true,
@@ -366,7 +412,6 @@
       "audio-recorder:开始/结束录音": true,
       "obsidian-local-images-plus:Local Images Plus  0.16.4\r\nLocalize attachments (plugin folder)": true,
       "markdown-importer:打开 Markdown 格式转换器": true,
-      "hi-note:HiNote": true,
       "obsidian-git:Open Git source control": true,
       "pexels-banner:🚩 Pixel Banner Menu": true,
       "vscode-editor:新建代码文件": true,
@@ -382,11 +427,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "d02256603631a0b3",
+  "active": "e99b35b83e61baff",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/时态/第一将来时, 第二将来时.md",
     "语言学习/德语/单词/生词/26-9.md",
+    "电脑、软件、系统/AI提示吃/AI德语对话提示词.md",
     "语言学习/德语/单词/生词/26-8.md",
+    "语言学习/德语/公共知识语法/句子成分 结构.md",
     "营养学以及养生/工具/电陶炉.md",
     "assets/image-491.png",
     "营养学以及养生/工具",
@@ -395,7 +442,6 @@
     "思想思维心理哲学/学习本身/学习情绪问题.md",
     "思想思维心理哲学/学习本身/游戏与生活/解决游戏沉迷.md",
     "Diary/2026/20260914.md",
-    "电脑、软件、系统/AI提示吃/AI德语对话提示词.md",
     "OBSetting/templater/生词表格-anki.md",
     "思想思维心理哲学/个人问题处理/情绪; 欲望/不再沉迷游戏 而是将生活 游戏化.md",
     "思想思维心理哲学/过度劳累.md",
@@ -420,7 +466,6 @@
     "copilot/skills/openartifacts-publish/openartifacts-publish.ps1",
     "copilot/skills/openartifacts-publish/openartifacts-publish.cmd",
     "copilot/skills/openartifacts-publish/openartifacts-publish.sh",
-    "copilot/skills/openartifacts-publish/themes/research-memo.md",
     "copilot/skills/openartifacts-publish/themes",
     "copilot/skills/openartifacts-publish",
     "assets/image-489.png",
