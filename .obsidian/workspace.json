@@ -6,48 +6,36 @@
       {
         "id": "dd4130c5419b5527",
         "type": "tabs",
-        "dimension": 68.12824139556812,
+        "dimension": 58.22725129655822,
         "children": [
           {
-            "id": "91c3793d1f08e6bd",
+            "id": "875df07346d010a3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "思想思维心理哲学/爱情/摄影/一本摄影书/第四章 点线面的运用.md",
+                "file": "Diary/2026/W36.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "第四章 点线面的运用"
+              "title": "W36"
             }
           },
           {
-            "id": "e99b35b83e61baff",
+            "id": "b97d5bdc1bd8e21b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/单词/生词/26-9.md",
+                "file": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "26-9"
-            }
-          },
-          {
-            "id": "8cf41c4395c025fa",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "思想思维心理哲学/爱情/摄影/DW_摄影.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "DW_摄影"
+              "title": "Boden  Erdkultur, Hydrokultur, Halbbodenkultur"
             }
           }
         ]
@@ -55,8 +43,23 @@
       {
         "id": "d5a252b342c9ae29",
         "type": "tabs",
-        "dimension": 31.87175860443187,
+        "dimension": 41.77274870344178,
         "children": [
+          {
+            "id": "8a2c1b7a23bd127c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Diary/2026/20260915.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "20260915"
+            }
+          },
           {
             "id": "5442a1605b0808a1",
             "type": "leaf",
@@ -85,21 +88,6 @@
               },
               "icon": "lucide-file",
               "title": "句子成分 结构"
-            }
-          },
-          {
-            "id": "d3c6b002ca72ccbc",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "营养学以及养生/工具/电陶炉.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "电陶炉"
             }
           }
         ]
@@ -377,13 +365,17 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "91c3793d1f08e6bd",
+  "active": "8a2c1b7a23bd127c",
   "lastOpenFiles": [
-    "思想思维心理哲学/爱情/摄影/一本摄影书/第三章 构图法则.md",
+    "Diary/2026/W36.md",
+    "Diary/2026/20260915.md",
+    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
     "思想思维心理哲学/爱情/摄影/DW_摄影.md",
+    "语言学习/德语/公共知识语法/句子成分 结构.md",
+    "思想思维心理哲学/爱情/摄影/一本摄影书/第四章 点线面的运用.md",
+    "思想思维心理哲学/爱情/摄影/一本摄影书/第三章 构图法则.md",
     "思想思维心理哲学/爱情/摄影/一本摄影书/点线面的运用1.md",
     "语言学习/德语/单词/生词/26-9.md",
-    "语言学习/德语/公共知识语法/句子成分 结构.md",
     "语言学习/德语/公共知识语法/时态/第一将来时, 第二将来时.md",
     "语言学习/德语/单词/生词/高频形近易错词.md",
     "语言学习/德语/单词/生词/新闻高频词.md",
@@ -405,13 +397,9 @@
     "语言学习/德语/德国所有历史政治经济等合集/政党/CDU.md",
     "assets/Pasted Image 20260913164152_108.png",
     "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
-    "语言学习/德语/德国所有历史政治经济等合集/未命名.md",
     "语言学习/德语/德国所有历史政治经济等合集/政党",
-    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/德国所有历史政治经济等合集",
-    "电脑、软件、系统/ps-tang.md",
     "assets/image-490.png",
-    "思想思维心理哲学/爱情/咖啡/“极简促智咖啡”实操手册.md",
     "assets/萨莉的柠檬水摊.html",
     "copilot/skills/openartifacts-publish/openartifacts-publish.ps1",
     "copilot/skills/openartifacts-publish/openartifacts-publish.cmd",
