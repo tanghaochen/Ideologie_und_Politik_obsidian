@@ -93,7 +93,7 @@ flowchart TD
 |**machen** (做)|mach|**gemacht**|**行政事务：** Ich habe einen Termin bei der Ausländerbehörde **gemacht**. (我在外管局预约了时间。)|
 |**arbeiten** (工作)|arbeit|**gearbeitet**|**求职：** Ich habe drei Jahre als Ingenieur **gearbeitet**. (我作为工程师工作了三年。)|
 
-##### 4. 可分动词（Trennbare Verben）：“ge” 被夹在中间
+##### 4. 可分动词（Trennbare Verben）：“ge” 被夹在中间 "en->t"
 
 在处理带有可分前缀（如 `ab-`, `an-`, `auf-`, `aus-`, `mit-`, `zu-` 等）的动词时，`ge-` 这个前缀会像一片火腿一样，被硬生生地塞进前缀和动词核心之间。核心动词的变化依然遵循上述规则（规则、不规则或混合）。
 
