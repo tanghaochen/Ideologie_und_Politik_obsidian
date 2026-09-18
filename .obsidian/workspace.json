@@ -33,6 +33,7 @@
           {
             "id": "a46b96b53bf7c39c",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
@@ -41,6 +42,7 @@
                 "source": false,
                 "backlinks": false
               },
+              "pinned": true,
               "icon": "lucide-file",
               "title": "未命名"
             }
