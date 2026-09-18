@@ -9,6 +9,21 @@
         "dimension": 45.96888260254597,
         "children": [
           {
+            "id": "e92494d8d9456341",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/柏林广场视频笔记/B1/30 形容词比较级和最高级.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "30 形容词比较级和最高级"
+            }
+          },
+          {
             "id": "4268ae6a82e431e1",
             "type": "leaf",
             "state": {
@@ -62,14 +77,28 @@
               "title": "从句"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       },
       {
         "id": "d5a252b342c9ae29",
         "type": "tabs",
         "dimension": 54.03111739745403,
         "children": [
+          {
+            "id": "ab0a4689ea09b3c9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "81 形容词和比较级 最高级 与 第一格"
+            }
+          },
           {
             "id": "34576279ca9043d7",
             "type": "leaf",
@@ -145,8 +174,7 @@
               "title": "系动词"
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "vertical"
@@ -421,8 +449,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "7f840c71b404a9a1",
+  "active": "ab0a4689ea09b3c9",
   "lastOpenFiles": [
+    "语言学习/德语/柏林广场视频笔记/B1/30 形容词比较级和最高级.md",
+    "语言学习/德语/公共知识语法/2动词/系动词.md",
     "语言学习/德语/单词/生词/26-9.md",
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/从句.md",
@@ -434,7 +464,6 @@
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
     "语言学习/德语/德国所有历史政治经济等合集/政党/得票.md",
     "assets/image-492.png",
-    "语言学习/德语/公共知识语法/2动词/系动词.md",
     "电脑、软件、系统/AI提示吃/AI德语对话提示词.md",
     "Diary/2026/20260915.md",
     "语言学习/德语/公共知识语法/2动词/第二分词;过去分词 ge....md",
@@ -450,7 +479,6 @@
     "语言学习/德语/公共知识语法/时态/第一将来时, 第二将来时.md",
     "语言学习/德语/单词/生词/高频形近易错词.md",
     "语言学习/德语/单词/生词/新闻高频词.md",
-    "语言学习/德语/单词/生词/26-8.md",
     "assets/image-491.png",
     "营养学以及养生/工具",
     "assets/Pasted Image 20260913164927_037.png",
