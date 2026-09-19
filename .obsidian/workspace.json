@@ -333,8 +333,7 @@
       "realclaudian:Open Claudian": false,
       "agent-client:Open agent client": false,
       "copilot:Open Copilot Agent Chat": false,
-      "notebook-navigator:Notebook Navigator": false,
-      "periodic-notes:Open today": false
+      "notebook-navigator:Notebook Navigator": false
     }
   },
   "active": "a46b96b53bf7c39c",
