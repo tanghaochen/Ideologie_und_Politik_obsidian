@@ -61,35 +61,20 @@
         "dimension": 54.03111739745404,
         "children": [
           {
-            "id": "acf6c1bc966223aa",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "网络/项目服务器/googlecloud已有节点.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "googlecloud已有节点"
-            }
-          },
-          {
             "id": "a46b96b53bf7c39c",
             "type": "leaf",
             "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
+                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/写作.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "pinned": true,
               "icon": "lucide-file",
-              "title": "未命名"
+              "title": "写作"
             }
           },
           {
@@ -382,10 +367,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "acf6c1bc966223aa",
+  "active": "a46b96b53bf7c39c",
   "lastOpenFiles": [
+    "网络/项目服务器/googlecloud已有节点.md",
     "网络/项目服务器/个人网站服务器.md",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/写作.md",
     "思想思维心理哲学/学习本身/《认知天性》.md",
     "语言学习/德语/德国所有历史政治经济等合集/政党/CDU.md",
     "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
@@ -411,7 +397,6 @@
     "语言学习/德语/柏林广场视频笔记/A1/54 超市购物相关 与 量词和名词复数.md",
     "Diary/2026/20260831.md",
     "思想思维心理哲学/爱情/摄影/DW_摄影.md",
-    "语言学习/德语/公共知识语法/句子成分 结构.md",
     "assets/image-491.png",
     "营养学以及养生/工具",
     "assets/Pasted Image 20260913164927_037.png",
