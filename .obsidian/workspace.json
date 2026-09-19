@@ -9,6 +9,21 @@
         "dimension": 45.96888260254596,
         "children": [
           {
+            "id": "4cf90ac3e8979dff",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "网络/项目服务器/个人网站服务器.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "个人网站服务器"
+            }
+          },
+          {
             "id": "6fa32cca3d108527",
             "type": "leaf",
             "state": {
@@ -45,6 +60,21 @@
         "type": "tabs",
         "dimension": 54.03111739745404,
         "children": [
+          {
+            "id": "acf6c1bc966223aa",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "网络/项目服务器/googlecloud已有节点.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "googlecloud已有节点"
+            }
+          },
           {
             "id": "a46b96b53bf7c39c",
             "type": "leaf",
@@ -352,8 +382,9 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "6fa32cca3d108527",
+  "active": "acf6c1bc966223aa",
   "lastOpenFiles": [
+    "网络/项目服务器/个人网站服务器.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
     "思想思维心理哲学/学习本身/《认知天性》.md",
     "语言学习/德语/德国所有历史政治经济等合集/政党/CDU.md",
@@ -381,7 +412,6 @@
     "Diary/2026/20260831.md",
     "思想思维心理哲学/爱情/摄影/DW_摄影.md",
     "语言学习/德语/公共知识语法/句子成分 结构.md",
-    "思想思维心理哲学/爱情/摄影/一本摄影书/第四章 点线面的运用.md",
     "assets/image-491.png",
     "营养学以及养生/工具",
     "assets/Pasted Image 20260913164927_037.png",
