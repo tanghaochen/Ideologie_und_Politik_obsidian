@@ -61,6 +61,21 @@
         "dimension": 54.03111739745404,
         "children": [
           {
+            "id": "0c1c9412aba8e4d2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "obsidian样式技巧"
+            }
+          },
+          {
             "id": "a46b96b53bf7c39c",
             "type": "leaf",
             "pinned": true,
@@ -367,11 +382,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "a46b96b53bf7c39c",
+  "active": "0c1c9412aba8e4d2",
   "lastOpenFiles": [
-    "网络/项目服务器/googlecloud已有节点.md",
     "网络/项目服务器/个人网站服务器.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/写作.md",
+    "网络/项目服务器/googlecloud已有节点.md",
     "思想思维心理哲学/学习本身/《认知天性》.md",
     "语言学习/德语/德国所有历史政治经济等合集/政党/CDU.md",
     "语言学习/德语/学习记录日记-技巧/德语学习规划.md",

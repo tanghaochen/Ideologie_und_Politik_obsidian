@@ -6212,12 +6212,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 14,
-        "ch": 37
+        "line": 30,
+        "ch": 0
       },
       "to": {
-        "line": 14,
-        "ch": 37
+        "line": 30,
+        "ch": 0
       }
     },
     "expandedKeys": []
@@ -9698,15 +9698,15 @@
     ]
   },
   "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md": {
-    "scroll": 0,
+    "scroll": 15.14564375443892,
     "cursor": {
       "from": {
-        "line": 12,
-        "ch": 31
+        "line": 41,
+        "ch": 24
       },
       "to": {
-        "line": 12,
-        "ch": 31
+        "line": 40,
+        "ch": 0
       }
     },
     "expandedKeys": []
@@ -17672,5 +17672,17 @@
       }
     },
     "scroll": 164.1929778765538
+  },
+  "语言学习/德语/学习记录日记-技巧/Lerntagbuch/写作.md": {
+    "cursor": {
+      "from": {
+        "line": 21,
+        "ch": 8
+      },
+      "to": {
+        "line": 21,
+        "ch": 8
+      }
+    }
   }
 }
