@@ -8,6 +8,21 @@
         "type": "tabs",
         "children": [
           {
+            "id": "0e8abf210f2aedee",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "全面讲解否定，nein,kein,nicht等"
+            }
+          },
+          {
             "id": "02ad04451b8e5a89",
             "type": "leaf",
             "state": {
@@ -43,6 +58,36 @@
         "id": "18cfb5ab0b8e42b0",
         "type": "tabs",
         "children": [
+          {
+            "id": "1eaf3b4d195037b0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/连词成对.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "连词成对"
+            }
+          },
+          {
+            "id": "28d30f3d74a3f58c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/学习记录日记-技巧/电商.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "电商"
+            }
+          },
           {
             "id": "97e0e205ae9ced77",
             "type": "leaf",
@@ -346,9 +391,12 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "97e0e205ae9ced77",
+  "active": "1eaf3b4d195037b0",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
+    "语言学习/德语/学习记录日记-技巧/电商.md",
     "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
+    "语言学习/德语/公共知识语法/2动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/写作.md",
     "营养学以及养生/症状/失眠难入睡，睡眠质量低.md",
     "思想思维心理哲学/健身/睡前准备.md",
@@ -373,9 +421,6 @@
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
     "语言学习/德语/德国所有历史政治经济等合集/政党/得票.md",
     "assets/image-492.png",
-    "Diary/2026/20260915.md",
-    "语言学习/德语/公共知识语法/2动词/第二分词;过去分词 ge....md",
-    "Diary/2026/W36.md",
     "assets/image-491.png",
     "营养学以及养生/工具",
     "assets/Pasted Image 20260913164927_037.png",

@@ -17,7 +17,6 @@ aliases:
 
 > 💡 **大师提示**：除了现在时变化 du/第三行 er/sie/es，其他都是词干变化 u / e / ü + 固定后缀变化。
 
-
 |**人称**|**现在时 (Präsens)(当下)**|**过去时 (Präteritum)(过去)**|**现在完成时 (Perfekt)(过去已发生)**|**过去完成时 (Plusquamperfekt)(过去的过去)**|**第一将来时 (Futur I)(将来/猜测)**|**第二将来时 (Futur II)(将来已完成)**|
 |---|---|---|---|---|---|---|
 |**ich**|werde|wurde|bin geworden|war geworden|werde werden|werde geworden sein|
@@ -177,3 +176,29 @@ graph TD
 在接下来的学习里，我建议你在阅读任何德语新闻、或是信箱里收到的信件时，拿起荧光笔，把所有包含 `werden/wurde/worden/geworden/würde` 的句子划出来，并问自己：**它在我的哪一个矩阵里？** 只要坚持刻意练习，你的长难句拆解能力将会有质的飞跃。
 
 稳扎稳打，六个月突破 B 2 绝对不是梦！当你准备好了，我们再来攻克下一座语法堡垒！Viel Erfolg! (祝你成功！)
+
+# 区分第一将来时和现在时
+
+^eov25g
+
+德语的 `werden` 确实是一个“多面手”。无论它在句子中扮演什么角色，它的变位（ich werde, du wirst, er wird...）是一模一样的。但是，区分它的不同时态和用法有一个绝对可靠的黄金法则：**直接看句子的最后面**。
+
+德语的核心句法特征之一是“框形结构”（Rahmenstruktur）。`werden` 永远占据句子的第二位，而句末的词汇决定了 `werden` 的真正身份。为了让你彻底掌握，我们直接看规则和针对移民生活的实战例句。
+
+### 现在时（Präsens）：实义动词
+
+**规则**：当 `werden` 作为完整的实义动词（Vollverb）表示“成为”或“变得”时，**句末没有其他任何动词**。它后面通常跟着的是形容词或名词。
+
+- **生活场景例句**：
+    - _Mein Visum **wird** bald ungültig._ （我的签证很快就**要失效了**。—— 句末是形容词 `ungültig`，表示状态的改变）
+    - _Er **wird** nächstes Jahr Abteilungsleiter._ （他明年**将成为**部门主管。—— 句末是名词 `Abteilungsleiter`，表示身份的改变）
+    - _Das Wetter in Deutschland **wird** im November sehr kalt._ （德国的天气在十一月**会变得**很冷。—— 句末是形容词 `kalt`）
+
+### 第一将来时（Futur I）：助动词
+
+**规则**：当 `werden` 用于第一将来时（表示未来将要发生的动作或强烈的意愿）时，它只充当助动词（Hilfsverb）。**句末必须有一个动词原形（Infinitiv）**。
+
+- **生活场景例句**：
+    - _Ich **werde** morgen früh beim Bürgeramt meinen Wohnsitz **anmelden**._ （我明早**将要在**行政办事处**登记**我的住址。—— 句末是动词原形 `anmelden`）
+    - _Der Vermieter **wird** den Mietvertrag heute Nachmittag per E-Mail **schicken**._ （房东今天下午**将**通过电子邮件**发送**租房合同。—— 句末是动词原形 `schicken`）
+    - _Wir **werden** nächste Woche eine neue Wohnung **suchen**._ （我们下周**将会寻找**一套新公寓。—— 句末是动词原形 `suchen`）
