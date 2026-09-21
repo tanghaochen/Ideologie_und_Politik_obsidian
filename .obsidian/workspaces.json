@@ -6,129 +6,154 @@
         "type": "split",
         "children": [
           {
-            "id": "afad75680372aa9c",
+            "id": "d5a252b342c9ae29",
             "type": "tabs",
-            "dimension": 50.346588836191174,
+            "dimension": 65.53512494106553,
             "children": [
               {
-                "id": "86b27dfd2c2b0627",
-                "type": "leaf",
-                "pinned": true,
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/柏林广场视频笔记/A1/40 第四格补足语及定冠词的变化.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": true,
-                    "backlinkOpts": {
-                      "collapseAll": false,
-                      "extraContext": false,
-                      "sortOrder": "alphabetical",
-                      "showSearch": false,
-                      "searchQuery": "",
-                      "backlinkCollapsed": false,
-                      "unlinkedCollapsed": true
-                    }
-                  },
-                  "pinned": true,
-                  "icon": "lucide-file",
-                  "title": "40 第四格补足语及定冠词的变化"
-                }
-              },
-              {
-                "id": "0640ecd2bd24a3bd",
-                "type": "leaf",
-                "pinned": true,
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": true,
-                    "backlinkOpts": {
-                      "collapseAll": false,
-                      "extraContext": false,
-                      "sortOrder": "alphabetical",
-                      "showSearch": false,
-                      "searchQuery": "",
-                      "backlinkCollapsed": false,
-                      "unlinkedCollapsed": true
-                    }
-                  },
-                  "pinned": true,
-                  "icon": "lucide-file",
-                  "title": "⭐必背所有知识点整理考察整理"
-                }
-              }
-            ]
-          },
-          {
-            "id": "dd4130c5419b5527",
-            "type": "tabs",
-            "dimension": 49.65341116380883,
-            "children": [
-              {
-                "id": "55f6f407a316eb33",
-                "type": "leaf",
-                "pinned": true,
-                "state": {
-                  "type": "pdf",
-                  "state": {
-                    "file": "语言学习/德语/教材/柏林广场/柏林广场  1  学生用书  新版.pdf",
-                    "page": 85,
-                    "left": -10,
-                    "top": 160,
-                    "zoom": 1.6516653962676675
-                  },
-                  "pinned": true,
-                  "icon": "lucide-file-text",
-                  "title": "柏林广场  1  学生用书  新版"
-                }
-              },
-              {
-                "id": "9cc84feeaa6ce640",
-                "type": "leaf",
-                "state": {
-                  "type": "pdf",
-                  "state": {
-                    "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
-                    "page": 32,
-                    "left": -46,
-                    "top": 285,
-                    "zoom": 1.6656688599415241
-                  },
-                  "icon": "lucide-file-text",
-                  "title": "德语语法 活学活用 A1-B1"
-                }
-              },
-              {
-                "id": "5359541883c54a2d",
+                "id": "66a2af9617287190",
                 "type": "leaf",
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "语言学习/德语/公共知识语法/格 与 介词 动词的固定搭配.md",
+                    "file": "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
                     "mode": "source",
                     "source": false,
-                    "backlinks": true,
-                    "backlinkOpts": {
-                      "collapseAll": false,
-                      "extraContext": false,
-                      "sortOrder": "alphabetical",
-                      "showSearch": false,
-                      "searchQuery": "",
-                      "backlinkCollapsed": false,
-                      "unlinkedCollapsed": true
-                    }
+                    "backlinks": false
                   },
                   "icon": "lucide-file",
-                  "title": "格 与 介词 动词的固定搭配"
+                  "title": "第3章 图形和摄影元素"
+                }
+              },
+              {
+                "id": "fbc2ee69a28aaa14",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/公共知识语法/10句型/疑问句/间接疑问句.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "间接疑问句"
+                }
+              },
+              {
+                "id": "39792b553b35e8c9",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/公共知识语法/10句型/疑问句/疑问词.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "疑问词"
+                }
+              },
+              {
+                "id": "b50e08618177499a",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/柏林广场视频笔记/A1/8  特殊疑问词wo和介词in_笔记.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "8  特殊疑问词wo和介词in_笔记"
+                }
+              },
+              {
+                "id": "9c4ca6fc4729fde1",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "背单词-数量与范围频率可能性确定性程度必要性重要性"
+                }
+              },
+              {
+                "id": "90e20b58fcc19d1d",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "思想思维心理哲学/爱情/摄影/一本摄影书/第四章 点线面的运用.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "第四章 点线面的运用"
+                }
+              },
+              {
+                "id": "691f529847c83a63",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/单词/生词/26-9.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "26-9"
                 }
               }
             ],
-            "currentTab": 2
+            "currentTab": 5
+          },
+          {
+            "id": "18cfb5ab0b8e42b0",
+            "type": "tabs",
+            "dimension": 34.46487505893446,
+            "children": [
+              {
+                "id": "2c8e1f8ba66f2055",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/柏林广场视频笔记/A1/知识点解答/各种疑问句区别.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "各种疑问句区别"
+                }
+              },
+              {
+                "id": "a46b96b53bf7c39c",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/写作.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "写作"
+                }
+              }
+            ]
           }
         ],
         "direction": "vertical"
@@ -142,16 +167,13 @@
             "type": "tabs",
             "children": [
               {
-                "id": "56aec1574e68adfb",
+                "id": "4f2c85b5efb02241",
                 "type": "leaf",
                 "state": {
-                  "type": "file-explorer",
-                  "state": {
-                    "sortOrder": "alphabetical",
-                    "autoReveal": true
-                  },
-                  "icon": "lucide-folder-closed",
-                  "title": "文件列表"
+                  "type": "notebook-navigator",
+                  "state": {},
+                  "icon": "notebook-navigator",
+                  "title": "Notebook Navigator"
                 }
               },
               {
@@ -159,19 +181,12 @@
                 "type": "leaf",
                 "state": {
                   "type": "bookmarks",
-                  "state": {},
+                  "state": {
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
                   "icon": "lucide-bookmark",
                   "title": "书签"
-                }
-              },
-              {
-                "id": "fa32035546bb2f1f",
-                "type": "leaf",
-                "state": {
-                  "type": "file-tree-view",
-                  "state": {},
-                  "icon": "sheets-in-box",
-                  "title": "File Tree"
                 }
               },
               {
@@ -180,7 +195,7 @@
                 "state": {
                   "type": "search",
                   "state": {
-                    "query": "",
+                    "query": "tag:#vLeben",
                     "matchingCase": true,
                     "explainSearch": false,
                     "collapseAll": false,
@@ -198,14 +213,14 @@
                   "type": "recent-files",
                   "state": {},
                   "icon": "clock",
-                  "title": "Recent Files"
+                  "title": "Recent files"
                 }
               }
             ]
           }
         ],
         "direction": "horizontal",
-        "width": 507.5124969482422
+        "width": 399.1125030517578
       },
       "right": {
         "id": "b2bf97bc0c7f8080",
@@ -214,55 +229,8 @@
           {
             "id": "0ed9c27411998641",
             "type": "tabs",
+            "dimension": 75.59779276517474,
             "children": [
-              {
-                "id": "a49850edf51b35c5",
-                "type": "leaf",
-                "state": {
-                  "type": "backlink",
-                  "state": {
-                    "file": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-                    "collapseAll": true,
-                    "extraContext": false,
-                    "sortOrder": "alphabetical",
-                    "showSearch": false,
-                    "searchQuery": "",
-                    "backlinkCollapsed": false,
-                    "unlinkedCollapsed": false
-                  },
-                  "icon": "links-coming-in",
-                  "title": "⭐必背所有知识点整理考察整理 的反向链接列表"
-                }
-              },
-              {
-                "id": "ecbd8a769d2b5ffc",
-                "type": "leaf",
-                "state": {
-                  "type": "outgoing-link",
-                  "state": {
-                    "file": "语言学习/德语/柏林广场视频笔记/A1/53 师太时态 二分词.md",
-                    "linksCollapsed": false,
-                    "unlinkedCollapsed": true
-                  },
-                  "icon": "links-going-out",
-                  "title": "53 师太时态 二分词 的出链列表"
-                }
-              },
-              {
-                "id": "77d72b1a27fea44a",
-                "type": "leaf",
-                "state": {
-                  "type": "outline",
-                  "state": {
-                    "file": "语言学习/德语/⭐必背所有知识点整理考察整理.md",
-                    "followCursor": false,
-                    "showSearch": false,
-                    "searchQuery": ""
-                  },
-                  "icon": "lucide-list",
-                  "title": "⭐必背所有知识点整理考察整理 的大纲"
-                }
-              },
               {
                 "id": "dd8c0de9236cf3b8",
                 "type": "leaf",
@@ -274,131 +242,192 @@
                 }
               },
               {
-                "id": "80277af3735ca63b",
-                "type": "leaf",
-                "state": {
-                  "type": "highlights-sidebar",
-                  "state": {},
-                  "icon": "highlighter",
-                  "title": "Highlights"
-                }
-              },
-              {
-                "id": "14d0006259a2f607",
+                "id": "36c96029ae4dd065",
                 "type": "leaf",
                 "pinned": true,
                 "state": {
-                  "type": "hinote-view",
+                  "type": "copilot-chat-view",
                   "state": {},
                   "pinned": true,
-                  "icon": "highlighter",
-                  "title": "HiNote"
+                  "icon": "message-square",
+                  "title": "Copilot (Quick Chat)"
                 }
               },
               {
-                "id": "adea512e898ad314",
+                "id": "fc8efd10765ae511",
                 "type": "leaf",
                 "state": {
-                  "type": "excalidraw-sidepanel",
+                  "type": "git-view",
                   "state": {},
-                  "icon": "excalidraw-icon",
-                  "title": "Excalidraw 侧边面板"
+                  "icon": "git-pull-request",
+                  "title": "Source Control"
+                }
+              },
+              {
+                "id": "2cc3d386c974b5b6",
+                "type": "leaf",
+                "state": {
+                  "type": "git-history-view",
+                  "state": {},
+                  "icon": "history",
+                  "title": "History"
+                }
+              },
+              {
+                "id": "d3ec81ed4c00a968",
+                "type": "leaf",
+                "state": {
+                  "type": "advanced-tables-toolbar",
+                  "state": {},
+                  "icon": "spreadsheet",
+                  "title": "Advanced Tables"
+                }
+              },
+              {
+                "id": "cf2b910cbf6b6677",
+                "type": "leaf",
+                "state": {
+                  "type": "file-properties",
+                  "state": {
+                    "file": "思想思维心理哲学/个人问题处理/芜湖.md"
+                  },
+                  "icon": "lucide-info",
+                  "title": "笔记属性"
+                }
+              },
+              {
+                "id": "7492b847e238b9e1",
+                "type": "leaf",
+                "state": {
+                  "type": "calendar",
+                  "state": {},
+                  "icon": "calendar-with-checkmark",
+                  "title": "Calendar"
+                }
+              },
+              {
+                "id": "7bcc90c64e14a360",
+                "type": "leaf",
+                "state": {
+                  "type": "mxmind-view",
+                  "state": {},
+                  "icon": "network",
+                  "title": "Mxmind"
+                }
+              },
+              {
+                "id": "0f758d49a646ce9e",
+                "type": "leaf",
+                "state": {
+                  "type": "tag",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "useHierarchy": true,
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-tags",
+                  "title": "标签"
+                }
+              },
+              {
+                "id": "2166e25004a3aa52",
+                "type": "leaf",
+                "state": {
+                  "type": "all-properties",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-archive",
+                  "title": "添加笔记属性"
+                }
+              }
+            ]
+          },
+          {
+            "id": "28e75bfc7e894da7",
+            "type": "tabs",
+            "dimension": 24.40220723482526,
+            "children": [
+              {
+                "id": "c3592eded90586bf",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "file-properties",
+                  "state": {
+                    "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
+                  },
+                  "pinned": true,
+                  "icon": "lucide-info",
+                  "title": "语法快查必背语法canvas的笔记属性"
+                }
+              },
+              {
+                "id": "5020f6b7d22ceb0b",
+                "type": "leaf",
+                "state": {
+                  "type": "footnotes",
+                  "state": {
+                    "file": "思想思维心理哲学/个人问题处理/芜湖.md"
+                  },
+                  "icon": "lucide-file-signature",
+                  "title": "脚注"
+                }
+              },
+              {
+                "id": "e377fe748686f28e",
+                "type": "leaf",
+                "state": {
+                  "type": "notebook-navigator-calendar",
+                  "state": {},
+                  "icon": "lucide-calendar-days",
+                  "title": "日历"
                 }
               }
             ],
-            "currentTab": 3
+            "currentTab": 2
           }
         ],
         "direction": "horizontal",
-        "width": 511.5
+        "width": 507.5
       },
       "left-ribbon": {
         "hiddenItems": {
-          "sidebar-highlights:Open highlights": false,
-          "obsidian-to-anki-plugin:Obsidian_to_Anki - Scan Vault": false,
-          "templates:插入模板": false,
-          "bases:新建数据库": true,
-          "mermaid-tools:Open Mermaid Toolbar": false,
-          "switcher:打开快速切换": true,
+          "media-extended:打开媒体库": true,
+          "media-extended:打开媒体快速切换器": true,
+          "mermaid-tools:Open Mermaid Toolbar": true,
           "canvas:新建白板": true,
-          "graph:查看关系图谱": false,
-          "daily-notes:打开/创建今天的日记": true,
-          "command-palette:打开命令面板": true,
-          "zk-prefixer:创建时间戳笔记": true,
-          "omnisearch:Omnisearch": false,
-          "webpage-html-export:导出为HTML": true,
-          "obsidian-excalidraw-plugin:新建绘图文件": true,
-          "pdf-plus:PDF++: Toggle auto-copy": false,
-          "pdf-plus:PDF++: Toggle auto-focus": false,
-          "pdf-plus:PDF++: Toggle auto-paste": false,
+          "omnisearch:Omnisearch": true,
+          "pdf-plus:PDF++: Toggle auto-copy": true,
+          "pdf-plus:PDF++: Toggle auto-focus": true,
+          "pdf-plus:PDF++: Toggle auto-paste": true,
           "workspaces:管理工作区布局": false,
           "templater-obsidian:Templater": false,
-          "file-tree-alternative:File Tree Alternative Plugin": false,
-          "table-editor-obsidian:Advanced Tables Toolbar": false,
-          "mxmind:Mxmind": false,
-          "audio-recorder:开始/结束录音": false,
-          "copilot:Open Copilot Chat": true,
-          "obsidian-local-images-plus:Local Images Plus  0.16.4\r\nLocalize attachments (plugin folder)": false,
-          "markdown-importer:打开 Markdown 格式转换器": false,
-          "hi-note:HiNote": false,
-          "media-extended:Open external media": false,
-          "obsidian-git:Open Git source control": false
+          "table-editor-obsidian:Advanced Tables Toolbar": true,
+          "mxmind:Mxmind": true,
+          "audio-recorder:开始/结束录音": true,
+          "obsidian-local-images-plus:Local Images Plus  0.16.4\r\nLocalize attachments (plugin folder)": true,
+          "markdown-importer:打开 Markdown 格式转换器": true,
+          "obsidian-git:Open Git source control": true,
+          "pexels-banner:🚩 Pixel Banner Menu": true,
+          "vscode-editor:新建代码文件": true,
+          "darlal-switcher-plus:Open in Headings Mode": true,
+          "darlal-switcher-plus:Open Symbols for the active editor": true,
+          "command-palette:打开命令面板": true,
+          "daily-notes:打开/创建今天的日记": false,
+          "obsidian-excalidraw-plugin:新建绘图文件": false,
+          "realclaudian:Open Claudian": false,
+          "agent-client:Open agent client": false,
+          "copilot:Open Copilot Agent Chat": false,
+          "notebook-navigator:Notebook Navigator": false,
+          "periodic-notes:Open today": false
         }
       },
-      "floating": {
-        "id": "a5e04a20c46c49f9",
-        "type": "floating",
-        "children": [
-          {
-            "id": "200c26763ecc2158",
-            "type": "window",
-            "children": [
-              {
-                "id": "00a008ee47ecd7c3",
-                "type": "tabs",
-                "children": [
-                  {
-                    "id": "1382e333b48a5b9e",
-                    "type": "leaf",
-                    "state": {
-                      "type": "excalidraw",
-                      "state": {
-                        "file": "语言学习/德语/公共知识语法/⭐✍️语法快查必背语法，表格canvas.md"
-                      },
-                      "icon": "excalidraw-icon",
-                      "title": "⭐✍️语法快查必背语法，表格canvas"
-                    }
-                  },
-                  {
-                    "id": "87a35d295189a297",
-                    "type": "leaf",
-                    "pinned": true,
-                    "state": {
-                      "type": "excalidraw",
-                      "state": {
-                        "file": "语言学习/德语/公共知识语法/⭐✍️德语语法结构Canvas.md"
-                      },
-                      "pinned": true,
-                      "icon": "excalidraw-icon",
-                      "title": "⭐✍️德语语法结构Canvas"
-                    }
-                  }
-                ],
-                "currentTab": 1
-              }
-            ],
-            "direction": "vertical",
-            "x": 2796,
-            "y": 205,
-            "width": 1144,
-            "height": 1393,
-            "maximize": true,
-            "zoom": -1.5
-          }
-        ]
-      },
-      "active": "5359541883c54a2d",
-      "mtime": "2026-03-19T21:01:09+08:00"
+      "active": "90e20b58fcc19d1d",
+      "mtime": "2026-09-22T01:00:13+08:00"
     },
     "PDF": {
       "main": {
@@ -1328,7 +1357,436 @@
       },
       "active": "4873ec5da53b302f",
       "mtime": "2025-12-11T10:57:47+08:00"
+    },
+    "摄影": {
+      "main": {
+        "id": "f5de525c029043e4",
+        "type": "split",
+        "children": [
+          {
+            "id": "d5a252b342c9ae29",
+            "type": "tabs",
+            "dimension": 65.53512494106553,
+            "children": [
+              {
+                "id": "66a2af9617287190",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "第3章 图形和摄影元素"
+                }
+              },
+              {
+                "id": "fbc2ee69a28aaa14",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/公共知识语法/10句型/疑问句/间接疑问句.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "间接疑问句"
+                }
+              },
+              {
+                "id": "39792b553b35e8c9",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/公共知识语法/10句型/疑问句/疑问词.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "疑问词"
+                }
+              },
+              {
+                "id": "b50e08618177499a",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/柏林广场视频笔记/A1/8  特殊疑问词wo和介词in_笔记.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "8  特殊疑问词wo和介词in_笔记"
+                }
+              },
+              {
+                "id": "9c4ca6fc4729fde1",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "背单词-数量与范围频率可能性确定性程度必要性重要性"
+                }
+              },
+              {
+                "id": "90e20b58fcc19d1d",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "思想思维心理哲学/爱情/摄影/一本摄影书/第四章 点线面的运用.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "第四章 点线面的运用"
+                }
+              },
+              {
+                "id": "691f529847c83a63",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/单词/生词/26-9.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "26-9"
+                }
+              }
+            ],
+            "currentTab": 5
+          },
+          {
+            "id": "18cfb5ab0b8e42b0",
+            "type": "tabs",
+            "dimension": 34.46487505893446,
+            "children": [
+              {
+                "id": "2c8e1f8ba66f2055",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/柏林广场视频笔记/A1/知识点解答/各种疑问句区别.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "各种疑问句区别"
+                }
+              },
+              {
+                "id": "a46b96b53bf7c39c",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/写作.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "写作"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "vertical"
+      },
+      "left": {
+        "id": "dde9718a6f30ff5d",
+        "type": "split",
+        "children": [
+          {
+            "id": "69b90f7608974d6b",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "4f2c85b5efb02241",
+                "type": "leaf",
+                "state": {
+                  "type": "notebook-navigator",
+                  "state": {},
+                  "icon": "notebook-navigator",
+                  "title": "Notebook Navigator"
+                }
+              },
+              {
+                "id": "abbd6433f71b711a",
+                "type": "leaf",
+                "state": {
+                  "type": "bookmarks",
+                  "state": {
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-bookmark",
+                  "title": "书签"
+                }
+              },
+              {
+                "id": "2bdbb354e1190468",
+                "type": "leaf",
+                "state": {
+                  "type": "search",
+                  "state": {
+                    "query": "tag:#vLeben",
+                    "matchingCase": true,
+                    "explainSearch": false,
+                    "collapseAll": false,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical"
+                  },
+                  "icon": "lucide-search",
+                  "title": "搜索"
+                }
+              },
+              {
+                "id": "232e94f80ffd93ce",
+                "type": "leaf",
+                "state": {
+                  "type": "recent-files",
+                  "state": {},
+                  "icon": "clock",
+                  "title": "Recent files"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "horizontal",
+        "width": 399.1125030517578
+      },
+      "right": {
+        "id": "b2bf97bc0c7f8080",
+        "type": "split",
+        "children": [
+          {
+            "id": "0ed9c27411998641",
+            "type": "tabs",
+            "dimension": 75.59779276517474,
+            "children": [
+              {
+                "id": "dd8c0de9236cf3b8",
+                "type": "leaf",
+                "state": {
+                  "type": "quiet-outline",
+                  "state": {},
+                  "icon": "lines-of-text",
+                  "title": "Quiet Outline"
+                }
+              },
+              {
+                "id": "36c96029ae4dd065",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "copilot-chat-view",
+                  "state": {},
+                  "pinned": true,
+                  "icon": "message-square",
+                  "title": "Copilot (Quick Chat)"
+                }
+              },
+              {
+                "id": "fc8efd10765ae511",
+                "type": "leaf",
+                "state": {
+                  "type": "git-view",
+                  "state": {},
+                  "icon": "git-pull-request",
+                  "title": "Source Control"
+                }
+              },
+              {
+                "id": "2cc3d386c974b5b6",
+                "type": "leaf",
+                "state": {
+                  "type": "git-history-view",
+                  "state": {},
+                  "icon": "history",
+                  "title": "History"
+                }
+              },
+              {
+                "id": "d3ec81ed4c00a968",
+                "type": "leaf",
+                "state": {
+                  "type": "advanced-tables-toolbar",
+                  "state": {},
+                  "icon": "spreadsheet",
+                  "title": "Advanced Tables"
+                }
+              },
+              {
+                "id": "cf2b910cbf6b6677",
+                "type": "leaf",
+                "state": {
+                  "type": "file-properties",
+                  "state": {
+                    "file": "思想思维心理哲学/个人问题处理/芜湖.md"
+                  },
+                  "icon": "lucide-info",
+                  "title": "笔记属性"
+                }
+              },
+              {
+                "id": "7492b847e238b9e1",
+                "type": "leaf",
+                "state": {
+                  "type": "calendar",
+                  "state": {},
+                  "icon": "calendar-with-checkmark",
+                  "title": "Calendar"
+                }
+              },
+              {
+                "id": "7bcc90c64e14a360",
+                "type": "leaf",
+                "state": {
+                  "type": "mxmind-view",
+                  "state": {},
+                  "icon": "network",
+                  "title": "Mxmind"
+                }
+              },
+              {
+                "id": "0f758d49a646ce9e",
+                "type": "leaf",
+                "state": {
+                  "type": "tag",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "useHierarchy": true,
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-tags",
+                  "title": "标签"
+                }
+              },
+              {
+                "id": "2166e25004a3aa52",
+                "type": "leaf",
+                "state": {
+                  "type": "all-properties",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-archive",
+                  "title": "添加笔记属性"
+                }
+              }
+            ]
+          },
+          {
+            "id": "28e75bfc7e894da7",
+            "type": "tabs",
+            "dimension": 24.40220723482526,
+            "children": [
+              {
+                "id": "c3592eded90586bf",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "file-properties",
+                  "state": {
+                    "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
+                  },
+                  "pinned": true,
+                  "icon": "lucide-info",
+                  "title": "语法快查必背语法canvas的笔记属性"
+                }
+              },
+              {
+                "id": "5020f6b7d22ceb0b",
+                "type": "leaf",
+                "state": {
+                  "type": "footnotes",
+                  "state": {
+                    "file": "思想思维心理哲学/个人问题处理/芜湖.md"
+                  },
+                  "icon": "lucide-file-signature",
+                  "title": "脚注"
+                }
+              },
+              {
+                "id": "e377fe748686f28e",
+                "type": "leaf",
+                "state": {
+                  "type": "notebook-navigator-calendar",
+                  "state": {},
+                  "icon": "lucide-calendar-days",
+                  "title": "日历"
+                }
+              }
+            ],
+            "currentTab": 2
+          }
+        ],
+        "direction": "horizontal",
+        "width": 507.5
+      },
+      "left-ribbon": {
+        "hiddenItems": {
+          "media-extended:打开媒体库": true,
+          "media-extended:打开媒体快速切换器": true,
+          "mermaid-tools:Open Mermaid Toolbar": true,
+          "canvas:新建白板": true,
+          "omnisearch:Omnisearch": true,
+          "pdf-plus:PDF++: Toggle auto-copy": true,
+          "pdf-plus:PDF++: Toggle auto-focus": true,
+          "pdf-plus:PDF++: Toggle auto-paste": true,
+          "workspaces:管理工作区布局": false,
+          "templater-obsidian:Templater": false,
+          "table-editor-obsidian:Advanced Tables Toolbar": true,
+          "mxmind:Mxmind": true,
+          "audio-recorder:开始/结束录音": true,
+          "obsidian-local-images-plus:Local Images Plus  0.16.4\r\nLocalize attachments (plugin folder)": true,
+          "markdown-importer:打开 Markdown 格式转换器": true,
+          "obsidian-git:Open Git source control": true,
+          "pexels-banner:🚩 Pixel Banner Menu": true,
+          "vscode-editor:新建代码文件": true,
+          "darlal-switcher-plus:Open in Headings Mode": true,
+          "darlal-switcher-plus:Open Symbols for the active editor": true,
+          "command-palette:打开命令面板": true,
+          "daily-notes:打开/创建今天的日记": false,
+          "obsidian-excalidraw-plugin:新建绘图文件": false,
+          "realclaudian:Open Claudian": false,
+          "agent-client:Open agent client": false,
+          "copilot:Open Copilot Agent Chat": false,
+          "notebook-navigator:Notebook Navigator": false,
+          "periodic-notes:Open today": false
+        }
+      },
+      "active": "90e20b58fcc19d1d",
+      "mtime": "2026-09-22T01:00:44+08:00"
     }
   },
-  "active": "1"
+  "active": "摄影"
 }
