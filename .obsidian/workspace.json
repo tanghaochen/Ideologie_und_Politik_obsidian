@@ -6,88 +6,43 @@
       {
         "id": "d5a252b342c9ae29",
         "type": "tabs",
-        "dimension": 41.53701084394154,
+        "dimension": 50,
         "children": [
           {
-            "id": "f9bc7c5aa4354d6a",
+            "id": "1bf41043e72f6333",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "营养学以及养生/工具/电陶炉.md",
+                "file": "语言学习/德语/学习记录日记-技巧/短文学习逻辑.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "电陶炉"
+              "title": "短文学习逻辑"
             }
           }
         ]
       },
       {
-        "id": "18cfb5ab0b8e42b0",
+        "id": "b400e570e6565cfe",
         "type": "tabs",
-        "dimension": 58.46298915605846,
+        "dimension": 50,
         "children": [
           {
-            "id": "4b2e3a6422b0617e",
+            "id": "bd982a2fec2a5a6f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "思想思维心理哲学/学习本身/情绪/宫本武藏.md",
+                "file": "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "宫本武藏"
-            }
-          },
-          {
-            "id": "494e559d491143ff",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "电脑、软件、系统/软件使用记录/zotero.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "zotero"
-            }
-          },
-          {
-            "id": "2c8e1f8ba66f2055",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/知识点解答/各种疑问句区别.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "各种疑问句区别"
-            }
-          },
-          {
-            "id": "a46b96b53bf7c39c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/写作.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "写作"
+              "title": "德语学习规划"
             }
           }
         ]
@@ -363,16 +318,19 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "4b2e3a6422b0617e",
+  "active": "bd982a2fec2a5a6f",
   "lastOpenFiles": [
+    "语言学习/德语/学习记录日记-技巧/短文学习逻辑.md",
+    "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
+    "语言学习/德语/学习记录日记-技巧/学习计划.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/写作.md",
     "营养学以及养生/工具/电陶炉.md",
-    "思想思维心理哲学/学习本身/情绪/宫本武藏.md",
+    "语言学习/德语/柏林广场视频笔记/A1/知识点解答/各种疑问句区别.md",
     "电脑、软件、系统/软件使用记录/zotero.md",
+    "思想思维心理哲学/学习本身/情绪/宫本武藏.md",
     "Diary/2026/20260922.md",
     "思想思维心理哲学/爱情/摄影/一本摄影书/第四章 点线面的运用.md",
     "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/写作.md",
-    "语言学习/德语/柏林广场视频笔记/A1/知识点解答/各种疑问句区别.md",
     "语言学习/德语/公共知识语法/10句型/疑问句/疑问词.md",
     "assets/image-493.png",
     "语言学习/德语/单词/生词/26-9.md",
@@ -389,9 +347,6 @@
     "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
     "网络/项目服务器/googlecloud已有节点.md",
     "思想思维心理哲学/学习本身/《认知天性》.md",
-    "语言学习/德语/德国所有历史政治经济等合集/政党/CDU.md",
-    "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
-    "电脑、软件、系统/AI提示吃/AI德语对话提示词.md",
     "思想思维心理哲学/学习本身/情绪",
     "assets/image-492.png",
     "assets/image-491.png",
