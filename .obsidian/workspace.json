@@ -6,126 +6,21 @@
       {
         "id": "d5a252b342c9ae29",
         "type": "tabs",
-        "dimension": 65.53512494106553,
+        "dimension": 41.53701084394154,
         "children": [
           {
-            "id": "0246c352690370b0",
+            "id": "f9bc7c5aa4354d6a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Diary/2026/20260922.md",
+                "file": "营养学以及养生/工具/电陶炉.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "20260922"
-            }
-          },
-          {
-            "id": "66a2af9617287190",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "第3章 图形和摄影元素"
-            }
-          },
-          {
-            "id": "fbc2ee69a28aaa14",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/疑问句/间接疑问句.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "间接疑问句"
-            }
-          },
-          {
-            "id": "39792b553b35e8c9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/疑问句/疑问词.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "疑问词"
-            }
-          },
-          {
-            "id": "b50e08618177499a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/柏林广场视频笔记/A1/8  特殊疑问词wo和介词in_笔记.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "8  特殊疑问词wo和介词in_笔记"
-            }
-          },
-          {
-            "id": "9c4ca6fc4729fde1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "背单词-数量与范围频率可能性确定性程度必要性重要性"
-            }
-          },
-          {
-            "id": "90e20b58fcc19d1d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/爱情/摄影/一本摄影书/第四章 点线面的运用.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "第四章 点线面的运用"
-            }
-          },
-          {
-            "id": "691f529847c83a63",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/单词/生词/26-9.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "26-9"
+              "title": "电陶炉"
             }
           }
         ]
@@ -133,8 +28,23 @@
       {
         "id": "18cfb5ab0b8e42b0",
         "type": "tabs",
-        "dimension": 34.46487505893446,
+        "dimension": 58.46298915605846,
         "children": [
+          {
+            "id": "4b2e3a6422b0617e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "思想思维心理哲学/学习本身/情绪/宫本武藏.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "宫本武藏"
+            }
+          },
           {
             "id": "494e559d491143ff",
             "type": "leaf",
@@ -243,8 +153,7 @@
               "title": "Recent files"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "horizontal",
@@ -454,8 +363,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "494e559d491143ff",
+  "active": "4b2e3a6422b0617e",
   "lastOpenFiles": [
+    "营养学以及养生/工具/电陶炉.md",
+    "思想思维心理哲学/学习本身/情绪/宫本武藏.md",
     "电脑、软件、系统/软件使用记录/zotero.md",
     "Diary/2026/20260922.md",
     "思想思维心理哲学/爱情/摄影/一本摄影书/第四章 点线面的运用.md",
@@ -481,8 +392,6 @@
     "语言学习/德语/德国所有历史政治经济等合集/政党/CDU.md",
     "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
     "电脑、软件、系统/AI提示吃/AI德语对话提示词.md",
-    "语言学习/德语/柏林广场视频笔记/A1/81 形容词和比较级 最高级 与 第一格.md",
-    "语言学习/德语/柏林广场视频笔记/B1/30 形容词比较级和最高级.md",
     "思想思维心理哲学/学习本身/情绪",
     "assets/image-492.png",
     "assets/image-491.png",
