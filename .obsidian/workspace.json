@@ -8,6 +8,18 @@
         "type": "tabs",
         "children": [
           {
+            "id": "a5d2066225816f75",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "格; 限定词"
+            }
+          },
+          {
             "id": "d32e0c195b033ad5",
             "type": "leaf",
             "state": {
@@ -310,10 +322,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "d32e0c195b033ad5",
+  "active": "a5d2066225816f75",
   "lastOpenFiles": [
-    "OBSetting/templater/日记-事件模板.md",
     "Diary/2026/20260923.md",
+    "OBSetting/templater/日记-事件模板.md",
     "OBSetting/templater/生词表格-anki.md",
     "OBSetting/templater/每日总结复盘.md",
     "OBSetting/templater/B_ 复盘自己.md",
