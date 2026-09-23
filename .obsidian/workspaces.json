@@ -1366,83 +1366,7 @@
           {
             "id": "d5a252b342c9ae29",
             "type": "tabs",
-            "dimension": 65.53512494106553,
             "children": [
-              {
-                "id": "66a2af9617287190",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "第3章 图形和摄影元素"
-                }
-              },
-              {
-                "id": "fbc2ee69a28aaa14",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/公共知识语法/10句型/疑问句/间接疑问句.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "间接疑问句"
-                }
-              },
-              {
-                "id": "39792b553b35e8c9",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/公共知识语法/10句型/疑问句/疑问词.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "疑问词"
-                }
-              },
-              {
-                "id": "b50e08618177499a",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/柏林广场视频笔记/A1/8  特殊疑问词wo和介词in_笔记.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "8  特殊疑问词wo和介词in_笔记"
-                }
-              },
-              {
-                "id": "9c4ca6fc4729fde1",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "背单词-数量与范围频率可能性确定性程度必要性重要性"
-                }
-              },
               {
                 "id": "90e20b58fcc19d1d",
                 "type": "leaf",
@@ -1457,29 +1381,12 @@
                   "icon": "lucide-file",
                   "title": "第四章 点线面的运用"
                 }
-              },
-              {
-                "id": "691f529847c83a63",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/单词/生词/26-9.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "26-9"
-                }
               }
-            ],
-            "currentTab": 5
+            ]
           },
           {
             "id": "18cfb5ab0b8e42b0",
             "type": "tabs",
-            "dimension": 34.46487505893446,
             "children": [
               {
                 "id": "494e559d491143ff",
@@ -1494,36 +1401,6 @@
                   },
                   "icon": "lucide-file",
                   "title": "zotero"
-                }
-              },
-              {
-                "id": "2c8e1f8ba66f2055",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/柏林广场视频笔记/A1/知识点解答/各种疑问句区别.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "各种疑问句区别"
-                }
-              },
-              {
-                "id": "a46b96b53bf7c39c",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/写作.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "写作"
                 }
               }
             ]
@@ -1801,7 +1678,7 @@
         }
       },
       "active": "494e559d491143ff",
-      "mtime": "2026-09-22T01:12:25+08:00"
+      "mtime": "2026-09-23T01:57:53+08:00"
     }
   },
   "active": "摄影"

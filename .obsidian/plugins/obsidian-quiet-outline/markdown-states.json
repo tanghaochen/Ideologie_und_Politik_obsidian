@@ -15177,7 +15177,7 @@
     "expandedKeys": []
   },
   "OBSetting/templater/每日总结复盘.md": {
-    "scroll": 0,
+    "scroll": 3.1290855416589505,
     "cursor": {
       "from": {
         "line": 18,
@@ -16813,15 +16813,15 @@
   "OBSetting/templater/日记-事件模板.md": {
     "cursor": {
       "from": {
-        "line": 29,
-        "ch": 7
+        "line": 20,
+        "ch": 2
       },
       "to": {
-        "line": 29,
-        "ch": 7
+        "line": 20,
+        "ch": 2
       }
     },
-    "scroll": 9.29208264083337
+    "scroll": 1.3825245164926905
   },
   "OBSetting/templater/周记-一览视图.md": {
     "cursor": {
@@ -17571,7 +17571,7 @@
         "ch": 0
       }
     },
-    "scroll": 43.92714131657998
+    "scroll": 43.2220819694647
   },
   "Diary/2026/20260915.md": {
     "cursor": {
@@ -17774,5 +17774,18 @@
       }
     },
     "scroll": 35.58844827153505
+  },
+  "Diary/2026/20260923.md": {
+    "cursor": {
+      "from": {
+        "line": 38,
+        "ch": 0
+      },
+      "to": {
+        "line": 38,
+        "ch": 0
+      }
+    },
+    "scroll": 12.6008322015869
   }
 }

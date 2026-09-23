@@ -1,6 +1,30 @@
 {
   "recentFiles": [
     {
+      "basename": "20260923",
+      "path": "Diary/2026/20260923.md"
+    },
+    {
+      "basename": "日记-事件模板",
+      "path": "OBSetting/templater/日记-事件模板.md"
+    },
+    {
+      "basename": "生词表格-anki",
+      "path": "OBSetting/templater/生词表格-anki.md"
+    },
+    {
+      "basename": "周记-一览视图",
+      "path": "OBSetting/templater/周记-一览视图.md"
+    },
+    {
+      "basename": "template-营养学健康物质模板",
+      "path": "template/template-营养学健康物质模板.md"
+    },
+    {
+      "basename": "第四章 点线面的运用",
+      "path": "思想思维心理哲学/爱情/摄影/一本摄影书/第四章 点线面的运用.md"
+    },
+    {
       "basename": "zotero",
       "path": "电脑、软件、系统/软件使用记录/zotero.md"
     },
@@ -43,10 +67,6 @@
     {
       "basename": "20260922",
       "path": "Diary/2026/20260922.md"
-    },
-    {
-      "basename": "第四章 点线面的运用",
-      "path": "思想思维心理哲学/爱情/摄影/一本摄影书/第四章 点线面的运用.md"
     },
     {
       "basename": "第3章 图形和摄影元素",
@@ -175,30 +195,6 @@
     {
       "basename": "第二分词;过去分词 ge...",
       "path": "语言学习/德语/公共知识语法/2动词/第二分词;过去分词 ge....md"
-    },
-    {
-      "basename": "W36",
-      "path": "Diary/2026/W36.md"
-    },
-    {
-      "basename": "数字 序数词",
-      "path": "语言学习/德语/公共知识语法/3形容词/数字 序数词.md"
-    },
-    {
-      "basename": "54 超市购物相关 与 量词和名词复数",
-      "path": "语言学习/德语/柏林广场视频笔记/A1/54 超市购物相关 与 量词和名词复数.md"
-    },
-    {
-      "basename": "20260831",
-      "path": "Diary/2026/20260831.md"
-    },
-    {
-      "basename": "DW_摄影",
-      "path": "思想思维心理哲学/爱情/摄影/DW_摄影.md"
-    },
-    {
-      "basename": "句子成分 结构",
-      "path": "语言学习/德语/公共知识语法/句子成分 结构.md"
     }
   ],
   "omittedPaths": [],
