@@ -8,6 +8,9 @@ aliases:
 ---
 
 # 被动语态（Vorgangspassiv）中 werden 的全部变化形式
+
+^5cn9z8
+
 | 时态                        | ich                      | du                       | er/sie/es               | wir                       | ihr                       | sie/Sie                   |
 | ------------------------- | ------------------------ | ------------------------ | ----------------------- | ------------------------- | ------------------------- | ------------------------- |
 | **Präsens 现在时**           | werde gelobt             | wirst gelobt             | wird gelobt             | werden gelobt             | werdet gelobt             | werden gelobt             |
@@ -440,32 +443,19 @@ werden 是**强变化动词**，过去时词干为 **wurd-**，第一、三人�
 
 以上即为 werden 在被动语态中的全部变化形式（不含情态动词结构），覆盖直陈式六时态、虚拟式两大类别、命令式、不定式及从句语序。如有任何一格想深入展开（如无人称被动、bekommen-Passiv 或间接引语中的被动态替换规则），欢迎继续提问。
 
-# 区分将来时和现在时
+# 区分将来时和被动态
+
+^66d9d0
 
 ^eov25g
+### 第一将来时和被动态区别
+
 |结构|公式|例句|中文|
 |---|---|---|---|
 |**Futur I 将来时（主动）**|werden + **Infinitiv（不定式）**|Er wird das Buch **lesen**.|他将读这本书。|
 |**Futur II 将来完成时（主动）**|werden + **Partizip II + haben/sein（不定式）**|Er wird das Buch **gelesen haben**.|他届时已经把书读完了。|
 |**Vorgangspassiv 过程被动态（现在时）**|werden + **Partizip II**|Das Buch wird **gelesen**.|这本书被读。|
-德语的 `werden` 确实是一个“多面手”。无论它在句子中扮演什么角色，它的变位（ich werde, du wirst, er wird...）是一模一样的。但是，区分它的不同时态和用法有一个绝对可靠的黄金法则：**直接看句子的最后面**。
 
-德语的核心句法特征之一是“框形结构”（Rahmenstruktur）。`werden` 永远占据句子的第二位，而句末的词汇决定了 `werden` 的真正身份。为了让你彻底掌握，我们直接看规则和针对移民生活的实战例句。
-
-### 现在时（Präsens）：实义动词
-
-**规则**：当 `werden` 作为完整的实义动词（Vollverb）表示“成为”或“变得”时，**句末没有其他任何动词**。它后面通常跟着的是形容词或名词。
-
-- **生活场景例句**：
-    - _Mein Visum **wird** bald ungültig._ （我的签证很快就**要失效了**。—— 句末是形容词 `ungültig`，表示状态的改变）
-    - _Er **wird** nächstes Jahr Abteilungsleiter._ （他明年**将成为**部门主管。—— 句末是名词 `Abteilungsleiter`，表示身份的改变）
-    - _Das Wetter in Deutschland **wird** im November sehr kalt._ （德国的天气在十一月**会变得**很冷。—— 句末是形容词 `kalt`）
-
-### 第一将来时（Futur I）：助动词
-
-**规则**：当 `werden` 用于第一将来时（表示未来将要发生的动作或强烈的意愿）时，它只充当助动词（Hilfsverb）。**句末必须有一个动词原形（Infinitiv）**。
-
-- **生活场景例句**：
-    - _Ich **werde** morgen früh beim Bürgeramt meinen Wohnsitz **anmelden**._ （我明早**将要在**行政办事处**登记**我的住址。—— 句末是动词原形 `anmelden`）
-    - _Der Vermieter **wird** den Mietvertrag heute Nachmittag per E-Mail **schicken**._ （房东今天下午**将**通过电子邮件**发送**租房合同。—— 句末是动词原形 `schicken`）
-    - _Wir **werden** nächste Woche eine neue Wohnung **suchen**._ （我们下周**将会寻找**一套新公寓。—— 句末是动词原形 `suchen`）
+### 第二将来时与被动的区别
+Futur II = wird 开头 + haben/sein（或 worden sein）收尾，中间夹 PII。
+中间的 PII 是它和完成时、被动态共用的部分，不构成区分依据；只要盯住句首的 wird 和句末的 haben/sein 这两端，就能一秒锁定 Futur II，不会与 Perfekt（句首 hat/ist）或被动态（句末什么都没有）混淆。
