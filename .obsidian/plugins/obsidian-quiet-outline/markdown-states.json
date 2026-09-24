@@ -16814,15 +16814,15 @@
   "OBSetting/templater/日记-事件模板.md": {
     "cursor": {
       "from": {
-        "line": 20,
-        "ch": 2
+        "line": 5,
+        "ch": 0
       },
       "to": {
-        "line": 20,
-        "ch": 2
+        "line": 1,
+        "ch": 0
       }
     },
-    "scroll": 1.3825245164926905
+    "scroll": 0
   },
   "OBSetting/templater/周记-一览视图.md": {
     "cursor": {
@@ -17842,14 +17842,14 @@
   "Diary/2026/20260924.md": {
     "cursor": {
       "from": {
-        "line": 20,
-        "ch": 48
+        "line": 131,
+        "ch": 46
       },
       "to": {
-        "line": 16,
-        "ch": 0
+        "line": 131,
+        "ch": 46
       }
     },
-    "scroll": 20.495831966665143
+    "scroll": 73.6740493774414
   }
 }

@@ -5,6 +5,14 @@
       "path": "Diary/2026/20260924.md"
     },
     {
+      "basename": "日记-事件模板",
+      "path": "OBSetting/templater/日记-事件模板.md"
+    },
+    {
+      "basename": "template-营养学健康物质模板",
+      "path": "template/template-营养学健康物质模板.md"
+    },
+    {
       "basename": "名词复数变化",
       "path": "语言学习/德语/公共知识语法/1名词/名词复数变化.md"
     },
@@ -89,20 +97,12 @@
       "path": "Diary/2026/20260923.md"
     },
     {
-      "basename": "日记-事件模板",
-      "path": "OBSetting/templater/日记-事件模板.md"
-    },
-    {
       "basename": "生词表格-anki",
       "path": "OBSetting/templater/生词表格-anki.md"
     },
     {
       "basename": "周记-一览视图",
       "path": "OBSetting/templater/周记-一览视图.md"
-    },
-    {
-      "basename": "template-营养学健康物质模板",
-      "path": "template/template-营养学健康物质模板.md"
     },
     {
       "basename": "第四章 点线面的运用",
