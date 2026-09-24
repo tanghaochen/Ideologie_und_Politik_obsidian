@@ -118,4 +118,3 @@ _语法规则：固定搭配 `sowohl ... als auch ...`。连接的两个部分�
 - **修饰第一格主语 (Subjektsprädikativum)：** **Als 18-jähriger Entwickler** habe ich mein erstes Konto bei Amazon Web Services registriert. （作为 18 岁的开发者，我注册了我的第一个 AWS 账户。） _解析：`als` 引导的成分修饰主语 `ich`，说明主语在注册账户时的身份状态，因此 `Entwickler` 使用第一格（强变化形容词词尾 -er）。即便它被放在了句首，依然是独立说明主语的表语性成分。_
 - **修饰第四格宾语 (Objektsprädikativum)：** Das IT-Unternehmen stellt mich **als Administrator für Oracle Cloud** ein. （这家 IT 公司聘用我作为 Oracle Cloud 的管理员。） _解析：`als` 成分修饰第四格宾语 `mich`，说明“我”被聘用后的职位角色，因此 `Administrator` 必须跟随使用第四格。_
 - **修饰介词宾语（常与特定动词搭配）：** Die Ausländerbehörde sieht dieses Zertifikat **als einen gültigen Nachweis** an. （外管局将这份证书视为有效的证明。） _解析：这是由动词 `ansehen als` 构成的固定搭配，`als` 修饰前面的第四格宾语 `dieses Zertifikat`，因此后续的 `Nachweis` 也是第四格。_
-Ich find es dreie Punkten zu unterdenken und unterscheiden. Erste Punkte ist, Hat Arbeiten bereich bequem. Zwiene Punkte, Arbeiter
