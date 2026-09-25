@@ -1,12 +1,20 @@
 {
   "recentFiles": [
     {
-      "basename": "未命名",
-      "path": "未命名.md"
+      "basename": "听说读写 以及学习外语的核心方法",
+      "path": "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md"
+    },
+    {
+      "basename": "学习计划",
+      "path": "语言学习/德语/学习记录日记-技巧/学习计划.md"
     },
     {
       "basename": "sein和haben区分易错点",
       "path": "语言学习/德语/公共知识语法/2动词/❌/sein和haben区分易错点.md"
+    },
+    {
+      "basename": "未命名",
+      "path": "未命名.md"
     },
     {
       "basename": "系动词",
@@ -129,10 +137,6 @@
       "path": "语言学习/德语/学习记录日记-技巧/短文学习逻辑.md"
     },
     {
-      "basename": "学习计划",
-      "path": "语言学习/德语/学习记录日记-技巧/学习计划.md"
-    },
-    {
       "basename": "写作",
       "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/写作.md"
     },
@@ -195,10 +199,6 @@
     {
       "basename": "个人网站服务器",
       "path": "网络/项目服务器/个人网站服务器.md"
-    },
-    {
-      "basename": "obsidian样式技巧",
-      "path": "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md"
     }
   ],
   "omittedPaths": [],
