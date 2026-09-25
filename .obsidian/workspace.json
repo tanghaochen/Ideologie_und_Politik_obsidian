@@ -356,12 +356,55 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "0632d9e84dc6e110",
+  "floating": {
+    "id": "e7b864528a9e55c5",
+    "type": "floating",
+    "children": [
+      {
+        "id": "b471ad44a4435f67",
+        "type": "window",
+        "children": [
+          {
+            "id": "1a837c4dfea5c678",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "b3aea26524486e21",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "未命名 1.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "未命名 1"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "vertical",
+        "x": -1635,
+        "y": 89,
+        "width": 783,
+        "height": 1094,
+        "maximize": false,
+        "zoom": -1
+      }
+    ]
+  },
+  "active": "b3aea26524486e21",
   "lastOpenFiles": [
-    "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
     "Clippings/被称之为疯子的自律方法  五轮书心法.md",
-    "语言学习/德语/学习记录日记-技巧/学习计划.md",
+    "未命名 1.md",
     "语言学习/德语/公共知识语法/2动词/❌/sein和haben区分易错点.md",
+    "assets/image-496.png",
+    "assets/image-495.png",
+    "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
+    "语言学习/德语/学习记录日记-技巧/学习计划.md",
     "未命名.md",
     "语言学习/德语/公共知识语法/2动词/系动词.md",
     "语言学习/德语/单词/生词/26-9.md",
@@ -386,7 +429,6 @@
     "电脑、软件、系统/创业项目/电商/淘宝详情页工作流程.md",
     "电脑、软件、系统/创业项目/电商",
     "语言学习/德语/学习记录日记-技巧/电商.md",
-    "语言学习/德语/公共知识语法/时态/第一将来时, 第二将来时.md",
     "语言学习/德语/公共知识语法/词或词组用法汇总",
     "assets/image-493.png",
     "思想思维心理哲学/学习本身/情绪",
@@ -402,8 +444,6 @@
     "copilot/skills/openartifacts-publish/openartifacts-publish.ps1",
     "copilot/skills/openartifacts-publish/openartifacts-publish.cmd",
     "copilot/skills/openartifacts-publish/openartifacts-publish.sh",
-    "assets/image-489.png",
-    "assets/image-488.png",
     "思想思维心理哲学/爱情/说话聊天/未命名.canvas",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "网络/简述软路由网络逻辑.canvas",
