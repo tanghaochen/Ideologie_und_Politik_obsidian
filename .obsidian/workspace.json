@@ -8,6 +8,16 @@
         "type": "tabs",
         "children": [
           {
+            "id": "2fefc98d7b56c107",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
+            }
+          },
+          {
             "id": "3266bebbe5b02f93",
             "type": "leaf",
             "state": {
@@ -49,8 +59,7 @@
               "title": "第三章 构图法则"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -324,11 +333,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "01b66654a6171d68",
+  "active": "61494c4b07a340da",
   "lastOpenFiles": [
+    "思想思维心理哲学/爱情/摄影/DW_摄影.md",
     "思想思维心理哲学/爱情/摄影/一本摄影书/第四章 点线面的运用.md",
     "思想思维心理哲学/爱情/摄影/一本摄影书/第三章 构图法则.md",
-    "思想思维心理哲学/爱情/摄影/DW_摄影.md",
     "思想思维心理哲学/爱情/咖啡/“极简促智咖啡”实操手册.md",
     "Clippings/被称之为疯子的自律方法  五轮书心法.md",
     "Clippings/最可怕的身心力量境界（宫本武藏）.md",
