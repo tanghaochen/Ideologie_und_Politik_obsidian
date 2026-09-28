@@ -298,6 +298,7 @@ c) **habe**（表主语的持续感受"感到冷"，非状态改变，我上班�
 情态动词／及物／反身 → haben；sein/werden/bleiben → sein；不及物 + 位置或状态改变 → sein；不及物 + 持续/天气 → haben。
 
 **第三步：查词汇残余名单**
-begegnen, gelingen, passieren, geschehen, auffallen, einfallen, beitreten → sein；gefallen, anfangen, beginnen, aufhören, zunehmen, abnehmen, sich ereignen → haben。
+begegnen, gelingen, passieren, geschehen, auffallen, einfallen, beitreten → sein；
+gefallen, anfangen, beginnen, aufhören, zunehmen, abnehmen, sich ereignen → haben。
 
 不确定时用**定语分词测试**：能说 `der angekommene Zug`（主动义）→ sein；只能说 `das gelesene Buch`（被动义）或根本不成立 → haben。
