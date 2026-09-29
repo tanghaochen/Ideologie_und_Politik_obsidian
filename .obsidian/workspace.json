@@ -8,6 +8,21 @@
         "type": "tabs",
         "children": [
           {
+            "id": "161de4cacdcc9361",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "Handys in der Schule"
+            }
+          },
+          {
             "id": "81cbcbbceaa7b6ad",
             "type": "leaf",
             "state": {
@@ -50,6 +65,27 @@
               },
               "icon": "lucide-file",
               "title": "听说读写 以及学习外语的核心方法"
+            }
+          }
+        ]
+      },
+      {
+        "id": "b5dbd09e7753bfc0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0ff1e81507805d0d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "未命名 2.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "未命名 2"
             }
           }
         ]
@@ -326,8 +362,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "81cbcbbceaa7b6ad",
+  "active": "161de4cacdcc9361",
   "lastOpenFiles": [
+    "未命名 2.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Leben ohne eigenes Auto.md",
     "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Homeoffice.md",
@@ -352,8 +390,6 @@
     "2026-08-13.md",
     "2026-W25.md",
     "语言学习/德语/柏林广场视频笔记/A1/4 动词sein和陈述句.md",
-    "2026-06-21.md",
-    "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien/难句解析.md",
     "assets/image-496.png",
     "assets/image-495.png",
     "assets/1790324613909_d.png",
