@@ -1,8 +1,32 @@
-Für mich ist lage viel alter und unbedankebar, dass wir leben in 2026 nicht in 2000.
-wie musste der Gründe der Handy anwenden. Der erste punkte ist, die Karama schnellst rekort leher video wegen Schriben ist lang zeit zu anwenden.
-Der zweite punkte ist, die Video wendet recycle in end der Kus. Schuler kannte Deteil schauen.
-der dritte punkte ist, allem Datum lassen sich ins Internet wegen es kannet vorlor.
 
+### Teil 1 — Forumsbeitrag (ca. 20 Minuten)
+
+> **Diskussionsforum › Schule und Erziehung › Handys in der Schule**
+>
+> **Beitrag von *Lehrerin_MariaB* (14.03., 19:42 Uhr):**
+>
+> An meiner Schule wird seit diesem Schuljahr diskutiert, ob Handys während des gesamten Schultages verboten werden sollen – also auch in den Pausen und in der Mittagspause. Ich persönlich finde: Ein komplettes Handyverbot ist längst überfällig. Immer wieder sehe ich Schülerinnen und Schüler, die in der Pause nur auf ihre Displays starren, statt miteinander zu reden. Wer Konflikte oder Ängste hat, findet im Netz ohnehin keine echte Hilfe, und die Konzentration im Unterricht leidet sowieso.
+>
+> Einige Kolleginnen sehen das anders. Sie argumentieren, ein Verbot sei in der Praxis kaum durchsetzbar und nehme den Jugendlichen ein wichtiges Werkzeug für Recherche und Sicherheit (etwa um die Eltern zu erreichen).
+>
+> **Was meinen Sie zu diesem Thema?**
+
+**Ihre Aufgabe:**
+
+Schreiben Sie einen Forumsbeitrag zum oben dargestellten Thema. Nehmen Sie dabei Stellung zur Frage, ob Handys an Schulen komplett verboten werden sollten. Gehen Sie auf folgende Punkte ein:
+
+- Erläutern Sie Ihre Position und begründen Sie sie.
+- Nennen Sie ein konkretes Beispiel aus Ihrer eigenen Erfahrung oder aus Ihrem Umfeld.
+- Gehen Sie auf ein Gegenargument ein und widerlegen Sie es oder stimmen Sie ihm teilweise zu.
+
+Schreiben Sie **mindestens 150 Wörter**.
+
+---
+Für mich ist die Lage ganz anders, denn wir leben im Jahr 2026 und nicht mehr im Jahr 2000. Jetzt muss ich die Gründe für die Handynutzung nennen.
+Der erste Punkt ist: Mit der Kamera kann man schnell ein Video aufnehmen, weil das Abschreiben viel Zeit kostet.
+Der zweite Punkt ist: Das Video kann man bis zum Ende des Kurses wiederverwenden.
+So können die Schüler die Details noch einmal anschauen.
+Der dritte Punkt ist: Alle Daten lassen sich im Internet speichern, damit sie nicht verloren gehen.
 
 # 📝 歌德 B 2 写作批改报告（第 2 篇）
 

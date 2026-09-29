@@ -1,434 +1,5 @@
 {
   "workspaces": {
-    "1": {
-      "main": {
-        "id": "f5de525c029043e4",
-        "type": "split",
-        "children": [
-          {
-            "id": "d5a252b342c9ae29",
-            "type": "tabs",
-            "dimension": 65.53512494106553,
-            "children": [
-              {
-                "id": "66a2af9617287190",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "思想思维心理哲学/爱情/摄影/第3章 图形和摄影元素.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "第3章 图形和摄影元素"
-                }
-              },
-              {
-                "id": "fbc2ee69a28aaa14",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/公共知识语法/10句型/疑问句/间接疑问句.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "间接疑问句"
-                }
-              },
-              {
-                "id": "39792b553b35e8c9",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/公共知识语法/10句型/疑问句/疑问词.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "疑问词"
-                }
-              },
-              {
-                "id": "b50e08618177499a",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/柏林广场视频笔记/A1/8  特殊疑问词wo和介词in_笔记.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "8  特殊疑问词wo和介词in_笔记"
-                }
-              },
-              {
-                "id": "9c4ca6fc4729fde1",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "背单词-数量与范围频率可能性确定性程度必要性重要性"
-                }
-              },
-              {
-                "id": "90e20b58fcc19d1d",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "思想思维心理哲学/爱情/摄影/一本摄影书/第四章 点线面的运用.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "第四章 点线面的运用"
-                }
-              },
-              {
-                "id": "691f529847c83a63",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/单词/生词/26-9.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "26-9"
-                }
-              }
-            ],
-            "currentTab": 5
-          },
-          {
-            "id": "18cfb5ab0b8e42b0",
-            "type": "tabs",
-            "dimension": 34.46487505893446,
-            "children": [
-              {
-                "id": "2c8e1f8ba66f2055",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/柏林广场视频笔记/A1/知识点解答/各种疑问句区别.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "各种疑问句区别"
-                }
-              },
-              {
-                "id": "a46b96b53bf7c39c",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/写作.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "写作"
-                }
-              }
-            ]
-          }
-        ],
-        "direction": "vertical"
-      },
-      "left": {
-        "id": "dde9718a6f30ff5d",
-        "type": "split",
-        "children": [
-          {
-            "id": "69b90f7608974d6b",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "4f2c85b5efb02241",
-                "type": "leaf",
-                "state": {
-                  "type": "notebook-navigator",
-                  "state": {},
-                  "icon": "notebook-navigator",
-                  "title": "Notebook Navigator"
-                }
-              },
-              {
-                "id": "abbd6433f71b711a",
-                "type": "leaf",
-                "state": {
-                  "type": "bookmarks",
-                  "state": {
-                    "showSearch": false,
-                    "searchQuery": ""
-                  },
-                  "icon": "lucide-bookmark",
-                  "title": "书签"
-                }
-              },
-              {
-                "id": "2bdbb354e1190468",
-                "type": "leaf",
-                "state": {
-                  "type": "search",
-                  "state": {
-                    "query": "tag:#vLeben",
-                    "matchingCase": true,
-                    "explainSearch": false,
-                    "collapseAll": false,
-                    "extraContext": false,
-                    "sortOrder": "alphabetical"
-                  },
-                  "icon": "lucide-search",
-                  "title": "搜索"
-                }
-              },
-              {
-                "id": "232e94f80ffd93ce",
-                "type": "leaf",
-                "state": {
-                  "type": "recent-files",
-                  "state": {},
-                  "icon": "clock",
-                  "title": "Recent files"
-                }
-              }
-            ]
-          }
-        ],
-        "direction": "horizontal",
-        "width": 399.1125030517578
-      },
-      "right": {
-        "id": "b2bf97bc0c7f8080",
-        "type": "split",
-        "children": [
-          {
-            "id": "0ed9c27411998641",
-            "type": "tabs",
-            "dimension": 75.59779276517474,
-            "children": [
-              {
-                "id": "dd8c0de9236cf3b8",
-                "type": "leaf",
-                "state": {
-                  "type": "quiet-outline",
-                  "state": {},
-                  "icon": "lines-of-text",
-                  "title": "Quiet Outline"
-                }
-              },
-              {
-                "id": "36c96029ae4dd065",
-                "type": "leaf",
-                "pinned": true,
-                "state": {
-                  "type": "copilot-chat-view",
-                  "state": {},
-                  "pinned": true,
-                  "icon": "message-square",
-                  "title": "Copilot (Quick Chat)"
-                }
-              },
-              {
-                "id": "fc8efd10765ae511",
-                "type": "leaf",
-                "state": {
-                  "type": "git-view",
-                  "state": {},
-                  "icon": "git-pull-request",
-                  "title": "Source Control"
-                }
-              },
-              {
-                "id": "2cc3d386c974b5b6",
-                "type": "leaf",
-                "state": {
-                  "type": "git-history-view",
-                  "state": {},
-                  "icon": "history",
-                  "title": "History"
-                }
-              },
-              {
-                "id": "d3ec81ed4c00a968",
-                "type": "leaf",
-                "state": {
-                  "type": "advanced-tables-toolbar",
-                  "state": {},
-                  "icon": "spreadsheet",
-                  "title": "Advanced Tables"
-                }
-              },
-              {
-                "id": "cf2b910cbf6b6677",
-                "type": "leaf",
-                "state": {
-                  "type": "file-properties",
-                  "state": {
-                    "file": "思想思维心理哲学/个人问题处理/芜湖.md"
-                  },
-                  "icon": "lucide-info",
-                  "title": "笔记属性"
-                }
-              },
-              {
-                "id": "7492b847e238b9e1",
-                "type": "leaf",
-                "state": {
-                  "type": "calendar",
-                  "state": {},
-                  "icon": "calendar-with-checkmark",
-                  "title": "Calendar"
-                }
-              },
-              {
-                "id": "7bcc90c64e14a360",
-                "type": "leaf",
-                "state": {
-                  "type": "mxmind-view",
-                  "state": {},
-                  "icon": "network",
-                  "title": "Mxmind"
-                }
-              },
-              {
-                "id": "0f758d49a646ce9e",
-                "type": "leaf",
-                "state": {
-                  "type": "tag",
-                  "state": {
-                    "sortOrder": "frequency",
-                    "useHierarchy": true,
-                    "showSearch": false,
-                    "searchQuery": ""
-                  },
-                  "icon": "lucide-tags",
-                  "title": "标签"
-                }
-              },
-              {
-                "id": "2166e25004a3aa52",
-                "type": "leaf",
-                "state": {
-                  "type": "all-properties",
-                  "state": {
-                    "sortOrder": "frequency",
-                    "showSearch": false,
-                    "searchQuery": ""
-                  },
-                  "icon": "lucide-archive",
-                  "title": "添加笔记属性"
-                }
-              }
-            ]
-          },
-          {
-            "id": "28e75bfc7e894da7",
-            "type": "tabs",
-            "dimension": 24.40220723482526,
-            "children": [
-              {
-                "id": "c3592eded90586bf",
-                "type": "leaf",
-                "pinned": true,
-                "state": {
-                  "type": "file-properties",
-                  "state": {
-                    "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
-                  },
-                  "pinned": true,
-                  "icon": "lucide-info",
-                  "title": "语法快查必背语法canvas的笔记属性"
-                }
-              },
-              {
-                "id": "5020f6b7d22ceb0b",
-                "type": "leaf",
-                "state": {
-                  "type": "footnotes",
-                  "state": {
-                    "file": "思想思维心理哲学/个人问题处理/芜湖.md"
-                  },
-                  "icon": "lucide-file-signature",
-                  "title": "脚注"
-                }
-              },
-              {
-                "id": "e377fe748686f28e",
-                "type": "leaf",
-                "state": {
-                  "type": "notebook-navigator-calendar",
-                  "state": {},
-                  "icon": "lucide-calendar-days",
-                  "title": "日历"
-                }
-              }
-            ],
-            "currentTab": 2
-          }
-        ],
-        "direction": "horizontal",
-        "width": 507.5
-      },
-      "left-ribbon": {
-        "hiddenItems": {
-          "media-extended:打开媒体库": true,
-          "media-extended:打开媒体快速切换器": true,
-          "mermaid-tools:Open Mermaid Toolbar": true,
-          "canvas:新建白板": true,
-          "omnisearch:Omnisearch": true,
-          "pdf-plus:PDF++: Toggle auto-copy": true,
-          "pdf-plus:PDF++: Toggle auto-focus": true,
-          "pdf-plus:PDF++: Toggle auto-paste": true,
-          "workspaces:管理工作区布局": false,
-          "templater-obsidian:Templater": false,
-          "table-editor-obsidian:Advanced Tables Toolbar": true,
-          "mxmind:Mxmind": true,
-          "audio-recorder:开始/结束录音": true,
-          "obsidian-local-images-plus:Local Images Plus  0.16.4\r\nLocalize attachments (plugin folder)": true,
-          "markdown-importer:打开 Markdown 格式转换器": true,
-          "obsidian-git:Open Git source control": true,
-          "pexels-banner:🚩 Pixel Banner Menu": true,
-          "vscode-editor:新建代码文件": true,
-          "darlal-switcher-plus:Open in Headings Mode": true,
-          "darlal-switcher-plus:Open Symbols for the active editor": true,
-          "command-palette:打开命令面板": true,
-          "daily-notes:打开/创建今天的日记": false,
-          "obsidian-excalidraw-plugin:新建绘图文件": false,
-          "realclaudian:Open Claudian": false,
-          "agent-client:Open agent client": false,
-          "copilot:Open Copilot Agent Chat": false,
-          "notebook-navigator:Notebook Navigator": false,
-          "periodic-notes:Open today": false
-        }
-      },
-      "active": "90e20b58fcc19d1d",
-      "mtime": "2026-09-22T01:00:13+08:00"
-    },
     "PDF": {
       "main": {
         "id": "f5de525c029043e4",
@@ -1067,297 +638,6 @@
       "active": "0a6a202637bfceab",
       "mtime": "2025-12-10T18:30:11+08:00"
     },
-    "en1": {
-      "main": {
-        "id": "f5de525c029043e4",
-        "type": "split",
-        "children": [
-          {
-            "id": "c78c70a8cdc87477",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "4873ec5da53b302f",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "Engilish/语法.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": true,
-                    "backlinkOpts": {
-                      "collapseAll": false,
-                      "extraContext": false,
-                      "sortOrder": "alphabetical",
-                      "showSearch": false,
-                      "searchQuery": "",
-                      "backlinkCollapsed": false,
-                      "unlinkedCollapsed": true
-                    }
-                  },
-                  "icon": "lucide-file",
-                  "title": "语法"
-                }
-              },
-              {
-                "id": "97c05cee687a2545",
-                "type": "leaf",
-                "state": {
-                  "type": "excalidraw",
-                  "state": {
-                    "file": "Engilish/被讨厌的勇气/reading note.md"
-                  },
-                  "icon": "excalidraw-icon",
-                  "title": "reading note"
-                }
-              }
-            ]
-          }
-        ],
-        "direction": "vertical"
-      },
-      "left": {
-        "id": "dde9718a6f30ff5d",
-        "type": "split",
-        "children": [
-          {
-            "id": "69b90f7608974d6b",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "56aec1574e68adfb",
-                "type": "leaf",
-                "state": {
-                  "type": "file-explorer",
-                  "state": {
-                    "sortOrder": "byModifiedTime",
-                    "autoReveal": false
-                  },
-                  "icon": "lucide-folder-closed",
-                  "title": "文件列表"
-                }
-              },
-              {
-                "id": "2bdbb354e1190468",
-                "type": "leaf",
-                "state": {
-                  "type": "search",
-                  "state": {
-                    "query": "",
-                    "matchingCase": false,
-                    "explainSearch": false,
-                    "collapseAll": false,
-                    "extraContext": false,
-                    "sortOrder": "alphabetical"
-                  },
-                  "icon": "lucide-search",
-                  "title": "搜索"
-                }
-              },
-              {
-                "id": "abbd6433f71b711a",
-                "type": "leaf",
-                "state": {
-                  "type": "bookmarks",
-                  "state": {},
-                  "icon": "lucide-bookmark",
-                  "title": "书签"
-                }
-              },
-              {
-                "id": "32264a9c229b4bb6",
-                "type": "leaf",
-                "pinned": true,
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "目录.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": true,
-                    "backlinkOpts": {
-                      "collapseAll": false,
-                      "extraContext": false,
-                      "sortOrder": "alphabetical",
-                      "showSearch": false,
-                      "searchQuery": "",
-                      "backlinkCollapsed": false,
-                      "unlinkedCollapsed": true
-                    }
-                  },
-                  "pinned": true,
-                  "icon": "lucide-file",
-                  "title": "目录"
-                }
-              },
-              {
-                "id": "93346b56582cde41",
-                "type": "leaf",
-                "state": {
-                  "type": "recent-files",
-                  "state": {},
-                  "icon": "clock",
-                  "title": "Recent Files"
-                }
-              },
-              {
-                "id": "fa32035546bb2f1f",
-                "type": "leaf",
-                "state": {
-                  "type": "file-tree-view",
-                  "state": {},
-                  "icon": "sheets-in-box",
-                  "title": "File Tree"
-                }
-              }
-            ],
-            "currentTab": 5
-          }
-        ],
-        "direction": "horizontal",
-        "width": 300.5
-      },
-      "right": {
-        "id": "b2bf97bc0c7f8080",
-        "type": "split",
-        "children": [
-          {
-            "id": "0ed9c27411998641",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "a49850edf51b35c5",
-                "type": "leaf",
-                "state": {
-                  "type": "backlink",
-                  "state": {
-                    "file": "经济学/投资方式/漫步华尔街.md",
-                    "collapseAll": true,
-                    "extraContext": false,
-                    "sortOrder": "alphabetical",
-                    "showSearch": false,
-                    "searchQuery": "",
-                    "backlinkCollapsed": false,
-                    "unlinkedCollapsed": true
-                  },
-                  "icon": "links-coming-in",
-                  "title": "漫步华尔街 的反向链接列表"
-                }
-              },
-              {
-                "id": "ecbd8a769d2b5ffc",
-                "type": "leaf",
-                "state": {
-                  "type": "outgoing-link",
-                  "state": {
-                    "file": "经济学/投资方式/漫步华尔街.md",
-                    "linksCollapsed": false,
-                    "unlinkedCollapsed": true
-                  },
-                  "icon": "links-going-out",
-                  "title": "漫步华尔街 的出链列表"
-                }
-              },
-              {
-                "id": "3b5a1e9c28b5d61b",
-                "type": "leaf",
-                "state": {
-                  "type": "all-properties",
-                  "state": {
-                    "sortOrder": "frequency",
-                    "showSearch": false,
-                    "searchQuery": ""
-                  },
-                  "icon": "lucide-archive",
-                  "title": "添加笔记属性"
-                }
-              },
-              {
-                "id": "7e79f6ae4932e6ce",
-                "type": "leaf",
-                "state": {
-                  "type": "quiet-outline",
-                  "state": {},
-                  "icon": "lines-of-text",
-                  "title": "Quiet Outline"
-                }
-              },
-              {
-                "id": "4d95b01a3344ae17",
-                "type": "leaf",
-                "state": {
-                  "type": "tag",
-                  "state": {
-                    "sortOrder": "frequency",
-                    "useHierarchy": true,
-                    "showSearch": false,
-                    "searchQuery": ""
-                  },
-                  "icon": "lucide-tags",
-                  "title": "标签"
-                }
-              },
-              {
-                "id": "77d72b1a27fea44a",
-                "type": "leaf",
-                "state": {
-                  "type": "outline",
-                  "state": {
-                    "file": "国家/日本经济发展和转型繁荣与停泻.md",
-                    "followCursor": false,
-                    "showSearch": false,
-                    "searchQuery": ""
-                  },
-                  "icon": "lucide-list",
-                  "title": "日本经济发展和转型繁荣与停泻 的大纲"
-                }
-              },
-              {
-                "id": "624f2782d94fd2cb",
-                "type": "leaf",
-                "state": {
-                  "type": "mermaid-toolbar-view",
-                  "state": {},
-                  "icon": "trident-custom",
-                  "title": "Mermaid Toolbar"
-                }
-              }
-            ],
-            "currentTab": 6
-          }
-        ],
-        "direction": "horizontal",
-        "width": 400.5,
-        "collapsed": true
-      },
-      "left-ribbon": {
-        "hiddenItems": {
-          "mermaid-tools:Open Mermaid Toolbar": false,
-          "switcher:打开快速切换": false,
-          "canvas:新建白板": false,
-          "graph:查看关系图谱": false,
-          "daily-notes:打开/创建今天的日记": false,
-          "templates:插入模板": false,
-          "command-palette:打开命令面板": false,
-          "audio-recorder:开始/结束录音": false,
-          "bases:创建新数据库": false,
-          "zk-prefixer:创建时间戳笔记": false,
-          "omnisearch:Omnisearch": false,
-          "obsidian-local-images-plus:Local Images Plus  0.16.4\r\nLocalize attachments (plugin folder)": false,
-          "webpage-html-export:导出为HTML": false,
-          "obsidian-excalidraw-plugin:新建绘图文件": false,
-          "pdf-plus:PDF++: Toggle auto-copy": false,
-          "pdf-plus:PDF++: Toggle auto-focus": false,
-          "pdf-plus:PDF++: Toggle auto-paste": false,
-          "workspaces:管理工作区布局": false,
-          "templater-obsidian:Templater": false,
-          "file-tree-alternative:File Tree Alternative Plugin": false
-        }
-      },
-      "active": "4873ec5da53b302f",
-      "mtime": "2025-12-11T10:57:47+08:00"
-    },
     "摄影": {
       "main": {
         "id": "f5de525c029043e4",
@@ -1679,7 +959,374 @@
       },
       "active": "494e559d491143ff",
       "mtime": "2026-09-23T01:57:53+08:00"
+    },
+    "D写作": {
+      "main": {
+        "id": "f5de525c029043e4",
+        "type": "split",
+        "children": [
+          {
+            "id": "ff5d945606200819",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "161de4cacdcc9361",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "Handys in der Schule"
+                }
+              },
+              {
+                "id": "81cbcbbceaa7b6ad",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Homeoffice.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "Homeoffice"
+                }
+              },
+              {
+                "id": "14421425e9d4a156",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Leben ohne eigenes Auto.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "Leben ohne eigenes Auto"
+                }
+              },
+              {
+                "id": "7f26734a40576a36",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "听说读写 以及学习外语的核心方法"
+                }
+              }
+            ]
+          },
+          {
+            "id": "b5dbd09e7753bfc0",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "0ff1e81507805d0d",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "Handys in der Schule.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "Handys in der Schule"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "vertical"
+      },
+      "left": {
+        "id": "dde9718a6f30ff5d",
+        "type": "split",
+        "children": [
+          {
+            "id": "69b90f7608974d6b",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "abbd6433f71b711a",
+                "type": "leaf",
+                "state": {
+                  "type": "bookmarks",
+                  "state": {
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-bookmark",
+                  "title": "书签"
+                }
+              },
+              {
+                "id": "2bdbb354e1190468",
+                "type": "leaf",
+                "state": {
+                  "type": "search",
+                  "state": {
+                    "query": "",
+                    "matchingCase": true,
+                    "explainSearch": false,
+                    "collapseAll": false,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical"
+                  },
+                  "icon": "lucide-search",
+                  "title": "搜索"
+                }
+              },
+              {
+                "id": "232e94f80ffd93ce",
+                "type": "leaf",
+                "state": {
+                  "type": "recent-files",
+                  "state": {},
+                  "icon": "clock",
+                  "title": "Recent files"
+                }
+              },
+              {
+                "id": "5962dcef85933e57",
+                "type": "leaf",
+                "state": {
+                  "type": "notebook-navigator",
+                  "state": {},
+                  "icon": "notebook-navigator",
+                  "title": "Notebook Navigator"
+                }
+              }
+            ],
+            "currentTab": 3
+          }
+        ],
+        "direction": "horizontal",
+        "width": 425.5125274658203
+      },
+      "right": {
+        "id": "b2bf97bc0c7f8080",
+        "type": "split",
+        "children": [
+          {
+            "id": "0ed9c27411998641",
+            "type": "tabs",
+            "dimension": 75.59779276517474,
+            "children": [
+              {
+                "id": "dd8c0de9236cf3b8",
+                "type": "leaf",
+                "state": {
+                  "type": "quiet-outline",
+                  "state": {},
+                  "icon": "lines-of-text",
+                  "title": "Quiet Outline"
+                }
+              },
+              {
+                "id": "36c96029ae4dd065",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "copilot-chat-view",
+                  "state": {},
+                  "pinned": true,
+                  "icon": "message-square",
+                  "title": "Copilot (Quick Chat)"
+                }
+              },
+              {
+                "id": "fc8efd10765ae511",
+                "type": "leaf",
+                "state": {
+                  "type": "git-view",
+                  "state": {},
+                  "icon": "git-pull-request",
+                  "title": "Source Control"
+                }
+              },
+              {
+                "id": "2cc3d386c974b5b6",
+                "type": "leaf",
+                "state": {
+                  "type": "git-history-view",
+                  "state": {},
+                  "icon": "history",
+                  "title": "History"
+                }
+              },
+              {
+                "id": "d3ec81ed4c00a968",
+                "type": "leaf",
+                "state": {
+                  "type": "advanced-tables-toolbar",
+                  "state": {},
+                  "icon": "spreadsheet",
+                  "title": "Advanced Tables"
+                }
+              },
+              {
+                "id": "cf2b910cbf6b6677",
+                "type": "leaf",
+                "state": {
+                  "type": "file-properties",
+                  "state": {
+                    "file": "思想思维心理哲学/个人问题处理/芜湖.md"
+                  },
+                  "icon": "lucide-info",
+                  "title": "笔记属性"
+                }
+              },
+              {
+                "id": "7492b847e238b9e1",
+                "type": "leaf",
+                "state": {
+                  "type": "calendar",
+                  "state": {},
+                  "icon": "calendar-with-checkmark",
+                  "title": "Calendar"
+                }
+              },
+              {
+                "id": "7bcc90c64e14a360",
+                "type": "leaf",
+                "state": {
+                  "type": "mxmind-view",
+                  "state": {},
+                  "icon": "network",
+                  "title": "Mxmind"
+                }
+              },
+              {
+                "id": "0f758d49a646ce9e",
+                "type": "leaf",
+                "state": {
+                  "type": "tag",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "useHierarchy": true,
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-tags",
+                  "title": "标签"
+                }
+              },
+              {
+                "id": "2166e25004a3aa52",
+                "type": "leaf",
+                "state": {
+                  "type": "all-properties",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-archive",
+                  "title": "添加笔记属性"
+                }
+              }
+            ]
+          },
+          {
+            "id": "28e75bfc7e894da7",
+            "type": "tabs",
+            "dimension": 24.40220723482526,
+            "children": [
+              {
+                "id": "c3592eded90586bf",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "file-properties",
+                  "state": {
+                    "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
+                  },
+                  "pinned": true,
+                  "icon": "lucide-info",
+                  "title": "语法快查必背语法canvas的笔记属性"
+                }
+              },
+              {
+                "id": "5020f6b7d22ceb0b",
+                "type": "leaf",
+                "state": {
+                  "type": "footnotes",
+                  "state": {
+                    "file": "思想思维心理哲学/个人问题处理/芜湖.md"
+                  },
+                  "icon": "lucide-file-signature",
+                  "title": "脚注"
+                }
+              },
+              {
+                "id": "e377fe748686f28e",
+                "type": "leaf",
+                "state": {
+                  "type": "notebook-navigator-calendar",
+                  "state": {},
+                  "icon": "lucide-calendar-days",
+                  "title": "日历"
+                }
+              }
+            ],
+            "currentTab": 2
+          }
+        ],
+        "direction": "horizontal",
+        "width": 507.5
+      },
+      "left-ribbon": {
+        "hiddenItems": {
+          "media-extended:打开媒体库": true,
+          "media-extended:打开媒体快速切换器": true,
+          "mermaid-tools:Open Mermaid Toolbar": true,
+          "canvas:新建白板": true,
+          "omnisearch:Omnisearch": true,
+          "pdf-plus:PDF++: Toggle auto-copy": true,
+          "pdf-plus:PDF++: Toggle auto-focus": true,
+          "pdf-plus:PDF++: Toggle auto-paste": true,
+          "workspaces:管理工作区布局": false,
+          "templater-obsidian:Templater": false,
+          "table-editor-obsidian:Advanced Tables Toolbar": true,
+          "mxmind:Mxmind": true,
+          "audio-recorder:开始/结束录音": true,
+          "obsidian-local-images-plus:Local Images Plus  0.16.4\r\nLocalize attachments (plugin folder)": true,
+          "markdown-importer:打开 Markdown 格式转换器": true,
+          "obsidian-git:Open Git source control": true,
+          "pexels-banner:🚩 Pixel Banner Menu": true,
+          "vscode-editor:新建代码文件": true,
+          "darlal-switcher-plus:Open in Headings Mode": true,
+          "darlal-switcher-plus:Open Symbols for the active editor": true,
+          "command-palette:打开命令面板": true,
+          "daily-notes:打开/创建今天的日记": false,
+          "obsidian-excalidraw-plugin:新建绘图文件": false,
+          "realclaudian:Open Claudian": false,
+          "agent-client:Open agent client": false,
+          "copilot:Open Copilot Agent Chat": false,
+          "notebook-navigator:Notebook Navigator": false,
+          "periodic-notes:Open today": false
+        }
+      },
+      "active": "0ff1e81507805d0d",
+      "mtime": "2026-09-30T01:12:29+08:00"
     }
   },
-  "active": "摄影"
+  "active": "D写作"
 }
