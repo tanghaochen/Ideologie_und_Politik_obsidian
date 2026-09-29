@@ -8,6 +8,18 @@
         "type": "tabs",
         "children": [
           {
+            "id": "23f38a45e254616f",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/从句.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "从句"
+            }
+          },
+          {
             "id": "161de4cacdcc9361",
             "type": "leaf",
             "state": {
@@ -67,12 +79,28 @@
               "title": "听说读写 以及学习外语的核心方法"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "b5dbd09e7753bfc0",
         "type": "tabs",
         "children": [
+          {
+            "id": "954cef3c63c5fe08",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "名词：性的规律, 不背词性，一眼识别词性"
+            }
+          },
           {
             "id": "0ff1e81507805d0d",
             "type": "leaf",
@@ -88,7 +116,8 @@
               "title": "未命名 2"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -362,10 +391,14 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "0ff1e81507805d0d",
+  "active": "161de4cacdcc9361",
   "lastOpenFiles": [
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md",
     "未命名 2.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md",
+    "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
+    "语言学习/德语/公共知识语法/格; 限定词.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/结果状语从句 sodass,weshalb,dermafsen ..,dass.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Leben ohne eigenes Auto.md",
     "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Homeoffice.md",
@@ -382,14 +415,10 @@
     "Diary/2026/20260923.md",
     "Diary/2026/20260922.md",
     "语言学习/德语/单词/生词/26-9.md",
-    "语言学习/德语/公共知识语法/格; 限定词.md",
     "语言学习/德语/公共知识语法/形容词.md",
     "语言学习/德语/公共知识语法/2动词/系动词.md",
     "语言学习/德语/公共知识语法/2动词/❌/sein和haben区分易错点.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "2026-08-13.md",
-    "2026-W25.md",
-    "语言学习/德语/柏林广场视频笔记/A1/4 动词sein和陈述句.md",
     "assets/image-496.png",
     "assets/image-495.png",
     "assets/1790324613909_d.png",

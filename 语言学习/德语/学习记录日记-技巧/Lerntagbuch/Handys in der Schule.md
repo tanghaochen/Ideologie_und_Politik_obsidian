@@ -29,6 +29,11 @@ Schreiben Sie einen Forumsbeitrag zum oben dargestellten Thema. Nehmen Sie dabei
 Schreiben Sie **mindestens 150 Wörter**.
 
 ---
+Für mich ist die Lage ganz anders, denn wir leben im Jahr 2026 und nicht mehr im Jahr 2000. Jetzt muss ich die Gründe für die Handynutzung nennen.
+Der erste Punkt ist: Mit der Kamera kann man schnell ein Video aufnehmen, weil das Abschreiben viel Zeit kostet.
+Der zweite Punkt ist: Das Video kann man bis zum Ende des Kurses wiederverwenden.
+So können die Schüler die Details noch einmal anschauen.
+Der dritte Punkt ist: Alle Daten lassen sich im Internet speichern, damit sie nicht verloren gehen.
 
 ### Teil 2 — Formelle E-Mail (ca. 25 Minuten)
 
