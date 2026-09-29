@@ -6702,11 +6702,11 @@
     "scroll": 85.63112928015809,
     "cursor": {
       "from": {
-        "line": 0,
+        "line": 1,
         "ch": 0
       },
       "to": {
-        "line": 0,
+        "line": 1,
         "ch": 0
       }
     },
@@ -13286,11 +13286,11 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 0,
+        "line": 5,
         "ch": 0
       },
       "to": {
-        "line": 0,
+        "line": 5,
         "ch": 0
       }
     },
@@ -14100,12 +14100,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 4,
-        "ch": 21
+        "line": 6,
+        "ch": 34
       },
       "to": {
-        "line": 4,
-        "ch": 21
+        "line": 8,
+        "ch": 28
       }
     },
     "expandedKeys": [
