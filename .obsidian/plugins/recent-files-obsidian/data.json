@@ -5,6 +5,10 @@
       "path": "语言学习/德语/公共知识语法/1名词/名词复数变化.md"
     },
     {
+      "basename": "动词与单复数关系",
+      "path": "语言学习/德语/公共知识语法/2动词/动词与单复数关系.md"
+    },
+    {
       "basename": "个人人生思想架构",
       "path": "思想思维心理哲学/个人人生思想架构.md"
     },
@@ -195,10 +199,6 @@
     {
       "basename": "生词表格-anki",
       "path": "OBSetting/templater/生词表格-anki.md"
-    },
-    {
-      "basename": "周记-一览视图",
-      "path": "OBSetting/templater/周记-一览视图.md"
     }
   ],
   "omittedPaths": [],
