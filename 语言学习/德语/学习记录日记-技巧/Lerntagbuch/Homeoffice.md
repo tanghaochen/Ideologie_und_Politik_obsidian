@@ -21,8 +21,6 @@ Gehen Sie dabei auf folgende Punkte ein:
 Ich find es dreie Punkten zu unterdenken und unterscheiden. Virte Punkte ist, Hat Arbeiten bereich bequem. Zwiene Punkte, Arbeiter Gedankes.Dritten, Fahrzeit für den Firme zu commen. Virte, der Arbeit inklude kennnis type? 
 Vor virte puncten wär bettem. Für teilwise manchen werden überglücklich, beisple habe sich familen zu fleich, ober sich möglich möuchen in arbeited zu vertiefern.
 
-
-
 # 📝 歌德 B 2 写作批改报告
 
 > ⚠️ **审题说明**：你没有附上题目原文，从你的内容（Arbeitsbereich、Gedanken der Arbeiter、Fahrzeit zur Firma、Kenntnisse）我推测题目是关于 **Homeoffice / mobile Arbeit**，要求分点论述（可能是"Nennen Sie vier Punkte, die man beim Homeoffice bedenken muss"或"Vor- und Nachteile"）。若题目不同，模块三的论点建议需相应调整——**但模块二的语法批改与题目无关，全部有效。**
