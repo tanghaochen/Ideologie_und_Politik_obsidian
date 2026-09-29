@@ -2837,11 +2837,11 @@
     "cursor": {
       "from": {
         "line": 0,
-        "ch": 0
+        "ch": 13
       },
       "to": {
         "line": 0,
-        "ch": 0
+        "ch": 13
       }
     },
     "expandedKeys": []
