@@ -140,7 +140,7 @@ Ich bin <del>eine Miearbeiter</del> <span style="color:red">ein Mitarbeiter</spa
 **③ 📋 本句问题一览（含错误原因解释）**
 - ¹ 🔴 动词变位错误：find → finde　🩺 原因：ich 的现在时词尾必须是 **-e**，ich find 缺词尾。
 - ² 🔴 谓语缺失：es viel → es ist (sehr gut)　🩺 原因：德语简单句必须有变位动词，不能出现"主语 + 副词"就结束的结构；viel 也不能作表语。
-- ³ 🔵 中文占位词：适合 → geeignet sein für + Akk. / sich eignen für　🩺 原因：中文词不能直接嵌入德语句子，须换成形容词短语 *geeignet sein für* 或动词 *sich eignen für*。
+- ³ 🔵 中文占位词：适合 → geeignet sein für + Akk. / sich eignen für　🩺 原因：中文词不能直接嵌入德语句子，须换成形容词短语 *geeignet sein für* 或动词 *sich eignen für*。 ^rrq0mp
 - ⁴ 🔴 单复数与格错误：letze Detail des Arbeitens → die letzten Arbeitsschritte　🩺 原因：Detail 作复数要用 Details，无冠词时形容词需强变化 **-en**（letzte Details）；"des Arbeitens" 是生硬的动名词，B 2 常直接用 *Arbeitsschritte*。
 - ⁵ 🔴 从句语序 + 介词搭配 + 名词单复数：weil ist meine Arbeiten voll in der Computer → weil ich meine Aufgaben vollständig am Computer erledige　🩺 原因：weil 从句中**变位动词必须置于句末**（尾语序）；"在电脑上"是 *am Computer*（an + dem），不能用 in；Arbeit 在此指"工作"，可数用法应为 Aufgaben。
 
@@ -152,6 +152,17 @@ Ich bin <del>eine Miearbeiter</del> <span style="color:red">ein Mitarbeiter</spa
 **⑤ 🔬 本句重写示范（同一原意 × 两种写法）**
 - 🛡️ 最小化改写：Ich finde, diese Arbeitsweise eignet sich sehr gut für die letzten Arbeitsschritte, weil ich meine Aufgaben vollständig am Computer erledige.
 - 🚀 高级改写：Meiner Erfahrung nach ist die Arbeit im Homeoffice gerade für konzentrationsintensive Tätigkeiten besonders geeignet, da ich sämtliche Aufgaben ortsunabhängig am Computer bearbeiten kann.（*konzentrationsintensiv*、*ortsunabhängig* 是职场高频高级词）
+
+① 句子与问题
+原句：我认为它非常适合那些工作内容都在电脑上完成的工作者，因为我的工作都可以在电脑上完成
+问题：翻译
+
+② 答案
+- 译文：**Ich finde, es eignet sich sehr gut für Berufstätige, deren Arbeit komplett am Computer erledigt wird, weil meine Arbeit auch komplett am Computer erledigt werden kann.**
+- "非常适合"＝**sich gut für + 第四格 eignen**（或 **gut zu jemandem passen**）；"工作者"用 **Berufstätige / Arbeitnehmer**。
+- "工作内容都在电脑上完成"用**关系从句**：**deren Arbeit**（deren ＝ 复数所有格，指"他们的工作"）**komplett am Computer erledigt wird**——被动态（werden + 分词），因为工作是"被完成"。
+- "可以在电脑上完成"＝**kann … erledigt werden**（情态动词 + 被动）或同义 **lässt sich … erledigen**（sich lassen + 不定式，表"能被……"）。
+- 语序：**weil** 引导从句，变位动词 **kann** 落到句末→ … weil meine Arbeit auch komplett am Computer **erledigt werden kann**。
 
 #### 第 5 句
 
@@ -198,6 +209,13 @@ Ich bin <del>eine Miearbeiter</del> <span style="color:red">ein Mitarbeiter</spa
 - 🛡️ 最小化改写：Außerdem lebt mein Vater allein und ist auf meine Pflege angewiesen; deshalb kann ich meine Arbeit nicht immer reibungslos erledigen.
 - 🚀 高级改写：Hinzu kommt, dass mein Vater pflegebedürftig ist und regelmäßig auf meine Unterstützung angewiesen ist – was es mir zusätzlich erschwert, jeden Tag pünktlich im Büro zu sein.（*Hinzu kommt, dass …* 是 B 2 高级衔接；*es jdm. erschweren, … zu + Inf.* 是高分句型）
 
+另外，我父亲一个人生活、需要人照料，所以我得照顾他，但是这并不影响我顺利工作。
+- 译文：Außerdem lebt mein Vater allein und braucht Pflege, deshalb muss ich mich um ihn kümmern, aber das hindert mich nicht daran, meine Arbeit gut zu erledigen.
+- "一个人生活"＝allein leben；"需要人照料"＝Pflege brauchen（或 ist auf Pflege angewiesen）。
+- "照顾某人"＝sich um jemanden kümmern（反身动词 + um + 第四格）→ mich um ihn kümmern。
+- "不影响我做某事"＝jemanden nicht daran hindern, etwas zu tun；hindern 支配第四格（mich），daran 是介词固定搭配（hindern an + 第三格）。
+- 语序：deshalb / aber 都占句首位置，其后必须紧跟变位动词 → deshalb muss ich …、aber das hindert …（V 2）。
+
 #### 第 7 句
 
 **① 💬 本句原意**
@@ -222,6 +240,8 @@ Ich bin <del>eine Miearbeiter</del> <span style="color:red">ein Mitarbeiter</spa
 - 🛡️ 最小化改写：Während der Arbeitszeit kann ich nur schnell etwas zu essen machen.
 - 🚀 高级改写：Da ich meinen Vater regelmäßig versorgen muss, bleibt mir während der Arbeitszeit kaum Zeit, warme Mahlzeiten zuzubereiten.（*kaum Zeit bleibt mir* + *zu + Inf.* 是 B 2 高频句式）
 
+原句：我只需要给他准备一点吃的，在午休或者公司正常允许的休息时间内
+- 译文：Ich muss ihm nur etwas zu essen machen – und zwar in der Mittagspause oder in den normalen, vom Unternehmen erlaubten Pausenzeiten.
 #### 第 8 句
 
 **① 💬 本句原意**
@@ -381,8 +401,8 @@ Max Mustermann
 - dass使用错误和 从句动词未知错误 [[E-Mail Homeoffice#^10vx9j|⁴ 🔴 ]]
 	- 强化练习da开头的造句 [[da-构成的代副词#^x9mmil|x9mmil]]
 		- da- 是不是从句？它的动词位置和从句有什么区别
-- 
-- 
+- 适合：[[E-Mail Homeoffice#^rrq0mp|³ 🔵 ]]
+- 关系从句的造句习惯 和理解
 
 
 
