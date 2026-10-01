@@ -176,7 +176,7 @@ B
 - “2 月度复盘第二步:找到“联结”,并用箭头标注” |([“复盘自己：从记录到蜕变的行动指南”, p. 134](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=135&annotation=TAD72VMV))
 - “3 月度复盘第三步:撰写总结” |([“复盘自己：从记录到蜕变的行动指南”, p. 135](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=136&annotation=CNSLSIL6)) ^GQ0JfzMU
 
-[[B_复盘自己#“7 种复盘技巧” ([“复盘自己：从记录到蜕变的行动指南”, p. 31](zotero //select/library/items/X743BJHT)) ([pdf](zotero //open-pdf/library/items/A9VMWXTF?page=32&annotation=RJB47VK3))|“7 种复盘技巧” |([“复盘自己：从记录到蜕变的行动指南”, p. 31](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=32&annotation=RJB47VK3))]] ^qdl6cVbj
+[B\_复盘自己](B_复盘自己.md#“7%20种复盘技巧”%20([“复盘自己：从记录到蜕变的行动指南”,%20p.%2031](zotero%20//select/library/items/X743BJHT))%20([pdf](zotero%20//open-pdf/library/items/A9VMWXTF?page=32&annotation=RJB47VK3))) ^qdl6cVbj
 
 [[B_复盘自己#“7 种复盘技巧和 3 类复盘方式”|“7 种复盘技巧和 3 类复盘方式”]] ^bTh4q4dl
 
@@ -185,7 +185,7 @@ B
 ## Element Links
 TERJRXmt: [[B_复盘自己#看清自己内心的三个阶段|看清自己内心的三个阶段]]
 
-eQI4I9A8: [[B_复盘自己#“7 种复盘技巧” ([“复盘自己：从记录到蜕变的行动指南”, p. 31](zotero //select/library/items/X743BJHT)) ([pdf](zotero //open-pdf/library/items/A9VMWXTF?page=32&annotation=RJB47VK3))|“7 种复盘技巧” |([“复盘自己：从记录到蜕变的行动指南”, p. 31](zotero://select/library/items/X743BJHT)) ([pdf](zotero://open-pdf/library/items/A9VMWXTF?page=32&annotation=RJB47VK3))]]
+eQI4I9A8: [B\_复盘自己](B_复盘自己.md#“7%20种复盘技巧”%20([“复盘自己：从记录到蜕变的行动指南”,%20p.%2031](zotero%20//select/library/items/X743BJHT))%20([pdf](zotero%20//open-pdf/library/items/A9VMWXTF?page=32&annotation=RJB47VK3)))
 
 wDlGY7Cx: zotero://select/library/items/X743BJHT
 
