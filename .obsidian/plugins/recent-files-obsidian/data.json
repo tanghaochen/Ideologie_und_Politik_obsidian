@@ -5,6 +5,14 @@
       "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/E-Mail Homeoffice.md"
     },
     {
+      "basename": "信件作文",
+      "path": "语言学习/德语/学习记录日记-技巧/写作知识/信件作文.md"
+    },
+    {
+      "basename": "听说读写 以及学习外语的核心方法",
+      "path": "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md"
+    },
+    {
       "basename": "格; 限定词",
       "path": "语言学习/德语/公共知识语法/格; 限定词.md"
     },
@@ -15,10 +23,6 @@
     {
       "basename": "Handys in der Schule",
       "path": "Handys in der Schule.md"
-    },
-    {
-      "basename": "听说读写 以及学习外语的核心方法",
-      "path": "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md"
     },
     {
       "basename": "Handys in der Schule",
@@ -195,10 +199,6 @@
     {
       "basename": "日记-事件模板",
       "path": "OBSetting/templater/日记-事件模板.md"
-    },
-    {
-      "basename": "template-营养学健康物质模板",
-      "path": "template/template-营养学健康物质模板.md"
     }
   ],
   "omittedPaths": [],

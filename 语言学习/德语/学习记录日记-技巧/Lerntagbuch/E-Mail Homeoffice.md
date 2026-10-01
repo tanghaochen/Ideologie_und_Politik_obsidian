@@ -333,6 +333,7 @@ Ich <del>hätte</del> <span style="color:red">habe</span><sup>¹</sup> <del>zu u
 
 ---
 
+当提到每一个人都会老去，每一个人都会面临父母生病需要照顾的事情，以及每个人在童年时都曾受到父母的关爱时，就能极大地引起同情，从而增加信函的批准率以及考官的情感。
 ## 模块四：写作方法论指导
 
 **💡 本课核心方法：Baukasten-Prinzip（模块化语块写作法）**
@@ -395,6 +396,29 @@ Max Mustermann
 > 2. 把模块五做一遍，错题抄进 Anki，正面写中文原意、反面写德语。
 > 3. 重写这篇作文：**保留你的三个想法，只换成正确骨架**，字数 130–150，务必补齐 Betreff、Terminvorschlag、Grußformel。写好后发我，我们再对比一次进步。
 
+
+## 最小改写的完整文章
+Betreff: Homeoffice-Regelung – Bitte um ein Gespräch
+
+Sehr geehrte Frau Reinhardt,
+
+ich bin Mitarbeiter in der Marketingabteilung und möchte Ihnen einen Vorschlag zur neuen Homeoffice-Regelung machen.
+
+Seit einigen Jahren ist Homeoffice eine neue Arbeitsweise, und dadurch kann ich viel Zeit sparen. Ich finde, diese Arbeitsweise eignet sich sehr gut für Berufstätige, deren Arbeit komplett am Computer erledigt wird, weil meine Aufgaben vollständig am Computer erledigt werden können.
+
+Zahlreiche Firmen lassen ihre Mitarbeiter Vollzeit zu Hause arbeiten.
+
+Außerdem lebt mein Vater allein und braucht Pflege, deshalb muss ich mich um ihn kümmern, aber das hindert mich nicht daran, meine Arbeit gut zu erledigen. Während der Arbeitszeit muss ich ihm nur etwas zu essen machen – und zwar in der Mittagspause oder in den normalen, vom Unternehmen erlaubten Pausenzeiten.
+
+Ich habe zu wenig Zeit und stehe unter Zeitdruck; außerdem ist mein Arbeitsweg sehr lang.
+
+Deshalb bitte ich Sie, mir zu erlauben, zwei Tage pro Woche zu Hause zu arbeiten. Als Terminvorschlag würde ich mich über ein kurzes Gespräch am kommenden Dienstag, den 15., um 10 Uhr sehr freuen.
+
+Sollte ich meine Aufgaben nicht wie vereinbart erledigen, bin ich bereit, die Konsequenzen zu tragen.
+
+Mit freundlichen Grüßen
+[Name]
+Marketingabteilung
 
 # 个人归纳错误日志
 
