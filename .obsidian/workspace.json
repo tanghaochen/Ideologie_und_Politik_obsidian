@@ -8,6 +8,18 @@
         "type": "tabs",
         "children": [
           {
+            "id": "b81388b3bf95c58a",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "格; 限定词"
+            }
+          },
+          {
             "id": "da101c9aab0a49e9",
             "type": "leaf",
             "state": {
@@ -82,8 +94,7 @@
               "title": "听说读写 以及学习外语的核心方法"
             }
           }
-        ],
-        "currentTab": 4
+        ]
       },
       {
         "id": "b5dbd09e7753bfc0",
@@ -424,7 +435,7 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "06aa10744e09e60f",
+  "active": "43cd994933423d71",
   "lastOpenFiles": [
     "未命名 2.md",
     "语言学习/德语/学习记录日记-技巧/德语 B 2 科学出题法 · 知识地图.md",
