@@ -7,24 +7,6 @@
 ## 1. 德语原题
 
 
-### Teil 2 — Formelle E-Mail (ca. 25 Minuten)
-
-**Situation:**
-
-Sie arbeiten seit drei Jahren in der Marketingabteilung der **Nordlicht GmbH**. Ihr Unternehmen hat vor Kurzem eine neue Homeoffice-Regelung eingeführt: Pro Woche darf nur **ein Tag** im Homeoffice gearbeitet werden. Für Sie ist diese Regelung problematisch, denn Sie kümmern sich regelmäßig um Ihren pflegebedürftigen Vater und haben außerdem einen sehr langen Arbeitsweg.
-
-**Ihre Aufgabe:**
-
-Schreiben Sie eine E-Mail an Ihre Abteilungsleiterin, **Frau Reinhardt**. Gehen Sie dabei auf **alle drei** folgenden Punkte ein:
-
-1. **Erklären Sie**, warum die aktuelle Regelung für Sie schwierig ist.
-2. **Machen Sie einen konkreten Vorschlag**, wie Sie Ihre Arbeit auch weiterhin zuverlässig erledigen können.
-3. **Bitten Sie um ein persönliches Gespräch** und nennen Sie einen Terminvorschlag.
-
-Achten Sie auf eine passende **Anrede** und **Grußformel**. Schreiben Sie **mindestens 100 Wörter**.
-
----
-
 ## 2. 中文翻译
 
 ### 第一部分 — 论坛帖（约 20 分钟）
