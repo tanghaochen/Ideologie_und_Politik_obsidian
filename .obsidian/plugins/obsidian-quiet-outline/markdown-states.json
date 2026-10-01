@@ -13791,11 +13791,11 @@
     "cursor": {
       "from": {
         "line": 12,
-        "ch": 11
+        "ch": 0
       },
       "to": {
         "line": 12,
-        "ch": 11
+        "ch": 0
       }
     },
     "expandedKeys": [
@@ -18019,15 +18019,15 @@
     "scroll": 81.6349776186121
   },
   "语言学习/德语/学习记录日记-技巧/Lerntagbuch/E-Mail Homeoffice.md": {
-    "scroll": 399.52495843283543,
+    "scroll": 9.977084141146234,
     "cursor": {
       "from": {
-        "line": 360,
-        "ch": 155
+        "line": 22,
+        "ch": 81
       },
       "to": {
-        "line": 360,
-        "ch": 173
+        "line": 18,
+        "ch": 0
       }
     }
   },

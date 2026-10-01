@@ -372,21 +372,27 @@ Ich möchte zwei Tage im Homeoffice arbeiten, weil ich meine Aufgaben vollständ
 ✏️ **4. 中译德（消灭中文占位词）**
 用以下词完成翻译：*geeignet / erledigen / die Konsequenzen tragen*
 a) 在家办公对我非常适合，因为我的工作完全可以在电脑上完成。
+Der Homeoffice ist geeignet für mich, 
 b) 如果我没能完成任务，我愿意承担后果。
 
 ✏️ **5. 填空 + 语块（正式邮件首尾）**
-Betreff: Homeoffice-Regelung – ______ (请求一次谈话)
+Betreff: Homeoffice-Regelung – ___1???___ (请求一次谈话)
 Sehr geehrte Frau Reinhardt,
-ich wende mich heute an Sie, ______ (因为) die neue Regelung für mich schwierig ist.
-Mit ______ Grüßen
+ich wende mich heute an Sie, __2???____ (因为) die neue Regelung für mich schwierig ist.
+Mit ___3???___ Grüßen
 Max Mustermann
 
 > [!note]- 👉 点击查看参考答案
 > **1.** *erledige* / *angewiesen ist*　解析：weil 引导从句时变位动词必须移到句末（尾语序），且从句不能使用主句语序"ich erledige …"。
+> 
 > **2.** *Mein Vater ist krank, deshalb pflege ich ihn, aber ich kann die Arbeit nicht gut machen.*　解析：der Vater 的所有格是 mein Vater（阳性）；pflegen 支配第四格，故用 ihn 而非 er；两个并列主句各需要一个主语，不能省掉第二个 ich。
+> 
 > **3.** *Ich bitte Sie, mir zu erlauben, zwei Tage im Homeoffice zu arbeiten.* / *Ich würde mich sehr freuen, wenn Sie mir zwei Tage im Homeoffice erlauben könnten.*　解析：erlauben 的句型是 jdm. erlauben, etw. zu tun（人用第三格 + zu 不定式）；用 würde + könnten 构成 Konjunktiv II，语气更礼貌，符合职场正式度。
+> 
 > **4 a.** *Die Arbeit im Homeoffice ist für mich sehr geeignet*，更地道：*Das Arbeiten im Homeoffice eignet sich für mich sehr gut, weil ich meine Aufgaben vollständig am Computer erledigen kann.*　解析：中文"适合"须转成 geeignet sein für 或 sich eignen für；"完成"对应 erledigen；主句 + weil 从句中动词位置必须正确。
+> 
 > **4 b.** *Sollte ich meine Aufgaben nicht erledigen, bin ich bereit, die Konsequenzen zu tragen.*　解析：对未来假设用 Sollte ich + Infinitiv 或 Wenn ich … nicht erledigen sollte；"承担后果"的固定搭配是 die Konsequenzen tragen。
+> 
 > **5.** 第一空：*Bitte um ein Gespräch*；第二空：*weil*；第三空：*freundlichen*　解析：Betreff 用名词短语（Bitte um …）最规范；weil 引导原因从句，动词须到句末（此处为 ist）；正式邮件结尾固定写法是 Mit freundlichen Grüßen。
 
 ---
@@ -425,7 +431,7 @@ Marketingabteilung
 - dass使用错误和 从句动词未知错误 [[E-Mail Homeoffice#^10vx9j|⁴ 🔴 ]]
 	- 强化练习da开头的造句 [[da-构成的代副词#^x9mmil|x9mmil]]
 		- da- 是不是从句？它的动词位置和从句有什么区别
-- 适合：[[E-Mail Homeoffice#^rrq0mp|³ 🔵 ]]
+- 适合 这个短语用法：[[E-Mail Homeoffice#^rrq0mp|³ 🔵 ]]
 - 关系从句的造句习惯 和理解
 
 
