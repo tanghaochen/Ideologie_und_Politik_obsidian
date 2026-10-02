@@ -64,7 +64,8 @@
               "title": "zu的所有用法"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "b5dbd09e7753bfc0",
@@ -146,7 +147,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -356,8 +357,9 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "ba78ab55f8b9e006",
+  "active": "19f378eb00c6d463",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/单词/生词/26-10.md",
     "语言学习/德语/单词/生词/26-9.md",
@@ -385,7 +387,6 @@
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/结果状语从句 sodass,weshalb,dermafsen ..,dass.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Leben ohne eigenes Auto.md",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Homeoffice.md",
     "assets/image-496.png",
     "assets/image-495.png",
     "assets/1790324613909_d.png",
