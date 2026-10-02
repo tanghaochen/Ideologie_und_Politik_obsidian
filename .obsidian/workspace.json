@@ -8,6 +8,22 @@
         "type": "tabs",
         "children": [
           {
+            "id": "cf92c18697f0f9ac",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
+                "page": 172,
+                "left": -65,
+                "top": 721,
+                "zoom": 1.25
+              },
+              "icon": "lucide-file-text",
+              "title": "德语语法 活学活用 A1-B1"
+            }
+          },
+          {
             "id": "ba78ab55f8b9e006",
             "type": "leaf",
             "state": {
@@ -64,8 +80,7 @@
               "title": "zu的所有用法"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "b5dbd09e7753bfc0",
@@ -357,11 +372,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "19f378eb00c6d463",
+  "active": "cf92c18697f0f9ac",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/单词/生词/26-10.md",
+    "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/单词/生词/26-9.md",
     "思想思维心理哲学/个人问题处理/每个人都想要别人付出.md",
     "语言学习/德语/公共知识语法/10句型/zu的所有用法.md",
