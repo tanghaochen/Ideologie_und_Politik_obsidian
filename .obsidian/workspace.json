@@ -8,34 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "cf92c18697f0f9ac",
-            "type": "leaf",
-            "state": {
-              "type": "pdf",
-              "state": {
-                "file": "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
-                "page": 172,
-                "left": -65,
-                "top": 721,
-                "zoom": 1.25
-              },
-              "icon": "lucide-file-text",
-              "title": "德语语法 活学活用 A1-B1"
-            }
-          },
-          {
-            "id": "ba78ab55f8b9e006",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/介词.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "介词"
-            }
-          },
-          {
             "id": "19f378eb00c6d463",
             "type": "leaf",
             "state": {
@@ -87,6 +59,21 @@
         "type": "tabs",
         "children": [
           {
+            "id": "c0599c290f77f59c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/单词/生词/26-9.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "26-9"
+            }
+          },
+          {
             "id": "b9e920bd5dbeb540",
             "type": "leaf",
             "state": {
@@ -96,6 +83,16 @@
               },
               "icon": "excalidraw-icon",
               "title": "从句"
+            }
+          },
+          {
+            "id": "c0b1ef0c185ff2fe",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
             }
           }
         ]
@@ -162,7 +159,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -372,12 +369,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "cf92c18697f0f9ac",
+  "active": "19f378eb00c6d463",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/单词/生词/26-9.md",
     "语言学习/德语/单词/生词/26-10.md",
     "语言学习/德语/公共知识语法/介词.md",
-    "语言学习/德语/单词/生词/26-9.md",
+    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
+    "语言学习/德语/公共知识语法/从句.md",
     "思想思维心理哲学/个人问题处理/每个人都想要别人付出.md",
     "语言学习/德语/公共知识语法/10句型/zu的所有用法.md",
     "语言学习/德语/公共知识语法/10句型/被动态.md",
@@ -401,7 +399,6 @@
     "assets/image-497.png",
     "语言学习/德语/公共知识语法/1名词/名词：性的规律, 不背词性，一眼识别词性.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/结果状语从句 sodass,weshalb,dermafsen ..,dass.md",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Leben ohne eigenes Auto.md",
     "assets/image-496.png",
     "assets/image-495.png",
     "assets/1790324613909_d.png",
@@ -419,7 +416,6 @@
     "语言学习/德语/德国所有历史政治经济等合集",
     "assets/萨莉的柠檬水摊.html",
     "copilot/skills/openartifacts-publish/openartifacts-publish.ps1",
-    "copilot/skills/openartifacts-publish/openartifacts-publish.cmd",
     "思想思维心理哲学/爱情/说话聊天/未命名.canvas",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "网络/简述软路由网络逻辑.canvas",
