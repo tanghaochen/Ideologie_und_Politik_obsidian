@@ -6,8 +6,20 @@
       {
         "id": "ff5d945606200819",
         "type": "tabs",
-        "dimension": 84.68511450381679,
+        "dimension": 46.58711217183771,
         "children": [
+          {
+            "id": "ff5a468c16d65b4b",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "思想思维心理哲学/阅读/被讨厌的勇气/被讨厌的勇气全书逻辑.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "被讨厌的勇气全书逻辑"
+            }
+          },
           {
             "id": "81cbcbbceaa7b6ad",
             "type": "leaf",
@@ -65,13 +77,12 @@
               "title": "Drawing 2026-10-04 19.32.46.excalidraw"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       },
       {
         "id": "b5dbd09e7753bfc0",
         "type": "tabs",
-        "dimension": 15.314885496183205,
+        "dimension": 53.41288782816229,
         "children": [
           {
             "id": "0ff1e81507805d0d",
@@ -408,11 +419,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "ef698d4ad3023c45",
+  "active": "ff5a468c16d65b4b",
   "lastOpenFiles": [
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Homeoffice.md",
-    "思想思维心理哲学/个人问题处理/情绪; 欲望/Drawing 2026-10-04 19.32.46.excalidraw.md",
     "宫本武藏《五轮书.md",
+    "思想思维心理哲学/个人问题处理/情绪; 欲望/Drawing 2026-10-04 19.32.46.excalidraw.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Homeoffice.md",
     "思想思维心理哲学/学习本身/情绪/宫本武藏.md",
     "思想思维心理哲学/个人问题处理/情绪; 欲望/《了解五轮书》有感.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md",
