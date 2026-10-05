@@ -6,8 +6,23 @@
       {
         "id": "ff5d945606200819",
         "type": "tabs",
-        "dimension": 46.58711217183771,
+        "dimension": 64.72553699284009,
         "children": [
+          {
+            "id": "6e7fa07505fb40cd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/单词/生词/26-10.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "26-10"
+            }
+          },
           {
             "id": "c5914365771f8513",
             "type": "leaf",
@@ -100,8 +115,23 @@
       {
         "id": "b5dbd09e7753bfc0",
         "type": "tabs",
-        "dimension": 53.41288782816229,
+        "dimension": 35.27446300715991,
         "children": [
+          {
+            "id": "d42b38b2c9ce04de",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Clippings/收到计算机软件侵权警告函（告知函，律师函等）如何处理？.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "收到计算机软件侵权警告函（告知函，律师函等）如何处理？"
+            }
+          },
           {
             "id": "7711e69c5c6454aa",
             "type": "leaf",
@@ -421,10 +451,12 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "7711e69c5c6454aa",
+  "active": "d42b38b2c9ce04de",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/2动词/情态动词.md",
+    "语言学习/德语/单词/生词/26-10.md",
+    "Clippings/收到计算机软件侵权警告函（告知函，律师函等）如何处理？.md",
     "语言学习/德语/公共知识语法/1词/形近词 易混词.md",
+    "语言学习/德语/公共知识语法/2动词/情态动词.md",
     "语言学习/德语/公共知识语法/时态/动词的过去时.md",
     "营养学以及养生/工具/电陶炉.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md",
@@ -446,9 +478,7 @@
     "语言学习/德语/公共知识语法/5介词/见字知义 的介词.md",
     "语言学习/德语/公共知识语法/5介词/介词和动词名词化的搭配.md",
     "语言学习/德语/单词/生词/26-9.md",
-    "语言学习/德语/单词/生词/26-10.md",
     "语言学习/德语/公共知识语法/连词成对.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/学习记录日记-技巧/写作知识",
     "assets/image-497.png",
