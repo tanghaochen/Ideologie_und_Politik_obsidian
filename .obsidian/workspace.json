@@ -9,6 +9,21 @@
         "dimension": 46.58711217183771,
         "children": [
           {
+            "id": "c5914365771f8513",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/2动词/情态动词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "情态动词"
+            }
+          },
+          {
             "id": "ee193b72ec0036c5",
             "type": "leaf",
             "state": {
@@ -87,6 +102,21 @@
         "type": "tabs",
         "dimension": 53.41288782816229,
         "children": [
+          {
+            "id": "6800141a55fcbc5a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/时态/动词的过去时.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "动词的过去时"
+            }
+          },
           {
             "id": "0ff1e81507805d0d",
             "type": "leaf",
@@ -376,8 +406,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "ee193b72ec0036c5",
+  "active": "c5914365771f8513",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/时态/动词的过去时.md",
+    "语言学习/德语/公共知识语法/2动词/情态动词.md",
+    "营养学以及养生/工具/电陶炉.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Leben ohne eigenes Auto.md",
     "思想思维心理哲学/思想/《当下的力量》精华总结.md",
@@ -402,9 +435,6 @@
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/介词.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
-    "思想思维心理哲学/个人问题处理/每个人都想要别人付出.md",
-    "语言学习/德语/公共知识语法/10句型/zu的所有用法.md",
-    "语言学习/德语/公共知识语法/10句型/被动态.md",
     "语言学习/德语/学习记录日记-技巧/写作知识",
     "assets/image-497.png",
     "assets/image-496.png",
