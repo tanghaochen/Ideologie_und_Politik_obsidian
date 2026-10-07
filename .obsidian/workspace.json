@@ -9,6 +9,18 @@
         "dimension": 64.72553699284009,
         "children": [
           {
+            "id": "e0a4056ed3d29252",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.14.4"
+              },
+              "icon": "lucide-book-up",
+              "title": "版本说明 1.14.4"
+            }
+          },
+          {
             "id": "d0489ed72d5d742f",
             "type": "leaf",
             "state": {
@@ -345,7 +357,6 @@
       "mxmind:Mxmind": true,
       "audio-recorder:开始/结束录音": true,
       "obsidian-local-images-plus:Local Images Plus  0.16.4\r\nLocalize attachments (plugin folder)": true,
-      "markdown-importer:打开 Markdown 格式转换器": true,
       "obsidian-git:Open Git source control": true,
       "pexels-banner:🚩 Pixel Banner Menu": true,
       "vscode-editor:新建代码文件": true,
@@ -361,7 +372,7 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "825aedfece7c46c3",
+  "active": "e0a4056ed3d29252",
   "lastOpenFiles": [
     "语言学习/德语/单词/生词/26-9.md",
     "语言学习/德语/公共知识语法/2动词/❌/sein和haben区分易错点.md",
