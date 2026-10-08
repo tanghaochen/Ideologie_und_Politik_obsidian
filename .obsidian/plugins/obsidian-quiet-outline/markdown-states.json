@@ -17652,15 +17652,15 @@
   "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md": {
     "cursor": {
       "from": {
-        "line": 24,
-        "ch": 0
+        "line": 8,
+        "ch": 37
       },
       "to": {
-        "line": 2,
-        "ch": 0
+        "line": 8,
+        "ch": 63
       }
     },
-    "scroll": 0
+    "scroll": 1.2333332549201168
   },
   "思想思维心理哲学/学习本身/《认知天性》.md": {
     "cursor": {
@@ -18207,5 +18207,18 @@
       }
     },
     "scroll": 0
+  },
+  "语言学习/德语/学习记录日记-技巧/Lerntagbuch/ein komplettes Handyverbot.md": {
+    "cursor": {
+      "from": {
+        "line": 102,
+        "ch": 69
+      },
+      "to": {
+        "line": 102,
+        "ch": 69
+      }
+    },
+    "scroll": 85.61709636569064
   }
 }

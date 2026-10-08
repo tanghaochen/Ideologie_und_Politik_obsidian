@@ -51,112 +51,45 @@
               "icon": "lucide-file",
               "title": "听说读写 以及学习外语的核心方法"
             }
+          },
+          {
+            "id": "4d6729eb8476b266",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/ein komplettes Handyverbot.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "ein komplettes Handyverbot"
+            }
           }
-        ]
+        ],
+        "currentTab": 3
       },
       {
         "id": "b5dbd09e7753bfc0",
         "type": "tabs",
         "children": [
           {
-            "id": "1505ed15ae77513a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/2动词/系动词.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "系动词"
-            }
-          },
-          {
-            "id": "3520175e48e49684",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/2动词/情态动词.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "情态动词"
-            }
-          },
-          {
-            "id": "e1ab4a50b15b80a4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "连词成对"
-            }
-          },
-          {
-            "id": "3f88fb878cddd9e2",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "格; 限定词"
-            }
-          },
-          {
             "id": "58a130599583d923",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
+                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/ein komplettes Handyverbot.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "未命名"
-            }
-          },
-          {
-            "id": "0ff1e81507805d0d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "Handys in der Schule"
-            }
-          },
-          {
-            "id": "fe8729b9f803ac4b",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "ein komplettes Handyverbot"
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "vertical"
@@ -429,11 +362,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "58a130599583d923",
+  "active": "4d6729eb8476b266",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/2动词/系动词.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Homeoffice.md",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/ein komplettes Handyverbot.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md",
     "语言学习/德语/公共知识语法/2动词/情态动词.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md",
