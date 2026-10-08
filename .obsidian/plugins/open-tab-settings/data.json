@@ -4,6 +4,6 @@
   "deduplicateTabs": true,
   "deduplicateAcrossTabGroups": true,
   "newTabPlacement": "beginning",
-  "newTabTabGroupPlacement": "opposite",
+  "newTabTabGroupPlacement": "same",
   "modClickBehavior": "opposite"
 }
