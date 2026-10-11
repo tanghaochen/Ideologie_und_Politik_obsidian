@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>行为改变方法地图 · 图形版</title>
+<style>
+  :root{
+    --bg:#0f1216; --card:#171c22; --line:#2b333d; --txt:#e6ebf1; --dim:#9aa7b4;
+    --green:#3ecf8e; --red:#ff6b6b; --amber:#f5b942; --blue:#5aa9ff; --purple:#b48cff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+       font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",system-ui,sans-serif;
+       line-height:1.65;font-size:15px}
+  .wrap{max-width:1180px;margin:0 auto;padding:36px 22px 80px}
+  h1{font-size:28px;margin:0 0 6px}
+  h2{font-size:20px;margin:0 0 4px;padding-left:12px;border-left:5px solid var(--blue)}
+  .sub{color:var(--dim);font-size:14px;margin:0 0 26px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;
+          padding:22px 22px 26px;margin:0 0 26px}
+  .note{color:var(--dim);font-size:13.5px;margin:10px 0 0}
+  .big{font-size:17px;font-weight:700}
+  svg{width:100%;height:auto;display:block;margin-top:6px}
+  /* 总公式 */
+  .formula{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:16px 0 4px}
+  .fbox{flex:1 1 170px;min-width:150px;background:#1e252d;border:1px solid var(--line);
+        border-radius:12px;padding:14px 12px;text-align:center}
+  .fbox b{display:block;font-size:16px;margin-bottom:4px}
+  .fbox span{color:var(--dim);font-size:12.5px}
+  .op{font-size:22px;color:var(--amber);font-weight:700;padding:0 2px}
+  .arrowrow{text-align:center;color:var(--amber);font-size:22px;line-height:1;margin:10px 0}
+  /* 思维导图 */
+  .mind{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+  .branch{background:#1b2229;border:1px solid var(--line);border-radius:12px;padding:14px}
+  .branch h3{margin:0 0 10px;font-size:16px;padding-bottom:8px;border-bottom:1px dashed var(--line)}
+  .branch ul{margin:0;padding-left:18px}
+  .branch li{margin-bottom:9px;font-size:14px}
+  .branch li em{display:block;color:var(--dim);font-style:normal;font-size:12.5px}
+  .b1 h3{color:var(--blue)} .b2 h3{color:var(--amber)}
+  .b3 h3{color:var(--green)} .b4 h3{color:var(--purple)}
+  .core{text-align:center;margin-top:16px;background:#1e252d;border:1px solid var(--amber);
+        border-radius:12px;padding:12px;font-weight:700}
+  /* 骨牌 */
+  .domino{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;margin:14px 0}
+  .d1,.d2,.d3{flex:1 1 230px;border-radius:10px;padding:12px}
+  .d1{background:#20262e;border:1px solid var(--blue)}
+  .d2{background:#20262e;border:1px solid var(--green)}
+  .d3{background:#20262e;border:1px solid var(--amber)}
+  .dlabel{font-size:11.5px;color:var(--dim);letter-spacing:1px;display:block;margin-bottom:5px}
+  /* 表 */
+  table{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:#1e252d;color:var(--dim);font-weight:600}
+  td.bad{color:var(--red)} td.good{color:var(--green)}
+  /* 双栏对比 */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  .col{background:#1b2229;border:1px solid var(--line);border-radius:12px;padding:14px}
+  .col h4{margin:0 0 8px;font-size:15px}
+  .col.good h4{color:var(--green)} .col.bad h4{color:var(--red)}
+  .col ul{margin:0;padding-left:18px;font-size:14px}
+  /* 循环 */
+  .loop{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:16px}
+  .lnode{background:#1e252d;border:1px solid var(--purple);border-radius:30px;
+         padding:10px 16px;font-size:14px}
+  .larrow{color:var(--purple);font-size:20px}
+  .warn{border-color:var(--red)!important}
+  ol.qa{font-size:14.5px;padding-left:22px} ol.qa li{margin-bottom:7px}
+  .kbd{background:#1e252d;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:13px}
+  @media (max-width:900px){ .mind{grid-template-columns:1fr 1fr} .two{grid-template-columns:1fr} }
+  @media print{ body{background:#fff;color:#000} section{break-inside:avoid;border-color:#bbb}
+    :root{--bg:#fff;--card:#fff;--line:#bbb;--txt:#111;--dim:#555} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>行为改变方法地图 · 图形版</h1>
+<p class="sub">所有内容只有一句总纲：<b>行为 = 触发 × 摩擦 × 替代供给 × 反馈闭环。</b>想改变行为，动这四个旋钮，不要动"决心"。</p>
+
+<!-- ============ 1. 总公式 ============ -->
+<section>
+  <h2>① 总公式：一台机器，四个旋钮</h2>
+  <div class="formula">
+    <div class="fbox"><b>触发</b><span>什么信号让行为开始</span></div>
+    <div class="op">×</div>
+    <div class="fbox"><b>摩擦</b><span>到达这个行为要几步</span></div>
+    <div class="op">×</div>
+    <div class="fbox"><b>替代供给</b><span>它满足的需求还给谁</span></div>
+    <div class="op">×</div>
+    <div class="fbox"><b>反馈闭环</b><span>做完留下什么痕迹</span></div>
+  </div>
+  <div class="arrowrow">↓</div>
+  <div class="fbox" style="border-color:var(--amber)"><b>行为</b><span>旋钮一改，行为自己变；旋钮不动，只下决心＝在原地加水</span></div>
+  <div class="arrowrow">↓ 反馈回到第一个旋钮（做完的痕迹会成为下一次的触发） ↓</div>
+  <div class="formula">
+    <div class="fbox"><b>触发</b><span>回到起点</span></div>
+  </div>
+</section>
+
+<!-- ============ 2. 思维导图 ============ -->
+<section>
+  <h2>② 十二原则归位图：四条支路</h2>
+  <p class="note">十二条方法不是十二件事，它们分别挂在四个旋钮下面。记四条支路，比背十二条容易。</p>
+  <div class="mind">
+    <div class="branch b1">
+      <h3>触发 · 让它自己开始</h3>
+      <ul>
+        <li><b>决策剥离</b><em>把"要不要"提前一次写死，之后只执行</em></li>
+        <li><b>触发–动作绑定</b><em>一旦 A 发生，我就做 B（不谈判）</em></li>
+        <li><b>身份陈述</b><em>"我是几点会在哪的人"，不是形容词</em></li>
+      </ul>
+    </div>
+    <div class="branch b2">
+      <h3>摩擦 · 让成本不对称</h3>
+      <ul>
+        <li><b>环境工程</b><em>好行为 2 秒可做，坏行为 5 步才到</em></li>
+        <li><b>最小可执行单元</b><em>断裂点在启动，不在能力</em></li>
+        <li><b>降低启动成本</b><em>材料摆在桌上，打开就是工作界面</em></li>
+      </ul>
+    </div>
+    <div class="branch b3">
+      <h3>替代供给 · 让它有去处</h3>
+      <ul>
+        <li><b>压制悖论</b><em>禁止＝持续激活；所以是转换，不是消除</em></li>
+        <li><b>需求诊断</b><em>先问：这个行为在满足什么需求</em></li>
+        <li><b>替代三标准</b><em>同需求 · 不可无限即时 · 有可见累积</em></li>
+      </ul>
+    </div>
+    <div class="branch b4">
+      <h3>反馈闭环 · 让它可演化</h3>
+      <ul>
+        <li><b>只看产出</b><em>感受不进账本，感受不可测量</em></li>
+        <li><b>单变量迭代</b><em>一次只改一样，否则没有信息</em></li>
+        <li><b>复发＝数据</b><em>真正的损失是复发后的附加行为</em></li>
+      </ul>
+    </div>
+  </div>
+  <div class="core">压在下面不能忘的两条地基：<span style="color:var(--amber)">硬件保养（睡眠·身体·真人关系）</span> 与 <span style="color:var(--amber)">结构外包 → 逐步内化</span></div>
+</section>
+
+<!-- ============ 3. 时间轴 ============ -->
+<section>
+  <h2>③ 冲动时间轴：你不需要打赢它，只需要比它慢 15 分钟</h2>
+  <svg viewBox="0 0 1120 470" role="img" aria-label="冲动强度随时间衰减曲线">
+    <rect x="0" y="0" width="1120" height="470" fill="#171c22"/>
+    <!-- 坐标轴 -->
+    <line x1="90" y1="350" x2="1095" y2="350" stroke="#3a4350" stroke-width="2"/>
+    <line x1="90" y1="350" x2="90" y2="60" stroke="#3a4350" stroke-width="2"/>
+    <text x="16" y="70" fill="#9aa7b4" font-size="13">冲动强度</text>
+    <text x="1000" y="378" fill="#9aa7b4" font-size="13">时间</text>
+    <!-- 刻度 -->
+    <g fill="#6f7d8c" font-size="12" text-anchor="middle">
+      <text x="90" y="370">0</text><text x="257" y="370">5 分</text><text x="423" y="370">10 分</text>
+      <text x="590" y="370">15 分</text><text x="757" y="370">20 分</text><text x="923" y="370">25 分</text>
+      <text x="1085" y="370">30 分</text>
+    </g>
+    <!-- 旧路径：喂它 -->
+    <path d="M90,250 L118,140 L180,132 L225,104 L300,108 L340,94 L430,99 L470,86 L580,90 L650,78"
+          fill="none" stroke="#ff6b6b" stroke-width="3" stroke-dasharray="8 6"/>
+    <circle cx="650" cy="78" r="5" fill="#ff6b6b"/>
+    <text x="664" y="74" fill="#ff6b6b" font-size="13.5">旧路径：立刻打开 → 快感 → 结束后羞耻</text>
+    <text x="664" y="94" fill="#ff6b6b" font-size="13.5">→ 基线越抬越高，下次来得更早更猛</text>
+    <!-- 新路径：等 -->
+    <path d="M90,250 C130,150 160,118 200,122 C300,140 420,205 590,248 C720,278 870,315 1085,334"
+          fill="none" stroke="#3ecf8e" stroke-width="4"/>
+    <circle cx="200" cy="122" r="6" fill="#3ecf8e"/>
+    <text x="110" y="86" fill="#3ecf8e" font-size="13.5">峰值（约 5–15 分钟内到达）</text>
+    <text x="340" y="326" fill="#3ecf8e" font-size="13.5">新路径：不喂它，它自己下坡</text>
+    <!-- 15 分钟竖线 -->
+    <line x1="590" y1="100" x2="590" y2="350" stroke="#f5b942" stroke-width="2" stroke-dasharray="5 5"/>
+    <text x="600" y="120" fill="#f5b942" font-size="13.5">15 分钟：峰值已经过去一半以上</text>
+    <!-- 30 秒窗口 -->
+    <line x1="113" y1="250" x2="113" y2="150" stroke="#5aa9ff" stroke-width="2"/>
+    <text x="100" y="418" fill="#5aa9ff" font-size="13.5">0–30 秒：唯一必须赢的窗口</text>
+    <text x="100" y="440" fill="#5aa9ff" font-size="13">在这个窗口里起身／念一句／按计时器</text>
+  </svg>
+  <p class="note">读法：红线是你过去两年的路径，每次喂它，整条基线都往上抬一点；绿线是"什么都不做"的路径——它自己会掉下去。你要做的动作不在"打赢"，只在"熬过前 15 分钟"。</p>
+</section>
+
+<!-- ============ 4. 决策树 ============ -->
+<section>
+  <h2>④ 冲动决策树：此刻有冲动，照着走</h2>
+  <svg viewBox="0 0 1120 820" role="img" aria-label="冲动应对决策树">
+    <rect x="0" y="0" width="1120" height="820" fill="#171c22"/>
+    <defs>
+      <marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 z" fill="#8b98a6"/>
+      </marker>
+      <marker id="arg" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 z" fill="#3ecf8e"/>
+      </marker>
+    </defs>
+
+    <!-- N0 -->
+    <rect x="400" y="18" width="320" height="56" rx="10" fill="#1e252d" stroke="#5aa9ff"/>
+    <text x="560" y="52" fill="#e6ebf1" font-size="16" text-anchor="middle">冲动出现：想刷 / 想看 / 想打开</text>
+    <line x1="560" y1="74" x2="560" y2="98" stroke="#8b98a6" stroke-width="2" marker-end="url(#ar)"/>
+
+    <!-- D1 -->
+    <polygon points="560,100 760,162 560,224 360,162" fill="#1e252d" stroke="#f5b942"/>
+    <text x="560" y="158" fill="#f5b942" font-size="15" text-anchor="middle">现在能离开这个位置吗？</text>
+    <text x="560" y="178" fill="#9aa7b4" font-size="12.5" text-anchor="middle">（能站起来就行）</text>
+
+    <!-- 能 → 右 -->
+    <path d="M760,162 L880,162 L880,268" fill="none" stroke="#3ecf8e" stroke-width="2" marker-end="url(#arg)"/>
+    <text x="800" y="152" fill="#3ecf8e" font-size="13.5">能</text>
+    <rect x="700" y="272" width="360" height="64" rx="10" fill="#1e252d" stroke="#3ecf8e"/>
+    <text x="880" y="300" fill="#e6ebf1" font-size="14.5" text-anchor="middle">站起来 · 按 15 分钟计时 · 离开屏幕</text>
+    <text x="880" y="322" fill="#9aa7b4" font-size="12.5" text-anchor="middle">同时念一句触发词，然后手上有事做</text>
+
+    <!-- 不能 → 左 -->
+    <path d="M360,162 L240,162 L240,268" fill="none" stroke="#5aa9ff" stroke-width="2" marker-end="url(#ar)"/>
+    <text x="135" y="140" fill="#5aa9ff" font-size="13.5">不能（在床上／在厕所／在通勤）</text>
+    <rect x="60" y="272" width="360" height="64" rx="10" fill="#1e252d" stroke="#5aa9ff"/>
+    <text x="240" y="300" fill="#e6ebf1" font-size="14.5" text-anchor="middle">最小物理动作：洗脸 / 漱口 / 起身走 2 分钟</text>
+    <text x="240" y="322" fill="#9aa7b4" font-size="12.5" text-anchor="middle">不必解决问题，只要换一个身体状态</text>
+
+    <!-- 汇聚到 D2 -->
+    <path d="M880,336 L880,384 L620,384 L620,430" fill="none" stroke="#8b98a6" stroke-width="2" marker-end="url(#ar)"/>
+    <path d="M240,336 L240,384 L500,384 L500,430" fill="none" stroke="#8b98a6" stroke-width="2" marker-end="url(#ar)"/>
+    <polygon points="560,420 780,482 560,544 340,482" fill="#1e252d" stroke="#f5b942"/>
+    <text x="560" y="478" fill="#f5b942" font-size="15" text-anchor="middle">还想吗？</text>
+    <text x="560" y="498" fill="#9aa7b4" font-size="12.5" text-anchor="middle">（15 分钟之后问自己）</text>
+
+    <!-- 还想 → 右下 -->
+    <path d="M780,482 L880,482 L880,588" fill="none" stroke="#3ecf8e" stroke-width="2" marker-end="url(#arg)"/>
+    <text x="800" y="472" fill="#3ecf8e" font-size="13.5">还想</text>
+    <rect x="690" y="592" width="380" height="64" rx="10" fill="#1e252d" stroke="#3ecf8e"/>
+    <text x="880" y="620" fill="#e6ebf1" font-size="14.5" text-anchor="middle">做替代动作：出门 / 洗澡 / 训练 / 打开材料</text>
+    <text x="880" y="642" fill="#9aa7b4" font-size="12.5" text-anchor="middle">必须满足：同需求 · 不可无限刷 · 有累积</text>
+
+    <!-- 不想 → 左下 -->
+    <path d="M340,482 L240,482 L240,588" fill="none" stroke="#3ecf8e" stroke-width="2" marker-end="url(#arg)"/>
+    <text x="150" y="472" fill="#3ecf8e" font-size="13.5">不想了</text>
+    <rect x="50" y="592" width="380" height="64" rx="10" fill="#1e252d" stroke="#3ecf8e"/>
+    <text x="240" y="620" fill="#e6ebf1" font-size="14.5" text-anchor="middle">直接回轨 + 顺手记一条触发记录</text>
+    <text x="240" y="642" fill="#9aa7b4" font-size="12.5" text-anchor="middle">时间 / 地点 / 前 30 分钟在干什么</text>
+
+    <!-- 终局 -->
+    <path d="M880,656 L880,700 L735,700" fill="none" stroke="#8b98a6" stroke-width="2" marker-end="url(#ar)"/>
+    <path d="M240,656 L240,700 L388,700" fill="none" stroke="#8b98a6" stroke-width="2" marker-end="url(#ar)"/>
+    <rect x="400" y="676" width="320" height="52" rx="10" fill="#1e252d" stroke="#3ecf8e"/>
+    <text x="560" y="708" fill="#3ecf8e" font-size="15" text-anchor="middle">回轨。不追究，不加倍，不写检讨。</text>
+
+    <!-- 禁行区 -->
+    <rect x="60" y="748" width="1000" height="54" rx="10" fill="#2a1a1c" stroke="#ff6b6b"/>
+    <text x="560" y="782" fill="#ff6b6b" font-size="15" text-anchor="middle">✗ 自责　✗ 发誓加倍　✗ "就看一眼"　✗ 写检讨　✗ 立刻重新规划人生　—— 这五扇门只是复发的上游</text>
+  </svg>
+</section>
+
+<!-- ============ 5. if-then 骨牌 ============ -->
+<section>
+  <h2>⑤ if–then 骨牌：这才是"一旦怎样我就怎样"的真身</h2>
+  <p class="note">它不是口号，是<b>预先写好的自动反应</b>。条件必须具体到"能被摄像机拍到"，动作必须具体到"两秒内能开始"。</p>
+
+  <div class="domino">
+    <div class="d1"><span class="dlabel">触发</span>一旦我把杯子放到桌上</div>
+    <div class="d2"><span class="dlabel">动作</span>我就打开今天的那份材料</div>
+  </div>
+  <div class="domino">
+    <div class="d1"><span class="dlabel">触发</span>一旦我的手伸向手机</div>
+    <div class="d2"><span class="dlabel">动作</span>我就先站起来，去厨房喝一杯水</div>
+  </div>
+  <div class="domino">
+    <div class="d1"><span class="dlabel">触发</span>一旦时间是 22:30</div>
+    <div class="d2"><span class="dlabel">动作</span>我就把手机插在客厅充电，人回卧室</div>
+  </div>
+  <div class="domino">
+    <div class="d1"><span class="dlabel">触发</span>一旦我发现自己在屏幕前无目的滑超过 5 分钟</div>
+    <div class="d2"><span class="dlabel">动作</span>我就关屏，站起来做 20 个深蹲</div>
+  </div>
+  <div class="domino">
+    <div class="d1"><span class="dlabel">触发</span>一旦冲动出现</div>
+    <div class="d2"><span class="dlabel">动作</span>我就按 15 分钟计时，然后去洗个澡</div>
+  </div>
+  <div class="domino">
+    <div class="d1"><span class="dlabel">触发</span>一旦我又断线了</div>
+    <div class="d2"><span class="dlabel">动作</span>我就第二天照最小版做，不补偿、不检讨</div>
+  </div>
+
+  <div class="two">
+    <div class="col bad">
+      <h4>✗ 这样写，等于没写</h4>
+      <ul>
+        <li>"一旦我分心，我就自律一点"<br><span class="note">动作不可执行</span></li>
+        <li>"一旦有想法，我就不要想它"<br><span class="note">否定句＝激活它</span></li>
+        <li>"从明天开始我要变一个人"<br><span class="note">不是触发，是情绪</span></li>
+        <li>"一旦我闲下来，我就学习"<br><span class="note">"闲下来"无法被观察到</span></li>
+      </ul>
+    </div>
+    <div class="col good">
+      <h4>✓ 这样写才咬得住</h4>
+      <ul>
+        <li>条件写在<b>能被看见的地方</b>（贴在触发会发生的那个位置）</li>
+        <li>动作限定在 <b>2 秒内能开始</b>的第一下</li>
+        <li>一次只上 <b>3 条</b>，两周后再加</li>
+        <li>念完／想到就<b>立刻做</b>，不做动作的骨牌不算骨牌</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. 身份 vs 目标 ============ -->
+<section>
+  <h2>⑥ 身份不是形容词，是"位置 + 频率"</h2>
+  <svg viewBox="0 0 1120 430" role="img" aria-label="身份循环图">
+    <rect x="0" y="0" width="1120" height="430" fill="#171c22"/>
+    <defs>
+      <marker id="arp" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 z" fill="#b48cff"/>
+      </marker>
+    </defs>
+    <ellipse cx="400" cy="215" rx="160" ry="160" fill="none" stroke="#2b333d" stroke-width="2" stroke-dasharray="6 8"/>
+    <!-- 四个节点 -->
+    <rect x="300" y="42" width="200" height="56" rx="12" fill="#1e252d" stroke="#b48cff"/>
+    <text x="400" y="66" fill="#e6ebf1" font-size="14" text-anchor="middle">位置 + 频率</text>
+    <text x="400" y="86" fill="#9aa7b4" font-size="12" text-anchor="middle">"我每天 21:00 在这张桌前"</text>
+
+    <rect x="470" y="188" width="200" height="56" rx="12" fill="#1e252d" stroke="#b48cff"/>
+    <text x="570" y="212" fill="#e6ebf1" font-size="14" text-anchor="middle">出现并做最小版</text>
+    <text x="570" y="232" fill="#9aa7b4" font-size="12" text-anchor="middle">哪怕只做 10 分钟</text>
+
+    <rect x="300" y="332" width="200" height="56" rx="12" fill="#1e252d" stroke="#b48cff"/>
+    <text x="400" y="356" fill="#e6ebf1" font-size="14" text-anchor="middle">证据 +1</text>
+    <text x="400" y="376" fill="#9aa7b4" font-size="12" text-anchor="middle">账本上多一笔，不看心情</text>
+
+    <rect x="130" y="188" width="200" height="56" rx="12" fill="#1e252d" stroke="#b48cff"/>
+    <text x="230" y="212" fill="#e6ebf1" font-size="14" text-anchor="middle">"我是那种人"</text>
+    <text x="230" y="232" fill="#9aa7b4" font-size="12" text-anchor="middle">票数堆出来的，不是喊出来的</text>
+
+    <!-- 循环箭头 -->
+    <path d="M500,80 Q612,104 588,180" fill="none" stroke="#b48cff" stroke-width="2.5" marker-end="url(#arp)"/>
+    <path d="M622,246 Q600,336 495,352" fill="none" stroke="#b48cff" stroke-width="2.5" marker-end="url(#arp)"/>
+    <path d="M300,354 Q206,336 186,244" fill="none" stroke="#b48cff" stroke-width="2.5" marker-end="url(#arp)"/>
+    <path d="M182,182 Q204,100 296,80" fill="none" stroke="#b48cff" stroke-width="2.5" marker-end="url(#arp)"/>
+    <text x="400" y="208" fill="#6f7d8c" font-size="13" text-anchor="middle">身份 = 位置 + 频率</text>
+    <text x="400" y="228" fill="#6f7d8c" font-size="13" text-anchor="middle">（不是"我自律"这种形容词）</text>
+
+    <!-- 右侧对照 -->
+    <rect x="740" y="70" width="340" height="290" rx="12" fill="#1b2229" stroke="#2b333d"/>
+    <text x="762" y="102" fill="#5aa9ff" font-size="15">目标：一条终点线</text>
+    <text x="762" y="126" fill="#9aa7b4" font-size="13">达成了就结束 → 失去方向</text>
+    <text x="762" y="146" fill="#9aa7b4" font-size="13">没达成容易一次性崩</text>
+    <text x="762" y="166" fill="#9aa7b4" font-size="13">用"我要…"（未来式，不指挥此刻）</text>
+    <line x1="762" y1="186" x2="1058" y2="186" stroke="#2b333d"/>
+    <text x="762" y="216" fill="#3ecf8e" font-size="15">身份：一个循环</text>
+    <text x="762" y="240" fill="#9aa7b4" font-size="13">可以无限次投币 → 抗中断</text>
+    <text x="762" y="260" fill="#9aa7b4" font-size="13">断线一天也不会摧毁它</text>
+    <text x="762" y="280" fill="#9aa7b4" font-size="13">用"我是…"（现在时，直接驱动动作）</text>
+    <line x1="762" y1="300" x2="1058" y2="300" stroke="#2b333d"/>
+    <text x="762" y="328" fill="#f5b942" font-size="13.5">念的时候不要用形容词，用坐标：</text>
+    <text x="762" y="348" fill="#e6ebf1" font-size="13">"我是每周一三五早上 6:00 在这里的人"</text>
+  </svg>
+</section>
+
+<!-- ============ 7. 需求→替代匹配 ============ -->
+<section>
+  <h2>⑦ 替代匹配表：不供给需求，行为一定回来</h2>
+  <table>
+    <thead><tr><th style="width:16%">它满足的需求</th><th style="width:22%">原本的供给方</th><th style="width:30%">合法供给方要满足的条件</th><th>具体可用的替代</th></tr></thead>
+    <tbody>
+      <tr><td>即时奖励</td><td>短视频 / 游戏 / 色情</td><td>反馈快，但强度不能高到劫持注意力</td><td>20 个深蹲的完成感、一局快棋、一段跟读录音</td></tr>
+      <tr><td>掌控与进步感</td><td>游戏等级、投喂机制、连击</td><td>必须可累积、可量化、留下痕迹</td><td>记录本的连续天数、卡片数、写作篇数、训练组数</td></tr>
+      <tr><td>亲密与陪伴</td><td>色情 / 线上社交</td><td>必须是真人，且不能被零成本无限获取</td><td>每周固定的真人聚会、语言交换、球局、通话</td></tr>
+      <tr><td>逃避痛苦</td><td>以上全部</td><td>必须面对来源，或交给专业帮助</td><td>就医／咨询、写下具体痛苦源、降低总负荷</td></tr>
+    </tbody>
+  </table>
+  <p class="note">判断替代品能不能用，只查这三条：<b>① 同需求 ② 不可无限即时消费 ③ 有可见累积</b>。能一直刷下去的东西，无论多"健康"，都不是替代品，只是延期。</p>
+</section>
+
+<!-- ============ 8. 摩擦不对称 ============ -->
+<section>
+  <h2>⑧ 摩擦不对称：加摩擦不会累，加自制力会累</h2>
+  <div class="two">
+    <div class="col good">
+      <h4>好行为：目标是「2 秒可做」</h4>
+      <ul>
+        <li>材料摊开在桌上，合上电脑也不收走</li>
+        <li>打开设备就是工作界面，没有多余的图标</li>
+        <li>第一步小到不可能失败：翻开、戴上耳机、说出第一句</li>
+      </ul>
+    </div>
+    <div class="col bad">
+      <h4>坏行为：目标是「5 步才到」</h4>
+      <ul>
+        <li>卸载 → 屏蔽 → 断开 → 移除设备 → 换地点</li>
+        <li>门槛不在设备里，在你要走的那几步路里</li>
+        <li>摩擦不够大 ＝ 等于没有摩擦（放在第二屏不算）</li>
+      </ul>
+    </div>
+  </div>
+  <div class="loop">
+    <span class="lnode" style="border-color:var(--green)">自制力：单次 · 易耗 · 不能累积</span>
+    <span class="larrow">vs</span>
+    <span class="lnode" style="border-color:var(--amber)">摩擦：永久 · 零消耗 · 可叠加</span>
+  </div>
+</section>
+
+<!-- ============ 9. 复位流程 ============ -->
+<section>
+  <h2>⑨ 断线复位流程：复发是数据，不是判决</h2>
+  <svg viewBox="0 0 1120 320" role="img" aria-label="断线复位流程图">
+    <rect x="0" y="0" width="1120" height="320" fill="#171c22"/>
+    <defs>
+      <marker id="arb" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 z" fill="#8b98a6"/>
+      </marker>
+    </defs>
+    <rect x="20" y="92" width="180" height="84" rx="10" fill="#2a1a1c" stroke="#ff6b6b"/>
+    <text x="110" y="128" fill="#e6ebf1" font-size="14" text-anchor="middle">发现断线</text>
+    <text x="110" y="150" fill="#9aa7b4" font-size="12" text-anchor="middle">（越早发现越好）</text>
+
+    <rect x="240" y="92" width="180" height="84" rx="10" fill="#1e252d" stroke="#5aa9ff"/>
+    <text x="330" y="124" fill="#e6ebf1" font-size="14" text-anchor="middle">T + 0：停手</text>
+    <text x="330" y="146" fill="#9aa7b4" font-size="12" text-anchor="middle">不做任何评价</text>
+
+    <rect x="460" y="92" width="180" height="84" rx="10" fill="#1e252d" stroke="#f5b942"/>
+    <text x="550" y="124" fill="#e6ebf1" font-size="14" text-anchor="middle">24 小时内</text>
+    <text x="550" y="146" fill="#9aa7b4" font-size="12" text-anchor="middle">做一次最小版</text>
+
+    <rect x="680" y="92" width="200" height="84" rx="10" fill="#1e252d" stroke="#f5b942"/>
+    <text x="780" y="118" fill="#e6ebf1" font-size="14" text-anchor="middle">填复位卡</text>
+    <text x="780" y="140" fill="#9aa7b4" font-size="12" text-anchor="middle">断点时间 / 触发场景</text>
+    <text x="780" y="158" fill="#9aa7b4" font-size="12" text-anchor="middle">/ 只改一个变量</text>
+
+    <rect x="920" y="92" width="180" height="84" rx="10" fill="#1e252d" stroke="#3ecf8e"/>
+    <text x="1010" y="128" fill="#e6ebf1" font-size="14" text-anchor="middle">回到日表</text>
+    <text x="1010" y="150" fill="#9aa7b4" font-size="12" text-anchor="middle">继续，不补课</text>
+
+    <line x1="200" y1="134" x2="236" y2="134" stroke="#8b98a6" stroke-width="2" marker-end="url(#arb)"/>
+    <line x1="420" y1="134" x2="456" y2="134" stroke="#8b98a6" stroke-width="2" marker-end="url(#arb)"/>
+    <line x1="640" y1="134" x2="676" y2="134" stroke="#8b98a6" stroke-width="2" marker-end="url(#arb)"/>
+    <line x1="880" y1="134" x2="916" y2="134" stroke="#8b98a6" stroke-width="2" marker-end="url(#arb)"/>
+
+    <rect x="240" y="216" width="860" height="72" rx="10" fill="#2a1a1c" stroke="#ff6b6b"/>
+    <text x="670" y="246" fill="#ff6b6b" font-size="14.5" text-anchor="middle">✗ 这些全部会延长损失：检讨书 · 加倍补偿 · 删除全部设备 · 重新规划人生 · 发誓"再也不会"</text>
+    <text x="670" y="272" fill="#9aa7b4" font-size="13" text-anchor="middle">真正的损失不是那一次，是那一次之后的附加行为。</text>
+  </svg>
+</section>
+
+<!-- ============ 10. 审计循环 ============ -->
+<section>
+  <h2>⑩ 每周 30 分钟：只改一个变量的循环</h2>
+  <div class="loop">
+    <span class="lnode">看四个数<br><span class="note">睡眠 · 产出 · 训练 · 失控次数</span></span>
+    <span class="larrow">→</span>
+    <span class="lnode">找最松的那个环节</span>
+    <span class="larrow">→</span>
+    <span class="lnode">只改一个变量</span>
+    <span class="larrow">→</span>
+    <span class="lnode">其余六天不问、不评估、不优化</span>
+    <span class="larrow">↺</span>
+  </div>
+  <div class="two" style="margin-top:16px">
+    <div class="col good">
+      <h4>报表只填产出</h4>
+      <ul>
+        <li>睡眠时长</li>
+        <li>可验证产出（分钟 / 次数 / 篇数 / 字数）</li>
+        <li>训练是否完成（含最小版）</li>
+        <li>失控次数</li>
+      </ul>
+    </div>
+    <div class="col bad">
+      <h4>不要写进报表</h4>
+      <ul>
+        <li>"今天状态不好／很努力／很废"</li>
+        <li>检讨书、感谢自己、自我励志长文</li>
+        <li>任何需要靠回忆和感受才能填的东西</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11. 替代关系总表 ============ -->
+<section>
+  <h2>⑪ 替代关系总表（这一张背下来就够用）</h2>
+  <table>
+    <thead><tr><th style="width:32%">失效做法</th><th style="width:30%">有效方法</th><th>机制原因</th></tr></thead>
+    <tbody>
+      <tr><td class="bad">禁止 / 压制</td><td class="good">转换 / 重定向</td><td>监控它就是激活它</td></tr>
+      <tr><td class="bad">压抑欲望</td><td class="good">替代供给</td><td>需求不会消失，只会换出口</td></tr>
+      <tr><td class="bad">靠意志力</td><td class="good">靠结构</td><td>意志力是消耗品</td></tr>
+      <tr><td class="bad">靠记忆和自觉</td><td class="good">靠环境与位置</td><td>环境不受情绪影响</td></tr>
+      <tr><td class="bad">喊口号</td><td class="good">触发–动作绑定</td><td>口号只占 10 秒窗口，必须挂动作</td></tr>
+      <tr><td class="bad">追求理想版</td><td class="good">最小可执行单元</td><td>断裂点在启动，不在能力</td></tr>
+      <tr><td class="bad">用感受评估</td><td class="good">用产出度量</td><td>感受不可测量，会天天换结论</td></tr>
+      <tr><td class="bad">全面改造</td><td class="good">单变量迭代</td><td>否则成功失败都不知道靠什么</td></tr>
+      <tr><td class="bad">惩罚 / 忏悔</td><td class="good">复位协议</td><td>附加行为才是真损失</td></tr>
+      <tr><td class="bad">目标宣言</td><td class="good">身份陈述</td><td>未来式不指挥此刻的动作</td></tr>
+      <tr><td class="bad">一次性革命</td><td class="good">外包 → 内化迁移</td><td>外部结构撤除即回弹</td></tr>
+      <tr><td class="bad">榨取睡眠与关系</td><td class="good">硬件优先</td><td>硬件坏则整套方法失效</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ 12. 自查 ============ -->
+<section>
+  <h2>⑫ 自查十问：能答出机制而不是结论，就算掌握</h2>
+  <ol class="qa">
+    <li>为什么"不要想 X"在机制上等于"想 X"？</li>
+    <li>一个替代行为要被采用，必须同时满足哪三条？</li>
+    <li>决策和执行，哪个先耗尽？这为什么重要？</li>
+    <li>为什么"增加摩擦"和"增加自制力"不能互相替代？</li>
+    <li>口号在生理上占的是哪一段？它必须和后继的什么绑定才算生效？</li>
+    <li>最小可执行单元解决的是什么问题？</li>
+    <li>为什么感受不能进报表？</li>
+    <li>为什么一次只能改一个变量？</li>
+    <li>复发之后，真正的损失来自哪里？</li>
+    <li>为什么外部结构必须配一套迁移计划？</li>
+  </ol>
+  <p class="note">打印提示：浏览器里 Ctrl+P → 选"另存为 PDF"，这页已做打印样式（白底黑字、不切块）。</p>
+</section>
+
+</div>
+</body>
+</html>

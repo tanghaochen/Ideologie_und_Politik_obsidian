@@ -70,5 +70,6 @@
   "agent-client",
   "better-export-pdf",
   "advanced-rename-and-delete-handler",
-  "hover-reveal"
+  "hover-reveal",
+  "obsidian-html-plugin"
 ]
