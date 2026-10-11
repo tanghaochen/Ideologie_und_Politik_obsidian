@@ -9789,12 +9789,12 @@
     "scroll": 88.65750028880436,
     "cursor": {
       "from": {
-        "line": 111,
-        "ch": 34
+        "line": 110,
+        "ch": 0
       },
       "to": {
-        "line": 111,
-        "ch": 34
+        "line": 110,
+        "ch": 0
       }
     },
     "expandedKeys": [
@@ -14692,11 +14692,11 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 4,
+        "line": 3,
         "ch": 0
       },
       "to": {
-        "line": 4,
+        "line": 3,
         "ch": 0
       }
     },
