@@ -71,5 +71,6 @@
   "better-export-pdf",
   "advanced-rename-and-delete-handler",
   "hover-reveal",
-  "obsidian-html-plugin"
+  "obsidian-html-plugin",
+  "local-html-embed"
 ]
