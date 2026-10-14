@@ -18,7 +18,13 @@ Arbeit_Neu_Denken
 
 198
 
-Dein Erfahrung ist mir sehr 
+Ich bestemme deinen mainung voll und ganz. Die zeit ist nicht alle für das Aufgabe, sondern das Effizient.
+Ich muss plus eine entsheidend Argument, die die Produktivität ist, haurzutage ist  pomp mit der Produktivität, Mann kann mehr Arbeit nicht. Der Automachina kann zehn mann Arbeit erreichen. Bürgershaft soll Kenzentieren bei Erschaffen und Techcologic leisten gebring. 
+Zum Beispiele söllen Bürger mehr Konsum, denn Konsum kann Richung gefluss.
+Zum Beispiele, Mann habe um mehr zeit , desto mehr konniss zu lernen, und mithilfe mehr konniss kann  neun Arubeit mudel gebring.
+Ich bereite zehnjahren Arbeit und ich shaue meine Eletern mit Arbeit seit Lebenjahr an. Diese Erfahrungen ist leid und schwert.
+
+我知道我字数不够，所以你不用从字数这个方面，就算我字数达标了来评价我这篇作文。因为我知道语法错误太多，我写不下去了，而不是因为字数不够
 
 350
 

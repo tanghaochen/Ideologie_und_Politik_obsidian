@@ -6,6 +6,7 @@
       {
         "id": "ff5d945606200819",
         "type": "tabs",
+        "dimension": 40.36259541984733,
         "children": [
           {
             "id": "d57dd2b8dd61418e",
@@ -73,6 +74,7 @@
       {
         "id": "b5dbd09e7753bfc0",
         "type": "tabs",
+        "dimension": 59.637404580152676,
         "children": [
           {
             "id": "acb687bd5a0abbee",
@@ -119,7 +121,8 @@
               "title": "Arbeit_Neu_Denken"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -392,9 +395,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "acb687bd5a0abbee",
+  "active": "e1cec0ae3b02418f",
   "lastOpenFiles": [
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Arbeit_Neu_Denken.md",
+    "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
     "语言学习/德语/学习记录日记-技巧/写作知识/所以写作论点，词汇、格式、模板、句子.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Leben ohne eigenes Auto.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/ein komplettes Handyverbot.md",
@@ -423,7 +427,6 @@
     "语言学习/德语/公共知识语法/10句型/从句合集/连词成对.md",
     "语言学习/德语/公共知识语法/2动词/情态动词.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
-    "语言学习/德语/公共知识语法/动词.md",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/学习记录日记-技巧/写作知识",
     "assets/image-497.png",
