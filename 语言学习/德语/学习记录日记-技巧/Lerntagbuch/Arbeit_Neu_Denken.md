@@ -184,7 +184,7 @@ Ich <del>muss</del> <span style="color:red">möchte</span><sup>¹</sup> <del>plu
 
 ---
 
-#### 第 6 句
+![[image-498.png|746x665]] #### 第 6 句
 
 **① 💬 本句原意**
 > 💬 本句原意：员工应该把精力集中在创造性的工作和技术上，并（由此）创造出成果。
@@ -200,7 +200,7 @@ Ich <del>muss</del> <span style="color:red">möchte</span><sup>¹</sup> <del>plu
 - ⁴ 🔴 介词搭配＋动词名物化错误：bei Erschaffen → auf kreative Arbeit / auf Kreativität　🩺 原因：sich konzentrieren 支配 **auf + Akkusativ**；Erschaffen 是动词原形，不能像名词一样独立使用（若真名物化须加冠词 das Erschaffen，且此处语义应为"创造性工作"）。
 - ⁵ 🔴 拼写错误：Techcologic → Technologie　🩺 原因：正确拼写为 Technologie（-ch-，-ie 结尾）。
 - ⁶ 🔴 动词短语杂糅：leisten gebring → Leistung bringen　🩺 原因：学生把 leisten 和 bringen 拼成了一个不存在的"leisten gebring"；"带来成果"的固定搭配是名词+动词 **Leistung bringen**，不能自行拼接。
-
+b
 **④ 🔍 原文直译对照**
 🔍 本句直译（按你实际写的德语）：
 「市民全体应该〔肯岑特里伦〕在这创造和技术〔莱斯滕格布林〕。」
