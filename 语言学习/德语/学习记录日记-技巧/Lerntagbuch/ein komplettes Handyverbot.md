@@ -174,9 +174,9 @@ Das Handy <span style="color:red">mit Anwenden</span><sup>1</sup> ist <span styl
 
 # 模块三：写作思路升维 (Inhaltliche Erweiterung)
 
-- 💡 **论点拓宽 1｜媒体教育视角（德国考官最吃这一套）**：学校的法定任务应当是 Vermittlung von Medienkompetenz（媒介素养教育），而不是用禁令代替教育。德国各州文化部长联席会议（KMK）的 "Bildung in der digitalen Welt" 战略就是把手机当作教学工具而非违禁品。**考官为什么喜欢**：这个角度把话题从"学生想不想玩手机"抬升到"学校该不该履行教育职责"，是典型的 institutionell / bildungspolitisch 论证层级，直接体现 B 2 以上的思辨高度。
-- 💡 **论点拓宽 2｜社会公平视角**：并非每个家庭都有替代的沟通渠道——Ganztagsschule（全日制学校）、Busfahrplan 临时变动、学生下课后要照顾弟妹，都依赖手机联系家长。**考官为什么喜欢**：它把"禁令"的代价具体化为对特定群体的不公（Verbot trifft die Falschen），属于 soziale Gerechtigkeit 的标准切入，比"我也需要手机"有力得多。
-- 💡 **逻辑链条补全（你断在哪 + 怎么缝）**：你从"手机用途很多"直接跳到"所以不该禁止"，中间少了关键一环——**为什么"用途多"就等于"禁令错误"**。这是**跳跃论证**（缺少中间前提）。补上"禁令打击的对象错位"这一步就能缝上，德语缝合句式：`Ein generelles Verbot trifft jedoch nicht den Missbrauch, sondern das Medium selbst – und damit auch alle legitimen Nutzungsformen.`（trifft nicht A, sondern B 是 B 2 对比论证的标配句式；用"Missbrauch / legitime Nutzung"这对词，论证立刻立体）
+- 💡 **论点拓宽 1｜媒体教育视角（德国考官最吃这一套）**：学校的法定任务应当是 Vermittlung von Medienkompetenz（媒介素养教育），而不是用禁令代替教育。德国各州文化部长联席会议（KMK）的 "Bildung in der digitalen Welt" 战略就是把手机当作教学工具而非违禁品。**考官为什么喜欢**：这个角度把话题从"学生想不想<font color="#d83931">玩手机"抬升到"学校该不该履行教育职责"，是典型的 institutionell / bildungspolitisch 论证层级，直接体现 B 2 以上的思辨高度。</font>
+- 💡 **论点拓宽 2｜社会公平视角**：并非每个家庭都有替代的沟通渠道——Ganztagsschule（全日制学校）、Busfahrplan 临时变动、学生下课后要照顾弟妹，都依赖手机联系家长。**考官为什么喜欢**：它<font color="#d83931">把"禁令"的代价具体化为对特定群体的不公（Verbot trifft die Falschen），属于 soziale Gerechtigkeit 的标准切入</font>，比"我也需要手机"有力得多。
+- 💡 **逻辑链条补全（你断在哪 + 怎么缝）**：你从"手机用途很多"直接跳到"所以不该禁止"，<font color="#d83931">中间少了关键一环——**为什么"用途多"就等于"禁令错误"**。这是**跳跃论证**（缺少中间前提）</font>。补上"禁令打击的对象错位"这一步就能缝上，德语缝合句式：`Ein generelles Verbot trifft jedoch nicht den Missbrauch, sondern das Medium selbst – und damit auch alle legitimen Nutzungsformen.`（trifft nicht A, sondern B 是 B 2 对比论证的标配句式；用"Missbrauch / legitime Nutzung"这对词，论证立刻立体）
 
 ---
 
