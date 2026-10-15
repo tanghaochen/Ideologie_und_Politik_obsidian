@@ -200,3 +200,7 @@ b) Berufskraftfahrer sind auf ein Auto ______ .
 > **4)** Insgesamt können normale Menschen ohne Auto auskommen, aber LKW-Fahrer sind auf ein Auto angewiesen.　（解析：ohne … auskommen 与 auf … angewiesen sein 是两个必须背熟的高频搭配。）
 > **5 a)** auskommen　（解析：ohne + Akk. auskommen = "没有…也能应付、过得去"。）
 > **5 b)** angewiesen　（解析：auf + Akk. angewiesen sein = "依赖…"，是书面论证的必备短语。）
+
+
+
+![[image-500.png|2560x1440]]
