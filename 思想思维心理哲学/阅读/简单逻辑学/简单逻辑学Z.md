@@ -70,7 +70,16 @@
 
 “如果你是个物理学家,在一个学术会议上与其他物理学家讨论“测 不准原理”,你可以自由地运用你的专业术语。但是,如果你是在向一群 普通人解释这个原理,就必须用比较通俗的语言,以方便大家理解。不要 对外行人使用业内行话,沟通的关键是理解。最忌讳两件事:一是对人讲 话态度傲慢;二是故作高深,让人云里雾里。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=25&annotation=PUBE6DBH)) |
 
+## “避免使用模糊和多义的语言” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=26&annotation=XTGAYGFI)) |
 
+“避免产生歧义的 方法是,让你所运用的词语尽可能有针对性地反映出你的本意,以便读 者或者听众不用费心去猜测你所说的到底是什么。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=26&annotation=KQMAX75G)) |
+
+## “避免闪避式语言” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=28&annotation=XHRUZ8DA)) |
+
+#### 委婉语言的利弊
+“但是我们必须小心,不要使委婉 的语言成为信息缺漏的根源。例如,设想一个词语叫“终极方案”,用 来掩盖一个罪恶的灭绝人类的计划。闪避式语言不能直接地表达出演 讲者或是作者脑中的真实想法,它
+带来的危害是双重的。首先,很明 显的,它可以欺骗听众;其次,无形中,它将对其使用者造成有害的 影响,扭曲他们对现实世界的感受。
+使用者==塑造语言,同时语言也塑 造使用者。如果持续使用扭曲现实的语言,我们会逐渐相信自己编造== 出来的虚假世界。这就是语言的力量。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=28&annotation=8W2V3UJN)) |
 
 
 
