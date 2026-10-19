@@ -43,6 +43,71 @@
   },
   "packets": [
     {
+      "id": "ostracon-mvfgll8h-86y5os",
+      "packet": {
+        "version": 1,
+        "id": "ostracon-mvfgll8h-86y5os",
+        "status": "sent",
+        "transport": "ws",
+        "createdAt": "2026-10-19T16:18:56.321Z",
+        "updatedAt": "2026-10-19T16:14:01.199Z",
+        "source": {
+          "platform": "MarginNote",
+          "title": "选中卡片",
+          "url": ""
+        },
+        "summary": "",
+        "tags": [],
+        "objects": [
+          {
+            "id": "F2996528-0BD9-474E-91A6-9DBC2DDC80A9",
+            "kind": "Card",
+            "title": "介词与格",
+            "comment": "格\n\nmarginnote4app://note/EBDBAF47-AC0D-4A10-A891-DC135D9AD468",
+            "sourceAnchor": "marginnote4app://note/F2996528-0BD9-474E-91A6-9DBC2DDC80A9",
+            "hasImage": true,
+            "hasHandwriting": false
+          }
+        ],
+        "relations": [],
+        "notes": "# 介词与格 [<img src=\"https://www.marginnote.com.cn/assets/logo.png\" width=\"20\">](marginnote4app://note/F2996528-0BD9-474E-91A6-9DBC2DDC80A9)\n\n格\n\n![linked excerpt](../assets/85ac44631bd3f077f2dba50fe9c156ad.png)\n\n![linked excerpt](../assets/dc20910d04ff0b9e333cdb532d0f2631.png)\n\nmarginnote4app://note/EBDBAF47-AC0D-4A10-A891-DC135D9AD468\n",
+        "format": "markdown",
+        "fileName": "介词与格",
+        "destination": {
+          "platform": "Obsidian",
+          "vault": "",
+          "folder": "Inbox"
+        }
+      },
+      "summary": {
+        "id": "ostracon-mvfgll8h-86y5os",
+        "version": 1,
+        "status": "sent",
+        "sourceTitle": "选中卡片",
+        "objectCount": 1,
+        "tags": [],
+        "firstObjectKind": "Card",
+        "destination": {
+          "platform": "Obsidian",
+          "vault": "",
+          "folder": "Inbox"
+        }
+      },
+      "filePath": "Marginnote/介词与格.md",
+      "source": {
+        "platform": "MarginNote",
+        "title": "选中卡片",
+        "url": ""
+      },
+      "tags": [],
+      "receivedAt": "2026-10-19T16:14:01.199Z",
+      "transport": "ws",
+      "requestId": "command-mvfgll8j-puq2f0",
+      "clientId": "mn-client-mvfe444u-gbqbkq",
+      "messageType": "command",
+      "version": 1
+    },
+    {
       "id": "ostracon-mvfg6z9d-fp2bwc",
       "packet": {
         "version": 1,
@@ -9598,6 +9663,294 @@
     }
   ],
   "logs": [
+    {
+      "id": "log-mvfi0hh2-a38362279fa5",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:58:30.902Z"
+    },
+    {
+      "id": "log-mvfhznuv-717805536c1e",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:57:52.519Z"
+    },
+    {
+      "id": "log-mvfhz0nq-637ba19a159f",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:57:22.454Z"
+    },
+    {
+      "id": "log-mvfhydgb-63f4d957080b",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:56:52.379Z"
+    },
+    {
+      "id": "log-mvfhxq8y-b8219764b115",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:56:22.306Z"
+    },
+    {
+      "id": "log-mvfhx31o-f7d811616075",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:55:52.236Z"
+    },
+    {
+      "id": "log-mvfhwfua-b588c1f98255",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:55:22.162Z"
+    },
+    {
+      "id": "log-mvfhvsmj-81dc56c161df",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:54:52.075Z"
+    },
+    {
+      "id": "log-mvfhv5c3-bbbf72bda921",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:54:21.891Z"
+    },
+    {
+      "id": "log-mvfhui4r-641dc2a55ba4",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:53:51.819Z"
+    },
+    {
+      "id": "log-mvfhtuxh-037c70962295",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:53:21.749Z"
+    },
+    {
+      "id": "log-mvfht7qd-e1f2fcb4901d",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:52:51.685Z"
+    },
+    {
+      "id": "log-mvfhskj0-0516798c38a9",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:52:21.612Z"
+    },
+    {
+      "id": "log-mvfhrxbm-5246f5131bdd",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:51:51.538Z"
+    },
+    {
+      "id": "log-mvfhra4n-92b6751773d3",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:51:21.479Z"
+    },
+    {
+      "id": "log-mvfhqmx7-579b7bd45947",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:50:51.403Z"
+    },
+    {
+      "id": "log-mvfhpzpw-09dd2b8ee76c",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:50:21.332Z"
+    },
+    {
+      "id": "log-mvfhpcir-cc96d6f0d3cc",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:49:51.267Z"
+    },
+    {
+      "id": "log-mvfhopbs-83fcc8dc2b17",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:49:21.208Z"
+    },
+    {
+      "id": "log-mvfho24f-f69ca109dbf9",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:48:51.135Z"
+    },
+    {
+      "id": "log-mvfhnexa-40c326d4dada",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:48:21.070Z"
+    },
+    {
+      "id": "log-mvfhmrq2-37e7721c7894",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:47:51.002Z"
+    },
+    {
+      "id": "log-mvfhm4ir-c93c89e8792b",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:47:20.931Z"
+    },
+    {
+      "id": "log-mvfhlhbn-de614ae5fbc1",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:46:50.867Z"
+    },
+    {
+      "id": "log-mvfhku4f-bb00ee050b21",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:46:20.799Z"
+    },
+    {
+      "id": "log-mvfhk6x6-3b26a5d26150",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:45:50.730Z"
+    },
+    {
+      "id": "log-mvfhjjq1-7746ca982ba4",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:45:20.665Z"
+    },
+    {
+      "id": "log-mvfhiwip-f3e2d45cbf74",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:44:50.593Z"
+    },
+    {
+      "id": "log-mvfhi9bd-48de6f0b7d67",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:44:20.521Z"
+    },
+    {
+      "id": "log-mvfhhm4a-dcd45380f940",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:43:50.458Z"
+    },
+    {
+      "id": "log-mvfhgyww-5855696ad30f",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:43:20.384Z"
+    },
+    {
+      "id": "log-mvfhgbpn-05e40e36117f",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:42:50.315Z"
+    },
+    {
+      "id": "log-mvfhfoii-6da3464d88ed",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:42:20.250Z"
+    },
+    {
+      "id": "log-mvfhf1b6-ac25e35c180e",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:41:50.178Z"
+    },
+    {
+      "id": "log-mvfhee47-95f0b382a95e",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:41:20.119Z"
+    },
+    {
+      "id": "log-mvfhdqx5-d295afd16e25",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:40:50.057Z"
+    },
+    {
+      "id": "log-mvfhd3q3-045a75809ff1",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:40:19.995Z"
+    },
+    {
+      "id": "log-mvfhcgiv-bef78acda9ac",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:39:49.927Z"
+    },
+    {
+      "id": "log-mvfhbtbq-73513bff2a47",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:39:19.862Z"
+    },
+    {
+      "id": "log-mvfhb64h-3d26e4498fa4",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:38:49.793Z"
+    },
+    {
+      "id": "log-mvfhaixw-81db0b4f7b84",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:38:19.748Z"
+    },
+    {
+      "id": "log-mvfha6jm-74d55f0c084a",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:38:03.682Z"
+    },
+    {
+      "id": "log-mvfha0bu-b2527cf72653",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:37:55.626Z"
+    },
+    {
+      "id": "log-mvfh9x7m-5e96b1036845",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:37:51.586Z"
+    },
+    {
+      "id": "log-mvfh9vn0-fea90d8a5c8a",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:37:49.548Z"
+    },
+    {
+      "id": "log-mvfh9uua-eec892e3d3de",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-19T16:37:48.514Z"
+    },
+    {
+      "id": "log-mvfgf9jq-42a9b1a185a6",
+      "level": "info",
+      "message": "ingested packet ostracon-mvfgll8h-86y5os",
+      "at": "2026-10-19T16:14:01.238Z"
+    },
+    {
+      "id": "log-mvfgbpk5-0111fe84cd98",
+      "level": "error",
+      "message": "卡片拖拽数据无效: 卡片拖拽数据包含无效的colorIndex: -1",
+      "at": "2026-10-19T16:11:15.365Z"
+    },
     {
       "id": "log-mvfg0nlp-0158b5bf57b8",
       "level": "info",
