@@ -122,6 +122,7 @@ Für mich ist <del>lage</del> <span style="color:red">die Lage</span><sup>¹</su
 
 Der erste <del>punkte</del> <span style="color:red">Punkt</span><sup>¹</sup> ist<del>,</del> <span style="color:red">:</span> die <del>Karama</del> <span style="color:red">Kamera</span><sup>²</sup> <del>schnellst</del> <span style="color:red">kann schnell</span><sup>³</sup> <del>rekort</del> <span style="color:red">aufnehmen</span><sup>⁴</sup> <del>leher video</del> <span style="color:red">(unklar: „Lernvideo“? „Lehrervideo“?)</span><sup>⁵</sup>, <del>wegen Schriben ist lang zeit zu anwenden</del> <span style="color:red">weil das Abschreiben viel Zeit kostet</span><sup>⁶</sup><sup>⁷</sup>.
 
+
 **③ 📋 本句问题一览（含错误原因解释）**
 
 - ¹ 🔴 单复数与大小写：punkte → Punkt　🩺 原因：`Der erste …` 后只能接**单数名词 Punkt**（主谓也要一致：ist），*Punkte* 是复数；且名词必须大写。
@@ -453,3 +454,9 @@ Zusammenfassend bleibe ich bei meiner Position: Ein komplettes Handyverbot ist a
 ---
 
 **惯用法争议说明（按规则不得悄悄带过）**：① „In meiner Schule" 与 „An meiner Schule" 都正确，前者强调"在校内"，后者强调"就我们学校而言"，两者皆可；② „auf ihr Display"（每人一块，单数）与 „auf ihre Displays" 均可接受；③ „Für die Pausen" 也可写成 „In den Pausen"，语义相同；④ 与 „man" 连用时的 „seine Eltern" 完全规范，若考官偏好也可写 „die eigenen Eltern"。
+
+> 明不等式的最基本的比较法之一，
+> [MarginNote](marginnote4app://note/565576C5-3254-4135-B2A2-F7AEDAEC7252)
+
+> 大小， 可以转化为
+> [MarginNote](marginnote4app://note/AFEE9701-57A7-4B8E-926A-2BAFB33E1036)

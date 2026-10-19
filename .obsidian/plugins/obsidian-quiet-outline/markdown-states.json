@@ -17982,15 +17982,15 @@
   "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md": {
     "cursor": {
       "from": {
-        "line": 197,
+        "line": 124,
         "ch": 0
       },
       "to": {
-        "line": 197,
+        "line": 124,
         "ch": 0
       }
     },
-    "scroll": 229.88057768900947
+    "scroll": 108.47395417692834
   },
   "Handys in der Schule.md": {
     "cursor": {
@@ -18366,12 +18366,37 @@
   "Marginnote/数学归纳法-Mathem.md": {
     "cursor": {
       "from": {
-        "line": 0,
-        "ch": 163
+        "line": 9,
+        "ch": 273
       },
       "to": {
-        "line": 0,
-        "ch": 163
+        "line": 9,
+        "ch": 0
+      }
+    }
+  },
+  "Marginnote/向前向后数学归纳法 1.md": {
+    "cursor": {
+      "from": {
+        "line": 15,
+        "ch": 142
+      },
+      "to": {
+        "line": 15,
+        "ch": 142
+      }
+    }
+  },
+  "Marginnote/Deutsch.md": {
+    "scroll": 926.813507392397,
+    "cursor": {
+      "from": {
+        "line": 932,
+        "ch": 0
+      },
+      "to": {
+        "line": 932,
+        "ch": 0
       }
     }
   }
