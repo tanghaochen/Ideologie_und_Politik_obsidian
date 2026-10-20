@@ -294,6 +294,35 @@ B) Wegen Schreiben kostet viel Zeit.
 - ☑ ⑤ 每句仅做 1 组"同一原意"重写，🛡️/🚀 各 1 句，未对单个错误逐一输出
 - ☑ 每句均含 ① 💬 本句原意（可直接复制进 Anki 做中译德卡片）
 
+---
+
+## 模块六：四版对照整理 (Vier-Fassungen-Übersicht)
+
+> 说明：每个句子末尾的脚注角标（¹²³…）表示四部分中「同一句」的对应关系；同一编号在四个部分中各出现一次。第一部分依据模块二 ② 的原文批注还原。
+
+### 第一部分：学生写的文章原文
+
+Für mich ist lage viel alter und unbedankebar, dass wir leben in 2026 nicht in 2000.[^1] wie musste der Gründe der Handy anwenden.[^2] Der erste punkte ist, die Karama schnellst rekort leher video, wegen Schriben ist lang zeit zu anwenden.[^3] Der zweite punkte ist, die Video wendet recycle in end der Kus.[^4] Schuler kannte Deteil schauen.[^5] der dritte punkte ist, allem Datum lassen sich ins Internet, wegen es kannet vorlor.[^6]
+
+### 第二部分：推测学生本来想要表达的中文翻译
+
+对我来说，今天的情况完全不一样了——我们生活在 2026 年，而不是 2000 年。[^1] 现在（我）必须说一下使用手机的理由。[^2] 第一个点是：用（手机）摄像头可以很快录下（课堂）视频，因为手写记录要花很长时间。[^3] 第二个点是：这个视频可以（一直）用到课程结束，可以重复使用。[^4] 学生（因此）可以再仔细看看细节。[^5] 第三个点是：所有数据都可以上传到网上，这样它们就不会丢失。[^6]
+
+### 第三部分：德语最小改动的文章
+
+Für mich ist die Lage ganz anders, denn wir leben im Jahr 2026 und nicht mehr im Jahr 2000.[^1] Jetzt muss ich die Gründe für die Handynutzung nennen.[^2] Der erste Punkt ist: Mit der Kamera kann man schnell ein Video aufnehmen, weil das Abschreiben viel Zeit kostet.[^3] Der zweite Punkt ist: Das Video kann man bis zum Ende des Kurses wiederverwenden.[^4] So können die Schüler die Details noch einmal anschauen.[^5] Der dritte Punkt ist: Alle Daten lassen sich im Internet speichern, damit sie nicht verloren gehen.[^6]
+
+### 第四部分：精改高级语法后的文章
+
+Aus meiner Sicht lässt sich die heutige Situation kaum mit der Zeit um 2000 vergleichen – wir leben schließlich im Jahr 2026.[^1] Im Folgenden möchte ich die wichtigsten Argumente für die Nutzung von Handys im Unterricht anführen.[^2] Erstens lassen sich mit dem Handy Inhalte in Sekundenschnelle filmen – das Mitschreiben per Hand nimmt dagegen deutlich mehr Zeit in Anspruch.[^3] Zweitens lassen sich die Aufnahmen bis zum Kursende erneut nutzen, sodass die Schülerinnen und Schüler jederzeit darauf zurückgreifen können.[^4] Auf diese Weise können die Lernenden einzelne Details beliebig oft wiederholen.[^5] Drittens können sämtliche Daten in einer Cloud gespeichert werden, sodass sie selbst bei einem Geräteverlust nicht verloren gehen.[^6]
+
+[^1]: 第 1 句 · 引入（2026 与 2000 对比）
+[^2]: 第 2 句 · 过渡（要列举手机用途）
+[^3]: 第 3 句 · 第一点（拍视频省时）
+[^4]: 第 4 句 · 第二点（视频可重复使用）
+[^5]: 第 5 句 · 视频用途（回看细节）
+[^6]: 第 6 句 · 第三点（数据云端保存防丢失）
+
 # 范文
 # 1. 范文（德语）
 

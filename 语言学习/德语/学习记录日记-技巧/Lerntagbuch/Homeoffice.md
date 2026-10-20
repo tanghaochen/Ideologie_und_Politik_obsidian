@@ -307,3 +307,34 @@ Für <del>teilwise manchen</del> <span style="color:red">manche Beschäftigte</s
 - ☑ ④ 直译故意保留"别扭感"，以照出原文错误（如"有 工作 区域 舒服""知识 型号"）
 - ☑ ⑤ 每句仅做 1 组"同一原意"重写，🛡️/🚀 各 1–2 句，未对单个错误逐一输出
 - ☑ 每句均含 ① 💬 本句原意（可直接复制进 Anki 做中译德卡片）
+
+---
+
+## 模块六：四版对照整理 (Vier-Fassungen-Übersicht)
+
+> 说明：每个句子末尾的脚注角标（¹²³…）表示四部分中「同一句」的对应关系；同一编号在四个部分中各出现一次。
+
+### 第一部分：学生写的文章原文
+
+Ich find es dreie Punkten zu unterdenken und unterscheiden.[^1] Virte Punkte ist, Hat Arbeiten bereich bequem.[^2] Zwiene Punkte, Arbeiter Gedankes.[^3] Dritten, Fahrzeit für den Firme zu commen.[^4] Virte, der Arbeit inklude kennnis type?[^5]
+Vor virte puncten wär bettem.[^6] Für teilwise manchen werden überglücklich, beisple habe sich familen zu fleich, ober sich möglich möuchen in arbeited zu vertiefern.[^7]
+
+### 第二部分：推测学生本来想要表达的中文翻译
+
+我认为，有三个点需要考虑到并加以区分。[^1] 第一个点是，在家里的工作区域很舒适。[^2] 第二个点是（员工的）想法／态度。[^3] 第三个点是（员工）到公司上班的乘车／通勤时间。[^4] 第四个点是，这份工作／岗位需要特定类型的知识。[^5] 在讨论这四个点之前，先（把它们）区分开会更好。[^6] 对某些（员工）来说这会是天大的幸福：比如他们能有更多时间照顾家庭，或者能更专注地投入到工作中。[^7]
+
+### 第三部分：德语最小改动的文章
+
+Ich finde, dass man drei Punkte bedenken und voneinander unterscheiden muss.[^1] Der erste Punkt ist, dass der Arbeitsplatz zu Hause bequem ist.[^2] Der zweite Punkt ist die Einstellung der Beschäftigten.[^3] Der dritte Punkt ist der Arbeitsweg zur Firma.[^4] Der vierte Punkt ist, dass die Arbeit bestimmte Kenntnisse erfordert.[^5] Bevor man diese vier Punkte bewertet, wäre es besser, sie klar zu unterscheiden.[^6] Für manche Beschäftigte wäre das ein Grund zur Freude: Zum Beispiel hätten sie mehr Zeit für ihre Familie oder könnten sich besser in ihre Arbeit vertiefen.[^7]
+
+### 第四部分：精改高级语法后的文章
+
+Aus meiner Sicht sind drei Aspekte zu berücksichtigen und klar voneinander abzugrenzen.[^1] Erstens bietet der heimische Arbeitsplatz einen nicht zu unterschätzenden Komfortvorteil.[^2] Zweitens spielt die Arbeitsmotivation bzw. die Einstellung der Beschäftigten eine zentrale Rolle.[^3] Drittens entfällt der tägliche Arbeitsweg, was nicht nur Zeit, sondern auch Nerven spart.[^4] Viertens ist zu bedenken, dass je nach Tätigkeit ganz unterschiedliche Qualifikationen gefordert sind.[^5] Um die vier Aspekte sinnvoll zu gewichten, sollte man zunächst zwischen Vor- und Nachteilen differenzieren.[^6] Manche Beschäftigten wären geradezu euphorisch: Sie gewönnen Zeit für die Familie und könnten sich zugleich konzentrierter in ihre Aufgaben vertiefen.[^7]
+
+[^1]: 第 1 句 · 总起（三个点需要考量并区分）
+[^2]: 第 2 句 · 第一点（在家办公舒适）
+[^3]: 第 3 句 · 第二点（员工态度）
+[^4]: 第 4 句 · 第三点（通勤时间）
+[^5]: 第 5 句 · 第四点（岗位所需知识）
+[^6]: 第 6 句 · 过渡（先区分再讨论）
+[^7]: 第 7 句 · 举例（家庭时间与专注工作）

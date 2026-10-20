@@ -201,3 +201,29 @@ b) Berufskraftfahrer sind auf ein Auto ______ .
 > **5 a)** auskommen　（解析：ohne + Akk. auskommen = "没有…也能应付、过得去"。）
 > **5 b)** angewiesen　（解析：auf + Akk. angewiesen sein = "依赖…"，是书面论证的必备短语。）
 
+---
+
+## 模块六：四版对照整理 (Vier-Fassungen-Übersicht)
+
+> 说明：每个句子末尾的脚注角标（¹²³…）表示四部分中「同一句」的对应关系；同一编号在四个部分中各出现一次。第 3 句在最小改动版与精改版中被拆成两句，因此两处都标 [^3]。
+
+### 第一部分：学生写的文章原文
+
+Ich begroße Sie meine Meinung zu Hören.[^1] Ich finde es wie Wasser und Luft zu zerleizt standshaft.[^2] In allem versteiden 不同人群，teil wie 普通人 Können find ohnes Auto, aber fracht fahrer konnen wären zuzielen.[^3]
+
+### 第二部分：推测学生本来想要表达的中文翻译
+
+您好，我想表达一下我的看法。[^1] 我认为它就像水和空气一样，是不可或缺的。[^2] 总的来说，必须区分不同的人群：比如普通人可以没有车生活，但货车司机（没有车）就无法到达目的地。[^3]
+
+### 第三部分：德语最小改动的文章
+
+Ich begrüße Sie und möchte meine Meinung äußern.[^1] Ich finde, es ist wie Wasser und Luft unverzichtbar.[^2] Insgesamt muss man verschiedene Menschengruppen unterscheiden.[^3] Zum Beispiel können normale Menschen ohne Auto auskommen, aber Frachtfahrer brauchen ein Auto, um ans Ziel zu kommen.[^3]
+
+### 第四部分：精改高级语法后的文章
+
+Ich möchte im Folgenden meine Meinung zu diesem Thema darlegen.[^1] Meiner Meinung nach ist es ebenso unentbehrlich wie Wasser und Luft.[^2] Grundsätzlich ist hierbei zwischen verschiedenen Personengruppen zu differenzieren.[^3] Während normale Menschen durchaus ohne eigenes Auto auskommen können, sind Berufskraftfahrer darauf angewiesen, ihr Ziel zu erreichen.[^3]
+
+[^1]: 第 1 句 · 问候并表明要表达观点
+[^2]: 第 2 句 · 比喻（如水与空气般不可或缺）
+[^3]: 第 3 句 · 分人群讨论（普通人 vs. 货车司机）
+

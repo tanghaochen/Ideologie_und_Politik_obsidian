@@ -392,6 +392,43 @@ Ich stimme ______ (dein) Meinung voll und ganz ______.
 
 ---
 
+## 模块六：四版对照整理 (Vier-Fassungen-Übersicht)
+
+> 说明：每个句子末尾的脚注角标（¹²³…）表示四部分中「同一句」的对应关系；同一编号在四个部分中各出现一次。
+
+### 第一部分：学生写的文章原文
+
+Ich bestemme deinen mainung voll und ganz.[^1] Die zeit ist nicht alle für das Aufgabe, sondern das Effizient.[^2]
+Ich muss plus eine entsheidend Argument, die die Produktivität ist,[^3] haurzutage ist  pomp mit der Produktivität, Mann kann mehr Arbeit nicht.[^4] Der Automachina kann zehn mann Arbeit erreichen.[^5] Bürgershaft soll Kenzentieren bei Erschaffen und Techcologic leisten gebring.[^6]
+Zum Beispiele söllen Bürger mehr Konsum, denn Konsum kann Richung gefluss.[^7]
+Zum Beispiele, Mann habe um mehr zeit , desto mehr konniss zu lernen, und mithilfe mehr konniss kann  neun Arubeit mudel gebring.[^8]
+Ich bereite zehnjahren Arbeit und ich shaue meine Eletern mit Arbeit seit Lebenjahr an.[^9] Diese Erfahrungen ist leid und schwert.[^10]
+
+### 第二部分：推测学生本来想要表达的中文翻译
+
+我完全同意你的观点。[^1] 决定一件事成败的不是时间的长短，而是效率。[^2] 我还想补充一个关键的理由，那就是生产率。[^3] 如今一切都围绕生产率（而不是时长），人不可能（靠延长工时来）干越来越多的活。[^4] 一台机器就能完成十个人的工作量。[^5] 员工应该把精力集中在创造性的工作和技术上，并（由此）创造出成果。[^6] 例如，人们（应该）更多地消费，因为消费能够影响（经济）的方向。[^7] 例如，一个人时间越多，就能学到越多知识；而凭借更多知识，就能开发出新的工作模式。[^8] 我已经工作十年了，而且我眼看着我的父母一辈子都在辛苦工作。[^9] 这些经历既痛苦又艰难。[^10]
+
+### 第三部分：德语最小改动的文章
+
+Ich stimme deiner Meinung voll und ganz zu.[^1] Nicht die Zeit, sondern die Effizienz ist entscheidend.[^2] Ich möchte noch ein Argument anführen: die Produktivität.[^3] Heutzutage kommt es auf die Produktivität an. Man kann nicht einfach immer mehr arbeiten.[^4] Eine Maschine kann die Arbeit von zehn Männern erledigen.[^5] Die Beschäftigten sollen sich auf kreative Arbeit und Technologie konzentrieren und Leistung bringen.[^6] Zum Beispiel sollten die Bürger mehr konsumieren, denn der Konsum beeinflusst die Wirtschaft.[^7] Zum Beispiel: Je mehr Zeit man hat, desto mehr Kenntnisse kann man erwerben. Und mit mehr Wissen kann man neue Arbeitsmodelle entwickeln.[^8] Ich arbeite seit zehn Jahren, und ich sehe, wie meine Eltern ihr Leben lang arbeiten.[^9] Diese Erfahrungen sind hart und schwer.[^10]
+
+### 第四部分：精改高级语法后的文章
+
+Deiner Meinung kann ich mich nur voll und ganz anschließen.[^1] Entscheidend ist nicht, wie viel Zeit man aufwendet, sondern wie effizient man arbeitet.[^2] Ein weiteres entscheidendes Argument möchte ich hinzufügen, nämlich die Produktivität.[^3] Heutzutage entscheidet die Produktivität und nicht die Zahl der Stunden – noch mehr zu arbeiten ist keine Lösung.[^4] Eine einzige Maschine bewältigt heute die Arbeit von zehn Arbeitskräften.[^5] Konzentrieren sich die Beschäftigten auf Kreativität und Technologie, steigt die Produktivität von selbst.[^6] Steigt der Konsum, kann er die wirtschaftliche Entwicklung in eine bestimmte Richtung lenken.[^7] Je mehr Freiraum die Beschäftigten haben, desto mehr Wissen können sie sich aneignen – und dieses Wissen wiederum bringt innovative Arbeitsmodelle hervor.[^8] Seit zehn Jahren bin ich im Berufsleben – und ich erlebe täglich mit, wie hart meine Eltern ihr ganzes Leben gearbeitet haben.[^9] Diese Erfahrungen haben mich geprägt und sind alles andere als leicht.[^10]
+
+[^1]: 第 1 句 · 表态（完全同意）
+[^2]: 第 2 句 · 时间与效率的对比
+[^3]: 第 3 句 · 补充论据（生产率）
+[^4]: 第 4 句 · 当今围绕生产率，不能一味增加工时
+[^5]: 第 5 句 · 机器完成十人的工作量
+[^6]: 第 6 句 · 员工应专注于创造性工作与技术
+[^7]: 第 7 句 · 举例（消费影响经济方向）
+[^8]: 第 8 句 · 举例（时间—知识—新工作模式）
+[^9]: 第 9 句 · 个人经验（自己十年、父母一辈子）
+[^10]: 第 10 句 · 总结感受（艰难）
+
+---
+
 ### 🎯 最后一句教练建议
 这篇作文里，**你的想法值 60 分，你的德语只展现了 42 分**。下一步别急着写新作文——先把上面 5 道题做两遍，再拿模块四的 6 个骨架，把"生产率 + 自动化"这个论点**只用你完全会写的句子**重写一遍（80 个词也行）。你会立刻看到分数的跳跃。
 

@@ -397,6 +397,48 @@ Max Mustermann
 
 ---
 
+## 模块六：四版对照整理 (Vier-Fassungen-Übersicht)
+
+> 说明：每个句子末尾的脚注角标（¹²³…）表示四部分中「同一句」的对应关系；同一编号在四个部分中各出现一次。
+
+### 第一部分：学生写的文章原文
+
+Eng Frau Reinhardt[^1]
+Ich bin eine Miearbeiter in der Marketingabteilung und möche eine shalge für Sie um die Homeoffice in der Zeit Regulung.[^2] Es als neue Arbeitewerse in näher manch jahr, dass hate ich viel zeit durch den Internet sparen zu bekannten.[^3] Ich find, es viel 适合 letze Detail des Arbeitens, weil ist meine Arbeiten voll in der Computer.[^4] Der zehlereich Firme darf die beshäften voll zeit zu haus gemachen.[^5]
+Anderem lage ist meine Vater schwer leben einzehle, dashalb phlegebe ich er, aber kann der Arbeiten gefluent.[^6] Wile machen ich nur bereite 食物 in der Arbeitenzeit.[^7] Ich hätte zu und geruck zeit so langer um gefahr nicht.[^8]
+Bitten Sie darf mich zu Haus.[^9] Wäre ich der Arbeiten 完成 nicht, sodass will ich 惩罚。[^10]
+
+### 第二部分：推测学生本来想要表达的中文翻译
+
+一位员工要正式地给部门主管女士写邮件，先写称呼。[^1] 我是市场部的员工，想就新的居家办公规定向您提一个建议。[^2] 居家办公是一种已经存在几年的新工作方式，通过它我能在网上省下很多时间。[^3] 我觉得居家办公非常适合处理工作中那些需要专注的部分，因为我的工作完全可以在电脑上完成。[^4] 很多公司已经让员工全职在家办公了。[^5] 另外，我父亲一个人生活、需要人照料，所以我得照顾他，可这样我就无法顺畅地完成工作了。[^6] 在工作时间里，我只能匆忙地准备一点吃的。[^7] 我时间又少又紧，而且每天的通勤路程那么长，这对我来说是额外的负担。[^8] 因此我请求您，允许我每周两天在家办公。[^9] 万一我没能按约定完成工作，我愿意承担后果。[^10]
+
+### 第三部分：德语最小改动的文章
+
+Sehr geehrte Frau Reinhardt,[^1]
+Ich bin Mitarbeiter in der Marketingabteilung und möchte Ihnen einen Vorschlag zur neuen Homeoffice-Regelung machen.[^2] Seit einigen Jahren ist Homeoffice eine neue Arbeitsweise, und dadurch kann ich viel Zeit sparen.[^3] Ich finde, diese Arbeitsweise eignet sich sehr gut für die letzten Arbeitsschritte, weil ich meine Aufgaben vollständig am Computer erledige.[^4] Zahlreiche Firmen lassen ihre Mitarbeiter Vollzeit zu Hause arbeiten.[^5]
+Außerdem lebt mein Vater allein und ist auf meine Pflege angewiesen; deshalb kann ich meine Arbeit nicht immer reibungslos erledigen.[^6] Während der Arbeitszeit kann ich nur schnell etwas zu essen machen.[^7] Ich habe zu wenig Zeit und stehe unter Zeitdruck; außerdem ist mein Arbeitsweg sehr lang.[^8]
+Deshalb bitte ich Sie, mir zu erlauben, zwei Tage pro Woche zu Hause zu arbeiten.[^9] Sollte ich meine Aufgaben nicht wie vereinbart erledigen, bin ich bereit, die Konsequenzen zu tragen.[^10]
+
+### 第四部分：精改高级语法后的文章
+
+Sehr geehrte Frau Reinhardt,[^1]
+Ich arbeite seit drei Jahren in der Marketingabteilung der Nordlicht GmbH und möchte Ihnen heute einen Vorschlag zur aktuellen Homeoffice-Regelung unterbreiten.[^2] Homeoffice hat sich in den vergangenen Jahren als feste Arbeitsform etabliert; für mich bedeutet das eine deutliche Zeitersparnis, da ich einen großen Teil meiner Aufgaben online erledigen kann.[^3] Meiner Erfahrung nach ist die Arbeit im Homeoffice gerade für konzentrationsintensive Tätigkeiten besonders geeignet, da ich sämtliche Aufgaben ortsunabhängig am Computer bearbeiten kann.[^4] In vielen Unternehmen ist die vollständige Arbeit im Homeoffice inzwischen selbstverständlich – ein Modell, das sich in der Praxis bewährt hat.[^5]
+Hinzu kommt, dass mein Vater pflegebedürftig ist und regelmäßig auf meine Unterstützung angewiesen ist – was es mir zusätzlich erschwert, jeden Tag pünktlich im Büro zu sein.[^6] Da ich meinen Vater regelmäßig versorgen muss, bleibt mir während der Arbeitszeit kaum Zeit, warme Mahlzeiten zuzubereiten.[^7] Hinzu kommt, dass ich täglich rund 90 Minuten für den Arbeitsweg benötige und mir daher kaum Zeit für die Pflege meines Vaters bleibt.[^8]
+Aus den genannten Gründen würde ich mich sehr freuen, wenn Sie mir künftig zwei Homeoffice-Tage pro Woche genehmigen könnten.[^9] Selbstverständlich stehe ich zu meiner Zusage: Sollten meine Arbeitsergebnisse hinter den Erwartungen zurückbleiben, bin ich bereit, die Vereinbarung gemeinsam mit Ihnen anzupassen.[^10]
+
+[^1]: 第 1 句 · 称呼
+[^2]: 第 2 句 · 自我介绍并提出建议
+[^3]: 第 3 句 · 居家办公是新的工作方式并节省时间
+[^4]: 第 4 句 · 适合需要专注的工作，可在电脑上完成
+[^5]: 第 5 句 · 许多公司允许员工全职居家办公
+[^6]: 第 6 句 · 父亲需要照顾，影响工作
+[^7]: 第 7 句 · 工作时间里只能匆忙准备吃的
+[^8]: 第 8 句 · 时间紧张且通勤时间长
+[^9]: 第 9 句 · 请求每周两天居家办公
+[^10]: 第 10 句 · 未按约定完成则承担后果
+
+---
+
 > 🎯 **下一步行动清单（本周只做三件事）**
 > 1. 把模块四的 8 行邮件骨架默写 3 遍，直到能不看卡片写出。
 > 2. 把模块五做一遍，错题抄进 Anki，正面写中文原意、反面写德语。
