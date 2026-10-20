@@ -81,7 +81,29 @@
 带来的危害是双重的。首先,很明 显的,它可以欺骗听众;其次,无形中,它将对其使用者造成有害的 影响,扭曲他们对现实世界的感受。
 使用者==塑造语言,同时语言也塑 造使用者。如果持续使用扭曲现实的语言,我们会逐渐相信自己编造== 出来的虚假世界。这就是语言的力量。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=28&annotation=8W2V3UJN)) |
 
+## “0 真相” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=29&annotation=J8AK4B2T)) |  
+> 🔤0 真相🔤
 
+“真相有两种基本形态,一为本体真相,一为逻辑真相。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=29&annotation=FQPEBIF2)) |  
+> 🔤真相有两种基本形态：一是本体真相，二是逻辑真相。🔤
+
+“桌上有一盏灯,这是本体 真相,因为它确实是在那里,而不是幻象。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=29&annotation=BRIUY5QR)) |  
+> 🔤桌上有一盏灯，这是本体真相，因为它确实在那里，而不是幻象。🔤
+
+“命题的定义:一个可以作出真假判断的语 言表述。肯定一个命题就是判断它为真,反之亦然。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=29&annotation=CHM4S9B6)) |  
+> 🔤命题的定义：一个可以作出真假判断的语言表述。肯定一个命题就是判断它为真，反之亦然。🔤
+
+“如果这里确实有一艘船,确实有一个码头,而 这艘船确实泊在码头上,那么这个命题就是真的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=29&annotation=VS7B5Z8C)) |  
+> 🔤如果这里确实有一艘船，确实有一个码头，而这艘船确实停泊在码头上，那么这个命题就是真的。🔤
+
+“决定命题真假的依据是现实情况,而逻辑真相是建立在本体真相的基础 之上的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=30&annotation=VLNA4EZY)) |  
+> 🔤决定命题真假的依据是现实情况，而逻辑真相是建立在本体真相的基础之上的。🔤
+
+“对论被认为是真实地反映 了物质世界客观规律的理论,它与真实的物质世界是相符合的” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=30&annotation=2HHSX4MX)) |  
+> 🔤理论被认为是真实反映物质世界客观规律的理论，它与真实的物质世界是相符合的。🔤
+
+“结论可能是非常荒谬的,因 为它所仰赖的基础并非客观世界中的现实情况,而是某种理论或思想学 说;而任何理论或者思想学说都可能是错误的,或者已经过时,与现实世 界并不相符。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=30&annotation=K7CA3HTK)) |  
+> 🔤结论可能极其荒谬，因为它所依赖的基础并非客观世界中的现实情况，而是某种理论或思想学说；而任何理论或思想学说都可能是错误的，或者已经过时，与现实世界并不相符。🔤
 
 
 

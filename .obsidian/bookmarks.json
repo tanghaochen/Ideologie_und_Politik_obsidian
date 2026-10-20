@@ -3,21 +3,7 @@
     {
       "type": "group",
       "ctime": 1752497921644,
-      "items": [
-        {
-          "type": "group",
-          "ctime": 1752497923610,
-          "items": [
-            {
-              "type": "file",
-              "ctime": 1780500110506,
-              "path": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Kultivierungslernen/Boden  Erdkultur, Hydrokultur, Halbbodenkultur.md",
-              "subpath": "#Boden Erdkultur, Hydrokultur, Halbbodenkultur"
-            }
-          ],
-          "title": "造句"
-        }
-      ],
+      "items": [],
       "title": "未命名组"
     },
     {
@@ -31,11 +17,6 @@
       "path": "思想思维心理哲学/个人人生思想架构.md"
     },
     {
-      "type": "folder",
-      "ctime": 1783142310783,
-      "path": "语言学习/德语/单词/生词"
-    },
-    {
       "type": "file",
       "ctime": 1788441743815,
       "path": "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
@@ -43,9 +24,15 @@
       "title": "当前阶段德语详细学习计划"
     },
     {
+      "type": "group",
+      "ctime": 1792511982257,
+      "items": [],
+      "title": "未命名组"
+    },
+    {
       "type": "file",
-      "ctime": 1789482686594,
-      "path": "思想思维心理哲学/爱情/摄影/一本摄影书/第四章 点线面的运用.md"
+      "ctime": 1792512025616,
+      "path": "Marginnote/介词与格.md"
     }
   ]
 }

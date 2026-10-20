@@ -6,78 +6,21 @@
       {
         "id": "ff5d945606200819",
         "type": "tabs",
-        "dimension": 51.885441527446304,
+        "dimension": 23.767724510465904,
         "children": [
           {
-            "id": "0ce48a29509a5845",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/写作知识/DW逻辑和论点表达模型.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "DW逻辑和论点表达模型"
-            }
-          },
-          {
-            "id": "0748fd24b47d95e5",
+            "id": "98c633534e4448b2",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/写作知识/所以写作论点，词汇、格式、模板、句子.md",
+                "file": "语言学习/德语/公共知识语法/时态/第一将来时, 第二将来时.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "所以写作论点，词汇、格式、模板、句子"
-            }
-          },
-          {
-            "id": "81cbcbbceaa7b6ad",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Homeoffice.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "Homeoffice"
-            }
-          },
-          {
-            "id": "14421425e9d4a156",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Leben ohne eigenes Auto.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "Leben ohne eigenes Auto"
-            }
-          },
-          {
-            "id": "7f26734a40576a36",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "听说读写 以及学习外语的核心方法"
+              "title": "第一将来时, 第二将来时"
             }
           }
         ]
@@ -85,55 +28,36 @@
       {
         "id": "b5dbd09e7753bfc0",
         "type": "tabs",
-        "dimension": 48.114558472553696,
+        "dimension": 76.2322754895341,
         "children": [
           {
-            "id": "c4ccafc68d566513",
+            "id": "d052bf28bb0037b5",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
+                "file": "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "未命名"
+              "title": "简单逻辑学Z"
             }
           },
           {
-            "id": "d0b4560e3a076cf5",
+            "id": "615dd7f791f38dad",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/E-Mail Homeoffice.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md"
               },
-              "icon": "lucide-file",
-              "title": "E-Mail Homeoffice"
-            }
-          },
-          {
-            "id": "0ff1e81507805d0d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "Handys in der Schule"
+              "icon": "excalidraw-icon",
+              "title": "DW简单逻辑学"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -407,8 +331,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "0ce48a29509a5845",
+  "active": "d052bf28bb0037b5",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/从句.md",
+    "语言学习/德语/学习记录日记-技巧/写作知识/DW逻辑和论点表达模型.md",
+    "Marginnote/介词与格.md",
+    "Marginnote/14-冠词-定冠词-不定.md",
+    "Marginnote/数学归纳法-Mathem.md",
     "语言学习/德语/学习记录日记-技巧/写作知识/所以写作论点，词汇、格式、模板、句子.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/E-Mail Homeoffice.md",
@@ -420,10 +349,8 @@
     "语言学习/德语/公共知识语法/10句型/被动态.md",
     "语言学习/德语/柏林广场视频笔记/A2/k18 58 被动态：分状态被动和过程被动.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/比较从句.md",
-    "Marginnote/介词与格.md",
     "2026-10-20.md",
     "Marginnote/Deutsch.md",
-    "Marginnote/14-冠词-定冠词-不定.md",
     "Marginnote/Deutsch.canvas",
     "Marginnote/向前向后数学归纳法 1.md",
     "assets/a07fa0503835fcf8735b4e8c1bd1b764.png",
@@ -437,17 +364,14 @@
     "assets/fe970cdc28bba4d0f6f1f682b9de5c94.png",
     "assets/39046175e828ecb903a33036f7167f9d.png",
     "Marginnote/错题管理.canvas",
-    "Marginnote/数学归纳法-Mathem.md",
     "Marginnote/向前向后数学归纳法.md",
     "Diary/2026/20261019.md",
     "Marginnote",
     "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
-    "语言学习/德语/学习记录日记-技巧/写作知识/DW逻辑和论点表达模型.md",
     "语言学习/德语/学习记录日记-技巧/写作知识/写作逻辑框架.md",
     "宫本武藏《五轮书.md",
     "Diary/2026/20261001.md",
     "Diary/2026/20260929.md",
-    "语言学习/德语/单词/生词/26-10.md",
     "思想思维心理哲学/阅读/简单逻辑学",
     "思想思维心理哲学/方法地图.html",
     "思想思维心理哲学/未命名.canvas",

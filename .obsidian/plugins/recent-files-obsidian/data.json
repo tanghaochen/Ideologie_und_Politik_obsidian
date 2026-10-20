@@ -1,8 +1,20 @@
 {
   "recentFiles": [
     {
+      "basename": "简单逻辑学Z",
+      "path": "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md"
+    },
+    {
+      "basename": "从句",
+      "path": "语言学习/德语/公共知识语法/从句.md"
+    },
+    {
       "basename": "DW逻辑和论点表达模型",
       "path": "语言学习/德语/学习记录日记-技巧/写作知识/DW逻辑和论点表达模型.md"
+    },
+    {
+      "basename": "介词与格",
+      "path": "Marginnote/介词与格.md"
     },
     {
       "basename": "所以写作论点，词汇、格式、模板、句子",
@@ -49,36 +61,8 @@
       "path": "语言学习/德语/公共知识语法/10句型/从句合集/比较从句.md"
     },
     {
-      "basename": "介词与格",
-      "path": "Marginnote/介词与格.md"
-    },
-    {
       "basename": "2026-10-20",
       "path": "2026-10-20.md"
-    },
-    {
-      "basename": "Deutsch",
-      "path": "Marginnote/Deutsch.md"
-    },
-    {
-      "basename": "Deutsch",
-      "path": "Marginnote/Deutsch.canvas"
-    },
-    {
-      "basename": "向前向后数学归纳法 1",
-      "path": "Marginnote/向前向后数学归纳法 1.md"
-    },
-    {
-      "basename": "错题管理",
-      "path": "Marginnote/错题管理.canvas"
-    },
-    {
-      "basename": "数学归纳法-Mathem",
-      "path": "Marginnote/数学归纳法-Mathem.md"
-    },
-    {
-      "basename": "向前向后数学归纳法",
-      "path": "Marginnote/向前向后数学归纳法.md"
     },
     {
       "basename": "20261019",
@@ -107,10 +91,6 @@
     {
       "basename": "26-10",
       "path": "语言学习/德语/单词/生词/26-10.md"
-    },
-    {
-      "basename": "简单逻辑学Z",
-      "path": "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md"
     },
     {
       "basename": "DW简单逻辑学",
@@ -189,16 +169,8 @@
       "path": "语言学习/德语/单词/生词/26-8.md"
     },
     {
-      "basename": "从句",
-      "path": "语言学习/德语/公共知识语法/从句.md"
-    },
-    {
       "basename": "不定式",
       "path": "语言学习/德语/公共知识语法/1名词/不定式.md"
-    },
-    {
-      "basename": "个人人生思想架构",
-      "path": "思想思维心理哲学/个人人生思想架构.md"
     }
   ],
   "omittedPaths": [],
