@@ -559,7 +559,8 @@
     "语言学习/德语/公共知识语法": {
       "option": "property-asc",
       "propertyKey": "sort_index"
-    }
+    },
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch": "created-desc"
   },
   "folderTreeSortOverrides": {},
   "folderAppearances": {
