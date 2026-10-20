@@ -9664,6 +9664,18 @@
   ],
   "logs": [
     {
+      "id": "log-mvg6csud-f9f5a5a254b6",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-20T04:19:56.293Z"
+    },
+    {
+      "id": "log-mvg6cr93-20961feaf3b9",
+      "level": "warn",
+      "message": "rejected additional MarginNote connection",
+      "at": "2026-10-20T04:19:54.231Z"
+    },
+    {
       "id": "log-mvfi0hh2-a38362279fa5",
       "level": "warn",
       "message": "rejected additional MarginNote connection",
