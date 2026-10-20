@@ -9669,6 +9669,18 @@
   ],
   "logs": [
     {
+      "id": "log-mvgu28vv-b6d175b41854",
+      "level": "info",
+      "message": "plugin loaded",
+      "at": "2026-10-20T15:23:34.651Z"
+    },
+    {
+      "id": "log-mvgu28v9-a8593b73351f",
+      "level": "info",
+      "message": "ws listening on ws://[::1]:27123",
+      "at": "2026-10-20T15:23:34.629Z"
+    },
+    {
       "id": "log-mvg92r3y-450cd6b35a50",
       "level": "info",
       "message": "device approved: mn-client-mvfe444u-o8kr4z",
