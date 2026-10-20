@@ -17,6 +17,11 @@
         "clientId": "mn-client-mvfe444u-gbqbkq",
         "name": "mn-client-mvfe444u-gbqbkq",
         "approvedAt": "2026-10-19T15:05:56.313Z"
+      },
+      {
+        "clientId": "mn-client-mvfe444u-o8kr4z",
+        "name": "mn-client-mvfe444u-o8kr4z",
+        "approvedAt": "2026-10-20T05:36:06.328Z"
       }
     ],
     "syncConfirm": false,
@@ -9663,6 +9668,12 @@
     }
   ],
   "logs": [
+    {
+      "id": "log-mvg92r3y-450cd6b35a50",
+      "level": "info",
+      "message": "device approved: mn-client-mvfe444u-o8kr4z",
+      "at": "2026-10-20T05:36:06.334Z"
+    },
     {
       "id": "log-mvg6csud-f9f5a5a254b6",
       "level": "warn",
