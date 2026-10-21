@@ -745,8 +745,8 @@
   "showNewVersionNotification": true,
   "latexBoilerplate": "\\color{green}e=mc^2",
   "latexPreambleLocation": "preamble.sty",
-  "taskboneEnabled": false,
-  "taskboneAPIkey": "",
+  "taskboneEnabled": true,
+  "taskboneAPIkey": "ex-obf:v1:AKMmqSyvMrU4uwCpJ4sBkhyEa6kT7lm6SJUCjwOFTYYiuWfoavRWvH//P17QEYpOtWPwH90OqQ==",
   "pinnedScripts": [],
   "sidepanelTabs": [
     "{\"script\":\"Downloaded/Mindmap Builder\",\"title\":\"MindMap Builder\"}"
