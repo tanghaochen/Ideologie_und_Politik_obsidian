@@ -6,7 +6,7 @@
       {
         "id": "ff5d945606200819",
         "type": "tabs",
-        "dimension": 19.52267303102625,
+        "dimension": 53.36515513126492,
         "children": [
           {
             "id": "98c633534e4448b2",
@@ -28,8 +28,38 @@
       {
         "id": "b5dbd09e7753bfc0",
         "type": "tabs",
-        "dimension": 80.47732696897376,
+        "dimension": 46.63484486873508,
         "children": [
+          {
+            "id": "791ca48330deef6b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·模块一题库-四段式.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "德语从句·模块一题库-四段式"
+            }
+          },
+          {
+            "id": "49d11bf21609ffeb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·掌握度与出题追踪档案.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "德语从句·掌握度与出题追踪档案"
+            }
+          },
           {
             "id": "330b54eb6931867c",
             "type": "leaf",
@@ -46,36 +76,6 @@
             }
           },
           {
-            "id": "43c40facbcd43583",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Marginnote/介词与格.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "介词与格"
-            }
-          },
-          {
-            "id": "6654fd21c32c734b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·掌握度与出题追踪档案.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "德语从句·掌握度与出题追踪档案"
-            }
-          },
-          {
             "id": "8a6da50acfbf47c5",
             "type": "leaf",
             "state": {
@@ -88,75 +88,6 @@
               },
               "icon": "lucide-file",
               "title": "德语从句  出题范围规范"
-            }
-          },
-          {
-            "id": "8717ea7cd969dee4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/健身/哑铃对应各部位肌肉动作.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "哑铃对应各部位肌肉动作"
-            }
-          },
-          {
-            "id": "f1b9e5e0051aebfe",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "营养学以及养生/平均每天的生活成本.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "平均每天的生活成本"
-            }
-          },
-          {
-            "id": "d052bf28bb0037b5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "简单逻辑学Z"
-            }
-          },
-          {
-            "id": "615dd7f791f38dad",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "DW简单逻辑学"
-            }
-          },
-          {
-            "id": "3210c5a631f0e062",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "从句"
             }
           }
         ]
@@ -372,8 +303,7 @@
               "title": "Claudian"
             }
           }
-        ],
-        "currentTab": 10
+        ]
       },
       {
         "id": "28e75bfc7e894da7",
@@ -455,15 +385,24 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "8e4a4822a9fb95bb",
+  "active": "791ca48330deef6b",
   "lastOpenFiles": [
-    "assets/image-502.png",
+    "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·掌握度与出题追踪档案.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·模块一题库-四段式.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·掌握度与出题追踪档案.md.tmp.19108.44174f92db1a",
+    "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·掌握度与出题追踪档案.md.tmp.19108.e2dfe2562f36",
+    "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·掌握度与出题追踪档案.md.tmp.19108.c2e8e29b9cc5",
+    "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·掌握度与出题追踪档案.md.tmp.19108.a55243230dca",
+    "语言学习/德语/公共知识语法/时态/第一将来时, 第二将来时.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·模块一题库-Anki.tsv",
+    "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·模块一题库-Anki.tsv.tmp.19108.75cb4d85b766",
+    "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·模块一题库-四段式.md.tmp.19108.89daa04102fd",
+    "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句  出题范围规范.md",
     "Marginnote/介词与格.md",
     "Marginnote/Wann.-als.md",
+    "assets/image-502.png",
     "assets/d73c77f1af29fa87c5f8b1e1bc9edf5f.png",
-    "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句  出题范围规范.md",
     "assets/ff6732a08ad9fefe4b60e273954e2923.png",
-    "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·掌握度与出题追踪档案.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·掌握度与出题追踪档案.md.tmp.37316.e0ace04ce4d6",
     "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·掌握度与出题追踪档案.md.tmp.37316.aa5d44be36bb",
     "语言学习/德语/公共知识语法/从句.md",
@@ -488,24 +427,14 @@
     "语言学习/德语/公共知识语法/10句型/被动态.md",
     "语言学习/德语/柏林广场视频笔记/A2/k18 58 被动态：分状态被动和过程被动.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/比较从句.md",
-    "2026-10-20.md",
-    "Marginnote/Deutsch.md",
     "Marginnote/Deutsch.canvas",
     "assets/a07fa0503835fcf8735b4e8c1bd1b764.png",
     "assets/6876e39d191041386e92505682df87da.png",
     "assets/1c0e0df5815df94d34e737ce66b8a4cc.png",
     "assets/c3cba23a39be6f38997a6539a13ee427.png",
     "assets/4c389541f6709ef93de46f5820a31b76.png",
-    "assets/0f19b210f461c017d43ea73465d1fec0.png",
     "Marginnote/错题管理.canvas",
-    "Marginnote",
-    "思想思维心理哲学/阅读/简单逻辑学",
-    "思想思维心理哲学/方法地图.html",
     "思想思维心理哲学/未命名.canvas",
-    "assets/方法地图 1.html",
-    "assets/方法地图.html",
-    "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
-    "语言学习/德语/学习记录日记-技巧/写作知识",
     "思想思维心理哲学/爱情/说话聊天/未命名.canvas",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "网络/简述软路由网络逻辑.canvas",
