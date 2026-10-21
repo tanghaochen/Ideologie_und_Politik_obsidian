@@ -25,9 +25,11 @@
 > “大脑中有一个特定的观念,我称之为“猫”,其对应物是现实存在的猫。但 是,如果我的大脑中另有一个观念“牛头马面”,它就没有对应的现实事物。类似牛 头马面的观念就是主观事实,因为它仅存在于我的大脑中。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=20&annotation=EW4434TG)) |
 > 
 
-## “观念联系事实” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=21&annotation=2S5LESMU)) |
+## “观念联系事实” |
 
-“(1)客观存在的事物;(2)事物在大脑 中的反映;(3)我们为其创造的语言,借之我们才能与他人交流。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=21&annotation=KR7WJQ5B)) |
+“(1)客观存在的事物;
+(2)事物在大脑 中的反映;
+(3)我们为其创造的语言,借之我们才能与他人交流。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=21&annotation=KR7WJQ5B)) |
 
 “就如我们举例中的猫, 我们称之为简单观念。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=21&annotation=MTWUY245)) |
 
@@ -204,7 +206,7 @@
 
 第一步:“害怕是一种情绪......” 第二步:“......促使我们逃避所感知的危险。” 分析 “感觉偏好”是另一个可以用来定义最相近类别的术语。特殊 的不同点恰好可以告诉我们所面临的是何种情绪。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=45&annotation=I36JUXID)) |
 
-## “07 直言命题” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=47&annotation=GQ8UFPVG)) |
+## “07 直言命题”
 
 “就是实例证明。如果我 只是告诉你这个或那个事物是真的,并且希望你仅凭我说的话就接受这 个观点,那么我就不是在说理。我必须对你说明这个或那个事物是真的, 并通过论证让你相信它。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=47&annotation=ERMW42TR)) |
 
@@ -216,7 +218,7 @@
 
 ““芝加哥棒球队是最好的棒球 队。”这是一个直言命题,但它告诉我们的只是讲话者坚定的信念。它描 述了一个主观事实,因为它只是讲话者自己的观点,而不反映任何客观 情况。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=47&annotation=Q5ZYKGXQ)) |
 
-## “08 普遍命题” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=48&annotation=EM472EB8)) |
+## “08 普遍命题”
 
 “普遍命题成立要满足以下条件:(1)它所陈述的 事物是真实的” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=48&annotation=TII2TTFT)) |
 
@@ -230,7 +232,57 @@
 
 “类似“大部分成年人开 车”和“大多数底层人投票给皮特森”同样是特称命题。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=48&annotation=8FMN53JK)) |
 
+# “第 3 章 论证:逻辑学的语言”
 
+“一个逻辑学家不需要亲眼见到或听过大西洋或尼亚加拉大瀑布,他从一滴水中就能推测出 它们存在的可能性。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=53&annotation=XBMU73RN)) |
+
+## “01 建立一个论证” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=54&annotation=NZ6857PL)) |
+![[image-503.png|343x539]]
+“逻辑推理的基本步骤,即推理的过程,就是根据已知正确的第一 个观点,推断出第二个观点,而第二个观点之所以正确,是由于第一 个观点的正确。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=54&annotation=5NBNVUX5)) |
+
+“每 个 论 证 都 由 两 个 基 本 要 素 组 成 —— 两 个 不 同 类 型 的 命 题 : 一 个“前提”和一个“结论”” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=54&annotation=845RXEPS)) |
+
+“前提是一个支持性命题,它是一个论证的起点, 包含着推理的出发点所依靠的基础事实” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=54&annotation=49B7S9WD)) |
+
+“结论是被证明的命题,它在前 提的基础上得出” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=54&annotation=5G2FL9FX)) |
+
+“复杂论证通常包含大量的前提,而且 各前提之间往往相互作用,具有一定的关系。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=54&annotation=EEDEECN6)) |
+
+“失了一颗铁钉,丢了一只马蹄铁;丢了一只马蹄铁,折了一匹战马;折了一匹战 马,损了一位将军;损了一位将军,输了一场战争;输了一场战争,亡了一个帝国。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=54&annotation=7MWZH68K)) |
+
+“论证的上下文就能告诉我们 哪个是前提,哪个是结论,但是这里我们常常给命题附上“逻辑指示词”, 以便分清前提和结论” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=54&annotation=VENHGGK6)) |
+
+“前提来说,常见的逻辑指示词包括“因 为”、“既然”、“由于”,而对结论来说,常见的逻辑指示词包括“因此”、“所 以”、“从而”。还有许多更详细的表述方法” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=54&annotation=TJ46C7BR)) |
+
+## “02 从全称到特称” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=56&annotation=HWPM9JNS)) |
+
+“所有的狗都是食肉的”成立,则“有些狗是 食肉的”必然成立一样” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=56&annotation=Z6ZCDIUL)) |
+
+“假设“所有的狗都是食肉的”这个前提 是正确的,那么无疑结论中“一些狗是食肉的”必然正确。同理可推知第 二个例子中的“一些男性不是妈妈”也必然正确。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=56&annotation=MZ8UMKBE)) |
+
+“果我们知道某个结论是对整个类别成立的,那么它必然对这个类别中 的任何部分都成立” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=56&annotation=US633CA2)) |
+
+## “03 从特称到全称” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=57&annotation=FZQURIR7)) |
+
+“从全称到特称的论证过程确保了结论的必然性,从特称到全称则不 然。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=57&annotation=I52NIUZM)) |
+
+““一些女性是母 亲”是个绝对无误的命题,但是这个前提并不支持“所有的女性都是母 亲”这个结论。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=57&annotation=SQDM4JJ7)) |
+
+“体包含部分,但是部分不 能代表整体。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=57&annotation=X6L529ZV)) |
+
+“这种谬误人们常常避免不了, 所以在面临类似的情况时应加倍小心。以偏概全是人类的某种天性” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=57&annotation=7CEZQ5SA)) |
+
+## 断言
+
+“断言是将谓项附着于主项的观念联结过程。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=58&annotation=VI3DSNQM)) |
+
+““莱瑞尔是经理助理”,在 这个命题中,经理助理是莱瑞尔的谓项。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=58&annotation=IGMSBNM5)) |
+
+“言是将观念聚合并配对的过程,那么测试断言的正确性就 在于聚合在一起的观念是否在实际中相互切合。如果观念在语法上的联 结反映了现实联结中的客观秩序,则这些观念是切合的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=58&annotation=X9YXQFT3)) |
+
+“在命题“麻疹是传染性的”中,传染性是对麻疹所下的断言。这是个正确的断 言,因为主项和谓项相辅相成” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=58&annotation=H8D55H9N)) |
+
+“马克·吐温出生在美国”。“出生在美国”是对马克·吐温的正确断言,因为它反映了 实际情况。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=58&annotation=NCV84H36)) |
 
 
 
