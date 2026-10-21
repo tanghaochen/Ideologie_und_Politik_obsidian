@@ -192,7 +192,43 @@
 
 “最好的工具握在不合 格的人手中,也不会出现最好的结果。请注意:一个合格的主要原因, 即使配上一个劣质的工具,也可以有所成效;但是一个不合格的主要 原因,即便配上一个最好的工具,也永远都达不到目的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=43&annotation=SP6NETXW)) |
 
+## “06 定义术语” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=44&annotation=JS7798BG)) |
 
+“逻辑论述中,避免语义不清和模棱两可最有效的方法就是定义术 语” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=44&annotation=E86929G3)) |
+
+“如“公正”、“美丽”、“智 慧”之类本身就含义模糊的词语,尤其需要清晰界定” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=44&annotation=4AYAVE8M)) |
+
+“逻辑上定义术语的过程分为两步:第一步,将要定义的术语放入 最相近的类别当中;第二步,确定其与同类中其他事物的不同特性。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=44&annotation=TGRCVTLJ)) |
+
+### “害怕 
+
+第一步:“害怕是一种情绪......” 第二步:“......促使我们逃避所感知的危险。” 分析 “感觉偏好”是另一个可以用来定义最相近类别的术语。特殊 的不同点恰好可以告诉我们所面临的是何种情绪。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=45&annotation=I36JUXID)) |
+
+## “07 直言命题” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=47&annotation=GQ8UFPVG)) |
+
+“就是实例证明。如果我 只是告诉你这个或那个事物是真的,并且希望你仅凭我说的话就接受这 个观点,那么我就不是在说理。我必须对你说明这个或那个事物是真的, 并通过论证让你相信它。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=47&annotation=ERMW42TR)) |
+
+“最有效 的论证,其结论都是直言命题,清楚明确地告诉我们事物的真相是什么” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=47&annotation=92HMX42M)) |
+
+““收音机在汽车后座上”。我们明确知道这里说的实际情况是什么。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=47&annotation=29KUYZHK)) |
+
+“如果有人说“收音机可能是在汽车后座上”,或者“可能收音机是在 汽车后座上”,情况马上就变得不确定了。这些就不是直言命题,” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=47&annotation=QC9ZZP8K)) |
+
+““芝加哥棒球队是最好的棒球 队。”这是一个直言命题,但它告诉我们的只是讲话者坚定的信念。它描 述了一个主观事实,因为它只是讲话者自己的观点,而不反映任何客观 情况。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=47&annotation=Q5ZYKGXQ)) |
+
+## “08 普遍命题” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=48&annotation=EM472EB8)) |
+
+“普遍命题成立要满足以下条件:(1)它所陈述的 事物是真实的” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=48&annotation=TII2TTFT)) |
+
+“(2)适用于整个类别。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=48&annotation=9MNJ5YTF)) |
+
+“像“迦太基人既粗鲁又愚蠢”这类表述,都是包括所有的迦 太基人。而当这个观点被质疑时,表述者就可以辩解说,他并没有说所有的迦太基 人都是粗鲁愚蠢的。是的,他确实没有直接说,但他暗示了。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=48&annotation=SZTPIRS4)) |
+
+“普遍命题有两种形式:全称命题和特称命题。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=48&annotation=4Y8EIK3U)) |
+
+“全称肯定命题意味 着“所有的”、“每个”(所有的鲸鱼都是哺乳动物),它肯定了某个类别的 所有事物的某种共性。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=48&annotation=EDWT7REB)) |
+
+“类似“大部分成年人开 车”和“大多数底层人投票给皮特森”同样是特称命题。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=48&annotation=8FMN53JK)) |
 
 
 
