@@ -87,7 +87,8 @@
               "title": "DW简单逻辑学"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -361,11 +362,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "8717ea7cd969dee4",
+  "active": "f1b9e5e0051aebfe",
   "lastOpenFiles": [
+    "思想思维心理哲学/健身/未命名.md",
     "assets/image-501.png",
     "营养学以及养生/平均每天的生活成本.md",
-    "思想思维心理哲学/健身/未命名.md",
     "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/学习记录日记-技巧/写作知识/DW逻辑和论点表达模型.md",
@@ -396,7 +397,6 @@
     "assets/74b4e995d7593dd6766e4dcee70dad75.png",
     "assets/7e7b7ca14158f6cda4c83a598d720a1f.png",
     "assets/fe970cdc28bba4d0f6f1f682b9de5c94.png",
-    "assets/39046175e828ecb903a33036f7167f9d.png",
     "Marginnote/错题管理.canvas",
     "Marginnote/向前向后数学归纳法.md",
     "Diary/2026/20261019.md",
