@@ -31,6 +31,51 @@
         "dimension": 80.47732696897376,
         "children": [
           {
+            "id": "330b54eb6931867c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Marginnote/Wann.-als.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "Wann.-als"
+            }
+          },
+          {
+            "id": "43c40facbcd43583",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Marginnote/介词与格.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "介词与格"
+            }
+          },
+          {
+            "id": "6654fd21c32c734b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·掌握度与出题追踪档案.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "德语从句·掌握度与出题追踪档案"
+            }
+          },
+          {
             "id": "8a6da50acfbf47c5",
             "type": "leaf",
             "state": {
@@ -305,8 +350,30 @@
               "icon": "lucide-archive",
               "title": "添加笔记属性"
             }
+          },
+          {
+            "id": "8e4a4822a9fb95bb",
+            "type": "leaf",
+            "state": {
+              "type": "claudian-view",
+              "state": {
+                "tabWorkspace": {
+                  "version": 1,
+                  "openTabs": [
+                    {
+                      "tabId": "tab-1792596851833-657tsow",
+                      "conversationId": "conv-1792596869893-4tjovc1i5"
+                    }
+                  ],
+                  "activeTabId": "tab-1792596851833-657tsow"
+                }
+              },
+              "icon": "bot",
+              "title": "Claudian"
+            }
           }
-        ]
+        ],
+        "currentTab": 10
       },
       {
         "id": "28e75bfc7e894da7",
@@ -388,13 +455,18 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "8a6da50acfbf47c5",
+  "active": "8e4a4822a9fb95bb",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·掌握度与出题追踪档案.md.tmp.37316.e0ace04ce4d6",
+    "assets/image-502.png",
+    "Marginnote/介词与格.md",
+    "Marginnote/Wann.-als.md",
+    "assets/d73c77f1af29fa87c5f8b1e1bc9edf5f.png",
+    "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句  出题范围规范.md",
+    "assets/ff6732a08ad9fefe4b60e273954e2923.png",
     "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·掌握度与出题追踪档案.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·掌握度与出题追踪档案.md.tmp.37316.e0ace04ce4d6",
     "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句·掌握度与出题追踪档案.md.tmp.37316.aa5d44be36bb",
     "语言学习/德语/公共知识语法/从句.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句  出题范围规范.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/题目",
     "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md",
     "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
@@ -403,7 +475,6 @@
     "assets/PixPin_2026-05-21_16-17-10.png",
     "assets/image-501.png",
     "语言学习/德语/学习记录日记-技巧/写作知识/DW逻辑和论点表达模型.md",
-    "Marginnote/介词与格.md",
     "Marginnote/14-冠词-定冠词-不定.md",
     "Marginnote/数学归纳法-Mathem.md",
     "语言学习/德语/学习记录日记-技巧/写作知识/所以写作论点，词汇、格式、模板、句子.md",
@@ -420,15 +491,12 @@
     "2026-10-20.md",
     "Marginnote/Deutsch.md",
     "Marginnote/Deutsch.canvas",
-    "Marginnote/向前向后数学归纳法 1.md",
     "assets/a07fa0503835fcf8735b4e8c1bd1b764.png",
     "assets/6876e39d191041386e92505682df87da.png",
     "assets/1c0e0df5815df94d34e737ce66b8a4cc.png",
     "assets/c3cba23a39be6f38997a6539a13ee427.png",
     "assets/4c389541f6709ef93de46f5820a31b76.png",
     "assets/0f19b210f461c017d43ea73465d1fec0.png",
-    "assets/74b4e995d7593dd6766e4dcee70dad75.png",
-    "assets/7e7b7ca14158f6cda4c83a598d720a1f.png",
     "Marginnote/错题管理.canvas",
     "Marginnote",
     "思想思维心理哲学/阅读/简单逻辑学",
@@ -438,7 +506,6 @@
     "assets/方法地图.html",
     "语言学习/德语/教材/其他/德语语法 活学活用 A1-B1.pdf",
     "语言学习/德语/学习记录日记-技巧/写作知识",
-    "电脑、软件、系统/创业项目/电商",
     "思想思维心理哲学/爱情/说话聊天/未命名.canvas",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "网络/简述软路由网络逻辑.canvas",

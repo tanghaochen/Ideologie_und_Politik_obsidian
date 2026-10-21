@@ -48,6 +48,71 @@
   },
   "packets": [
     {
+      "id": "ostracon-mvi9zmqr-nhwbuy",
+      "packet": {
+        "version": 1,
+        "id": "ostracon-mvi9zmqr-nhwbuy",
+        "status": "sent",
+        "transport": "ws",
+        "createdAt": "2026-10-21T15:37:12.675Z",
+        "updatedAt": "2026-10-21T15:32:15.520Z",
+        "source": {
+          "platform": "MarginNote",
+          "title": "选中卡片",
+          "url": ""
+        },
+        "summary": "",
+        "tags": [],
+        "objects": [
+          {
+            "id": "7A4768EA-CDA5-4BB7-B4D3-1F58FBA5E20D",
+            "kind": "Card",
+            "title": "Wann. als",
+            "comment": "",
+            "sourceAnchor": "marginnote4app://note/7A4768EA-CDA5-4BB7-B4D3-1F58FBA5E20D",
+            "hasImage": true,
+            "hasHandwriting": false
+          }
+        ],
+        "relations": [],
+        "notes": "# Wann. als [<img src=\"https://www.marginnote.com.cn/assets/logo.png\" width=\"20\">](marginnote4app://note/7A4768EA-CDA5-4BB7-B4D3-1F58FBA5E20D)\n\n![excerpt](../assets/d73c77f1af29fa87c5f8b1e1bc9edf5f.png)\n",
+        "format": "markdown",
+        "fileName": "Wann.-als",
+        "destination": {
+          "platform": "Obsidian",
+          "vault": "",
+          "folder": "Inbox"
+        }
+      },
+      "summary": {
+        "id": "ostracon-mvi9zmqr-nhwbuy",
+        "version": 1,
+        "status": "sent",
+        "sourceTitle": "选中卡片",
+        "objectCount": 1,
+        "tags": [],
+        "firstObjectKind": "Card",
+        "destination": {
+          "platform": "Obsidian",
+          "vault": "",
+          "folder": "Inbox"
+        }
+      },
+      "filePath": "Marginnote/Wann.-als.md",
+      "source": {
+        "platform": "MarginNote",
+        "title": "选中卡片",
+        "url": ""
+      },
+      "tags": [],
+      "receivedAt": "2026-10-21T15:32:15.520Z",
+      "transport": "ws",
+      "requestId": "command-mvi9zmqs-2vlewp",
+      "clientId": "mn-client-mvfe444u-o8kr4z",
+      "messageType": "command",
+      "version": 1
+    },
+    {
       "id": "ostracon-mvfgll8h-86y5os",
       "packet": {
         "version": 1,
@@ -9668,6 +9733,12 @@
     }
   ],
   "logs": [
+    {
+      "id": "log-mvi9t9ho-a4c987716d53",
+      "level": "info",
+      "message": "ingested packet ostracon-mvi9zmqr-nhwbuy",
+      "at": "2026-10-21T15:32:15.564Z"
+    },
     {
       "id": "log-mvgvrxqo-d40a0aa48c81",
       "level": "warn",
