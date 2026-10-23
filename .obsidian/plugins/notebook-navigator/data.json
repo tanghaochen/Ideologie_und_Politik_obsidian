@@ -227,7 +227,7 @@
   "showAllPropertiesFolder": true,
   "scopePropertiesToCurrentContext": false,
   "defaultListMode": "compact",
-  "includeDescendantNotes": false,
+  "includeDescendantNotes": true,
   "defaultFolderSort": "modified-desc",
   "defaultFolderSortPropertyKey": "",
   "propertySortKey": "",
@@ -565,7 +565,8 @@
       "option": "property-asc",
       "propertyKey": "sort_index"
     },
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch": "created-desc"
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch": "created-desc",
+    "语言学习/德语/公共知识语法/2动词/❌": "created-desc"
   },
   "folderTreeSortOverrides": {},
   "folderAppearances": {
@@ -574,6 +575,9 @@
     },
     "Diary/2026": {
       "previewRows": 1
+    },
+    "语言学习/德语/公共知识语法/2动词/❌": {
+      "groupBy": "folder"
     }
   },
   "tagIcons": {},

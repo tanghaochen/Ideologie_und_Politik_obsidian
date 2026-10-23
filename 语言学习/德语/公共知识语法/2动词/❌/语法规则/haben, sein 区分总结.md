@@ -41,28 +41,47 @@ Die Rechnung ist bis Freitag zu bezahlen. → Sie haben die Rechnung bis Freitag
 
 ^r 9948 u
 
-## sein 的六种身份
+## sein 的六种身份 发生
 
-| # | 功能 | 标志 | 例句 |
-|---|---|---|---|
-| 1 | 系动词（Kopula） | + 名词/形容词 | Er **ist** Lehrer.（他是老师。） |
-| 2 | 完成时助动词 | + Partizip II（位置/状态改变动词） | Er **ist** gekommen.（他来了。） |
-| 3 | 状态被动（Zustandspassiv） | + Partizip II（及物动词，无 worden） | Die Tür **ist** geöffnet.（门是开着的。） |
-| 4 | 过程被动的完成时 | + Partizip II + **worden** | Die Tür **ist** geöffnet **worden**.（门被打开了。） |
-| 5 | 情态被动替代式 | + **zu** + Inf | Die Tür **ist** zu öffnen.（门须打开。） |
-| 6 | 进行体（口语，Rheinische Verlaufsform） | + am/beim/dabei + Inf | Ich **bin** am Arbeiten.（我正在工作。） |
+| #   | 功能                              | 标志                           | 例句                                           |
+| --- | ------------------------------- | ---------------------------- | -------------------------------------------- |
+| 1   | 系动词（Kopula）                     | + 名词/形容词                     | Er **ist** Lehrer.（他是老师。）                    |
+| 2   | 完成时助动词                          | + Partizip II（位置/状态改变动词）     | Er **ist** gekommen.（他来了。）                   |
+| 3   | 状态被动（Zustandspassiv）            | + Partizip II（及物动词，无 worden） | Die Tür **ist** geöffnet.（门是开着的。）            |
+| 4   | 过程被动的完成时                        | + Partizip II + **worden**   | Die Tür **ist** geöffnet **worden**.（门被打开了。） |
+| 5   | 情态被动替代式                         | + **zu** + Inf               | Die Tür **ist** zu öffnen.（门须打开。）            |
+| 6   | 进行体（口语，Rheinische Verlaufsform） | + am/beim/dabei + Inf        | Ich **bin** am Arbeiten.（我正在工作。）             |
 
 **第 3 / 4 / 2 三项的区分是阅读理解的关键：有 worden 就是动作被动，没有 worden 且动词及物就是状态，动词不及物才是完成时。**
 
-## haben 的五种身份
+## haben 的五种身份 完成
 
-| # | 功能 | 标志 | 例句 |
-|---|---|---|---|
-| 1 | 实义动词"有" | + 第四格宾语 | Ich **habe** Zeit.（我有时间。） |
-| 2 | 完成时助动词 | + Partizip II | Ich **habe** gearbeitet.（我工作了。） |
-| 3 | 情态主动替代式 | + **zu** + Inf | Du **hast** zu gehorchen.（你必须服从。） |
-| 4 | 状态持有 | + 第四格 + Partizip II／方位不定式 | Ich **habe** das Auto geparkt / das Geld auf dem Konto liegen.（车我停好了／钱存在账上。） |
-| 5 | 存在义（南德/奥地利口语） | es hat = es gibt | **Es hat** heute Schnee.（今天有雪。） |
+| #   | 功能            | 标志                                        | 例句                                                                           |
+| --- | ------------- | ----------------------------------------- | ---------------------------------------------------------------------------- |
+| 1   | 实义动词"有"       | + 第四格宾语                                   | Ich **habe** Zeit.（我有时间。）                                                    |
+| 2   | 完成时助动词        | + Partizip II(状态完成可能和上面表格用法有些相似，可以看下面的说明) | Ich **habe** gearbeitet.（我工作了。）                                              |
+| 3   | 情态主动替代式       | + **zu** + Inf                            | Du **hast** zu gehorchen.（你必须服从。）                                            |
+| 4   | 状态持有          | + 第四格 + Partizip II／方位不定式                 | Ich **habe** das Auto geparkt / das Geld auf dem Konto liegen.（车我停好了／钱存在账上。） |
+| 5   | 存在义（南德/奥地利口语） | es hat = es gibt                          | **Es hat** heute Schnee.（今天有雪。）                                              |
+
+#### 区分同时存在于两个表格的完成时被动和状态持有
+
+| 例句                               | 判断依据                    | 这是什么     | 意思     |
+| -------------------------------- | ----------------------- | -------- | ------ |
+| **Ich habe das Auto geparkt.**   | 中间有第四格 **das Auto**     | 状态持有，主动  | 车我停好了。 |
+| **Das Auto ist geparkt worden.** | 分词后有 **worden**         | 过程被动的完成时 | 车被停了。  |
+| **Das Auto ist geparkt.**        | 无第四格、无 **worden**、动词及物  | 状态被动     | 车是停着的。 |
+| **Er ist gekommen.**             | 无第四格、无 **worden**、动词不及物 | 主动完成时    | 他来了。   |
+
+
+| 句子                        | 动词           | 动词性质      | 助动词       | 为什么                | 身份    |
+| ------------------------- | ------------ | --------- | --------- | ------------------ | ----- |
+| Ich **habe** gearbeitet.  | **arbeiten** | 不及物、纯活动   | **haben** | 只有“做事”，没有位移和变化     | 主动完成时 |
+| Er **ist** gekommen.      | **kommen**   | 不及物、位移到某处 | **sein**  | 主语换了位置             | 主动完成时 |
+| Die Tür **ist** geöffnet. | **öffnen**   | 及物        | **sein**  | 能还原出第四格宾语和施动者，是被处置 | 状态被动  |
+
+arbeiten 不也是“从没工作到工作”的过渡吗，为什么不用 sein？
+![[file-20261024003127497.png]]
 
 ---
 
@@ -124,17 +143,13 @@ Die Rechnung ist bis Freitag zu bezahlen. → Sie haben die Rechnung bis Freitag
 
 ### 5. 反例（用来打掉今天最可能长出来的两条伪规律）
 
-**伪规律 1："三格动词用 sein"**
-- 反例① `Er **hat** mir geholfen.`（helfen，三格，haben）
-- 反例② `Das Buch **hat** mir gehört.`（gehören，三格，haben）
-- 反例③ 今天这题 b) `Das Konzert **hat** mir gefallen.`
-
-**伪规律 2："运动动词全用 sein"**
-- 反例① `Ich **habe** eine Stunde geschwommen.`（无终点）
-- 反例② `Er **hat** das Pferd geritten.`（及物化）
-
-**伪规律 3："sich 只是装饰，看意思定"**
-- 反例：`Der Unfall **ist** passiert.`（无 sich，sein）vs. `Der Unfall **hat** sich ereignet.`（有 sich，haben）——**同义却不同助动词，唯一的差别就是那个 sich**。这一组反例直接证明：形式规则可以压倒语义。
+| 不可靠口诀           | 真实的德语（正确）（可以推翻口诀的例子）                                           | 这句怎么推翻口诀                     | 该记的结论           |
+| --------------- | -------------------------------------------------------------- | ---------------------------- | --------------- |
+| 三格动词用 **sein**  | Er **hat** mir geholfen.                                       | 有第三格 **mir**，助动词却是 **haben** | 三格不决定助动词        |
+| 三格动词用 **sein**  | Das Buch **hat** mir gehört.                                   | 同上                           | 同上              |
+| 运动动词全用 **sein** | Ich **habe** eine Stunde geschwommen.                          | 是运动动词，却配 **haben**           | 看有没有终点          |
+| 运动动词全用 **sein** | Er **hat** das Pferd geritten.                                 | 是运动动词，却配 **haben**           | 及物化就归 **haben** |
+| **sich** 只是装饰   | Der Unfall **ist** passiert.／Der Unfall **hat** sich ereignet. | 意思相同，助动词不同，差别只在 **sich**     | **sich** 是硬标志   |
 
 ### 6. 一句话口诀
 
