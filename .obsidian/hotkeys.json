@@ -311,5 +311,17 @@
       ],
       "key": "F11"
     }
-  ]
+  ],
+  "darlal-switcher-plus:switcher-plus:open-commands": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "P"
+    }
+  ],
+  "command-palette:open": [],
+  "file-explorer:new-file-in-new-pane": [],
+  "easy-typing-obsidian:easy-typing-format-selection": [],
+  "easy-typing-obsidian:easy-typing-toggle-comment": []
 }

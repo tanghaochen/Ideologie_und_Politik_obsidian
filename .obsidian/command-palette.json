@@ -1,5 +1,6 @@
 {
   "pinned": [
-    "quickadd:choice:d9c23104-7030-4520-81bb-15b0f0d95601"
+    "quickadd:choice:d9c23104-7030-4520-81bb-15b0f0d95601",
+    "workspaces:save-and-load"
   ]
 }
