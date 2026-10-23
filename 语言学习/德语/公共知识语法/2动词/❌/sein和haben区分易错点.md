@@ -243,7 +243,7 @@ d) **gewesen zu sein**（sein 的完成不定式带 zu）
 
 ### 8
 
-![[file-20261023205648181.png]]
+
 a) Die Anträge **sind** bis Montag **einzureichen**.（被动，主语是受动者）
 b) Sie **haben** die Anträge bis Montag **einzureichen**.（主动，主语是施动者）
 c) Dieser Fehler **ist** nicht mehr **zu korrigieren**.（可能义，触发词 nicht）
