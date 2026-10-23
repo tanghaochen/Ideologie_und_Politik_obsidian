@@ -71,6 +71,8 @@ b) Er ___ mit dem Wagen nach Hamburg gefahren.
 c) Ich ___ zwei Stunden geschwommen.
 d) Ich ___ ans andere Ufer geschwommen.
 
+hat, ist, bin bin
+
 **2.** 改错（每句一处）：
 a) Ich bin mich auf das Sofa gesetzt.
 b) Der Film ist um acht Uhr angefangen.
@@ -82,6 +84,11 @@ a) Gestern ___ ich einem alten Freund begegnet.
 b) Das Konzert ___ mir sehr gut gefallen.
 c) Mir ___ gerade eine gute Idee eingefallen.
 d) Der Unfall ___ sich am Bahnübergang ereignet.
+
+hate
+ist
+hate
+hate
 
 **4.** 判断并填空，注意第四格是否为真宾语：
 a) Wir ___ den ganzen Weg zu Fuß gegangen.
@@ -115,6 +122,8 @@ a) Die Anträge müssen bis Montag eingereicht werden.
 b) Sie müssen die Anträge bis Montag einreichen.
 c) Dieser Fehler kann nicht mehr korrigiert werden.
 d) Der Student muss die Bibliotheksordnung beachten.
+
+
 
 **9.** 反向改写成带情态动词的句子：
 a) Diese Frage ist nur schwer zu beantworten.
