@@ -1121,7 +1121,7 @@
   },
   "语言学习/德语/公共知识语法/2动词/❌/sein和haben区分易错点.md": {
     "scrollState": {
-      "top": 9108,
+      "top": 9348,
       "left": 0,
       "clientHeight": 1516,
       "clientWidth": 939,
@@ -1130,12 +1130,12 @@
     },
     "cursor": {
       "from": {
-        "ch": 31,
-        "line": 245
+        "ch": 0,
+        "line": 257
       },
       "to": {
-        "ch": 31,
-        "line": 245
+        "ch": 0,
+        "line": 252
       }
     }
   },
@@ -2456,6 +2456,26 @@
       "to": {
         "ch": 0,
         "line": 40
+      }
+    }
+  },
+  "思想思维心理哲学/日常记录总结/AI时代，人与人之间还剩下什么.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1516,
+      "clientWidth": 939,
+      "height": 1516,
+      "width": 951
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 3
+      },
+      "to": {
+        "ch": 0,
+        "line": 3
       }
     }
   }
