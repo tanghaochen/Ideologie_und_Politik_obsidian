@@ -285,10 +285,46 @@
 “马克·吐温出生在美国”。“出生在美国”是对马克·吐温的正确断言,因为它反映了 实际情况。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=58&annotation=NCV84H36)) |
 
 
+## “05 否定命题” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=59&annotation=5AWIE5GJ)) |
+
+“否定命题 则相反。全称性否定命题完全隔断观念之间的联结” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=59&annotation=4XN9F2IW)) |
+
+“当我们运用逻辑语言讨论一个命题的性质时,我们 所说的就是它是肯定的还是否定的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=59&annotation=7KIC5DPW)) |
+
+“切尼没有当过美国总统”是真 的,“华盛顿不是美国的首都”是假的” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=59&annotation=G8M836CH)) |
+
+“在其他条件相同的情况下,如果肯定命题和否定命题都能同样清晰 地说明同一个事物,最好是选择肯定结构的命题” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=59&annotation=6DJCJ6M6)) |
+
+“肯定命题更加直接有力,这是所有肯定命题 的共同特征。因为它强调的是这个东西是什么,与强调这个东西不是什 么相比,它传递的是正面的结果。否定命题则会引导我们去思考命题的 反面是什么。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=59&annotation=63NX2TCD)) |
+
+“否定命题可被有效应用于纠正假的命题。“不是所有的艺术家都是神经 病”和“所有的艺术家都不是神经病”,两者都是对“所有的艺术家都是神经病”的反 驳。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=60&annotation=5VQGLUB6)) |
+
+““这是个白痴的决定”是个清 晰明了的命题,但很生硬,过于直接粗暴。如果我们换成“这个决定可能 不是最谨慎的”,就不那么伤人” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=60&annotation=2BNIBQRQ)) |
+
+## “比较” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=61&annotation=HY9ZS5YP)) |
+
+“当我们比较两个事物时就会发现它们或者完全相似,或者截然不 同,或者部分相似。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=61&annotation=5R3DME6M)) |
+
+“如果从字面上来说两个事物是完全相同的,那么它们只能 是一个事物。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=62&annotation=XWKUR66L)) |
+
+“如果将 A 与 B 相比,可以得出 B 与 A 完全不 同的结论的话,那么我们只能确定事物 A,因为 B 是根本不存在的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=62&annotation=KMQYR32Z)) |
+
+“一个主要特性被遗漏,那么即使有大量相似的其他特性,也不 能作出可靠的比较结论。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=62&annotation=I9Y9PX2G)) |
+
+“没见过大象的听众,启发他的第一步就 是要来比较这两个动物。我告诉他这两个动物都是四条腿、两只眼睛、两只耳朵、一 张嘴、一条舌头、一条尾巴、一个心脏,等等,这些都是重要特性。但是在我的叙述 中,我没有提到两者最显著的对比因素:体型。我遗漏了一个极其重要的特性。如果 听众由此得出老鼠和大象非常相似的结论,显然是可笑的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=62&annotation=6NJ4FQA8)) |
 
 
+## “7 比较和论证” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=63&annotation=TXX4FNSW)) |
 
+“过仔细观察,我列出了它们共有特性的详细清单。通过论 证,我的结论是:“A 和 B 非常相似。”论证的前提是我观察到的 A、B 共有 的特性:“因为 A 和 B 共享特性 X,因为 A 和 B 共享特性 Y”,等等。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=63&annotation=88EN2NEQ)) |
 
+“假设 A 是一个历史事件,比如说是越南战争, B 代表未来所要发生的一个事件,比如说是目前美国政府正在筹备的一 项行动,我的任务是使你相信如果政府发动了这一行动,它将重蹈越南 战争的覆辙。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=63&annotation=9X9AGB8I)) |
+
+“论证概要” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=63&annotation=TDT5XSTC)) |
+
+“A 具有特性 R、S、T、U、V、W、X 和 Y。 B 具有特性 R、S、T、U、V、W、X 和 Y。 A 具有特性 Z。 所以,B 也具有特性 Z。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=63&annotation=FA2L7N4J)) |
+
+“分析 这个结论不是必然的,但是它是极有可能的” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=64&annotation=H8E28SNF)) |
 
 
 
