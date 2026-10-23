@@ -76,7 +76,8 @@
               "title": "sein和haben区分易错点"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -372,7 +373,7 @@
       "obsidian-local-images-plus:Local Images Plus  0.17.1\r\nLocalize attachments (plugin folder)": false
     }
   },
-  "active": "0de0af66c9200784",
+  "active": "9518e494cb24d19b",
   "lastOpenFiles": [
     "语言学习/德语/公共知识语法/2动词/❌/未命名.md",
     "语言学习/德语/公共知识语法/2动词/❌/sein和haben区分易错点.md",
