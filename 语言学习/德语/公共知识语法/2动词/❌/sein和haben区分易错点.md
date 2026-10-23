@@ -97,7 +97,12 @@ c) Er ___ die Liste dreimal durchgegangen.
 d) Er ___ seine Erkältung endlich losgeworden.
 e) Sie ___ früher viel Ski gefahren.
 f) Sie ___ ihren neuen Wagen selbst nach Italien gefahren.
-
+sein
+sein
+hate
+ist
+hate
+ist
 ### B 组：情态动词与替代不定式
 
 **5.** 把括号里的句子改成完成时：

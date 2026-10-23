@@ -6169,6 +6169,10 @@ var OPENAI_VOICES = [
   { id: "sage", label: "Sage (Calm)", lang: "en-US" },
   { id: "shimmer", label: "Shimmer (Soft)", lang: "en-US" }
 ];
+var OPENAI_COMPAT_FORMATS = [
+  { id: "mp3", label: "MP3 (recommended)" },
+  { id: "wav", label: "WAV" }
+];
 var MINIMAX_REGIONS = [
   { id: "api.minimax.io", label: "Global (api.minimax.io)" },
   { id: "api.minimaxi.chat", label: "Mainland China (api.minimaxi.chat)" }
@@ -6226,6 +6230,13 @@ var DEFAULT_SETTINGS = {
   OPENAI_API_KEY: "",
   OPENAI_VOICE: "alloy",
   OPENAI_MODEL: "gpt-4o-mini-tts",
+  OPENAI_COMPAT_BASE_URL: "",
+  OPENAI_COMPAT_API_KEY: "",
+  OPENAI_COMPAT_MODEL: "",
+  OPENAI_COMPAT_VOICE: "alloy",
+  OPENAI_COMPAT_FORMAT: "mp3",
+  OPENAI_COMPAT_CUSTOM_MODELS: "",
+  OPENAI_COMPAT_CUSTOM_VOICES: "",
   MINIMAX_API_KEY: "",
   MINIMAX_GROUP_ID: "",
   MINIMAX_VOICE: "Wise_Woman",
@@ -6251,7 +6262,7 @@ var DEFAULT_SETTINGS = {
 };
 
 // src/settings/VoiceSettingTab.ts
-var import_obsidian6 = require("obsidian");
+var import_obsidian7 = require("obsidian");
 
 // node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js
 function setCredentialFeature(credentials, feature, value2) {
@@ -13383,12 +13394,119 @@ var AzureSpeechService = class extends BaseSpeechService {
 
 // src/service/OpenAiSpeechService.ts
 var import_obsidian4 = require("obsidian");
+
+// src/utils/audioFormat.ts
+var AUDIO_EXTENSIONS = ["mp3", "wav"];
+var MIME_BY_EXTENSION = {
+  mp3: "audio/mpeg",
+  wav: "audio/wav"
+};
+function isAudioExtension(extension2) {
+  return AUDIO_EXTENSIONS.includes(
+    extension2.toLowerCase()
+  );
+}
+function isAudioPath(path2) {
+  const dot = path2.lastIndexOf(".");
+  return dot !== -1 && isAudioExtension(path2.slice(dot + 1));
+}
+function stripAudioExtension(name) {
+  return name.replace(/\.(mp3|wav)$/i, "");
+}
+function mimeForAudioExtension(extension2) {
+  return MIME_BY_EXTENSION[extension2];
+}
+function audioExtensionForMime(mime) {
+  const type = mime.toLowerCase();
+  return type.includes("wav") || type.includes("wave") ? "wav" : "mp3";
+}
+function isWavBuffer(buffer) {
+  if (buffer.byteLength < 12) {
+    return false;
+  }
+  const bytes = new Uint8Array(buffer, 0, 12);
+  return ascii(bytes, 0, 4) === "RIFF" && ascii(bytes, 8, 4) === "WAVE";
+}
+function concatWavBuffers(buffers) {
+  if (buffers.length === 0) {
+    throw new Error("No WAV data to join");
+  }
+  const parts = buffers.map(parseWav);
+  const format2 = parts[0].format;
+  const dataLength = parts.reduce((sum, part) => sum + part.data.length, 0);
+  const headerLength = 12 + 8 + format2.length + 8;
+  const out = new Uint8Array(headerLength + dataLength);
+  const view = new DataView(out.buffer);
+  writeAscii(out, 0, "RIFF");
+  view.setUint32(4, out.length - 8, true);
+  writeAscii(out, 8, "WAVE");
+  writeAscii(out, 12, "fmt ");
+  view.setUint32(16, format2.length, true);
+  out.set(format2, 20);
+  const dataHeader = 20 + format2.length;
+  writeAscii(out, dataHeader, "data");
+  view.setUint32(dataHeader + 4, dataLength, true);
+  let offset = headerLength;
+  for (const part of parts) {
+    out.set(part.data, offset);
+    offset += part.data.length;
+  }
+  return out.buffer;
+}
+function parseWav(buffer) {
+  if (!isWavBuffer(buffer)) {
+    throw new Error("Audio chunk is not a WAV file");
+  }
+  const bytes = new Uint8Array(buffer);
+  const view = new DataView(buffer);
+  let format2 = null;
+  let offset = 12;
+  while (offset + 8 <= bytes.length) {
+    const id = ascii(bytes, offset, 4);
+    const declared = view.getUint32(offset + 4, true);
+    const bodyStart = offset + 8;
+    const remaining = bytes.length - bodyStart;
+    if (id === "data") {
+      if (!format2) {
+        break;
+      }
+      const size = declared === 0 || declared > remaining ? remaining : declared;
+      return { format: format2, data: bytes.subarray(bodyStart, bodyStart + size) };
+    }
+    if (id === "fmt ") {
+      format2 = bytes.slice(
+        bodyStart,
+        bodyStart + Math.min(declared, remaining)
+      );
+    }
+    offset = bodyStart + declared + declared % 2;
+  }
+  throw new Error("WAV file has no format or data chunk");
+}
+function ascii(bytes, start, length) {
+  let text5 = "";
+  for (let i2 = start; i2 < start + length; i2++) {
+    text5 += String.fromCharCode(bytes[i2]);
+  }
+  return text5;
+}
+function writeAscii(bytes, start, text5) {
+  for (let i2 = 0; i2 < text5.length; i2++) {
+    bytes[start + i2] = text5.charCodeAt(i2);
+  }
+}
+
+// src/service/OpenAiSpeechService.ts
 var OPENAI_BASE_URL = "https://api.openai.com/v1";
 var MAX_CHUNK_CHARS2 = 2e3;
 var OpenAiSpeechService = class extends BaseSpeechService {
   constructor(apiKey, voice, model, speed) {
     super(voice, speed);
     this.inputFormat = "text";
+    /** Provider name used in error messages. */
+    this.providerLabel = "OpenAI";
+    /** Audio format requested from the speech endpoint. */
+    this.responseFormat = "mp3";
     this.apiKey = apiKey;
     this.model = model || "gpt-4o-mini-tts";
   }
@@ -13399,16 +13517,32 @@ var OpenAiSpeechService = class extends BaseSpeechService {
     this.apiKey = settings.OPENAI_API_KEY;
     this.model = settings.OPENAI_MODEL || "gpt-4o-mini-tts";
   }
+  /** The API root that `/audio/speech` and `/models` are appended to. */
+  baseUrl() {
+    return OPENAI_BASE_URL;
+  }
   /**
-   * Synthesize and play plain text via OpenAI.
+   * Why synthesis cannot start with the current configuration, or null when it
+   * can. OpenAI needs an API key.
+   */
+  configurationError() {
+    return this.apiKey ? null : "Missing OpenAI API key";
+  }
+  /** Request headers carrying the API key, when one is set. */
+  authHeaders() {
+    return this.apiKey ? { Authorization: `Bearer ${this.apiKey}` } : {};
+  }
+  /**
+   * Synthesize and play plain text via the speech endpoint.
    */
   async speak(content3, speed, filePath) {
     var _a3, _b2;
     if (this.isLoading) {
-      throw new Error("OpenAI call already in progress.");
+      throw new Error(`${this.providerLabel} call already in progress.`);
     }
-    if (!this.apiKey) {
-      const error = new Error("Missing OpenAI API key");
+    const configError = this.configurationError();
+    if (configError) {
+      const error = new Error(configError);
       this.reportError(error);
       throw error;
     }
@@ -13420,25 +13554,24 @@ var OpenAiSpeechService = class extends BaseSpeechService {
     try {
       this.reportProgress(0, 1);
       const chunks = chunkPlainText(text5, MAX_CHUNK_CHARS2);
-      const audioBlobs = [];
+      const audioChunks = [];
       for (let i2 = 0; i2 < chunks.length; i2++) {
         if ((_a3 = this.abortController) == null ? void 0 : _a3.signal.aborted) {
           throw new Error("AbortError");
         }
-        const blob = await this.synthesizeChunk(chunks[i2]);
+        const audio = await this.synthesizeChunk(chunks[i2]);
         if ((_b2 = this.abortController) == null ? void 0 : _b2.signal.aborted) {
           throw new Error("AbortError");
         }
-        audioBlobs.push(blob);
+        audioChunks.push(audio);
         this.reportProgress((i2 + 1) / chunks.length * 0.95, 1);
       }
-      const finalBlob = new Blob(audioBlobs, { type: "audio/mpeg" });
-      this.playBlob(finalBlob, speed, filePath);
+      this.playBlob(joinAudioChunks(audioChunks), speed, filePath);
     } catch (error) {
       if (error instanceof Error && error.name === "AbortError") {
         return;
       }
-      console.error("Error in OpenAI speak:", error);
+      console.error(`Error in ${this.providerLabel} speak:`, error);
       this.reportError(error);
       throw error;
     } finally {
@@ -13447,43 +13580,45 @@ var OpenAiSpeechService = class extends BaseSpeechService {
     }
   }
   /**
-   * Synthesize a single text chunk and return the MP3 blob.
+   * Synthesize a single text chunk and return its audio bytes.
    */
   async synthesizeChunk(text5) {
-    var _a3, _b2;
     const response = await (0, import_obsidian4.requestUrl)({
-      url: `${OPENAI_BASE_URL}/audio/speech`,
+      url: `${this.baseUrl()}/audio/speech`,
       method: "POST",
       headers: {
-        Authorization: `Bearer ${this.apiKey}`,
+        ...this.authHeaders(),
         "Content-Type": "application/json",
-        Accept: "audio/mpeg"
+        Accept: mimeForAudioExtension(this.responseFormat)
       },
       body: JSON.stringify({
-        model: this.model,
+        // Omitted when empty: some compatible servers have a single model and
+        // reject an empty id, but accept a request without one.
+        ...this.model ? { model: this.model } : {},
         input: text5,
         voice: this.voice,
-        response_format: "mp3"
+        response_format: this.responseFormat
       }),
       throw: false
     });
+    const label = this.providerLabel;
     if (response.status === 401) {
-      throw new Error("OpenAI: invalid or expired API key (401)");
+      throw new Error(`${label}: invalid or expired API key (401)`);
     }
     if (response.status === 429) {
-      throw new Error("OpenAI: rate limit or quota reached (429)");
+      throw new Error(`${label}: rate limit or quota reached (429)`);
     }
     if (response.status >= 400) {
-      const message = (_b2 = (_a3 = response.json) == null ? void 0 : _a3.error) == null ? void 0 : _b2.message;
+      const message = errorMessageFrom(response);
       throw new Error(
-        `OpenAI API error (HTTP ${response.status})${message ? `: ${message}` : ""}`
+        `${label} API error (HTTP ${response.status})${message ? `: ${message}` : ""}`
       );
     }
     const arrayBuffer = response.arrayBuffer;
     if (!arrayBuffer || arrayBuffer.byteLength === 0) {
-      throw new Error("OpenAI returned an empty audio response");
+      throw new Error(`${label} returned an empty audio response`);
     }
-    return new Blob([arrayBuffer], { type: "audio/mpeg" });
+    return arrayBuffer;
   }
   /**
    * Validate the API key. OpenAI has no list-voices endpoint, so we probe the
@@ -13496,9 +13631,9 @@ var OpenAiSpeechService = class extends BaseSpeechService {
     }
     try {
       const response = await (0, import_obsidian4.requestUrl)({
-        url: `${OPENAI_BASE_URL}/models`,
+        url: `${this.baseUrl()}/models`,
         method: "GET",
-        headers: { Authorization: `Bearer ${this.apiKey}` },
+        headers: this.authHeaders(),
         throw: false
       });
       if (response.status === 200) {
@@ -13542,9 +13677,322 @@ var OpenAiSpeechService = class extends BaseSpeechService {
     return "OpenAI error. Please try again.";
   }
 };
+function joinAudioChunks(chunks) {
+  if (chunks.length > 0 && isWavBuffer(chunks[0])) {
+    return new Blob([concatWavBuffers(chunks)], {
+      type: mimeForAudioExtension("wav")
+    });
+  }
+  return new Blob(chunks, { type: mimeForAudioExtension("mp3") });
+}
+function errorMessageFrom(response) {
+  var _a3;
+  try {
+    const body = response.json;
+    if (typeof (body == null ? void 0 : body.error) === "string") {
+      return body.error;
+    }
+    if (typeof ((_a3 = body == null ? void 0 : body.error) == null ? void 0 : _a3.message) === "string") {
+      return body.error.message;
+    }
+    if (typeof (body == null ? void 0 : body.detail) === "string") {
+      return body.detail;
+    }
+  } catch (e2) {
+  }
+  return "";
+}
+
+// src/service/OpenAiCompatibleSpeechService.ts
+var import_obsidian5 = require("obsidian");
+
+// src/service/openAiCompatible.ts
+var VOICE_LIST_PATHS = [
+  "/audio/voices",
+  "/audio/speech/voices",
+  "/voices"
+];
+var CUSTOM_VOICE_GROUP = "Added by you";
+var SERVER_VOICE_GROUP = "Server voices";
+function normalizeBaseUrl(raw) {
+  const trimmed = raw.trim().replace(/\/+$/, "");
+  if (!/^https?:\/\/[^/\s]+/i.test(trimmed)) {
+    return null;
+  }
+  return trimmed;
+}
+function parseListInput(raw) {
+  const seen = /* @__PURE__ */ new Set();
+  const items = [];
+  for (const part of raw.split(/[,\n]/)) {
+    const item = part.trim();
+    if (item && !seen.has(item)) {
+      seen.add(item);
+      items.push(item);
+    }
+  }
+  return items;
+}
+function looksLikeSpeechModel(id) {
+  return /tts|speech|voice|audio|kokoro|piper|xtts|voxtral/i.test(id);
+}
+function parseModelList(json) {
+  var _a3, _b2;
+  const entries = listEntries(json, ["data", "models"]);
+  const models = [];
+  const seen = /* @__PURE__ */ new Set();
+  for (const entry of entries) {
+    const raw = typeof entry === "string" ? { id: entry } : entry;
+    const id = typeof (raw == null ? void 0 : raw.id) === "string" ? raw.id.trim() : "";
+    if (!id || seen.has(id)) {
+      continue;
+    }
+    seen.add(id);
+    const modalities = (_b2 = (_a3 = raw.architecture) == null ? void 0 : _a3.output_modalities) != null ? _b2 : raw.output_modalities;
+    const audio = Array.isArray(modalities) ? modalities.some((m) => /audio|speech/i.test(String(m))) : null;
+    models.push({ id, audio });
+  }
+  const declared = models.some((m) => m.audio !== null);
+  const kept = declared ? models.filter((m) => m.audio === true) : models;
+  const collator = new Intl.Collator(void 0, { numeric: true });
+  return kept.map((m) => m.id).sort((a2, b2) => {
+    const speechFirst = Number(looksLikeSpeechModel(b2)) - Number(looksLikeSpeechModel(a2));
+    return speechFirst !== 0 ? speechFirst : collator.compare(a2, b2);
+  });
+}
+function countModelEntries(json) {
+  let count = 0;
+  const seen = /* @__PURE__ */ new Set();
+  for (const entry of listEntries(json, ["data", "models"])) {
+    const raw = typeof entry === "string" ? { id: entry } : entry;
+    const id = typeof (raw == null ? void 0 : raw.id) === "string" ? raw.id.trim() : "";
+    if (id && !seen.has(id)) {
+      seen.add(id);
+      count++;
+    }
+  }
+  return count;
+}
+function reconcileModel(current, serverModels, customModels) {
+  var _a3;
+  const chosen = current.trim();
+  if (chosen && (serverModels.includes(chosen) || customModels.includes(chosen))) {
+    return chosen;
+  }
+  return (_a3 = serverModels[0]) != null ? _a3 : chosen;
+}
+function parseVoiceList(json) {
+  const entries = listEntries(json, ["voices", "data"]);
+  const voices = [];
+  const seen = /* @__PURE__ */ new Set();
+  for (const entry of entries) {
+    const raw = typeof entry === "string" ? { id: entry } : entry;
+    if (!raw || typeof raw !== "object") {
+      continue;
+    }
+    const id = firstString(raw.id, raw.voice_id, raw.ShortName, raw.name);
+    if (!id || seen.has(id)) {
+      continue;
+    }
+    seen.add(id);
+    const name = firstString(raw.label, raw.display_name, raw.name) || id;
+    const gender = firstString(raw.gender);
+    const lang = firstString(raw.lang, raw.language, raw.locale, raw.Locale);
+    voices.push({
+      id,
+      label: gender ? `${name} (${gender})` : name,
+      lang,
+      group: lang ? void 0 : SERVER_VOICE_GROUP
+    });
+  }
+  return voices;
+}
+function mergeVoiceCatalog(serverVoices, customVoiceIds, fallback2) {
+  const known = new Set(serverVoices.map((v) => v.id));
+  const custom = customVoiceIds.filter((id) => !known.has(id)).map((id) => ({ id, label: id, lang: "", group: CUSTOM_VOICE_GROUP }));
+  const merged = [...serverVoices, ...custom];
+  return merged.length > 0 ? merged : fallback2;
+}
+function mergeModelChoices(serverModels, customModels, current) {
+  const all2 = [...serverModels, ...customModels, current].filter(
+    (id) => id.trim() !== ""
+  );
+  return [...new Set(all2)];
+}
+function listEntries(json, keys) {
+  if (Array.isArray(json)) {
+    return json;
+  }
+  if (json && typeof json === "object") {
+    for (const key of keys) {
+      const value2 = json[key];
+      if (Array.isArray(value2)) {
+        return value2;
+      }
+    }
+  }
+  return [];
+}
+function firstString(...values) {
+  for (const value2 of values) {
+    if (typeof value2 === "string" && value2.trim() !== "") {
+      return value2.trim();
+    }
+  }
+  return "";
+}
+
+// src/service/OpenAiCompatibleSpeechService.ts
+var OpenAiCompatibleSpeechService = class extends OpenAiSpeechService {
+  constructor(settings) {
+    super(
+      settings.OPENAI_COMPAT_API_KEY,
+      settings.OPENAI_COMPAT_VOICE,
+      settings.OPENAI_COMPAT_MODEL,
+      Number(settings.SPEED)
+    );
+    this.providerLabel = "OpenAI-compatible server";
+    this.serverUrl = "";
+    this.voiceCatalog = [];
+    this.customVoices = [];
+    this.applySettings(settings);
+  }
+  updateCredentials(settings) {
+    this.applySettings(settings);
+  }
+  applySettings(settings) {
+    var _a3;
+    this.apiKey = settings.OPENAI_COMPAT_API_KEY;
+    this.model = settings.OPENAI_COMPAT_MODEL;
+    this.serverUrl = settings.OPENAI_COMPAT_BASE_URL;
+    this.responseFormat = settings.OPENAI_COMPAT_FORMAT;
+    this.voiceCatalog = (_a3 = settings.openaiCompatVoiceCatalog) != null ? _a3 : [];
+    this.customVoices = parseListInput(settings.OPENAI_COMPAT_CUSTOM_VOICES);
+  }
+  getVoiceOptions() {
+    return mergeVoiceCatalog(
+      this.voiceCatalog,
+      this.customVoices,
+      OPENAI_VOICES
+    );
+  }
+  baseUrl() {
+    var _a3;
+    return (_a3 = normalizeBaseUrl(this.serverUrl)) != null ? _a3 : "";
+  }
+  configurationError() {
+    return normalizeBaseUrl(this.serverUrl) ? null : "Missing server URL";
+  }
+  /**
+   * Check that the server is reachable (and the key accepted), and read its
+   * models and voices. A server without a `/models` endpoint still counts as
+   * valid — only the model list stays empty.
+   */
+  async validateCredentials() {
+    const base = normalizeBaseUrl(this.serverUrl);
+    if (!base) {
+      return {
+        isValid: false,
+        error: "Enter a server URL starting with http:// or https://."
+      };
+    }
+    let models = [];
+    try {
+      const response = await (0, import_obsidian5.requestUrl)({
+        url: `${base}/models`,
+        method: "GET",
+        headers: this.authHeaders(),
+        throw: false
+      });
+      if (response.status === 401 || response.status === 403) {
+        return {
+          isValid: false,
+          error: this.apiKey ? "The server rejected the API key." : "The server requires an API key."
+        };
+      }
+      if (response.status === 200) {
+        const body = safeJson(response);
+        if (countModelEntries(body) === 0) {
+          return {
+            isValid: false,
+            error: "The server answered but listed no models \u2014 is this an OpenAI-compatible endpoint?"
+          };
+        }
+        models = parseModelList(body);
+      } else if (response.status !== 404) {
+        return {
+          isValid: false,
+          error: `The server answered with HTTP ${response.status}. Check the URL.`
+        };
+      }
+    } catch (error) {
+      console.error("OpenAI-compatible server check failed:", error);
+      return {
+        isValid: false,
+        error: "Could not reach the server. Check the URL (localhost only works on this device)."
+      };
+    }
+    const voices = await this.fetchVoices(base);
+    return {
+      isValid: true,
+      voiceCount: voices.length || void 0,
+      voices,
+      models
+    };
+  }
+  /** The first non-empty voice list among the known voice endpoints. */
+  async fetchVoices(base) {
+    for (const path2 of VOICE_LIST_PATHS) {
+      try {
+        const response = await (0, import_obsidian5.requestUrl)({
+          url: `${base}${path2}`,
+          method: "GET",
+          headers: this.authHeaders(),
+          throw: false
+        });
+        if (response.status !== 200) {
+          continue;
+        }
+        const voices = parseVoiceList(safeJson(response));
+        if (voices.length > 0) {
+          return voices;
+        }
+      } catch (e2) {
+      }
+    }
+    return [];
+  }
+  getErrorMessage(error) {
+    const message = error && typeof error === "object" && "message" in error ? String(error.message) : "";
+    if (message.includes("Missing server URL")) {
+      return "Add your server URL in settings.";
+    }
+    if (message.includes("401")) {
+      return "The server rejected the API key.";
+    }
+    if (message.includes("429")) {
+      return "The server's rate limit or quota was reached. Please wait and try again.";
+    }
+    if (message.includes("empty audio")) {
+      return "The server returned no audio. Try a different voice or model.";
+    }
+    if (message.toLowerCase().includes("network")) {
+      return "Could not reach the server. Check the URL and your connection.";
+    }
+    return message ? `Server error: ${message}` : "Server error. Please try again.";
+  }
+};
+function safeJson(response) {
+  var _a3;
+  try {
+    return (_a3 = response.json) != null ? _a3 : null;
+  } catch (e2) {
+    return null;
+  }
+}
 
 // src/service/MiniMaxSpeechService.ts
-var import_obsidian5 = require("obsidian");
+var import_obsidian6 = require("obsidian");
 
 // src/service/minimaxAudio.ts
 function hexToBytes(hex) {
@@ -13688,7 +14136,7 @@ var MiniMaxSpeechService = class extends BaseSpeechService {
    */
   async synthesizeChunk(text5) {
     var _a3;
-    const response = await (0, import_obsidian5.requestUrl)({
+    const response = await (0, import_obsidian6.requestUrl)({
       url: this.endpoint(),
       method: "POST",
       headers: {
@@ -13742,7 +14190,7 @@ var MiniMaxSpeechService = class extends BaseSpeechService {
       };
     }
     try {
-      const response = await (0, import_obsidian5.requestUrl)({
+      const response = await (0, import_obsidian6.requestUrl)({
         url: this.endpoint(),
         method: "POST",
         headers: {
@@ -13841,6 +14289,8 @@ function createSpeechProvider(settings) {
       settings.OPENAI_MODEL,
       Number(settings.SPEED)
     );
+  } else if (settings.TTS_PROVIDER === "openai-compatible") {
+    provider = new OpenAiCompatibleSpeechService(settings);
   } else if (settings.TTS_PROVIDER === "minimax") {
     provider = new MiniMaxSpeechService(
       settings.MINIMAX_API_KEY,
@@ -13869,7 +14319,7 @@ function createSpeechProvider(settings) {
 }
 
 // src/settings/VoiceSettingTab.ts
-var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
+var VoiceSettingTab = class extends import_obsidian7.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
     /**
@@ -13928,6 +14378,7 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
             google: "Google Cloud",
             azure: "Azure Speech",
             openai: "OpenAI",
+            "openai-compatible": "OpenAI-compatible",
             minimax: "MiniMax"
           }
         }
@@ -14087,6 +14538,8 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
       this.displayAzureSettings(containerEl);
     } else if (this.plugin.settings.TTS_PROVIDER === "openai") {
       this.displayOpenAISettings(containerEl);
+    } else if (this.plugin.settings.TTS_PROVIDER === "openai-compatible") {
+      this.displayOpenAiCompatibleSettings(containerEl);
     } else if (this.plugin.settings.TTS_PROVIDER === "minimax") {
       this.displayMiniMaxSettings(containerEl);
     } else {
@@ -14096,18 +14549,18 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
   render() {
     const { containerEl } = this;
     containerEl.empty();
-    new import_obsidian6.Setting(containerEl).setName("Speech Provider").setDesc(
+    new import_obsidian7.Setting(containerEl).setName("Speech Provider").setDesc(
       "Choose which text-to-speech engine to use. AWS Polly, ElevenLabs, and Google Cloud offer the same plugin features; each uses its own credentials and voices."
     ).addDropdown((dropdown) => {
-      dropdown.addOption("polly", "AWS Polly").addOption("elevenlabs", "ElevenLabs").addOption("google", "Google Cloud").addOption("azure", "Azure Speech").addOption("openai", "OpenAI").addOption("minimax", "MiniMax").setValue(this.plugin.settings.TTS_PROVIDER).onChange(async (value2) => {
+      dropdown.addOption("polly", "AWS Polly").addOption("elevenlabs", "ElevenLabs").addOption("google", "Google Cloud").addOption("azure", "Azure Speech").addOption("openai", "OpenAI").addOption("openai-compatible", "OpenAI-compatible").addOption("minimax", "MiniMax").setValue(this.plugin.settings.TTS_PROVIDER).onChange(async (value2) => {
         this.plugin.settings.TTS_PROVIDER = value2;
         await this.plugin.saveSettings();
         this.plugin.reinitializeProvider();
         this.render();
       });
     });
-    new import_obsidian6.Setting(containerEl).setName("Playback").setHeading();
-    const rewindSetting = new import_obsidian6.Setting(containerEl).setName("Rewind interval").setDesc(
+    new import_obsidian7.Setting(containerEl).setName("Playback").setHeading();
+    const rewindSetting = new import_obsidian7.Setting(containerEl).setName("Rewind interval").setDesc(
       `How many seconds the rewind control jumps back (${MIN_SKIP_SECONDS}\u2013${MAX_SKIP_SECONDS}s).`
     );
     let rewindValueEl;
@@ -14123,7 +14576,7 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
       rewindSetting,
       this.formatSecondsValue(this.plugin.settings.rewindSeconds)
     );
-    const forwardSetting = new import_obsidian6.Setting(containerEl).setName("Fast-forward interval").setDesc(
+    const forwardSetting = new import_obsidian7.Setting(containerEl).setName("Fast-forward interval").setDesc(
       `How many seconds the fast-forward control jumps ahead (${MIN_SKIP_SECONDS}\u2013${MAX_SKIP_SECONDS}s).`
     );
     let forwardValueEl;
@@ -14139,16 +14592,16 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
       forwardSetting,
       this.formatSecondsValue(this.plugin.settings.forwardSeconds)
     );
-    new import_obsidian6.Setting(containerEl).setName("Saving audio").setHeading();
-    new import_obsidian6.Setting(containerEl).setName("Save location").setDesc(this.audioSaveLocationDesc());
-    new import_obsidian6.Setting(containerEl).setName("Save automatically").setDesc("Save the MP3 after each playback, without pressing save.").addToggle(
+    new import_obsidian7.Setting(containerEl).setName("Saving audio").setHeading();
+    new import_obsidian7.Setting(containerEl).setName("Save location").setDesc(this.audioSaveLocationDesc());
+    new import_obsidian7.Setting(containerEl).setName("Save automatically").setDesc("Save the MP3 after each playback, without pressing save.").addToggle(
       (toggle) => toggle.setValue(this.plugin.settings.autoDownloadAudio).onChange(async (value2) => {
         this.plugin.settings.autoDownloadAudio = value2;
         await this.plugin.saveSettings();
       })
     );
-    new import_obsidian6.Setting(containerEl).setName("Player").setHeading();
-    new import_obsidian6.Setting(containerEl).setName("Play the note's saved audio").setDesc(
+    new import_obsidian7.Setting(containerEl).setName("Player").setHeading();
+    new import_obsidian7.Setting(containerEl).setName("Play the note's saved audio").setDesc(
       "When you press play, load the MP3 already saved for the note you're viewing (matched by name) instead of re-generating it \u2014 even if another chapter is loaded. Off keeps the loaded chapter playing and always re-generates notes."
     ).addToggle(
       (toggle) => toggle.setValue(this.plugin.settings.playNoteSavedAudio).onChange(async (value2) => {
@@ -14156,7 +14609,7 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
         await this.plugin.saveSettings();
       })
     );
-    new import_obsidian6.Setting(containerEl).setName("Folder list follows note").setDesc(
+    new import_obsidian7.Setting(containerEl).setName("Folder list follows note").setDesc(
       "The player's folder list jumps to the current note's folder. Off keeps your chosen folder."
     ).addToggle(
       (toggle) => toggle.setValue(this.plugin.settings.folderSelectorFollowsNote).onChange(async (value2) => {
@@ -14167,8 +14620,8 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
     this.renderActiveProviderSettings(containerEl);
   }
   displayMiniMaxSettings(containerEl) {
-    new import_obsidian6.Setting(containerEl).setName("MiniMax").setHeading();
-    new import_obsidian6.Setting(containerEl).setName("Region").setDesc(
+    new import_obsidian7.Setting(containerEl).setName("MiniMax").setHeading();
+    new import_obsidian7.Setting(containerEl).setName("Region").setDesc(
       "The MiniMax API host. Pick the region where your MiniMax account was created."
     ).addDropdown((dropdown) => {
       MINIMAX_REGIONS.forEach((region) => {
@@ -14180,7 +14633,7 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
         this.plugin.reinitializeProviderCredentials();
       });
     });
-    new import_obsidian6.Setting(containerEl).setName("Model").setDesc(
+    new import_obsidian7.Setting(containerEl).setName("Model").setDesc(
       "The MiniMax T2A model. HD favours quality; Turbo favours latency and cost."
     ).addDropdown((dropdown) => {
       MINIMAX_MODELS.forEach((model) => {
@@ -14226,8 +14679,8 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
     });
   }
   displayOpenAISettings(containerEl) {
-    new import_obsidian6.Setting(containerEl).setName("OpenAI").setHeading();
-    new import_obsidian6.Setting(containerEl).setName("Model").setDesc(
+    new import_obsidian7.Setting(containerEl).setName("OpenAI").setHeading();
+    new import_obsidian7.Setting(containerEl).setName("Model").setDesc(
       "The OpenAI text-to-speech model. GPT-4o mini TTS is recommended; TTS-1 favours latency and TTS-1 HD favours quality."
     ).addDropdown((dropdown) => {
       OPENAI_MODELS.forEach((model) => {
@@ -14260,9 +14713,130 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
       helpUrl: "https://platform.openai.com/api-keys"
     });
   }
+  displayOpenAiCompatibleSettings(containerEl) {
+    const settings = this.plugin.settings;
+    new import_obsidian7.Setting(containerEl).setName("OpenAI-compatible server").setHeading();
+    new import_obsidian7.Setting(containerEl).setName("Server URL").setDesc(
+      "The API address of a server that implements OpenAI's speech API, e.g. https://openrouter.ai/api/v1 or http://localhost:8880/v1. On a phone, localhost means the phone itself."
+    ).addText(
+      (text5) => text5.setPlaceholder("https://openrouter.ai/api/v1").setValue(settings.OPENAI_COMPAT_BASE_URL).onChange(async (value2) => {
+        settings.OPENAI_COMPAT_BASE_URL = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+      })
+    );
+    this.addPasswordSetting(
+      containerEl,
+      "API key",
+      "Optional. Leave empty for servers that don't need a key.",
+      "Enter the server's API key",
+      settings.OPENAI_COMPAT_API_KEY,
+      async (value2) => {
+        settings.OPENAI_COMPAT_API_KEY = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+      }
+    );
+    let modelDropdown;
+    const fillModelOptions = (dropdown) => {
+      var _a3;
+      const choices = mergeModelChoices(
+        (_a3 = settings.openaiCompatModelCatalog) != null ? _a3 : [],
+        parseListInput(settings.OPENAI_COMPAT_CUSTOM_MODELS),
+        settings.OPENAI_COMPAT_MODEL
+      );
+      dropdown.selectEl.empty();
+      if (choices.length === 0) {
+        dropdown.addOption("", "Test the connection to load models");
+      }
+      for (const id of choices) {
+        dropdown.addOption(id, id);
+      }
+      dropdown.setValue(settings.OPENAI_COMPAT_MODEL);
+    };
+    const renderModelOptions = () => {
+      if (modelDropdown) {
+        fillModelOptions(modelDropdown);
+      }
+    };
+    new import_obsidian7.Setting(containerEl).setName("Model").setDesc(
+      "Loaded from the server when you test the connection, plus any models you add below."
+    ).addDropdown((dropdown) => {
+      modelDropdown = dropdown;
+      fillModelOptions(dropdown);
+      dropdown.onChange(async (value2) => {
+        settings.OPENAI_COMPAT_MODEL = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+      });
+    });
+    new import_obsidian7.Setting(containerEl).setName("Add models").setDesc(
+      "Models the server doesn't list, separated by commas. They appear in the model list above."
+    ).addText(
+      (text5) => text5.setPlaceholder("tts-1, kokoro").setValue(settings.OPENAI_COMPAT_CUSTOM_MODELS).onChange(async (value2) => {
+        settings.OPENAI_COMPAT_CUSTOM_MODELS = value2;
+        await this.plugin.saveSettings();
+        renderModelOptions();
+      })
+    );
+    new import_obsidian7.Setting(containerEl).setName("Add voices").setDesc(
+      "Voices the server doesn't list, separated by commas. Pick a voice in the player; without any voices, the standard OpenAI voices are offered."
+    ).addText(
+      (text5) => text5.setPlaceholder("alloy, af_bella").setValue(settings.OPENAI_COMPAT_CUSTOM_VOICES).onChange(async (value2) => {
+        settings.OPENAI_COMPAT_CUSTOM_VOICES = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+        this.plugin.refreshVoicePlayerControls();
+      })
+    );
+    new import_obsidian7.Setting(containerEl).setName("Audio format").setDesc(
+      "MP3 works everywhere and keeps files small. Choose WAV for servers that only produce WAV; audio is then saved as .wav."
+    ).addDropdown((dropdown) => {
+      OPENAI_COMPAT_FORMATS.forEach((format2) => {
+        dropdown.addOption(format2.id, format2.label);
+      });
+      dropdown.setValue(settings.OPENAI_COMPAT_FORMAT).onChange(async (value2) => {
+        settings.OPENAI_COMPAT_FORMAT = value2;
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+      });
+    });
+    this.renderCredentialValidation(containerEl, {
+      providerName: "server",
+      isConfigured: () => normalizeBaseUrl(settings.OPENAI_COMPAT_BASE_URL) !== null,
+      missingMessage: "Please enter a server URL starting with http:// or https:// before testing.",
+      promptMessage: "Enter the server URL above, then click 'Test Credentials' to connect and load its models and voices",
+      helpText: "Which servers work? ",
+      helpUrl: "https://github.com/chrisurf/obsidian-voice#openai-compatible-servers",
+      successMessage: (result) => {
+        var _a3, _b2, _c2, _d;
+        const models = (_b2 = (_a3 = result.models) == null ? void 0 : _a3.length) != null ? _b2 : 0;
+        const voices = (_d = (_c2 = result.voices) == null ? void 0 : _c2.length) != null ? _d : 0;
+        return `\u2713 Connected! Found ${models} ${models === 1 ? "model" : "models"} and ${voices} ${voices === 1 ? "voice" : "voices"}.`;
+      },
+      onValidated: async (result) => {
+        var _a3, _b2, _c2;
+        settings.openaiCompatModelCatalog = (_a3 = result.models) != null ? _a3 : [];
+        settings.openaiCompatVoiceCatalog = (_b2 = result.voices) != null ? _b2 : [];
+        settings.OPENAI_COMPAT_MODEL = reconcileModel(
+          settings.OPENAI_COMPAT_MODEL,
+          (_c2 = result.models) != null ? _c2 : [],
+          parseListInput(settings.OPENAI_COMPAT_CUSTOM_MODELS)
+        );
+        await this.plugin.saveSettings();
+        this.plugin.reinitializeProviderCredentials();
+        const voices = this.plugin.getSpeechProvider().getVoiceOptions();
+        if (voices.length > 0 && !voices.some((voice) => voice.id === settings.OPENAI_COMPAT_VOICE)) {
+          await this.plugin.persistActiveVoice(voices[0].id);
+        }
+        this.plugin.refreshVoicePlayerControls();
+        renderModelOptions();
+      }
+    });
+  }
   displayAzureSettings(containerEl) {
-    new import_obsidian6.Setting(containerEl).setName("Azure Speech").setHeading();
-    new import_obsidian6.Setting(containerEl).setName("Region").setDesc("The Azure region of your Speech resource (must match the key).").addDropdown((dropdown) => {
+    new import_obsidian7.Setting(containerEl).setName("Azure Speech").setHeading();
+    new import_obsidian7.Setting(containerEl).setName("Region").setDesc("The Azure region of your Speech resource (must match the key).").addDropdown((dropdown) => {
       AZURE_REGIONS.forEach((region) => {
         dropdown.addOption(region.id, region.label);
       });
@@ -14294,7 +14868,7 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
     });
   }
   displayGoogleSettings(containerEl) {
-    new import_obsidian6.Setting(containerEl).setName("Google Cloud").setHeading();
+    new import_obsidian7.Setting(containerEl).setName("Google Cloud").setHeading();
     this.addPasswordSetting(
       containerEl,
       "Google Cloud API Key",
@@ -14317,8 +14891,8 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
     });
   }
   displayPollySettings(containerEl) {
-    new import_obsidian6.Setting(containerEl).setName("AWS").setHeading();
-    new import_obsidian6.Setting(containerEl).setName("AWS Region").setDesc("The AWS Region for the Polly service.").addDropdown((dropdown) => {
+    new import_obsidian7.Setting(containerEl).setName("AWS").setHeading();
+    new import_obsidian7.Setting(containerEl).setName("AWS Region").setDesc("The AWS Region for the Polly service.").addDropdown((dropdown) => {
       dropdown.addOption("us-east-2", "US East (Ohio)").addOption("us-east-1", "US East (N. Virginia)").addOption("us-west-1", "US West (N. California)").addOption("us-west-2", "US West (Oregon)").addOption("af-south-1", "Africa (Cape Town)").addOption("ap-east-1", "Asia Pacific (Hong Kong)").addOption("ap-south-2", "Asia Pacific (Hyderabad)").addOption("ap-southeast-3", "Asia Pacific (Jakarta)").addOption("ap-southeast-4", "Asia Pacific (Melbourne)").addOption("ap-south-1", "Asia Pacific (Mumbai)").addOption("ap-northeast-3", "Asia Pacific (Osaka)").addOption("ap-northeast-2", "Asia Pacific (Seoul)").addOption("ap-southeast-1", "Asia Pacific (Singapore)").addOption("ap-southeast-2", "Asia Pacific (Sydney)").addOption("ap-northeast-1", "Asia Pacific (Tokyo)").addOption("ca-central-1", "Canada (Central)").addOption("eu-central-1", "Europe (Frankfurt)").addOption("eu-west-1", "Europe (Ireland)").addOption("eu-west-2", "Europe (London)").addOption("eu-south-1", "Europe (Milan)").addOption("eu-west-3", "Europe (Paris)").addOption("eu-south-2", "Europe (Spain)").addOption("eu-north-1", "Europe (Stockholm)").addOption("eu-central-2", "Europe (Zurich)").addOption("me-south-1", "Middle East (Bahrain)").addOption("me-central-1", "Middle East (UAE)").addOption("sa-east-1", "South America (S\xE3o Paulo)").setValue(this.plugin.settings.AWS_REGION).onChange(async (value2) => {
         this.plugin.settings.AWS_REGION = value2;
         await this.plugin.saveSettings();
@@ -14359,8 +14933,8 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
     });
   }
   displayElevenLabsSettings(containerEl) {
-    new import_obsidian6.Setting(containerEl).setName("ElevenLabs").setHeading();
-    new import_obsidian6.Setting(containerEl).setName("Model").setDesc(
+    new import_obsidian7.Setting(containerEl).setName("ElevenLabs").setHeading();
+    new import_obsidian7.Setting(containerEl).setName("Model").setDesc(
       "The ElevenLabs model used for synthesis. Multilingual v2 offers the best quality; Flash v2.5 is the fastest."
     ).addDropdown((dropdown) => {
       ELEVENLABS_MODELS.forEach((model) => {
@@ -14398,7 +14972,7 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
    */
   addPasswordSetting(containerEl, name, desc, placeholder, value2, onChange) {
     let isVisible = false;
-    new import_obsidian6.Setting(containerEl).setName(name).setDesc(desc).addText((text5) => {
+    new import_obsidian7.Setting(containerEl).setName(name).setDesc(desc).addText((text5) => {
       text5.setPlaceholder(placeholder).setValue(value2).onChange(onChange);
       text5.inputEl.type = "password";
     }).addExtraButton((button) => {
@@ -14475,7 +15049,7 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
       if (isValid === true) {
         statusIndicator.addClass("is-valid");
         statusText.addClass("is-valid");
-        statusText.textContent = voiceCount ? `\u2713 Credentials valid! Found ${voiceCount} voices available.` : "\u2713 Credentials are valid!";
+        statusText.textContent = message ? message : voiceCount ? `\u2713 Credentials valid! Found ${voiceCount} voices available.` : "\u2713 Credentials are valid!";
         helpContainer.removeClass("is-visible");
       } else if (isValid === false) {
         statusIndicator.addClass("is-invalid");
@@ -14488,6 +15062,7 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
       }
     };
     const validateCredentials = async () => {
+      var _a3, _b2, _c2;
       if (!opts.isConfigured()) {
         updateStatus(false, opts.missingMessage);
         return;
@@ -14503,7 +15078,13 @@ var VoiceSettingTab = class extends import_obsidian6.PluginSettingTab {
             this.plugin.reinitializeProviderCredentials();
             this.plugin.refreshVoicePlayerControls();
           }
-          updateStatus(true, "", false, result.voiceCount);
+          await ((_a3 = opts.onValidated) == null ? void 0 : _a3.call(opts, result));
+          updateStatus(
+            true,
+            (_c2 = (_b2 = opts.successMessage) == null ? void 0 : _b2.call(opts, result)) != null ? _c2 : "",
+            false,
+            result.voiceCount
+          );
         } else {
           updateStatus(false, result.error || "Validation failed", false);
         }
@@ -14606,16 +15187,16 @@ var HotkeySettings = class {
 };
 
 // src/utils/VoicePlugin.ts
-var import_obsidian17 = require("obsidian");
+var import_obsidian18 = require("obsidian");
 
 // src/utils/MarkdownHelper.ts
-var import_obsidian7 = require("obsidian");
+var import_obsidian8 = require("obsidian");
 var MarkdownHelper = class {
   constructor(app) {
     this.app = app;
   }
   async getMarkdownView() {
-    const activeView = this.app.workspace.getActiveViewOfType(import_obsidian7.MarkdownView);
+    const activeView = this.app.workspace.getActiveViewOfType(import_obsidian8.MarkdownView);
     if (activeView) {
       const selectedText = activeView.editor.getSelection();
       return {
@@ -14624,9 +15205,9 @@ var MarkdownHelper = class {
       };
     }
     const activeFile = this.app.workspace.getActiveFile();
-    if (activeFile && activeFile instanceof import_obsidian7.TFile) {
+    if (activeFile && activeFile instanceof import_obsidian8.TFile) {
       const fileView = this.app.workspace.getLeavesOfType("markdown").map((leaf) => leaf.view).find(
-        (view) => view instanceof import_obsidian7.MarkdownView && view.file === activeFile
+        (view) => view instanceof import_obsidian8.MarkdownView && view.file === activeFile
       );
       if (fileView) {
         const selectedText = fileView.editor.getSelection();
@@ -14650,16 +15231,16 @@ var MarkdownHelper = class {
 };
 
 // src/utils/IconEventHandler.ts
-var import_obsidian14 = require("obsidian");
+var import_obsidian15 = require("obsidian");
 
 // src/utils/MobileControlBar.ts
-var import_obsidian10 = require("obsidian");
+var import_obsidian11 = require("obsidian");
 
 // src/ui/VoicePlayerView.ts
-var import_obsidian9 = require("obsidian");
+var import_obsidian10 = require("obsidian");
 
 // src/utils/folderAudio.ts
-var import_obsidian8 = require("obsidian");
+var import_obsidian9 = require("obsidian");
 
 // src/utils/chapters.ts
 function normalizeFolderPath(path2) {
@@ -14689,7 +15270,7 @@ function listMp3Folders(mp3Paths) {
 function chapterName(path2) {
   var _a3;
   const file = (_a3 = path2.split("/").pop()) != null ? _a3 : path2;
-  return file.replace(/\.mp3$/i, "");
+  return stripAudioExtension(file);
 }
 function listChapters(mp3Paths) {
   return [...mp3Paths].sort(
@@ -14698,14 +15279,14 @@ function listChapters(mp3Paths) {
 }
 
 // src/utils/folderAudio.ts
-function mp3FilesInFolder(vault, folderPath) {
+function audioFilesInFolder(vault, folderPath) {
   const normalized = normalizeFolderPath(folderPath);
   const folder = normalized === "/" ? vault.getRoot() : vault.getAbstractFileByPath(normalized);
-  if (!(folder instanceof import_obsidian8.TFolder)) {
+  if (!(folder instanceof import_obsidian9.TFolder)) {
     return [];
   }
   return folder.children.filter(
-    (child) => child instanceof import_obsidian8.TFile && child.extension === "mp3"
+    (child) => child instanceof import_obsidian9.TFile && isAudioExtension(child.extension)
   );
 }
 
@@ -14829,10 +15410,10 @@ function resolveSaveFolder(defaultFolder, noteFolder) {
   }
   return normalizeFolderPath(noteFolder);
 }
-function noteAudioPath(defaultFolder, noteFolder, baseName) {
+function noteAudioPath(defaultFolder, noteFolder, baseName, extension2 = "mp3") {
   const folder = resolveSaveFolder(defaultFolder, noteFolder);
   const dir = folder === "/" ? "" : folder;
-  return dir ? `${dir}/${baseName}.mp3` : `${baseName}.mp3`;
+  return dir ? `${dir}/${baseName}.${extension2}` : `${baseName}.${extension2}`;
 }
 function isDefaultFolder(defaultFolder, path2) {
   const target = normalizeFolderPath(path2);
@@ -14898,9 +15479,10 @@ var PROVIDERS = [
   { id: "google", label: "Google Cloud" },
   { id: "azure", label: "Azure Speech" },
   { id: "openai", label: "OpenAI" },
+  { id: "openai-compatible", label: "OpenAI-compatible" },
   { id: "minimax", label: "MiniMax" }
 ];
-var VoicePlayerView = class extends import_obsidian9.ItemView {
+var VoicePlayerView = class extends import_obsidian10.ItemView {
   constructor(leaf, plugin) {
     super(leaf);
     // Tracks which icon the download button currently shows, so we only swap it
@@ -14937,14 +15519,14 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
     this.registerEvent(
       this.app.workspace.on("active-leaf-change", () => this.refreshContext())
     );
-    const refreshOnMp3 = (file) => {
-      if (file.path.toLowerCase().endsWith(".mp3")) {
+    const refreshOnAudio = (file) => {
+      if (isAudioPath(file.path)) {
         this.refreshContext();
       }
     };
-    this.registerEvent(this.app.vault.on("create", refreshOnMp3));
-    this.registerEvent(this.app.vault.on("delete", refreshOnMp3));
-    this.registerEvent(this.app.vault.on("rename", refreshOnMp3));
+    this.registerEvent(this.app.vault.on("create", refreshOnAudio));
+    this.registerEvent(this.app.vault.on("delete", refreshOnAudio));
+    this.registerEvent(this.app.vault.on("rename", refreshOnAudio));
   }
   provider() {
     return this.plugin.getSpeechProvider();
@@ -14984,7 +15566,7 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
       cls: "voice-player-btn voice-player-track",
       attr: { "aria-label": "Previous track" }
     });
-    (0, import_obsidian9.setIcon)(this.prevTrackBtn, "skip-back");
+    (0, import_obsidian10.setIcon)(this.prevTrackBtn, "skip-back");
     this.registerDomEvent(
       this.prevTrackBtn,
       "click",
@@ -14994,7 +15576,7 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
       cls: "voice-player-btn voice-player-skip",
       attr: { "aria-label": "Rewind" }
     });
-    (0, import_obsidian9.setIcon)(rewindBtn, "rewind");
+    (0, import_obsidian10.setIcon)(rewindBtn, "rewind");
     rewindBtn.createSpan({ cls: "voice-player-skip-label" }).setText(`${this.plugin.settings.rewindSeconds}`);
     this.registerDomEvent(
       rewindBtn,
@@ -15007,7 +15589,7 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
         "aria-label": "Tap: play, pause or cancel \xB7 Hold: regenerate from scratch"
       }
     });
-    (0, import_obsidian9.setIcon)(this.playPauseBtn, "play");
+    (0, import_obsidian10.setIcon)(this.playPauseBtn, "play");
     attachPressGesture(this.playPauseBtn, {
       onTap: () => this.togglePlay(),
       onHold: () => this.regenerate()
@@ -15016,7 +15598,7 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
       cls: "voice-player-btn voice-player-skip",
       attr: { "aria-label": "Fast-forward" }
     });
-    (0, import_obsidian9.setIcon)(forwardBtn, "fast-forward");
+    (0, import_obsidian10.setIcon)(forwardBtn, "fast-forward");
     forwardBtn.createSpan({ cls: "voice-player-skip-label" }).setText(`${this.plugin.settings.forwardSeconds}`);
     this.registerDomEvent(
       forwardBtn,
@@ -15027,7 +15609,7 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
       cls: "voice-player-btn voice-player-track",
       attr: { "aria-label": "Next track" }
     });
-    (0, import_obsidian9.setIcon)(this.nextTrackBtn, "skip-forward");
+    (0, import_obsidian10.setIcon)(this.nextTrackBtn, "skip-forward");
     this.registerDomEvent(
       this.nextTrackBtn,
       "click",
@@ -15038,7 +15620,7 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
       cls: "voice-player-download",
       attr: { "aria-label": "Download as MP3" }
     });
-    (0, import_obsidian9.setIcon)(this.downloadBtn, "download");
+    (0, import_obsidian10.setIcon)(this.downloadBtn, "download");
     attachPressGesture(this.downloadBtn, {
       onTap: () => void this.downloadAudio(),
       onHold: () => void this.downloadAudio({ forcePicker: true })
@@ -15049,7 +15631,7 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
         "aria-label": "Save or move audio to a folder you choose (optionally pin it as your default)"
       }
     });
-    (0, import_obsidian9.setIcon)(this.folderBtn, "folder-open");
+    (0, import_obsidian10.setIcon)(this.folderBtn, "folder-open");
     this.registerDomEvent(
       this.folderBtn,
       "click",
@@ -15065,22 +15647,22 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
       cls: "voice-player-speed-btn",
       attr: { "aria-label": "Slower" }
     });
-    (0, import_obsidian9.setIcon)(slower, "minus");
+    (0, import_obsidian10.setIcon)(slower, "minus");
     this.registerDomEvent(slower, "click", () => this.changeSpeed(-0.1));
     this.speedEl = speedGroup.createSpan({ cls: "voice-player-speed-value" });
     const faster = speedGroup.createEl("button", {
       cls: "voice-player-speed-btn",
       attr: { "aria-label": "Faster" }
     });
-    (0, import_obsidian9.setIcon)(faster, "plus");
+    (0, import_obsidian10.setIcon)(faster, "plus");
     this.registerDomEvent(faster, "click", () => this.changeSpeed(0.1));
     this.codeBtn = secondary.createEl("button", { cls: "voice-player-toggle" });
-    (0, import_obsidian9.setIcon)(this.codeBtn, "code");
+    (0, import_obsidian10.setIcon)(this.codeBtn, "code");
     this.registerDomEvent(this.codeBtn, "click", () => this.toggleCodeBlocks());
     this.acronymBtn = secondary.createEl("button", {
       cls: "voice-player-toggle"
     });
-    (0, import_obsidian9.setIcon)(this.acronymBtn, "case-sensitive");
+    (0, import_obsidian10.setIcon)(this.acronymBtn, "case-sensitive");
     this.registerDomEvent(
       this.acronymBtn,
       "click",
@@ -15089,12 +15671,12 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
     this.urlBtn = secondary.createEl("button", {
       cls: "voice-player-toggle"
     });
-    (0, import_obsidian9.setIcon)(this.urlBtn, "unlink");
+    (0, import_obsidian10.setIcon)(this.urlBtn, "unlink");
     this.registerDomEvent(this.urlBtn, "click", () => this.toggleSkipUrls());
     this.embedBtn = secondary.createEl("button", {
       cls: "voice-player-toggle"
     });
-    (0, import_obsidian9.setIcon)(this.embedBtn, "paperclip");
+    (0, import_obsidian10.setIcon)(this.embedBtn, "paperclip");
     this.registerDomEvent(this.embedBtn, "click", () => this.toggleEmbed());
     const options = root3.createDiv({ cls: "voice-player-options" });
     this.providerSelect = options.createEl("select", {
@@ -15199,15 +15781,21 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
    */
   existingNoteAudio(active) {
     var _a3, _b2;
-    const path2 = (0, import_obsidian9.normalizePath)(
-      noteAudioPath(
-        this.plugin.settings.defaultAudioFolder,
-        (_b2 = (_a3 = active.parent) == null ? void 0 : _a3.path) != null ? _b2 : "",
-        active.basename
-      )
-    );
-    const file = this.app.vault.getAbstractFileByPath(path2);
-    return file instanceof import_obsidian9.TFile ? file : null;
+    for (const extension2 of AUDIO_EXTENSIONS) {
+      const path2 = (0, import_obsidian10.normalizePath)(
+        noteAudioPath(
+          this.plugin.settings.defaultAudioFolder,
+          (_b2 = (_a3 = active.parent) == null ? void 0 : _a3.path) != null ? _b2 : "",
+          active.basename,
+          extension2
+        )
+      );
+      const file = this.app.vault.getAbstractFileByPath(path2);
+      if (file instanceof import_obsidian10.TFile) {
+        return file;
+      }
+    }
+    return null;
   }
   /**
    * Whether the audio currently loaded in the player no longer matches the
@@ -15415,7 +16003,7 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
     const hasDefault = this.plugin.settings.defaultAudioFolder.trim() !== "";
     if (hasDefault !== this.downloadShowsSave) {
       this.downloadShowsSave = hasDefault;
-      (0, import_obsidian9.setIcon)(this.downloadBtn, hasDefault ? "save" : "download");
+      (0, import_obsidian10.setIcon)(this.downloadBtn, hasDefault ? "save" : "download");
     }
     this.downloadBtn.setAttribute(
       "aria-label",
@@ -15447,8 +16035,8 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
     }
     this.updateTitle();
     const active = this.app.workspace.getActiveFile();
-    const mp3Files = this.app.vault.getFiles().filter((f2) => f2.extension === "mp3");
-    this.folders = listMp3Folders(mp3Files.map((f2) => f2.path));
+    const audioFiles = this.app.vault.getFiles().filter((f2) => isAudioExtension(f2.extension));
+    this.folders = listMp3Folders(audioFiles.map((f2) => f2.path));
     this.selectedFolderPath = this.resolveSelectedFolder(active);
     this.renderFolderOptions();
     this.renderSelectedFolderChapters();
@@ -15507,7 +16095,7 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
   /** Render the chapters (MP3s) that live in the selected folder. */
   renderSelectedFolderChapters() {
     const folderPath = this.selectedFolderPath;
-    const mp3Paths = folderPath === null ? [] : mp3FilesInFolder(this.app.vault, folderPath).map((f2) => f2.path);
+    const mp3Paths = folderPath === null ? [] : audioFilesInFolder(this.app.vault, folderPath).map((f2) => f2.path);
     this.chapters = listChapters(mp3Paths);
     this.subtitleEl.setText(
       this.chapters.length === 1 ? "1 chapter" : `${this.chapters.length} chapters`
@@ -15538,7 +16126,7 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
         cls: "voice-player-chapter-edit",
         attr: { "aria-label": "Track actions" }
       });
-      (0, import_obsidian9.setIcon)(actionsBtn, "more-vertical");
+      (0, import_obsidian10.setIcon)(actionsBtn, "more-vertical");
       this.registerDomEvent(actionsBtn, "click", (evt) => {
         evt.stopPropagation();
         this.openChapterActions(item, chapter);
@@ -15643,12 +16231,12 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
   /** Delete a chapter's MP3 (after confirmation) and refresh the list. */
   async deleteChapter(chapter) {
     const file = this.app.vault.getAbstractFileByPath(chapter.path);
-    if (file instanceof import_obsidian9.TFile) {
+    if (file instanceof import_obsidian10.TFile) {
       try {
         await this.app.fileManager.trashFile(file);
-        new import_obsidian9.Notice(`Deleted: ${chapter.name}`);
+        new import_obsidian10.Notice(`Deleted: ${chapter.name}`);
       } catch (error) {
-        new import_obsidian9.Notice(
+        new import_obsidian10.Notice(
           `Could not delete: ${error instanceof Error ? error.message : String(error)}`
         );
       }
@@ -15710,25 +16298,25 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
     var _a3, _b2;
     const file = this.app.vault.getAbstractFileByPath(chapter.path);
     const newBase = rawName.trim();
-    if (!(file instanceof import_obsidian9.TFile) || !newBase || newBase === chapter.name) {
+    if (!(file instanceof import_obsidian10.TFile) || !newBase || newBase === chapter.name) {
       this.refreshContext();
       return;
     }
     if (/[\\/:*?"<>|]/.test(newBase)) {
-      new import_obsidian9.Notice("That file name contains characters that aren't allowed.");
+      new import_obsidian10.Notice("That file name contains characters that aren't allowed.");
       this.refreshContext();
       return;
     }
     const folder = normalizeFolderPath((_b2 = (_a3 = file.parent) == null ? void 0 : _a3.path) != null ? _b2 : "/");
     const dir = folder === "/" ? "" : `${folder}/`;
-    const newPath = (0, import_obsidian9.normalizePath)(`${dir}${newBase}.${file.extension}`);
+    const newPath = (0, import_obsidian10.normalizePath)(`${dir}${newBase}.${file.extension}`);
     try {
       await this.app.fileManager.renameFile(file, newPath);
       if (this.currentChapterPath === chapter.path) {
         this.currentChapterPath = newPath;
       }
     } catch (error) {
-      new import_obsidian9.Notice(
+      new import_obsidian10.Notice(
         `Could not rename: ${error instanceof Error ? error.message : String(error)}`
       );
     }
@@ -15736,7 +16324,7 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
   }
   playChapter(path2) {
     const file = this.app.vault.getAbstractFileByPath(path2);
-    if (!(file instanceof import_obsidian9.TFile)) {
+    if (!(file instanceof import_obsidian10.TFile)) {
       return;
     }
     const audio = this.audio();
@@ -15811,7 +16399,7 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
       return;
     }
     const icon = this.repeatMode === "one" ? "repeat-1" : "repeat";
-    (0, import_obsidian9.setIcon)(this.repeatBtn, icon);
+    (0, import_obsidian10.setIcon)(this.repeatBtn, icon);
     this.repeatBtn.toggleClass("is-active", this.repeatMode !== "none");
     const label = this.repeatMode === "one" ? "Repeat one" : this.repeatMode === "all" ? "Repeat all" : "Repeat off";
     this.repeatBtn.setAttribute("aria-label", label);
@@ -15861,11 +16449,11 @@ var VoicePlayerView = class extends import_obsidian9.ItemView {
       this.loadingFillEl.setCssProps({ "--voice-progress": `${pct}%` });
       if (!this.playPauseBtn.hasClass("rotating-icon")) {
         this.playPauseBtn.addClass("rotating-icon");
-        (0, import_obsidian9.setIcon)(this.playPauseBtn, "refresh-ccw");
+        (0, import_obsidian10.setIcon)(this.playPauseBtn, "refresh-ccw");
       }
     } else {
       this.playPauseBtn.removeClass("rotating-icon");
-      (0, import_obsidian9.setIcon)(this.playPauseBtn, provider.isPlaying() ? "pause" : "play");
+      (0, import_obsidian10.setIcon)(this.playPauseBtn, provider.isPlaying() ? "pause" : "play");
     }
     if (this.providerSelect.value !== this.plugin.settings.TTS_PROVIDER) {
       this.refreshControls();
@@ -15948,7 +16536,7 @@ var MobileControlBar = class {
       "mic",
       "Change Voice",
       (event) => {
-        const menu = new import_obsidian10.Menu();
+        const menu = new import_obsidian11.Menu();
         this.pollyService.getVoiceOptions().forEach((voice) => {
           menu.addItem(
             (item) => item.setTitle(voice.label).setChecked(voice.id === this.pollyService.getVoice()).onClick(() => void this.selectVoice(voice.id))
@@ -16040,7 +16628,7 @@ var MobileControlBar = class {
       cls: "voice-mobile-control-btn",
       attr: { title }
     });
-    (0, import_obsidian10.setIcon)(button, icon);
+    (0, import_obsidian11.setIcon)(button, icon);
     button.addEventListener("click", onClick);
     return button;
   }
@@ -16083,7 +16671,7 @@ var MobileControlBar = class {
   showLoadingState() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.addClass("rotating-icon");
-      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "refresh-ccw");
+      (0, import_obsidian11.setIcon)(this.playPauseIconEl, "refresh-ccw");
     }
     this.showProgressBar();
     this.updateProgressBar(0);
@@ -16091,7 +16679,7 @@ var MobileControlBar = class {
   resetToPlayState() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian11.setIcon)(this.playPauseIconEl, "play");
     }
   }
   showProgressBar() {
@@ -16131,7 +16719,7 @@ var MobileControlBar = class {
   onPlay() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "pause");
+      (0, import_obsidian11.setIcon)(this.playPauseIconEl, "pause");
     }
     this.hideProgressBar();
     this.show();
@@ -16140,7 +16728,7 @@ var MobileControlBar = class {
   onPause() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian11.setIcon)(this.playPauseIconEl, "play");
     }
     this.hideProgressBar();
     window.setTimeout(() => {
@@ -16155,7 +16743,7 @@ var MobileControlBar = class {
   onEnded() {
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian10.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian11.setIcon)(this.playPauseIconEl, "play");
     }
     this.hideProgressBar();
     window.setTimeout(() => this.hide(), 3e3);
@@ -16245,7 +16833,7 @@ var MobileControlBar = class {
       return;
     }
     this.downloadShowsSave = hasDefault;
-    (0, import_obsidian10.setIcon)(this.downloadIconEl, hasDefault ? "save" : "download");
+    (0, import_obsidian11.setIcon)(this.downloadIconEl, hasDefault ? "save" : "download");
   }
   destroy() {
     const audio = this.pollyService.getAudio();
@@ -16261,7 +16849,7 @@ var MobileControlBar = class {
 };
 
 // src/utils/AudioFileManager.ts
-var import_obsidian11 = require("obsidian");
+var import_obsidian12 = require("obsidian");
 var AudioFileManager = class {
   constructor(app) {
     this.app = app;
@@ -16274,27 +16862,28 @@ var AudioFileManager = class {
    * embeds/links updated.
    */
   async saveOrMove(params) {
-    var _a3;
+    var _a3, _b2;
     try {
       const dir = this.resolveSaveDir(params.folder, "");
       await this.ensureFolderExists(dir);
-      const pathFor = (base) => (0, import_obsidian11.normalizePath)(dir ? `${dir}/${base}.mp3` : `${base}.mp3`);
-      const sourcePath = (_a3 = params.sourceFile) == null ? void 0 : _a3.path;
+      const ext = params.kind === "move" && params.sourceFile ? params.sourceFile.extension : audioExtensionForMime(((_a3 = params.blob) == null ? void 0 : _a3.type) || "");
+      const pathFor = (base) => (0, import_obsidian12.normalizePath)(dir ? `${dir}/${base}.${ext}` : `${base}.${ext}`);
+      const sourcePath = (_b2 = params.sourceFile) == null ? void 0 : _b2.path;
       let baseName = params.baseName;
       for (; ; ) {
         const existing = this.app.vault.getAbstractFileByPath(
           pathFor(baseName)
         );
-        const collides = existing instanceof import_obsidian11.TFile && existing.path !== sourcePath;
+        const collides = existing instanceof import_obsidian12.TFile && existing.path !== sourcePath;
         if (!collides) {
           break;
         }
         const choice = await params.resolveConflict({
-          fileName: `${baseName}.mp3`,
+          fileName: `${baseName}.${ext}`,
           folder: dir === "" ? "the vault root" : dir,
           suggested: suggestFreeBaseName(
             baseName,
-            this.mp3BaseNamesInFolder(dir)
+            this.audioBaseNamesInFolder(dir)
           )
         });
         if (choice.action === "cancel") {
@@ -16313,11 +16902,11 @@ var AudioFileManager = class {
       }
       await this.writeBlob(params.blob, finalPath);
       if (params.embed) {
-        await this.insertAudioEmbed(`${baseName}.mp3`);
+        await this.insertAudioEmbed(`${baseName}.${ext}`);
       }
     } catch (error) {
       console.error("Error saving/moving audio:", error);
-      new import_obsidian11.Notice(`Error saving audio: ${error.message}`);
+      new import_obsidian12.Notice(`Error saving audio: ${error.message}`);
     }
   }
   /** Move an existing file to finalPath, replacing any file already there. */
@@ -16326,11 +16915,11 @@ var AudioFileManager = class {
       return;
     }
     const existing = this.app.vault.getAbstractFileByPath(finalPath);
-    if (existing instanceof import_obsidian11.TFile && existing.path !== source.path) {
+    if (existing instanceof import_obsidian12.TFile && existing.path !== source.path) {
       await this.app.fileManager.trashFile(existing);
     }
     await this.app.fileManager.renameFile(source, finalPath);
-    new import_obsidian11.Notice(`Moved: ${finalPath}`);
+    new import_obsidian12.Notice(`Moved: ${finalPath}`);
   }
   /** Create or overwrite the MP3 at finalPath with the blob's bytes. */
   async writeBlob(blob, finalPath) {
@@ -16339,21 +16928,21 @@ var AudioFileManager = class {
     }
     const arrayBuffer = await blob.arrayBuffer();
     const existing = this.app.vault.getAbstractFileByPath(finalPath);
-    if (existing instanceof import_obsidian11.TFile) {
+    if (existing instanceof import_obsidian12.TFile) {
       await this.app.vault.modifyBinary(existing, arrayBuffer);
-      new import_obsidian11.Notice(`Updated: ${finalPath}`);
+      new import_obsidian12.Notice(`Updated: ${finalPath}`);
     } else {
       await this.app.vault.createBinary(finalPath, arrayBuffer);
-      new import_obsidian11.Notice(`Created: ${finalPath}`);
+      new import_obsidian12.Notice(`Created: ${finalPath}`);
     }
   }
-  /** Base names (no extension) of the MP3s already in a vault folder. */
-  mp3BaseNamesInFolder(dir) {
+  /** Base names (no extension) of the audio files already in a vault folder. */
+  audioBaseNamesInFolder(dir) {
     const target = normalizeFolderPath(dir === "" ? "/" : dir);
-    return mp3FilesInFolder(this.app.vault, target).map((f2) => f2.basename);
+    return audioFilesInFolder(this.app.vault, target).map((f2) => f2.basename);
   }
   /**
-   * Save audio blob as an MP3 file.
+   * Save audio blob as an audio file (.mp3, or .wav for WAV audio).
    * @param audioBlob - The audio data to save
    * @param targetFolder - Vault-relative folder to save into ("/" or "" = vault
    *   root). When omitted, the MP3 is saved next to the active note, preserving
@@ -16365,39 +16954,42 @@ var AudioFileManager = class {
     try {
       const activeFile = this.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian11.Notice("No active file found");
+        new import_obsidian12.Notice("No active file found");
         return null;
       }
-      const fileName = activeFile.basename;
       const fileDir = this.resolveSaveDir(
         targetFolder,
         ((_a3 = activeFile.parent) == null ? void 0 : _a3.path) || ""
       );
-      const audioFileName = `${fileName}.mp3`;
-      const audioFilePath = (0, import_obsidian11.normalizePath)(
+      const audioFileName = this.audioFileName(activeFile.basename, audioBlob);
+      const audioFilePath = (0, import_obsidian12.normalizePath)(
         fileDir ? `${fileDir}/${audioFileName}` : audioFileName
       );
       await this.ensureFolderExists(fileDir);
       const arrayBuffer = await audioBlob.arrayBuffer();
       const existingFile = this.app.vault.getAbstractFileByPath(audioFilePath);
       let audioFile;
-      if (existingFile instanceof import_obsidian11.TFile) {
+      if (existingFile instanceof import_obsidian12.TFile) {
         await this.app.vault.modifyBinary(existingFile, arrayBuffer);
         audioFile = existingFile;
-        new import_obsidian11.Notice(`Updated: ${audioFilePath}`);
+        new import_obsidian12.Notice(`Updated: ${audioFilePath}`);
       } else {
         audioFile = await this.app.vault.createBinary(
           audioFilePath,
           arrayBuffer
         );
-        new import_obsidian11.Notice(`Created: ${audioFilePath}`);
+        new import_obsidian12.Notice(`Created: ${audioFilePath}`);
       }
       return audioFile;
     } catch (error) {
       console.error("Error saving audio file:", error);
-      new import_obsidian11.Notice(`Error saving audio file: ${error.message}`);
+      new import_obsidian12.Notice(`Error saving audio file: ${error.message}`);
       return null;
     }
+  }
+  /** File name for a note's audio, with the extension matching its format. */
+  audioFileName(baseName, audioBlob) {
+    return `${baseName}.${audioExtensionForMime(audioBlob.type || "")}`;
   }
   /**
    * Resolve the destination folder for a save.
@@ -16433,7 +17025,7 @@ var AudioFileManager = class {
     try {
       const activeFile = this.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian11.Notice("No active file found");
+        new import_obsidian12.Notice("No active file found");
         return;
       }
       const content3 = await this.app.vault.read(activeFile);
@@ -16446,7 +17038,7 @@ var AudioFileManager = class {
       await this.app.vault.modify(activeFile, newContent);
     } catch (error) {
       console.error("Error inserting audio embed:", error);
-      new import_obsidian11.Notice(`Error inserting audio embed: ${error.message}`);
+      new import_obsidian12.Notice(`Error inserting audio embed: ${error.message}`);
     }
   }
   /**
@@ -16477,11 +17069,10 @@ var AudioFileManager = class {
     try {
       const activeFile = this.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian11.Notice("No active file found");
+        new import_obsidian12.Notice("No active file found");
         return;
       }
-      const fileName = activeFile.basename;
-      const audioFileName = `${fileName}.mp3`;
+      const audioFileName = this.audioFileName(activeFile.basename, audioBlob);
       const savedFile = await this.saveAudioFile(audioBlob, targetFolder);
       if (!savedFile) {
         return;
@@ -16491,21 +17082,21 @@ var AudioFileManager = class {
       }
     } catch (error) {
       console.error("Error in downloadAndEmbed:", error);
-      new import_obsidian11.Notice(`Error downloading audio: ${error.message}`);
+      new import_obsidian12.Notice(`Error downloading audio: ${error.message}`);
     }
   }
 };
 
 // src/ui/FolderPickerModal.ts
-var import_obsidian12 = require("obsidian");
-var FolderPickerModal = class _FolderPickerModal extends import_obsidian12.SuggestModal {
+var import_obsidian13 = require("obsidian");
+var FolderPickerModal = class _FolderPickerModal extends import_obsidian13.SuggestModal {
   constructor(app, plugin) {
     super(app);
     this.resolve = () => {
     };
     this.settled = false;
     this.plugin = plugin;
-    this.allFolders = app.vault.getAllLoadedFiles().filter((f2) => f2 instanceof import_obsidian12.TFolder).map((f2) => normalizeFolderPath(f2.path));
+    this.allFolders = app.vault.getAllLoadedFiles().filter((f2) => f2 instanceof import_obsidian13.TFolder).map((f2) => normalizeFolderPath(f2.path));
     this.setPlaceholder("Search folders to save / move audio\u2026");
     this.setInstructions([
       { command: "\u21B5", purpose: "save / move here" },
@@ -16560,7 +17151,7 @@ var FolderPickerModal = class _FolderPickerModal extends import_obsidian12.Sugge
     el.addClass("voice-folder-suggestion");
     if (item.kind === "create") {
       const icon2 = el.createSpan({ cls: "voice-folder-suggestion-icon" });
-      (0, import_obsidian12.setIcon)(icon2, "folder-plus");
+      (0, import_obsidian13.setIcon)(icon2, "folder-plus");
       el.createSpan({
         cls: "voice-folder-suggestion-name",
         text: `Create folder \u201C${item.path}\u201D`
@@ -16571,7 +17162,7 @@ var FolderPickerModal = class _FolderPickerModal extends import_obsidian12.Sugge
     el.toggleClass("is-favorite", item.isFavorite);
     el.toggleClass("is-section-start", !!item.sectionStart);
     const icon = el.createSpan({ cls: "voice-folder-suggestion-icon" });
-    (0, import_obsidian12.setIcon)(icon, item.path === "/" ? "home" : "folder");
+    (0, import_obsidian13.setIcon)(icon, item.path === "/" ? "home" : "folder");
     el.createSpan({
       cls: "voice-folder-suggestion-name",
       text: item.path === "/" ? "Vault root" : item.path
@@ -16583,7 +17174,7 @@ var FolderPickerModal = class _FolderPickerModal extends import_obsidian12.Sugge
       });
     }
     const pin = el.createSpan({ cls: "voice-folder-suggestion-pin" });
-    (0, import_obsidian12.setIcon)(pin, item.isDefault ? "pin" : "pin-off");
+    (0, import_obsidian13.setIcon)(pin, item.isDefault ? "pin" : "pin-off");
     pin.toggleClass("is-default", item.isDefault);
     pin.setAttribute(
       "aria-label",
@@ -16595,7 +17186,7 @@ var FolderPickerModal = class _FolderPickerModal extends import_obsidian12.Sugge
       void this.toggleDefaultFor(item.path);
     });
     const star = el.createSpan({ cls: "voice-folder-suggestion-star" });
-    (0, import_obsidian12.setIcon)(star, item.isFavorite ? "star" : "star-off");
+    (0, import_obsidian13.setIcon)(star, item.isFavorite ? "star" : "star-off");
     star.toggleClass("is-favorite", item.isFavorite);
     star.setAttribute(
       "aria-label",
@@ -16647,8 +17238,8 @@ var FolderPickerModal = class _FolderPickerModal extends import_obsidian12.Sugge
 };
 
 // src/ui/FileConflictModal.ts
-var import_obsidian13 = require("obsidian");
-var FileConflictModal = class _FileConflictModal extends import_obsidian13.Modal {
+var import_obsidian14 = require("obsidian");
+var FileConflictModal = class _FileConflictModal extends import_obsidian14.Modal {
   constructor(app, fileName, folderLabel, suggested) {
     super(app);
     this.resolve = () => {
@@ -16676,7 +17267,7 @@ var FileConflictModal = class _FileConflictModal extends import_obsidian13.Modal
       text: `\u201C${this.fileName}\u201D already exists in ${this.folderLabel}. Replace it, or save under a new name?`
     });
     let newBaseName = this.suggested;
-    const nameSetting = new import_obsidian13.Setting(contentEl).setName("New name").addText((text5) => {
+    const nameSetting = new import_obsidian14.Setting(contentEl).setName("New name").addText((text5) => {
       text5.setValue(this.suggested).onChange((value2) => {
         newBaseName = value2;
       });
@@ -16687,11 +17278,12 @@ var FileConflictModal = class _FileConflictModal extends import_obsidian13.Modal
         }
       });
     });
+    const dot = this.fileName.lastIndexOf(".");
     nameSetting.controlEl.createSpan({
       cls: "voice-conflict-ext",
-      text: ".mp3"
+      text: dot === -1 ? "" : this.fileName.slice(dot)
     });
-    new import_obsidian13.Setting(contentEl).addButton((btn) => {
+    new import_obsidian14.Setting(contentEl).addButton((btn) => {
       btn.setButtonText("Replace").onClick(() => this.settle({ action: "replace" }));
       btn.buttonEl.addClass("mod-warning");
     }).addButton(
@@ -16807,7 +17399,7 @@ var IconEventHandler = class {
     this.voiceDisplayEl.setAttribute("aria-label-position", "top");
     this.updateVoiceDisplay();
     this.voiceDisplayEl.addEventListener("click", (event) => {
-      const menu = new import_obsidian14.Menu();
+      const menu = new import_obsidian15.Menu();
       this.pollyService.getVoiceOptions().forEach((voice) => {
         menu.addItem(
           (item) => item.setTitle(voice.label).setChecked(voice.id === this.pollyService.getVoice()).onClick(() => void this.voice.persistActiveVoice(voice.id))
@@ -16885,7 +17477,7 @@ var IconEventHandler = class {
         }
         if (!this.pollyService.isPlaying()) {
           this.playPauseIconEl.addClass("rotating-icon");
-          (0, import_obsidian14.setIcon)(this.playPauseIconEl, "refresh-ccw");
+          (0, import_obsidian15.setIcon)(this.playPauseIconEl, "refresh-ccw");
         }
         void this.voice.speakText();
       },
@@ -16918,7 +17510,7 @@ var IconEventHandler = class {
     const iconEl = this.statusBarItem.createSpan({
       cls: "status-bar-icon " + cls
     });
-    (0, import_obsidian14.setIcon)(iconEl, icon);
+    (0, import_obsidian15.setIcon)(iconEl, icon);
     iconEl.addEventListener("click", onClick);
     if (tooltip) {
       iconEl.title = tooltip;
@@ -16989,8 +17581,8 @@ var IconEventHandler = class {
       this.isErrorState = false;
       this.ribbonIconEl.addClass("rotating-icon");
       this.playPauseIconEl.addClass("rotating-icon");
-      (0, import_obsidian14.setIcon)(this.ribbonIconEl, "refresh-ccw");
-      (0, import_obsidian14.setIcon)(this.playPauseIconEl, "refresh-ccw");
+      (0, import_obsidian15.setIcon)(this.ribbonIconEl, "refresh-ccw");
+      (0, import_obsidian15.setIcon)(this.playPauseIconEl, "refresh-ccw");
       if (this.mobileControlBar) {
         this.mobileControlBar.showLoadingStateFromExternal();
       } else {
@@ -17002,11 +17594,11 @@ var IconEventHandler = class {
   onPlay() {
     if (this.ribbonIconEl) {
       this.ribbonIconEl.removeClass("rotating-icon");
-      (0, import_obsidian14.setIcon)(this.ribbonIconEl, "pause-circle");
+      (0, import_obsidian15.setIcon)(this.ribbonIconEl, "pause-circle");
     }
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian14.setIcon)(this.playPauseIconEl, "pause");
+      (0, import_obsidian15.setIcon)(this.playPauseIconEl, "pause");
     }
     this.hideProgressBar();
     this.showDownloadButton();
@@ -17014,11 +17606,11 @@ var IconEventHandler = class {
   onPause() {
     if (this.ribbonIconEl) {
       this.ribbonIconEl.removeClass("rotating-icon");
-      (0, import_obsidian14.setIcon)(this.ribbonIconEl, "play-circle");
+      (0, import_obsidian15.setIcon)(this.ribbonIconEl, "play-circle");
     }
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian14.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian15.setIcon)(this.playPauseIconEl, "play");
     }
     this.hideProgressBar();
   }
@@ -17114,7 +17706,7 @@ var IconEventHandler = class {
   handleError(errorMessage) {
     this.showErrorState();
     this.resetIconsToPlayState();
-    new import_obsidian14.Notice(`\u{1F50A} Voice Plugin: ${friendlySpeechError(errorMessage)}`, 5e3);
+    new import_obsidian15.Notice(`\u{1F50A} Voice Plugin: ${friendlySpeechError(errorMessage)}`, 5e3);
     window.setTimeout(() => {
       this.hideProgressBar();
     }, 3e3);
@@ -17122,11 +17714,11 @@ var IconEventHandler = class {
   resetIconsToPlayState() {
     if (this.ribbonIconEl) {
       this.ribbonIconEl.removeClass("rotating-icon");
-      (0, import_obsidian14.setIcon)(this.ribbonIconEl, "play-circle");
+      (0, import_obsidian15.setIcon)(this.ribbonIconEl, "play-circle");
     }
     if (this.playPauseIconEl) {
       this.playPauseIconEl.removeClass("rotating-icon");
-      (0, import_obsidian14.setIcon)(this.playPauseIconEl, "play");
+      (0, import_obsidian15.setIcon)(this.playPauseIconEl, "play");
     }
   }
   onCanPlayThrough() {
@@ -17223,7 +17815,7 @@ var IconEventHandler = class {
         const file = this.plugin.app.vault.getAbstractFileByPath(
           options.moveFromPath
         );
-        if (file instanceof import_obsidian14.TFile) {
+        if (file instanceof import_obsidian15.TFile) {
           await this.audioFileManager.saveOrMove({
             kind: "move",
             sourceFile: file,
@@ -17260,14 +17852,14 @@ var IconEventHandler = class {
       }
       const activeFile = this.plugin.app.workspace.getActiveFile();
       if (!activeFile) {
-        new import_obsidian14.Notice("No active file found");
+        new import_obsidian15.Notice("No active file found");
         return;
       }
       const audioBlob = this.pollyService.getLastGeneratedAudio(
         activeFile.path
       );
       if (!audioBlob) {
-        new import_obsidian14.Notice(
+        new import_obsidian15.Notice(
           "No audio available for this file. Please generate audio first."
         );
         return;
@@ -17283,7 +17875,7 @@ var IconEventHandler = class {
       );
     } catch (error) {
       console.error("Error downloading audio:", error);
-      new import_obsidian14.Notice(`Failed to download audio: ${error.message}`);
+      new import_obsidian15.Notice(`Failed to download audio: ${error.message}`);
     }
   }
   /**
@@ -17319,7 +17911,7 @@ var IconEventHandler = class {
       return;
     }
     this.downloadShowsSave = hasDefault;
-    (0, import_obsidian14.setIcon)(this.downloadIconEl, hasDefault ? "save" : "download");
+    (0, import_obsidian15.setIcon)(this.downloadIconEl, hasDefault ? "save" : "download");
   }
   /**
    * Refresh the download button's tooltip to reflect the current default folder,
@@ -28197,7 +28789,7 @@ var MarkdownToTextProcessor = class {
 };
 
 // src/utils/TextSpeaker.ts
-var import_obsidian15 = require("obsidian");
+var import_obsidian16 = require("obsidian");
 var TextSpeaker = class {
   constructor(provider, markdownHelper, iconEventHandler, spellOutAcronyms = false, readCodeBlocks = false, skipUrls = false) {
     this.provider = provider;
@@ -28240,17 +28832,17 @@ var TextSpeaker = class {
         return;
       }
       if (!read.ok) {
-        new import_obsidian15.Notice(
+        new import_obsidian16.Notice(
           read.reason === "no-note" ? NO_NOTE_MESSAGE : READ_ERROR_MESSAGE
         );
         return;
       }
       const rawText = read.text;
       if (rawText.trim() === "") {
-        new import_obsidian15.Notice(EMPTY_NOTE_MESSAGE);
+        new import_obsidian16.Notice(EMPTY_NOTE_MESSAGE);
         return;
       }
-      const processingNotice = new import_obsidian15.Notice("Processing text...", 2e3);
+      const processingNotice = new import_obsidian16.Notice("Processing text...", 2e3);
       const content3 = await this.processContent(rawText);
       processingNotice.hide();
       if (!this.provider.isCurrentRequest(requestId)) {
@@ -28276,7 +28868,7 @@ var TextSpeaker = class {
       }
       console.error("Error in text-to-speech processing:", error);
       const errorMessage = error instanceof Error ? error.message : String(error);
-      new import_obsidian15.Notice(friendlySpeechError(errorMessage));
+      new import_obsidian16.Notice(friendlySpeechError(errorMessage));
     } finally {
       this.provider.endOperation(requestId);
     }
@@ -28292,7 +28884,7 @@ var TextSpeaker = class {
     const result = await this.ssmlProcessor.process(rawText);
     if (!result.isValid) {
       console.error("SSML validation errors:", result.errors);
-      new import_obsidian15.Notice(
+      new import_obsidian16.Notice(
         friendlySpeechError(
           `SSML validation failed: ${result.errors.join("; ")}`
         )
@@ -28307,13 +28899,22 @@ var TextSpeaker = class {
 };
 
 // src/ui/WhatsNewModal.ts
-var import_obsidian16 = require("obsidian");
+var import_obsidian17 = require("obsidian");
 
 // src/utils/whatsNew.ts
 var HERO_IMAGE_URL = "https://raw.githubusercontent.com/chrisurf/obsidian-voice/main/assets/hero.png";
 var BUY_ME_A_COFFEE_URL = "https://www.buymeacoffee.com/chrisurf";
 var BUY_ME_A_COFFEE_IMAGE_URL = "https://raw.githubusercontent.com/chrisurf/obsidian-voice/main/assets/buymeacoffee.png";
-var WHATS_NEW = `## \u{1F195} New: MiniMax \u2014 text-to-speech that works from China
+var WHATS_NEW = `## \u{1F195} New: bring any OpenAI-compatible server
+
+Voice now talks to **any server that speaks OpenAI's speech API** \u2014 hosted routers like **OpenRouter**, gateways like **LiteLLM**, or a **self-hosted** engine such as **Kokoro** running on your own machine.
+
+- \u{1F50C} Choose **OpenAI-compatible** in **Settings \u2192 Voice**, enter the **server URL** (and an API key if it needs one), then press **Test Credentials**.
+- \u{1F4CB} Voice **loads the server's models and voices** for you \u2014 and you can **add your own** if the server doesn't list them.
+- \u{1F3A7} Pick **MP3** or **WAV** \u2014 WAV files are saved and listed as chapters just like MP3s.
+- \u{1F4F1} On a phone, \`localhost\` means the phone itself \u2014 use an address the phone can reach.
+
+## MiniMax \u2014 text-to-speech that works from China \u2014 text-to-speech that works from China
 
 Voice's **sixth provider** is here: **MiniMax**. It's a great fit for **Chinese-language** notes \u2014 and, crucially, it's reachable from **mainland China**, where the other engines often aren't.
 
@@ -28369,7 +28970,7 @@ function shouldShowWhatsNew(currentVersion, lastSeenVersion) {
 }
 
 // src/ui/WhatsNewModal.ts
-var WhatsNewModal = class extends import_obsidian16.Modal {
+var WhatsNewModal = class extends import_obsidian17.Modal {
   constructor(app, version, component, onOpenPlayer) {
     super(app);
     this.version = version;
@@ -28400,8 +29001,8 @@ var WhatsNewModal = class extends import_obsidian16.Modal {
     });
     coffeeImg.addEventListener("error", () => support.hide());
     const body = contentEl.createDiv({ cls: "voice-whats-new-body" });
-    void import_obsidian16.MarkdownRenderer.render(this.app, WHATS_NEW, body, "", this.component);
-    new import_obsidian16.Setting(contentEl).addButton(
+    void import_obsidian17.MarkdownRenderer.render(this.app, WHATS_NEW, body, "", this.component);
+    new import_obsidian17.Setting(contentEl).addButton(
       (btn) => btn.setButtonText("Open Voice player").setCta().onClick(() => {
         this.onOpenPlayer();
         this.close();
@@ -28416,7 +29017,7 @@ var WhatsNewModal = class extends import_obsidian16.Modal {
 };
 
 // src/utils/VoicePlugin.ts
-var Voice = class extends import_obsidian17.Plugin {
+var Voice = class extends import_obsidian18.Plugin {
   async onload() {
     await this.loadSettings();
     this.addSettingTab(new VoiceSettingTab(this.app, this));
@@ -28506,7 +29107,7 @@ var Voice = class extends import_obsidian17.Plugin {
     await this.textSpeaker.speakText(speed);
   }
   isMobile() {
-    return import_obsidian17.Platform.isMobile;
+    return import_obsidian18.Platform.isMobile;
   }
   onunload() {
     if (this.iconEventHandler) {
@@ -28589,6 +29190,8 @@ var Voice = class extends import_obsidian17.Plugin {
       this.settings.AZURE_VOICE = voiceId;
     } else if (this.settings.TTS_PROVIDER === "openai") {
       this.settings.OPENAI_VOICE = voiceId;
+    } else if (this.settings.TTS_PROVIDER === "openai-compatible") {
+      this.settings.OPENAI_COMPAT_VOICE = voiceId;
     } else if (this.settings.TTS_PROVIDER === "minimax") {
       this.settings.MINIMAX_VOICE = voiceId;
     } else {
@@ -28621,7 +29224,7 @@ var Voice = class extends import_obsidian17.Plugin {
     const currentIndex = options.findIndex((v) => v.id === currentId);
     const next = options[(currentIndex + 1) % options.length];
     await this.persistActiveVoice(next.id);
-    new import_obsidian17.Notice(`Voice: ${next.label}`);
+    new import_obsidian18.Notice(`Voice: ${next.label}`);
   }
   /**
    * Open the Voice player and reveal it (right sidebar on desktop, full-screen

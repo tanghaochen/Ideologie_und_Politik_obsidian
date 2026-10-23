@@ -6393,6 +6393,7 @@ var dragExtension = (plugin) => {
         createFileAndDraw({
           located: drawView,
           draw: async (target) => {
+            var _a, _b, _c;
             const dropCanvas = drawView.canvas;
             const size2 = {
               width: plugin.settings.canvasNodeWidth,
@@ -6410,8 +6411,9 @@ var dragExtension = (plugin) => {
               subpath: target.subpath,
               save: false
             });
-            if (plugin.settings.autoLink && isCanvasEditorNode(source == null ? void 0 : source.fileEditor)) {
-              const fromSide = getRelativePosition(source.fileEditor, createNode);
+            if (plugin.settings.autoLink) {
+              const sourceNodeInfo = isCanvasEditorNode(source == null ? void 0 : source.fileEditor) ? { node: source.fileEditor, canvasView: source.view } : plugin.getLatestSelectCanvasNodeInfo(source == null ? void 0 : source.view);
+              const fromSide = sourceNodeInfo !== void 0 && ((_b = (_a = sourceNodeInfo.canvasView) == null ? void 0 : _a.file) == null ? void 0 : _b.path) === ((_c = drawView.file) == null ? void 0 : _c.path) ? getRelativePosition(sourceNodeInfo.node, createNode) : void 0;
               if (fromSide && reverseRelative.has(fromSide)) {
                 const toSide = reverseRelative.get(fromSide);
                 const edgeID = plugin.createRandomHexString(16);
@@ -6423,7 +6425,7 @@ var dragExtension = (plugin) => {
                   const e2 = new edgeSample.constructor(
                     dropCanvas,
                     edgeID,
-                    { side: fromSide, node: source.fileEditor, end: fromEnd },
+                    { side: fromSide, node: sourceNodeInfo.node, end: fromEnd },
                     { side: toSide, node: createNode, end: toEnd }
                   );
                   e2.setLabel(label);
@@ -6436,7 +6438,7 @@ var dragExtension = (plugin) => {
                     nodes: data.nodes,
                     edges: [...data.edges, {
                       id: edgeID,
-                      fromNode: source.fileEditor.id,
+                      fromNode: sourceNodeInfo.node.id,
                       fromSide,
                       fromEnd,
                       toNode: createNode.id,
@@ -6625,9 +6627,7 @@ var dragExtension = (plugin) => {
 };
 function fitContentHeight(node) {
   return asyncContentRenderObserveWrapper(node, (entries) => {
-    for (let entry of entries) {
-      node == null ? void 0 : node.onResizeDblclick(new MouseEvent("dblclick"), "bottom");
-    }
+    node == null ? void 0 : node.onResizeDblclick(new MouseEvent("dblclick"), "bottom");
   });
 }
 function asyncContentRenderObserveWrapper(node, subscriptions) {
@@ -6643,7 +6643,7 @@ function asyncContentRenderObserveWrapper(node, subscriptions) {
       }
       let prevRenderSectionsCount = 0;
       const renderObserve = new ResizeObserver((entries) => {
-        requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
           var _a2, _b2, _c2, _d2;
           const currentSectionCount = (_d2 = (_c2 = (_b2 = (_a2 = node.child) == null ? void 0 : _a2.previewMode) == null ? void 0 : _b2.renderer.sections) == null ? void 0 : _c2.length) != null ? _d2 : 0;
           if (currentSectionCount !== prevRenderSectionsCount)
@@ -6660,7 +6660,7 @@ function asyncContentRenderObserveWrapper(node, subscriptions) {
           clearInterval(id);
           resolve();
         }
-      }, 500);
+      }, 800);
     } catch (error) {
       reject(`fit content height error: ${error}`);
     }
@@ -12141,6 +12141,7 @@ var CardNote = class extends import_obsidian15.Plugin {
     __publicField(this, "applyAutoPreviewNode", () => {
     });
     __publicField(this, "autoPreviewAttribute", "cardnote-preview-leaf");
+    __publicField(this, "latestSelectCanvasNodeInfo");
   }
   async onload() {
     await this.loadSettings();
@@ -12233,6 +12234,10 @@ var CardNote = class extends import_obsidian15.Plugin {
         const [node] = selectedNodes;
         if (!isCanvasFileNode(node))
           return;
+        plugin.latestSelectCanvasNodeInfo = {
+          node,
+          canvasView: activeView
+        };
         plugin.settings.previewNodeInfo = [node.id, node.file.path, (_b = (_a = activeView == null ? void 0 : activeView.file) == null ? void 0 : _a.path) != null ? _b : ""];
         const previewLeaf = await getPreviewLeaf();
         previewLeaf.containerEl.setAttribute(plugin.autoPreviewAttribute, encodeURI(JSON.stringify(plugin.settings.previewNodeInfo)));
@@ -12442,6 +12447,7 @@ var CardNote = class extends import_obsidian15.Plugin {
         () => this.settings.autoPreview,
         () => {
           this.settings.autoPreview = false;
+          this.latestSelectCanvasNodeInfo = void 0;
         }
       )
     });
@@ -12516,11 +12522,11 @@ var CardNote = class extends import_obsidian15.Plugin {
   }
   getActiveEditorFile() {
     var _a;
-    const view = this.app.workspace.getActiveViewOfType(import_obsidian15.TextFileView);
+    const view = this.app.workspace.getActiveViewOfType(import_obsidian15.FileView);
     if (view) {
       if (isObsidianCanvasView(view)) {
         const [selectNode] = view.canvas.selection;
-        return isCanvasEditorNode(selectNode) ? { fileEditor: selectNode, offset: getOffset(selectNode) } : void 0;
+        return isCanvasEditorNode(selectNode) ? { fileEditor: selectNode, offset: getOffset(selectNode), view } : void 0;
       }
       if (isExcalidrawView(view)) {
         const excalidrawShape = view.getViewSelectedElements().first();
@@ -12530,11 +12536,22 @@ var CardNote = class extends import_obsidian15.Plugin {
             ...embeddable.node,
             id: (_a = excalidrawShape == null ? void 0 : excalidrawShape.id) != null ? _a : embeddable.node.id
           },
-          offset: getOffset(embeddable.node)
+          offset: getOffset(embeddable.node),
+          view
         } : void 0;
       }
     }
-    return { fileEditor: this.app.workspace.activeEditor, offset: 0 };
+    const activeEditorFile = {
+      fileEditor: this.app.workspace.activeEditor,
+      offset: 0,
+      view
+    };
+    return activeEditorFile;
+  }
+  getLatestSelectCanvasNodeInfo(view) {
+    if (this.settings.autoPreview && view && view.leaf.containerEl.getAttribute(this.autoPreviewAttribute) !== null) {
+      return this.latestSelectCanvasNodeInfo;
+    }
   }
   async checkFileName(file) {
     const fileName = file.fileName;
@@ -12559,17 +12576,17 @@ var CardNote = class extends import_obsidian15.Plugin {
   }
   updateInternalLinks(linkMap, newPath) {
     const changes = LinkToChanges(linkMap, newPath);
-    this.app.fileManager.updateInternalLinks(changes);
+    this.app.metadataCache.updateInternalLinks(changes);
   }
   renameCanvasSubpath(origin, newFile) {
     var _a, _b;
-    const canvasUpdater = this.app.fileManager.linkUpdaters.canvas;
+    const canvasUpdater = this.app.metadataCache.linkUpdaters.canvas;
     if (origin.file.path === newFile.file.path && origin.subpath !== newFile.subpath) {
       canvasUpdater.renameSubpath(origin.file, (_a = origin.subpath) != null ? _a : "", (_b = newFile.subpath) != null ? _b : "");
     }
   }
   getCanvas(filter) {
-    const canvasUpdater = this.app.fileManager.linkUpdaters.canvas;
+    const canvasUpdater = this.app.metadataCache.linkUpdaters.canvas;
     const canvases = canvasUpdater.canvas.index.getAll();
     const queue = [];
     for (const canvasFilePath in canvases) {
@@ -12640,7 +12657,7 @@ var CardNote = class extends import_obsidian15.Plugin {
       const cache = this.app.metadataCache;
       const fileManger = this.app.fileManager;
       const linkMap = /* @__PURE__ */ new Map();
-      fileManger.iterateAllRefs((fileName, linkCache) => {
+      cache.iterateAllRefs((fileName, linkCache) => {
         var _a;
         fileName.normalize();
         const linkInfo = this.createLinkInfo(linkCache);

@@ -1,13 +1,13 @@
 ---
-title: "Obsidian Web Clipper 深度使用笔记：Deepseek 智能加持，微信公众号等素材高效管理"
-source: "https://zhuanlan.zhihu.com/p/27980381867"
+title: Obsidian Web Clipper 深度使用笔记：Deepseek 智能加持，微信公众号等素材高效管理
+source: https://zhuanlan.zhihu.com/p/27980381867
 author:
   - "[[田公子电子工程师]]"
 published:
 created: 2026-05-08
-description: "Obsidian Web Clipper 深度使用笔记：Deepseek 智能加持，微信公众号等素材高效管理前言在信息爆炸的时代，我们每天都需要从海量的网页中筛选和收集素材。今天，我将为大家带来 Obsidian Web Clipper 的深度使用笔…"
+description: Obsidian Web Clipper 深度使用笔记：Deepseek 智能加持，微信公众号等素材高效管理前言在信息爆炸的时代，我们每天都需要从海量的网页中筛选和收集素材。今天，我将为大家带来 Obsidian Web Clipper 的深度使用笔…
 tags:
-  - "clippings"
+  - clippings
 ---
 16 人赞同了该文章
 
