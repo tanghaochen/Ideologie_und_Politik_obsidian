@@ -120,6 +120,8 @@ b) Sie muss schon nach Hause gegangen ___.
 c) Er will nichts davon gewusst ___.
 d) Sie behauptet, nie dort gewesen ___ ___.
 
+
+
 ### C 组：sein/haben + zu + 不定式
 
 **8.** 用 sein 或 haben + zu + Inf 改写，不改变意思：
@@ -232,7 +234,10 @@ b) …, weil ich nach Hause **habe** gehen müssen.
 双不定式（Doppelinfinitiv）结构中助动词**前移**到两个不定式之前，这是德语从句动词不占末位的少数情形之一。
 
 ### 7
-a) **haben**（verpassen 及物）b) **sein**（gehen 不及物）c) **haben**（wissen）d) **gewesen zu sein**（sein 的完成不定式带 zu）
+a) **haben**（verpassen 及物）
+b) **sein**（gehen 不及物）
+c) **haben**（wissen）
+d) **gewesen zu sein**（sein 的完成不定式带 zu）
 
 对比第 5 题：**情态动词 + 完成不定式**时，sein/haben 反而由主句动词决定，情态动词不干扰。5 和 7 是一对镜像，混淆率极高。
 

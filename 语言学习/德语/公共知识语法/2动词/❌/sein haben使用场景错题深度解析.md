@@ -170,7 +170,7 @@ a) bin   b) hat   c) ist   d) hat
   （`sich ereignen, sich ereignen, sich freuen, sich ärgern, sich verändern, sich beeilen` —— 状态变化也好、位置移动也好，一律 haben。）
 - **第 2 步：动词有第四格宾语吗（及物）？** → 有 → **haben**，结束。
   （`essen, lesen, kaufen, bekommen, besuchen, überfallen, fahren + das Auto` ……）
-- **第 3 步：前两步都没有**，才问一句：**主语是"做了这件事的人"，还是"到了某处 / 变成了某种状态 / 被事件落到头上"？** 后者 → **sein**；前者 → **haben**。
+- **第 3 步：前两步都没有**，才问一句：**主语是"做了这件事的人"， **haben**。，还是"到了某处 / 变成了某种状态 / 被事件落到头上"？**  **sein**；
 
 跑一遍今天的题：
 
