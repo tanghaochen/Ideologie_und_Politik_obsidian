@@ -8,6 +8,30 @@
         "type": "tabs",
         "children": [
           {
+            "id": "f08599394206abaf",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw"
+              },
+              "icon": "excalidraw-icon",
+              "title": "简单逻辑学-论证流水线"
+            }
+          },
+          {
+            "id": "8ec4f8719ef0102e",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw"
+              },
+              "icon": "excalidraw-icon",
+              "title": "简单逻辑学-全书逻辑图谱"
+            }
+          },
+          {
             "id": "9fc65c69d9add161",
             "type": "leaf",
             "state": {
@@ -318,12 +342,16 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "9fc65c69d9add161",
+  "active": "f08599394206abaf",
   "lastOpenFiles": [
-    "_AI-Diagrams/简单逻辑学-全书逻辑图谱-preview.png",
     "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw",
-    "_AI-Diagrams/逻辑学/02-思想准备八条.excalidraw.md",
+    "_AI-Diagrams/简单逻辑学-论证流水线.png",
+    "_AI-Diagrams/简单逻辑学-论证流水线-preview.png",
+    "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw",
     "file:E:/AI workpace/简单逻辑学/简单逻辑学-全书逻辑图.excalidraw",
+    "_AI-Diagrams/简单逻辑学-全书逻辑图谱.png",
+    "_AI-Diagrams/简单逻辑学-全书逻辑图谱-preview.png",
+    "_AI-Diagrams/逻辑学/02-思想准备八条.excalidraw.md",
     "_AI-Diagrams/逻辑学/03-论证-有效性与真.excalidraw.md",
     "_AI-Diagrams/逻辑学/02-思想准备八条.excalidraw",
     "_AI-Diagrams/逻辑学/01-全书骨架.excalidraw",
@@ -333,7 +361,6 @@
     "_AI-Diagrams/逻辑学/00-索引.md",
     "_AI-Diagrams/逻辑学/03-论证-有效性与真.excalidraw",
     "file:E:/AI workpace/简单逻辑学-逻辑图/简单逻辑学-04-非逻辑思维的根源.excalidraw",
-    "file:E:/AI workpace/简单逻辑学-逻辑图/简单逻辑学-03-论证.excalidraw",
     "_AI-Diagrams/mcp-test_0.excalidraw.md",
     "_AI-Diagrams/mcp-test.excalidraw.md",
     "_AI-Diagrams/README.md",
@@ -362,10 +389,6 @@
     "assets/Pasted Image 20261022155003_192.png",
     "assets/image-509.png",
     "assets/PixPin_2026-10-22_15-47-33-1.gif",
-    "assets/PixPin_2026-10-22_15-47-33.gif",
-    "assets/PixPin_2026-10-22_15-46-17-1.gif",
-    "assets/PixPin_2026-10-22_15-46-17.gif",
-    "assets/image-508.png",
     "Marginnote/Deutsch.canvas",
     "Marginnote/错题管理.canvas",
     "思想思维心理哲学/未命名.canvas",
