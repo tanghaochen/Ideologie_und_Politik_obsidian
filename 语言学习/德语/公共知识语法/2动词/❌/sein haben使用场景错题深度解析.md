@@ -189,6 +189,7 @@ a) bin   b) hat   c) ist   d) hat
 2. **有终点的位置变化，约 22 个**：gehen, kommen, ankommen, abfahren, fahren(有目的地), fliegen(有目的地), reisen, laufen(有目的地), schwimmen(有目的地), reiten, wandern, einsteigen, aussteigen, umziehen(搬家), ziehen(迁居), aufbrechen, zurückkehren, aufstehen, sich setzen 以外的 steigen, fallen, sinken, klettern(有目的地)
 3. **状态变化，约 16 个**：aufwachen, einschlafen, aufstehen, sterben, versterben, erkranken, genesen, wachsen, reifen, verblühen, aufblühen, gefrieren, schmelzen(不及物), verbrennen(不及物), platzen, zerbrechen(不及物)
 4. **非自主事件 / 三格承受，约 16 个**：begegnen, folgen, passieren, geschehen, gelingen, misslingen, glücken, widerfahren, zustoßen, unterlaufen, entgehen, vorkommen(=发生), auffallen, **einfallen**, entfallen, geraten
+	1. “非自主事件”说的是：主语不是有意去做这件事的人，事情是“落到”谁身上、在谁身上发生的，那个人只是承受者。 
 
 **B. haben 阵营（数量压倒性，按语义分 5 组）**
 
