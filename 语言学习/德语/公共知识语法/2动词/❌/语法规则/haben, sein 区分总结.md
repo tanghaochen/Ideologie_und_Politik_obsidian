@@ -39,7 +39,7 @@ Die Rechnung ist bis Freitag zu bezahlen. → Sie haben die Rechnung bis Freitag
 
 # 二、sein 与 haben 的全部功能（阅读必备清单）
 
-^r 9948 u
+^jk5eti
 
 ## sein 的六种身份 发生
 
