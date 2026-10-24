@@ -4,67 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "24f2bc4942a14274",
+        "id": "f7fc639dc6d39e5d",
         "type": "tabs",
         "children": [
           {
-            "id": "f08599394206abaf",
+            "id": "b5f44ba9d4f7ab73",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw"
-              },
-              "icon": "excalidraw-icon",
-              "title": "简单逻辑学-论证流水线"
-            }
-          },
-          {
-            "id": "8ec4f8719ef0102e",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw"
-              },
-              "icon": "excalidraw-icon",
-              "title": "简单逻辑学-全书逻辑图谱"
-            }
-          },
-          {
-            "id": "9fc65c69d9add161",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "file:E:/AI workpace/简单逻辑学/简单逻辑学-全书逻辑图.excalidraw"
-              },
-              "icon": "excalidraw-icon",
-              "title": "简单逻辑学-全书逻辑图"
-            }
-          },
-          {
-            "id": "5153d55633bda5db",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "_AI-Diagrams/逻辑学/02-思想准备八条.excalidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "02-思想准备八条.excalidraw"
-            }
-          },
-          {
-            "id": "88865a6e09f21e17",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "_AI-Diagrams/逻辑学/03-论证-有效性与真.excalidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "03-论证-有效性与真.excalidraw"
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
             }
           }
         ]
@@ -342,17 +292,17 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "f08599394206abaf",
+  "active": "b5f44ba9d4f7ab73",
   "lastOpenFiles": [
+    "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw",
     "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw",
+    "file:E:/AI workpace/简单逻辑学/简单逻辑学-全书逻辑图.excalidraw",
+    "_AI-Diagrams/逻辑学/03-论证-有效性与真.excalidraw.md",
+    "_AI-Diagrams/逻辑学/02-思想准备八条.excalidraw.md",
     "_AI-Diagrams/简单逻辑学-论证流水线.png",
     "_AI-Diagrams/简单逻辑学-论证流水线-preview.png",
-    "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw",
-    "file:E:/AI workpace/简单逻辑学/简单逻辑学-全书逻辑图.excalidraw",
     "_AI-Diagrams/简单逻辑学-全书逻辑图谱.png",
     "_AI-Diagrams/简单逻辑学-全书逻辑图谱-preview.png",
-    "_AI-Diagrams/逻辑学/02-思想准备八条.excalidraw.md",
-    "_AI-Diagrams/逻辑学/03-论证-有效性与真.excalidraw.md",
     "_AI-Diagrams/逻辑学/02-思想准备八条.excalidraw",
     "_AI-Diagrams/逻辑学/01-全书骨架.excalidraw",
     "_AI-Diagrams/逻辑学/04-推理形式-假言与三段论.excalidraw",
