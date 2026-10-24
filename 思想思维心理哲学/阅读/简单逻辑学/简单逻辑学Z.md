@@ -326,8 +326,55 @@
 
 “分析 这个结论不是必然的,但是它是极有可能的” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=64&annotation=H8E28SNF)) |
 
+## “08 正确论证” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=65&annotation=XGKSNLNT)) |  
 
+“有两个基本要素:前提和结论。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=65&annotation=NBLMJ8PB)) |  
 
+“专家的权威性。因发言人的权威性而接受他的观点也不 是不合理的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=65&annotation=GNL5LBE3)) |  
+
+“为了使论证正确有力,我们必须关注其事实(内容)和形式(结 构)” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=65&annotation=JGE7WQRN)) |  
+
+“结 构与有效性将息息相关,我们将通过例子来说明有效性问题。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=65&annotation=52C7UVZC)) |  
+
+“而有效性则 针对命题的结构,我们称之为论证。其次,只要命题反映的事实是真相, 它就是正确的。但一个论证如果想成立,如前文所述,在前提正确的基础 上,它的结构也必须能有效支持它的结论。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=65&annotation=K3A88WAK)) |  
+
+“三种简单的论证 形式:联言论证、选言论证和条件论证。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=65&annotation=7SSGFW7I)) |  
+
+### “联言论证” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=66&annotation=BCFJWUIR)) |  
+
+“联言论证的象征性表示为:A·B。其中 A 和 B 都代表一个完整的命 题。用简单的一个例子表示,比如:“安娜是明尼苏达大学二年级的学生, 主修生物学。”A、B 之间的符号“·”代表的意思是“和”,它具有重要意义, 表示 A 和 B 都是真的。这其实是一个连锁反应,在假设其中一个为假的情 况下,你不能认为另一个为真。A·B 可以作为一个论证的前提,由此可得 出两个有效的结论: A·B A·B 所以,A 所以,B 分析 A 的逆命题-A 同 B 的逆命题-B(即安娜不是明尼苏达大学二 年级的学生或者她主修的不是生物学)都是假的,因为它们同论证的前 提相矛盾。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=66&annotation=23B2VPW7)) |  
+
+### “选言论证” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=66&annotation=6S2RNSYT)) |  
+> 🔤🔤
+
+“阿迪尔昨晚或者是坐火车 去了华盛顿,或者是坐飞机。”这里我们面对的是严格的或者说是不相容 的选言命题,” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=66&annotation=CP6HII9N)) |  
+
+“一个为真,另一个必为假” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=66&annotation=IUZQE7DB)) |  
+
+“或者是 A 或者是 B”时,隐含的意思就是两者中必选其一。如果 我们的意思是“既不是 A 也不是 B”,就必须明确地说出来。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=66&annotation=ZH2U73VN)) |  
+
+## “09 条件论证” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=68&annotation=JFTB3Q3Z)) |  
+
+“条件论证,有时又称假言论证,是一个包含“如果......那么......”” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=68&annotation=HQE956NL)) |  
+> 🔤🔤
+
+“条件论证的要点是大前提 A→B 告诉我们如果 A(无论它是什么)成 立,那么 B 也必然成立” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=68&annotation=JES4HMIZ)) |
+
+“如果路易斯在跑步,那么他一定是在移动。 路易斯确实是在跑步。 所以,路易斯在移动。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=69&annotation=RJC24YDV)) |
+
+““如果公牛队获胜,他们将进入季后赛。”首先我们假设这是对真实情况的表 述。根据目前的成绩,如果公牛队获胜,他们将进入季后赛。然而,前提(赢得比赛) 和结论(进入季后赛)之间的联系也不是必然的。比如说,公牛队赢了比赛,但是由 于球员罢工,季后赛取消。实际上,罢工看起来可能性不大,所以考虑到所有因素, 前提和结论之间的联系还是很牢固的。如果公牛队取得胜利,得出他们将进入季后 赛的结论是可靠的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=70&annotation=IC6BDQV6)) |
+
+“条件论证的可靠与否取决于你对论证中前提与结论的了解程度及 它们的联系方式。如果论证的因果关系十分脆弱,就此下结论就是草率 的。注意,条件论证是具有前瞻性的,可靠的预言来自于对过去事实的积 累。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=70&annotation=7BL4N8FG)) |
+
+## “10 三段论” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=71&annotation=ISIPH4ES)) |
+![[file-20261025013034129.png]]
+“三段论的一个符号模式: 每一个 M 都是 P。 每一个 S 都是 M。 所以,每一个 S 都是 P。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=71&annotation=29XDDU3Y)) |
+
+“第一个命题是大前提,第二个是小前提,不用说,第三个是结论” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=71&annotation=HLJFLVJ5)) |
+
+“M 代表“中项”,P 代表“大项”,S 代表“小项”。中项尤其重要,因为它 的任务是搭建起联结其他两项的桥梁,论证的成功与否有赖于中项。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=71&annotation=SR3S8DAV)) |
+
+“三段论推理的根据是,首先确定某一部分是属于整体的,然后得出 某一部分的组成成员也是属于整体的。如果 A 是某个整体的一部分,那 么 B,假设它是 A 的一部分,也一定属于整体。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=71&annotation=HFTKG6ED)) |
 
 
 

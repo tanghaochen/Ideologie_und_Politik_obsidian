@@ -18341,15 +18341,15 @@
   "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md": {
     "cursor": {
       "from": {
-        "line": 316,
-        "ch": 92
+        "line": 3,
+        "ch": 0
       },
       "to": {
-        "line": 316,
-        "ch": 92
+        "line": 3,
+        "ch": 0
       }
     },
-    "scroll": 272.19291482334677
+    "scroll": 0
   },
   "Diary/2026/20261019.md": {
     "cursor": {
@@ -18541,11 +18541,11 @@
     "cursor": {
       "from": {
         "line": 3,
-        "ch": 1
+        "ch": 12
       },
       "to": {
         "line": 3,
-        "ch": 1
+        "ch": 12
       }
     },
     "scroll": 0
@@ -18677,6 +18677,44 @@
       "to": {
         "line": 83,
         "ch": 31
+      }
+    }
+  },
+  "_AI-Diagrams/简单逻辑学Z.md": {
+    "cursor": {
+      "from": {
+        "line": 376,
+        "ch": 94
+      },
+      "to": {
+        "line": 376,
+        "ch": 94
+      }
+    },
+    "scroll": 296.4088271834801
+  },
+  "file:E:/AI workpace/简单逻辑学/简单逻辑学-全书逻辑笔记.md": {
+    "scroll": 313.35000413836855,
+    "cursor": {
+      "from": {
+        "line": 283,
+        "ch": 0
+      },
+      "to": {
+        "line": 283,
+        "ch": 0
+      }
+    }
+  },
+  "_AI-Diagrams/逻辑学/00-索引.md": {
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
       }
     }
   }

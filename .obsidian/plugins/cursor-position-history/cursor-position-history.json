@@ -2159,26 +2159,6 @@
       }
     }
   },
-  "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md": {
-    "scrollState": {
-      "top": 9753.6005859375,
-      "left": 0,
-      "clientHeight": 1516,
-      "clientWidth": 2083,
-      "height": 1516,
-      "width": 2095
-    },
-    "cursor": {
-      "from": {
-        "ch": 92,
-        "line": 316
-      },
-      "to": {
-        "ch": 92,
-        "line": 316
-      }
-    }
-  },
   "营养学以及养生/平均每天的生活成本.md": {
     "scrollState": {
       "top": 0,
@@ -2324,18 +2304,18 @@
       "top": 0,
       "left": 0,
       "clientHeight": 1516,
-      "clientWidth": 1585,
+      "clientWidth": 1818,
       "height": 1516,
-      "width": 1597
+      "width": 1830
     },
     "cursor": {
       "from": {
-        "ch": 29,
-        "line": 0
+        "ch": 12,
+        "line": 3
       },
       "to": {
-        "ch": 29,
-        "line": 0
+        "ch": 12,
+        "line": 3
       }
     }
   },
@@ -2516,6 +2496,46 @@
       "to": {
         "ch": 0,
         "line": 0
+      }
+    }
+  },
+  "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1516,
+      "clientWidth": 1818,
+      "height": 1516,
+      "width": 1830
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 3
+      },
+      "to": {
+        "ch": 0,
+        "line": 3
+      }
+    }
+  },
+  "file:E:/AI workpace/简单逻辑学/简单逻辑学-全书逻辑笔记.md": {
+    "scrollState": {
+      "top": 10203.6005859375,
+      "left": 0,
+      "clientHeight": 1516,
+      "clientWidth": 1818,
+      "height": 1516,
+      "width": 1830
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 283
+      },
+      "to": {
+        "ch": 0,
+        "line": 283
       }
     }
   }

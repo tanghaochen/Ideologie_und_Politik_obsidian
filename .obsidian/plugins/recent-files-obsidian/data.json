@@ -1,6 +1,38 @@
 {
   "recentFiles": [
     {
+      "basename": "简单逻辑学-全书逻辑图谱",
+      "path": "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw"
+    },
+    {
+      "basename": "简单逻辑学-全书逻辑图",
+      "path": "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw"
+    },
+    {
+      "basename": "简单逻辑学-论证流水线",
+      "path": "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw"
+    },
+    {
+      "basename": "DW简单逻辑学",
+      "path": "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md"
+    },
+    {
+      "basename": "简单逻辑学-全书逻辑图",
+      "path": "file:E:/AI workpace/简单逻辑学/简单逻辑学-全书逻辑图.excalidraw"
+    },
+    {
+      "basename": "简单逻辑学Z",
+      "path": "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md"
+    },
+    {
+      "basename": "论证",
+      "path": "思想思维心理哲学/阅读/简单逻辑学/术语/论证.md"
+    },
+    {
+      "basename": "简单逻辑学-全书逻辑笔记",
+      "path": "file:E:/AI workpace/简单逻辑学/简单逻辑学-全书逻辑笔记.md"
+    },
+    {
       "basename": "26-10",
       "path": "语言学习/德语/单词/生词/26-10.md"
     },
@@ -41,46 +73,6 @@
       "path": "语言学习/德语/公共知识语法/2动词/❌/sein和haben区分易错点.md"
     },
     {
-      "basename": "简单逻辑学-论证流水线",
-      "path": "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw"
-    },
-    {
-      "basename": "简单逻辑学-全书逻辑图谱",
-      "path": "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw"
-    },
-    {
-      "basename": "简单逻辑学-全书逻辑图",
-      "path": "file:E:/AI workpace/简单逻辑学/简单逻辑学-全书逻辑图.excalidraw"
-    },
-    {
-      "basename": "03-论证-有效性与真.excalidraw",
-      "path": "_AI-Diagrams/逻辑学/03-论证-有效性与真.excalidraw.md"
-    },
-    {
-      "basename": "02-思想准备八条.excalidraw",
-      "path": "_AI-Diagrams/逻辑学/02-思想准备八条.excalidraw.md"
-    },
-    {
-      "basename": "01-全书骨架",
-      "path": "_AI-Diagrams/逻辑学/01-全书骨架.excalidraw"
-    },
-    {
-      "basename": "04-推理形式-假言与三段论",
-      "path": "_AI-Diagrams/逻辑学/04-推理形式-假言与三段论.excalidraw"
-    },
-    {
-      "basename": "05-谬误总图",
-      "path": "_AI-Diagrams/逻辑学/05-谬误总图.excalidraw"
-    },
-    {
-      "basename": "06-对当关系方阵",
-      "path": "_AI-Diagrams/逻辑学/06-对当关系方阵.excalidraw"
-    },
-    {
-      "basename": "00-索引",
-      "path": "_AI-Diagrams/逻辑学/00-索引.md"
-    },
-    {
       "basename": "简单逻辑学-04-非逻辑思维的根源",
       "path": "file:E:/AI workpace/简单逻辑学-逻辑图/简单逻辑学-04-非逻辑思维的根源.excalidraw"
     },
@@ -99,26 +91,6 @@
     {
       "basename": "简单逻辑学-00-全书总览",
       "path": "file:E:/AI workpace/简单逻辑学-逻辑图/简单逻辑学-00-全书总览.excalidraw"
-    },
-    {
-      "basename": "mcp-test_0.excalidraw",
-      "path": "_AI-Diagrams/mcp-test_0.excalidraw.md"
-    },
-    {
-      "basename": "mcp-test.excalidraw",
-      "path": "_AI-Diagrams/mcp-test.excalidraw.md"
-    },
-    {
-      "basename": "README",
-      "path": "_AI-Diagrams/README.md"
-    },
-    {
-      "basename": "DW简单逻辑学",
-      "path": "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md"
-    },
-    {
-      "basename": "简单逻辑学Z",
-      "path": "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md"
     },
     {
       "basename": "第一将来时, 第二将来时",
@@ -191,14 +163,6 @@
     {
       "basename": "哑铃对应各部位肌肉动作",
       "path": "思想思维心理哲学/健身/哑铃对应各部位肌肉动作.md"
-    },
-    {
-      "basename": "各部位对应动作一览",
-      "path": "思想思维心理哲学/健身/各部位对应动作一览.md"
-    },
-    {
-      "basename": "断言",
-      "path": "思想思维心理哲学/阅读/简单逻辑学/术语/断言.md"
     }
   ],
   "omittedPaths": [],
