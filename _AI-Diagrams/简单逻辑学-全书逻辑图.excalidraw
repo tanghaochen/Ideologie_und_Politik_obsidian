@@ -9004,13 +9004,44 @@
 			"rawText": "",
 			"labelPosition": null,
 			"baseFontSize": null
+		},
+		{
+			"id": "0jbiGzzT",
+			"type": "rectangle",
+			"x": 16.876672244257975,
+			"y": 265.73386907300164,
+			"width": 603.6757143495954,
+			"height": 1413.048384262067,
+			"angle": 0,
+			"strokeColor": "#1e1e1e",
+			"backgroundColor": "#a5d8ff",
+			"fillStyle": "solid",
+			"strokeWidth": 2,
+			"strokeStyle": "solid",
+			"roughness": 1,
+			"opacity": 100,
+			"groupIds": [],
+			"frameId": null,
+			"index": "b2V",
+			"roundness": {
+				"type": 3
+			},
+			"seed": 1272040022,
+			"version": 82,
+			"versionNonce": 569295254,
+			"isDeleted": false,
+			"boundElements": null,
+			"updated": 1792864386070,
+			"created": 1792864385034,
+			"link": null,
+			"locked": false
 		}
 	],
 	"appState": {
 		"theme": "light",
 		"viewBackgroundColor": "#ffffff",
 		"currentItemStrokeColor": "#1e1e1e",
-		"currentItemBackgroundColor": "transparent",
+		"currentItemBackgroundColor": "#a5d8ff",
 		"currentItemFillStyle": "solid",
 		"currentItemStickynoteStrokeColor": "#1e1e1e",
 		"currentItemStrokeWidthKey": "medium",
@@ -9025,10 +9056,10 @@
 		"currentItemEndArrowhead": "arrow",
 		"currentItemArrowType": "round",
 		"currentItemFrameRole": null,
-		"scrollX": 767.8207195821124,
-		"scrollY": -200.4314570055028,
+		"scrollX": -335.0783638708201,
+		"scrollY": -235.21418078996584,
 		"zoom": {
-			"value": 0.786712
+			"value": 1.036712
 		},
 		"currentItemRoundness": "round",
 		"gridSize": 20,

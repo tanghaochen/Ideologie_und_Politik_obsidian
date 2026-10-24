@@ -8136,11 +8136,11 @@
 			"frameId": "TTmtKRnP",
 			"roundness": null,
 			"seed": 924525002,
-			"version": 228,
-			"versionNonce": 826475018,
+			"version": 230,
+			"versionNonce": 1452611094,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325516,
 			"link": null,
 			"locked": false,
 			"text": "第一部分 · 思想准备：八条操作，不是八条品德",
@@ -8181,8 +8181,8 @@
 				"type": 3
 			},
 			"seed": 1604868234,
-			"version": 228,
-			"versionNonce": 1114255562,
+			"version": 230,
+			"versionNonce": 1501527626,
 			"isDeleted": false,
 			"boundElements": [
 				{
@@ -8202,7 +8202,7 @@
 					"id": "wzc1pHdXrfLjQc0ZdlZTz"
 				}
 			],
-			"updated": 1792864036953,
+			"updated": 1792864325516,
 			"link": null,
 			"locked": false,
 			"customData": {
@@ -8231,11 +8231,11 @@
 			"frameId": "TTmtKRnP",
 			"roundness": null,
 			"seed": 1457567562,
-			"version": 228,
-			"versionNonce": 1815971722,
+			"version": 230,
+			"versionNonce": 519430998,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325516,
 			"link": null,
 			"locked": false,
 			"text": "思想准备\n让事实·观念·语言对齐",
@@ -8276,8 +8276,8 @@
 				"type": 3
 			},
 			"seed": 1830764042,
-			"version": 228,
-			"versionNonce": 385353290,
+			"version": 230,
+			"versionNonce": 1582114058,
 			"isDeleted": false,
 			"boundElements": [
 				{
@@ -8297,7 +8297,7 @@
 					"id": "piHx36d8lHRGtdBGXYJ98"
 				}
 			],
-			"updated": 1792864036953,
+			"updated": 1792864325516,
 			"link": null,
 			"locked": false,
 			"customData": {
@@ -8326,11 +8326,11 @@
 			"frameId": "TTmtKRnP",
 			"roundness": null,
 			"seed": 794750154,
-			"version": 229,
-			"versionNonce": 1802808586,
+			"version": 231,
+			"versionNonce": 1414203542,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325516,
 			"link": null,
 			"locked": false,
 			"text": "① 注意力",
@@ -8371,11 +8371,11 @@
 				"type": 2
 			},
 			"seed": 1396360074,
-			"version": 229,
-			"versionNonce": 1060010954,
+			"version": 231,
+			"versionNonce": 808973258,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325516,
 			"link": null,
 			"locked": false,
 			"points": [
@@ -8442,8 +8442,8 @@
 				"type": 3
 			},
 			"seed": 586007114,
-			"version": 228,
-			"versionNonce": 4223626,
+			"version": 230,
+			"versionNonce": 105481686,
 			"isDeleted": false,
 			"boundElements": [
 				{
@@ -8455,7 +8455,7 @@
 					"id": "Bvfs71kHnrcnCJBIdJtCO"
 				}
 			],
-			"updated": 1792864036953,
+			"updated": 1792864325516,
 			"link": null,
 			"locked": false,
 			"customData": {
@@ -8484,11 +8484,11 @@
 			"frameId": "TTmtKRnP",
 			"roundness": null,
 			"seed": 1767041290,
-			"version": 229,
-			"versionNonce": 560304458,
+			"version": 231,
+			"versionNonce": 22735498,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325516,
 			"link": null,
 			"locked": false,
 			"text": "全神贯注：我看到的，还是我以为的？",
@@ -8529,11 +8529,11 @@
 				"type": 2
 			},
 			"seed": 1575303114,
-			"version": 229,
-			"versionNonce": 100194314,
+			"version": 231,
+			"versionNonce": 101079830,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325516,
 			"link": null,
 			"locked": false,
 			"points": [
@@ -8592,8 +8592,8 @@
 				"type": 3
 			},
 			"seed": 280997514,
-			"version": 228,
-			"versionNonce": 1844790986,
+			"version": 230,
+			"versionNonce": 141625674,
 			"isDeleted": false,
 			"boundElements": [
 				{
@@ -8605,7 +8605,7 @@
 					"id": "piHx36d8lHRGtdBGXYJ98"
 				}
 			],
-			"updated": 1792864036953,
+			"updated": 1792864325516,
 			"link": null,
 			"locked": false,
 			"customData": {
@@ -8634,11 +8634,11 @@
 			"frameId": "TTmtKRnP",
 			"roundness": null,
 			"seed": 1453149514,
-			"version": 228,
-			"versionNonce": 1643502986,
+			"version": 230,
+			"versionNonce": 972458070,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325516,
 			"link": null,
 			"locked": false,
 			"text": "确认事实：谁能作证？证据什么类型？",
@@ -8679,11 +8679,11 @@
 				"type": 2
 			},
 			"seed": 886641674,
-			"version": 229,
-			"versionNonce": 523607114,
+			"version": 231,
+			"versionNonce": 1825918986,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325516,
 			"link": null,
 			"locked": false,
 			"points": [
@@ -8742,8 +8742,8 @@
 				"type": 3
 			},
 			"seed": 1299055306,
-			"version": 228,
-			"versionNonce": 59736842,
+			"version": 230,
+			"versionNonce": 1911491990,
 			"isDeleted": false,
 			"boundElements": [
 				{
@@ -8767,7 +8767,7 @@
 					"id": "x_E4CQkLQFL67AogjkAxh"
 				}
 			],
-			"updated": 1792864036953,
+			"updated": 1792864325516,
 			"link": null,
 			"locked": false,
 			"customData": {
@@ -8796,11 +8796,11 @@
 			"frameId": "TTmtKRnP",
 			"roundness": null,
 			"seed": 1257707914,
-			"version": 228,
-			"versionNonce": 2038337994,
+			"version": 230,
+			"versionNonce": 847429322,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325516,
 			"link": null,
 			"locked": false,
 			"text": "② 观念",
@@ -8841,11 +8841,11 @@
 				"type": 2
 			},
 			"seed": 1286559818,
-			"version": 229,
-			"versionNonce": 1679673482,
+			"version": 231,
+			"versionNonce": 992275158,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325516,
 			"link": null,
 			"locked": false,
 			"points": [
@@ -8912,8 +8912,8 @@
 				"type": 3
 			},
 			"seed": 1383186186,
-			"version": 228,
-			"versionNonce": 187180874,
+			"version": 231,
+			"versionNonce": 1978635914,
 			"isDeleted": false,
 			"boundElements": [
 				{
@@ -8925,13 +8925,13 @@
 					"id": "mtR_09GWndko1T8QWNuJs"
 				}
 			],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"customData": {
 				"legacyTextWrap": true
 			},
-			"index": "b2Ip",
+			"index": "b2In",
 			"created": 1792864009911,
 			"hasTextLink": false
 		},
@@ -8954,11 +8954,11 @@
 			"frameId": "TTmtKRnP",
 			"roundness": null,
 			"seed": 683232714,
-			"version": 228,
-			"versionNonce": 116960778,
+			"version": 231,
+			"versionNonce": 1398959894,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"text": "观念 ≠ 对象：别把概念当实物",
@@ -8971,7 +8971,7 @@
 			"lineHeight": 1.3,
 			"baseline": 14,
 			"autoResize": true,
-			"index": "b2It",
+			"index": "b2Ip",
 			"created": 1792864009911,
 			"hasTextLink": false,
 			"rawText": "",
@@ -8999,11 +8999,11 @@
 				"type": 2
 			},
 			"seed": 1419838602,
-			"version": 229,
-			"versionNonce": 747265226,
+			"version": 232,
+			"versionNonce": 1569731914,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"points": [
@@ -9036,7 +9036,7 @@
 			"startArrowhead": null,
 			"endArrowhead": null,
 			"elbowed": false,
-			"index": "b2Ix",
+			"index": "b2It",
 			"created": 1792864009911,
 			"hasTextLink": false,
 			"moveMidPointsWithElement": false
@@ -9062,8 +9062,8 @@
 				"type": 3
 			},
 			"seed": 2145641290,
-			"version": 228,
-			"versionNonce": 2037920650,
+			"version": 231,
+			"versionNonce": 716184662,
 			"isDeleted": false,
 			"boundElements": [
 				{
@@ -9075,13 +9075,13 @@
 					"id": "uKVtCucN09eaJyjqUMC_f"
 				}
 			],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"customData": {
 				"legacyTextWrap": true
 			},
-			"index": "b2J",
+			"index": "b2Ix",
 			"created": 1792864009911,
 			"hasTextLink": false
 		},
@@ -9104,11 +9104,11 @@
 			"frameId": "TTmtKRnP",
 			"roundness": null,
 			"seed": 1692199434,
-			"version": 229,
-			"versionNonce": 2147299914,
+			"version": 232,
+			"versionNonce": 758053898,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"text": "追溯来源：亲历？转述？自己推的？",
@@ -9121,7 +9121,7 @@
 			"lineHeight": 1.3,
 			"baseline": 14,
 			"autoResize": true,
-			"index": "b2J4",
+			"index": "b2J",
 			"created": 1792864009911,
 			"hasTextLink": false,
 			"rawText": "",
@@ -9149,11 +9149,11 @@
 				"type": 2
 			},
 			"seed": 981932234,
-			"version": 229,
-			"versionNonce": 1391745290,
+			"version": 232,
+			"versionNonce": 1045832086,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"points": [
@@ -9186,7 +9186,7 @@
 			"startArrowhead": null,
 			"endArrowhead": null,
 			"elbowed": false,
-			"index": "b2J8",
+			"index": "b2J4",
 			"created": 1792864009911,
 			"hasTextLink": false,
 			"moveMidPointsWithElement": false
@@ -9212,8 +9212,8 @@
 				"type": 3
 			},
 			"seed": 545091466,
-			"version": 228,
-			"versionNonce": 1910024138,
+			"version": 231,
+			"versionNonce": 315026122,
 			"isDeleted": false,
 			"boundElements": [
 				{
@@ -9225,13 +9225,13 @@
 					"id": "x_E4CQkLQFL67AogjkAxh"
 				}
 			],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"customData": {
 				"legacyTextWrap": true
 			},
-			"index": "b2JG",
+			"index": "b2J8",
 			"created": 1792864009911,
 			"hasTextLink": false
 		},
@@ -9254,11 +9254,11 @@
 			"frameId": "TTmtKRnP",
 			"roundness": null,
 			"seed": 184217162,
-			"version": 229,
-			"versionNonce": 885333642,
+			"version": 232,
+			"versionNonce": 294223574,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"text": "观念须联系事实：否则在论证里空转",
@@ -9271,7 +9271,7 @@
 			"lineHeight": 1.3,
 			"baseline": 14,
 			"autoResize": true,
-			"index": "b2JO",
+			"index": "b2JG",
 			"created": 1792864009911,
 			"hasTextLink": false,
 			"rawText": "",
@@ -9299,11 +9299,11 @@
 				"type": 2
 			},
 			"seed": 786076938,
-			"version": 229,
-			"versionNonce": 947174730,
+			"version": 232,
+			"versionNonce": 1156776330,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"points": [
@@ -9336,7 +9336,7 @@
 			"startArrowhead": null,
 			"endArrowhead": null,
 			"elbowed": false,
-			"index": "b2JV",
+			"index": "b2JO",
 			"created": 1792864009911,
 			"hasTextLink": false,
 			"moveMidPointsWithElement": false
@@ -9362,8 +9362,8 @@
 				"type": 3
 			},
 			"seed": 1838638026,
-			"version": 397,
-			"versionNonce": 1245873162,
+			"version": 400,
+			"versionNonce": 2027893782,
 			"isDeleted": false,
 			"boundElements": [
 				{
@@ -9387,13 +9387,13 @@
 					"id": "3ZYboWabcB7gIplBS9IkN"
 				}
 			],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"customData": {
 				"legacyTextWrap": true
 			},
-			"index": "b2JZ",
+			"index": "b2JV",
 			"created": 1792864009911,
 			"hasTextLink": false
 		},
@@ -9416,11 +9416,11 @@
 			"frameId": "TTmtKRnP",
 			"roundness": null,
 			"seed": 1095522954,
-			"version": 398,
-			"versionNonce": 1412002506,
+			"version": 401,
+			"versionNonce": 1861107786,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"text": "③ 语言",
@@ -9433,7 +9433,7 @@
 			"lineHeight": 1.3,
 			"baseline": 17,
 			"autoResize": true,
-			"index": "b2Jd",
+			"index": "b2JZ",
 			"created": 1792864009911,
 			"hasTextLink": false,
 			"rawText": "",
@@ -9461,11 +9461,11 @@
 				"type": 2
 			},
 			"seed": 682916170,
-			"version": 398,
-			"versionNonce": 1220839818,
+			"version": 401,
+			"versionNonce": 1850491222,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"points": [
@@ -9506,7 +9506,7 @@
 			"startArrowhead": null,
 			"endArrowhead": "arrow",
 			"elbowed": false,
-			"index": "b2Jl",
+			"index": "b2Jd",
 			"created": 1792864009911,
 			"hasTextLink": false,
 			"moveMidPointsWithElement": false
@@ -9532,8 +9532,8 @@
 				"type": 3
 			},
 			"seed": 321568778,
-			"version": 228,
-			"versionNonce": 256821322,
+			"version": 231,
+			"versionNonce": 479438602,
 			"isDeleted": false,
 			"boundElements": [
 				{
@@ -9545,13 +9545,13 @@
 					"id": "9_I5fzJHadVT8vzizGJyj"
 				}
 			],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"customData": {
 				"legacyTextWrap": true
 			},
-			"index": "b2Jt",
+			"index": "b2Jl",
 			"created": 1792864009911,
 			"hasTextLink": false
 		},
@@ -9574,11 +9574,11 @@
 			"frameId": "TTmtKRnP",
 			"roundness": null,
 			"seed": 1286221514,
-			"version": 229,
-			"versionNonce": 1872965386,
+			"version": 232,
+			"versionNonce": 1696966294,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"text": "把观念变成语言：容器漏，内容就洒",
@@ -9591,7 +9591,7 @@
 			"lineHeight": 1.3,
 			"baseline": 14,
 			"autoResize": true,
-			"index": "b2K",
+			"index": "b2Jt",
 			"created": 1792864009911,
 			"hasTextLink": false,
 			"rawText": "",
@@ -9619,11 +9619,11 @@
 				"type": 2
 			},
 			"seed": 1775093130,
-			"version": 398,
-			"versionNonce": 2117909962,
+			"version": 401,
+			"versionNonce": 643708362,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"points": [
@@ -9656,7 +9656,7 @@
 			"startArrowhead": null,
 			"endArrowhead": null,
 			"elbowed": false,
-			"index": "b2K8",
+			"index": "b2K",
 			"created": 1792864009911,
 			"hasTextLink": false,
 			"moveMidPointsWithElement": false
@@ -9682,8 +9682,8 @@
 				"type": 3
 			},
 			"seed": 869303370,
-			"version": 228,
-			"versionNonce": 137786506,
+			"version": 231,
+			"versionNonce": 505439190,
 			"isDeleted": false,
 			"boundElements": [
 				{
@@ -9695,13 +9695,13 @@
 					"id": "GEpKMqE-7P9j9u5yvYo-k"
 				}
 			],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"customData": {
 				"legacyTextWrap": true
 			},
-			"index": "b2KG",
+			"index": "b2K8",
 			"created": 1792864009911,
 			"hasTextLink": false
 		},
@@ -9724,11 +9724,11 @@
 			"frameId": "TTmtKRnP",
 			"roundness": null,
 			"seed": 344812298,
-			"version": 229,
-			"versionNonce": 2135642954,
+			"version": 232,
+			"versionNonce": 493415562,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"text": "有效沟通：让对方接收到，不是自己说完",
@@ -9741,7 +9741,7 @@
 			"lineHeight": 1.3,
 			"baseline": 14,
 			"autoResize": true,
-			"index": "b2KV",
+			"index": "b2KG",
 			"created": 1792864009911,
 			"hasTextLink": false,
 			"rawText": "",
@@ -9769,11 +9769,11 @@
 				"type": 2
 			},
 			"seed": 41908682,
-			"version": 398,
-			"versionNonce": 1708546570,
+			"version": 401,
+			"versionNonce": 2068936982,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"points": [
@@ -9806,7 +9806,7 @@
 			"startArrowhead": null,
 			"endArrowhead": null,
 			"elbowed": false,
-			"index": "b2Kl",
+			"index": "b2KV",
 			"created": 1792864009911,
 			"hasTextLink": false,
 			"moveMidPointsWithElement": false
@@ -9832,8 +9832,8 @@
 				"type": 3
 			},
 			"seed": 1824632970,
-			"version": 228,
-			"versionNonce": 986876106,
+			"version": 231,
+			"versionNonce": 930007882,
 			"isDeleted": false,
 			"boundElements": [
 				{
@@ -9845,13 +9845,13 @@
 					"id": "3ZYboWabcB7gIplBS9IkN"
 				}
 			],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"customData": {
 				"legacyTextWrap": true
 			},
-			"index": "b2L",
+			"index": "b2Kl",
 			"created": 1792864009911,
 			"hasTextLink": false
 		},
@@ -9874,11 +9874,11 @@
 			"frameId": "TTmtKRnP",
 			"roundness": null,
 			"seed": 655298378,
-			"version": 229,
-			"versionNonce": 1708842890,
+			"version": 232,
+			"versionNonce": 1412294230,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"text": "避免模糊与歧义：模糊＝边界不清／歧义＝一词多义",
@@ -9891,7 +9891,7 @@
 			"lineHeight": 1.3,
 			"baseline": 14,
 			"autoResize": true,
-			"index": "b2LV",
+			"index": "b2L",
 			"created": 1792864009911,
 			"hasTextLink": false,
 			"rawText": "",
@@ -9919,11 +9919,11 @@
 				"type": 2
 			},
 			"seed": 1438815754,
-			"version": 398,
-			"versionNonce": 589979210,
+			"version": 401,
+			"versionNonce": 986370570,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
+			"updated": 1792864325517,
 			"link": null,
 			"locked": false,
 			"points": [
@@ -9956,7 +9956,7 @@
 			"startArrowhead": null,
 			"endArrowhead": null,
 			"elbowed": false,
-			"index": "b2M",
+			"index": "b2LG",
 			"created": 1792864009911,
 			"hasTextLink": false,
 			"moveMidPointsWithElement": false
@@ -9964,9 +9964,9 @@
 		{
 			"id": "yn8n4rJr",
 			"type": "text",
-			"x": -424.8177523098302,
-			"y": -76.84126888544597,
-			"width": 708,
+			"x": -422.62161106089513,
+			"y": -85.24711286223528,
+			"width": 902.1195069218352,
 			"height": 23.400000000000002,
 			"angle": 0,
 			"strokeColor": "#c92a2a",
@@ -9980,15 +9980,14 @@
 			"frameId": "TTmtKRnP",
 			"roundness": null,
 			"seed": 1507280074,
-			"version": 228,
-			"versionNonce": 1872495882,
+			"version": 292,
+			"versionNonce": 302130518,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792864036953,
-			"link": null,
+			"updated": 1792864359345,
 			"locked": false,
-			"text": "箭头不能反：注意力 → 事实 → 观念 → 语言。跳过任何一环，后面的推理都建在沙上。",
-			"originalText": "箭头不能反：注意力 → 事实 → 观念 → 语言。跳过任何一环，后面的推理都建在沙上。",
+			"text": "箭头不能反：注意力 → 事实 → 观念 → 语言 -> 沟通 → 真相。跳过任何一环，后面的推理都建在沙上。",
+			"originalText": "箭头不能反：注意力 → 事实 → 观念 → 语言 -> 沟通 → 真相。跳过任何一环，后面的推理都建在沙上。",
 			"fontSize": 18,
 			"fontFamily": 5,
 			"textAlign": "left",
@@ -9996,9 +9995,51 @@
 			"containerId": null,
 			"lineHeight": 1.3,
 			"baseline": 16,
+			"autoResize": false,
+			"index": "b2LV",
+			"created": 1792864009911,
+			"hasTextLink": false,
+			"rawText": "箭头不能反：注意力 → 事实 → 观念 → 语言 -> 沟通 → 真相。跳过任何一环，后面的推理都建在沙上。",
+			"labelPosition": null,
+			"baseFontSize": null
+		},
+		{
+			"type": "text",
+			"id": "jrzBN2PG",
+			"x": -423.1864025522843,
+			"y": -51.2946710989429,
+			"width": 280,
+			"height": 35,
+			"text": "本章判据：看一个人是否准备好讲逻辑，\n先看他从事实出发，还是从情绪与立场出发。",
+			"originalText": "本章判据：看一个人是否准备好讲逻辑，\n先看他从事实出发，还是从情绪与立场出发。",
+			"fontSize": 14,
+			"fontFamily": 3,
+			"textAlign": "left",
+			"verticalAlign": "top",
+			"strokeColor": "#64748b",
+			"backgroundColor": "transparent",
+			"fillStyle": "solid",
+			"strokeWidth": 1,
+			"strokeStyle": "solid",
+			"roughness": 0,
+			"opacity": 100,
+			"angle": 0,
+			"seed": 707554826,
+			"version": 67,
+			"versionNonce": 429705430,
+			"isDeleted": false,
+			"groupIds": [],
+			"boundElements": [],
+			"link": null,
+			"locked": false,
+			"containerId": null,
+			"lineHeight": 1.25,
 			"autoResize": true,
 			"index": "b2N",
-			"created": 1792864009911,
+			"frameId": "TTmtKRnP",
+			"roundness": null,
+			"updated": 1792864325517,
+			"created": 1792864319145,
 			"hasTextLink": false,
 			"rawText": "",
 			"labelPosition": null,
@@ -10010,7 +10051,7 @@
 			"x": -481.54526917773,
 			"y": -995.368630391127,
 			"width": 1313.4547008167615,
-			"height": 984.0000221946024,
+			"height": 990.5883900912157,
 			"angle": 0,
 			"strokeColor": "#bbb",
 			"backgroundColor": "transparent",
@@ -10024,11 +10065,11 @@
 			"index": "b2u",
 			"roundness": null,
 			"seed": 167300874,
-			"version": 279,
-			"versionNonce": 623704906,
+			"version": 284,
+			"versionNonce": 711387274,
 			"isDeleted": false,
 			"boundElements": null,
-			"updated": 1792864036953,
+			"updated": 1792864324976,
 			"created": 1792864029711,
 			"link": null,
 			"locked": false,
@@ -19121,90 +19162,6 @@
 				}
 			},
 			"name": "全书逻辑图"
-		},
-		{
-			"type": "text",
-			"id": "2GrdeuMy",
-			"x": -324.36105165365984,
-			"y": 1.217118320762438,
-			"width": 332,
-			"height": 20,
-			"text": "思维链：事实 → 观念 → 语言 → 沟通 → 真相",
-			"originalText": "思维链：事实 → 观念 → 语言 → 沟通 → 真相",
-			"fontSize": 16,
-			"fontFamily": 3,
-			"textAlign": "left",
-			"verticalAlign": "top",
-			"strokeColor": "#c2410c",
-			"backgroundColor": "transparent",
-			"fillStyle": "solid",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 0,
-			"opacity": 100,
-			"angle": 0,
-			"seed": 2043930442,
-			"version": 5,
-			"versionNonce": 860232906,
-			"isDeleted": false,
-			"groupIds": [],
-			"boundElements": [],
-			"link": null,
-			"locked": false,
-			"containerId": null,
-			"lineHeight": 1.25,
-			"autoResize": true,
-			"index": "b65",
-			"frameId": null,
-			"roundness": null,
-			"updated": 1792864319145,
-			"created": 1792864319145,
-			"hasTextLink": false,
-			"rawText": "",
-			"labelPosition": null,
-			"baseFontSize": null
-		},
-		{
-			"type": "text",
-			"id": "jrzBN2PG",
-			"x": -324.36105165365984,
-			"y": 55.21711832076244,
-			"width": 280,
-			"height": 35,
-			"text": "本章判据：看一个人是否准备好讲逻辑，\n先看他从事实出发，还是从情绪与立场出发。",
-			"originalText": "本章判据：看一个人是否准备好讲逻辑，\n先看他从事实出发，还是从情绪与立场出发。",
-			"fontSize": 14,
-			"fontFamily": 3,
-			"textAlign": "left",
-			"verticalAlign": "top",
-			"strokeColor": "#64748b",
-			"backgroundColor": "transparent",
-			"fillStyle": "solid",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 0,
-			"opacity": 100,
-			"angle": 0,
-			"seed": 707554826,
-			"version": 5,
-			"versionNonce": 558787798,
-			"isDeleted": false,
-			"groupIds": [],
-			"boundElements": [],
-			"link": null,
-			"locked": false,
-			"containerId": null,
-			"lineHeight": 1.25,
-			"autoResize": true,
-			"index": "b66",
-			"frameId": null,
-			"roundness": null,
-			"updated": 1792864319145,
-			"created": 1792864319145,
-			"hasTextLink": false,
-			"rawText": "",
-			"labelPosition": null,
-			"baseFontSize": null
 		}
 	],
 	"appState": {
@@ -19226,10 +19183,10 @@
 		"currentItemEndArrowhead": "arrow",
 		"currentItemArrowType": "round",
 		"currentItemFrameRole": null,
-		"scrollX": 784.1692106335958,
-		"scrollY": 758.2168504422771,
+		"scrollX": -360.37823162013103,
+		"scrollY": 1191.9876993361445,
 		"zoom": {
-			"value": 1.092837
+			"value": 0.81947
 		},
 		"currentItemRoundness": "round",
 		"gridSize": 20,
