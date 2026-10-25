@@ -2598,5 +2598,45 @@
         "line": 1
       }
     }
+  },
+  "思想思维心理哲学/个人与社会的关系/从关系到超越：情感的双向契约与生命丰盈.md": {
+    "scrollState": {
+      "top": 8740.7998046875,
+      "left": 0,
+      "clientHeight": 1516,
+      "clientWidth": 1036,
+      "height": 1516,
+      "width": 1048
+    },
+    "cursor": {
+      "from": {
+        "ch": 3,
+        "line": 273
+      },
+      "to": {
+        "ch": 3,
+        "line": 273
+      }
+    }
+  },
+  "思想思维心理哲学/个人与社会的关系/宏观社会巨机器与微观个体之间的雕塑关系.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1516,
+      "clientWidth": 1036,
+      "height": 1516,
+      "width": 1048
+    },
+    "cursor": {
+      "from": {
+        "ch": 87,
+        "line": 0
+      },
+      "to": {
+        "ch": 87,
+        "line": 0
+      }
+    }
   }
 }
