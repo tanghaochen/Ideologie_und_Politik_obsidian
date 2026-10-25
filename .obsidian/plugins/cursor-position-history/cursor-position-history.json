@@ -2538,5 +2538,25 @@
         "line": 283
       }
     }
+  },
+  "file:E:/AI workpace/gdx_research/Geomagic_Design_X_签名错误_深度研究报告.md": {
+    "scrollState": {
+      "top": 17288.400390625,
+      "left": 0,
+      "clientHeight": 1516,
+      "clientWidth": 1818,
+      "height": 1516,
+      "width": 1830
+    },
+    "cursor": {
+      "from": {
+        "ch": 27,
+        "line": 453
+      },
+      "to": {
+        "ch": 27,
+        "line": 453
+      }
+    }
   }
 }
