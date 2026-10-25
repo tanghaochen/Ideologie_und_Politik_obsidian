@@ -1641,7 +1641,7 @@
   },
   "语言学习/德语/单词/生词/26-10.md": {
     "scrollState": {
-      "top": 2499.60009765625,
+      "top": 2340,
       "left": 0,
       "clientHeight": 1516,
       "clientWidth": 1322,
@@ -2541,7 +2541,7 @@
   },
   "file:E:/AI workpace/gdx_research/Geomagic_Design_X_签名错误_深度研究报告.md": {
     "scrollState": {
-      "top": 17288.400390625,
+      "top": 15505.2001953125,
       "left": 0,
       "clientHeight": 1516,
       "clientWidth": 1818,
@@ -2556,6 +2556,26 @@
       "to": {
         "ch": 27,
         "line": 453
+      }
+    }
+  },
+  "语言学习/德语/单词/生词/形近词，易错词/表达说一类词汇辨析汇总.md": {
+    "scrollState": {
+      "top": 2614.800048828125,
+      "left": 0,
+      "clientHeight": 1516,
+      "clientWidth": 1322,
+      "height": 1516,
+      "width": 1334
+    },
+    "cursor": {
+      "from": {
+        "ch": 10,
+        "line": 0
+      },
+      "to": {
+        "ch": 10,
+        "line": 0
       }
     }
   }
