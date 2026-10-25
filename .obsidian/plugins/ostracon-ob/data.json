@@ -9734,6 +9734,30 @@
   ],
   "logs": [
     {
+      "id": "log-mvnt07m2-51e209f04485",
+      "level": "info",
+      "message": "plugin loaded",
+      "at": "2026-10-25T12:28:23.306Z"
+    },
+    {
+      "id": "log-mvnt07lg-85bb73a051c6",
+      "level": "info",
+      "message": "ws listening on ws://[::1]:27123",
+      "at": "2026-10-25T12:28:23.284Z"
+    },
+    {
+      "id": "log-mvnns71t-8a3d03680e90",
+      "level": "info",
+      "message": "plugin loaded",
+      "at": "2026-10-25T10:02:11.249Z"
+    },
+    {
+      "id": "log-mvnns71f-36a8c93342f7",
+      "level": "info",
+      "message": "ws listening on ws://[::1]:27123",
+      "at": "2026-10-25T10:02:11.235Z"
+    },
+    {
       "id": "log-mvi9t9ho-a4c987716d53",
       "level": "info",
       "message": "ingested packet ostracon-mvi9zmqr-nhwbuy",
