@@ -75,6 +75,48 @@
         "type": "tabs",
         "children": [
           {
+            "id": "802e37197acec1c3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "思想思维心理哲学/阅读/被讨厌的勇气/如何改变自己.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "如何改变自己"
+            }
+          },
+          {
+            "id": "e092df320c762e60",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "思想思维心理哲学/阅读/被讨厌的勇气/被讨厌的勇气全书逻辑.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "被讨厌的勇气全书逻辑"
+            }
+          },
+          {
+            "id": "bed66d3aca7afb10",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "思想思维心理哲学/个人与社会的关系/当下制度文化与历史演变.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "当下制度文化与历史演变"
+            }
+          },
+          {
             "id": "e0e49447d90cb7d5",
             "type": "leaf",
             "state": {
@@ -445,10 +487,12 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e0e49447d90cb7d5",
+  "active": "802e37197acec1c3",
   "lastOpenFiles": [
-    "思想思维心理哲学/个人与社会的关系/从关系到超越：情感的双向契约与生命丰盈.md",
+    "思想思维心理哲学/阅读/被讨厌的勇气/被讨厌的勇气全书逻辑.md",
+    "思想思维心理哲学/个人与社会的关系/当下制度文化与历史演变.md",
     "思想思维心理哲学/个人与社会的关系/宏观社会巨机器与微观个体之间的雕塑关系.md",
+    "思想思维心理哲学/个人与社会的关系/从关系到超越：情感的双向契约与生命丰盈.md",
     "思想思维心理哲学/个人与社会的关系/从 0 到 1：社会连接的善恶算法与尊严支柱.md",
     "思想思维心理哲学/个人问题处理/未命名.md",
     "思想思维心理哲学/个人与社会的关系",
@@ -482,8 +526,6 @@
     "语言学习/德语/公共知识语法/2动词/❌/语法规则/haben, sein 区分总结.md",
     "语言学习/德语/公共知识语法/2动词/❌/语法规则/sein和haben区分易错点.md",
     "语言学习/德语/公共知识语法/2动词/❌/深度解析/sein haben使用场景错题深度解析.md",
-    "语言学习/德语/公共知识语法/2动词/❌/lassen错误.md",
-    "语言学习/德语/公共知识语法/2动词/❌/sein和haben区分易错点.md",
     "_AI-Diagrams/简单逻辑学-论证流水线.png",
     "_AI-Diagrams/简单逻辑学-论证流水线-preview.png",
     "_AI-Diagrams/简单逻辑学-全书逻辑图谱.png",

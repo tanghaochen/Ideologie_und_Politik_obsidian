@@ -1561,21 +1561,21 @@
   },
   "思想思维心理哲学/阅读/被讨厌的勇气/如何改变自己.md": {
     "scrollState": {
-      "top": 1224,
+      "top": 5120.39990234375,
       "left": 0,
       "clientHeight": 1516,
-      "clientWidth": 1107,
+      "clientWidth": 1036,
       "height": 1516,
-      "width": 1119
+      "width": 1048
     },
     "cursor": {
       "from": {
-        "ch": 0,
-        "line": 167
+        "ch": 6,
+        "line": 182
       },
       "to": {
-        "ch": 0,
-        "line": 167
+        "ch": 6,
+        "line": 182
       }
     }
   },
@@ -2636,6 +2636,26 @@
       "to": {
         "ch": 87,
         "line": 0
+      }
+    }
+  },
+  "思想思维心理哲学/个人与社会的关系/当下制度文化与历史演变.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1516,
+      "clientWidth": 1036,
+      "height": 1516,
+      "width": 1048
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 1
+      },
+      "to": {
+        "ch": 0,
+        "line": 1
       }
     }
   }
