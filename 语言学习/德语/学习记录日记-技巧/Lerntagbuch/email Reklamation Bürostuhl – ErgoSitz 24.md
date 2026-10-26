@@ -376,72 +376,626 @@ c) Ich habe Fotos als ________ beigefügt.
 
 ---
 
-## 模块六：四栏对照速查版
+# 🎓 B 2 写作批改报告 · Teil 2 Formelle E-Mail (Reklamation)
 
-> 用法：每一句在四个部分里都带同一个脚注编号，点编号即可跳到文末说明，四栏句子一一对应。
+---
 
-**第一部分 · 推测你想表达的中文**
+## 模块一：考官短评与 B 2 维度体检 (Kurze Bewertung)
 
-1. 尊敬的 Neumann 先生（您好）。[^1]
-2. 我是你们的顾客，写信是因为我买的那把办公椅，右扶手断了。[^2]
-3. 我非常生气，因为我五天前就给客服写了邮件，却一直没有回复，这到底是什么原因？[^3]
-4. 我用相机拍了照片和视频，作为证据附在邮件里。[^4]
-5. 我希望这个问题尽快解决，否则我将提出投诉。[^5]
-6. 请你们给我一个解决方案。[^6]
-7. 我的意见是再给我寄一把人体工学办公椅，而且退货运费必须由你们承担。[^7]
-8. 我希望你们尽快看邮件并回复我（并给我书面确认和期限）。[^8]
-9. 此致敬礼 / （写信人签名）。[^9]
+### 🟢 亮点先行 (Das hast du gut gemacht)
 
-**第二部分 · 你的原文**
+- ✅ **书信框架意识完整**：你写了 Anrede + 正文 + Grußformel，知道这是一封正式信函，没有写成聊天消息——这是最重要的第一步。
+- ✅ **全篇唯一一个复杂从句，你写对了**：`weil ich bereits vor fünf Tagen eine E-Mail an den Kundenservice geschrieben habe`
+  - weil 引导从句 → 变位动词 `habe` 正确置于句末（尾语序）
+  - Perfekt 结构 `geschrieben habe` 正确
+  - `vor fünf Tagen` 第三格正确
+  - 这一句是标准的 B 2 级从句，说明你**具备写出正确复杂句的能力**，问题只在词汇层面。
+- ✅ **形容词词尾正确**：`einen ergonomischen Bürostuhl`（Akkusativ 阳性，ein-Wort 后弱变化 -en）完全正确。
+- ✅ **有"后果/施压"这一层意识**：你写了 `sonst …`，说明你知道投诉信需要"否则我将……"，这是 B 2 论证思维，很多人根本想不到。
 
-1. sehr Geehrd Die Angestellte.[^1]
-2. Ich bin eine Comsummer, ich schiebe wegen des Kaufs des Burostuhl, desen ist die rechte Armlehne gebrochen.[^2]
-3. Ich bin am ärgisten viel und ganz, wile ich bereits vor fünf Tagen eine E-Mail an den Kundenservice geschrieben habe, was die Gründe für die situtation?[^3]
-4. Ich rekorde sich mit die Cemare und die vedio, die durcheinsatz die E-Mail als die Auswiese.[^4]
-5. Ich möche Ihn shneller problem verhanden, sonst ich eine Verwerbung unterschieben.[^5]
-6. Shollten wir eine Lösung angeben.[^6]
-7. Maine mainung ist wieder einen ergonomischen Bürostuhl vorsand, und euch mussten wenig günstig kaufpreises rücksenden.[^7]
-8. Ich möchte euch die shnellsten Antworten, wenn E-Mail zu lesen.[^8]
-9. mit fraundlich Grüße / Herrn Neumann[^9]
+### 整体印象
 
-**第三部分 · 最小改动的德语版（保分版）**
+结构骨架在、从句能力在，但**词汇层面大量"听音拼写 + 英语直搬 + 生造词"**（Comsummer / schiebe / verhanden / vorsand / Verwerbung / Auswiese），导致多个句子在德语中无法被理解；同时题目 4 个任务点只完成了 1 个半（Mangel 部分描述 / Lösung 模糊提到），**Frist、Rücksendekosten、schriftliche Bestätigung、Bestellnummer 全部缺失**。
 
-*(Betreff: Reklamation Bürostuhl – Bestell-Nr. E-2024-5567)*
+### 多维度打分
 
-1. Sehr geehrter Herr Neumann,[^1]
-2. ich bin Ihre Kundin und schreibe Ihnen wegen des Kaufs des Bürostuhls: bei dem Stuhl ist die rechte Armlehne gebrochen.[^2]
-3. Ich bin sehr verärgert, weil ich bereits vor fünf Tagen eine E-Mail an den Kundenservice geschrieben habe und bis heute keine Antwort erhalten habe.[^3]
-4. Ich habe mit der Kamera Fotos und ein Video aufgenommen, die ich als Beweis in die E-Mail eingefügt habe.[^4]
-5. Ich möchte, dass das Problem schnell gelöst wird, sonst reiche ich eine Beschwerde ein.[^5]
-6. Bitte bieten Sie mir eine Lösung an.[^6]
-7. Meiner Meinung nach sollten Sie mir einen ergonomischen Bürostuhl als Ersatz schicken, und Sie müssen die Rücksendekosten übernehmen.[^7]
-8. Bitte antworten Sie mir so schnell wie möglich per E-Mail.[^8]
-9. Mit freundlichen Grüßen / [Ihr Name][^9]
+| 维度 | 得分 | 评级 |
+|---|---|---|
+| 总分 | **38 / 100** | **Nicht bestanden**（及格线 60） |
 
-**第四部分 · 精改高级版（冲刺版）**
+**📋 任务完成度 (Aufgabenerfüllung)** — 9 / 25
+- 已做到：提到 Kauf des Bürostuhls、Armlehne gebrochen、erste E-Mail geschrieben。
+- 下一步：每个 Bullet Point 必须至少落成 1 个明确句子——Bestellnummer + Lieferdatum、erste Mail **unbeantwortet**、Frist、Rücksendekosten、schriftliche Bestätigung。
 
-*(Betreff: Reklamation Bürostuhl – Bestell-Nr. E-2024-5567)*
+**🔗 连贯性与逻辑 (Kohärenz & Kohäsion)** — 9 / 25
+- 已做到：整体顺序大致是 Mangel → Ärger → Lösung → Antwort，逻辑方向对。
+- 下一步：句子之间缺连接词（daher / außerdem / andernfalls / abschließend），并且多处用逗号连两个主句（Kommaspleiß），需要改成句号或 und/denn。
 
-1. Sehr geehrter Herr Neumann,[^1]
-2. ich wende mich an Sie bezüglich meiner Bestellung Nr. E-2024-5567 (ergonomischer Bürostuhl, Lieferung am 18. Mai): Beim Aufbau habe ich festgestellt, dass die rechte Armlehne gebrochen ist und das Gestell mehrere tiefe Kratzer aufweist.[^2]
-3. Da ich Ihnen bereits vor fünf Tagen geschrieben habe und bis heute ohne Rückmeldung geblieben bin, bin ich über diese Situation sehr verärgert.[^3]
-4. Zur Dokumentation des Schadens habe ich Fotos sowie ein kurzes Video angefertigt und diese meiner ersten E-Mail als Beweis beigefügt.[^4]
-5. Ich möchte Sie daher bitten, das Problem schnellstmöglich zu beheben; andernfalls sähe ich mich gezwungen, eine offizielle Beschwerde einzureichen.[^5]
-6. Bitte teilen Sie mir mit, welche Lösung Sie mir anbieten können – Umtausch, Reparatur oder Erstattung des Kaufpreises.[^6]
-7. Meiner Meinung nach kommt hier nur ein Umtausch in Frage: Bitte senden Sie mir einen einwandfreien Ersatzstuhl zu und übernehmen Sie die Kosten für die Rücksendung des defekten Stuhls.[^7]
-8. Ich bitte Sie, mir bis zum 30. Mai schriftlich zu bestätigen, dass Sie den Stuhl umtauschen und die Rücksendekosten übernehmen.[^8]
-9. Mit freundlichen Grüßen / [Ihr Name][^9]
+**📚 词汇多样性 (Wortschatz)** — 8 / 25
+- 已做到：用到了 Kaufs、Kundenservice、ergonomisch、Kaufpreis 等题目关键词。
+- 下一步：**停止"凭发音拼词"**。先建一张 15 个词的 Beschwerde-Redemittel 卡（Mangel, Ersatz, Frist, erstatten, übernehmen, bestätigen…），考前只背这些。
 
-[^1]: 第 1 句 · Anrede + Betreffzeile —— 称呼必须落到具体姓名，且以逗号结尾。
-[^2]: 第 2 句 · Anlass + Mangel —— Bestellnummer und Lieferdatum gehören in diesen Satz.
-[^3]: 第 3 句 · Beschwerde über die fehlende Antwort —— weil-Satz，动词放句末。
-[^4]: 第 4 句 · Beweismittel —— als Beweis beifügen 是固定搭配。
-[^5]: 第 5 句 · Konsequenz androhen —— sonst/andernfalls 后必须倒装。
-[^6]: 第 6 句 · Lösung erfragen —— welche-间接疑问，覆盖 Umtausch / Reparatur / Erstattung。
-[^7]: 第 7 句 · Forderung + Rücksendekosten —— die Rücksendekosten übernehmen。
-[^8]: 第 8 句 · Frist + schriftliche Bestätigung —— 本题第三个 Bullet Point 的双重得分点。
-[^9]: 第 9 句 · Grußformel + Absender —— 签名处写写信人自己的名字，不是收件人。
+**🏗️ 句法与结构 (Strukturen)** — 12 / 25
+- 已做到：weil 从句语序正确、Perfekt 正确、形容词词尾正确。
+- 下一步：主句必须有且只有一个变位动词占第二位（第 6、7 句整句缺谓语）；sonst/deshalb 置句首时动词必须紧随其后。
 
+> 💡 差距说明：你的失分**主要来自"词汇生造"和"内容点缺失"，不是语法体系**。这两项都是背 Redemittel 就能快速提分的部分，所以这篇从 38 提到 65+ 是完全现实的。
+
+---
+
+## 模块二：逐句精批 (Satz-für-Satz-Korrektur)
+
+#### 第 1 句
+
+> 💬 本句原意：尊敬的诺伊曼先生：
+
+② 📝 原文批注
+
+<span style="color:#c00">~~sehr~~</span>¹ <span style="color:#c00">~~Geehrd~~</span>² <span style="color:#c00">~~Die Angestellte~~</span>³<span style="color:#c00">~~.~~</span>⁴
+（🟢 你写出了"称呼语"这个正式邮件的必备开头，框架意识正确）
+
+📝 逐处拆解（分行缩进）：
+- ¹ `sehr` → `Sehr`
+- ² `Geehrd` → `geehrter`
+- ³ `Die Angestellte` → `Herr Neumann`
+- ⁴ `.` → `,`
+
+③ 📋 本句问题一览（含错误原因解释）
+
+- ¹ 🔴 大小写错误：sehr → Sehr
+  - 🩺 原因：句首第一个词必须大写（Satzanfang-Großschreibung）；德语 Anrede 是独立句子的开头，因此 "Sehr" 必须大写。
+- ² 🔴 拼写 + 形容词词尾缺失：Geehrd → geehrter
+  - 🩺 原因：geehrt 是 ehren 的第二分词，此处作形容词修饰阳性第一格 Herr，必须带词尾 **-er**（der geehrte Herr）；原写法既少字母又缺词尾。
+- ³ 🔴 收信人错误 + 格/数错误：Die Angestellte → Herr Neumann
+  - 🩺 原因：
+    - ① 题目明确指定写给客服人员 **Neumann 先生**，写成 "die Angestellte" 换了人、也换了性别；
+    - ② Angestellte 是形容词名词化，须与冠词一致（der Angestellte / die Angestellte），若泛指全体员工应作复数 die Angestellten；
+    - ③ 正式信函标准公式为 "Sehr geehrter Herr [Nachname]"。
+- ⁴ 🔴 标点错误：句号 → 逗号
+  - 🩺 原因：德语 Anrede 后固定用**逗号**，且下一行正文首词**小写**（名词除外），这是德语书信格式规范。
+
+④ 🔍 原文直译对照
+
+🔍 本句直译（按你实际写的德语）：
+「〔很〕尊敬〔的〕这位女职员。」
+
+⚠️ 注意：以下偏离了你的意图：
+- `sehr Geehrd` 直译是"非常受尊敬"，但词尾缺失，德语读者会理解为"拼写残缺的形容词"，而不是称呼。
+- `Die Angestellte` 字面指"这位女职员"，收信人变成了某个女性员工，而不是题目要求的 Neumann 先生。
+
+⑤ 🔬 本句重写示范（同一原意 × 两种写法）
+
+- 🛡️ **最小化改写**：`Sehr geehrter Herr Neumann,`
+- 🚀 **高级改写**：`Sehr geehrter Herr Neumann,` + 独立 Betreffzeile：`Betreff: Reklamation meiner Bestellung Nr. E-2024-5567 – defekter Bürostuhl (Lieferung am 18. Mai)`（正式邮件必须有一行 Betreff，它同时把两个任务点 Bestellnummer + Lieferdatum 免费送进文章）
+
+---
+
+#### 第 2 句
+
+> 💬 本句原意：我是您的客户，写信是因为我购买了这把办公椅（订单号 E-2024-5567，5 月 18 日到货）：右侧扶手已断裂，椅架还有多处很深的划痕。
+
+② 📝 原文批注
+
+Ich bin <span style="color:#c00">~~eine Comsummer~~</span>¹, ich <span style="color:#c00">~~schiebe~~</span>² wegen des Kaufs des <span style="color:#c00">~~Burostuhl~~</span>³, <span style="color:#c00">~~desen ist~~</span>⁴ die rechte Armlehne gebrochen.
+（🟢 `wegen des Kaufs` ——第二格支配的意识完全正确，这是 B 2 结构分的重要来源）
+
+📝 逐处拆解（分行缩进）：
+- ¹ `eine Comsummer` → `Ihr Kunde` / `Ihr Kunde (männlich) bzw. Ihre Kundin`
+- ² `schiebe` → `schreibe`
+- ³ `des Burostuhl` → `des Bürostuhls`
+- ⁴ `desen ist … gebrochen` → `bei dem … gebrochen ist`
+- ⁵ 两个主句之间的 `,` → `.`（Kommaspleiß）
+- ⁶ 缺失：`Bestellnummer E-2024-5567` + `Lieferung am 18. Mai`
+- ⁷ 缺失：`das Gestell weist mehrere tiefe Kratzer auf`
+
+③ 📋 本句问题一览（含错误原因解释）
+
+- ¹ 🔴 生造词 + 阴阳性/表语错误：eine Comsummer → Ich bin Ihr Kunde
+  - 🩺 原因：
+    - ① "Consumer" 是英语词，德语中不存在 "Comsummer"（拼写也不成立），正确词是 Kunde / Kundin / Verbraucher；
+    - ② 名词表语须与主语性别一致：男性说 ein Kunde，女性说 eine Kundin；原句 eine + 阳性错误。
+- ² 🔴 动词误用 + 变位：schiebe → schreibe
+  - 🩺 原因：schieben（推）与 schreiben（写）是两个完全不同的动词，语境是"写信"，必须用 schreiben；第一人称单数为 schreibe（不规则变位 schreiben → schreibe）。
+- ³ 🔴 第二格词尾缺失 + 变音：des Burostuhl → des Bürostuhls
+  - 🩺 原因：介词 wegen 支配**第二格**；阳性/中性名词单数第二格须加 **-s**（des Stuhls）。Bürostuhl 是复合词，变格由核心词 Stuhl 决定，且必须写变音 ü → Bürostuhl。
+- ⁴ 🔴 代词错误 + 从句动词位置错误：desen ist … gebrochen → bei dem … gebrochen ist
+  - 🩺 原因：
+    - ① 要表达"这把椅子的右扶手坏了"，需用关系代词指代 Stuhl（bei dem / an dem）；dessen 是**第二格**"其…的"，后面必须直接接名词（dessen Armlehne），不能接 ist；
+    - ② 一旦写成从句，变位动词 ist 必须移到**句末**。
+- ⁵ 🔴 逗号连接两个主句（Kommaspleiß）
+  - 🩺 原因：德语两个独立主句不能只用逗号连接，必须用**句号、冒号或并列连词**（und / denn）。原句 "Ich bin …, ich schiebe …" 属于典型逗号粘连。
+- ⁶ 🟡 任务点遗漏：未给出 Bestellnummer 与 Lieferdatum
+  - 🩺 原因：第一个 Bullet Point 要求 "nennen Sie die wichtigsten Angaben zu Ihrer Bestellung"；缺 E-2024-5567 与 18. Mai 在评分中属于内容不完整，直接扣 Aufgabenerfüllung。
+- ⁷ 🟡 任务点遗漏：只写了 Armlehne，未提 Gestell 的 Kratzer
+  - 🩺 原因：题目给出**两处** Mangel（Armlehne gebrochen **und** Gestell mit tiefen Kratzern），只写一处 = 未完整处理 Situationsvorgabe。
+
+④ 🔍 原文直译对照
+
+🔍 本句直译（按你实际写的德语）：
+「我是一个 Comsummer，我推因为买这个 Bürostuhl 的，其是右扶手破了。」
+
+⚠️ 注意：逐条说明
+- `ich schiebe` 字面意思是"我在推（东西）"，德语读者完全不会联想到"写信"。
+- `desen ist die rechte Armlehne gebrochen` 在德语中不构成任何可解析的结构，等同于"其是右扶手破了"。
+- `eine Comsummer` 德国读者不认识这个词，只会猜"英语 consumer 拼错了"。
+
+⑤ 🔬 本句重写示范（同一原意 × 两种写法）
+
+- 🛡️ **最小化改写**：`Ich bin Ihr Kunde und schreibe Ihnen wegen des Kaufs des Bürostuhls (Bestellnummer E-2024-5567). Bei dem Stuhl ist die rechte Armlehne gebrochen.`
+- 🚀 **高级改写**：`Ich wende mich an Sie, da ich am 18. Mai den bei Ihnen bestellten ergonomischen Bürostuhl (Bestellnummer E-2024-5567) erhalten habe, an dem die rechte Armlehne gebrochen ist und dessen Gestell mehrere tiefe Kratzer aufweist.`（`dessen` 作第二格关系代词 + `Kratzer aufweisen` 是 Beschwerde 的高分搭配）
+
+---
+
+#### 第 3 句
+
+> 💬 本句原意：我非常生气，因为我五天前就已经给客服写过一封邮件，但到今天都没收到任何回复。这到底是什么原因？
+
+② 📝 原文批注
+
+Ich bin <span style="color:#c00">~~am ärgisten viel und ganz~~</span>¹, <span style="color:#c00">~~wile~~</span>² ich bereits vor fünf Tagen eine E-Mail an den Kundenservice geschrieben habe（🟢 这一整段从句语序、Perfekt、第三格全对，是本篇最亮的一句）, <span style="color:#c00">~~was die Gründe für die situtation?~~</span>³ <span style="color:#c00">~~（缺：aber bis heute keine Antwort erhalten habe）~~</span>⁴
+
+📝 逐处拆解（分行缩进）：
+- ¹ `am ärgisten viel und ganz` → `sehr verärgert` / `äußerst verärgert`
+- ² `wile` → `weil`
+- ³ `was die Gründe für die situtation?` → `Was sind die Gründe dafür?`
+- ⁴ 缺失成分 → `…, aber bis heute keine Antwort erhalten habe.`
+
+③ 📋 本句问题一览（含错误原因解释）
+
+- ¹ 🔴 生造表达 + 程度副词叠用错误：am ärgisten viel und ganz → sehr verärgert
+  - 🩺 原因：
+    - ① "ärgisten" 不是可用的词形；表示"我很生气"用形容词/分词原级 + 程度副词（sehr verärgert / ärgerlich），最高级 am ärgerlichsten 只能用于比较（am ärgerlichsten ist…）；
+    - ② viel 和 ganz 不能叠加来强化形容词，德语用 sehr / äußerst / zutiefst。
+- ² 🔴 拼写：wile → weil
+  - 🩺 原因：连词 weil 只写一个 l；它引导原因从句并把变位动词推到句末——你这里的 `habe` 位置完全正确。
+- ³ 🔴 疑问句缺谓语 + 名词小写 + 断句错误：was die Gründe für die situtation? → Was sind die Gründe dafür?
+  - 🩺 原因：
+    - ① 完整疑问句必须有变位动词且占**第二位**（Was **sind** die Gründe …?），原句完全没有谓语；
+    - ② Situation 是名词，必须大写；
+    - ③ 前面是从句，从句结束后应**用句号**断开，再开始新句子，不能只用逗号。
+- ⁴ 🟡 任务点遗漏：未明确写出"第一封邮件至今未被回复"
+  - 🩺 原因：题目要求 "weisen Sie darauf hin, dass Ihre erste E-Mail bisher **unbeantwortet** geblieben ist"；你只用问句暗示，缺少明确的陈述句（keine Antwort erhalten），评卷时该 Bullet Point 可能不视为完成。
+
+④ 🔍 原文直译对照
+
+🔍 本句直译（按你实际写的德语）：
+「我是最愤怒的多和完全，因为我已经五天前写了一封邮件给客服，什么这个情况的原因？」
+
+⚠️ 注意：逐条说明
+- `am ärgisten viel und ganz` 直译不成立，德语读者读到的是三个互不相关的程度词堆叠。
+- `was die Gründe für die situation?` 缺谓语，直译成"什么这个情况的原因？"——像一个没有动词的标题。
+
+⑤ 🔬 本句重写示范（同一原意 × 两种写法）
+
+- 🛡️ **最小化改写**：`Ich bin sehr verärgert, weil ich bereits vor fünf Tagen eine E-Mail an den Kundenservice geschrieben habe, aber bis heute keine Antwort erhalten habe.`
+- 🚀 **高级改写**：`Da meine erste E-Mail an Ihren Kundenservice trotz einer Wartezeit von fünf Tagen bis heute unbeantwortet geblieben ist, bin ich über diese Missachtung meiner Anfrage äußerst verärgert.`（Da-Satz 置句首 → 主句动词第二位倒装 `bin ich`，B 2 高频高分结构）
+
+---
+
+#### 第 4 句
+
+> 💬 本句原意：我用相机拍了照片和一段视频，把它们作为证据附在这封邮件里。
+
+② 📝 原文批注
+
+Ich <span style="color:#c00">~~rekorde sich~~</span>¹ mit <span style="color:#c00">~~die Cemare~~</span>² und <span style="color:#c00">~~die vedio~~</span>³, <span style="color:#c00">~~die durcheinsatz die E-Mail als die Auswiese~~</span>⁴.
+
+📝 逐处拆解（分行缩进）：
+- ¹ `rekorde sich` → `habe … dokumentiert / fotografiert`
+- ² `mit die Cemare` → `mit der Kamera` / `mit Fotos`
+- ³ `und die vedio` → `und einem Video`
+- ⁴ `die durcheinsatz die E-Mail als die Auswiese` → `die ich der E-Mail als Nachweis beigefügt habe`
+
+③ 📋 本句问题一览（含错误原因解释）
+
+- ¹ 🔴 生造动词 + 反身代词错误：rekorde sich → habe … dokumentiert
+  - 🩺 原因：
+    - ① 德语没有 rekordieren 这个动词（英语 record 不能直接搬用），表"记录/拍摄"用 dokumentieren / Fotos machen；
+    - ② sich 与主语 ich 不匹配（第一人称反身代词是 mich），而此处根本不需要反身结构。
+- ² 🔴 介词支配格错误 + 拼写：mit die Cemare → mit der Kamera
+  - 🩺 原因：介词 mit 支配**第三格**，阴性单数冠词为 der（nicht die）；Kamera 拼写为 K-a-m-e-r-a，"Cemare" 是听音拼写。
+- ³ 🔴 冠词格错误 + 拼写：und die vedio → und einem Video
+  - 🩺 原因：
+    - ① 与 mit 并列时同样受第三格支配，中性单数不定冠词为 einem；
+    - ② Video 拼写为 V-i-d-e-o（德语里 v 读 /f/，但书写仍是 v）。
+- ⁴ 🔴 生造词 + 介词/名词搭配错误 + 从句语序缺失：die durcheinsatz die E-Mail als die Auswiese → die ich der E-Mail als Nachweis beigefügt habe
+  - 🩺 原因：
+    - ① "durcheinsatz" 不是德语词，表达"附件/附上"用 im Anhang / (etwas) beifügen；
+    - ② "Auswiese" 是把 der Ausweis（身份证件）拼错，此处需要的是 der Nachweis（证明）；
+    - ③ `als` 表身份/用途时后面通常**不加冠词**：als Nachweis；
+    - ④ 关系代词 die 之后必须是完整从句，变位动词置于句末（…beigefügt habe）。
+
+④ 🔍 原文直译对照
+
+🔍 本句直译（按你实际写的德语）：
+「我记录自己用这 Cemare 和这 vedio，其通过运用这邮件作为这身份证。」
+
+⚠️ 注意：逐条说明
+- `rekorde sich` 无法被还原成任何德语动词，读者猜不到"拍摄/记录"。
+- `die durcheinsatz die E-Mail als die Auswiese` 三个成分之间没有任何语法关系，读者只能猜"你想说附件"，而 "Auswiese" 会让读者想到"身份证"。
+
+⑤ 🔬 本句重写示范（同一原意 × 两种写法）
+
+- 🛡️ **最小化改写**：`Ich habe Fotos und ein Video gemacht und der E-Mail als Nachweis beigefügt.`
+- 🚀 **高级改写**：`Als Nachweis für den Mangel habe ich Ihnen die entsprechenden Fotos sowie eine kurze Videoaufnahme in den Anhang dieser E-Mail beigefügt.`（`jm. etwas beifügen` + `in den Anhang` 是标准书面搭配）／被动版：`Die Schäden wurden von mir fotografisch dokumentiert und der E-Mail als Nachweis beigefügt.`
+
+---
+
+#### 第 5 句
+
+> 💬 本句原意：我想请您尽快处理这个问题，否则我将不得不提出投诉。
+
+② 📝 原文批注
+
+Ich <span style="color:#c00">~~möche~~</span>¹ <span style="color:#c00">~~Ihn shneller~~</span>² <span style="color:#c00">~~problem verhanden~~</span>³, <span style="color:#c00">~~sonst ich eine Verwerbung unterschieben~~</span>⁴.
+
+📝 逐处拆解（分行缩进）：
+- ¹ `möche` → `möchte`
+- ² `Ihn shneller` → `Ihnen … schnell / zügig`
+- ³ `problem verhanden` → `das Problem zu bearbeiten / zu lösen`
+- ⁴ `sonst ich eine Verwerbung unterschieben` → `sonst reiche ich eine Beschwerde ein` / `sonst sehe ich mich gezwungen, Beschwerde einzulegen`
+
+③ 📋 本句问题一览（含错误原因解释）
+
+- ¹ 🔴 动词形式/拼写：möche → möchte
+  - 🩺 原因：mögen 的礼貌形式（第二虚拟式）是 möchte，词干后必须带 **-t**（möch-te），少这个字母在德语中就是不存在的形式。
+- ² 🔴 人称代词格错误 + 拼写：Ihn shneller → Ihnen … schnell
+  - 🩺 原因：
+    - ① 对收信人的礼貌第三格是 **Ihnen**；Ihn 是"他"的第四格（第三人称单数阳性），对象完全错位；
+    - ② shneller → schneller（sch 拼写）；
+    - ③ 此处需要副词 schnell（快），更地道是 zügig / schnellstmöglich。
+- ³ 🔴 生造词 + 搭配错误 + 缺 zu-结构：problem verhanden → das Problem zu lösen
+  - 🩺 原因：
+    - ① Problem 是名词，须大写并带冠词 das；
+    - ② "verhanden" 不是词形；verhandeln 意为"谈判"，与"处理问题"不搭配，正确动词是 bearbeiten / lösen / klären；
+    - ③ "我想请您做某事"的固定结构是 `Ich möchte Sie bitten, … zu + Infinitiv`，不能直接"宾语 + 动词原形"。
+- ⁴ 🔴 语序错误 + 生造词 + 动词误用：sonst ich eine Verwerbung unterschieben → sonst reiche ich eine Beschwerde ein
+  - 🩺 原因：
+    - ① **sonst 是副词，置于句首时占据第一位，变位动词必须紧随其后占第二位**（sonst **reiche** ich …），原句保留了主语句序，是典型 V 2 错误；
+    - ② "Verwerbung" 不是德语词；投诉 = die Beschwerde，警告 = die Verwarnung；
+    - ③ unterschieben 意为"把…塞给某人/栽赃"，与投诉无关；投诉的固定搭配是 `eine Beschwerde einreichen`。
+- ⑤ 🟡 语气策略建议
+  - 🩺 原因：直接威胁在正式投诉信中可以用，但必须先给出 **Frist**，否则显得情绪化而非专业；德语标准句式是 `Sollte ich bis … keine Antwort erhalten, sehe ich mich gezwungen, …`。
+
+④ 🔍 原文直译对照
+
+🔍 本句直译（按你实际写的德语）：
+「我想 他 更快 问题 谈判，否则我 一个 广告 塞给。」
+
+⚠️ 注意：逐条说明
+- `Ihn` 直译"他"，你实际指的是收信人，人称彻底错位。
+- `verhanden` 借了 verhandeln（谈判）的壳，读者会理解成"想和问题谈判"。
+- `Verwerbung unterschieben` 字面接近"把广告塞给某人"，与"投诉"毫无关系，可能造成严重误解。
+
+⑤ 🔬 本句重写示范（同一原意 × 两种写法）
+
+- 🛡️ **最小化改写**：`Ich möchte Sie bitten, das Problem schnell zu lösen, sonst reiche ich eine Beschwerde ein.`
+- 🚀 **高级改写**：`Ich möchte Sie daher bitten, den Mangel zügig zu bearbeiten; andernfalls sähe ich mich gezwungen, meine Rechte als Verbraucher geltend zu machen und Beschwerde bei einer Verbraucherschutzorganisation einzulegen.`（`andernfalls` + 第二虚拟式 `sähe ich mich gezwungen` = 委婉但有力的"最后通牒"句式）
+
+---
+
+#### 第 6 句
+
+> 💬 本句原意：我们希望找到一个解决方案。（更符合题意的说法：请您给我一个解决方案。）
+
+② 📝 原文批注
+
+<span style="color:#c00">~~Shollten~~</span>¹ <span style="color:#c00">~~wir~~</span>² eine Lösung <span style="color:#c00">~~angeben~~</span>³.
+
+📝 逐处拆解（分行缩进）：
+- ¹ `Shollten` → `Sollten`
+- ² `wir`（+ 动词居首）→ `Sie` / `Bitte nennen Sie …`
+- ³ `eine Lösung angeben` → `eine Lösung finden / vorschlagen`
+
+③ 📋 本句问题一览（含错误原因解释）
+
+- ¹ 🔴 拼写：Shollten → Sollten
+  - 🩺 原因：sollen 的过去时/虚拟式为 sollte-，词首是单元音 s；德语只有 sch 这一组合才写作 sch。
+- ² 🔴 主语视角错误 + V 1 语序错误：Shollten wir … → Sollten Sie … / Bitte nennen Sie mir …
+  - 🩺 原因：
+    - ① 投诉信是"我要求你方"，主语应是收信方 **Sie**；用 wir 把责任模糊成"我们一起"，立场消失；
+    - ② 变位动词置于句首（V 1）在陈述句中不合法，只出现在是非问句或命令句中；原句加句号 → 语序与句式冲突。
+- ³ 🔴 搭配错误：eine Lösung angeben → eine Lösung finden / vorschlagen
+  - 🩺 原因：angeben 意为"填写、申报（数据）"（z. B. sein Alter angeben），不能与 Lösung 搭配；德语固定搭配是 `eine Lösung finden / vorschlagen / erarbeiten`。
+
+④ 🔍 原文直译对照
+
+🔍 本句直译（按你实际写的德语）：
+「应该 我们 一个 解决方案 填写。」
+
+⚠️ 注意：逐条说明
+- 因动词在句首且句子以句号结尾，德语读者会把它读成问句"我们该交一个解决方案吗？"，与你"要求对方给出方案"的意图正好相反。
+- `eine Lösung angeben` 直译"填写一个解决方案"，搭配不通，读者会想到填表格。
+
+⑤ 🔬 本句重写示范（同一原意 × 两种写法）
+
+- 🛡️ **最小化改写**：`Bitte nennen Sie mir eine Lösung für dieses Problem.`
+- 🚀 **高级改写**：`Ich erwarte daher, dass Sie mir zeitnah eine tragfähige Lösung vorschlagen.`（`erwarten, dass …` 表达明确期待；tragfähig 为 B 2 高级形容词"可行的"）
+
+---
+
+#### 第 7 句
+
+> 💬 本句原意：我认为，您应该给我寄一把新的符合人体工学的办公椅；或者由您退还购货款。（并把坏椅子退回）
+
+② 📝 原文批注
+
+<span style="color:#c00">~~Maine mainung ist~~</span>¹ <span style="color:#c00">~~wieder~~</span>² einen ergonomischen Bürostuhl <span style="color:#c00">~~vorsand~~</span>³, und <span style="color:#c00">~~euch mussten~~</span>⁴ <span style="color:#c00">~~wenig günstig kaufpreises rücksenden~~</span>⁵.
+
+📝 逐处拆解（分行缩进）：
+- ¹ `Maine mainung ist` → `Meiner Meinung nach sollten Sie …`
+- ² `wieder` → `einen neuen` / `ersatzweise`
+- ³ `vorsand` → `zusenden / schicken`
+- ⁴ `euch mussten` → `Ihnen müssten / sollten`
+- ⁵ `wenig günstig kaufpreises rücksenden` → `mir den Kaufpreis erstatten` / `den Stuhl zurücksenden`
+
+③ 📋 本句问题一览（含错误原因解释）
+
+- ¹ 🔴 固定短语错误 + 缺主句谓语：Maine mainung ist → Meiner Meinung nach sollten Sie …
+  - 🩺 原因：
+    - ① 固定表达是 **meiner Meinung nach**（第二格 + 后置介词 nach），不能写成 "Meinung ist"；
+    - ② mainung → Meinung（名词必须大写，拼写为 ei）；
+    - ③ 这个短语只是状语，句子里仍然必须有"主语 + 变位动词"。
+- ² 🟡 词义误用：wieder → einen neuen / einwandfreien Ersatz
+  - 🩺 原因：wieder 表示"再一次"（暗示之前已换过一次），而你要表达的是"一个新的、无瑕疵的替换品"，应用 ein neuer / ein einwandfreier Stuhl。
+- ³ 🔴 生造词 + 整句缺变位动词：vorsand → zusenden
+  - 🩺 原因：
+    - ① "vorsand" 不是任何德语动词形式（可能混了 vorsenden / zusenden）；
+    - ② 更严重的是本句**没有变位动词**，德语主句必须有位于第二位的变位动词：`sollten Sie mir … zusenden`。
+- ⁴ 🔴 语域/人称错误 + 情态动词形式错误：euch mussten → Ihnen müssten / sollten
+  - 🩺 原因：
+    - ① 正式信函对收信人始终用 Sie / Ihnen；euch 是"你们"的宾格，属于私人语域，混用会让整封信语域崩塌；
+    - ② mussten 是过去时"不得不"，此处需要第二虚拟式 **müssten** 或 sollten，才能表达礼貌的"应该"。
+- ⁵ 🔴 表达无法解读 + 格错误：wenig günstig kaufpreises rücksenden → mir den Kaufpreis erstatten
+  - 🩺 原因：
+    - ① Kaufpreis 是名词须大写，作第四格宾语为 **den Kaufpreis**（不是 kaufpreises）；
+    - ② "wenig günstig" 无法与 rücksenden 组合出任何意义；
+    - ③ "退款"与"退货"是两个不同动作：退款 = `den Kaufpreis erstatten`，退货 = `die Ware zurücksenden` ——不能合并进一个动词。
+- ⁶ 🟡 任务点遗漏：未说明 Rücksendekosten 由谁承担
+  - 🩺 原因：第三个 Bullet Point 明确要求 "klären Sie die Frage der Rücksendekosten"，这是硬性内容点，缺失即扣分（补写句见本模块末尾"缺失任务点"）。
+- ⁷ 🟡 任务点遗漏：未在三种方案（Umtausch / Reparatur / Erstattung）中明确表态
+  - 🩺 原因：题目要求 "Erklären Sie, welche Lösung Sie erwarten"；你用了模糊的 "vorsand"，没有说清是换新还是退款，评分人会判"未完成"。
+
+④ 🔍 原文直译对照
+
+🔍 本句直译（按你实际写的德语）：
+「我的 意见 是 又 一个 符合人体工学的办公椅 预先寄，和 你们 必须 少 便宜 买价 回寄。」
+
+⚠️ 注意：逐条说明
+- `Maine mainung ist` 后面直接接"一把办公椅"，中间没有动词，句子断裂。
+- `vorsand` 无法对应任何德语动词，读者不知道是"寄出"还是"退回"。
+- `euch mussten … rücksenden` 直译接近"你们必须少便宜买价回寄"，读者无法判断你是要退款、要换货，还是要自己寄回。
+
+⑤ 🔬 本句重写示范（同一原意 × 两种写法）
+
+- 🛡️ **最小化改写**：`Meiner Meinung nach sollten Sie mir einen neuen ergonomischen Bürostuhl schicken, und ich schicke Ihnen den defekten Stuhl zurück.`
+- 🚀 **高级改写**：`Meiner Meinung nach wäre es am sinnvollsten, wenn Sie mir umgehend einen einwandfreien Ersatzstuhl zusenden würden; alternativ bitte ich um vollständige Erstattung des Kaufpreises.`（Konjunktiv II `wäre / würden` 让要求礼貌而坚定；`alternativ bitte ich um …` 是 B 2 高级并列手段）
+
+---
+
+#### 第 8 句
+
+> 💬 本句原意：我希望您读邮件后尽快回复我。
+
+② 📝 原文批注
+
+Ich möchte <span style="color:#c00">~~euch~~</span>¹ <span style="color:#c00">~~die shnellsten Antworten~~</span>², <span style="color:#c00">~~wenn E-Mail zu lesen~~</span>³.
+
+📝 逐处拆解（分行缩进）：
+- ¹ `euch` → `von Ihnen`
+- ² `die shnellsten Antworten` → `eine schnellstmögliche Antwort`
+- ³ `wenn E-Mail zu lesen` → `sobald Sie meine E-Mail gelesen haben`（并补 `erhalten`）
+
+③ 📋 本句问题一览（含错误原因解释）
+
+- ¹ 🔴 语域错误：euch → von Ihnen
+  - 🩺 原因：euch 属于 du/ihr 的非正式称呼；正式邮件对收信人必须全程用 Sie / Ihnen，一处 euch 就会让整封投诉信的语域失衡。
+- ² 🔴 冠词/单复数 + 比较级 + 拼写：die shnellsten Antworten → eine schnellstmögliche Antwort
+  - 🩺 原因：
+    - ① 一封回信只有一封，须用单数 eine Antwort；
+    - ② 正式书信表达"尽快"用 schnellstmöglich，比形容词最高级 die schnellsten 更地道；
+    - ③ shnellsten → schnellsten（sch 拼写）。
+- ³ 🔴 从句缺主语和谓语 + 缺"获得"动词：wenn E-Mail zu lesen → sobald Sie meine E-Mail gelesen haben
+  - 🩺 原因：
+    - ① wenn 从句必须有主语（Sie）和变位动词（haben），原句两者都没有；
+    - ② E-Mail 前须有限定词（meine / diese）；
+    - ③ 表"一…就…"用 **sobald** 比 wenn 更精确；
+    - ④ `Ich möchte eine Antwort` 还缺 `erhalten / bekommen`，否则 möchte 后面少一个动作。
+
+④ 🔍 原文直译对照
+
+🔍 本句直译（按你实际写的德语）：
+「我想 你们 这 最快的 回答，如果 邮件 去 读。」
+
+⚠️ 注意：逐条说明
+- `euch die Antworten` 直译"给你们这些答案"，让人以为写信人自己是给答案的人，主客颠倒。
+- `wenn E-Mail zu lesen` 缺主语和动词，读者无法判断"谁读、什么时候读"。
+
+⑤ 🔬 本句重写示范（同一原意 × 两种写法）
+
+- 🛡️ **最小化改写**：`Bitte antworten Sie mir schnellstmöglich per E-Mail.`
+- 🚀 **高级改写**：`Ich bitte Sie, mir Ihre Rückmeldung bis spätestens zum 30. Mai per E-Mail zukommen zu lassen.`（`jm. etwas zukommen lassen` 是正式书信中"寄送/告知"的高级搭配）
+
+---
+
+#### 第 9 句
+
+> 💬 本句原意：此致敬礼 / 〔写信人姓名〕
+
+② 📝 原文批注
+
+<span style="color:#c00">~~mit fraundlich Grüße~~</span>¹
+<span style="color:#c00">~~Herrn Neumann~~</span>²
+
+📝 逐处拆解（分行缩进）：
+- ¹ `mit fraundlich Grüße` → `Mit freundlichen Grüßen`
+- ² `Herrn Neumann` → 你自己的姓名（如 Max Mustermann）
+
+③ 📋 本句问题一览（含错误原因解释）
+
+- ¹ 🔴 拼写 + 格词尾：mit fraundlich Grüße → Mit freundlichen Grüßen
+  - 🩺 原因：
+    - ① 固定搭配是 `mit freundlichen Grüßen`：介词 mit 支配**第三格复数**，形容词词尾 -en，名词复数 Grüßen 也要加 **-n**；
+    - ② freundlich 拼写为 f-r-e-u-…（不是 fraundlich）；
+    - ③ 句首 Mit 必须大写。
+- ² 🔴 署名错误：Herrn Neumann → 发信人姓名
+  - 🩺 原因：Neumann 是**收信人**，Grußformel 之后只能写发信人本人姓名；把收信人放在署名处会让整封信的收发关系颠倒。另外 `Sehr geehrter Herrn Neumann` 这类写法也常见——记住：Anrede 里 `Herr` 不加 -n，只有第三格（Ich schreibe Herrn Neumann）才加。
+
+④ 🔍 原文直译对照
+
+🔍 本句直译（按你实际写的德语）：
+「和 友好的 问候 / 诺伊曼先生」
+
+⚠️ 注意：德语读者读完会认为**写信人就是 Neumann 先生本人**——这封信立刻变成"自己投诉自己"。
+
+⑤ 🔬 本句重写示范（同一原意 × 两种写法）
+
+- 🛡️ **最小化改写**：`Mit freundlichen Grüßen / Max Mustermann`
+- 🚀 **高级改写**：`Ich danke Ihnen im Voraus für Ihre Bemühungen und verbleibe mit freundlichen Grüßen / Max Mustermann`（`im Voraus danken` + `verbleibe mit …` 是德国商务信函的经典收尾公式）
+
+---
+
+#### 缺失任务点（原文没有对应句子）
+
+💡 你的原文里有 4 个题目硬性内容点完全没有落脚句，这在评分中比语法错误掉分更狠。下面给出可直接背的句子：
+
+- 📌 **Betreffzeile（放在 Anrede 之前）**
+  - 🚀 `Betreff: Reklamation meiner Bestellung Nr. E-2024-5567 – defekter Bürostuhl (Lieferung am 18. Mai)`
+- 📌 **Frist setzen（第三个 Bullet Point 前半）**
+  - 🛡️ `Ich setze Ihnen eine Frist bis zum 30. Mai.`
+  - 🚀 `Ich setze Ihnen für die Bearbeitung dieses Mangels eine Frist bis zum 30. Mai.`
+- 📌 **Rücksendekosten klären（第三个 Bullet Point 后半）**
+  - 🛡️ `Die Rücksendekosten übernehmen Sie.`
+  - 🚀 `Da es sich um einen Sachmangel handelt, sind die Rücksendekosten selbstverständlich von Ihnen zu tragen.`
+- 📌 **Schriftliche Bestätigung erbitten**
+  - 🛡️ `Bitte bestätigen Sie mir das schriftlich.`
+  - 🚀 `Ich bitte Sie um eine schriftliche Bestätigung dieser Reklamation sowie des vereinbarten Termins.`
+
+---
+
+## 模块三：写作思路升维 (Inhaltliche Erweiterung)
+
+💡 **论点拓宽 (Ideen-Brainstorming)**
+- **消费者法视角**：把"我很生气"升级为 `Sachmangel` + `Gewährleistung` + `Nachfristsetzung`。德国考官非常认这种写法——它把私人抱怨变成有法律依据的 Sachverhalt，同时让词汇从 A 2 直接跳到 B 2。
+- **服务沟通视角**：把情绪翻译成"事实链"——Verzögerung (5 Tage) → keine Rückmeldung → keine Handlungsmöglichkeit für mich。sachlich 的投诉比"ich bin ärgerlich"更有说服力，也更符合德国 Beschwerde 文化。
+
+💡 **逻辑链条补全**
+- 断裂点：你从"Mangel 描述"直接跳到"否则我投诉"，中间缺 3 个环节。
+- 缺的环节 → 缝合句式：
+  - `Beleg`：`Als Nachweis habe ich Ihnen … beigefügt.`
+  - `Fristsetzung`：`Ich setze Ihnen daher eine Frist bis zum 30. Mai.`
+  - `Konsequenz`：`Sollte ich bis dahin keine Rückmeldung erhalten, sehe ich mich gezwungen, …`
+
+---
+
+## 模块四：写作方法论指导 (Methodik & Strategien)
+
+💡 **本课只教一个方法：把 4 个 Bullet Points 变成 4 个"段落积木"（Baustein-Kette）**
+- **积木 1｜Sachverhalt**：`am 18. Mai erhielt ich … (Bestellnummer …). Beim Aufbau musste ich feststellen, dass …`
+- **积木 2｜Vorgeschichte**：`Da meine E-Mail vom … bis heute unbeantwortet geblieben ist, …`
+- **积木 3｜Lösung + Frist**：`Ich bitte Sie daher, … bis zum 30. Mai …`
+- **积木 4｜Kosten + Bestätigung**：`Die Rücksendekosten sind von Ihnen zu tragen. Ich bitte um eine schriftliche Bestätigung.`
+- **自检法**：写完数一遍——4 个积木是否都出现？每块是否≥1 句？缺一块就补一句，这是最快稳过 Aufgabenerfüllung 的操作。
+
+---
+
+## 模块五：语法巩固练习 (Grammatik-Training)
+
+✏️ **1. 改错题（语域统一）**：把下面这句改成正式语域，并保持"请您处理"的结构。
+`Ich möchte euch die schnellsten Antworten.`
+
+✏️ **2. 填空题（sonst 后的语序）**：补全括号内动词的正确形式与位置。
+`Ich möchte Sie bitten, den Mangel bis zum 30. Mai zu beheben; sonst ______ ich mich gezwungen, eine Beschwerde ______ . (sehen / einreichen)`
+
+✏️ **3. 句型转换（wegen + Genitiv ↔ weil-Satz）**：把下面这句改成 weil 从句。
+`Wegen des Kaufs des Bürostuhls schreibe ich Ihnen.`
+
+✏️ **4. 中译德（Frist + Kosten + Ersatz，一次练三个任务点）**：
+"请您最迟在 5 月 30 日前给我寄一把无瑕疵的替换椅，并承担退货运费。"
+
+✏️ **5. 改错题（Anrede + Grußformel 格式）**：下面这封信的开头和结尾共 4 处错误，请改正。
+`sehr geehrter herrn neumann, … mit freundlich Grüße, Herrn Neumann`
+
+> [!note]- 答案与解析（点击展开，先自己写完再看）
+> **1.** `Ich möchte Sie bitten, mir schnellstmöglich zu antworten.` / `Bitte antworten Sie mir schnellstmöglich.`
+> — 解析：euch 属 du/ihr 语域，正式信函对收信人必须用 Sie/Ihnen；möchte + 名词答案缺少"获得"动词，改成 bitten, … zu + Infinitiv 最稳。
+>
+> **2.** `… sonst sehe ich mich gezwungen, eine Beschwerde einzureichen.`
+> — 解析：sonst 占第一位 → 变位动词 sehe 必须紧随其后（V 2）；`sich gezwungen sehen, … zu + Infinitiv` 是固定结构，可分动词 einreichen 在 zu-Infinitiv 中写作 einzureichen。
+>
+> **3.** `Ich schreibe Ihnen, weil ich den Bürostuhl gekauft habe.`
+> — 解析：wegen + 第二格（des Kaufes des Bürostuhls）是名词化表达；改成 weil 从句后，动词 kaufen 恢复变位并置于从句句末（habe … gekauft），第二格负担随之消失。
+>
+> **4.** `Bitte senden Sie mir bis spätestens zum 30. Mai einen einwandfreien Ersatz und übernehmen Sie die Rücksendekosten.`
+> — 解析：`bis spätestens zum + Dativ` 是标准 Frist 表达；Ersatz 为阳性，Akkusativ 为 einen einwandfreien Ersatz（形容词弱变化 -en）；`die Kosten übernehmen` 是"承担费用"的固定搭配。
+>
+> **5.** `Sehr geehrter Herr Neumann,` … `Mit freundlichen Grüßen` / `Max Mustermann`
+> — 解析：① Anrede 首词大写；② Sehr geehrter 后接 Herr 不加 -n（Nur Dativ: Ich schreibe Herrn Neumann）；③ freundlichen Grüßen 为第三格复数（-en + -n）；④ 署名处写发信人，不写收信人。
+
+---
+
+## 模块六：全文汇总（脚标对照版）
+
+> 编号说明：上标 ¹ ² ³ … 对应模块二的「第 N 句」，句内具体错误请回看该句 ③ 列表。
+
+### 第一部分：推测你本来想表达的中文
+
+> ¹ 尊敬的诺伊曼先生：
+> ² 我是您的客户，写信是因为我买了这把办公椅（订单号 E-2024-5567，5 月 18 日到货）：右侧扶手断裂，椅架还有多处很深的划痕。
+> ³ 我非常生气，因为我五天前就给客服写过邮件，至今没有任何回复——这到底是什么原因？
+> ⁴ 我拍了照片和视频，作为证据附在邮件里。
+> ⁵ 我想请您尽快处理这个问题，否则我将提出投诉。
+> ⁶ 我们应该给出一个解决方案。
+> ⁷ 我认为，您应该给我寄一把新的符合人体工学的办公椅；或者退还货款。
+> ⁸ 我希望您读邮件后尽快回复。
+> ⁹ 此致敬礼 / 〔你的姓名〕
+
+### 第二部分：你的原文
+
+> ¹ sehr Geehrd Die Angestellte.
+> ² Ich bin eine Comsummer, ich schiebe wegen des Kaufs des Burostuhl, desen ist die rechte Armlehne gebrochen.
+> ³ Ich bin am ärgisten viel und ganz, wile ich bereits vor fünf Tagen eine E-Mail an den Kundenservice geschrieben habe, was die Gründe für die situtation?
+> ⁴ Ich rekorde sich mit die Cemare und die vedio, die durcheinsatz die E-Mail als die Auswiese.
+> ⁵ Ich möche Ihn shneller problem verhanden, sonst ich eine Verwerbung unterschieben.
+> ⁶ Shollten wir eine Lösung angeben.
+> ⁷ Maine mainung ist wieder einen ergonomischen Bürostuhl vorsand, und euch mussten wenig günstig kaufpreises rücksenden.
+> ⁸ Ich möchte euch die shnellsten Antworten, wenn E-Mail zu lesen.
+> ⁹ mit fraundlich Grüße / Herrn Neumann
+
+### 第三部分：最小改动版（保分版，仍缺 3 个任务点，需按"缺失任务点"补齐）
+
+> ¹ Sehr geehrter Herr Neumann,
+> ² Ich bin Ihr Kunde und schreibe Ihnen wegen des Kaufs des Bürostuhls (Bestellnummer E-2024-5567, Lieferung am 18. Mai). Bei dem Stuhl ist die rechte Armlehne gebrochen, und das Gestell hat mehrere tiefe Kratzer.
+> ³ Ich bin sehr verärgert, weil ich bereits vor fünf Tagen eine E-Mail an den Kundenservice geschrieben habe, aber bis heute keine Antwort erhalten habe. Was sind die Gründe dafür?
+> ⁴ Ich habe Fotos und ein Video gemacht und der E-Mail als Nachweis beigefügt.
+> ⁵ Ich möchte Sie bitten, das Problem schnell zu lösen, sonst reiche ich eine Beschwerde ein.
+> ⁶ Wir sollten eine Lösung finden.
+> ⁷ Meiner Meinung nach sollten Sie mir einen neuen ergonomischen Bürostuhl zusenden, und ich schicke Ihnen den defekten Stuhl zurück.
+> ⁸ Bitte antworten Sie mir schnellstmöglich per E-Mail.
+> ⁹ Mit freundlichen Grüßen / Max Mustermann
+
+### 第四部分：精改高级版（含全部任务点，可作为范文背诵）
+
+> **Betreff:** Reklamation und Fristsetzung – Bestellung Nr. E-2024-5567 (Bürostuhl „ErgoSitz 24")
+>
+> ¹ Sehr geehrter Herr Neumann,
+> ² am 18. Mai erhielt ich den bei Ihnen bestellten ergonomischen Bürostuhl (Bestellnummer E-2024-5567); beim Aufbau musste ich feststellen, dass die rechte Armlehne gebrochen ist und das Gestell mehrere tiefe Kratzer aufweist, sodass der Stuhl nicht benutzbar ist.
+> ³ Da meine bereits vor fünf Tagen an Ihren Kundenservice gerichtete E-Mail bis heute unbeantwortet geblieben ist, bin ich über diese Verzögerung äußerst verärgert.
+> ⁴ Als Nachweis habe ich Ihnen die entsprechenden Fotos sowie eine kurze Videoaufnahme in den Anhang dieser E-Mail beigefügt.
+> ⁵ Ich setze Ihnen für die Bearbeitung dieses Mangels eine Frist bis zum 30. Mai.
+> ⁶ Meiner Meinung nach wäre es am sinnvollsten, wenn Sie mir umgehend einen einwandfreien Ersatzstuhl zusenden würden; alternativ bitte ich um vollständige Erstattung des Kaufpreises.
+> ⁷ Da es sich um einen Sachmangel handelt, sind die Rücksendekosten des defekten Stuhls selbstverständlich von Ihnen zu tragen.
+> ⁸ Sollte ich bis zum genannten Datum keine Rückmeldung erhalten, sähe ich mich gezwungen, meine Rechte als Verbraucher geltend zu machen und Beschwerde bei einer Verbraucherschutzorganisation einzulegen.
+> ⁹ Ich bitte Sie um eine schriftliche Bestätigung dieser Reklamation und verbleibe mit freundlichen Grüßen / Max Mustermann
+
+---
+
+## ✅ 下一步行动清单（三天可完成）
+
+- 📌 背 10 个词：`Mangel, Sachmangel, Ersatz, Frist, erstatten, übernehmen, bestätigen, beanstanden, beifügen, zusenden`
+- 📌 背 4 个句式积木（模块四），以后每篇 Beschwerde 直接套
+- 📌 重写这篇一次，只允许 ≤ 2 处新错误——写完后对照模块六第四部分逐句比对
+- 📌 特别检查三个"高危点"：① 每句有没有变位动词？② sonst/deshalb 后面动词在不在第二位？③ 全篇有没有一处 euch？
 ## 个人问题总结
 - [[email Reklamation Bürostuhl – ErgoSitz 24#第 2 句|第 2 句]] 名词的变格规则，第二格要加S，其他格需要加吗？还是不变？强变化名词怎么辨别？死记硬背呗
 	- 用关系代词写dessen可以吗
