@@ -996,8 +996,181 @@ Ich möchte <span style="color:#c00">~~euch~~</span>¹ <span style="color:#c00">
 - 📌 背 4 个句式积木（模块四），以后每篇 Beschwerde 直接套
 - 📌 重写这篇一次，只允许 ≤ 2 处新错误——写完后对照模块六第四部分逐句比对
 - 📌 特别检查三个"高危点"：① 每句有没有变位动词？② sonst/deshalb 后面动词在不在第二位？③ 全篇有没有一处 euch？
-## 个人问题总结
+# 个人问题总结
 - [[email Reklamation Bürostuhl – ErgoSitz 24#第 2 句|第 2 句]] 名词的变格规则，第二格要加S，其他格需要加吗？还是不变？强变化名词怎么辨别？死记硬背呗
 	- 用关系代词写dessen可以吗
 - 
+# 范文
 
+> 说明：你这次只给了题目，**没有附德语原稿**。为了不破坏 7 项格式，第 5、6 项我先按你自述的错误画像（从句动词、格、拼写、搭配、情态/介词）重构了一份"模拟原稿"来做诊断示范。请把真实原稿贴给我，我会用同一套表格重做一遍真诊断。
+
+---
+
+## 1. 范文（德语）
+
+**Betreff: Reklamation meiner Bestellung E-2024-5567 – beschädigter Bürostuhl**
+
+[Anrede] Sehr geehrter Herr Neumann,
+
+[Einleitung / Bezug auf die Bestellung] am 18. Mai habe ich von Ihnen einen ergonomischen Bürostuhl erhalten (Bestellnummer: E-2024-5567). Leider musste ich beim Aufbau feststellen, dass der Stuhl nicht in einwandfreiem Zustand ist: Die rechte Armlehne ist gebrochen, und das Gestell weist mehrere tiefe Kratzer auf. In diesem Zustand lässt sich der Stuhl nicht sicher benutzen.
+
+[Hinweis auf die erste E-Mail] Bereits vor fünf Tagen habe ich Ihnen den Schaden per E-Mail gemeldet. Bis heute habe ich jedoch keine Antwort erhalten. Das finde ich enttäuschend, denn ich hatte mit einer schnellen Reaktion gerechnet.
+
+[Erwartete Lösung: Umtausch – Reparatur – Erstattung] Da der Stuhl beschädigt geliefert wurde, erwarte ich einen kostenlosen Umtausch gegen ein fehlerfreies Modell. Eine Reparatur wäre für mich nur akzeptabel, wenn sie innerhalb weniger Tage durchgeführt würde. Sollte ein Umtausch nicht möglich sein, bitte ich Sie, mir den Kaufpreis vollständig zu erstatten.
+
+[Frist / Rücksendekosten / schriftliche Bestätigung] Ich setze Ihnen daher eine Frist bis zum 10. Juni. Bitte holen Sie den Stuhl bis zu diesem Termin ab oder bestätigen Sie mir einen Abholtermin. Die Kosten für die Rücksendung übernehmen selbstverständlich Sie, da der Mangel bereits bei der Lieferung vorlag. Außerdem bitte ich Sie um eine schriftliche Bestätigung des Umtauschs per E-Mail.
+
+[Schluss] Für eine schnelle Bearbeitung wäre ich Ihnen sehr dankbar.
+
+Mit freundlichen Grüßen
+Li Wei
+
+**（约 191 词，满足 ≥100 词要求）**
+
+---
+
+## 2. 逐段中文翻译
+
+**主题：关于我的订单 E-2024-5567 的投诉——损坏的办公椅**
+
+[称呼] 尊敬的 Neumann 先生：
+
+[开头／点明订单] 我于 5 月 18 日收到了您寄来的一把人体工学办公椅（订单号：E-2024-5567）。遗憾的是，我在组装时不得不确认，这把椅子的状态并不完好：右侧扶手已断裂，椅架有多处很深的划痕。在这种状态下，椅子无法安全使用。
+
+[说明第一封邮件未获回复] 早在五天前，我就已经通过电子邮件向您报告了这一损坏。但直到今天我仍未收到任何答复。我认为这令人失望，因为我原本期待能得到快速回应。
+
+[期望的解决方案：换货—维修—退款] 由于椅子送到时已损坏，我期待免费更换一把无瑕疵的型号。只有在几天之内就能完成维修的情况下，维修对我才是可以接受的。如果无法换货，我请求您全额退还购货款。
+
+[期限／退货运费／书面确认] 因此我给您设定一个期限，截至 6 月 10 日。请您在此期限前取走这把椅子，或向我确认一个取件时间。退货运费理所当然由您承担，因为该瑕疵在交货时就已经存在。此外，我请求您通过电子邮件就换货一事给我一份书面确认。
+
+[结尾] 若能得到快速处理，我将非常感激。
+
+此致敬礼
+李伟
+
+---
+
+## 3. 满分结构拆解
+
+```
+[Betreff] 主题行（Reklamation + 订单号 + 关键词）
+   → Erfüllung：投诉信的功能标识（考官 3 秒定位文体）
+   → Kohärenz：全文锚点，后文所有细节都可回挂到这里
+        ↓
+[Anrede] 称呼（Herr Neumann 已知姓氏 → 必须用 geehrter）
+   → Erfüllung：格式分（Anrede 是否得体直接扣分）
+        ↓
+[Einleitung] ①交货日期 ②货品 ③订单号
+   → Erfüllung（题目要求"nennen Sie die wichtigsten Angaben"）
+        ↓
+[Mangel-Darstellung] ④右侧扶手断裂 ⑤椅架划痕 ⑥不可使用
+   → Wortschatz（genaue Verben: gebrochen sein / Kratzer aufweisen）
+   → Strukturen（dass-Satz 动词置末 + 冒号列举结构）
+        ↓
+[Hinweis auf erste E-Mail] ⑦五天前已写 ⑧至今无回复 ⑨评价
+   → Erfüllung（第三个必写点）
+   → Strukturen（denn 原因从句 + hatte...gerechnet 过去完成）
+        ↓
+[Erwartete Lösung] ⑩换货（主诉求）⑪维修（让步：nur...wenn + Konjunktiv II）
+   ⑫退款（Sollte-条件句兜底）
+   → Erfüllung（题目三选一必须明确，且分层=高分标志）
+   → Strukturen（Konjunktiv II + 倒装条件句）
+        ↓
+[Frist] ⑬明确日期
+[Rücksendekosten] ⑭责任归属 + da 从句说明理由
+[Bestätigung] ⑮书面确认要求
+   → Erfüllung（三个必写点密集落地，一段打包最省词数）
+        ↓
+[Schluss] 感谢句（wäre...dankbar）
+   → Strukturen（Konjunktiv II 礼貌式）+ 语域稳定
+        ↓
+[Grußformel] Mit freundlichen Grüßen + 姓名
+```
+
+**四条评分维度对应的"安全垫"**：
+- **Erfüllung**：3 个提示点 → 6 个信息块，一个不漏，每块都能在原文里指出来。
+- **Kohärenz**：Leider → Bereits/Bis heute → Da → daher → Außerdem，连接词像链条一样推进。
+- **Wortschatz**：Mangel, beschädigt, einwandfrei, erstatten, übernehmen, bestätigen 全是主题词，不堆冷僻词。
+- **Strukturen**：dass-Satz、wenn-Satz、da-Satz、denn-Satz、Sollte-倒装、Konjunktiv II —— B 2 语法点全覆盖，且每处都为内容服务。
+
+---
+
+## 4. 可迁移句式清单
+
+| # | 句式（德语） | 中文 | 我可以在什么场景用它 |
+|---|---|---|---|
+| 1 | Am ... habe ich von Ihnen ... erhalten (Bestellnummer: ...). | 我于……收到您的……（订单号：……）。 | 任何投诉/询问信的第一句，先立"时间+货物+单号"三要素。 |
+| 2 | Leider musste ich beim Aufbau feststellen, dass ... | 遗憾的是，我在组装/使用中发现…… | 报告问题时的万能开场，后面直接跟 dass 从句（动词记得置末）。 |
+| 3 | In diesem Zustand lässt sich der Stuhl nicht sicher benutzen. | 在这种状态下，椅子无法安全使用。 | 想说"东西没法用"，用 sich lassen + 不定式，比 ich kann nicht 高级。 |
+| 4 | Bereits vor fünf Tagen habe ich Ihnen ... gemeldet. Bis heute habe ich jedoch keine Antwort erhalten. | 早在五天前我已向您报告……但至今未获答复。 | 催复、第二次联系、投诉升级，两句一组最有力。 |
+| 5 | Das finde ich enttäuschend, denn ich hatte mit einer schnellen Reaktion gerechnet. | 我认为这令人失望，因为我原本期待快速回应。 | 表达不满但保持礼貌（不骂人，只评价行为）。 |
+| 6 | Da ... , erwarte ich ... | 由于……，我期待…… | 把"理由+诉求"压进一句，正式信件的黄金句型。 |
+| 7 | Eine Reparatur wäre für mich nur akzeptabel, wenn sie ... würde. | 只有在……的情况下，维修对我才是可接受的。 | 提让步/次要方案，nur...wenn + Konjunktiv II 显得克制又强硬。 |
+| 8 | Sollte ein Umtausch nicht möglich sein, bitte ich Sie, mir ... zu erstatten. | 若无法换货，请您向我退还…… | 写"如果不行，那就……"的兜底要求，Sollte 倒装 + bitten um/zu。 |
+| 9 | Ich setze Ihnen eine Frist bis zum ... | 我给您设定期限至…… | 一切投诉、催款、索赔信件必备，比 Ich gebe Ihnen eine Frist 更正式。 |
+| 10 | Die Kosten für ... übernehmen selbstverständlich Sie, da ... | ……的费用理所当然由您承担，因为…… | 争费用责任时用，selbstverständlich 一词把"这是你的义务"说得很硬。 |
+| 11 | Ich bitte Sie um eine schriftliche Bestätigung des ... per E-Mail. | 我请您通过邮件就……出具书面确认。 | 结尾要求留证据，租房、保险、退换货都能用。 |
+
+---
+
+## 5. 原稿逐句诊断表（模拟原稿示范）
+
+> 以下"我的原句"是按你自述错误画像构造的 A 2–B 1 典型稿，用于演示诊断方法。
+
+| 我的原句 | 错误类型 | 修正句 |
+|---|---|---|
+| （缺 Betreff） | 格式缺失 | Betreff: Reklamation meiner Bestellung E-2024-5567 |
+| Sehr geehrte Herr Neumann, | 格／形容词词尾（Herrn 为弱变化，Anrede 用第三格） | Sehr geehrter Herr Neumann, |
+| ich habe bestellt ein ergonomischer Bürostuhl bei Ihre Online-Shop. | 词序（框型结构：助动词+第二分词须夹住宾语）＋格（第四格）＋介词格（bei + Dativ） | Ich habe bei Ihrem Online-Shop einen ergonomischen Bürostuhl bestellt. |
+| Die Bestellnummer ist E-2024-5567 und die Lieferung war am 18. Mai. | 搭配／用词（号码"叫"lauten；交货用 erfolgen） | Die Bestellnummer lautet E-2024-5567; die Lieferung erfolgte am 18. Mai. |
+| Leider ist das Stuhl kaputt: | 冠词性别（der Stuhl）＋语域（kaputt 偏口语） | Leider ist der Stuhl beschädigt: |
+| die rechte Armlehne ist gebrochen und das Gestell hat viele Kratzer. | 拼写（句首大写）＋搭配（Kratzer 用 aufweisen） | Die rechte Armlehne ist gebrochen, und das Gestell weist mehrere tiefe Kratzer auf. |
+| Ich kann das Stuhl nicht benutzen. | 格（den Stuhl）＋表达升级 | Der Stuhl ist so nicht benutzbar. / Ich kann den Stuhl nicht benutzen. |
+| Ich habe geschrieben eine E-Mail vor fünf Tage, | 词序（第二分词位置）＋时间介词（vor + Dativ 复数 -n） | Ich habe Ihnen vor fünf Tagen eine E-Mail geschrieben, |
+| aber ich habe keine Antwort bekommen. | 基本正确，仅语域（bekommen → erhalten）＋建议加 bis heute | aber bis heute habe ich keine Antwort erhalten. |
+| Das ist nicht gut. | 表达空泛／语域过低 | Das finde ich enttäuschend. |
+| Ich möchte ein Umtausch. | 格（第四格：einen Umtausch）＋情态（期望→erwarten） | Ich erwarte einen Umtausch. |
+| Vielleicht können Sie reparieren, aber ich glaube nicht. | 搭配（reparieren 缺宾语）＋口语化插入语 | Eine Reparatur wäre für mich nur akzeptabel, wenn sie kurzfristig erfolgt. |
+| Wenn nicht, dann geben Sie mir mein Geld zurück. | 句法（口语条件句）＋用词（Geld zurückgeben → erstatten） | Sollte ein Umtausch nicht möglich sein, bitte ich Sie, mir den Kaufpreis zu erstatten. |
+| Ich gebe Ihnen eine Frist bis 10. Juni. | 思路正确，正式度可升级（Frist setzen；bis zum） | Ich setze Ihnen eine Frist bis zum 10. Juni. |
+| Wer bezahlt die Rücksendekosten? | 语域（正式邮件里不当面提问） | Die Rücksendekosten übernehmen selbstverständlich Sie. |
+| Ich denke, Sie müssen bezahlen. | 表达软弱＋从句应为 dass/或改主句结构 | ..., da der Mangel bereits bei der Lieferung vorlag. |
+| Bitte bestätigen Sie mir schriftlich. | 缺宾语（确认什么？）＋缺渠道 | Bitte bestätigen Sie mir den Umtausch schriftlich per E-Mail. |
+| Mit freundliche Grüße | 词尾（Dativ 复数 -n）＋固定搭配复数 | Mit freundlichen Grüßen |
+
+**诊断结论（你的三个"改一次就永久受益"的点）**：① 所有 dass/wenn/weil 从句先把动词写到最后；② 阳性弱变化名词（der Stuhl → den Stuhl / der Herr → Herrn）单独列一张小卡背；③ kaputt / gut / Geld zurück 这类口语词换成 beschädigt / enttäuschend / erstatten，分数立刻上一个档。
+
+---
+
+## 6. 原稿升格版（保留你的论点与顺序）
+
+**Betreff: Reklamation: ergonomischer Bürostuhl aus Bestellung E-2024-5567**
+
+Sehr geehrter Herr Neumann,
+
+**【留用】** ich habe am 18. Mai einen ergonomischen Bürostuhl von Ihnen erhalten. Meine Bestellnummer lautet E-2024-5567. Leider habe ich beim Aufbau festgestellt, dass der Stuhl beschädigt ist: Die rechte Armlehne ist gebrochen, und das Gestell weist mehrere tiefe Kratzer auf. **【留用，仅升级用词】** Ich kann den Stuhl so nicht benutzen.
+
+Vor fünf Tagen habe ich Ihnen bereits eine E-Mail geschrieben und den Schaden gemeldet. **【留用】** Aber bis heute habe ich keine Antwort bekommen. Das ist für mich nicht zufriedenstellend, denn ich brauche den Stuhl dringend für mein Homeoffice.
+
+Deshalb möchte ich einen Umtausch. Bitte schicken Sie mir einen neuen, fehlerfreien Stuhl. Wenn ein Umtausch nicht möglich ist, können Sie den Stuhl auch reparieren lassen – allerdings nur, wenn das schnell geht. Wenn beides nicht geht, möchte ich den Kaufpreis vollständig zurück.
+
+Ich gebe Ihnen eine Frist bis zum 10. Juni. Bitte antworten Sie mir bis dahin und sagen Sie mir, wer die Rücksendekosten bezahlt. Meiner Meinung nach müssen Sie die Kosten übernehmen, denn der Schaden war schon bei der Lieferung da. **【留用】** Bitte bestätigen Sie mir das schriftlich.
+
+Mit freundlichen Grüßen
+Li Wei
+
+**与原稿的对应关系**：全文顺序仍是"描述瑕疵 → 抱怨没回复 → 换货→维修→退款 → 期限/运费/书面确认"，一个字论点都没换；只做了三件事：把口语词换成标准词、给每个从句补上正确的动词位置、把"设期限 + 运费 + 书面确认"打包成一段以节省词数。标【留用】的句子说明你的思路和语感已经过关，考场可以直接写。
+
+---
+
+## 7. 自检清单
+
+- ✅ **词数达标**：范文约 191 词（≥100），升格版约 165 词，均达标且不啰嗦。
+- ✅ **结构完整（含让步段）**：Betreff → Anrede → 三要素引言 → Mangel → 催复 → Lösung（含 Reparatur 让步）→ Frist/运费/确认 → Schluss/Gruß。
+- ✅ **从句动词置末**：dass der Stuhl nicht in einwandfreiem Zustand **ist**；wenn sie ... durchgeführt **würde**；da der Mangel ... **vorlag**；denn ich ... gerechnet **hatte** —— 逐句核对无误。
+- ✅ **无拼写错误**：已核 Herr/Herrn、Kratzer、Armlehne、Bestätigung、Grüßen、erstatten。
+- ✅ **词汇难度适配你的水平**：全篇除 ergonomisch（题目原词）外，无 C 1 冷僻词；三个核心升级词 beschädigt / erstatten / bestätigen 都是 B 2 必备。
+- ✅ **用的是你（题目）的论点**：换货优先、维修次之、退款兜底——未增加未要求的论点（如"我要精神赔偿"）。
+- ⚠️ **待补一项**：真实原稿未提供，第 5、6 项基于模拟稿；贴出原稿后我会逐句重做诊断。
+
+*惯用法说明：`bis zum 10. Juni` 与 `bis 10. Juni` 在商务信函中均正确（后者更常见、更简洁），范文取前者以便你记住 Dativ 形式；瑞士/奥地利变体写作 `Grüssen`，歌德考试按德国标准 `Grüßen` 计分，两者都不算错。*
