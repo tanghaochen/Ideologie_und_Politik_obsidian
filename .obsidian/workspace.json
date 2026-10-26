@@ -4,102 +4,94 @@
     "type": "split",
     "children": [
       {
-        "id": "ff5d945606200819",
-        "type": "tabs",
-        "dimension": 59.33174224343676,
-        "children": [
-          {
-            "id": "bb7616969366fe67",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/个人与社会的关系/其他 匮乏感陷阱.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "其他 匮乏感陷阱"
-            }
-          },
-          {
-            "id": "4941ed643b059f3a",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "格; 限定词"
-            }
-          },
-          {
-            "id": "9be7e4bb836fa99e",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "从句"
-            }
-          },
-          {
-            "id": "7f26734a40576a36",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "听说读写 以及学习外语的核心方法"
-            }
-          },
-          {
-            "id": "fe8729b9f803ac4b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/email Reklamation Bürostuhl – ErgoSitz 24.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "email Reklamation Bürostuhl – ErgoSitz 24"
-            }
-          }
-        ]
-      },
-      {
         "id": "b5dbd09e7753bfc0",
         "type": "tabs",
-        "dimension": 40.66825775656325,
         "children": [
           {
-            "id": "b7a63eada15fbce6",
+            "id": "e605bbafc4b641cf",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/email Reklamation Bürostuhl – ErgoSitz 24.md",
+                "file": "思想思维心理哲学/阅读/简单逻辑学/术语/中项.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "email Reklamation Bürostuhl – ErgoSitz 24"
+              "title": "中项"
+            }
+          },
+          {
+            "id": "0cf8b36a15790d0a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "思想思维心理哲学/阅读/简单逻辑学/术语/所有字母符号关系表达SPMA....md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "所有字母符号关系表达SPMA..."
+            }
+          },
+          {
+            "id": "d052bf28bb0037b5",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "pinned": true,
+              "icon": "lucide-file",
+              "title": "简单逻辑学Z"
+            }
+          },
+          {
+            "id": "6596cf5905efd8db",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw"
+              },
+              "icon": "excalidraw-icon",
+              "title": "简单逻辑学-全书逻辑图谱"
+            }
+          },
+          {
+            "id": "f40c279baef395fe",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw"
+              },
+              "icon": "excalidraw-icon",
+              "title": "简单逻辑学-全书逻辑图"
+            }
+          },
+          {
+            "id": "1a88828d7b6d4f17",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw"
+              },
+              "icon": "excalidraw-icon",
+              "title": "简单逻辑学-论证流水线"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -167,7 +159,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 425.5125274658203
+    "width": 690.7125091552734
   },
   "right": {
     "id": "b2bf97bc0c7f8080",
@@ -373,12 +365,26 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "bb7616969366fe67",
+  "active": "0cf8b36a15790d0a",
   "lastOpenFiles": [
+    "思想思维心理哲学/阅读/简单逻辑学/术语/全称.md",
+    "思想思维心理哲学/阅读/简单逻辑学/术语/主项.md",
+    "思想思维心理哲学/阅读/简单逻辑学/术语/特称.md",
+    "思想思维心理哲学/阅读/简单逻辑学/术语/谓项.md",
+    "思想思维心理哲学/阅读/简单逻辑学/术语/中项.md",
+    "思想思维心理哲学/阅读/简单逻辑学/术语/直言命题的结构.md",
+    "思想思维心理哲学/阅读/简单逻辑学/术语/所有字母符号关系表达SPMA....md",
+    "思想思维心理哲学/阅读/简单逻辑学/术语/周延.md",
+    "思想思维心理哲学/阅读/简单逻辑学/术语/命题.md",
+    "思想思维心理哲学/阅读/简单逻辑学/术语/量项.md",
+    "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
+    "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw",
+    "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw",
+    "file:E:/AI workpace/gdx_research/Geomagic_Design_X_签名错误_深度研究报告.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/email Reklamation Bürostuhl – ErgoSitz 24.md",
+    "语言学习/德语/公共知识语法/格; 限定词.md",
     "思想思维心理哲学/个人与社会的关系/其他 匮乏感陷阱.md",
     "语言学习/德语/公共知识语法/从句.md",
-    "语言学习/德语/公共知识语法/格; 限定词.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/E-Mail Homeoffice.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Homeoffice.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md",
@@ -389,28 +395,14 @@
     "思想思维心理哲学/个人与社会的关系/宏观社会巨机器与微观个体之间的雕塑关系.md",
     "思想思维心理哲学/个人与社会的关系/从关系到超越：情感的双向契约与生命丰盈.md",
     "思想思维心理哲学/个人与社会的关系/从 0 到 1：社会连接的善恶算法与尊严支柱.md",
-    "思想思维心理哲学/个人问题处理/未命名.md",
     "思想思维心理哲学/个人与社会的关系",
-    "语言学习/德语/单词/生词/26-10.md",
-    "语言学习/德语/单词/生词/形近词，易错词/表达说一类词汇辨析汇总.md",
     "语言学习/德语/单词/生词/形近词，易错词",
-    "file:E:/AI workpace/gdx_research/Geomagic_Design_X_签名错误_深度研究报告.md",
-    "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw",
     "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw",
-    "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw",
-    "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md",
     "file:E:/AI workpace/简单逻辑学/简单逻辑学-全书逻辑图.excalidraw",
-    "_AI-Diagrams/逻辑学/00-索引.md",
     "_AI-Diagrams/逻辑学/01-全书骨架.excalidraw",
     "_AI-Diagrams/逻辑学/06-对当关系方阵.excalidraw",
     "_AI-Diagrams/逻辑学/05-谬误总图.excalidraw",
     "_AI-Diagrams/逻辑学/04-推理形式-假言与三段论.excalidraw",
-    "_AI-Diagrams/逻辑学/03-论证-有效性与真.excalidraw.md",
-    "_AI-Diagrams/逻辑学/02-思想准备八条.excalidraw.md",
-    "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
-    "_AI-Diagrams/mcp-test_0.excalidraw.md",
-    "_AI-Diagrams/README.md",
-    "_AI-Diagrams/mcp-test.excalidraw.md",
     "assets/file-20261025013034129.png",
     "_AI-Diagrams/简单逻辑学-论证流水线.png",
     "_AI-Diagrams/简单逻辑学-论证流水线-preview.png",
