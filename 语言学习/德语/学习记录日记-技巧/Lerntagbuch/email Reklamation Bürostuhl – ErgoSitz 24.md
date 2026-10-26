@@ -1097,19 +1097,19 @@ Li Wei
 
 ## 4. 可迁移句式清单
 
-| # | 句式（德语） | 中文 | 我可以在什么场景用它 |
-|---|---|---|---|
-| 1 | Am ... habe ich von Ihnen ... erhalten (Bestellnummer: ...). | 我于……收到您的……（订单号：……）。 | 任何投诉/询问信的第一句，先立"时间+货物+单号"三要素。 |
-| 2 | Leider musste ich beim Aufbau feststellen, dass ... | 遗憾的是，我在组装/使用中发现…… | 报告问题时的万能开场，后面直接跟 dass 从句（动词记得置末）。 |
-| 3 | In diesem Zustand lässt sich der Stuhl nicht sicher benutzen. | 在这种状态下，椅子无法安全使用。 | 想说"东西没法用"，用 sich lassen + 不定式，比 ich kann nicht 高级。 |
-| 4 | Bereits vor fünf Tagen habe ich Ihnen ... gemeldet. Bis heute habe ich jedoch keine Antwort erhalten. | 早在五天前我已向您报告……但至今未获答复。 | 催复、第二次联系、投诉升级，两句一组最有力。 |
-| 5 | Das finde ich enttäuschend, denn ich hatte mit einer schnellen Reaktion gerechnet. | 我认为这令人失望，因为我原本期待快速回应。 | 表达不满但保持礼貌（不骂人，只评价行为）。 |
-| 6 | Da ... , erwarte ich ... | 由于……，我期待…… | 把"理由+诉求"压进一句，正式信件的黄金句型。 |
-| 7 | Eine Reparatur wäre für mich nur akzeptabel, wenn sie ... würde. | 只有在……的情况下，维修对我才是可接受的。 | 提让步/次要方案，nur...wenn + Konjunktiv II 显得克制又强硬。 |
-| 8 | Sollte ein Umtausch nicht möglich sein, bitte ich Sie, mir ... zu erstatten. | 若无法换货，请您向我退还…… | 写"如果不行，那就……"的兜底要求，Sollte 倒装 + bitten um/zu。 |
-| 9 | Ich setze Ihnen eine Frist bis zum ... | 我给您设定期限至…… | 一切投诉、催款、索赔信件必备，比 Ich gebe Ihnen eine Frist 更正式。 |
-| 10 | Die Kosten für ... übernehmen selbstverständlich Sie, da ... | ……的费用理所当然由您承担，因为…… | 争费用责任时用，selbstverständlich 一词把"这是你的义务"说得很硬。 |
-| 11 | Ich bitte Sie um eine schriftliche Bestätigung des ... per E-Mail. | 我请您通过邮件就……出具书面确认。 | 结尾要求留证据，租房、保险、退换货都能用。 |
+| #   | 句式（德语）                                                                                                | 中文                    | 我可以在什么场景用它                                         |
+| --- | ----------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------------------- |
+| 1   | Am ... habe ich von Ihnen ... erhalten (Bestellnummer: ...).                                          | 我于……收到您的……（订单号：……）。   | 任何投诉/询问信的第一句，先立"时间+货物+单号"三要素。                      |
+| 2   | Leider musste ich beim Aufbau feststellen, dass ...                                                   | 遗憾的是，我在组装/使用中发现……     | 报告问题时的万能开场，后面直接跟 dass 从句（动词记得置末）。                  |
+| 3   | In diesem Zustand lässt sich der Stuhl nicht sicher benutzen.                                         | 在这种状态下，椅子无法安全使用。      | 想说"东西没法用"，用 sich lassen + 不定式，比 ich kann nicht 高级。 |
+| 4   | Bereits vor fünf Tagen habe ich Ihnen ... gemeldet. Bis heute habe ich jedoch keine Antwort erhalten. | 早在五天前我已向您报告……但至今未获答复。 | 催复、第二次联系、投诉升级，两句一组最有力。                             |
+| 5   | Das finde ich enttäuschend, denn ich hatte mit einer schnellen Reaktion gerechnet.                    | 我认为这令人失望，因为我原本期待快速回应。 | 表达不满但保持礼貌（不骂人，只评价行为）。                              |
+| 6   | Da ... , erwarte ich ...                                                                              | 由于……，我期待……            | 把"理由+诉求"压进一句，正式信件的黄金句型。                            |
+| 7   | Eine Reparatur wäre für mich nur akzeptabel, wenn sie ... würde.                                      | 只有在……的情况下，维修对我才是可接受的。 | 提让步/次要方案，nur...wenn + Konjunktiv II 显得克制又强硬。       |
+| 8   | Sollte ein Umtausch nicht möglich sein, bitte ich Sie, mir ... zu erstatten.                          | 若无法换货，请您向我退还……        | 写"如果不行，那就……"的兜底要求，Sollte 倒装 + bitten um/zu。        |
+| 9   | Ich setze Ihnen eine Frist bis zum ...                                                                | 我给您设定期限至……            | 一切投诉、催款、索赔信件必备，比 Ich gebe Ihnen eine Frist 更正式。    |
+| 10  | Die Kosten für ... übernehmen selbstverständlich Sie, da ...                                          | ……的费用理所当然由您承担，因为……    | 争费用责任时用，selbstverständlich 一词把"这是你的义务"说得很硬。        |
+| 11  | Ich bitte Sie um eine schriftliche Bestätigung des ... per E-Mail.                                    | 我请您通过邮件就……出具书面确认。     | 结尾要求留证据，租房、保险、退换货都能用。                              |
 
 ---
 
