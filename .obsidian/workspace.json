@@ -8,6 +8,36 @@
         "type": "tabs",
         "children": [
           {
+            "id": "9b01df120c579cbc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/E-Mail Homeoffice.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "E-Mail Homeoffice"
+            }
+          },
+          {
+            "id": "f8d2c828ef91ced4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "未命名"
+            }
+          },
+          {
             "id": "d57dd2b8dd61418e",
             "type": "leaf",
             "state": {
@@ -68,153 +98,12 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       },
       {
         "id": "b5dbd09e7753bfc0",
         "type": "tabs",
         "children": [
-          {
-            "id": "165857b8dd7d51fa",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/原因状语从句与让步从句 weil, da,obwohl,wobei....md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "原因状语从句与让步从句 weil, da,obwohl,wobei..."
-            }
-          },
-          {
-            "id": "0170940740f99c33",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "从句"
-            }
-          },
-          {
-            "id": "802e37197acec1c3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/阅读/被讨厌的勇气/如何改变自己.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "如何改变自己"
-            }
-          },
-          {
-            "id": "e092df320c762e60",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "思想思维心理哲学/阅读/被讨厌的勇气/被讨厌的勇气全书逻辑.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "被讨厌的勇气全书逻辑"
-            }
-          },
-          {
-            "id": "bed66d3aca7afb10",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/个人与社会的关系/当下制度文化与历史演变.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "当下制度文化与历史演变"
-            }
-          },
-          {
-            "id": "e0e49447d90cb7d5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/个人与社会的关系/宏观社会巨机器与微观个体之间的雕塑关系.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "宏观社会巨机器与微观个体之间的雕塑关系"
-            }
-          },
-          {
-            "id": "4d67838528f8d0a6",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/个人与社会的关系/从 0 到 1：社会连接的善恶算法与尊严支柱.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "从 0 到 1：社会连接的善恶算法与尊严支柱"
-            }
-          },
-          {
-            "id": "6678a82ee5b75ca0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/个人问题处理/未命名.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "未命名"
-            }
-          },
-          {
-            "id": "043cf2202777bada",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/个人与社会的关系/从关系到超越：情感的双向契约与生命丰盈.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "从关系到超越：情感的双向契约与生命丰盈"
-            }
-          },
-          {
-            "id": "370ecf8c96ac5142",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.14.5"
-              },
-              "icon": "lucide-book-up",
-              "title": "版本说明 1.14.5"
-            }
-          },
           {
             "id": "0ff1e81507805d0d",
             "type": "leaf",
@@ -514,8 +403,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "165857b8dd7d51fa",
+  "active": "5962dcef85933e57",
   "lastOpenFiles": [
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/E-Mail Homeoffice.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Homeoffice.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/原因状语从句与让步从句 weil, da,obwohl,wobei....md",
     "语言学习/德语/公共知识语法/从句.md",
     "思想思维心理哲学/阅读/被讨厌的勇气/如何改变自己.md",
     "思想思维心理哲学/阅读/被讨厌的勇气/被讨厌的勇气全书逻辑.md",
@@ -548,11 +442,6 @@
     "思想思维心理哲学/阅读/简单逻辑学/术语/论证.md",
     "file:E:/AI workpace/简单逻辑学/简单逻辑学-全书逻辑笔记.md",
     "assets/file-20261025013034129.png",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/ein komplettes Handyverbot.md",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Homeoffice.md",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Leben ohne eigenes Auto.md",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md",
-    "语言学习/德语/公共知识语法/2动词/❌/语法规则/haben, sein 区分总结.md",
     "_AI-Diagrams/简单逻辑学-论证流水线.png",
     "_AI-Diagrams/简单逻辑学-论证流水线-preview.png",
     "_AI-Diagrams/简单逻辑学-全书逻辑图谱.png",

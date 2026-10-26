@@ -565,7 +565,7 @@
       "option": "property-asc",
       "propertyKey": "sort_index"
     },
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch": "created-desc",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch": "created-asc",
     "语言学习/德语/公共知识语法/2动词/❌": "created-desc"
   },
   "folderTreeSortOverrides": {},
