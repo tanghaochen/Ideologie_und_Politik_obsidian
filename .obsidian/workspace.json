@@ -8,6 +8,18 @@
         "type": "tabs",
         "children": [
           {
+            "id": "3963096e0b3cece6",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/从句.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "从句"
+            }
+          },
+          {
             "id": "473a336d6bc3e565",
             "type": "leaf",
             "state": {
@@ -406,8 +418,9 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "473a336d6bc3e565",
+  "active": "3963096e0b3cece6",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/语法对应的场景.md",
     "assets/Pasted Image 20261027140128_774.png",
     "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/email Reklamation Bürostuhl – ErgoSitz 24.md",
@@ -453,7 +466,6 @@
     "assets/file-20261023205648181.png",
     "assets/file-20261023195935775.png",
     "assets/Pasted Image 20261022155003_192.png",
-    "assets/image-509.png",
     "Marginnote/Deutsch.canvas",
     "Marginnote/错题管理.canvas",
     "思想思维心理哲学/未命名.canvas",
