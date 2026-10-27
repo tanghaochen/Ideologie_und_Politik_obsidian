@@ -8,6 +8,16 @@
         "type": "tabs",
         "children": [
           {
+            "id": "5d1542e3af74ba44",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
+            }
+          },
+          {
             "id": "3963096e0b3cece6",
             "type": "leaf",
             "state": {
@@ -418,8 +428,9 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "3963096e0b3cece6",
+  "active": "5d1542e3af74ba44",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/语法对应的场景.md",
     "assets/Pasted Image 20261027140128_774.png",
     "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
@@ -442,7 +453,6 @@
     "file:E:/AI workpace/gdx_research/Geomagic_Design_X_签名错误_深度研究报告.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
     "思想思维心理哲学/个人与社会的关系/其他 匮乏感陷阱.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/E-Mail Homeoffice.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Homeoffice.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Handys in der Schule.md",

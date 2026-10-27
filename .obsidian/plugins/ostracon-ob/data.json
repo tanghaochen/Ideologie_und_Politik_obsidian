@@ -9734,6 +9734,18 @@
   ],
   "logs": [
     {
+      "id": "log-mvqntdb0-674c085dcf39",
+      "level": "info",
+      "message": "plugin loaded",
+      "at": "2026-10-27T12:26:24.540Z"
+    },
+    {
+      "id": "log-mvqntdaj-2233926be6e4",
+      "level": "info",
+      "message": "ws listening on ws://[::1]:27123",
+      "at": "2026-10-27T12:26:24.523Z"
+    },
+    {
       "id": "log-mvnt07m2-51e209f04485",
       "level": "info",
       "message": "plugin loaded",
