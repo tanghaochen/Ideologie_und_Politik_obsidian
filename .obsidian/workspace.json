@@ -8,67 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "738ec772933b6636",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/个人与社会的关系/从 0 到 1：社会连接的善恶算法与尊严支柱.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "从 0 到 1：社会连接的善恶算法与尊严支柱"
-            }
-          },
-          {
-            "id": "09b39104672b8846",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/个人与社会的关系/社会学学科介绍.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "社会学学科介绍"
-            }
-          },
-          {
-            "id": "5abe0e9a33508e4f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/不同场景练习德语语法句子.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "不同场景练习德语语法句子"
-            }
-          },
-          {
-            "id": "e378b00ab7db0985",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/个人与社会的关系/宏观社会巨机器与微观个体之间的雕塑关系.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "宏观社会巨机器与微观个体之间的雕塑关系"
-            }
-          },
-          {
-            "id": "f9e6643dfaf3c478",
+            "id": "cc460f3de7bd07bf",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
@@ -164,7 +104,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 690.7125091552734
+    "width": 449.5125274658203
   },
   "right": {
     "id": "b2bf97bc0c7f8080",
@@ -307,8 +247,19 @@
               "icon": "inbox",
               "title": "MN 卡片"
             }
+          },
+          {
+            "id": "3389fbe2cbe03848",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw-sidepanel",
+              "state": {},
+              "icon": "excalidraw-icon",
+              "title": "Excalidraw 侧边面板"
+            }
           }
-        ]
+        ],
+        "currentTab": 12
       },
       {
         "id": "28e75bfc7e894da7",
@@ -390,15 +341,61 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "738ec772933b6636",
+  "floating": {
+    "id": "70d84ea69b8e85fe",
+    "type": "floating",
+    "children": [
+      {
+        "id": "1571701547a0d107",
+        "type": "window",
+        "children": [
+          {
+            "id": "790a466c7df1667b",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "94c90a9ef50783a0",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "思想思维心理哲学/个人与社会的关系/宏观社会巨机器与微观个体之间的雕塑关系.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "宏观社会巨机器与微观个体之间的雕塑关系"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "vertical",
+        "x": -1673,
+        "y": 124,
+        "width": 1829,
+        "height": 1392,
+        "maximize": true,
+        "zoom": -1
+      }
+    ]
+  },
+  "active": "3389fbe2cbe03848",
   "lastOpenFiles": [
-    "_AI-Diagrams/时代国家个人/时代国家个人-三层坐标系.excalidraw",
-    "_AI-Diagrams/时代国家个人/四国对比-中德美与落后国家.png",
-    "_AI-Diagrams/时代国家个人/四国对比-中德美与落后国家.excalidraw",
-    "_AI-Diagrams/时代国家个人/宏观微观-五道工序雕刻个人.png",
-    "_AI-Diagrams/时代国家个人/宏观微观-五道工序雕刻个人.excalidraw",
-    "_AI-Diagrams/时代国家个人",
     "思想思维心理哲学/个人与社会的关系/宏观社会巨机器与微观个体之间的雕塑关系.md",
+    "思想思维心理哲学/个人与社会的关系/DW 社会个人关系模型.md",
+    "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
+    "_AI-Diagrams/时代国家个人/宏观微观-五道工序雕刻个人.excalidraw",
+    "_AI-Diagrams/时代国家个人/00-总览-时代国家个人.md",
+    "思想思维心理哲学/个人问题处理/未命名.md",
+    "_AI-Diagrams/时代国家个人/时代国家个人-三层坐标系.excalidraw",
+    "_AI-Diagrams/时代国家个人/四国对比-中德美与落后国家.excalidraw",
+    "思想思维心理哲学/个人与社会的关系/从 0 到 1：社会连接的善恶算法与尊严支柱.md",
+    "_AI-Diagrams/时代国家个人/时代国家个人-三层坐标系.png",
+    "_AI-Diagrams/时代国家个人/四国对比-中德美与落后国家.png",
+    "_AI-Diagrams/时代国家个人/宏观微观-五道工序雕刻个人.png",
+    "_AI-Diagrams/时代国家个人",
     "语言学习/德语/学习记录日记-技巧/不同场景练习德语语法句子.md",
     "思想思维心理哲学/个人与社会的关系/社会学学科介绍.md",
     "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
@@ -407,10 +404,8 @@
     "语言学习/德语/学习记录日记-技巧/短文学习逻辑.md",
     "语言学习/德语/学习记录日记-技巧/德语 B 2 科学出题法 · 知识地图.md",
     "语言学习/德语/学习记录日记-技巧/电商.md",
-    "思想思维心理哲学/个人与社会的关系/DW 社会个人关系模型.md",
     "思想思维心理哲学/个人人生思想架构.md",
     "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
-    "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
     "语言学习/德语/公共知识语法/2动词/❌反身动词代词错题.md",
     "语言学习/德语/公共知识语法/2动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
     "2026-10-28.md",
@@ -424,9 +419,6 @@
     "语言学习/德语/公共知识语法/术语词典语库/句子结构：术语，形容词，副词，表语，定语，状语.md",
     "语言学习/德语/公共知识语法/语法对应的场景.md",
     "电脑、软件、系统/创业项目/网赚项目想法记录.md",
-    "营养学以及养生/术语营养物质和药材功用/维生素D.md",
-    "思想思维心理哲学/个人与社会的关系/泡学续集.md",
-    "思想思维心理哲学/个人与社会的关系/人性操纵术.md",
     "assets/Pasted Image 20261027140128_774.png",
     "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw",
     "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw",
@@ -434,11 +426,9 @@
     "语言学习/德语/单词/生词/形近词，易错词",
     "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw",
     "file:E:/AI workpace/简单逻辑学/简单逻辑学-全书逻辑图.excalidraw",
-    "_AI-Diagrams/逻辑学/01-全书骨架.excalidraw",
     "assets/file-20261025013034129.png",
     "_AI-Diagrams/简单逻辑学-论证流水线.png",
     "_AI-Diagrams/简单逻辑学-论证流水线-preview.png",
-    "_AI-Diagrams/简单逻辑学-全书逻辑图谱.png",
     "Marginnote/Deutsch.canvas",
     "Marginnote/错题管理.canvas",
     "思想思维心理哲学/未命名.canvas",
