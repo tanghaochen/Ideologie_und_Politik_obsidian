@@ -8,33 +8,75 @@
         "type": "tabs",
         "children": [
           {
-            "id": "22f53caa343139a2",
+            "id": "738ec772933b6636",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2026-10-28.md",
+                "file": "思想思维心理哲学/个人与社会的关系/从 0 到 1：社会连接的善恶算法与尊严支柱.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "2026-10-28"
+              "title": "从 0 到 1：社会连接的善恶算法与尊严支柱"
             }
           },
           {
-            "id": "9305b28290afa1cb",
+            "id": "09b39104672b8846",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/2动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
+                "file": "思想思维心理哲学/个人与社会的关系/社会学学科介绍.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "83 反身代词和动词 Reflexivpronomen；形容词变名词"
+              "title": "社会学学科介绍"
+            }
+          },
+          {
+            "id": "5abe0e9a33508e4f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/学习记录日记-技巧/不同场景练习德语语法句子.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "不同场景练习德语语法句子"
+            }
+          },
+          {
+            "id": "e378b00ab7db0985",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "思想思维心理哲学/个人与社会的关系/宏观社会巨机器与微观个体之间的雕塑关系.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "宏观社会巨机器与微观个体之间的雕塑关系"
+            }
+          },
+          {
+            "id": "f9e6643dfaf3c478",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "思想思维心理哲学/个人与社会的关系/DW 社会个人关系模型.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "DW 社会个人关系模型"
             }
           },
           {
@@ -54,8 +96,7 @@
               "title": "简单逻辑学Z"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -119,7 +160,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -246,6 +287,26 @@
               "icon": "lucide-archive",
               "title": "添加笔记属性"
             }
+          },
+          {
+            "id": "2cb591d0cac3ef1b",
+            "type": "leaf",
+            "state": {
+              "type": "ostracon-inbox-view",
+              "state": {},
+              "icon": "inbox",
+              "title": "MN 卡片"
+            }
+          },
+          {
+            "id": "9755f4126e7d9700",
+            "type": "leaf",
+            "state": {
+              "type": "ostracon-inbox-view",
+              "state": {},
+              "icon": "inbox",
+              "title": "MN 卡片"
+            }
           }
         ]
       },
@@ -329,8 +390,27 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "d052bf28bb0037b5",
+  "active": "738ec772933b6636",
   "lastOpenFiles": [
+    "_AI-Diagrams/时代国家个人/时代国家个人-三层坐标系.excalidraw",
+    "_AI-Diagrams/时代国家个人/四国对比-中德美与落后国家.png",
+    "_AI-Diagrams/时代国家个人/四国对比-中德美与落后国家.excalidraw",
+    "_AI-Diagrams/时代国家个人/宏观微观-五道工序雕刻个人.png",
+    "_AI-Diagrams/时代国家个人/宏观微观-五道工序雕刻个人.excalidraw",
+    "_AI-Diagrams/时代国家个人",
+    "思想思维心理哲学/个人与社会的关系/宏观社会巨机器与微观个体之间的雕塑关系.md",
+    "语言学习/德语/学习记录日记-技巧/不同场景练习德语语法句子.md",
+    "思想思维心理哲学/个人与社会的关系/社会学学科介绍.md",
+    "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
+    "语言学习/德语/学习记录日记-技巧/2026.canvas",
+    "语言学习/德语/学习记录日记-技巧/学习计划.md",
+    "语言学习/德语/学习记录日记-技巧/短文学习逻辑.md",
+    "语言学习/德语/学习记录日记-技巧/德语 B 2 科学出题法 · 知识地图.md",
+    "语言学习/德语/学习记录日记-技巧/电商.md",
+    "思想思维心理哲学/个人与社会的关系/DW 社会个人关系模型.md",
+    "思想思维心理哲学/个人人生思想架构.md",
+    "语言学习/德语/学习记录日记-技巧/德语学习规划.md",
+    "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
     "语言学习/德语/公共知识语法/2动词/❌反身动词代词错题.md",
     "语言学习/德语/公共知识语法/2动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
     "2026-10-28.md",
@@ -347,20 +427,7 @@
     "营养学以及养生/术语营养物质和药材功用/维生素D.md",
     "思想思维心理哲学/个人与社会的关系/泡学续集.md",
     "思想思维心理哲学/个人与社会的关系/人性操纵术.md",
-    "语言学习/德语/公共知识语法/从句.md",
     "assets/Pasted Image 20261027140128_774.png",
-    "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
-    "思想思维心理哲学/个人与社会的关系/社会关系的重塑，AI时代千年未有之变局 解局法.md",
-    "思想思维心理哲学/个人与社会的关系/诺贝尔奖预期管理.md",
-    "思想思维心理哲学/阅读/简单逻辑学/术语/周延.md",
-    "思想思维心理哲学/阅读/简单逻辑学/术语/所有字母符号关系表达SPMA....md",
-    "思想思维心理哲学/阅读/简单逻辑学/术语/全称.md",
-    "思想思维心理哲学/阅读/简单逻辑学/术语/主项.md",
-    "思想思维心理哲学/阅读/简单逻辑学/术语/特称.md",
-    "思想思维心理哲学/阅读/简单逻辑学/术语/谓项.md",
-    "思想思维心理哲学/阅读/简单逻辑学/术语/中项.md",
-    "思想思维心理哲学/阅读/简单逻辑学/术语/直言命题的结构.md",
-    "思想思维心理哲学/阅读/简单逻辑学/术语/命题.md",
     "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw",
     "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw",
     "思想思维心理哲学/个人与社会的关系",
@@ -368,22 +435,16 @@
     "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw",
     "file:E:/AI workpace/简单逻辑学/简单逻辑学-全书逻辑图.excalidraw",
     "_AI-Diagrams/逻辑学/01-全书骨架.excalidraw",
-    "_AI-Diagrams/逻辑学/06-对当关系方阵.excalidraw",
-    "_AI-Diagrams/逻辑学/05-谬误总图.excalidraw",
-    "_AI-Diagrams/逻辑学/04-推理形式-假言与三段论.excalidraw",
     "assets/file-20261025013034129.png",
     "_AI-Diagrams/简单逻辑学-论证流水线.png",
     "_AI-Diagrams/简单逻辑学-论证流水线-preview.png",
     "_AI-Diagrams/简单逻辑学-全书逻辑图谱.png",
-    "_AI-Diagrams/简单逻辑学-全书逻辑图谱-preview.png",
-    "assets/file-20261024003127497.png",
     "Marginnote/Deutsch.canvas",
     "Marginnote/错题管理.canvas",
     "思想思维心理哲学/未命名.canvas",
     "思想思维心理哲学/爱情/说话聊天/未命名.canvas",
     "语言学习/德语/公共知识语法/10句型/句子解析学习/Nico weg/生词 AI Canvas.canvas",
     "网络/简述软路由网络逻辑.canvas",
-    "未命名.canvas",
-    "语言学习/德语/学习记录日记-技巧/2026.canvas"
+    "未命名.canvas"
   ]
 }

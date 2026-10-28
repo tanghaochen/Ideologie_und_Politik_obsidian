@@ -1,0 +1,568 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "type": "text", "id": "t_title", "x": 90, "y": 58, "width": 440, "height": 35,
+      "text": "个人痛苦，是宏观结构的微观显影", "originalText": "个人痛苦，是宏观结构的微观显影",
+      "fontSize": 28, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100001, "version": 1, "versionNonce": 100002, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "t_sub", "x": 90, "y": 100, "width": 380, "height": 18,
+      "text": "同一台巨机器，同时生产顺从、戾气与创造力", "originalText": "同一台巨机器，同时生产顺从、戾气与创造力",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100003, "version": 1, "versionNonce": 100004, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "lbl_macro", "x": 90, "y": 164, "width": 200, "height": 23,
+      "text": "① 宏观 · 五道工序", "originalText": "① 宏观 · 五道工序",
+      "fontSize": 18, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100005, "version": 1, "versionNonce": 100006, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "macro1_t", "x": 110, "y": 204, "width": 240, "height": 23,
+      "text": "制度", "originalText": "制度",
+      "fontSize": 18, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#1e3a5f", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100011, "version": 1, "versionNonce": 100012, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "macro1_d", "x": 110, "y": 232, "width": 240, "height": 35,
+      "text": "定博弈规则\n正和，还是零和", "originalText": "定博弈规则\n正和，还是零和",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100013, "version": 1, "versionNonce": 100014, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "macro2_t", "x": 400, "y": 204, "width": 240, "height": 23,
+      "text": "政策", "originalText": "政策",
+      "fontSize": 18, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#1e3a5f", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100015, "version": 1, "versionNonce": 100016, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "macro2_d", "x": 400, "y": 232, "width": 240, "height": 35,
+      "text": "设激励漏斗\n补贴谁，惩罚谁", "originalText": "设激励漏斗\n补贴谁，惩罚谁",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100017, "version": 1, "versionNonce": 100018, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "macro3_t", "x": 690, "y": 204, "width": 240, "height": 23,
+      "text": "福利", "originalText": "福利",
+      "fontSize": 18, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#1e3a5f", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100019, "version": 1, "versionNonce": 100020, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "macro3_d", "x": 690, "y": 232, "width": 240, "height": 35,
+      "text": "铺安全垫\n坠落时会不会死", "originalText": "铺安全垫\n坠落时会不会死",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100021, "version": 1, "versionNonce": 100022, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "macro4_t", "x": 980, "y": 204, "width": 240, "height": 23,
+      "text": "官僚", "originalText": "官僚",
+      "fontSize": 18, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#1e3a5f", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100023, "version": 1, "versionNonce": 100024, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "macro4_d", "x": 980, "y": 232, "width": 240, "height": 35,
+      "text": "装传动齿轮\n流程合规 > 结果", "originalText": "装传动齿轮\n流程合规 > 结果",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100025, "version": 1, "versionNonce": 100026, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "macro5_t", "x": 1270, "y": 204, "width": 240, "height": 23,
+      "text": "文化", "originalText": "文化",
+      "fontSize": 18, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#1e3a5f", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100027, "version": 1, "versionNonce": 100028, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "macro5_d", "x": 1270, "y": 232, "width": 240, "height": 35,
+      "text": "灌精神空气\n什么值得羞耻", "originalText": "灌精神空气\n什么值得羞耻",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100029, "version": 1, "versionNonce": 100030, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "line", "id": "spine1", "x": 230, "y": 276, "width": 0, "height": 96,
+      "strokeColor": "#94a3b8", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100031, "version": 1, "versionNonce": 100032, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [0, 96]]
+    },
+    {
+      "type": "line", "id": "spine2", "x": 520, "y": 276, "width": 0, "height": 96,
+      "strokeColor": "#94a3b8", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100033, "version": 1, "versionNonce": 100034, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [0, 96]]
+    },
+    {
+      "type": "line", "id": "spine3", "x": 810, "y": 276, "width": 0, "height": 96,
+      "strokeColor": "#94a3b8", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100035, "version": 1, "versionNonce": 100036, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [0, 96]]
+    },
+    {
+      "type": "line", "id": "spine4", "x": 1100, "y": 276, "width": 0, "height": 96,
+      "strokeColor": "#94a3b8", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100037, "version": 1, "versionNonce": 100038, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [0, 96]]
+    },
+    {
+      "type": "line", "id": "spine5", "x": 1390, "y": 276, "width": 0, "height": 96,
+      "strokeColor": "#94a3b8", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100039, "version": 1, "versionNonce": 100040, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [0, 96]]
+    },
+    {
+      "type": "line", "id": "rail", "x": 230, "y": 372, "width": 1160, "height": 0,
+      "strokeColor": "#1e3a5f", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100041, "version": 1, "versionNonce": 100042, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [1160, 0]]
+    },
+    {
+      "type": "text", "id": "lbl_mech", "x": 90, "y": 396, "width": 220, "height": 23,
+      "text": "② 中观 · 两把雕刻刀", "originalText": "② 中观 · 两把雕刻刀",
+      "fontSize": 18, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100043, "version": 1, "versionNonce": 100044, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "arrow", "id": "arr_knifeA", "x": 470, "y": 372, "width": 0, "height": 90,
+      "strokeColor": "#b45309", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 3, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100045, "version": 1, "versionNonce": 100046, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [0, 90]],
+      "startBinding": null, "endBinding": null,
+      "startArrowhead": null, "endArrowhead": "arrow"
+    },
+    {
+      "type": "text", "id": "lbl_kA_verb", "x": 484, "y": 402, "width": 100, "height": 18,
+      "text": "分配收益", "originalText": "分配收益",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#b45309", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100047, "version": 1, "versionNonce": 100048, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "arrow", "id": "arr_knifeB", "x": 1150, "y": 372, "width": 0, "height": 90,
+      "strokeColor": "#b45309", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 3, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100049, "version": 1, "versionNonce": 100050, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [0, 90]],
+      "startBinding": null, "endBinding": null,
+      "startArrowhead": null, "endArrowhead": "arrow"
+    },
+    {
+      "type": "text", "id": "lbl_kB_verb", "x": 1164, "y": 402, "width": 100, "height": 18,
+      "text": "设定恐惧", "originalText": "设定恐惧",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#b45309", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100051, "version": 1, "versionNonce": 100052, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "knifeA_rect", "x": 150, "y": 468, "width": 340, "height": 140,
+      "strokeColor": "#b45309", "backgroundColor": "#fef3c7", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100053, "version": 1, "versionNonce": 100054, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "knifeA_title", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "knifeA_title", "x": 165, "y": 480, "width": 310, "height": 23,
+      "text": "刀① 奖惩算法", "originalText": "刀① 奖惩算法",
+      "fontSize": 18, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#b45309", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100055, "version": 1, "versionNonce": 100056, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "knifeA_rect", "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "knifeA_detail", "x": 170, "y": 512, "width": 300, "height": 53,
+      "text": "守规矩被奖励 → 长出诚信\n钻空子被奖励 → 长出投机\n好人赔钱 → 道德退出", "originalText": "守规矩被奖励 → 长出诚信\n钻空子被奖励 → 长出投机\n好人赔钱 → 道德退出",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100057, "version": 1, "versionNonce": 100058, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "rectangle", "id": "knifeB_rect", "x": 880, "y": 468, "width": 340, "height": 140,
+      "strokeColor": "#b45309", "backgroundColor": "#fef3c7", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100059, "version": 1, "versionNonce": 100060, "isDeleted": false,
+      "groupIds": [], "boundElements": [{"id": "knifeB_title", "type": "text"}],
+      "link": null, "locked": false, "roundness": {"type": 3}
+    },
+    {
+      "type": "text", "id": "knifeB_title", "x": 895, "y": 480, "width": 310, "height": 23,
+      "text": "刀② 稀缺阈值", "originalText": "刀② 稀缺阈值",
+      "fontSize": 18, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#b45309", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100061, "version": 1, "versionNonce": 100062, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "knifeB_rect", "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "knifeB_detail", "x": 900, "y": 512, "width": 300, "height": 53,
+      "text": "有兜底 → 敢试错、敢长期\n无兜底 → 只看眼前、先自保\n一场大病，全家破产", "originalText": "有兜底 → 敢试错、敢长期\n无兜底 → 只看眼前、先自保\n一场大病，全家破产",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#374151", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 100063, "version": 1, "versionNonce": 100064, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "ellipse", "id": "person_ellipse", "x": 760, "y": 688, "width": 200, "height": 64,
+      "strokeColor": "#1e40af", "backgroundColor": "#dbeafe", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200001, "version": 1, "versionNonce": 200002, "isDeleted": false,
+      "groupIds": [], "boundElements": [
+        {"id": "person_text", "type": "text"},
+        {"id": "arr_to_personA", "type": "arrow"},
+        {"id": "arr_to_personB", "type": "arrow"}
+      ],
+      "link": null, "locked": false
+    },
+    {
+      "type": "text", "id": "person_text", "x": 770, "y": 706, "width": 180, "height": 23,
+      "text": "普通人的一生", "originalText": "普通人的一生",
+      "fontSize": 18, "fontFamily": 5, "textAlign": "center", "verticalAlign": "middle",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200003, "version": 1, "versionNonce": 200004, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": "person_ellipse", "lineHeight": 1.25
+    },
+    {
+      "type": "arrow", "id": "arr_to_personA", "x": 320, "y": 608, "width": 470, "height": 92,
+      "strokeColor": "#b45309", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200005, "version": 1, "versionNonce": 200006, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [470, 92]],
+      "startBinding": null,
+      "endBinding": {"elementId": "person_ellipse", "focus": 0, "gap": 2},
+      "startArrowhead": null, "endArrowhead": "arrow"
+    },
+    {
+      "type": "text", "id": "lbl_shape_verb", "x": 540, "y": 670, "width": 120, "height": 18,
+      "text": "塑造行为", "originalText": "塑造行为",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#b45309", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200007, "version": 1, "versionNonce": 200008, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "arrow", "id": "arr_to_personB", "x": 1050, "y": 608, "width": 120, "height": 92,
+      "strokeColor": "#b45309", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200009, "version": 1, "versionNonce": 200010, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [-120, 92]],
+      "startBinding": null,
+      "endBinding": {"elementId": "person_ellipse", "focus": 0, "gap": 2},
+      "startArrowhead": null, "endArrowhead": "arrow"
+    },
+    {
+      "type": "text", "id": "lbl_squeeze_verb", "x": 978, "y": 670, "width": 120, "height": 18,
+      "text": "压缩心智", "originalText": "压缩心智",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#b45309", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200011, "version": 1, "versionNonce": 200012, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "line", "id": "bus_v", "x": 860, "y": 752, "width": 0, "height": 30,
+      "strokeColor": "#94a3b8", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200013, "version": 1, "versionNonce": 200014, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [0, 30]]
+    },
+    {
+      "type": "line", "id": "bus_h", "x": 300, "y": 782, "width": 1120, "height": 0,
+      "strokeColor": "#94a3b8", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200015, "version": 1, "versionNonce": 200016, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [1120, 0]]
+    },
+    {
+      "type": "line", "id": "spur1", "x": 300, "y": 782, "width": 0, "height": 18,
+      "strokeColor": "#94a3b8", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200017, "version": 1, "versionNonce": 200018, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [0, 18]]
+    },
+    {
+      "type": "line", "id": "spur2", "x": 860, "y": 782, "width": 0, "height": 18,
+      "strokeColor": "#94a3b8", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200019, "version": 1, "versionNonce": 200020, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [0, 18]]
+    },
+    {
+      "type": "line", "id": "spur3", "x": 1420, "y": 782, "width": 0, "height": 18,
+      "strokeColor": "#94a3b8", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200021, "version": 1, "versionNonce": 200022, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [0, 18]]
+    },
+    {
+      "type": "text", "id": "sym1_t", "x": 150, "y": 800, "width": 300, "height": 23,
+      "text": "① 不敢停", "originalText": "① 不敢停",
+      "fontSize": 18, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#b91c1c", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200023, "version": 1, "versionNonce": 200024, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "sym1_d", "x": 150, "y": 828, "width": 300, "height": 53,
+      "text": "房贷、学费、35 岁门槛\n停一步，排名就下滑\n← 政策漏斗 + 稀缺阈值", "originalText": "房贷、学费、35 岁门槛\n停一步，排名就下滑\n← 政策漏斗 + 稀缺阈值",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200025, "version": 1, "versionNonce": 200026, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "sym2_t", "x": 710, "y": 800, "width": 300, "height": 23,
+      "text": "② 不敢帮", "originalText": "② 不敢帮",
+      "fontSize": 18, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#b91c1c", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200027, "version": 1, "versionNonce": 200028, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "sym2_d", "x": 710, "y": 828, "width": 300, "height": 53,
+      "text": "扶人可能被讹\n善意先算完成本\n← 福利薄 + 制度不护善", "originalText": "扶人可能被讹\n善意先算完成本\n← 福利薄 + 制度不护善",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200029, "version": 1, "versionNonce": 200030, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "sym3_t", "x": 1270, "y": 800, "width": 300, "height": 23,
+      "text": "③ 怪自己", "originalText": "③ 怪自己",
+      "fontSize": 18, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#b91c1c", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200031, "version": 1, "versionNonce": 200032, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "sym3_d", "x": 1270, "y": 828, "width": 300, "height": 53,
+      "text": "把结构性失业\n读成「我不够努力」\n← 优绩主义文化", "originalText": "把结构性失业\n读成「我不够努力」\n← 优绩主义文化",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "center", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 200033, "version": 1, "versionNonce": 200034, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "lbl_zoom", "x": 90, "y": 948, "width": 420, "height": 23,
+      "text": "③ 放大看福利：同一场失业，两种大脑", "originalText": "③ 放大看福利：同一场失业，两种大脑",
+      "fontSize": 18, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#1e40af", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300001, "version": 1, "versionNonce": 300002, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "compL_t", "x": 120, "y": 996, "width": 320, "height": 23,
+      "text": "薄兜底 → 稀缺大脑", "originalText": "薄兜底 → 稀缺大脑",
+      "fontSize": 18, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#b91c1c", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300003, "version": 1, "versionNonce": 300004, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "compL_d", "x": 120, "y": 1026, "width": 320, "height": 53,
+      "text": "前额叶掉线，IQ −13~14 分\n管窥：只看得见下周的账单\n不敢扶人、不敢辞职、不敢生", "originalText": "前额叶掉线，IQ −13~14 分\n管窥：只看得见下周的账单\n不敢扶人、不敢辞职、不敢生",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300005, "version": 1, "versionNonce": 300006, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "compR_t", "x": 1000, "y": 996, "width": 320, "height": 23,
+      "text": "厚兜底 → 从容大脑", "originalText": "厚兜底 → 从容大脑",
+      "fontSize": 18, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300007, "version": 1, "versionNonce": 300008, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "compR_d", "x": 1000, "y": 1026, "width": 340, "height": 53,
+      "text": "心智带宽释放，敢做长期计划\n敢拒绝羞辱性的工作\n有余力利他与创造", "originalText": "心智带宽释放，敢做长期计划\n敢拒绝羞辱性的工作\n有余力利他与创造",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300009, "version": 1, "versionNonce": 300010, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "arrow", "id": "arr_comp", "x": 560, "y": 1036, "width": 200, "height": 0,
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300011, "version": 1, "versionNonce": 300012, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 0], [200, 0]],
+      "startBinding": null, "endBinding": null,
+      "startArrowhead": null, "endArrowhead": "arrow"
+    },
+    {
+      "type": "text", "id": "lbl_comp", "x": 570, "y": 1000, "width": 160, "height": 18,
+      "text": "加一层安全垫", "originalText": "加一层安全垫",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300013, "version": 1, "versionNonce": 300014, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "footnote", "x": 90, "y": 1132, "width": 720, "height": 18,
+      "text": "福利不是施舍，是「反非人化安全网」——它买的不是懒，是说「不」的底气。", "originalText": "福利不是施舍，是「反非人化安全网」——它买的不是懒，是说「不」的底气。",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300015, "version": 1, "versionNonce": 300016, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "arrow", "id": "arr_loop", "x": 960, "y": 340, "width": 700, "height": 380,
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 2, "strokeStyle": "dashed", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300017, "version": 1, "versionNonce": 300018, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "points": [[0, 380], [700, 380], [700, 0], [440, 0]],
+      "startBinding": null,
+      "endBinding": null,
+      "startArrowhead": null, "endArrowhead": "arrow"
+    },
+    {
+      "type": "text", "id": "lbl_loop", "x": 1430, "y": 596, "width": 160, "height": 35,
+      "text": "无数个体的选择\n缓慢改写规则", "originalText": "无数个体的选择\n缓慢改写规则",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#047857", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300019, "version": 1, "versionNonce": 300020, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    },
+    {
+      "type": "text", "id": "lbl_mills", "x": 1100, "y": 654, "width": 320, "height": 18,
+      "text": "米尔斯：个人困扰 → 公共议题", "originalText": "米尔斯：个人困扰 → 公共议题",
+      "fontSize": 14, "fontFamily": 5, "textAlign": "left", "verticalAlign": "top",
+      "strokeColor": "#64748b", "backgroundColor": "transparent", "fillStyle": "solid",
+      "strokeWidth": 1, "strokeStyle": "solid", "roughness": 0, "opacity": 100, "angle": 0,
+      "seed": 300021, "version": 1, "versionNonce": 300022, "isDeleted": false,
+      "groupIds": [], "boundElements": null, "link": null, "locked": false,
+      "containerId": null, "lineHeight": 1.25
+    }
+  ],
+  "appState": { "viewBackgroundColor": "#ffffff", "gridSize": 20 },
+  "files": {}
+}
