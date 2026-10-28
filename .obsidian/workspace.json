@@ -8,6 +8,21 @@
         "type": "tabs",
         "children": [
           {
+            "id": "89da2c9d6a08229a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "思想思维心理哲学/个人与社会的关系/不可能的，自给自足.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "不可能的，自给自足"
+            }
+          },
+          {
             "id": "cc460f3de7bd07bf",
             "type": "leaf",
             "state": {
@@ -36,7 +51,8 @@
               "title": "简单逻辑学Z"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -381,10 +397,11 @@
       }
     ]
   },
-  "active": "3389fbe2cbe03848",
+  "active": "cc460f3de7bd07bf",
   "lastOpenFiles": [
-    "思想思维心理哲学/个人与社会的关系/宏观社会巨机器与微观个体之间的雕塑关系.md",
+    "思想思维心理哲学/个人与社会的关系/不可能的，自给自足.md",
     "思想思维心理哲学/个人与社会的关系/DW 社会个人关系模型.md",
+    "思想思维心理哲学/个人与社会的关系/宏观社会巨机器与微观个体之间的雕塑关系.md",
     "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
     "_AI-Diagrams/时代国家个人/宏观微观-五道工序雕刻个人.excalidraw",
     "_AI-Diagrams/时代国家个人/00-总览-时代国家个人.md",
