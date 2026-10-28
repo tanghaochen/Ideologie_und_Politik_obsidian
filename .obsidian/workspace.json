@@ -459,8 +459,7 @@
       "realclaudian:Open Claudian": false,
       "agent-client:Open agent client": false,
       "copilot:Open Copilot Agent Chat": false,
-      "notebook-navigator:Notebook Navigator": false,
-      "periodic-notes:Open today": false
+      "notebook-navigator:Notebook Navigator": false
     }
   },
   "active": "efe963bf9c4eeab6",
