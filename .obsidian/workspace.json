@@ -8,6 +8,30 @@
         "type": "tabs",
         "children": [
           {
+            "id": "f1b9056d4fe8f8da",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "_AI-Diagrams/时代国家个人/四国对比-中德美与落后国家.excalidraw"
+              },
+              "icon": "excalidraw-icon",
+              "title": "四国对比-中德美与落后国家"
+            }
+          },
+          {
+            "id": "277555912a362a81",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "_AI-Diagrams/时代国家个人/时代国家个人-三层坐标系.excalidraw"
+              },
+              "icon": "excalidraw-icon",
+              "title": "时代国家个人-三层坐标系"
+            }
+          },
+          {
             "id": "89da2c9d6a08229a",
             "type": "leaf",
             "state": {
@@ -51,8 +75,7 @@
               "title": "简单逻辑学Z"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -392,21 +415,21 @@
         "y": 124,
         "width": 1829,
         "height": 1392,
-        "maximize": true,
+        "maximize": false,
         "zoom": -1
       }
     ]
   },
-  "active": "cc460f3de7bd07bf",
+  "active": "f1b9056d4fe8f8da",
   "lastOpenFiles": [
-    "思想思维心理哲学/个人与社会的关系/不可能的，自给自足.md",
+    "_AI-Diagrams/时代国家个人/时代国家个人-三层坐标系.excalidraw",
     "思想思维心理哲学/个人与社会的关系/DW 社会个人关系模型.md",
+    "思想思维心理哲学/个人与社会的关系/不可能的，自给自足.md",
     "思想思维心理哲学/个人与社会的关系/宏观社会巨机器与微观个体之间的雕塑关系.md",
     "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
     "_AI-Diagrams/时代国家个人/宏观微观-五道工序雕刻个人.excalidraw",
     "_AI-Diagrams/时代国家个人/00-总览-时代国家个人.md",
     "思想思维心理哲学/个人问题处理/未命名.md",
-    "_AI-Diagrams/时代国家个人/时代国家个人-三层坐标系.excalidraw",
     "_AI-Diagrams/时代国家个人/四国对比-中德美与落后国家.excalidraw",
     "思想思维心理哲学/个人与社会的关系/从 0 到 1：社会连接的善恶算法与尊严支柱.md",
     "_AI-Diagrams/时代国家个人/时代国家个人-三层坐标系.png",
@@ -435,7 +458,6 @@
     "语言学习/德语/公共知识语法/句子成分 结构.md",
     "语言学习/德语/公共知识语法/术语词典语库/句子结构：术语，形容词，副词，表语，定语，状语.md",
     "语言学习/德语/公共知识语法/语法对应的场景.md",
-    "电脑、软件、系统/创业项目/网赚项目想法记录.md",
     "assets/Pasted Image 20261027140128_774.png",
     "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw",
     "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw",

@@ -1749,10 +1749,10 @@
 		"currentItemEndArrowhead": "arrow",
 		"currentItemArrowType": "round",
 		"currentItemFrameRole": null,
-		"scrollX": 121.72849913114015,
-		"scrollY": 205.3207911672838,
+		"scrollX": 103.5083358224214,
+		"scrollY": 13.92681282347425,
 		"zoom": {
-			"value": 0.89909
+			"value": 1.04909
 		},
 		"currentItemRoundness": "round",
 		"gridSize": 20,
