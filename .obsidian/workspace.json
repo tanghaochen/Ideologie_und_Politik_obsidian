@@ -131,6 +131,36 @@
             }
           },
           {
+            "id": "90aae133c29aaddb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述物品的摆放：位置、姿态与排列.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "描述物品的摆放：位置、姿态与排列"
+            }
+          },
+          {
+            "id": "f05b7cbb17d90fd2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/间接引语（新闻体）：第一、第二虚拟式与介词连接体系.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "间接引语（新闻体）：第一、第二虚拟式与介词连接体系"
+            }
+          },
+          {
             "id": "bcbbea41d655326c",
             "type": "leaf",
             "state": {
@@ -161,7 +191,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -351,8 +381,7 @@
               "title": "添加笔记属性"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       },
       {
         "id": "28e75bfc7e894da7",
@@ -434,11 +463,16 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "c52ecd87abcfe178",
+  "active": "f05b7cbb17d90fd2",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/连词成对.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述物品的摆放：位置、姿态与排列.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/间接引语（新闻体）：第一、第二虚拟式与介词连接体系.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen..md",
+    "copilot/copilot-conversations/分段翻译@20261111_223457.md",
+    "copilot/copilot-conversations/分段翻译请求@20261111_223433.md",
     "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
+    "语言学习/德语/公共知识语法/连词成对.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/观点发表（Stellungnahme）：对一篇文章或评论表示赞同、反驳或部分赞同.md",
     "copilot/copilot-conversations/Add_Translation_in_Same_Cell@20261111_214556.md",
     "copilot/copilot-conversations/分段附翻译@20261111_214348.md",
@@ -459,14 +493,9 @@
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/email Reklamation Bürostuhl – ErgoSitz 24.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述一个人在房间里做各种动作（Tätigkeiten im Haushalt）.md",
-    "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
-    "语言学习/德语/公共知识语法/格; 限定词.md",
-    "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md",
     "assets/a_clean_colorful_educational_infographic_in_chine.png",
     "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw",
     "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述物品的摆放：位置、姿态与排列.md",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/购物与客服沟通：线下购物与网店的售前、下单、售后、退换货.md",
     "assets/德语场景表达训练全流程 инфোগրաfic (1).png",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习",
     "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw",

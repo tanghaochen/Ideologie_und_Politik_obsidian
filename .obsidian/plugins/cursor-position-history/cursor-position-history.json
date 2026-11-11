@@ -3681,21 +3681,21 @@
   },
   "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述物品的摆放：位置、姿态与排列.md": {
     "scrollState": {
-      "top": 4892.39990234375,
+      "top": 7921.2001953125,
       "left": 0,
-      "clientHeight": 1516,
+      "clientHeight": 1468,
       "clientWidth": 1370,
-      "height": 1516,
+      "height": 1468,
       "width": 1382
     },
     "cursor": {
       "from": {
-        "ch": 37,
-        "line": 139
+        "ch": 0,
+        "line": 264
       },
       "to": {
-        "ch": 37,
-        "line": 139
+        "ch": 0,
+        "line": 264
       }
     }
   },
@@ -3795,6 +3795,46 @@
       },
       "to": {
         "ch": 63,
+        "line": 0
+      }
+    }
+  },
+  "语言学习/德语/公共知识语法/10句型/从句合集/条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen..md": {
+    "scrollState": {
+      "top": 710.4000244140625,
+      "left": 0,
+      "clientHeight": 1516,
+      "clientWidth": 1370,
+      "height": 1516,
+      "width": 1382
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 94
+      },
+      "to": {
+        "ch": 0,
+        "line": 94
+      }
+    }
+  },
+  "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/间接引语（新闻体）：第一、第二虚拟式与介词连接体系.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1516,
+      "clientWidth": 1370,
+      "height": 1516,
+      "width": 1382
+    },
+    "cursor": {
+      "from": {
+        "ch": 27,
+        "line": 0
+      },
+      "to": {
+        "ch": 0,
         "line": 0
       }
     }
