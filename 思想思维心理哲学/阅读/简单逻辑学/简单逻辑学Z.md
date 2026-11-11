@@ -258,7 +258,7 @@
 “这种谬误人们常常避免不了, 所以在面临类似的情况时应加倍小心。以偏概全是人类的某种天性” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=57&annotation=7CEZQ5SA)) |
 
 ## 断言
-
+![[逻辑学断言概念信息图.png|1536x1024]]
 “断言是将谓项附着于主项的观念联结过程。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=58&annotation=VI3DSNQM)) |
 
 ““莱瑞尔是经理助理”,在 这个命题中,经理助理是莱瑞尔的谓项。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=58&annotation=IGMSBNM5)) |

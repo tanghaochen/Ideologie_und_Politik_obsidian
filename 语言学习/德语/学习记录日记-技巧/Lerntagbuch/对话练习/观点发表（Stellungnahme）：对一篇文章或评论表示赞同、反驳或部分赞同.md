@@ -678,11 +678,19 @@ kaum｜nur bedingt｜in Teilen｜weitgehend｜durchaus｜allenfalls（充其量�
 
 ## 七、实战示范（把全部模块用在一段上）
 
+^olk3mf
+
 **示范文本（虚构，仅作练习材料）：**
 > „Die deutsche Wirtschaft ist am Ende. Nirgendwo wird so wenig gearbeitet wie hier. Eine aktuelle Umfrage zeigt: 87 Prozent der Bürger sind unzufrieden. Wer das nicht sieht, will es nicht sehen. Die Politik hat komplett versagt.“
 
 **批评段（约 160 词）：**
 > Der Text arbeitet mit starken Behauptungen, bleibt aber die Belege dafür schuldig. Für die zentrale Aussage, die Wirtschaft sei „am Ende“, fehlen jegliche Daten – weder Wachstumszahlen noch ein Vergleichszeitraum werden genannt. Die Zahl von 87 Prozent wird als „aktuelle Umfrage“ eingeführt, ohne Quelle, Auftraggeber oder Angaben zur Stichprobe; ob sie repräsentativ ist, lässt sich daher nicht überprüfen. Zudem belegt Unzufriedenheit nicht den Niedergang der Wirtschaft – hier wird ein Stimmungsbild mit einer ökonomischen Aussage gleichgesetzt. Die Argumentation bleibt durchgehend pauschal: Es fehlt die Differenzierung nach Branchen und Regionen, und die Gegenposition wird nicht zur Kenntnis genommen. Mit Formulierungen wie „komplett versagt“ und dem Satz „Wer das nicht sieht, will es nicht sehen“ wird der Text zudem affektiv und immunisiert sich gegen Einwände. Insgesamt handelt es sich um eine meinungsstarke, aber belegarme Zuspitzung: Die These ist nicht widerlegt – aber auch nicht gestützt.
+ 
+**示范文本（虚构，仅作练习材料）：**
+> “德国经济已经完了。没有哪个地方像这里一样干活这么少。一项最新调查显示：87%的公民不满意。看不到这一点的人，就是不想看到。政治已经完全失败了。”
+
+**批评段（约 160 词）：**
+> 该文本使用强烈断言，却拿不出相应证据。对于“经济已经完了”这一核心论断，完全缺乏数据——既未给出增长数据，也未指明比较时期。87%这一数字被以“最新调查”的名义引入，却没有来源、委托方或样本信息；因此无法核查其是否具有代表性。此外，不满情绪并不能证明经济衰退——这里把一种情绪图景等同于一项经济论断。论证始终流于笼统：缺少按行业和地区的区分，对立立场也未得到正视。借助“彻底失败”这类措辞以及“谁看不到这一点，就是不想看到”这句话，文本还带有情绪化色彩，并使自身免受质疑。总体而言，这是一次观点鲜明但证据不足的尖锐化处理：该论点没有被驳倒——但也没有得到支撑。
 
 对应检查：A（出处/样本/因果混淆）→ B（pauschal、缺区分、忽略反方）→ C（affektiv、免疫化）→ 落点（nicht widerlegt, aber auch nicht gestützt）。
 

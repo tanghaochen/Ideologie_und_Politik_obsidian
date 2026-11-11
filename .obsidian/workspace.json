@@ -144,24 +144,9 @@
               "icon": "lucide-file",
               "title": "连词成对"
             }
-          },
-          {
-            "id": "28b05241f5e5dad5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "AGENTS.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "AGENTS"
-            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -433,15 +418,18 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e07fc50f5bf19b7f",
+  "active": "5b9ac5c4ba35d39a",
   "lastOpenFiles": [
-    "AGENTS.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
+    "思想思维心理哲学/阅读/简单逻辑学/术语/断言.md",
+    "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
+    "assets/逻辑学断言概念信息图.png",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/观点发表（Stellungnahme）：对一篇文章或评论表示赞同、反驳或部分赞同.md",
     "语言学习/德语/公共知识语法/连词成对.md",
+    "AGENTS.md",
     "copilot/copilot-conversations/添加翻译请求@20261111_203320.md",
     "copilot/memory/Recent Conversations.md",
     "copilot/memory",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/观点发表（Stellungnahme）：对一篇文章或评论表示赞同、反驳或部分赞同.md",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
     "copilot/copilot-conversations/例句添加中文翻译@20261111_202454.md",
     "电脑、软件、系统/创业项目/网赚项目想法记录.md",
     "copilot/copilot-conversations/补充翻译@20261111_195527.md",
@@ -457,7 +445,6 @@
     "assets/a_clean_colorful_educational_infographic_in_chine.png",
     "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw",
     "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw",
-    "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述物品的摆放：位置、姿态与排列.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/购物与客服沟通：线下购物与网店的售前、下单、售后、退换货.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/物品的颜色、形状与长宽高：词汇 → 句型 → 成段描述.md",
@@ -465,8 +452,6 @@
     "assets/德语场景表达训练全流程 инфোগրաfic (1).png",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习",
     "语言学习/德语/单词/生词/2026-11.md",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Beitrag von _engagiert_im_Altenheim_.md",
-    "电脑、软件、系统/ps-tang.md",
     "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw",
     "assets/城市地铁论证逻辑全解.png",
     "assets/第3章论证逻辑思维导图.png",
@@ -475,7 +460,6 @@
     "assets/PixPin_2026-11-06_01-30-31-1.png",
     "assets/PixPin_2026-11-06_01-30-31.png",
     "assets/file-20261102134812990.png",
-    "assets/invisible-field@2x.png",
     "语言学习/德语/教材/其他/德语活学活用B2-C1.pdf",
     "语言学习/德语/公共知识语法/10句型/从句合集/关系从句",
     "_AI-Diagrams/时代国家个人/四国对比-中德美与落后国家.excalidraw",
