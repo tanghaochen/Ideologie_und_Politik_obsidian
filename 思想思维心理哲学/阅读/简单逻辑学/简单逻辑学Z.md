@@ -104,10 +104,8 @@
 > 🔤逻辑学的基本原理🔤
 
 ## “基本原理” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=35&annotation=742AADMP)) |  
-> 🔤基本原理🔤
 
 “何科学的基本原理 都是这门科学赖以建立的最基础的事实,在此基础上才能衍生出其他的 各项活动。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=35&annotation=QUJM86LZ)) |  
-> 🔤任何科学的基本原理，都是这门科学赖以建立的最基础的事实；只有在此基础上，才能衍生出其他各项活动。🔤
 
 ### “同一律 表述:事物只能是其本身。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=35&annotation=9JSNFQ43)) |  
 

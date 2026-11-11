@@ -8,42 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "043053a7ed81e90e",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "DW简单逻辑学"
-            }
-          },
-          {
-            "id": "34475f1101eb8aa5",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw"
-              },
-              "icon": "excalidraw-icon",
-              "title": "简单逻辑学-全书逻辑图谱"
-            }
-          },
-          {
-            "id": "8fad9431bd094621",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw"
-              },
-              "icon": "excalidraw-icon",
-              "title": "简单逻辑学-论证流水线"
-            }
-          },
-          {
             "id": "187cec01b10e64bd",
             "type": "leaf",
             "state": {
@@ -54,8 +18,21 @@
               "icon": "excalidraw-icon",
               "title": "简单逻辑学-全书逻辑图"
             }
+          },
+          {
+            "id": "667a600022d25893",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "DW简单逻辑学"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -413,15 +390,22 @@
       }
     ]
   },
-  "active": "d052bf28bb0037b5",
+  "active": "667a600022d25893",
   "lastOpenFiles": [
+    "assets/Designer (7).png",
+    "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw",
     "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md",
+    "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw",
+    "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw",
+    "assets/Designer (6).png",
     "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
+    "assets/Designer (5).png",
+    "assets/Designer (3).png",
+    "assets/file-20261112011109789.png",
     "assets/Designer.png",
     "assets/非形式谬误分类思维导图-1.png",
     "assets/识别谬误的思维导图.png",
     "assets/逻辑学断言概念信息图 1.png",
-    "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/间接引语（新闻体）：第一、第二虚拟式与介词连接体系.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述物品的摆放：位置、姿态与排列.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
@@ -448,13 +432,7 @@
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/对话练习.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md",
     "assets/a_clean_colorful_educational_infographic_in_chine.png",
-    "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw",
-    "assets/德语场景表达训练全流程 инфোগրաfic (1).png",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习",
-    "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw",
-    "assets/城市地铁论证逻辑全解.png",
-    "assets/第3章论证逻辑思维导图.png",
-    "assets/周延与不周延逻辑图解-1.png",
     "语言学习/德语/教材/其他/德语活学活用B2-C1.pdf",
     "语言学习/德语/公共知识语法/10句型/从句合集/关系从句",
     "_AI-Diagrams/时代国家个人/四国对比-中德美与落后国家.excalidraw",
