@@ -280,7 +280,8 @@
             "action": "Add Next Sibling",
             "key": "Enter",
             "modifiers": [
-              "Alt"
+              "Mod",
+              "Shift"
             ],
             "scope": 3
           },
@@ -312,18 +313,19 @@
           },
           {
             "action": "Add + follow + zoom",
-            "key": "Enter",
+            "key": "]",
             "modifiers": [
               "Mod",
-              "Shift"
+              "Alt"
             ],
             "scope": 3
           },
           {
             "action": "Dock/Undock",
-            "key": "Enter",
+            "key": "CapsLock",
             "modifiers": [
-              "Shift"
+              "Mod",
+              "Alt"
             ],
             "scope": 3
           },

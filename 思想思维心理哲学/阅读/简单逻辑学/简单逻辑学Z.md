@@ -84,28 +84,20 @@
 使用者==塑造语言,同时语言也塑 造使用者。如果持续使用扭曲现实的语言,我们会逐渐相信自己编造== 出来的虚假世界。这就是语言的力量。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=28&annotation=8W2V3UJN)) |
 
 ## “0 真相” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=29&annotation=J8AK4B2T)) |  
-> 🔤0 真相🔤
 
 “真相有两种基本形态,一为本体真相,一为逻辑真相。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=29&annotation=FQPEBIF2)) |  
-> 🔤真相有两种基本形态：一是本体真相，二是逻辑真相。🔤
 
 “桌上有一盏灯,这是本体 真相,因为它确实是在那里,而不是幻象。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=29&annotation=BRIUY5QR)) |  
-> 🔤桌上有一盏灯，这是本体真相，因为它确实在那里，而不是幻象。🔤
 
 “命题的定义:一个可以作出真假判断的语 言表述。肯定一个命题就是判断它为真,反之亦然。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=29&annotation=CHM4S9B6)) |  
-> 🔤命题的定义：一个可以作出真假判断的语言表述。肯定一个命题就是判断它为真，反之亦然。🔤
 
 “如果这里确实有一艘船,确实有一个码头,而 这艘船确实泊在码头上,那么这个命题就是真的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=29&annotation=VS7B5Z8C)) |  
-> 🔤如果这里确实有一艘船，确实有一个码头，而这艘船确实停泊在码头上，那么这个命题就是真的。🔤
 
 “决定命题真假的依据是现实情况,而逻辑真相是建立在本体真相的基础 之上的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=30&annotation=VLNA4EZY)) |  
-> 🔤决定命题真假的依据是现实情况，而逻辑真相是建立在本体真相的基础之上的。🔤
 
 “对论被认为是真实地反映 了物质世界客观规律的理论,它与真实的物质世界是相符合的” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=30&annotation=2HHSX4MX)) |  
-> 🔤理论被认为是真实反映物质世界客观规律的理论，它与真实的物质世界是相符合的。🔤
 
 “结论可能是非常荒谬的,因 为它所仰赖的基础并非客观世界中的现实情况,而是某种理论或思想学 说;而任何理论或者思想学说都可能是错误的,或者已经过时,与现实世 界并不相符。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=30&annotation=K7CA3HTK)) |  
-> 🔤结论可能极其荒谬，因为它所依赖的基础并非客观世界中的现实情况，而是某种理论或思想学说；而任何理论或思想学说都可能是错误的，或者已经过时，与现实世界并不相符。🔤
 
 
 # “逻辑学的基本原理” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=32&annotation=FLI8P2LS)) |  
@@ -118,28 +110,21 @@
 > 🔤任何科学的基本原理，都是这门科学赖以建立的最基础的事实；只有在此基础上，才能衍生出其他各项活动。🔤
 
 ### “同一律 表述:事物只能是其本身。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=35&annotation=9JSNFQ43)) |  
-> 🔤同一律：表述为事物只能是其本身。🔤
 
 ### “排中律 表述:对于任何事物在一定条件下的判断都要有明确 的“是”或“非”,不存在中间状态。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=35&annotation=ANQ4HWPD)) |  
-> 🔤排中律的表述：对于任何事物在一定条件下的判断，都要有明确的“是”或“非”，不存在中间状态。🔤
 
 “关于人的存在,并没有一个从无到有的“变成”状 态。莱恩的变化中是相对的,而不是绝对的。她不是正在变化成为莱恩,而是变化成 为更成熟的音乐家莱恩。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=36&annotation=TUDEKVIQ)) |  
-> 🔤关于人的存在，并不存在一个从无到有的“变成”状态。莱恩的变化是相对的，而非绝对的。她不是在变成莱恩，而是在变成更成熟的音乐家莱恩。🔤
 
 ### “充足理由律” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=36&annotation=59W7JKYM)) |  
-> 🔤充足理由律🔤
 
 “表述:任何事物都有其存在的充足理由。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=36&annotation=8U7S65LL)) |  
-> 🔤任何事物都有其存在的充足理由。🔤
 
 “(1)它解释了为什么另一 个事物存在” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=36&annotation=HUVWF64N)) |  
 > 🔤🔤
 
 “(2)它解释了为什么另一个事物以这种或那种特定的方 式存在,即存在方式的由来。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=36&annotation=TL7XFP6B)) |  
-> 🔤（2）它解释了另一事物为何以这种或那种特定方式存在，即存在方式的由来。🔤
 
 “优秀的网球运动员。不同于给了拉里生命的父 母,教练带来的是拉里生活状态的改变。当然,可能还有很多原因促使拉里成为一 名优秀的网球运动员,教练只是其中一个。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=36&annotation=EI2QEX4F)) |  
-> 🔤同于给了拉里生命的父母，教练带来的是拉里生活状态的改变。当然，可能还有很多原因促使拉里成为一名优秀的网球运动员，教练只是其中一个。🔤
 
 ### “矛盾律” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=36&annotation=BE75SUL8)) |  
 
@@ -376,10 +361,111 @@
 
 “三段论推理的根据是,首先确定某一部分是属于整体的,然后得出 某一部分的组成成员也是属于整体的。如果 A 是某个整体的一部分,那 么 B,假设它是 A 的一部分,也一定属于整体。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=71&annotation=HFTKG6ED)) |
 
+## “11 前提的真实性” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=74&annotation=PE27BSEK)) |
+
+“一个三段论的论证,或者是任何一个论证,如果 想要得到正确的结论,必须达到两个基本的要求:一是它必须有正确的 内容,二是它必须有合理的结构。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=74&annotation=QY5KH2MU)) |
+
+“每只狗都有三个头。 牧羊犬是狗。 所以,牧羊犬有三个头。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=74&annotation=BLLLPFSM)) |
+
+“再合理的结构 也不能带给具有错误前提的论证新生。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=74&annotation=VNPZDBS9)) |
+
+“这就好像是一辆做工完美(结构 合理)但是汽油箱内却注满了水(内容错误)的汽车。没有汽油,再好的 汽车也别想发动。所以,仅靠结构合理还不足以得到正确的结论。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=74&annotation=J8K58J7Z)) |
+
+## “12 前提的相关性” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=75&annotation=INARTPLN)) |
+
+“如果前提本身和结论毫不相关,即便它是正确的,也不能起到应有的 作用。前提失效的表现之一是不能证明结论。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=75&annotation=4DMP29MQ)) |
+
+“皮埃尔是个全美闻名的橄榄球运动员。 皮埃尔不到 30 岁就赚到第一个 100 万美元。 皮埃尔很英俊,笑容迷人。 所以,皮埃尔应该被选为州长。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=75&annotation=AFX4NPMW)) |
+
+## “13 事实命题,价值命题” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=76&annotation=ACL84KD7)) |
+
+“音乐家是演奏音乐的人。 桃乐丝是个音乐家。 所以,桃乐丝演奏音乐。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=76&annotation=2DJBD62K)) |
+
+“音乐家都是杰出的人。 塞西莉亚是音乐家。 所以,塞西莉亚是杰出的人。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=76&annotation=E24NFBZQ)) |
+
+“注意“杰出的”这个词语的模糊性。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=76&annotation=7BFX3QVC)) |
+
+“价值命题为前提的论断,永远不能像以事实为前提 的论断那样,有确定的评判标准,因为价值的评估永远会受到挑战。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=76&annotation=XVH2WBDX)) |
+
+## “14 论证结构” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=77&annotation=6PEZ86KZ)) |
+
+“我们已经知道,结构正确、前提错误的论证带来的也是错误的结论。 在这种情况下,结构是正确的,前提是错误的。相应的,前提正确、结构错 误同样带来错误的结论,这时的错误根源是论证结构的缺陷。看下面的 例子: 每只松鼠都是哺乳动物。 每只熊猫都是哺乳动物。 所以,每只熊猫都是松鼠。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=77&annotation=MWSMDG3D)) |
+
+“字母之间的连接线代表口头的连接词“是”。第二项和第三项命 题之间的横线代表“所以”。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=77&annotation=FE3EZ6Z8)) |
+
+“中项至少要有一次是周延的,这样才能在大项和小项之间起 到联结作用,才能演绎出必然的而不是可能的结论。一个不支持中项周 延性的论证结构必然是无效的。这种错误在逻辑学上有特定的名称,叫 做中项不周延。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=78&annotation=QEGBEEYU)) |
+
+“沿着这样的结构,你同样可以构造出正确的论证,前提 是你必须清楚地知道,这样演绎出来的结论只是可能的,而不是必然 的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=79&annotation=DFK7IEH5)) |
+
+“杰克参加了四月份在芝加哥举行的会议。 皮特参加了同一个会议。 他们可能已经在那里见过面了。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=79&annotation=7WW5LURA)) |
+
+## “15 结论必须反映前提的量” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=80&annotation=YWSJ68PC)) |
+
+“一些青少年学习西班牙文。 一些国际象棋冠军是青少年。 所以,一些国际象棋冠军学习西班牙文。 分析 结论不成立。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=80&annotation=GD8H4RA4)) |
+
+“中项没有一次是周延的。这样导致的结果就是:它没有足够 的能力联结大项和小项。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=81&annotation=Y8WJYGCQ)) |
+
+![[PixPin_2026-11-06_01-30-31.png|837x623]]
+
+## “16 结论必须反映前提的质” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=82&annotation=6WZLWA6H)) |
 
 
+“命题的质,我们已经讲过,指的是它是肯定的还是否定的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=82&annotation=58CNT698)) |  
 
+“宾夕法尼亚居民和加利福尼亚居民(大前提)是完全对立 的,斯克兰顿居民是被宾夕法尼亚居民(小前提)完全包含的子集。 所以斯克兰顿居民这个小子集与加利福尼亚居民这个大前提也是完全 对立的,这正如我们所看到的结论” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=83&annotation=QANXSMEK)) |  
 
+## “17 归纳论证” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=84&annotation=ZRB44QUV)) |  
+
+“目前为止,我们所讨论的所有论证都是演绎论证。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=84&annotation=UMP43ULU)) |  
+
+“演绎论证是从一般到个别,而归纳论证则恰 恰相反。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=84&annotation=LHD4GKKR)) |  
+
+“更准确地区分两者的 方法是:演绎论证得出的是必然性结论,而归纳论证只能得出可能性结 论。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=84&annotation=7F38MK5V)) |  
+
+“演绎论证和归纳论证都具有论证的两个 基本要素:前提和结论。在演绎论证中,我们只用一个正确的命题作为起 点(大前提)。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=84&annotation=L57KPAEA)) |  
+
+“(例如“每棵 树都有根系”)” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=84&annotation=PBJM93HZ)) |  
+
+“演绎论证的基本原理是:从一个我们知道为真的命题 (大前提)开始,经过抽丝剥茧的分析(通过小前提到结论)得出原始命 题后隐含的是什么。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=84&annotation=KQ7L5DVY)) |  
+
+“每棵树都有根系。 门边的白杨是树。 所以,门边的白杨有根系。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=84&annotation=Q8J3N22T)) |  
+
+“一旦模式被探测到,一 旦重复出现的规律性被记录到,可信的推测就有了坚实的土壤。如果我 观测到,只要现象 Y 不发生,现象 X 就绝不会出现(假设我已经观察了成 千上万次的现象 X),那么我可以合理推测,如果现象 X 明天会出现,那么 现象 Y 一定会发生。归纳推理因此成为演绎推理的基础。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=85&annotation=AG9TZGEM)) |  
+
+“以整体中的某一部分为样本来做研 究,以此来代表整体。样本范围的大小决定了它的代表性。想要代表一 个整体,你所取的样本必须足够多,多到你可以合理地认为它涵盖了 整体中的所有情况” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=85&annotation=RTXYY2DR)) |
+
+ vx## “18 评定论证” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=86&annotation=GQZ8CUTM)) |  
+
+“论证展现的是推理的核心——推理的过程; 在最简单的形式里,它使我们从一个观点出发并接受另一个观点” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=86&annotation=GC3RUBNH)) |  
+
+“只有证据充足的命题可以得出结论。一” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=86&annotation=843ATZ8T)) |  
+> 🔤🔤
+
+“,最重要的,前提是正确的吗?” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=86&annotation=DPY6MJ6T)) |  
+
+“通常,最具有迷惑性的论证往往具有真假参半的前提。这时 我们要尤其注意语言的微妙性。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=86&annotation=VBU8AG97)) |  
+
+“它是否能在前提和结论之间搭建 起合乎逻辑的桥梁” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=86&annotation=LDAWTKQN)) |  
+> 🔤🔤
+
+“19 构造一个论证” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=87&annotation=LPDXZLLB)) |  
+
+“论证不会自动建立起来。在你的命题中,必须要有 一部分(前提)作为另一部分(结论)的支持信息” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=87&annotation=GGZCB8TM)) |  
+
+“前提必须 符合两个标准:真实、有力。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=87&annotation=LWM5X5V6)) |  
+
+“前提的真实性” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=87&annotation=9W33LKL4)) |  
+“如果你对论证中要使用的 证据有任何一丝的怀疑,在使用前,请重新检查它。这对于得到事实真相 有极其重要的意义。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=87&annotation=435HDBD9)) |  
+
+“前提的力度” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=87&annotation=CZF2DHWG)) |  
+
+“给予结论最大限度的直接支持的前提才是相关前提。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=88&annotation=BMTNYCCP)) |  
+
+“最后一个需要注意的问题是个由来已久的忠告:了解你的听众。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=88&annotation=2WRQQXXU)) |  
+
+“一个论证有双重的目的:得出正确的结论,说服听众接受。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=88&annotation=DVQPZR4N)) |  
+
+“我们必须选择适合于听众的方式。这就是逻辑学艺 术性的由来。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=88&annotation=6XSNYSIH)) |  
 
 
 

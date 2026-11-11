@@ -30,6 +30,7 @@
   "defaultSaveFolder": "copilot/copilot-conversations",
   "defaultConversationTag": "copilot-conversation",
   "autosaveChat": true,
+  "autoAttachActiveNote": true,
   "defaultOpenArea": "editor",
   "defaultSendShortcut": "enter",
   "customPromptsFolder": "copilot/copilot-custom-prompts",
@@ -302,22 +303,24 @@
   ],
   "lexicalSearchRamLimit": 100,
   "promptUsageTimestamps": {},
-  "promptSortStrategy": "timestamp",
+  "promptSortStrategy": "manual",
   "chatHistorySortStrategy": "recent",
   "projectsFolder": "copilot/projects",
   "defaultConversationNoteName": "{$topic}@{$date}_{$time}",
   "inlineEditCommands": [],
   "projectList": [],
   "lastDismissedVersion": "3.3.2",
-  "lastShownStartupVersion": "4.0.16",
+  "lastShownStartupVersion": "4.0.19",
   "passMarkdownImages": true,
   "enableAutonomousAgent": true,
   "enableCustomPromptTemplating": true,
   "enableSelfHostMode": false,
   "enableMiyo": false,
-  "enableMiyoSearchSkill": false,
+  "enableMiyoSearchSkill": true,
   "miyoSearchAll": false,
   "miyoExtraSearchFolders": [],
+  "miyoSearchMaxResults": 20,
+  "miyoSearchMaxVariants": 2,
   "relevantNotesLiveUpdate": true,
   "miyoServerUrl": "",
   "selfHostSearchProvider": "firecrawl",
@@ -345,6 +348,7 @@
   "enableRecentConversations": true,
   "maxRecentConversations": 30,
   "enableSavedMemory": true,
+  "quickCommandModelKey": "a725dbe3-9701-4b5f-ba5d-be21e9f637b5",
   "quickCommandIncludeNoteContext": true,
   "autoAcceptEdits": false,
   "diffViewMode": "split",
@@ -360,14 +364,60 @@
     "offerFeedbackCards": true,
     "notificationSound": true,
     "notificationSoundId": "piano",
-    "welcomeDismissed": false,
     "skills": {
       "folder": "copilot/skills"
     }
   },
-  "providers": {},
-  "configuredModels": [],
-  "backends": {},
+  "providers": {
+    "d29da2a6-b699-445f-ad62-f1f2346551cf": {
+      "providerType": "openai-compatible",
+      "displayName": "DS",
+      "baseUrl": "https://api.deepseek.com",
+      "enableCors": false,
+      "requiresApiKey": true,
+      "origin": {
+        "kind": "byok",
+        "catalogProviderId": "openai"
+      },
+      "providerId": "d29da2a6-b699-445f-ad62-f1f2346551cf",
+      "addedAt": 1794398085362,
+      "apiKeyKeychainId": "copilot-va637fefa-provider-openai-api-key"
+    }
+  },
+  "configuredModels": [
+    {
+      "configuredModelId": "a725dbe3-9701-4b5f-ba5d-be21e9f637b5",
+      "providerId": "d29da2a6-b699-445f-ad62-f1f2346551cf",
+      "info": {
+        "id": "deepseek-flash",
+        "displayName": "deepseek-flash"
+      },
+      "configuredAt": 1794398085365
+    },
+    {
+      "configuredModelId": "728e2b94-bb7d-4ccc-bb0f-20131e0b8d51",
+      "providerId": "d29da2a6-b699-445f-ad62-f1f2346551cf",
+      "info": {
+        "id": "deepseek-v4-pro",
+        "displayName": "deepseek-v4-pro"
+      },
+      "configuredAt": 1794398085365
+    }
+  ],
+  "backends": {
+    "chat": {
+      "enabledModels": [
+        "a725dbe3-9701-4b5f-ba5d-be21e9f637b5",
+        "728e2b94-bb7d-4ccc-bb0f-20131e0b8d51"
+      ]
+    },
+    "opencode": {
+      "enabledModels": [
+        "a725dbe3-9701-4b5f-ba5d-be21e9f637b5",
+        "728e2b94-bb7d-4ccc-bb0f-20131e0b8d51"
+      ]
+    }
+  },
   "copilotPlusCatalog": {
     "models": [
       {
@@ -433,25 +483,6 @@
         "id": "deepseek-v4-pro",
         "displayName": "DeepSeek V4 Pro",
         "description": "A top-tier model for the hardest reasoning and agentic tasks.",
-        "toolCall": true,
-        "reasoning": true,
-        "reasoningEfforts": [],
-        "modalities": {
-          "input": [
-            "text"
-          ],
-          "output": [
-            "text"
-          ]
-        },
-        "limits": {
-          "context": 1048576
-        }
-      },
-      {
-        "id": "deepseek-v4-flash-0731",
-        "displayName": "DeepSeek V4 Flash 0731",
-        "description": "The July 2026 DeepSeek V4 Flash snapshot: fast, cheap, and broadly capable.",
         "toolCall": true,
         "reasoning": true,
         "reasoningEfforts": [],
@@ -551,6 +582,6 @@
   "selfHostUrl": "",
   "selfHostApiKey": "",
   "_keychainVaultId": "a637fefa",
-  "settingsVersion": 15,
+  "settingsVersion": 16,
   "miyoConnectionMode": "local"
 }

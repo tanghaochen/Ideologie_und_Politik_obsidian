@@ -9734,6 +9734,42 @@
   ],
   "logs": [
     {
+      "id": "log-mwc2mtlb-0c90d2c83e1f",
+      "level": "info",
+      "message": "plugin loaded",
+      "at": "2026-11-11T12:04:22.991Z"
+    },
+    {
+      "id": "log-mwc2mtkx-d8523c0df6d1",
+      "level": "info",
+      "message": "ws listening on ws://[::1]:27123",
+      "at": "2026-11-11T12:04:22.977Z"
+    },
+    {
+      "id": "log-mw4jkf98-b798d3c63b03",
+      "level": "info",
+      "message": "plugin loaded",
+      "at": "2026-11-06T05:36:15.164Z"
+    },
+    {
+      "id": "log-mw4jkf8o-79dac8c523c7",
+      "level": "info",
+      "message": "ws listening on ws://[::1]:27123",
+      "at": "2026-11-06T05:36:15.144Z"
+    },
+    {
+      "id": "log-mw1qm0em-13ed1c352697",
+      "level": "info",
+      "message": "plugin loaded",
+      "at": "2026-11-04T06:30:08.014Z"
+    },
+    {
+      "id": "log-mw1qm0e8-f67fc05cba77",
+      "level": "info",
+      "message": "ws listening on ws://[::1]:27123",
+      "at": "2026-11-04T06:30:08.000Z"
+    },
+    {
       "id": "log-mvrkhlix-1a7eb264d8b5",
       "level": "info",
       "message": "plugin loaded",

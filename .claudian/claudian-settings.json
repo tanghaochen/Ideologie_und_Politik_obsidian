@@ -2,7 +2,7 @@
   "userName": "",
   "permissionMode": "yolo",
   "model": "haiku",
-  "effortLevel": "high",
+  "effortLevel": "default",
   "serviceTier": "default",
   "enableAutoTitleGeneration": true,
   "titleGenerationLocale": "",
@@ -49,21 +49,23 @@
       "selectedModels": []
     },
     "codex": {
-      "enabled": false,
+      "enabled": true,
       "safeMode": "workspace-write",
       "cliPath": "",
       "cliPathsByHost": {},
       "modelAliases": {},
       "visibleModels": [],
       "enableUltraEffort": false,
-      "reasoningSummary": "detailed",
-      "environmentVariables": "",
-      "environmentHash": "",
-      "installationMethodsByHost": {},
-      "wslDistroOverridesByHost": {},
       "responseStyle": "pragmatic",
       "responseVerbosity": "default",
-      "sessionEnvironmentHash": "",
+      "reasoningSummary": "detailed",
+      "environmentVariables": "",
+      "environmentHash": "runtime-input:v1:ed54f4f5238abeec7f65a5da1e468c9a639e157a7d1c7753b53f54ba1196e8a0",
+      "sessionEnvironmentHash": "runtime-input:v1:cf4a613a63a895356fbc95544817979656506c93b9fb3fe1c76833522e1c19fc",
+      "installationMethodsByHost": {
+        "device-ab326a8661d4f6bb0720f1fc894ed3b61c53771ba8700d41c553b29ba1d4a69f": "native-windows"
+      },
+      "wslDistroOverridesByHost": {},
       "selectedModels": []
     },
     "grok": {
@@ -115,7 +117,7 @@
       "selectedModels": []
     }
   },
-  "settingsProvider": "deepseek",
+  "settingsProvider": "opencode",
   "lastSelectedChatModel": null,
   "inlineEditModel": null,
   "savedProviderModel": {
@@ -127,7 +129,9 @@
   "savedProviderServiceTier": {},
   "savedProviderPermissionMode": {
     "claude": "yolo",
-    "deepseek": "yolo"
+    "deepseek": "yolo",
+    "codex": "auto-review",
+    "opencode": "yolo"
   },
   "pendingProviderSessionInvalidations": {},
   "enableAutoScroll": true,

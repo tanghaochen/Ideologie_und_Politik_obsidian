@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 880" role="img" aria-label="马斯洛需求层次理论金字塔：从下到上为生理需求、安全需求、社交需求、尊重需求、自我实现" width="900" height="880">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap');
+      text { font-family: 'JetBrains Mono', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif; }
+    </style>
+
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+    </pattern>
+
+    <radialGradient id="halo" gradientUnits="userSpaceOnUse" cx="490" cy="520" r="440">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.8"/>
+      <stop offset="55%" stop-color="#1e293b" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+
+    <linearGradient id="g5" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.40"/>
+      <stop offset="100%" stop-color="#a78bfa" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="g4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.36"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.13"/>
+    </linearGradient>
+    <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.36"/>
+      <stop offset="100%" stop-color="#34d399" stop-opacity="0.13"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#fbbf24" stop-opacity="0.11"/>
+    </linearGradient>
+    <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fb7185" stop-opacity="0.34"/>
+      <stop offset="100%" stop-color="#fb7185" stop-opacity="0.12"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background -->
+  <rect width="900" height="880" fill="#0f172a"/>
+  <rect width="900" height="880" fill="url(#grid)"/>
+  <rect width="900" height="880" fill="url(#halo)"/>
+
+  <!-- ambient glow -->
+  <ellipse cx="490" cy="300" rx="150" ry="165" fill="#a78bfa" opacity="0.10" filter="url(#glow)"/>
+  <ellipse cx="490" cy="715" rx="305" ry="115" fill="#fb7185" opacity="0.07" filter="url(#glow)"/>
+
+  <!-- need groups: growth (top) / deficiency (bottom) -->
+  <g fill="none" stroke="#475569" stroke-width="1">
+    <path d="M112,142 H100 V250 H112"/>
+    <path d="M112,274 H100 V778 H112"/>
+  </g>
+  <text x="86" y="181" fill="#94a3b8" font-size="9" font-weight="600" text-anchor="middle"><tspan x="86">成</tspan><tspan x="86" dy="11.5">长</tspan><tspan x="86" dy="11.5">需</tspan><tspan x="86" dy="11.5">求</tspan></text>
+  <text x="86" y="511" fill="#94a3b8" font-size="9" font-weight="600" text-anchor="middle"><tspan x="86">基</tspan><tspan x="86" dy="11.5">本</tspan><tspan x="86" dy="11.5">需</tspan><tspan x="86" dy="11.5">求</tspan></text>
+
+  <!-- direction of satisfaction -->
+  <line x1="840" y1="152" x2="840" y2="782" stroke="#475569" stroke-width="1.2"/>
+  <polygon points="840,140 834,152 846,152" fill="#64748b"/>
+  <text x="858" y="418" fill="#94a3b8" font-size="9" text-anchor="middle"><tspan x="858">满</tspan><tspan x="858" dy="11">足</tspan><tspan x="858" dy="11">顺</tspan><tspan x="858" dy="11">序</tspan><tspan x="858" dy="11">·</tspan><tspan x="858" dy="11">由</tspan><tspan x="858" dy="11">低</tspan><tspan x="858" dy="11">到</tspan><tspan x="858" dy="11">高</tspan></text>
+
+  <!-- pyramid: L5 self-actualization -->
+  <polygon points="490,130 554,262 426,262" fill="url(#g5)" stroke="#a78bfa" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="490" y="226" fill="#ffffff" font-size="12.5" font-weight="700" text-anchor="middle">自我实现</text>
+  <text x="490" y="242" fill="#e2e8f0" opacity="0.72" font-size="8" text-anchor="middle">Self-actualization</text>
+
+  <!-- L4 esteem -->
+  <polygon points="554,262 618,394 362,394 426,262" fill="url(#g4)" stroke="#22d3ee" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="490" y="320" fill="#ffffff" font-size="13.5" font-weight="700" text-anchor="middle">尊重需求</text>
+  <text x="490" y="338" fill="#e2e8f0" opacity="0.72" font-size="8.5" text-anchor="middle">Esteem</text>
+  <text x="490" y="358" fill="#cbd5e1" opacity="0.92" font-size="8.5" text-anchor="middle">自尊 · 自信 · 成就 · 被认可</text>
+
+  <!-- L3 love &amp; belonging -->
+  <polygon points="618,394 682,526 298,526 362,394" fill="url(#g3)" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="490" y="452" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">社交需求 · 归属与爱</text>
+  <text x="490" y="470" fill="#e2e8f0" opacity="0.72" font-size="8.5" text-anchor="middle">Love &amp; Belonging</text>
+  <text x="490" y="490" fill="#cbd5e1" opacity="0.92" font-size="9" text-anchor="middle">亲情 · 友情 · 爱情 · 社群归属</text>
+
+  <!-- L2 safety -->
+  <polygon points="682,526 746,658 234,658 298,526" fill="url(#g2)" stroke="#fbbf24" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="490" y="582" fill="#ffffff" font-size="15" font-weight="700" text-anchor="middle">安全需求</text>
+  <text x="490" y="600" fill="#e2e8f0" opacity="0.72" font-size="8.5" text-anchor="middle">Safety</text>
+  <text x="490" y="621" fill="#cbd5e1" opacity="0.92" font-size="9" text-anchor="middle">人身安全 · 健康 · 财产 · 职业稳定 · 秩序</text>
+
+  <!-- L1 physiological -->
+  <polygon points="746,658 810,790 170,790 234,658" fill="url(#g1)" stroke="#fb7185" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="490" y="712" fill="#ffffff" font-size="16" font-weight="700" text-anchor="middle">生理需求</text>
+  <text x="490" y="730" fill="#e2e8f0" opacity="0.72" font-size="8.5" text-anchor="middle">Physiological</text>
+  <text x="490" y="752" fill="#cbd5e1" opacity="0.92" font-size="9" text-anchor="middle">食物 · 水 · 空气 · 睡眠 · 体温调节 · 性</text>
+
+  <!-- footnote -->
+  <text x="470" y="844" fill="#64748b" font-size="9" text-anchor="middle">需求层级越低越基础、越优先；低层需求基本满足后，高层需求才成为主要动机。</text>
+
+  <!-- title block -->
+  <text x="36" y="50" fill="#ffffff" font-size="22" font-weight="700">马斯洛需求层次理论</text>
+  <text x="36" y="74" fill="#94a3b8" font-size="10.5">MASLOW'S HIERARCHY OF NEEDS · 五大需求等级</text>
+  <text x="864" y="50" fill="#64748b" font-size="9" text-anchor="end">A. MASLOW · 1943</text>
+  <line x1="36" y1="92" x2="864" y2="92" stroke="#1e293b" stroke-width="1"/>
+</svg>

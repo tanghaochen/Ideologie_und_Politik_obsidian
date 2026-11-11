@@ -58,13 +58,13 @@ aliases:
 **核心误区剖析 (Verständnisfehler: Verwechslung von Adverb und Subjunktion):**
 
 1. **当 `da` 作为副词 (Adverb) 时 —— 用于主句**
-    
+
     - **含义：** 表示地点（“在那里”）或时间（“在那时/当时”）。
     - **语序：** 它占据主句的一个位置（通常是第一位或第三位），且**不改变主句的动词第二位原则**。
     - **举例：** **Da** ist mein Buch. (我的书**在那儿**。) / Ich kam nach Hause, **da** klingelte das Telefon. (我回到家，**那时**电话响了。)
-        
+
 2. **当 `da` 作为从属连词 (Subjunktion) 时 —— 必须引导从句**
-    
+
     - **含义：** 表示原因，翻译为“因为、由于、既然”。在 B 1/B 2 级别中，它经常用来替换基础的 `weil`。
     - **语序：** 只要 `da` 表达“因为”，它就变成了极其严苛的**从句引导词**。它所在的句子必须是从句（Nebensatz），且**变位动词必须被无情地踢到句子的绝对末尾**（也就是你原句中最后的 `habe`）。
     - **使用语境：** 相比于 `weil`，`da` 引导的原因通常是对方已经知道的、显而易见的，或者像你原句这样，作为推测的“既定背景证据”。它既可以放在主句之前，也可以放在主句之后。
@@ -94,3 +94,39 @@ aliases:
 
 - **核心逻辑：** 相当于 _Regardless of the fact that..._。用于极其正式的辩论、新闻或学术写作中。它由介词 `ungeachtet` (+ 第二格) 演变而来。
 - **实战场景：** _**Ungeachtet dessen, dass** die Chefin meist freundlich reagiert, würde ich in nächster Zeit vorsichtiger sein._ (**尽管**女老板通常反应很友好，**但不管怎样**，我接下来还是会小心点。)
+
+# da
+
+```mermaid
+flowchart TD
+    A["遇到 da"] --> B{"da 后紧跟变位动词？"}
+    B -->|"是"| C["副词：那里／这时"]
+    C --> D["主句语序：Da kommt der Bus"]
+    B -->|"否，先出主语"| E["从属连词：因为／既然"]
+    E --> F["动词到句末：Da er krank ist, ..."]
+```
+da 的四种身份：
+
+|da 的身份|例句（完整句＋翻译）|为什么（判断依据）|
+|---|---|---|
+|从属连词：因为、既然|Da er krank ist, bleibt er heute im Bett.（因为他病了，他今天待在床上。）|因为动词 ist 被推到从句句末，而主句动词 bleibt 紧跟在逗号后面，组成“从句＋主句”|
+|地点副词：那里、在场|Da liegt ein großes Problem.（那儿有一个大问题。）|因为 da 后紧跟变位动词 liegt，仍是主句语序，动词占第二位|
+|指代副词：这时、那就|Da konnte ich nichts mehr sagen.（那时我再也说不出一句话来。）|因为 da 指代上文刚发生的情景，变位动词 konnte 仍占第二位|
+|代副词（da- 复合）|Ich freue mich schon darauf.（我已经在期待这件事了。）|因为 da 与介词 auf 粘成一个词，指代前面提过的事物而不是地点|
+
+“这／这里／那里”各词的分工：
+
+|词|意思|例句（完整句＋翻译）|为什么（触发条件）|
+|---|---|---|---|
+|das|这（指整件事，作主语）|Das ist mein zweiter Brief an Sie.（这是我给您的第二封信。）|因为要指代一个事实并让它当主语，中性指示代词 das 最自然|
+|dies|这（书面、强调）|Dies ist bereits mein zweiter Brief an Sie.（这已经是给您的第二封信。）|因为要突出“正是这一件”，且语体偏书面|
+|es|这（占位，内容在后）|Es ist bereits das zweite Mal, dass ich Ihnen schreibe.（这已经是我第二次给您写信了。）|因为真正的主语是后面的 dass 从句，前面只能用占位的 es|
+|hiermit|以此、在此（信里）|Ich schreibe Ihnen hiermit bereits zum zweiten Mal.（我在此已经是第二次给您写信了。）|因为 hier + mit 指“用这封信”，是公函的固定说法|
+|hier|这里|Hier ist es heute sehr laut.（这里今天很吵。）|因为指说话人自己所处的位置|
+|da|那儿|Stell den Korb bitte da hin.（请把篮子放在那儿。）|因为指听话人附近或上文已提过的位置|
+|dort|那里（较远）|Dort wohnt mein alter Nachbar.（我的老邻居住在那儿。）|因为距离明确较远，语体偏书面|
+|damit / wofür|用这个／为了什么|Ich bin damit völlig einverstanden.（我完全同意这一点。）／Wofür interessierst du dich?（你对什么感兴趣？）|因为 da-／wo- 粘介词指代事物，不指地点|
+
+
+
+

@@ -169,7 +169,7 @@ werden ^uYdYo8ty
 1 ^uGowT0jy
 
 ## Element Links
-fQgcFVxU: [[语言学习/德语/柏林广场视频笔记/A1/13 判断疑问句与动词核心框架.md]]
+fQgcFVxU: [[13 动词核心框架]]
 
 JfGhhFer: [[语言学习/德语/公共知识语法/⭐✍️DE语法总汇CanvasCanvas.md]]
 
@@ -205,7 +205,7 @@ JBT5VuMV: [[语言学习/德语/公共知识语法/2动词/werden.md]]
 
 l4lAIch9: [[语言学习/德语/人称代词; 疑问代词; 指示代词.md]]
 
-Yn5qpBLP: [[句子结构：术语，形容词，副词，表语，定语，状语]]
+Yn5qpBLP: [[句子结构成分：术语，形容词，副词，表语，定语，状语]]
 
 XEMH3YaH: [[语言学习/德语/公共知识语法/2动词/动词变名词化.md]]
 

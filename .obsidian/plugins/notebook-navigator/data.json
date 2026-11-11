@@ -530,10 +530,19 @@
       "folder": true,
       "tag": false,
       "property": false
+    },
+    "思想思维心理哲学/个人与社会的关系/DW 社会个人关系模型.md": {
+      "folder": true,
+      "tag": false,
+      "property": false
+    },
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/对话练习.md": {
+      "folder": true,
+      "tag": false,
+      "property": false
     }
   },
   "fileIcons": {
-    "思想思维心理哲学/个人人生思想架构.md": "excalidraw-icon",
     "经济学/投资方式/投资方法/经济数据.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/句子成分逻辑展示.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/形容词.md": "excalidraw-icon",
@@ -544,7 +553,8 @@
     "语言学习/德语/公共知识语法/介词.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/从句.md": "excalidraw-icon",
     "语言学习/德语/公共知识语法/名词.md": "excalidraw-icon",
-    "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md": "obsidian-new"
+    "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md": "obsidian-new",
+    "思想思维心理哲学/DW个人人生思想架构.md": "excalidraw-icon"
   },
   "fileColors": {},
   "fileBackgroundColors": {},
@@ -557,15 +567,13 @@
     "国家": "#00000000",
     "语言学习/德语/公共知识语法": "#22c55e30",
     "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz": "#a855f7",
-    "语言学习/德语/学习记录日记-技巧": "#a855f7"
+    "语言学习/德语/学习记录日记-技巧": "#a855f7",
+    "思想思维心理哲学/个人与社会的关系": "#06b6d4"
   },
   "folderSortOverrides": {
     "语言学习/德语/柏林广场视频笔记/A1": "title-asc",
-    "语言学习/德语/公共知识语法": {
-      "option": "property-asc",
-      "propertyKey": "sort_index"
-    },
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch": "created-asc",
+    "语言学习/德语/公共知识语法": "created-desc",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch": "created-desc",
     "语言学习/德语/公共知识语法/2动词/❌": "created-desc"
   },
   "folderTreeSortOverrides": {},
@@ -577,6 +585,12 @@
       "previewRows": 1
     },
     "语言学习/德语/公共知识语法/2动词/❌": {
+      "groupBy": "folder"
+    },
+    "语言学习/德语/公共知识语法/10句型/从句合集": {
+      "groupBy": "folder"
+    },
+    "语言学习/德语/公共知识语法": {
       "groupBy": "folder"
     }
   },

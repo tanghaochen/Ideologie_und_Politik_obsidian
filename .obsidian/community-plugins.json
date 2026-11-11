@@ -67,12 +67,12 @@
   "obsidian-excalidraw-plugin",
   "notebook-navigator",
   "realclaudian",
-  "agent-client",
   "better-export-pdf",
   "advanced-rename-and-delete-handler",
   "hover-reveal",
   "obsidian-html-plugin",
   "local-html-embed",
   "ostracon-ob",
-  "obsidian-custom-attachment-location"
+  "obsidian-custom-attachment-location",
+  "smart-composer"
 ]

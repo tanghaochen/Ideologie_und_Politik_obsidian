@@ -1,0 +1,86 @@
+{
+  "id": "6443786b-aa90-414d-a564-e02612438cd8",
+  "title": "优化排版，使用无序列表分割内容",
+  "messages": [
+    {
+      "role": "user",
+      "content": {
+        "root": {
+          "children": [
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "优化排版，使用无序列表分割内容",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "textFormat": 0,
+              "textStyle": ""
+            }
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1
+        }
+      },
+      "promptContent": [
+        {
+          "type": "text",
+          "text": "```语言学习/德语/公共知识语法/5介词/未命名.md\n② 答案\n\n**von、über、für、um、gegen** 这几个即使放在句首也不表示原因，**bei** 也只是间接涉及“在……情况下”的条件，并没有真正表示原因；因此，你分不清，根源在于把“话题、目的、条件”当成了“原因”。德语里表示原因基本只用一小批介词，并按“是什么样的原因”分工：客观理由用第二格（第二格＝名词“的”那套词尾）的 **wegen**（通用）、**aufgrund**（正式书面）、**infolge**（多指造成后果的原因）、**angesichts**（鉴于某事实）、**dank**（多亏，正面）；内心动机用 **aus** + 第三格，比如 **aus Angst**、**aus Liebe**、**aus Erfahrung**；强烈情绪或生理反应造成的用 **vor** + 第三格，比如 **vor Freude**、**vor Kälte**、**vor Müdigkeit**；通过某种手段或媒介引发的结果用 **durch** + 第四格，比如 **durch den Regen**；只表示条件情境的用 **bei** + 第三格，比如 **bei diesem Lärm**、**bei Regen**。\n```\n\n\n优化排版，使用无序列表分割内容\n\n"
+        }
+      ],
+      "id": "178a783b-2f58-4840-b70d-d29db024d990",
+      "mentionables": [
+        {
+          "type": "current-file",
+          "file": "语言学习/德语/公共知识语法/5介词/未命名.md"
+        },
+        {
+          "type": "block",
+          "content": "② 答案\n\n**von、über、für、um、gegen** 这几个即使放在句首也不表示原因，**bei** 也只是间接涉及“在……情况下”的条件，并没有真正表示原因；因此，你分不清，根源在于把“话题、目的、条件”当成了“原因”。德语里表示原因基本只用一小批介词，并按“是什么样的原因”分工：客观理由用第二格（第二格＝名词“的”那套词尾）的 **wegen**（通用）、**aufgrund**（正式书面）、**infolge**（多指造成后果的原因）、**angesichts**（鉴于某事实）、**dank**（多亏，正面）；内心动机用 **aus** + 第三格，比如 **aus Angst**、**aus Liebe**、**aus Erfahrung**；强烈情绪或生理反应造成的用 **vor** + 第三格，比如 **vor Freude**、**vor Kälte**、**vor Müdigkeit**；通过某种手段或媒介引发的结果用 **durch** + 第四格，比如 **durch den Regen**；只表示条件情境的用 **bei** + 第三格，比如 **bei diesem Lärm**、**bei Regen**。",
+          "file": "语言学习/德语/公共知识语法/5介词/未命名.md",
+          "startLine": 9,
+          "endLine": 11
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": "<smtcmp_block filename=\"语言学习/德语/公共知识语法/5介词/未命名.md\" language=\"markdown\">\n② 答案\n\n**von、über、für、um、gegen** 这几个即使放在句首也不表示原因，**bei** 也只是间接涉及“在……情况下”的条件，并没有真正表示原因；因此，你分不清，根源在于把“话题、目的、条件”当成了“原因”。德语里表示原因基本只用一小批介词，并按“是什么样的原因”分工：\n\n- 客观理由用第二格（第二格＝名词“的”那套词尾）的：\n    - **wegen**（通用）\n    - **aufgrund**（正式书面）\n    - **infolge**（多指造成后果的原因）\n    - **angesichts**（鉴于某事实）\n    - **dank**（多亏，正面）\n- 内心动机用 **aus** + 第三格，比如 **aus Angst**、**aus Liebe**、**aus Erfahrung**\n- 强烈情绪或生理反应造成的用 **vor** + 第三格，比如 **vor Freude**、**vor Kälte**、**vor Müdigkeit**\n- 通过某种手段或媒介引发的结果用 **durch** + 第四格，比如 **durch den Regen**\n- 只表示条件情境的用 **bei** + 第三格，比如 **bei diesem Lärm**、**bei Regen**\n</smtcmp_block>\n\n主要改动：把原来一整段密集的“分工”拆成按原因类型分组的无序列表，并把第二格客观理由的五个介词嵌套为子列表。",
+      "id": "56116eaa-3870-4944-810e-95da10f71c08",
+      "metadata": {
+        "model": {
+          "providerType": "deepseek",
+          "providerId": "deepseek",
+          "id": "deepseek-chat",
+          "model": "deepseek-chat"
+        },
+        "usage": {
+          "prompt_tokens": 2155,
+          "completion_tokens": 352,
+          "total_tokens": 2507,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 2155
+        }
+      }
+    }
+  ],
+  "createdAt": 1793265692875,
+  "updatedAt": 1793265715409,
+  "schemaVersion": 1
+}

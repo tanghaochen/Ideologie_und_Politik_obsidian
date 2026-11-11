@@ -1509,12 +1509,11 @@
 			"frameId": null,
 			"roundness": null,
 			"seed": 1525,
-			"version": 2,
-			"versionNonce": 1901851594,
+			"version": 3,
+			"versionNonce": 1410611299,
 			"isDeleted": false,
 			"boundElements": [],
-			"updated": 1792784372000,
-			"link": null,
+			"updated": 1794069539611,
 			"locked": false,
 			"text": "④ 组成命题",
 			"fontSize": 18,
@@ -1528,9 +1527,10 @@
 			"index": "ab",
 			"created": null,
 			"hasTextLink": false,
-			"rawText": "",
+			"rawText": "④ 组成命题",
 			"labelPosition": null,
-			"baseFontSize": null
+			"baseFontSize": null,
+			"link": null
 		},
 		{
 			"id": "jzAVuipH",
@@ -10925,10 +10925,10 @@
 		"currentItemEndArrowhead": "arrow",
 		"currentItemArrowType": "round",
 		"currentItemFrameRole": null,
-		"scrollX": 180.6001335555501,
-		"scrollY": 543.3370100285114,
+		"scrollX": -416.7949727009604,
+		"scrollY": -75.34340389054094,
 		"zoom": {
-			"value": 0.505545
+			"value": 0.64428
 		},
 		"currentItemRoundness": "round",
 		"gridSize": 20,
@@ -10966,8 +10966,8 @@
 		"disableContextMenu": false,
 		"bindingPreference": "enabled",
 		"isMidpointSnappingEnabled": true,
-		"boxSelectionMode": "contain",
-		"inputDevice": "auto"
+		"boxSelectionMode": "overlap",
+		"inputDevice": "mouse"
 	},
 	"files": {}
 }

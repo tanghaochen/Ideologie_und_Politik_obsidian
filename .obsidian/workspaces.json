@@ -695,7 +695,7 @@
           {
             "id": "ff5d945606200819",
             "type": "tabs",
-            "dimension": 59.33174224343676,
+            "dimension": 34.03341288782816,
             "children": [
               {
                 "id": "4941ed643b059f3a",
@@ -751,30 +751,135 @@
                   "title": "email Reklamation Bürostuhl – ErgoSitz 24"
                 }
               }
-            ],
-            "currentTab": 3
+            ]
           },
           {
             "id": "b5dbd09e7753bfc0",
             "type": "tabs",
-            "dimension": 40.66825775656325,
+            "dimension": 65.96658711217184,
             "children": [
               {
-                "id": "b7a63eada15fbce6",
+                "id": "086d9cbe40e64179",
                 "type": "leaf",
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/email Reklamation Bürostuhl – ErgoSitz 24.md",
+                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/对话练习.md",
                     "mode": "source",
                     "source": false,
                     "backlinks": false
                   },
                   "icon": "lucide-file",
-                  "title": "email Reklamation Bürostuhl – ErgoSitz 24"
+                  "title": "对话练习"
+                }
+              },
+              {
+                "id": "bd9c955e296dbd2f",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述一个人在房间里做各种动作（Tätigkeiten im Haushalt）.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "描述一个人在房间里做各种动作（Tätigkeiten im Haushalt）"
+                }
+              },
+              {
+                "id": "3c96a158d121d0b9",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述物品的摆放：位置、姿态与排列.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "描述物品的摆放：位置、姿态与排列"
+                }
+              },
+              {
+                "id": "28c160dbd364b9aa",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/物品的颜色、形状与长宽高：词汇 → 句型 → 成段描述.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "物品的颜色、形状与长宽高：词汇 → 句型 → 成段描述"
+                }
+              },
+              {
+                "id": "d7374d364dad7b9e",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "全面讲解否定，nein,kein,nicht等"
+                }
+              },
+              {
+                "id": "cd67d083bb3038a7",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/购物与客服沟通：线下购物与网店的售前、下单、售后、退换货.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "购物与客服沟通：线下购物与网店的售前、下单、售后、退换货"
+                }
+              },
+              {
+                "id": "4bc48c36e9d7ac40",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/观点发表（Stellungnahme）：对一篇文章或评论表示赞同、反驳或部分赞同.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "观点发表（Stellungnahme）：对一篇文章或评论表示赞同、反驳或部分赞同"
+                }
+              },
+              {
+                "id": "531ac13e99363be3",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl"
                 }
               }
-            ]
+            ],
+            "currentTab": 1
           }
         ],
         "direction": "vertical"
@@ -1018,6 +1123,7 @@
       },
       "left-ribbon": {
         "hiddenItems": {
+          "smart-composer:Open smart composer": false,
           "ostracon-ob:获取MN数据": false,
           "obsidian-local-images-plus:Local Images Plus  0.17.1\r\nLocalize attachments (plugin folder)": false,
           "media-extended:打开媒体库": true,
@@ -1042,14 +1148,13 @@
           "daily-notes:打开/创建今天的日记": false,
           "obsidian-excalidraw-plugin:新建绘图文件": false,
           "realclaudian:Open Claudian": false,
-          "agent-client:Open agent client": false,
           "copilot:Open Copilot Agent Chat": false,
           "notebook-navigator:Notebook Navigator": false,
           "periodic-notes:Open today": false
         }
       },
-      "active": "fe8729b9f803ac4b",
-      "mtime": "2026-10-27T00:10:38+08:00"
+      "active": "5962dcef85933e57",
+      "mtime": "2026-11-11T00:42:14+08:00"
     },
     "生词": {
       "main": {
@@ -1084,18 +1189,18 @@
             "dimension": 63.3729216152019,
             "children": [
               {
-                "id": "17f3e60d26c5915a",
+                "id": "476da2a53369c094",
                 "type": "leaf",
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "语言学习/德语/单词/生词/26-10.md",
+                    "file": "语言学习/德语/单词/生词/2025-11.md",
                     "mode": "source",
                     "source": false,
                     "backlinks": false
                   },
                   "icon": "lucide-file",
-                  "title": "26-10"
+                  "title": "2025-11"
                 }
               }
             ]
@@ -1342,6 +1447,9 @@
       },
       "left-ribbon": {
         "hiddenItems": {
+          "smart-composer:Open smart composer": false,
+          "ostracon-ob:获取MN数据": false,
+          "obsidian-local-images-plus:Local Images Plus  0.17.1\r\nLocalize attachments (plugin folder)": false,
           "media-extended:打开媒体库": true,
           "media-extended:打开媒体快速切换器": true,
           "mermaid-tools:Open Mermaid Toolbar": true,
@@ -1355,7 +1463,6 @@
           "table-editor-obsidian:Advanced Tables Toolbar": true,
           "mxmind:Mxmind": true,
           "audio-recorder:开始/结束录音": true,
-          "obsidian-local-images-plus:Local Images Plus  0.16.4\r\nLocalize attachments (plugin folder)": true,
           "obsidian-git:Open Git source control": true,
           "pexels-banner:🚩 Pixel Banner Menu": true,
           "vscode-editor:新建代码文件": true,
@@ -1365,14 +1472,13 @@
           "daily-notes:打开/创建今天的日记": false,
           "obsidian-excalidraw-plugin:新建绘图文件": false,
           "realclaudian:Open Claudian": false,
-          "agent-client:Open agent client": false,
           "copilot:Open Copilot Agent Chat": false,
           "notebook-navigator:Notebook Navigator": false,
           "periodic-notes:Open today": false
         }
       },
-      "active": "17f3e60d26c5915a",
-      "mtime": "2026-10-14T15:19:30+08:00"
+      "active": "476da2a53369c094",
+      "mtime": "2026-11-06T00:17:01+08:00"
     },
     "逻辑学": {
       "main": {
@@ -1384,39 +1490,19 @@
             "type": "tabs",
             "children": [
               {
-                "id": "2a192cdfba992fb2",
+                "id": "043053a7ed81e90e",
                 "type": "leaf",
                 "state": {
-                  "type": "markdown",
+                  "type": "excalidraw",
                   "state": {
-                    "file": "file:E:/AI workpace/gdx_research/Geomagic_Design_X_签名错误_深度研究报告.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
+                    "file": "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md"
                   },
-                  "icon": "lucide-file",
-                  "title": "Geomagic_Design_X_签名错误_深度研究报告"
+                  "icon": "excalidraw-icon",
+                  "title": "DW简单逻辑学"
                 }
               },
               {
-                "id": "d052bf28bb0037b5",
-                "type": "leaf",
-                "pinned": true,
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "pinned": true,
-                  "icon": "lucide-file",
-                  "title": "简单逻辑学Z"
-                }
-              },
-              {
-                "id": "6596cf5905efd8db",
+                "id": "34475f1101eb8aa5",
                 "type": "leaf",
                 "state": {
                   "type": "excalidraw",
@@ -1428,19 +1514,7 @@
                 }
               },
               {
-                "id": "f40c279baef395fe",
-                "type": "leaf",
-                "state": {
-                  "type": "excalidraw",
-                  "state": {
-                    "file": "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw"
-                  },
-                  "icon": "excalidraw-icon",
-                  "title": "简单逻辑学-全书逻辑图"
-                }
-              },
-              {
-                "id": "1a88828d7b6d4f17",
+                "id": "8fad9431bd094621",
                 "type": "leaf",
                 "state": {
                   "type": "excalidraw",
@@ -1449,6 +1523,18 @@
                   },
                   "icon": "excalidraw-icon",
                   "title": "简单逻辑学-论证流水线"
+                }
+              },
+              {
+                "id": "187cec01b10e64bd",
+                "type": "leaf",
+                "state": {
+                  "type": "excalidraw",
+                  "state": {
+                    "file": "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw"
+                  },
+                  "icon": "excalidraw-icon",
+                  "title": "简单逻辑学-全书逻辑图"
                 }
               }
             ]
@@ -1519,7 +1605,7 @@
           }
         ],
         "direction": "horizontal",
-        "width": 690.7125091552734
+        "width": 449.5125274658203
       },
       "right": {
         "id": "b2bf97bc0c7f8080",
@@ -1550,6 +1636,18 @@
                   "pinned": true,
                   "icon": "message-square",
                   "title": "Copilot (Quick Chat)"
+                }
+              },
+              {
+                "id": "0904c4f879fe7747",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "smtcmp-chat-view",
+                  "state": {},
+                  "pinned": true,
+                  "icon": "wand-sparkles",
+                  "title": "Smart composer chat"
                 }
               },
               {
@@ -1642,6 +1740,36 @@
                   "icon": "lucide-archive",
                   "title": "添加笔记属性"
                 }
+              },
+              {
+                "id": "2cb591d0cac3ef1b",
+                "type": "leaf",
+                "state": {
+                  "type": "ostracon-inbox-view",
+                  "state": {},
+                  "icon": "inbox",
+                  "title": "MN 卡片"
+                }
+              },
+              {
+                "id": "9755f4126e7d9700",
+                "type": "leaf",
+                "state": {
+                  "type": "ostracon-inbox-view",
+                  "state": {},
+                  "icon": "inbox",
+                  "title": "MN 卡片"
+                }
+              },
+              {
+                "id": "3389fbe2cbe03848",
+                "type": "leaf",
+                "state": {
+                  "type": "excalidraw-sidepanel",
+                  "state": {},
+                  "icon": "excalidraw-icon",
+                  "title": "Excalidraw 侧边面板"
+                }
               }
             ]
           },
@@ -1691,7 +1819,7 @@
           }
         ],
         "direction": "horizontal",
-        "width": 507.5
+        "width": 512.699951171875
       },
       "left-ribbon": {
         "hiddenItems": {
@@ -1710,7 +1838,6 @@
           "table-editor-obsidian:Advanced Tables Toolbar": true,
           "mxmind:Mxmind": true,
           "audio-recorder:开始/结束录音": true,
-          "obsidian-local-images-plus:Local Images Plus  0.16.4\r\nLocalize attachments (plugin folder)": true,
           "obsidian-git:Open Git source control": true,
           "pexels-banner:🚩 Pixel Banner Menu": true,
           "vscode-editor:新建代码文件": true,
@@ -1720,14 +1847,56 @@
           "daily-notes:打开/创建今天的日记": false,
           "obsidian-excalidraw-plugin:新建绘图文件": false,
           "realclaudian:Open Claudian": false,
-          "agent-client:Open agent client": false,
           "copilot:Open Copilot Agent Chat": false,
           "notebook-navigator:Notebook Navigator": false,
-          "periodic-notes:Open today": false
+          "periodic-notes:Open today": false,
+          "smart-composer:Open smart composer": false
         }
       },
-      "active": "2a192cdfba992fb2",
-      "mtime": "2026-10-25T13:36:28+08:00"
+      "floating": {
+        "id": "70d84ea69b8e85fe",
+        "type": "floating",
+        "children": [
+          {
+            "id": "67d1c2fe6692e418",
+            "type": "window",
+            "children": [
+              {
+                "id": "11ad2369815a11ea",
+                "type": "tabs",
+                "children": [
+                  {
+                    "id": "d052bf28bb0037b5",
+                    "type": "leaf",
+                    "pinned": true,
+                    "state": {
+                      "type": "markdown",
+                      "state": {
+                        "file": "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
+                        "mode": "source",
+                        "source": false,
+                        "backlinks": false
+                      },
+                      "pinned": true,
+                      "icon": "lucide-file",
+                      "title": "简单逻辑学Z"
+                    }
+                  }
+                ]
+              }
+            ],
+            "direction": "vertical",
+            "x": -953,
+            "y": 344,
+            "width": 601,
+            "height": 601,
+            "maximize": false,
+            "zoom": -1
+          }
+        ]
+      },
+      "active": "5962dcef85933e57",
+      "mtime": "2026-11-08T09:59:21+08:00"
     },
     "错题": {
       "main": {
@@ -2119,5 +2288,5 @@
       "mtime": "2026-10-24T01:34:45+08:00"
     }
   },
-  "active": "逻辑学"
+  "active": "D写作"
 }

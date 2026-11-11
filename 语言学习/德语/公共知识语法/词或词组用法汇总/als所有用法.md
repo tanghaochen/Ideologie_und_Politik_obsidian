@@ -1,22 +1,40 @@
 # als所有用法
 
-`als` 在德语中是一个高度灵活且功能多样的词，贯穿了从 A 1 到 C 1 的各个学习阶段。为了在六个月内达到 B 2 水平，你必须绝对精确地掌握它在不同语境下的词性、格的支配以及对句子语序的影响。
+结论：图里那六项可以归并成两大类，而判断属于哪一类，只需看 **als** 后面是不是一整个句子。如果后面有主语和变位动词，它就是连词（这类词会把变位动词放到句末），具体分三种：时间（过去只发生一次，现在、将来和反复发生则用 **wenn**）、虚拟比较（**als ob**，动词句末加第二虚拟式）、结果（**zu …, als dass …**）；如果没有，它只是连接词或短语的连接词，动词位置完全不动，包括比较级后的比较、表身份的“作为”、否定词后的“除了”，以及 **sowohl … als auch** 这类固定搭配。唯一的例外是 **kaum …, als …**，它前半句倒装，**als** 后面反而是正常语序，动词在第二位。
 
-为了清晰梳理其语法体系，这里参照 "The Mermaid Guide to Text-Based Diagramming and Visualization" 的可视化原则，先用结构图为你拆解 `als` 的六大核心用法：
+格的处理有一条铁律：**als** 自己永远不支配格，既不要求第三格也不要求第四格，它只是把两端并排，谁的格该是什么就照原样留着。具体分三种情形：比较级后的一端照抄平行成分的格（**Sie ist größer als er**，不能说 **ihn**）；表身份的那一端跟着它所说明的成分走（**Ich kenne ihn als guten Lehrer** 是第四格，因为 **ihn** 是 **kennen** 的宾语；**Er gilt als guter Lehrer** 是第一格，因为说的是主语）；否定词后的一端跟着那个否定词的格（**Kein anderer als er** 第一格，**nichts als Wasser** 第四格）。
 
-代码段
+图解：**als** 判断流程图
 
 ```mermaid
-flowchart LR
-    A[als 的语法功能] --> B(时间连词: 引导时间状语从句)
-    A --> C(比较连词: 用于比较级)
-    A --> D(同位语连词: 标识身份/功能)
-    A --> E(虚拟式连词: 引导非真实比较从句)
-    A --> F(关联连词: 构成固定双部分连词)
-    A --> G(限制小品词: 用于否定词之后)
+flowchart TD
+    A["als"] --> B{"后面是一整句吗？"}
+    B -->|"是"| C["连词：变位动词到句末"]
+    B -->|"不是"| D["只连词或短语：动词位置不变"]
+    C --> C1["时间：过去一次性"]
+    C --> C2["虚拟：als ob"]
+    C --> C3["结果：als dass"]
+    D --> D1["比较级之后"]
+    D --> D2["身份：作为"]
+    D --> D3["否定词之后"]
 ```
 
-以下是各项用法的详尽剖析。
+| 用法                                            | 触发条件                                                       | 例句与翻译                                                                                                                 | 格与动词位置                                                          |
+| --------------------------------------------- | ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| 时间连词（“当……的时候”）                                | 过去发生的一次性事件；现在、将来、反复发生用 **wenn**                            | **Als ich zwölf war, zogen wir nach Berlin.**（我十二岁那年，我们搬到了柏林。）                                                        | **als** 引导从句，变位动词 **zogen** 到句末                                 |
+| 比较连词（比较级后）                                    | 前面有比较级（**-er、mehr、weniger、eher、anders**），两者不相等；相等用 **wie** | **Er läuft schneller als sein Bruder.**（他跑得比他哥哥快。）／**Anders als sein Bruder mag er keinen Sport.**（和他哥哥不同，他不喜欢运动。）    | 后面的代词照抄平行成分的格：**Sie ist größer als er.**（不是 **ihn**）            |
+| 虚拟比较从句（**als ob / als wenn / als** 倒装）        | 与事实相反的“好像……似的”                                             | **Er tut, als ob er nichts gehört hätte.**（他装作什么也没听见。）／**Er tut, als hätte er nichts gehört.**（同上，省略 **ob** 的倒装式）     | 从句动词句末，用第二虚拟式；省略 **ob** 时动词紧跟 **als**                           |
+| 结果从句（**zu …, als dass …**）                    | “太……以至于不能”，含否定结果                                           | **Er ist zu müde, als dass er noch weiterarbeiten könnte.**（他太累了，没法再继续工作。）                                            | **als dass** 引导从句，动词句末，常用第二虚拟式                                  |
+| 同位语连词（“作为、是”）                                 | 说明身份、职业、功能，等于把两端画等号                                        | **Sie arbeitet als Ärztin in Hamburg.**（她在汉堡当医生。）／**Ich kenne ihn als guten Lehrer.**（我了解他是一名好老师。）                    | **als** 不变格；后面的名词跟它所说明的成分同格：**Ärztin** 第一格，**guten Lehrer** 第四格 |
+| 限制小品词（否定词之后，“除了……没有别的”）                       | 前面有 **nichts、niemand、kein anderer、nirgends**               | **Kein anderer als er kann das entscheiden.**（除了他没人能决定这事。）／**Er trinkt nichts als Wasser.**（他除了水什么也不喝。）               | 跟着否定词的格走：**er** 第一格，**Wasser** 第四格                              |
+| 关联连词 **sowohl … als auch**                    | 两者都成立                                                      | **Sie spricht sowohl Deutsch als auch Chinesisch.**（她既会说德语也会说中文。）                                                     | 两端同格，冠词照常保留                                                     |
+| 关联连词 **kaum …, als …**                        | “刚一……就……”，过去一次性                                            | **Kaum hatte er das Haus betreten, als das Telefon klingelte.**（他刚进屋，电话就响了。）                                          | 前半句倒装；**als** 后是主句语序，动词在第二位，**不是**从句                            |
+| 关联连词 **eher / lieber / nichts anderes … als** | 排高低或排除其他可能                                                 | **Ich fahre lieber mit dem Zug, als zu fliegen.**（我宁愿坐火车，也不愿坐飞机。）／**Es war nichts anderes als ein Zufall.**（那不过是个巧合。） | **als** 后接 **zu** + 不定式或名词，两端形式对称、同格                            |
+| 数量比较 **mehr / weniger als**                   | 数量、程度“多于、少于”                                               | **Mehr als hundert Leute kamen zur Versammlung.**（来参加集会的一百多人。）                                                        | 只比数量；该成分是主语就用第一格，是宾语就用第四格                                       |
+| 身份类的延伸：**als** + 序数                           | “作为第一个、第二个……”                                              | **Als Erster erreichte er das Ziel.**（他第一个到达终点。）                                                                      | 跟着主语同第一格，序数词照常变格                                                |
+| 旧式与南德说法 **so … als**                          | 标准德语已改用 **so … wie**，只剩固定短语                                | **Komm so schnell als möglich.**（尽可能快点来。）                                                                             | 相当于 **wie**，不支配格                                                |
+
+同类收尾：**Er benimmt sich wie ein Kind, obwohl er als Erwachsener gilt.** 一句话里同时出现 **wie**（相等比较）和 **als**（身份），正好说明两者的分工：**wie** 是“像”，**als** 是“作为”，谁都不改变后面名词的格。
 
 ## 一、 时间连词 (Temporale Subjunktion)
 
@@ -91,6 +109,8 @@ _语法规则：固定搭配 `sowohl ... als auch ...`。连接的两个部分�
 
 ## 六、 用于否定词之后的限制 (Einschränkung nach Negation)
 
+^rwfqmg
+
 当 `als` 出现在 `nichts`（什么也没有）、`niemand`（没有人）、`kein-`（没有）等否定词之后，意为“除了……（没有别的）”。
 
 - Ich habe auf dem Amt heute **nichts als** Ärger gehabt!
@@ -102,6 +122,29 @@ _语法规则：固定搭配 `sowohl ... als auch ...`。连接的两个部分�
 `als` 的核心就在于：看到它，先判断它是连句子（注意语序）、连比较级，还是连身份（注意对格）。
 
 你现在对“同位语连词的格一致性 (Kasuskongruenz)”理解得如何？需要我给出几个带陷阱的填空题来测试一下你的肌肉记忆吗？
+
+```mermaid
+  flowchart TD
+    A["先找支配者：动词或介词"] --> B{"这个成分在句中是什么角色？"}
+    B -->|"主语"| C["第一格"]
+    B -->|"第四格宾语"| D["第四格"]
+    B -->|"第三格宾语"| E["第三格"]
+    C --> F["als / sondern 后面照抄同一个格"]
+    D --> F
+    E --> F
+```
+
+|结构|中文意思|例句|翻译|中间成分的格由什么决定|算否定吗|
+|---|---|---|---|---|---|
+|eher A als B|与其说 B，不如说 A|Zwang erzeugt eher Frust als Engagement.|强制带来的与其说是投入，不如说是挫败。|两端处于同一格位，格由支配它的动词或介词决定；这里 erzeugen 支配第四格，所以 Frust 和 Engagement 同用第四格|不算，只有比较级排序|
+|nicht A, sondern B|不是 A，而是 B|Ich suche nicht den Lehrer, sondern den Schüler.|我找的不是那位老师，而是那个学生。|sondern 后重复冠词，格跟随同一动词或介词；suchen 支配第四格，两端都用第四格|算，nicht 直接否定 A|
+|nichts anderes als A|除了 A 没别的|Er will nichts anderes als den Frieden.|他除了和平别无他求。|nichts 已是 wollen 的第四格宾语，den Frieden 也采用同一格；整个短语作主语时改回第一格：Nichts anderes als der Zufall hat das bewirkt|算，nichts 排除其他全部可能|
+|kaum mehr als A|不过 A 而已|Kaum mehr als zehn Studenten kamen zur Prüfung.|来参加考试的不过十来个学生。|只比较数量，格跟着该成分的角色走：作主语用第一格，作宾语用第四格（Ich habe kaum mehr als zehn Euro.）|半否定，kaum 压低数量|
+|zu …, als dass …|太……以至于不能|Er ist zu müde, als dass er noch weiterarbeiten könnte.|他太累了，没法再继续工作。|引出的是完整从句，主语 er 用第一格，变位动词 könnte 位于句末，所以没有中间成分的格的问题|隐含否定，结果实现不了，故用第二虚拟式|
+|als ob …|好像……似的|Er tut, als ob er nichts gehört hätte.|他装作什么也没听见。|同样是完整从句，主语 er 用第一格，hätte 位于句末；省略 ob 时改成 als hätte er nichts gehört，动词提前到 als 之后|反事实，与事实相反，故用第二虚拟式|
+|对照：比较级 + als 代词|比……更……|Ich kenne ihn besser als dich. / Sie ist größer als er.|我比你更了解他。/ 她比他高。|als 后面的代词照抄平行成分的格：dich 是 kennen 的第四格，er 是主语第一格，不能写成 als du|不算否定|
+
+同类收尾：Das ist eher eine Frage des Zufalls als des Könnens. 与第一行完全同构：两端都是 sein 后面的第二格定语，格由前面的名词 Frage 决定，als 只是把两端并在同一个格位上。
 
 ## 七、 表语性成分 (als-Prädikativum)
 

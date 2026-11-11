@@ -2,8 +2,8 @@
   "openInNewTab": true,
   "previewTabs": false,
   "deduplicateTabs": true,
-  "deduplicateAcrossTabGroups": true,
-  "newTabPlacement": "beginning",
+  "deduplicateAcrossTabGroups": false,
+  "newTabPlacement": "afterActive",
   "newTabTabGroupPlacement": "same",
   "modClickBehavior": "opposite"
 }
