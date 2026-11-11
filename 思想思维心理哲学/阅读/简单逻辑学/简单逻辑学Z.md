@@ -434,7 +434,7 @@
 
 “以整体中的某一部分为样本来做研 究,以此来代表整体。样本范围的大小决定了它的代表性。想要代表一 个整体,你所取的样本必须足够多,多到你可以合理地认为它涵盖了 整体中的所有情况” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=85&annotation=RTXYY2DR)) |
 
- vx## “18 评定论证” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=86&annotation=GQZ8CUTM)) |  
+## 评定论证
 
 “论证展现的是推理的核心——推理的过程; 在最简单的形式里,它使我们从一个观点出发并接受另一个观点” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=86&annotation=GC3RUBNH)) |  
 
@@ -448,7 +448,7 @@
 “它是否能在前提和结论之间搭建 起合乎逻辑的桥梁” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=86&annotation=LDAWTKQN)) |  
 > 🔤🔤
 
-“19 构造一个论证” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=87&annotation=LPDXZLLB)) |  
+## “19 构造一个论证” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=87&annotation=LPDXZLLB)) |  
 
 “论证不会自动建立起来。在你的命题中,必须要有 一部分(前提)作为另一部分(结论)的支持信息” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=87&annotation=GGZCB8TM)) |  
 
@@ -467,7 +467,229 @@
 
 “我们必须选择适合于听众的方式。这就是逻辑学艺 术性的由来。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=88&annotation=6XSNYSIH)) |  
 
+# “第 4 章 非逻辑思维的根源” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=90&annotation=W5JJ8PB2)) |  
 
+“某些 缺陷导致了非逻辑思维的产生。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=91&annotation=R4MRQJBQ)) |
+
+## “01 怀疑论” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=93&annotation=JXYTYI2D)) |
+
+“怀疑论的两种态度:一是将怀疑永久化,这是我们要极力 避免的;二是在特定的情况下,将怀疑作为一种适当的、必要的态度。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=93&annotation=NZJTNHN8)) |
+
+“表现形式有两种,其中一种尤为极端,但是两者都 祸害无穷” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=93&annotation=S4NFXHGI)) |
+
+“极端怀疑论者宣称世界上根本没有所谓的真相” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=93&annotation=YPQR8U95)) |
+
+“中度怀疑论者勉强承认这个世界 上或许有真相存在,但是他坚持,即使真相存在,人类也没有能力探知 它。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=93&annotation=ZQH2TAK7)) |
+
+“逻辑本质上是关于真相的。如果真相只是 一个我们永远可望而不可即的幻影,那逻辑就不值一提。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=93&annotation=SJZWQFRH)) |
+
+## “02 逃避性不可知论” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=94&annotation=IK67ZS8L)) |
+
+“怀疑论者和不可知论者之间有显著的差别。不 可知论者既不否定真相的存在也不认为它可望而不可即。他们仅仅是声 称人们对任何确定的事物的真相都所知甚少。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=94&annotation=H7N3P4RD)) |
+
+“当我们承 认自己的无知时,我们就是一个诚实的不可知论者。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=94&annotation=BAC7M9D4)) |
+
+“即使在对一个事物做了长久深入的调查后,他仍旧 会说“我不知道”。这与你根本没有付出任何努力时所说的“我不知道”是 有本质区别的。秉持逃避性不可知论的人,无知对于他们来说,更像是借 口而非理由。这样的无知是懒惰和漠视的结果。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=94&annotation=UR5U96E6)) |
+
+## “03 玩世不恭和盲目乐观主义” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=95&annotation=3ZWKS6CD)) |
+
+“玩世不恭者习惯在证据不足的情况下,对事物作出悲观的预计,而 盲目乐观主义者则恰恰相反” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=95&annotation=DVU22BIH)) |
+
+“(1)要辩论的问题是荒 谬的;(2)他的对手很愚蠢;(3)辩论本身不能带来任何好处。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=95&annotation=4MPWD5Y2)) |
+
+“无论是玩世不恭者还是盲目乐观主义者,他们对所处的世界都没有 正确的认识。他们眼中的世界不是世界本身,而是一个自己想当然认为 的世界” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=95&annotation=N2KBH5F9)) |
+
+## “04 眼界狭窄” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=96&annotation=7NYDHDVE)) |  
+> 1
+
+“一个眼界狭窄 的人,他拒绝某些选择仅仅是因为这些选择偏离了他的预先设想,所以 他认为不值得去探寻。这种限制缺乏理性的基础,换句话说,眼界狭窄实 际上是在削弱推理过程的有效性。但有些时候,过于开放地接受一切的 态度在理性思维上可能会错得更离谱。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=96&annotation=8JP3UX45)) |  
+> 🔤一个眼界狭窄的人，拒绝某些选择仅仅是因为这些选择偏离了他的预先设想，所以认为不值得去探寻。这种限制缺乏理性的基础；换句话说，眼界狭窄实际上是在削弱推理过程的有效性。但有些时候，过于开放地接受一切的态度在理性思维上可能会错得更离谱。🔤
+
+“推卸应该承担的责任是道德沦丧,而忍受一切则会使一切都变得没 有意义。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=96&annotation=RFDPFFNY)) |  
+> 🔤推卸应尽的责任是道德沦丧，而一味忍受一切则会使一切都变得毫无意义。🔤
+
+## “05 情感和论证” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=97&annotation=YX6YIU9Z)) |  
+> 🔤05 情感和论证🔤
+
+“情绪越紧张, 清晰思维、冷静行动的难度就越大。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=97&annotation=6WDZYM48)) |  
+> 🔤情绪越紧张，清晰思维、冷静行动的难度就越大。🔤
+
+“永远不要直接调动人们的情感,要努力使 人们自己发现真相。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=97&annotation=32339LTM)) |  
+> 🔤永远不要直接调动人们的情感，要努力使人们自己发现真相。🔤
+
+## “06 推理的原因” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=98&annotation=ZCED6585)) |  
+> 🔤06 推理的原因🔤
+
+“有时论证会在情感的引导下变成宣泄愤怒的途径,或者是自我辩白 的借口,甚至仅仅是自我膨胀的工具。由此,偶发事件取代了真相。理想 的辩论,输赢并不是真正的目的,从正反双方的努力中,发现所辩论事物 中蕴涵的真相才是最终目的。为了胜利不惜一切代价?“不惜一切”本身 就是没有任何人可以负担的代价。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=98&annotation=PUVNT5VQ)) |
+
+## “07 论证不是争吵” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=99&annotation=2TZ73LJL)) |
+
+“论证的目的是发 现真相,争吵的目的是击败你的对手。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=99&annotation=ENVZC65M)) |
+
+## “08 真诚的局限性” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=100&annotation=Y7ZFPR78)) |
+
+“如果你对自己公然 鼓吹、极力辩护的观点都不信服,那么你就是在滥用推理。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=100&annotation=DX6JMDXL)) |
+
+“绝对真诚,但同时也绝对错 误。真诚不能将谬误变成真相。人要真诚,然而人更要正确。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=100&annotation=FSS74ICZ)) |
+## “09 常识” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=101&annotation=BQ7YGGBM)) |
+
+“常识 更接近本源,服务于推理的基本原则。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=101&annotation=T94SET7L)) |
+
+# “第 5 章 非逻辑思维的主要形式” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=103&annotation=E4H4RQWG)) |
+
+“形式谬误”,顾名思义,问题出现在形 式上,或是论证结构上” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=104&annotation=UW5EQBI5)) |
+
+““非形式谬误”,则说的是形式谬误之外的各种逻辑错 误。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=104&annotation=Z2M5MPYA)) |
+
+“(1)它将使我们对正确推理有更深入的了解,敏锐我们的神经, 从而使我们更加坚定地遵循正确的路径” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=105&annotation=NVQY6IUX)) |
+
+“(2)在我们面对错误推理时, 它将保护我们不受误导。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=105&annotation=BJA4J6FQ)) |
+
+“错误推理通常以直接作用于人的情感的方式来战胜正确推理。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=105&annotation=WV8ZA4XF)) |
+
+## “01 否定前件” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=106&annotation=T49Q8KCM)) |
+
+“A→B -A 所以,-B 举例如下: 如果路易斯在跑步,那么他在移动。 路易斯没有跑步。 所以,他没有移动。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=106&annotation=ML8N49QV)) |
+
+“仅仅是 A 的缺席并不能得出 B 一定缺席的结论。 记住,这是一个无效论证,因为结论并不具备必然性。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=106&annotation=BILWTVX5)) |
+
+“A→B B 所以,A 举例如下: 如果路易斯在跑步,那么他在移动。 路易斯在移动。 所以,他在跑步。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=107&annotation=6NMQK9P8)) |
+
+“,这种情况下得出的结论可能是正确的,但不是必然正确 的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=107&annotation=BPTWY2GD)) |
+
+## “3 中项不周延” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=108&annotation=4QTBLGLW)) |
+
+“几个纳粹党人是恺撒俱乐部的成员。 汉斯是恺撒俱乐部的成员。 所以,汉斯是纳粹党人。 分析 这是个错误推理” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=108&annotation=99WYI9U2)) |
+
+## “04 偷换概念” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=109&annotation=MBKETKRA)) |
+
+“多义词或多义字,顾名思义,肯定不只有一个意思。多义词带来的潜 在问题是模糊不清。如果我们有意无意地通过语言运用的方式产生了模 糊不清,这无疑将产生谬误。谬误同时产生于当我们以欺骗为目的、故意 使用多义词时。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=109&annotation=KVKTLBCZ)) |
+
+“鬼是迷信的人所说的人死后的灵魂。 他心里有鬼,所以目光闪烁。 所以,他心里有人死后的灵魂。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=109&annotation=Z5RCG2P2)) |
+
+## “05 窃取论题” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=111&annotation=LXDFJ27Q)) |
+
+“造成这种谬误的原因是缺乏真实前提为结论提供充足的支持。这种 谬误的重要标志是:把有待证明的观点当做不证自明的前提条件。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=111&annotation=6E7XVJQN)) |
+
+“窃取论题谬误的另一种叫法是循环论证,有时也称为恶性循环。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=112&annotation=GE7CY2TJ)) |
+
+## “06 虚假假设” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=113&annotation=2ZD42Z2C)) |
+
+“评判假设的一 个基本标准是:命题不能违反矛盾律。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=113&annotation=C9Z3MREQ)) |
+
+“假设必须要小心谨慎。虚假假设可以被证明是假的,因为事实 完全与之对立。如果一个论证以一个错误的假设开始,那么它必将以一 个错误的结论结束。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=113&annotation=BRZMN2BT)) |
+
+## “07 稻草人谬误” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=114&annotation=B33JFK3S)) |
+
+“我们要对事不对人,要紧扣论证中给定的论点。在与他 人辩论的过程当中,如果你为了削弱对方的论点而故意扭曲其论证过 程,那就犯了稻草人谬误” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=114&annotation=V2XVMNBP)) |
+
+## “08 误用传统” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=115&annotation=FEZZIPQF)) |
+
+“习惯会对我们的生活产生重大影 响,如果不分析实际上是否值得就遵循习惯做事,我们就会成为习惯 的奴隶。在评价给定的实践时,我们关注的焦点应该是实践本身,而不 是它的历史。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=115&annotation=D5ILFWRL)) |
+
+“这种错误背后所反映的态度是某些新新人 类所坚持的,他们认为只有新的才是有价值的,只有变化才是唯一永恒 的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=115&annotation=W3ADGW8E)) |
+
+## “09 以暴易暴” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=116&annotation=ESUTTZFJ)) |
+
+“这个论证的推理有赖于如下假设:先例独立决定未来的行为。实 际上先例不能为未来的行为提供有效的支持,已经完成的行为只有历 史意义。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=116&annotation=THEINXYF)) |
+
+## “10 民主谬误” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=117&annotation=LMFBT4IM)) |
+
+“如果 大多数人都认为命题 X 是正确的,那么我们可以就此得出结论说 X 是正 确的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=117&annotation=D9QWBUMI)) |
+
+## “11 对人不对事” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=118&annotation=CCR98GPX)) |
+
+“在论证中,我们要关注的是论证 本身,而不是作出论证的人。如果一个人忽略论证本身而故意去攻击论 证者,那么他就违反了这个原则。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=118&annotation=NT85VIN8)) |
+
+“你的胜利并非源于 观点的价值,而是源于你扰乱听众视听的能力。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=118&annotation=P8DS4UVR)) |
+
+## “12 压制理性” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=119&annotation=2J5BQ86J)) |
+
+“理想的论证是通过证据使人们认识到某些事物是真的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=119&annotation=CRNWYXIN)) |
+
+“人们只有在自由思考的时候才 能接受什么是真,也只有在独立判断的时候才能确定什么是真。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=119&annotation=EHSGXMCJ)) |
+
+## “13 滥用专家意见” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=120&annotation=ZB6LI27C)) |
+
+“专” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=120&annotation=IN6UPT4L)) |
+
+“家的主要意见,要结合他秉持这种意见的理由,只有在这种情 况下,我们得到的才不仅仅是他的意见。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=120&annotation=T6GW2GWY)) |
+
+“一个仅仅因为音乐成就而闻名于世的音乐家就经济或是 全球变暖问题所提的观点没有权威力量。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=121&annotation=3K63F4UR)) |
+
+## “14 质的量化” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=122&annotation=FAGA48KA)) |
+
+“很多重要的事物都不能定量衡量,或许我们可以说最重要的事物都 不能” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=122&annotation=KYPKLWTE)) |
+
+“例如爱、美丽、善良、公正、自由、和平,等等。我们如何衡量它们? 它们有多重?速度是多少?成本几角几分?试图将不需要量化的事物进 行量化是对它们的亵渎。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=122&annotation=2IKTQT5Z)) |
+
+## “15 以出身论英雄” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=123&annotation=TGSY53ZS)) |
+
+“以你对 X 学院的了解,彼得或许 确实不是一名合格的人选。但是,这不是必然的。一颗闪亮的新星是可能 出自于类似 X 学院之类的学校的。你所犯谬误的根源如下:知道一个来 源一般是坏的,于是认定出于这个来源的所有都一定是坏的。这并不必 然成立。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=123&annotation=8BMUACKN)) |
+
+## “16 止于分析” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=124&annotation=W9QPDA6W)) |
+
+“是分解只能针对合成的产物,而 且仅仅分解是不够的,我们还要能把它们重新组合成整体。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=124&annotation=BDL8A3PR)) |
+
+## “17 简化主义” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=125&annotation=LRPBWIMR)) |
+
+“这种谬误发生于当我们选择性地只对整体的一部分加以关注之 时。例如,当我们只把精神放在一个人的缺点上,并因此认为我们已 经完全了解这个人的本质时,这个谬误就正在发挥作用。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=125&annotation=AY7CFTDX)) |
+
+## “18 分类错误” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=126&annotation=UC86GK5H)) |
+
+“如果人类天生是分析动物,那么人类同时也天生是分类动物。我们 将一个事物放入某个和它有某方面共同点的一个大类中” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=126&annotation=7XF2Y45E)) |
+
+“书馆中,一本书 的错误分类可能导致几年的遍寻不果。将事物归入错误的类别是因为我 们最开始就没有正确认识它们,而没有正确认识的原因是我们散漫的态 度。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=126&annotation=Y6QK9D34)) |
+
+## “19 混淆视听” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=127&annotation=MZ9DE3DK)) |
+
+“正如我们在对人不对事 谬误中所看到的,通过提供与论证毫无关系的爆炸性情感信息来攻击对 手。混淆视听提供了这种策略的另一种样本。它是故意提出一些无关的 情感信息来分散对方的注意力。这种谬误有两个特点:(1)它直接诉诸 情感,而不是推理;(2)它所提供的信息与所要进行的论证毫不相关。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=127&annotation=L7QCRR6I)) |
+
+## “20 以笑饰非” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=128&annotation=F7LAGGPP)) |
+
+“将听众的注意力转移到一些无关主题的事情上,例如,演讲 中对手的口吃,等等,以此来回避他所不能胜任的辩论。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=128&annotation=89KZDVP7)) |
+
+## “21 以泪掩过” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=129&annotation=AIY94LYE)) |
+
+“通过博取听众同情的方式 来达到同一个目的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=129&annotation=7M9HYW62)) |
+
+“强烈的情感和清晰 的思维是成反比的,一旦情感超过一定界限,引导论证正确进行的机 会就随之归零。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=129&annotation=BF8PASB5)) |
+
+## “22 无力反驳不算证明” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=130&annotation=TYMCA6MX)) |
+
+“没有强有力的证据进行反对论证,并不能因此证明其为真。不能仅 仅因为你不能证明我是错的,就说我的观点是对的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=130&annotation=M2L2WNLX)) |
+
+## “23 两难陷阱” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=131&annotation=IBGGMHNA)) |
+
+“这里我所说的两难陷阱发生在这种情况下:当问题实际上有很多 选项时,我试图说服你只有两种。这里的进退两难是假象,因为它是 对真实情况的扭曲反映。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=131&annotation=L6GFLQD5)) |
+
+## “24 以先后论因果” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=132&annotation=LY5W9JYY)) |
+
+“这种仅仅以发生的先后来断定因果关系的做法就是以先后论因果 谬误。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=132&annotation=YB6F3SJ6)) |
+
+“一个具有哲学思想倾向的原始人,有一天突然注意到,鸟儿总是在太阳升起之 前歌唱。由此,他高兴地得出结论:是鸟儿的歌唱导致每天的日出。他犯的就是以先 后论因果谬误。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=132&annotation=Y3D24L6Y)) |
+
+“一件事恰巧出现在另一件事之前,这并不足以断定它们之间必然有 因果关系” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=132&annotation=JB2P8J9K)) |
+
+## “25 情感误导” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=133&annotation=D8A7JJYT)) |
+
+“选择性地忽略一些与我们的信仰相抵触的重要信息时,我们 就犯了情感误导谬误。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=133&annotation=JP8NQJMP)) |
+
+“假设我在写一部关于我的母校——X 大学的历史。我热爱我的母校,我将在校 园的日子视为我一生中最美好的时光。我想在我的作品中向人们证明我的母校是 全国最好的大学之一。但是,研究得越深入,我越发现母校过去的历史并不是那么 令人满意。我不改初衷,所以在写作的时候,我决定剔除所有母校历史上的负面新 闻,只反映它光辉的一面。于是,我就犯了情感误导谬误,我在书中所描绘的 X 大学 的面目已经被严重扭曲” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=133&annotation=3FAA95VU)) |
+
+## “26 功利误导” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=134&annotation=TYHCE58J)) |
+
+“当我们仅仅注重于一个方法对 想要得到的结果的作用,而不考虑其他方面时,我们就犯了功利误导谬 误。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=134&annotation=F9RFFPK9)) |
+
+“当我们利欲熏心,为达目的不择手段时,就犯了功利误导谬误。操纵 这种谬误的态度是:只要我成功了,如何取得成功并不重要。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=134&annotation=XIK3PE55)) |
+
+## “27 避免结论” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=135&annotation=EME6A3IV)) |
+
+“如果我们论证的目的只是为了使自己听到自己在说什 么,那是将论证的庸俗化。认识到有些问题目前在我们认识能力范围 以外,暂时无法解决是一回事,但是接受这样的问题永远不能解决的 结论则完全是另外一回事” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=135&annotation=XCR4QKNL)) |
+
+## “28 简化推理” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=136&annotation=JBYTXJ82)) |
+
+“有时我们受简单化的驱使,黑白不分,那是因为生活的复杂性淹没 了我们。但是,通过对复杂的现实的简单扭曲来达到简化的目的同样是 不合逻辑的反应。过分简化的结果往往是扭曲现实。 有些听众将其接受能力局限在自己想听的东西之上,另一些人只喜 欢简单的答案,这往往是愤世嫉俗者的特点。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=136&annotation=75Q9KQSM)) |
 
 
 
