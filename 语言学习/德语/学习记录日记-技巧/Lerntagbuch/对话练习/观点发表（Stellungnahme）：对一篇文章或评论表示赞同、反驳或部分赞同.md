@@ -597,28 +597,38 @@ die Verallgemeinerung / die Pauschalisierung｜die Verkürzung（简化失真）
 > Der Autor **präsentiert ein Werturteil als Tatsachenbehauptung**.
 > An die Stelle der Begründung **tritt der Appell**.
 
-### 词汇
-**形容词**：emotional aufgeladen｜affektiv｜polemisch｜appellativ｜rhetorisch überzogen｜wertend｜normativ｜moralisierend｜tendenziös（带倾向性）｜suggestiv｜zugespitzt｜**meinungsstark, aber belegarm**（立场强、证据薄）
-**名词**：die Polemik｜der Appell｜die Wertung / das Werturteil｜die Zuspitzung｜die Übertreibung｜die Wortwahl｜der Belegmangel｜die Immunisierung gegen Einwände（对反驳免疫）
-**动词**：zuspitzen｜polemisieren **gegen** + A｜appellieren **an** + A｜moralisieren｜suggerieren｜unterstellen｜gleichsetzen **mit** + D｜vermengen A und B
+| 词性 | 德语＋翻译 |
+|---|---|
+| **形容词** | emotional aufgeladen：情绪渲染的<br>affektiv：情感冲动的<br>polemisch：攻击性论战的<br>appellativ：呼吁号召式的<br>rhetorisch überzogen：修辞上夸张过火的<br>wertend：带评价的<br>normativ：规范应然性的<br>moralisierend：道德说教的<br>tendenziös：带倾向性的<br>suggestiv：暗示性的<br>zugespitzt：被推向极端的<br>**meinungsstark, aber belegarm**：立场强、证据薄 |
+| **名词** | die Polemik：论战、激烈抨击<br>der Appell：呼吁、号召<br>die Wertung / das Werturteil：评价／价值判断<br>die Zuspitzung：极端化<br>die Übertreibung：夸张<br>die Wortwahl：用词、措辞<br>der Belegmangel：证据缺失<br>die Immunisierung gegen Einwände：对反驳免疫（免于质疑） |
+| **动词** | zuspitzen：使尖锐化、推向极端<br>polemisieren **gegen** + A：针对……论战抨击<br>appellieren **an** + A：向……发出呼吁<br>moralisieren：进行道德说教<br>suggerieren：暗示、给人……的印象<br>unterstellen：臆断、把……强加于人<br>gleichsetzen **mit** + D：把……等同于<br>vermengen A und B：把 A 与 B 混为一谈 |
 
-### 句式
-- Die Schlussfolgerung ist **rhetorisch zugespitzt** und argumentativ nicht gedeckt.
-- Wörter wie „Katastrophe“ oder „Versagen“ sind **affektiv aufgeladen** und ersetzen keine Analyse.
-- **Hier argumentiert der Autor nicht, er appelliert**: An die Stelle der Begründung tritt die Empörung.
-- Die Darstellung ist **tendenziös**: Gegenbeispiele werden ausgelassen.
-- Der Satz „Wer das nicht sieht, will es nicht sehen“ **immunisiert den Text gegen jede Kritik**.
-- Die These ist **apodiktisch** formuliert und lässt keine Nuance zu.
-- Kritik ist berechtigt – **aber sie muss sachlich begründet werden**.
+| 德语例句＋翻译 |
+|---|
+| Die Schlussfolgerung ist **rhetorisch zugespitzt** und argumentativ nicht gedeckt.<br>该结论在修辞上被推向极端，论证上缺乏支撑。 |
+| Wörter wie „Katastrophe“ oder „Versagen“ sind **affektiv aufgeladen** und ersetzen keine Analyse.<br>“灾难”“失职”这类词带有情绪渲染，不能替代分析。 |
+| **Hier argumentiert der Autor nicht, er appelliert**: An die Stelle der Begründung tritt die Empörung.<br>这里作者不是在论证，而是在呼吁：义愤取代了说理。 |
+| Die Darstellung ist **tendenziös**: Gegenbeispiele werden ausgelassen.<br>这段叙述带有倾向性：反例被略去。 |
+| Der Satz „Wer das nicht sieht, will es nicht sehen“ **immunisiert den Text gegen jede Kritik**.<br>“看不到这点的人就是不想看到”这句话，使全文对任何批评免疫。 |
+| Die These ist **apodiktisch** formuliert und lässt keine Nuance zu.<br>该论点表述武断绝对，不留任何细微差别。 |
+| Kritik ist berechtigt – **aber sie muss sachlich begründet werden**.<br>批评是合理的——但必须言之有据、就事论事。 |
 
-### 常见谬误的德语名称（用来“分析”，而非“骂人”）
-die Verallgemeinerung（以偏概全）｜die Scheinkausalität（伪因果）｜das Strohmann-Argument（稻草人）｜das Autoritätsargument（诉诸权威）｜das argumentum ad hominem（人身攻击）｜der Zirkelschluss（循环论证）｜das falsche Dilemma / die Schwarz-Weiß-Malerei
+| 谬误名称＋翻译 |
+|---|
+| die Verallgemeinerung：以偏概全 |
+| die Scheinkausalität：伪因果 |
+| das Strohmann-Argument：稻草人论证 |
+| das Autoritätsargument：诉诸权威 |
+| das argumentum ad hominem：人身攻击 |
+| der Zirkelschluss：循环论证 |
+| das falsche Dilemma / die Schwarz-Weiß-Malerei：虚假两难／非黑即白 |
 
-### 强度调节副词（把话说得“像行家”）
-kaum｜nur bedingt｜in Teilen｜weitgehend｜durchaus｜allenfalls（充其量）｜zumindest｜keineswegs
-几乎没有｜仅在有限程度上｜部分如此｜在很大程度上｜确实如此｜充其量如此｜至少算是吧｜根本不是这样
+| 副词＋翻译 |
+|---|
+| kaum：几乎没有<br>nur bedingt：仅在有限程度上<br>in Teilen：部分地<br>weitgehend：在很大程度上<br>durchaus：确实、完全可以<br>allenfalls：充其量<br>zumindest：至少<br>keineswegs：绝不、根本不是 |
+
 > Die Daten belegen **allenfalls** einen Zusammenhang, **keineswegs** eine Ursache.
-> 这些数据至多只能证明两者之间存在关联，但绝对不能说明因果关系。
+> 这些数据充其量只能证明存在关联，绝不能说明因果关系。
 
 ---
 
@@ -679,18 +689,44 @@ kaum｜nur bedingt｜in Teilen｜weitgehend｜durchaus｜allenfalls（充其量�
 ## 七、实战示范（把全部模块用在一段上）
 
 ^olk3mf
-
 **示范文本（虚构，仅作练习材料）：**
+
 > „Die deutsche Wirtschaft ist am Ende. Nirgendwo wird so wenig gearbeitet wie hier. Eine aktuelle Umfrage zeigt: 87 Prozent der Bürger sind unzufrieden. Wer das nicht sieht, will es nicht sehen. Die Politik hat komplett versagt.“
-
+“德国经济已经走到尽头。没有哪个地方的工作强度比这里更低。最新调查显示：87%的民众对此感到不满。那些不愿承认事实的人，根本就是装作没看见。政客们彻底失职了。”
 **批评段（约 160 词）：**
+
 > Der Text arbeitet mit starken Behauptungen, bleibt aber die Belege dafür schuldig. Für die zentrale Aussage, die Wirtschaft sei „am Ende“, fehlen jegliche Daten – weder Wachstumszahlen noch ein Vergleichszeitraum werden genannt. Die Zahl von 87 Prozent wird als „aktuelle Umfrage“ eingeführt, ohne Quelle, Auftraggeber oder Angaben zur Stichprobe; ob sie repräsentativ ist, lässt sich daher nicht überprüfen. Zudem belegt Unzufriedenheit nicht den Niedergang der Wirtschaft – hier wird ein Stimmungsbild mit einer ökonomischen Aussage gleichgesetzt. Die Argumentation bleibt durchgehend pauschal: Es fehlt die Differenzierung nach Branchen und Regionen, und die Gegenposition wird nicht zur Kenntnis genommen. Mit Formulierungen wie „komplett versagt“ und dem Satz „Wer das nicht sieht, will es nicht sehen“ wird der Text zudem affektiv und immunisiert sich gegen Einwände. Insgesamt handelt es sich um eine meinungsstarke, aber belegarme Zuspitzung: Die These ist nicht widerlegt – aber auch nicht gestützt.
- 
-**示范文本（虚构，仅作练习材料）：**
-> “德国经济已经完了。没有哪个地方像这里一样干活这么少。一项最新调查显示：87%的公民不满意。看不到这一点的人，就是不想看到。政治已经完全失败了。”
 
-**批评段（约 160 词）：**
-> 该文本使用强烈断言，却拿不出相应证据。对于“经济已经完了”这一核心论断，完全缺乏数据——既未给出增长数据，也未指明比较时期。87%这一数字被以“最新调查”的名义引入，却没有来源、委托方或样本信息；因此无法核查其是否具有代表性。此外，不满情绪并不能证明经济衰退——这里把一种情绪图景等同于一项经济论断。论证始终流于笼统：缺少按行业和地区的区分，对立立场也未得到正视。借助“彻底失败”这类措辞以及“谁看不到这一点，就是不想看到”这句话，文本还带有情绪化色彩，并使自身免受质疑。总体而言，这是一次观点鲜明但证据不足的尖锐化处理：该论点没有被驳倒——但也没有得到支撑。
+
+**1.** Der Text arbeitet mit starken Behauptungen, bleibt aber die Belege dafür schuldig.
+→ 这篇文章使用了强烈的断言，但对这些断言却拿不出证据。
+
+**2.** Für die zentrale Aussage, die Wirtschaft sei „am Ende“, fehlen jegliche Daten – weder Wachstumszahlen noch ein Vergleichszeitraum werden genannt.
+→ 对于“经济已经完了”这一核心论断，完全缺乏数据——既没有给出增长数据，也没有给出对比时间段。
+
+**3.** Die Zahl von 87 Prozent wird als „aktuelle Umfrage“ eingeführt, ohne Quelle, Auftraggeber oder Angaben zur Stichprobe; ob sie repräsentativ ist, lässt sich daher nicht überprüfen.
+→ 那个 87% 的数字是以“最新调查”的名义引入的，却未说明来源、委托方或抽样情况；因此无法核查它是否具有代表性。
+
+**4.** Zudem belegt Unzufriedenheit nicht den Niedergang der Wirtschaft – hier wird ein Stimmungsbild mit einer ökonomischen Aussage gleichgesetzt.
+→ 此外，民众的不满并不能证明经济的衰退——这里把一种情绪图景与一个经济学论断等同了起来。
+
+**5.** Die Argumentation bleibt durchgehend pauschal: Es fehlt die Differenzierung nach Branchen und Regionen, und die Gegenposition wird nicht zur Kenntnis genommen.
+→ 整个论证始终流于笼统：缺少按行业和地区的区分，反方立场也未被理会。
+
+**6.** Mit Formulierungen wie „komplett versagt“ und dem Satz „Wer das nicht sieht, will es nicht sehen“ wird der Text zudem affektiv und immunisiert sich gegen Einwände.
+→ 此外，凭借“彻底失败”这类措辞以及“谁看不到这一点，就是不想看到”这句话，文章变得情绪化，并对质疑产生了免疫。
+
+**7.** Insgesamt handelt es sich um eine meinungsstarke, aber belegarme Zuspitzung: Die These ist nicht widerlegt – aber auch nicht gestützt.
+→ 总体而言，这是一篇观点强烈但证据薄弱的极端化表述：该论断并未被驳倒——但同样也未得到支撑。
+
+---
+
+**结构提示**（便于背记）：
+- 第 1 句 = 总起（A 数据/来源：*den Beleg schuldig bleiben*）
+- 第 2–4 句 = 逐条拆证据（A：缺数据、缺来源、相关≠因果）
+- 第 5 句 = B 具体性（*pauschal / Differenzierung / Gegenposition*）
+- 第 6 句 = C 语气（*affektiv / immunisiert sich*）
+- 第 7 句 = 落点（*nicht widerlegt – aber auch nicht gestützt*）
 
 对应检查：A（出处/样本/因果混淆）→ B（pauschal、缺区分、忽略反方）→ C（affektiv、免疫化）→ 落点（nicht widerlegt, aber auch nicht gestützt）。
 
@@ -700,13 +736,13 @@ kaum｜nur bedingt｜in Teilen｜weitgehend｜durchaus｜allenfalls（充其量�
 
 | ✗ 常见做法 | ✓ 正确做法 | 原因 |
 |---|---|---|
-| Der Autor lügt. / Das ist falsch. | Die Angabe ist nicht nachvollziehbar / unbelegt. | 说谎需举证；缺证明只需指出缺失 |
-| Der Autor ist Lehrer, also ahnungslos. | Ob der Autor fachlich ausgewiesen ist, ist fraglich; entscheidend ist jedoch die Prüfung der Belege. | 避免 ad hominem |
-| Der Text ist total emotional. | Die Wortwahl („Katastrophe“) ist affektiv aufgeladen und ersetzt die Begründung. | “emotional” 只是风格描述，非缺陷；必须引证 |
-| Er sagt nicht, welche Politik er meint. | Welche konkrete Regelung gemeint ist, bleibt unklar; Angaben zu Zielgruppe und Zeitraum fehlen. | 把“含糊”具体化为可核对项 |
-| 通篇 hedging：Es könnte sein, dass man vielleicht fragen müsste … | 2–3 处 hedging + 明确表态：Deshalb überzeugt mich die Argumentation nicht. | 过度模糊会丢“klare Position”分 |
-| 只说缺点，不给建设性标准 | Überzeugend wäre erst der Nachweis, dass … | C 1 高分特征 |
-| 把“无数据”直接推成“结论错误” | Die These ist nicht widerlegt, aber auch nicht gestützt. | 避免“缺乏证据即错误”的谬误 |
+| Der Autor lügt. / Das ist falsch.<br>作者在撒谎。/ 这是错的。 | Die Angabe ist nicht nachvollziehbar / unbelegt.<br>该说法无法理解／缺乏证据。 | 说谎需举证；缺证明只需指出缺失<br>（指控撒谎需举证，指出缺证据只需说明缺失） |
+| Der Autor ist Lehrer, also ahnungslos.<br>作者是老师，所以一窍不通。 | Ob der Autor fachlich ausgewiesen ist, ist fraglich; entscheidend ist jedoch die Prüfung der Belege.<br>作者是否具备专业资质值得怀疑；但关键在于核查其证据。 | 避免 ad hominem<br>（避免人身攻击） |
+| Der Text ist total emotional.<br>这篇文章完全情绪化。 | Die Wortwahl („Katastrophe“) ist affektiv aufgeladen und ersetzt die Begründung.<br>其用词（“灾难”）带有情绪色彩，且替代了论证。 | “emotional” 只是风格描述，非缺陷；必须引证<br>（“情绪化”只是风格描述，本身不是缺陷，必须举出具体词句为证） |
+| Er sagt nicht, welche Politik er meint.<br>他没说他指的是什么政策。 | Welche konkrete Regelung gemeint ist, bleibt unklar; Angaben zu Zielgruppe und Zeitraum fehlen.<br>他所指的究竟是何具体规定仍不清楚；关于适用对象与时间范围的说明缺失。 | 把“含糊”具体化为可核对项<br>（把“含糊”拆解为可逐项核对的具体缺失） |
+| 通篇 hedging：Es könnte sein, dass man vielleicht fragen müsste …<br>通篇都是模糊表达：“也许可能大概得问一下……”。 | 2–3 处 hedging + 明确表态：Deshalb überzeugt mich die Argumentation nicht.<br>2–3 处模糊限制语 + 明确表态：“因此这套论证无法说服我。” | 过度模糊会丢“klare Position”分<br>（过度模糊会丢失“立场明确”这一评分点） |
+| 只说缺点，不给建设性标准<br>（只否定，不提出建设性标准） | Überzeugend wäre erst der Nachweis, dass …<br>只有证明……，才具有说服力。 | C 1 高分特征<br>（这是 C1 的高分特征） |
+| 把“无数据”直接推成“结论错误”<br>（把“没有数据”直接推成“结论错误”） | Die These ist nicht widerlegt, aber auch nicht gestützt.<br>该论点并未被推翻，但同样未获支持。 | 避免“缺乏证据即错误”的谬误<br>（避免“缺乏证据即等于错误”的逻辑谬误） |
 
 ---
 

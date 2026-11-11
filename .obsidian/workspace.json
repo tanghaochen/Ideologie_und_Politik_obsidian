@@ -116,6 +116,21 @@
             }
           },
           {
+            "id": "c52ecd87abcfe178",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "背单词-数量与范围频率可能性确定性程度必要性重要性"
+            }
+          },
+          {
             "id": "bcbbea41d655326c",
             "type": "leaf",
             "state": {
@@ -146,7 +161,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -336,7 +351,8 @@
               "title": "添加笔记属性"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "28e75bfc7e894da7",
@@ -418,15 +434,20 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "5b9ac5c4ba35d39a",
+  "active": "c52ecd87abcfe178",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/连词成对.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
+    "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/观点发表（Stellungnahme）：对一篇文章或评论表示赞同、反驳或部分赞同.md",
+    "copilot/copilot-conversations/Add_Translation_in_Same_Cell@20261111_214556.md",
+    "copilot/copilot-conversations/分段附翻译@20261111_214348.md",
+    "AGENTS.md",
+    "copilot/copilot-conversations/分段翻译请求@20261111_214219.md",
+    "copilot/copilot-conversations/文本分段与翻译@20261111_214007.md",
     "思想思维心理哲学/阅读/简单逻辑学/术语/断言.md",
     "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
     "assets/逻辑学断言概念信息图.png",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/观点发表（Stellungnahme）：对一篇文章或评论表示赞同、反驳或部分赞同.md",
-    "语言学习/德语/公共知识语法/连词成对.md",
-    "AGENTS.md",
     "copilot/copilot-conversations/添加翻译请求@20261111_203320.md",
     "copilot/memory/Recent Conversations.md",
     "copilot/memory",
@@ -440,18 +461,14 @@
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述一个人在房间里做各种动作（Tätigkeiten im Haushalt）.md",
     "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
-    "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
     "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md",
     "assets/a_clean_colorful_educational_infographic_in_chine.png",
     "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw",
     "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述物品的摆放：位置、姿态与排列.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/购物与客服沟通：线下购物与网店的售前、下单、售后、退换货.md",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/物品的颜色、形状与长宽高：词汇 → 句型 → 成段描述.md",
-    "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
     "assets/德语场景表达训练全流程 инфোগրաfic (1).png",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习",
-    "语言学习/德语/单词/生词/2026-11.md",
     "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw",
     "assets/城市地铁论证逻辑全解.png",
     "assets/第3章论证逻辑思维导图.png",
