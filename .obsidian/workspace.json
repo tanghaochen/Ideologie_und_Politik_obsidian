@@ -4,194 +4,59 @@
     "type": "split",
     "children": [
       {
-        "id": "ff5d945606200819",
-        "type": "tabs",
-        "dimension": 34.03341288782816,
-        "children": [
-          {
-            "id": "4941ed643b059f3a",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "格; 限定词"
-            }
-          },
-          {
-            "id": "9be7e4bb836fa99e",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "从句"
-            }
-          },
-          {
-            "id": "7f26734a40576a36",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "听说读写 以及学习外语的核心方法"
-            }
-          },
-          {
-            "id": "fe8729b9f803ac4b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/email Reklamation Bürostuhl – ErgoSitz 24.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "email Reklamation Bürostuhl – ErgoSitz 24"
-            }
-          },
-          {
-            "id": "c15b930b39ac1c30",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl"
-            }
-          }
-        ],
-        "currentTab": 4
-      },
-      {
         "id": "b5dbd09e7753bfc0",
         "type": "tabs",
-        "dimension": 65.96658711217184,
         "children": [
           {
-            "id": "086d9cbe40e64179",
+            "id": "043053a7ed81e90e",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/对话练习.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md"
               },
-              "icon": "lucide-file",
-              "title": "对话练习"
+              "icon": "excalidraw-icon",
+              "title": "DW简单逻辑学"
             }
           },
           {
-            "id": "5b9ac5c4ba35d39a",
+            "id": "34475f1101eb8aa5",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/观点发表（Stellungnahme）：对一篇文章或评论表示赞同、反驳或部分赞同.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw"
               },
-              "icon": "lucide-file",
-              "title": "观点发表（Stellungnahme）：对一篇文章或评论表示赞同、反驳或部分赞同"
+              "icon": "excalidraw-icon",
+              "title": "简单逻辑学-全书逻辑图谱"
             }
           },
           {
-            "id": "c52ecd87abcfe178",
+            "id": "8fad9431bd094621",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw"
               },
-              "icon": "lucide-file",
-              "title": "背单词-数量与范围频率可能性确定性程度必要性重要性"
+              "icon": "excalidraw-icon",
+              "title": "简单逻辑学-论证流水线"
             }
           },
           {
-            "id": "90aae133c29aaddb",
+            "id": "187cec01b10e64bd",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述物品的摆放：位置、姿态与排列.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw"
               },
-              "icon": "lucide-file",
-              "title": "描述物品的摆放：位置、姿态与排列"
-            }
-          },
-          {
-            "id": "f05b7cbb17d90fd2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/间接引语（新闻体）：第一、第二虚拟式与介词连接体系.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "间接引语（新闻体）：第一、第二虚拟式与介词连接体系"
-            }
-          },
-          {
-            "id": "bcbbea41d655326c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "未命名"
-            }
-          },
-          {
-            "id": "e07fc50f5bf19b7f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/连词成对.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "连词成对"
+              "icon": "excalidraw-icon",
+              "title": "简单逻辑学-全书逻辑图"
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -259,7 +124,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 425.5125274658203
+    "width": 449.5125274658203
   },
   "right": {
     "id": "b2bf97bc0c7f8080",
@@ -283,11 +148,25 @@
           {
             "id": "36c96029ae4dd065",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "copilot-chat-view",
               "state": {},
+              "pinned": true,
               "icon": "message-square",
-              "title": "Copilot Quick Chat"
+              "title": "Copilot (Quick Chat)"
+            }
+          },
+          {
+            "id": "0904c4f879fe7747",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "smtcmp-chat-view",
+              "state": {},
+              "pinned": true,
+              "icon": "wand-sparkles",
+              "title": "Smart composer chat"
             }
           },
           {
@@ -380,6 +259,36 @@
               "icon": "lucide-archive",
               "title": "添加笔记属性"
             }
+          },
+          {
+            "id": "2cb591d0cac3ef1b",
+            "type": "leaf",
+            "state": {
+              "type": "ostracon-inbox-view",
+              "state": {},
+              "icon": "inbox",
+              "title": "MN 卡片"
+            }
+          },
+          {
+            "id": "9755f4126e7d9700",
+            "type": "leaf",
+            "state": {
+              "type": "ostracon-inbox-view",
+              "state": {},
+              "icon": "inbox",
+              "title": "MN 卡片"
+            }
+          },
+          {
+            "id": "3389fbe2cbe03848",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw-sidepanel",
+              "state": {},
+              "icon": "excalidraw-icon",
+              "title": "Excalidraw 侧边面板"
+            }
           }
         ]
       },
@@ -429,11 +338,10 @@
       }
     ],
     "direction": "horizontal",
-    "width": 507.5
+    "width": 512.699951171875
   },
   "left-ribbon": {
     "hiddenItems": {
-      "smart-composer:Open smart composer": false,
       "ostracon-ob:获取MN数据": false,
       "obsidian-local-images-plus:Local Images Plus  0.17.1\r\nLocalize attachments (plugin folder)": false,
       "media-extended:打开媒体库": true,
@@ -460,13 +368,58 @@
       "realclaudian:Open Claudian": false,
       "copilot:Open Copilot Agent Chat": false,
       "notebook-navigator:Notebook Navigator": false,
-      "periodic-notes:Open today": false
+      "periodic-notes:Open today": false,
+      "smart-composer:Open smart composer": false
     }
   },
-  "active": "f05b7cbb17d90fd2",
+  "floating": {
+    "id": "70d84ea69b8e85fe",
+    "type": "floating",
+    "children": [
+      {
+        "id": "67d1c2fe6692e418",
+        "type": "window",
+        "children": [
+          {
+            "id": "11ad2369815a11ea",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "d052bf28bb0037b5",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "pinned": true,
+                  "icon": "lucide-file",
+                  "title": "简单逻辑学Z"
+                }
+              }
+            ]
+          }
+        ],
+        "direction": "vertical",
+        "x": -954,
+        "y": 344,
+        "width": 754,
+        "height": 752,
+        "maximize": true,
+        "zoom": -1
+      }
+    ]
+  },
+  "active": "34475f1101eb8aa5",
   "lastOpenFiles": [
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述物品的摆放：位置、姿态与排列.md",
+    "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md",
+    "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/间接引语（新闻体）：第一、第二虚拟式与介词连接体系.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述物品的摆放：位置、姿态与排列.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/条件状语从句与转折状语从句 wenn,falls, wahrend,wohingegen..md",
     "copilot/copilot-conversations/分段翻译@20261111_223457.md",
@@ -480,7 +433,6 @@
     "copilot/copilot-conversations/分段翻译请求@20261111_214219.md",
     "copilot/copilot-conversations/文本分段与翻译@20261111_214007.md",
     "思想思维心理哲学/阅读/简单逻辑学/术语/断言.md",
-    "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
     "assets/逻辑学断言概念信息图.png",
     "copilot/copilot-conversations/添加翻译请求@20261111_203320.md",
     "copilot/memory/Recent Conversations.md",
@@ -492,7 +444,6 @@
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/对话练习.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/email Reklamation Bürostuhl – ErgoSitz 24.md",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述一个人在房间里做各种动作（Tätigkeiten im Haushalt）.md",
     "assets/a_clean_colorful_educational_infographic_in_chine.png",
     "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw",
     "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw",
