@@ -78,7 +78,7 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 1
       },
       {
         "id": "b5dbd09e7753bfc0",
@@ -98,6 +98,18 @@
               },
               "icon": "lucide-file",
               "title": "未命名"
+            }
+          },
+          {
+            "id": "c7984f13219465e0",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/形容词.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "形容词"
             }
           },
           {
@@ -389,8 +401,10 @@
   },
   "active": "bcbbea41d655326c",
   "lastOpenFiles": [
-    "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
+    "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
+    "语言学习/德语/公共知识语法/形容词.md",
+    "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/对话练习.md",
     "语言学习/德语/公共知识语法/连词成对.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/间接引语（新闻体）：第一、第二虚拟式与介词连接体系.md",
@@ -426,8 +440,6 @@
     "copilot/copilot-conversations/分段翻译@20261111_223457.md",
     "copilot/copilot-conversations/分段翻译请求@20261111_223433.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/观点发表（Stellungnahme）：对一篇文章或评论表示赞同、反驳或部分赞同.md",
-    "copilot/copilot-conversations/Add_Translation_in_Same_Cell@20261111_214556.md",
-    "copilot/copilot-conversations/分段附翻译@20261111_214348.md",
     "assets/逻辑学断言概念信息图.png",
     "copilot/memory",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习",
