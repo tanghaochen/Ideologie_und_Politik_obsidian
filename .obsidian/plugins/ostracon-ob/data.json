@@ -9734,6 +9734,18 @@
   ],
   "logs": [
     {
+      "id": "log-mwd5y3rt-58de87559801",
+      "level": "info",
+      "message": "plugin loaded",
+      "at": "2026-11-12T06:24:54.425Z"
+    },
+    {
+      "id": "log-mwd5y3rf-d8fc2f051481",
+      "level": "info",
+      "message": "ws listening on ws://[::1]:27123",
+      "at": "2026-11-12T06:24:54.411Z"
+    },
+    {
       "id": "log-mwc7cs41-faa5dc82f5a5",
       "level": "info",
       "message": "plugin loaded",

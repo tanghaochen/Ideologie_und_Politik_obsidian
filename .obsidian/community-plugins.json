@@ -1,7 +1,6 @@
 [
   "omnisearch",
   "advanced-canvas",
-  "canvas-mindmap",
   "simple-canvasearch",
   "virtual-linker",
   "statusbar-organizer",
@@ -28,9 +27,7 @@
   "table-editor-obsidian",
   "calendar",
   "any-block",
-  "mxmind",
   "xmind-linker",
-  "obsidian-markmind",
   "obsidian-path-title",
   "copilot",
   "obsidian-local-images-plus",
