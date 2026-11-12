@@ -1,0 +1,59 @@
+{
+  "hoverDelay": 0,
+  "hideDelay": 200,
+  "dateFormat": "YYYY-MM-DD",
+  "timeFormat": "HH:mm",
+  "menuLayout": {
+    "insert": {
+      "order": [
+        "code",
+        "math",
+        "callout",
+        "link",
+        "ext-link",
+        "image",
+        "table",
+        "today",
+        "time",
+        "footnote",
+        "comment"
+      ],
+      "expanded": [
+        "callout",
+        "link",
+        "ext-link",
+        "table",
+        "today",
+        "time",
+        "footnote",
+        "comment"
+      ],
+      "collapsed": false
+    },
+    "transform": {
+      "order": [
+        "paragraph",
+        "h1",
+        "h2",
+        "h3",
+        "todo",
+        "bullet",
+        "numbered",
+        "blockquote",
+        "code",
+        "math",
+        "divider",
+        "callout"
+      ],
+      "expanded": [
+        "paragraph",
+        "numbered",
+        "blockquote",
+        "code",
+        "divider",
+        "callout"
+      ],
+      "collapsed": false
+    }
+  }
+}

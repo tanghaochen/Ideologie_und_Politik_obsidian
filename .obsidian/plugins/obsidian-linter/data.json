@@ -722,7 +722,7 @@
       "list-style": "consistent"
     },
     "compact-yaml": {
-      "enabled": true,
+      "enabled": false,
       "inner-new-lines": true
     },
     "consecutive-blank-lines": {

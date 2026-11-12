@@ -1,0 +1,25 @@
+{
+  "version": 8,
+  "formatVersion": 8,
+  "pages": [
+    {
+      "id": "page_mwd8pjid_y2058qsr",
+      "title": "欢迎使用 Blockspace",
+      "icon": "✨",
+      "parentId": null,
+      "status": "doing",
+      "priority": "medium",
+      "tags": [
+        "blockspace"
+      ],
+      "excerpt": "独立的块编辑工作台 · 这里的内容保存为结构化块数据，而不是 Markdown 文件。 · 输入 / 可以切换块类型；拖动左侧手柄可以调整顺序。 · 创建你的第一个 Blockspace 页面",
+      "updatedAt": "2026-11-12T07:42:13.764Z",
+      "revision": 1
+    }
+  ],
+  "activePageId": "page_mwd8pjid_y2058qsr",
+  "bridgePaths": {
+    "page_mwd8pjid_y2058qsr": "Blockspace Bridge/欢迎使用 Blockspace~3aca661b.md"
+  },
+  "nativeMarkdownPaths": {}
+}
