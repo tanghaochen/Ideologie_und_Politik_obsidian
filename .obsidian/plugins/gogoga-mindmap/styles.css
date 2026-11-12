@@ -1,0 +1,2844 @@
+/* ==========================================================================
+   Mind Map — XMind 风格思维导图
+   节点是 HTML，连线是 SVG；所有颜色都走 CSS 变量，跟随 Obsidian 主题与深色模式。
+   ========================================================================== */
+
+.mm-view-content {
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.gg-mm-root {
+  --mm-font: var(--font-interface, "Inter", system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif);
+  --mm-bg: var(--background-primary, #ffffff);
+  --mm-line: #2b2b2b;
+  --mm-root-bg: #3f51b5;
+  --mm-root-fg: #ffffff;
+  --mm-main-bg: #e9e9ef;
+  --mm-main-fg: var(--text-normal, #1f1f1f);
+  --mm-node-bg: #f1f1f4;
+  --mm-node-fg: var(--text-normal, #1f1f1f);
+  --mm-selection: var(--interactive-accent, #155dff);
+  --mm-toggle-bg: var(--mm-bg);
+  --mm-toggle-fg: #555555;
+  --mm-toggle-border: #8a8a8a;
+  --mm-max-width: 300px;
+  --mm-root-max-width: 440px;
+
+  /* 各层级的形状与字号，主题在 [data-theme] 块里覆盖 */
+  --mm-root-radius: 8px;
+  --mm-root-pad: 18px 32px;
+  --mm-root-size: 26px;
+  --mm-root-weight: 600;
+  --mm-main-radius: 8px;
+  --mm-main-pad: 10px 16px;
+  --mm-main-size: 17px;
+  --mm-main-weight: 600;
+  --mm-node-radius: 6px;
+  --mm-node-pad: 6px 10px;
+  --mm-node-size: 14px;
+  --mm-node-weight: 400;
+  --mm-node-border: none;
+  --mm-root-border: none;
+  --mm-branch-fg: #1f1f1f;
+  --mm-edge-w1: 3px;
+  --mm-edge-w2: 2px;
+  --mm-edge-w3: 1.5px;
+
+  /* 命名颜色：%%red%% 等 */
+  --mm-c-fg: #1f1f1f;
+  --mm-c-red: #f9a3a3;
+  --mm-c-orange: #fbc98d;
+  --mm-c-yellow: #f7e48e;
+  --mm-c-green: #a3e5a2;
+  --mm-c-teal: #93e3d6;
+  --mm-c-blue: #8edbf7;
+  --mm-c-purple: #d4b5f5;
+  --mm-c-pink: #f8b8da;
+  --mm-c-gray: #dcdce2;
+
+  /* 彩虹分支 */
+  --mm-branch-0: #f76c6c;
+  --mm-branch-1: #ffa36b;
+  --mm-branch-2: #8ccba4;
+  --mm-branch-3: #7fe0d3;
+  --mm-branch-4: #62cff4;
+  --mm-branch-5: #d98cf2;
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--mm-bg);
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: var(--mm-font);
+  touch-action: none;
+  cursor: grab;
+}
+
+.theme-dark .gg-mm-root {
+  --mm-line: #c9c9d1;
+  --mm-root-bg: #5c6bc0;
+  --mm-main-bg: #30303a;
+  --mm-node-bg: #2a2a31;
+  --mm-toggle-fg: #bbbbbb;
+  --mm-toggle-border: #777777;
+  --mm-c-fg: #f2f2f2;
+  --mm-c-red: #8c3b3b;
+  --mm-c-orange: #8c5a2b;
+  --mm-c-yellow: #7a6a22;
+  --mm-c-green: #2f6b3a;
+  --mm-c-teal: #23615a;
+  --mm-c-blue: #2a5a78;
+  --mm-c-purple: #5a3e82;
+  --mm-c-pink: #7a3860;
+  --mm-c-gray: #45454e;
+  --mm-branch-0: #e26262;
+  --mm-branch-1: #e8955f;
+  --mm-branch-2: #6fb88c;
+  --mm-branch-3: #5fc9bb;
+  --mm-branch-4: #4fb8dd;
+  --mm-branch-5: #c47ee0;
+}
+
+.mm-viewport {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  /* will-change 由 canvas.ts 在平移/缩放时临时加、停手后摘掉；常驻会让放大后的文字糊 */
+}
+
+.mm-edges {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.mm-edge {
+  fill: none;
+  stroke: var(--mm-line);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: var(--mm-edge-w3);
+}
+.mm-edge[data-depth="1"] { stroke-width: var(--mm-edge-w1); }
+.mm-edges.is-dashed .mm-edge { stroke-dasharray: 6 5; }
+.mm-edge[data-depth="2"] { stroke-width: var(--mm-edge-w2); }
+
+/* 概要：大括号 + 一段比节点轻一档的文字，括号和文字都不接收画布的拖拽 */
+.mm-summary-brace {
+  fill: none;
+  stroke: var(--mm-line);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* 关联线：虚线箭头，压在节点下面；加宽的透明路径负责点选 */
+.mm-rel-line {
+  fill: none;
+  stroke: var(--mm-rel, var(--mm-line));
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+  stroke-linecap: round;
+  opacity: 0.75;
+}
+.mm-rel-arrow { fill: var(--mm-rel, var(--mm-line)); stroke: none; opacity: 0.75; }
+.mm-rel-hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 12;
+  pointer-events: stroke;
+  cursor: pointer;
+}
+.mm-rel:hover .mm-rel-line, .mm-rel:hover .mm-rel-arrow { opacity: 1; }
+.mm-rel.is-active .mm-rel-line { stroke: var(--mm-selection); opacity: 1; }
+.mm-rel.is-active .mm-rel-arrow { fill: var(--mm-selection); opacity: 1; }
+.mm-rel-draft {
+  fill: none;
+  stroke: var(--mm-selection);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+  pointer-events: none;
+}
+/* 线上的文字放在弧顶，盖住底下那段线；拖它改弯曲。没文字时平常不显示，选中线时变成一个小圆点手柄 */
+.mm-rel-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  /* 按文字宽度，最宽 240px，超过就折行、全部显示（以前单行省略号截断，长的说明看不全）；
+     绝对定位的元素宽度会被挤到最窄，编辑时 CodeMirror 自动折行会变成一个字一行（竖着），所以宽度固定按内容算 */
+  width: max-content;
+  max-width: 240px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--mm-bg, transparent);
+  font-family: var(--mm-font);
+  font-size: 12px;
+  line-height: 17px;
+  color: inherit;
+  opacity: 0.85;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  text-align: center;
+  cursor: grab;
+  user-select: none;
+}
+.mm-rel-label.is-active { opacity: 1; box-shadow: 0 0 0 1.5px var(--mm-selection); }
+.mm-rel-label.is-editing { cursor: text; user-select: text; min-width: 40px; outline: none; box-shadow: 0 0 0 1.5px var(--mm-selection); }
+.mm-rel-label.is-empty { display: none; }
+/* 编辑框通用的 max-width: 100% 是按外层算的，关联线标签挂在一层宽度为 0 的图层上，会被压成 0（一个字一行）：按自己的最宽 240px */
+.gg-mm-root .mm-rel-label.mm-has-editor { max-width: 240px; }
+/* 编辑时和显示时一样居中，切换时文字不左右跳 */
+.gg-mm-root .mm-rel-label.mm-has-editor .cm-content { text-align: center; }
+/* 选中关联线时两头的控制点手柄（#28）：空心圆，细线连到线头；拖它改弧度 */
+.mm-rel-guide { fill: none; stroke: var(--mm-selection); stroke-width: 1; opacity: 0; pointer-events: none; }
+.mm-rel.has-handles .mm-rel-guide { opacity: 0.55; }
+.mm-rel-handle {
+  position: absolute;
+  z-index: 6;
+  display: none;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border: 1.5px solid var(--mm-selection);
+  border-radius: 50%;
+  background: var(--mm-bg);
+  cursor: move;
+  touch-action: none;
+}
+.mm-rel-handle.is-shown { display: block; }
+.mm-rel-handle:hover { background: var(--mm-selection); }
+.mm-rel-label.is-empty.is-active {
+  display: block;
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--mm-selection);
+  box-shadow: 0 0 0 2px var(--mm-bg);
+}
+.mm-rel-hint {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--mm-selection);
+  color: #fff;
+  font-size: 12px;
+  pointer-events: none;
+}
+.is-connecting .gg-mm-node { cursor: crosshair; }
+
+.mm-summary {
+  position: absolute;
+  box-sizing: border-box;
+  max-width: 240px;
+  padding: 3px 9px;
+  border: 1.5px solid var(--mm-line);
+  border-radius: 6px;
+  background: var(--mm-bg, transparent);
+  font-family: var(--mm-font);
+  font-size: 13px;
+  line-height: 18px;
+  color: inherit;
+  cursor: default;
+  user-select: none;
+}
+/* 省略号放在里面的文字上：外层不能裁切，不然边缘的拖动竖条会被切掉 */
+.mm-summary-text {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mm-summary.is-empty { opacity: 0.5; }
+/* 拖过宽度的：按宽度换行，不再省略号 */
+.mm-summary.has-width { max-width: none; }
+.mm-summary.has-width .mm-summary-text { white-space: normal; overflow-wrap: anywhere; }
+.mm-summary .mm-link { color: var(--link-color, var(--mm-selection)); }
+.mm-summary-handle {
+  position: absolute;
+  top: 50%;
+  right: -4px;
+  width: 6px;
+  height: 18px;
+  margin-top: -9px;
+  border-radius: 3px;
+  background: var(--mm-selection);
+  cursor: ew-resize;
+  opacity: 0;
+}
+.mm-summary[data-side="left"] .mm-summary-handle { right: auto; left: -4px; }
+.gg-mm-root.is-editable .mm-summary:hover .mm-summary-handle { opacity: 0.8; }
+.mm-summary.is-editing .mm-summary-handle { display: none; }
+
+/* 外框 / 概要两端的范围手柄：选中里面的节点或停在概要文字上才显示，拖动改括住的范围 */
+.mm-range-handle {
+  position: absolute;
+  z-index: 3;
+  width: 18px;
+  height: 8px;
+  margin: -4px 0 0 -9px;
+  border-radius: 4px;
+  background: var(--mm-selection);
+  box-shadow: 0 0 0 2px var(--mm-bg, var(--background-primary));
+  cursor: ns-resize;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s;
+}
+.mm-range-handle[data-orient="h"] {
+  width: 8px;
+  height: 18px;
+  margin: -9px 0 0 -4px;
+  cursor: ew-resize;
+}
+.mm-range-handle.is-active,
+.mm-range-handle:hover {
+  opacity: 0.9;
+  pointer-events: auto;
+}
+.gg-mm-root.is-range-dragging,
+.gg-mm-root.is-range-dragging * { cursor: ns-resize !important; }
+.gg-mm-root.is-range-dragging-h,
+.gg-mm-root.is-range-dragging-h * { cursor: ew-resize !important; }
+.gg-mm-root.is-editable .mm-summary { cursor: pointer; }
+.mm-summary.is-active { border-color: var(--mm-selection); box-shadow: 0 0 0 1px var(--mm-selection); }
+.mm-summary.is-editing .mm-summary-text { overflow: visible; text-overflow: clip; }
+.mm-summary.is-editing {
+  max-width: none;
+  cursor: text;
+  user-select: text;
+  outline: 2px solid var(--mm-selection);
+  outline-offset: 1px;
+}
+
+/* 外框：虚线圆角框 + 淡底色，开分支色的主题跟随起始节点的分支色 */
+.mm-box {
+  fill: var(--mm-box-color, var(--mm-line));
+  fill-opacity: 0.05;
+  stroke: var(--mm-box-color, var(--mm-line));
+  stroke-opacity: 0.55;
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+}
+.mm-box.is-active {
+  stroke: var(--mm-selection);
+  stroke-opacity: 1;
+  stroke-width: 2;
+}
+.mm-box-title {
+  position: absolute;
+  box-sizing: border-box;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 4px;
+  font-family: var(--mm-font);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  /* 比节点文字淡一档，一眼能看出是外框的说明而不是节点 */
+  color: var(--mm-box-color, var(--mm-line));
+  opacity: 0.62;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
+  user-select: none;
+}
+.gg-mm-root.is-editable .mm-box-title { cursor: pointer; }
+.mm-box-title.is-editing,
+.mm-box-title:hover { opacity: 1; }
+.mm-box-title.is-editing {
+  overflow: visible;
+  text-overflow: clip;
+  max-width: none !important;
+  outline: 1.5px solid var(--mm-selection);
+  background: var(--mm-bg);
+  cursor: text;
+  user-select: text;
+}
+
+.mm-nodes {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* ---------- 节点 ---------- */
+
+.gg-mm-node {
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: max-content;
+  max-width: var(--mm-max-width);
+  padding: var(--mm-node-pad);
+  border: var(--mm-node-border);
+  border-radius: var(--mm-node-radius);
+  background: var(--mm-node-bg);
+  color: var(--mm-node-fg);
+  font-size: calc(var(--mm-node-size) * var(--mm-font-scale, 1));
+  font-weight: var(--mm-node-weight);
+  line-height: 1.4;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  cursor: default;
+  transition: box-shadow 0.12s ease;
+}
+
+.gg-mm-node[data-depth="1"] {
+  background: var(--mm-main-bg);
+  color: var(--mm-main-fg);
+  padding: var(--mm-main-pad);
+  border-radius: var(--mm-main-radius);
+  font-size: calc(var(--mm-main-size) * var(--mm-font-scale, 1));
+  font-weight: var(--mm-main-weight);
+}
+
+.gg-mm-node[data-depth="0"] {
+  background: var(--mm-root-bg);
+  color: var(--mm-root-fg);
+  padding: var(--mm-root-pad);
+  border-radius: var(--mm-root-radius);
+  font-size: calc(var(--mm-root-size) * var(--mm-font-scale, 1));
+  font-weight: var(--mm-root-weight);
+  max-width: var(--mm-root-max-width);
+  border: var(--mm-root-border);
+}
+
+.gg-mm-node[data-color="red"]    { --mm-node-bg: var(--mm-c-red);    --mm-node-fg: var(--mm-c-fg); }
+.gg-mm-node[data-color="orange"] { --mm-node-bg: var(--mm-c-orange); --mm-node-fg: var(--mm-c-fg); }
+.gg-mm-node[data-color="yellow"] { --mm-node-bg: var(--mm-c-yellow); --mm-node-fg: var(--mm-c-fg); }
+.gg-mm-node[data-color="green"]  { --mm-node-bg: var(--mm-c-green);  --mm-node-fg: var(--mm-c-fg); }
+.gg-mm-node[data-color="teal"]   { --mm-node-bg: var(--mm-c-teal);   --mm-node-fg: var(--mm-c-fg); }
+.gg-mm-node[data-color="blue"]   { --mm-node-bg: var(--mm-c-blue);   --mm-node-fg: var(--mm-c-fg); }
+.gg-mm-node[data-color="purple"] { --mm-node-bg: var(--mm-c-purple); --mm-node-fg: var(--mm-c-fg); }
+.gg-mm-node[data-color="pink"]   { --mm-node-bg: var(--mm-c-pink);   --mm-node-fg: var(--mm-c-fg); }
+.gg-mm-node[data-color="gray"]   { --mm-node-bg: var(--mm-c-gray);   --mm-node-fg: var(--mm-c-fg); }
+.gg-mm-node.has-color {
+  background: var(--mm-node-bg);
+  color: var(--mm-node-fg);
+}
+
+.gg-mm-node:hover:not(.is-selected):not(.is-editing) {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--mm-selection) 40%, transparent);
+}
+.gg-mm-node.is-selected {
+  box-shadow: 0 0 0 2px var(--mm-bg), 0 0 0 4px var(--mm-selection);
+}
+.gg-mm-node.is-editing {
+  box-shadow: 0 0 0 2px var(--mm-bg), 0 0 0 4px var(--mm-selection);
+}
+
+.mm-label {
+  display: inline;
+  min-width: 1ch;
+  outline: none;
+}
+.gg-mm-node.is-editing .mm-label {
+  cursor: text;
+  user-select: text;
+  -webkit-user-select: text;
+  white-space: pre-wrap;
+  min-width: 2em;
+}
+/* ---------- 行内编辑框（CodeMirror，见 inline-editor.ts）：长得和原来的文字一样，没有边框和内边距 ---------- */
+.gg-mm-root .mm-has-editor,
+.mm-outline .mm-has-editor { display: inline-block; min-width: 2em; max-width: 100%; vertical-align: top; }
+:is(.gg-mm-root, .mm-outline) .mm-has-editor .cm-editor { background: transparent; color: inherit; font: inherit; }
+:is(.gg-mm-root, .mm-outline) .mm-has-editor .cm-editor.cm-focused { outline: none; }
+:is(.gg-mm-root, .mm-outline) .mm-has-editor .cm-scroller { overflow: visible; font-family: inherit; line-height: inherit; }
+:is(.gg-mm-root, .mm-outline) .mm-has-editor .cm-content { padding: 0; font-family: inherit; caret-color: currentColor; }
+:is(.gg-mm-root, .mm-outline) .mm-has-editor .cm-line { padding: 0; }
+:is(.gg-mm-root, .mm-outline) .mm-has-editor .cm-placeholder { color: var(--text-faint, #999); }
+/* 实时预览：和节点渲染出来的样子一致；光标进到某段时露出的标记符淡一些 */
+.mm-has-editor .mm-ed-strong { font-weight: 700; }
+.mm-has-editor .mm-ed-em { font-style: italic; }
+.mm-has-editor .mm-ed-del { text-decoration: line-through; }
+.mm-has-editor .mm-ed-u { text-decoration: underline; }
+.mm-has-editor .mm-ed-code { padding: 0 0.3em; border-radius: 3px; background: rgba(127, 127, 127, 0.18); font-family: var(--font-monospace, monospace); }
+.mm-has-editor .mm-ed-mark { background: rgba(255, 210, 0, 0.45); border-radius: 2px; }
+.mm-has-editor .mm-ed-syntax { opacity: 0.45; }
+/* 藏起来的标记两边 CodeMirror 会垫一个空图片，它会打断中文标点挤压（「）：」相邻时压掉半个字），编辑时比显示宽一截；去掉它 */
+.mm-has-editor img.cm-widgetBuffer { display: none; }
+.mm-label strong { font-weight: 700; }
+.mm-label code {
+  font-family: var(--font-monospace, ui-monospace, Menlo, monospace);
+  font-size: 0.9em;
+  padding: 0 0.3em;
+  border-radius: 3px;
+  background: rgba(127, 127, 127, 0.18);
+}
+.mm-label mark {
+  background: rgba(255, 210, 0, 0.45);
+  color: inherit;
+  border-radius: 2px;
+}
+/* Obsidian 1.15 的彩色高亮 ==🔴文字==：用主题里的高亮色，老版本 Obsidian 没有这些变量时按主题色调淡 */
+:is(.mm-label mark, .mm-has-editor .mm-ed-mark, .mm-format-bar .mm-format-btn.is-bg, .mm-hl-chip)[data-highlight="red"] { background: var(--highlight-background-red, rgba(var(--color-red-rgb, 233, 49, 71), 0.3)); }
+:is(.mm-label mark, .mm-has-editor .mm-ed-mark, .mm-format-bar .mm-format-btn.is-bg, .mm-hl-chip)[data-highlight="orange"] { background: var(--highlight-background-orange, rgba(var(--color-orange-rgb, 236, 117, 0), 0.3)); }
+:is(.mm-label mark, .mm-has-editor .mm-ed-mark, .mm-format-bar .mm-format-btn.is-bg, .mm-hl-chip)[data-highlight="yellow"] { background: var(--highlight-background-yellow, rgba(var(--color-yellow-rgb, 224, 172, 0), 0.3)); }
+:is(.mm-label mark, .mm-has-editor .mm-ed-mark, .mm-format-bar .mm-format-btn.is-bg, .mm-hl-chip)[data-highlight="green"] { background: var(--highlight-background-green, rgba(var(--color-green-rgb, 8, 185, 78), 0.3)); }
+:is(.mm-label mark, .mm-has-editor .mm-ed-mark, .mm-format-bar .mm-format-btn.is-bg, .mm-hl-chip)[data-highlight="blue"] { background: var(--highlight-background-blue, rgba(var(--color-blue-rgb, 8, 109, 221), 0.3)); }
+:is(.mm-label mark, .mm-has-editor .mm-ed-mark, .mm-format-bar .mm-format-btn.is-bg, .mm-hl-chip)[data-highlight="purple"] { background: var(--highlight-background-purple, rgba(var(--color-purple-rgb, 120, 82, 238), 0.3)); }
+/* 编辑时选中文字浮出的格式栏 */
+.mm-format-bar {
+  position: absolute;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px 4px;
+  border-radius: 8px;
+  background: var(--background-primary, #fff);
+  border: 1px solid var(--background-modifier-border, #e3e3e3);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.mm-format-bar .mm-format-btn {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 4px;
+  border-radius: 5px;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--text-normal, #1f1f1f);
+  cursor: pointer;
+}
+.mm-format-bar .mm-format-btn:hover { background: var(--background-modifier-hover, rgba(0, 0, 0, 0.06)); }
+.mm-format-bar .mm-format-btn.is-bold { font-weight: 700; }
+.mm-format-bar .mm-format-btn.is-italic { font-style: italic; font-family: Georgia, serif; }
+.mm-format-bar .mm-format-btn.is-strike { text-decoration: line-through; }
+.mm-format-bar .mm-format-btn.is-underline { text-decoration: underline; }
+.mm-format-bar .mm-format-btn.is-color { font-weight: 700; }
+.mm-format-bar .mm-format-btn.is-bg { width: 20px; min-width: 20px; height: 18px; margin: 0 2px; font-size: 11px; font-weight: 600; }
+.mm-format-bar .mm-format-btn .mm-icon { font-size: 15px; }
+.mm-format-sep { width: 1px; height: 16px; margin: 0 3px; background: var(--background-modifier-border, #e3e3e3); }
+
+/* ---------- 颜色「按钮 + 下拉」和色板（color-palette.ts）：节点浮动工具栏、格式栏、设置页共用 ---------- */
+.mm-hl-chip:not([data-highlight]) { background: var(--text-highlight-bg, rgba(255, 208, 0, 0.4)); }
+/* A 在上、色条在下，右边 V 形箭头。平时没有边框（和工具栏其他按钮一样），鼠标移上去才出现一圈浅色实线框和中间的竖线。
+   按钮要 all: unset 去掉 Obsidian 的按钮样式，后面的规则都挂在 .mm-color-split 下面，优先级压过它 */
+.mm-color-split { display: inline-flex; align-items: stretch; height: 30px; margin: 0 2px; border: 1px solid transparent; border-radius: 6px; box-sizing: border-box; }
+.mm-color-split:hover { border-color: var(--background-modifier-border, #e3e3e3); }
+.mm-color-split > button {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-normal, #1f1f1f);
+}
+.mm-color-split > button:hover { background: var(--background-modifier-hover, rgba(0, 0, 0, 0.06)); }
+.mm-color-split > .mm-color-split-main { flex-direction: column; justify-content: center; gap: 3px; width: 28px; border-radius: 5px 0 0 5px; }
+.mm-color-split .mm-color-split-face { display: flex; align-items: center; justify-content: center; height: 15px; font-size: 15px; font-weight: 500; line-height: 1; }
+.mm-color-split .mm-color-split-face .mm-icon { font-size: 15px; }
+.mm-color-split .mm-color-split-face svg { width: 15px; height: 15px; }
+.mm-color-split .mm-color-split-bar { display: block; width: 16px; height: 3px; border-radius: 2px; box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.12); }
+.mm-color-split > .mm-color-split-caret { width: 16px; border-left: 1px solid transparent; border-radius: 0 5px 5px 0; font-size: 0; color: var(--text-muted, #888); }
+.mm-color-split:hover > .mm-color-split-caret { border-left-color: var(--background-modifier-border, #e3e3e3); }
+.mm-color-split > .mm-color-split-caret::before { content: ""; width: 5px; height: 5px; margin-top: -3px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); }
+.mm-format-bar .mm-color-split { height: 28px; }
+.mm-swatch-more { all: unset; box-sizing: border-box; height: 18px; padding: 0 3px; margin-left: 1px; border-radius: 4px; font-size: 11px; letter-spacing: 1px; line-height: 18px; color: var(--text-muted, #888); cursor: pointer; }
+.mm-swatch-more:hover { background: var(--background-modifier-hover, rgba(0, 0, 0, 0.06)); color: var(--text-normal); }
+.mm-palette {
+  position: absolute;
+  z-index: 30;
+  box-sizing: border-box;
+  width: 262px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--background-primary, #fff);
+  border: 1px solid var(--background-modifier-border, #e3e3e3);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.16);
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+  font-size: 12px;
+  color: var(--text-normal, #1f1f1f);
+}
+.mm-format-bar .mm-palette.mm-format-palette { top: calc(100% + 6px); }
+.mm-palette-title { margin: 8px 0 5px; color: var(--text-muted, #888); font-size: 11px; }
+.mm-palette-title:first-child { margin-top: 0; }
+.mm-palette-row { display: flex; flex-wrap: wrap; gap: 4px; }
+.mm-palette-grid { display: grid; grid-template-columns: repeat(10, 20px); gap: 3px; margin-top: 10px; }
+.mm-palette-swatch {
+  all: unset;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: transform 0.08s;
+}
+.mm-palette-swatch:hover { transform: scale(1.15); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25); }
+.mm-palette-swatch.is-none { position: relative; background: var(--background-primary, #fff); box-shadow: inset 0 0 0 1px var(--background-modifier-border, #ddd); overflow: hidden; }
+.mm-palette-swatch.is-none::after { content: ""; position: absolute; left: -3px; top: 9px; width: 26px; height: 1.5px; background: #e5484d; transform: rotate(-45deg); }
+.mm-palette-alpha { display: flex; align-items: center; gap: 8px; margin-top: 10px; color: var(--text-muted, #888); }
+.mm-palette-track { position: relative; flex: 1; height: 6px; border-radius: 3px; background: var(--background-modifier-border, #e3e3e3); cursor: pointer; touch-action: none; }
+.mm-palette-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; background: var(--interactive-accent, #7b6cd9); }
+.mm-palette-thumb { position: absolute; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--background-primary, #fff); box-shadow: 0 0 0 1px var(--interactive-accent, #7b6cd9), 0 1px 3px rgba(0, 0, 0, 0.2); }
+.mm-palette-alpha-val { min-width: 32px; text-align: right; color: var(--text-normal); }
+.mm-palette-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+.mm-palette-current { display: flex; align-items: center; gap: 6px; min-height: 18px; }
+.mm-palette-preview { width: 26px; height: 16px; border-radius: 4px; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1); background-image: none; }
+.mm-palette-hex { font-family: var(--font-monospace, monospace); color: var(--text-muted, #888); font-size: 11px; }
+.mm-palette-custom { all: unset; cursor: pointer; color: var(--text-accent, #7b6cd9); font-size: 12px; padding: 2px 4px; border-radius: 4px; }
+.mm-palette-custom:hover { background: var(--background-modifier-hover, rgba(0, 0, 0, 0.06)); }
+.mm-palette-native { position: fixed; left: -100px; top: -100px; width: 1px; height: 1px; opacity: 0; }
+/* 设置页的颜色清单、色板不在脑图里面，节点颜色名（red …）的取色单独给一份，和脑图里一样 */
+.mm-color-list,
+.mm-settings-palette {
+  --mm-c-fg: #1f1f1f;
+  --mm-c-red: #f9a3a3;
+  --mm-c-orange: #fbc98d;
+  --mm-c-yellow: #f7e48e;
+  --mm-c-green: #a3e5a2;
+  --mm-c-teal: #93e3d6;
+  --mm-c-blue: #8edbf7;
+  --mm-c-purple: #d4b5f5;
+  --mm-c-pink: #f8b8da;
+  --mm-c-gray: #dcdce2;
+}
+.theme-dark .mm-color-list,
+.theme-dark .mm-settings-palette {
+  --mm-c-fg: #f2f2f2;
+  --mm-c-red: #8c3b3b;
+  --mm-c-orange: #8c5a2b;
+  --mm-c-yellow: #7a6a22;
+  --mm-c-green: #2f6b3a;
+  --mm-c-teal: #23615a;
+  --mm-c-blue: #2a5a78;
+  --mm-c-purple: #5a3e82;
+  --mm-c-pink: #7a3860;
+  --mm-c-gray: #45454e;
+}
+.mm-settings-palette { position: fixed; z-index: var(--layer-menu, 65); }
+.setting-item-control.mm-color-list-ctl { flex: 1 1 auto; max-width: 420px; flex-direction: column; align-items: flex-end; gap: 6px; }
+.mm-color-list { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+.mm-color-chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 4px 3px 4px; border: 1px solid var(--background-modifier-border); border-radius: 6px; font-size: var(--font-ui-smaller, 12px); color: var(--text-muted); cursor: pointer; background: var(--background-primary); }
+.mm-color-chip:hover { border-color: var(--background-modifier-border-hover, var(--text-faint)); color: var(--text-normal); }
+.mm-color-chip-swatch { width: 16px; height: 16px; border-radius: 4px; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1); }
+.mm-color-chip-name { max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-monospace); font-size: 11px; }
+.mm-color-chip-x { display: flex; color: var(--text-faint); border-radius: 3px; }
+.mm-color-chip-x:hover { color: var(--text-error, #e5484d); }
+.mm-color-chip-x svg { width: 12px; height: 12px; }
+.mm-color-list-add { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 24px; padding: 0; border: 1px dashed var(--background-modifier-border) !important; background: transparent !important; box-shadow: none !important; color: var(--text-muted); }
+.mm-color-list-add svg { width: 14px; height: 14px; }
+.mm-color-list-mode { font-size: var(--font-ui-smaller, 12px); color: var(--text-faint); cursor: pointer; }
+.mm-color-list-raw { width: 260px; }
+.mm-link {
+  color: var(--link-color, var(--mm-selection));
+  text-decoration: none;
+  cursor: pointer;
+}
+.mm-link:hover { text-decoration: underline; }
+.gg-mm-node[data-depth="0"] .mm-link { color: inherit; text-decoration: underline; }
+
+.mm-task {
+  display: inline-block;
+  width: 0.85em;
+  height: 0.85em;
+  margin-right: 0.35em;
+  border: 1.5px solid currentColor;
+  border-radius: 3px;
+  vertical-align: -0.05em;
+  opacity: 0.7;
+}
+.mm-task.is-done {
+  background: currentColor;
+  opacity: 0.55;
+}
+
+.mm-icon {
+  display: inline-flex;
+  flex: none;
+}
+.mm-icon svg {
+  width: 1em;
+  height: 1em;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mm-note-icon {
+  font-size: 0.95em;
+  opacity: 0.6;
+  cursor: pointer;
+}
+.mm-note-icon:hover { opacity: 1; }
+.mm-note-icon.is-expanded { opacity: 0.9; }
+
+/* 折叠按钮：挂在节点外侧，短线连到节点 */
+.mm-toggle {
+  all: unset;
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translate(10px, -50%);
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--mm-toggle-border);
+  border-radius: 50%;
+  background: var(--mm-toggle-bg);
+  color: var(--mm-toggle-fg);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+.mm-toggle::before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  width: 10px;
+  height: 1.5px;
+  margin-top: -0.75px;
+  background: var(--mm-toggle-border);
+}
+.mm-toggle .mm-icon { font-size: 10px; }
+.mm-toggle:hover {
+  border-color: var(--mm-selection);
+  color: var(--mm-selection);
+}
+.gg-mm-node:hover .mm-toggle,
+.gg-mm-node.is-selected .mm-toggle,
+.mm-toggle.is-folded {
+  opacity: 1;
+}
+.gg-mm-node[data-side="left"] .mm-toggle {
+  left: auto;
+  right: 100%;
+  transform: translate(-10px, -50%);
+}
+.gg-mm-node[data-side="left"] .mm-toggle::before {
+  right: auto;
+  left: 100%;
+}
+.gg-mm-node.is-underline .mm-toggle { top: 100%; }
+
+/* ---------- 彩虹主题 ---------- */
+
+.gg-mm-node[data-branch="0"] { --mm-branch: var(--mm-branch-0); }
+.gg-mm-node[data-branch="1"] { --mm-branch: var(--mm-branch-1); }
+.gg-mm-node[data-branch="2"] { --mm-branch: var(--mm-branch-2); }
+.gg-mm-node[data-branch="3"] { --mm-branch: var(--mm-branch-3); }
+.gg-mm-node[data-branch="4"] { --mm-branch: var(--mm-branch-4); }
+.gg-mm-node[data-branch="5"] { --mm-branch: var(--mm-branch-5); }
+
+.gg-mm-root[data-branch-colors="true"] .gg-mm-node[data-depth="1"] {
+  background: var(--mm-branch);
+  color: var(--mm-branch-fg);
+}
+.gg-mm-root[data-branch-colors="true"] .gg-mm-node.has-color {
+  background: var(--mm-node-bg);
+  color: var(--mm-node-fg);
+}
+/* 底下那条线由连线画（见 canvas.ts 的 tail），这里只留出位置 */
+.gg-mm-node.is-underline {
+  background: transparent;
+  color: var(--text-normal, #1f1f1f);
+  border: none;
+  border-radius: 0;
+  padding: 2px 6px 5px;
+}
+.gg-mm-node.is-underline.is-selected,
+.gg-mm-node.is-underline.is-editing {
+  border-radius: 4px;
+}
+
+/* ---------- 工具栏 ---------- */
+
+.mm-toolbar {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 8px;
+  background: var(--background-primary, #fff);
+  border: 1px solid var(--background-modifier-border, #e3e3e3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  font-size: 12px;
+  cursor: default;
+}
+.mm-tool {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  color: var(--text-muted, #666);
+  cursor: pointer;
+}
+.mm-tool .mm-icon { font-size: 16px; }
+.mm-tool:hover {
+  background: var(--background-modifier-hover, #f0f0f0);
+  color: var(--text-normal, #1f1f1f);
+}
+.mm-tool.is-active {
+  color: var(--mm-selection);
+  background: color-mix(in srgb, var(--mm-selection) 12%, transparent);
+}
+.mm-zoom-label {
+  width: auto;
+  min-width: 40px;
+  padding: 0 4px;
+  font-variant-numeric: tabular-nums;
+}
+.mm-tool-sep {
+  width: 1px;
+  height: 18px;
+  margin: 0 4px;
+  background: var(--background-modifier-border, #e3e3e3);
+}
+
+/* ---------- 备注弹层 ---------- */
+
+.mm-popover {
+  position: absolute;
+  z-index: 3;
+  max-width: 360px;
+  max-height: 320px;
+  overflow: auto;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--background-primary, #fff);
+  border: 1px solid var(--background-modifier-border, #e3e3e3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  color: var(--text-normal, #1f1f1f);
+  font-size: 13px;
+  line-height: 1.55;
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: auto;
+}
+/* 查看备注：默认更大一些，右下角可以拖动改大小（拖过的尺寸会记住） */
+.mm-popover.is-view {
+  max-width: min(520px, calc(100% - 16px));
+  max-height: min(480px, calc(100% - 16px));
+  min-width: 160px;
+  min-height: 48px;
+  box-sizing: border-box;
+  resize: both;
+}
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) img { max-width: 100%; height: auto; cursor: zoom-in; -webkit-user-drag: none; }
+.mm-popover-body.is-plain { white-space: pre-wrap; }
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) { font-size: 13px; line-height: 1.55; }
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) > :first-child { margin-top: 0; }
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) > :last-child { margin-bottom: 0; }
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) p { margin: 0 0 0.5em; }
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) ul,
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) ol { margin: 0.2em 0 0.5em; padding-left: 1.4em; }
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) li { margin: 0.1em 0; }
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) li > p { margin: 0; }
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) h1,
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) h2,
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) h3,
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) h4 { margin: 0.5em 0 0.25em; font-size: 1.05em; font-weight: 600; line-height: 1.4; }
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) pre { margin: 0.4em 0; padding: 6px 8px; font-size: 12px; }
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) blockquote { margin: 0.3em 0; padding: 0 0 0 0.8em; border-left: 2px solid var(--background-modifier-border, #ddd); }
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) .callout { margin: 0.3em 0; }
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) table { font-size: 12px; }
+.gg-mm-root :is(.mm-popover-body, .mm-note-card-body) img { max-width: 100%; }
+
+/* ---------- 代码块嵌入 ---------- */
+
+.mm-codeblock {
+  position: relative;
+  height: 320px;
+  margin: 8px 0;
+  border: 1px solid var(--background-modifier-border, #e3e3e3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* ---------- v2：多选、拖拽、节点工具栏、备注编辑 ---------- */
+
+.mm-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
+.mm-drop-indicator {
+  position: absolute;
+  display: none;
+  width: 48px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--mm-selection);
+  box-shadow: 0 0 0 2px var(--mm-bg);
+}
+.gg-mm-node.is-dragging { opacity: 0.35; }
+.gg-mm-node.is-drop-target {
+  box-shadow: 0 0 0 2px var(--mm-bg), 0 0 0 4px var(--mm-selection);
+  filter: brightness(0.96);
+}
+/* 拖节点到概要文字上：挂到这个概要后面 */
+.mm-summary.is-drop-target {
+  box-shadow: 0 0 0 2px var(--mm-bg), 0 0 0 4px var(--mm-selection);
+  filter: brightness(0.96);
+}
+/* 多个节点一起拖时，幽灵节点右上角的数量角标 */
+.mm-ghost-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  box-sizing: border-box;
+  border-radius: 9px;
+  background: var(--mm-selection);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: center;
+}
+.mm-ghost {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.85;
+  transform-origin: 0 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+}
+.gg-mm-root.is-dragging-node,
+.gg-mm-root.is-dragging-node .gg-mm-node { cursor: grabbing; }
+
+.mm-marquee {
+  position: absolute;
+  z-index: 4;
+  border: 1px solid var(--mm-selection);
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--mm-selection) 10%, transparent);
+  pointer-events: none;
+}
+
+.mm-nodebar {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 4px;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 5px;
+  border-radius: 8px;
+  background: var(--background-primary, #fff);
+  border: 1px solid var(--background-modifier-border, #e3e3e3);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  cursor: default;
+}
+.mm-nodebar.is-hidden { display: none; }
+.mm-nodebar-group { display: flex; align-items: center; gap: inherit; }
+.mm-nodebar.is-wrapped .mm-tool-sep { display: none; }
+.mm-nodebar .mm-tool {
+  width: 24px;
+  height: 24px;
+}
+.mm-nodebar .mm-tool .mm-icon { font-size: 15px; }
+.mm-swatch {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--swatch, transparent);
+  border: 1px solid rgba(127, 127, 127, 0.35);
+  color: var(--text-muted, #666);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+.mm-swatch:hover { transform: scale(1.2); }
+.mm-swatch .mm-icon { font-size: 13px; }
+
+.mm-note-editor {
+  display: block;
+  width: 300px;
+  max-width: 70vw;
+  min-height: 64px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: 13px/1.55 var(--mm-font);
+  resize: vertical;
+}
+/* 从查看切过来的编辑框：外框沿用查看窗口的大小，文字区铺满，还能继续拖右下角 */
+.mm-popover.is-sized {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-width: 160px;
+  min-height: 48px;
+  max-width: calc(100% - 16px);
+  max-height: calc(100% - 16px);
+  resize: both;
+}
+.mm-popover.is-sized .mm-note-editor { flex: 1; width: auto; max-width: none; min-height: 0; resize: none; }
+/* 分栏预览：左边写、右边实时渲染；弹窗窄于 460px 时改成上下排 */
+.mm-popover.has-preview { container-type: inline-size; overflow: hidden; }
+.mm-note-split { flex: 1; display: flex; gap: 12px; min-height: 0; }
+.mm-note-split > .mm-note-editor { flex: 1 1 0; width: auto; max-width: none; min-width: 0; min-height: 0; resize: none; }
+.mm-note-preview {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  padding-left: 12px;
+  border-left: 1px solid var(--background-modifier-border, #e3e3e3);
+}
+@container (max-width: 460px) {
+  .mm-note-split { flex-direction: column; gap: 8px; }
+  .mm-note-preview { padding-left: 0; padding-top: 8px; border-left: none; border-top: 1px solid var(--background-modifier-border, #e3e3e3); }
+}
+.mm-popover-edit {
+  all: unset;
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--mm-selection);
+  cursor: pointer;
+}
+.mm-popover-edit:hover { text-decoration: underline; }
+
+/* .xmind 只读视图的工作表切换 */
+/* .xmind 里有插件不支持的内容时的提示条 */
+.mm-xmind-lost {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 2;
+  max-width: min(420px, calc(100% - 24px));
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: var(--font-ui-small, 13px);
+  line-height: 1.45;
+  color: var(--text-muted, #666);
+  background: var(--background-primary, #fff);
+  border: 1px solid var(--background-modifier-border, #e3e3e3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.mm-sheets {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 2;
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 8px;
+  background: var(--background-primary, #fff);
+  border: 1px solid var(--background-modifier-border, #e3e3e3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.mm-sheets button {
+  all: unset;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--text-muted, #666);
+  cursor: pointer;
+}
+.mm-sheets button.is-active {
+  color: var(--mm-selection);
+  background: color-mix(in srgb, var(--mm-selection) 12%, transparent);
+}
+
+/* rainbow 主题深色模式：分支色本身已压暗，主主题改用浅色文字 */
+.theme-dark .gg-mm-root[data-theme="rainbow"] .gg-mm-node[data-depth="1"] { color: #f5f5f5; }
+.theme-dark .gg-mm-root[data-theme="rainbow"] .gg-mm-node[data-depth="1"] .mm-link { color: inherit; text-decoration: underline; }
+
+/* ---------- 压过 Obsidian 的 button:not(.clickable-icon) 默认样式 ----------
+   那条规则的优先级是 (0,1,1)，比单个类名高，会把色板、工具栏、折叠徽章的背景和阴影都改掉。 */
+.gg-mm-root button.mm-swatch {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid rgba(127, 127, 127, 0.35);
+  border-radius: 50%;
+  background: var(--swatch, transparent);
+  box-shadow: none;
+  font-size: 12px;
+}
+.gg-mm-root button.mm-swatch:hover {
+  background: var(--swatch, transparent);
+  transform: scale(1.2);
+}
+.gg-mm-root button.mm-tool {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-muted, #666);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+}
+.gg-mm-root button.mm-tool:hover {
+  background: var(--background-modifier-hover, #f0f0f0);
+  color: var(--text-normal, #1f1f1f);
+}
+.gg-mm-root button.mm-tool.is-active {
+  color: var(--mm-selection);
+  background: color-mix(in srgb, var(--mm-selection) 12%, transparent);
+}
+.gg-mm-root button.mm-zoom-label {
+  width: auto;
+  min-width: 40px;
+  padding: 0 4px;
+}
+.gg-mm-root .mm-nodebar button.mm-tool {
+  width: 24px;
+  height: 24px;
+}
+.gg-mm-root button.mm-toggle {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--mm-toggle-border);
+  border-radius: 50%;
+  background: var(--mm-toggle-bg);
+  box-shadow: none;
+  color: var(--mm-toggle-fg);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+}
+.gg-mm-root button.mm-toggle:hover {
+  background: var(--mm-toggle-bg);
+  border-color: var(--mm-selection);
+  color: var(--mm-selection);
+}
+.gg-mm-root button.mm-popover-edit {
+  height: auto;
+  padding: 0;
+  margin: 8px 0 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  color: var(--mm-selection);
+  font-size: 12px;
+}
+.gg-mm-root .mm-sheets button {
+  height: auto;
+  padding: 3px 10px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-muted, #666);
+  font-size: 12px;
+}
+.gg-mm-root .mm-sheets button:hover {
+  background: var(--background-modifier-hover, #f0f0f0);
+}
+.gg-mm-root .mm-sheets button.is-active {
+  color: var(--mm-selection);
+  background: color-mix(in srgb, var(--mm-selection) 12%, transparent);
+}
+
+/* ---------- 嵌入代码块的编辑态 ---------- */
+.gg-mm-root .mm-tool.is-hidden,
+.gg-mm-root .mm-tool-sep.is-hidden { display: none; }
+.mm-codeblock.is-editable { border-color: color-mix(in srgb, var(--interactive-accent, #155dff) 45%, var(--background-modifier-border, #e3e3e3)); }
+/* 实时预览里 Obsidian 会给代码块画一圈悬停框，再叠一层自己的边框就成了两道线；这里只留 Obsidian 那圈。
+   编辑开关看工具栏上的 ✓ 按钮 */
+.cm-preview-code-block .mm-codeblock,
+.cm-preview-code-block .mm-codeblock.is-editable { border-color: transparent; }
+
+/* ---------- 搜索 ---------- */
+
+.gg-mm-search {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 4px 4px 8px;
+  border-radius: 8px;
+  background: var(--background-primary, #fff);
+  border: 1px solid var(--background-modifier-border, #e3e3e3);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  cursor: default;
+}
+.gg-mm-root input.gg-mm-search-input {
+  width: 180px;
+  height: 26px;
+  padding: 0 4px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  outline: none;
+  color: var(--text-normal, #1f1f1f);
+  font: 13px/1 var(--mm-font);
+}
+.mm-search-count {
+  min-width: 36px;
+  padding: 0 4px;
+  color: var(--text-muted, #666);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+.gg-mm-search .mm-tool { width: 24px; height: 24px; }
+.gg-mm-node.is-match { box-shadow: 0 0 0 2px color-mix(in srgb, #f5b400 70%, transparent); }
+.gg-mm-node.is-current-match,
+.gg-mm-node.is-current-match.is-selected { box-shadow: 0 0 0 2px var(--mm-bg), 0 0 0 4px #f5b400; }
+
+/* ---------- 折叠菜单 ---------- */
+
+/* 编辑节点时 [[ 的链接候选 */
+.gg-mm-root .mm-link-suggest { min-width: 220px; max-width: 360px; max-height: 320px; overflow-y: auto; overscroll-behavior: contain; z-index: 6; }
+.mm-link-suggest-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: var(--mm-font);
+}
+.mm-link-suggest-item:hover { background: var(--background-modifier-hover, rgba(0, 0, 0, 0.05)); }
+.mm-link-suggest-item.is-active { background: var(--background-modifier-active-hover, rgba(21, 93, 255, 0.1)); }
+.mm-link-suggest-name { font-size: 14px; color: var(--text-normal, #1f1f1f); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mm-link-suggest-folder { font-size: 11.5px; color: var(--text-faint, #999); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.mm-menu {
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+  padding: 4px;
+  border-radius: 8px;
+  background: var(--background-primary, #fff);
+  border: 1px solid var(--background-modifier-border, #e3e3e3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+.gg-mm-root button.mm-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+  height: auto;
+  padding: 6px 12px 6px 8px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-normal, #1f1f1f);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+/* 左侧固定一条勾选位，勾出现在同一列，标签永远对齐 */
+.gg-mm-root button.mm-menu-item::before {
+  content: "";
+  flex: none;
+  width: 16px;
+  margin-right: 4px;
+  color: var(--mm-selection);
+  font-size: 12px;
+  text-align: center;
+}
+.gg-mm-root button.mm-menu-item:hover { background: var(--background-modifier-hover, #f0f0f0); }
+
+/* ---------- 触屏：放大点击目标 ---------- */
+
+@media (pointer: coarse) {
+  .gg-mm-root button.mm-toggle { width: 22px; height: 22px; font-size: 12px; transform: translate(12px, -50%); }
+  .gg-mm-node[data-side="left"] .mm-toggle { transform: translate(-12px, -50%); }
+  .mm-toggle::before { width: 12px; }
+  body:not(.gg-mm-touch-toggle-auto) .gg-mm-node:not(:hover) .mm-toggle { opacity: 1; }
+  .gg-mm-root button.mm-tool { width: 34px; height: 34px; }
+  .gg-mm-root .mm-nodebar button.mm-tool { width: 30px; height: 30px; }
+  .gg-mm-root button.mm-swatch { width: 24px; height: 24px; }
+  .mm-nodebar { gap: 5px; padding: 6px; }
+  .gg-mm-root button.mm-menu-item { padding: 10px 12px; font-size: 14px; }
+}
+
+/* ---------- 向下 / 树形结构 ---------- */
+
+.gg-mm-node[data-side="down"] .mm-toggle {
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 10px);
+}
+.gg-mm-node[data-side="down"] .mm-toggle::before {
+  right: auto;
+  left: 50%;
+  top: auto;
+  bottom: 100%;
+  width: 1.5px;
+  height: 10px;
+  margin: 0 0 0 -0.75px;
+}
+/* 横向时间轴里朝上长的分支：折叠按钮在主主题上面 */
+.gg-mm-node[data-side="up"] .mm-toggle {
+  left: 50%;
+  top: auto;
+  bottom: 100%;
+  transform: translate(-50%, -10px);
+}
+.gg-mm-node[data-side="up"] .mm-toggle::before {
+  right: auto;
+  left: 50%;
+  top: 100%;
+  width: 1.5px;
+  height: 10px;
+  margin: 0 0 0 -0.75px;
+}
+.mm-drop-indicator.is-vertical { width: 4px; height: 40px; }
+.gg-mm-root button.mm-menu-item.is-active { color: var(--mm-selection); }
+.gg-mm-root button.mm-menu-item.is-active::before { content: "✓"; }
+
+/* ---------- 节点 ⇄ 笔记链接 ---------- */
+.gg-mm-node.is-linked .mm-label .mm-link { text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); text-underline-offset: 2px; }
+.mm-picker-new { color: var(--interactive-accent, #155dff); }
+
+/* ---------- 公式与图片 ---------- */
+.mm-label .mm-math { display: inline-block; vertical-align: middle; }
+.mm-label .mm-math-fallback { opacity: 0.8; }
+.mm-label img.mm-img {
+  display: block;
+  max-width: var(--mm-img-thumb-w, 240px);
+  max-height: calc(var(--mm-img-thumb-w, 240px) * 0.75);
+  margin: 2px auto;
+  border-radius: 6px;
+  object-fit: contain;
+  pointer-events: none;
+}
+/* 有明确宽度的图片不受缩略图上限约束。含图片的节点照样按最大宽度给文字换行，
+   图片比最大宽度还宽时，min-width（最宽那张图）压过 max-width，节点按图片宽度来 */
+.mm-label img.mm-img.has-size { max-width: none; max-height: none; }
+.gg-mm-node.has-image { align-items: flex-start; min-width: min-content; }
+.gg-mm-node.has-image .mm-label { display: block; text-align: center; }
+.gg-mm-node[data-depth="0"] img.mm-img { max-width: calc(var(--mm-img-thumb-w, 240px) * 4 / 3); }
+/* PDF 截区（PDF++ 画的裁切图）：外面包着 MarkdownRenderer 的段落和嵌入容器，去掉它们的边距，
+   鼠标事件一律交给节点（和普通图片一样按坐标判断点没点在图上） */
+.mm-label .mm-pdf-crop { display: block; position: relative; pointer-events: none; }
+/* 截区角上的「跳到 PDF」：鼠标移到节点上或选中时出现 */
+.mm-label .mm-pdf-jump {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  pointer-events: auto;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 13px;
+  line-height: 22px;
+  cursor: pointer;
+  box-shadow: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.gg-mm-node:hover .mm-pdf-jump, .gg-mm-node.is-selected .mm-pdf-jump { opacity: 1; }
+.mm-label .mm-pdf-jump:hover { background: rgba(0, 0, 0, 0.75); }
+.mm-label .mm-pdf-crop p { margin: 0; }
+.mm-label .mm-pdf-crop .internal-embed { display: block; margin: 0; }
+
+/* <iframe> 嵌入：视频这类东西自己要吃走鼠标事件，所以节点留一圈边距当把手，
+   不然整个节点被 iframe 盖住，既选不中也拖不动 */
+.mm-frame-box {
+  position: relative;
+  display: block;
+  width: max-content;
+  margin: 2px auto;
+}
+.mm-label iframe.mm-frame {
+  display: block;
+  border: 0;
+  border-radius: 6px;
+  background: #000;
+}
+/* 挡板：跨域 iframe 里点了哪儿看不见，默认整块挡住，双击才放开 */
+.mm-frame-shield {
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+/* 激活按钮：跟双击画面等效，多一条不用猜的路。
+   Obsidian 的 button:not(.clickable-icon) 会盖掉单类名按钮样式，所以带上 .gg-mm-root */
+.gg-mm-root button.mm-frame-activate {
+  position: absolute;
+  right: 7px;
+  bottom: 7px;
+  padding: 3px 10px;
+  height: auto;
+  width: auto;
+  border: 0;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.66);
+  box-shadow: none;
+  color: #fff;
+  font-size: 11px;
+  line-height: 1.5;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+.gg-mm-root button.mm-frame-activate:hover { background: rgba(0, 0, 0, 0.82); }
+/* 悬停画面时出现；节点被选中时常驻，免得完全发现不了 */
+.mm-frame-shield:hover .mm-frame-activate,
+.gg-mm-node.is-selected .mm-frame-activate { opacity: 1; }
+.gg-mm-node.is-frame-live .mm-frame-shield { display: none; }
+/* 放开之后加一圈虚线，免得不知道现在点下去是会跳走的。
+   用 outline 不用 box-shadow —— 选中态已经占了 box-shadow，两者要能叠加 */
+.gg-mm-node.is-frame-live {
+  outline: 2px dashed var(--mm-selection);
+  outline-offset: 3px;
+}
+.gg-mm-node.has-frame {
+  align-items: flex-start;
+  max-width: none;
+  padding: 10px;
+}
+.gg-mm-node.has-frame .mm-label { display: block; text-align: center; }
+
+/* ---------- 大纲面板 ---------- */
+
+.mm-view-content { display: flex; flex-direction: row; }
+.mm-canvas-host { flex: 1 1 auto; min-width: 0; height: 100%; position: relative; }
+.mm-outline-host { flex: none; width: 0; height: 100%; overflow: hidden; }
+.mm-view-content.has-outline .mm-outline-host { width: 260px; border-right: 1px solid var(--background-modifier-border, #e3e3e3); }
+.mm-outline {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  outline: none;
+  background: var(--background-secondary, #f6f6f7);
+  font-family: var(--font-interface, system-ui, sans-serif);
+  font-size: 13px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.mm-outline:focus-within { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--interactive-accent, #155dff) 35%, transparent); }
+.mm-outline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 8px 8px 12px;
+  color: var(--text-muted, #666);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.mm-outline button.mm-outline-close { width: 22px; height: 22px; font-size: 16px; line-height: 1; border: none; background: transparent; box-shadow: none; color: var(--text-muted, #666); border-radius: 5px; cursor: pointer; }
+.mm-outline button.mm-outline-close:hover { background: var(--background-modifier-hover, #e8e8ea); }
+.mm-outline-list { flex: 1 1 auto; overflow: auto; padding: 0 6px 12px; }
+.mm-outline-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 26px;
+  padding: 2px 6px 2px calc(6px + var(--depth, 0) * 14px);
+  border-radius: 5px;
+  color: var(--text-normal, #1f1f1f);
+  cursor: default;
+  white-space: nowrap;
+}
+.mm-outline-row:hover { background: var(--background-modifier-hover, #ececee); }
+.mm-outline-row.is-selected { background: color-mix(in srgb, var(--interactive-accent, #155dff) 14%, transparent); color: var(--text-normal, #1f1f1f); }
+/* 概要主题：文字前面加一个大括号，看得出它是前面几项的概要 */
+.mm-outline-row.is-summary-topic .mm-outline-text::before { content: "} "; color: var(--text-faint, #999); }
+.mm-outline-chevron { flex: none; width: 14px; color: var(--text-faint, #999); font-size: 11px; text-align: center; cursor: pointer; transition: transform 0.12s ease; }
+.mm-outline-chevron.is-folded { transform: rotate(-90deg); }
+.mm-outline-chevron:hover { color: var(--text-normal, #1f1f1f); }
+.mm-outline-dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--mm-node-bg, #ccc); }
+.mm-outline-dot[data-color="red"] { background: var(--mm-c-red, #f9a3a3); }
+.mm-outline-dot[data-color="orange"] { background: var(--mm-c-orange, #fbc98d); }
+.mm-outline-dot[data-color="yellow"] { background: var(--mm-c-yellow, #f7e48e); }
+.mm-outline-dot[data-color="green"] { background: var(--mm-c-green, #a3e5a2); }
+.mm-outline-dot[data-color="teal"] { background: var(--mm-c-teal, #93e3d6); }
+.mm-outline-dot[data-color="blue"] { background: var(--mm-c-blue, #8edbf7); }
+.mm-outline-dot[data-color="purple"] { background: var(--mm-c-purple, #d4b5f5); }
+.mm-outline-dot[data-color="pink"] { background: var(--mm-c-pink, #f8b8da); }
+.mm-outline-dot[data-color="gray"] { background: var(--mm-c-gray, #dcdce2); }
+.mm-outline-text { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; outline: none; }
+/* 设置「大纲显示完整标题」：长标题换行，箭头和色点贴着第一行 */
+body.gg-mm-outline-wrap .mm-outline-row { white-space: normal; align-items: flex-start; padding-top: 3px; padding-bottom: 3px; }
+body.gg-mm-outline-wrap .mm-outline-text { overflow: visible; overflow-wrap: anywhere; }
+body.gg-mm-outline-wrap .mm-outline-row > :not(.mm-outline-text) { margin-top: 0.3em; }
+.mm-outline-text .mm-math { font-size: 0.95em; }
+.mm-outline-row[style*="--depth: 0"] .mm-outline-text { font-weight: 600; }
+.mm-outline-row[style*="--depth: 1"] .mm-outline-text { font-weight: 500; }
+.mm-outline-row.is-editing .mm-outline-text { white-space: pre-wrap; user-select: text; -webkit-user-select: text; background: var(--background-primary, #fff); border-radius: 3px; padding: 0 3px; }
+.mm-outline-note { flex: none; color: var(--text-faint, #999); font-size: 11px; }
+
+/* ---------- 工具栏位置 ---------- */
+
+/* 主视图里底部工具栏抬高，避开 Obsidian 右下角的状态栏 */
+.gg-mm-root:not(.is-embedded) .mm-toolbar[data-pos="bottom"] { bottom: var(--mm-bottom-inset, 44px); }
+/* 窗格放不下所有按钮时自动折行（分屏、侧边栏），别藏在横向滚动里被截掉 */
+.mm-toolbar[data-pos="bottom"],
+.mm-toolbar[data-pos="top"] { max-width: calc(100% - 24px); flex-wrap: wrap; justify-content: flex-end; row-gap: 2px; }
+.mm-toolbar[data-pos="left"],
+.mm-toolbar[data-pos="right"] { max-height: calc(100% - 24px); overflow-y: auto; scrollbar-width: none; }
+.mm-toolbar::-webkit-scrollbar { display: none; }
+.mm-toolbar > * { flex-shrink: 0; }
+.mm-toolbar[data-pos="top"] { top: 12px; bottom: auto; }
+.mm-toolbar[data-pos="left"],
+.mm-toolbar[data-pos="right"] {
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+  flex-direction: column;
+  padding: 5px 4px;
+}
+.mm-toolbar[data-pos="left"] { left: 12px; right: auto; }
+.mm-toolbar[data-pos="right"] { right: 12px; }
+.mm-toolbar[data-pos="left"] .mm-tool-sep,
+.mm-toolbar[data-pos="right"] .mm-tool-sep { width: 18px; height: 1px; margin: 4px 0; }
+.mm-toolbar[data-pos="left"] .mm-zoom-label,
+.mm-toolbar[data-pos="right"] .mm-zoom-label { min-width: 0; width: 34px; padding: 0; font-size: 11px; }
+/* 工具栏在上方时，搜索栏让到下方 */
+.gg-mm-root[data-toolbar="top"] .gg-mm-search { top: auto; bottom: 12px; }
+.gg-mm-root:not(.is-embedded)[data-toolbar="top"] .gg-mm-search { bottom: var(--mm-bottom-inset, 44px); }
+/* 垂直工具栏靠右时，搜索栏往左让一点，避免高窗口里挨着 */
+.gg-mm-root[data-toolbar="right"] .gg-mm-search { right: 60px; }
+
+/* ---------- 图片缩放手柄 ---------- */
+/* 手动宽度：节点不再受最大宽度限制，文字按设定宽度换行 */
+.gg-mm-root .gg-mm-node.has-width { max-width: none; }
+/* 宽度手柄：铺满节点右边的一条透明窄条，指上去才看见中间的小竖条；选中的节点一直显示竖条 */
+.mm-width-handle {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  right: -6px;
+  width: 10px;
+  cursor: ew-resize;
+  touch-action: none;
+}
+.mm-width-handle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 1px;
+  width: 8px;
+  height: 22px;
+  max-height: calc(100% - 8px);
+  min-height: 12px;
+  box-sizing: border-box;
+  transform: translateY(-50%);
+  border: 2px solid var(--mm-selection);
+  border-radius: 4px;
+  background: var(--mm-bg);
+  pointer-events: none;
+}
+/* 悬停出来的（节点没选中）：平时看不见，指到右边缘才出现 */
+.mm-width-handle.is-hover::after { opacity: 0; transition: opacity 0.12s; }
+.mm-width-handle.is-hover:hover::after { opacity: 1; }
+.mm-width-handle.is-left { right: auto; left: -6px; }
+@media (pointer: coarse) {
+  .mm-width-handle { width: 16px; right: -9px; }
+  .mm-width-handle::after { left: 1px; width: 14px; }
+  .mm-width-handle.is-left { left: -9px; }
+}
+
+/* 双击图片看大图 */
+.mm-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--layer-modal, 50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.78);
+  cursor: zoom-out;
+}
+.mm-lightbox img {
+  max-width: 92vw;
+  max-height: 92vh;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+}
+
+.mm-img-handle {
+  position: absolute;
+  z-index: 2;
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+  border: 2px solid var(--mm-selection);
+  border-radius: 3px;
+  background: var(--mm-bg);
+  cursor: nwse-resize;
+  touch-action: none;
+}
+.mm-img-handle:hover { transform: scale(1.2); }
+@media (pointer: coarse) { .mm-img-handle { width: 20px; height: 20px; } }
+
+/* ---------- 聚焦面包屑 ---------- */
+.mm-crumbs {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 6px;
+  border-radius: 8px;
+  background: var(--background-primary, #fff);
+  border: 1px solid var(--background-modifier-border, #e3e3e3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  font-size: 12px;
+}
+.gg-mm-root:not(.is-embedded).has-outline .mm-crumbs { left: 12px; }
+.gg-mm-root button.mm-crumb {
+  height: auto;
+  padding: 3px 8px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-muted, #666);
+  font-size: 12px;
+  cursor: pointer;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.gg-mm-root button.mm-crumb:hover { background: var(--background-modifier-hover, #f0f0f0); color: var(--text-normal, #1f1f1f); }
+.gg-mm-root button.mm-crumb.is-current { color: var(--text-normal, #1f1f1f); font-weight: 600; }
+.mm-crumb-sep { color: var(--text-faint, #aaa); }
+.gg-mm-root[data-toolbar="top"] .mm-crumbs { top: auto; bottom: 12px; }
+
+/* ---------- 标签、标记、任务 ---------- */
+.mm-label a.mm-tag {
+  display: inline-block;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--mm-selection) 12%, transparent);
+  color: var(--mm-selection);
+  font-size: 0.85em;
+  text-decoration: none;
+  cursor: pointer;
+  vertical-align: baseline;
+}
+.mm-label a.mm-tag:hover { background: color-mix(in srgb, var(--mm-selection) 22%, transparent); }
+.gg-mm-node[data-depth="0"] .mm-label a.mm-tag { background: rgba(255, 255, 255, 0.2); color: inherit; }
+.mm-markers { margin-right: 0.35em; font-size: 1.05em; letter-spacing: 0.15em; }
+.mm-task { cursor: pointer; }
+.mm-task:hover { opacity: 1; }
+
+/* ---------- 标记选择器 ---------- */
+.mm-marker-picker { gap: 4px; padding: 8px; }
+.mm-marker-row { display: flex; align-items: center; gap: 3px; }
+.mm-marker-label { width: 44px; color: var(--text-muted, #666); font-size: 11px; }
+.gg-mm-root button.mm-marker-btn {
+  width: 30px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  box-shadow: none;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+.gg-mm-root button.mm-marker-btn:hover { background: var(--background-modifier-hover, #f0f0f0); }
+.gg-mm-root button.mm-marker-btn.is-active { border-color: var(--mm-selection); background: color-mix(in srgb, var(--mm-selection) 12%, transparent); }
+.mm-marker-picker .mm-menu-item { margin-top: 4px; justify-content: center; font-size: 12px; color: var(--text-muted, #666); }
+.mm-marker-picker .mm-menu-item::before { display: none; }
+
+
+/* ==========================================================================
+   主题。每个主题只覆盖需要的变量；行为（连线形状、分支色、下划线、间距）在 theme.ts。
+   深色模式的覆盖跟在各自主题后面。
+   ========================================================================== */
+
+/* ---------- 彩虹：中心主题无底色，主主题用分支色 ---------- */
+.gg-mm-root[data-theme="rainbow"] {
+  --mm-root-bg: transparent;
+  --mm-root-fg: var(--text-normal, #1f1f1f);
+  --mm-root-size: 28px;
+  --mm-root-weight: 700;
+  --mm-root-pad: 12px 20px;
+  --mm-main-pad: 8px 16px;
+  --mm-main-radius: 10px;
+  --mm-main-size: 16px;
+  --mm-main-weight: 500;
+}
+
+/* ---------- 商务：深蓝中心，实心蓝主主题，直角折线 ---------- */
+.gg-mm-root[data-theme="business"] {
+  --mm-line: #64748b;
+  --mm-root-bg: #1e3a5f;
+  --mm-root-fg: #ffffff;
+  --mm-main-bg: #2b6cb0;
+  --mm-main-fg: #ffffff;
+  --mm-node-bg: #eef2f7;
+  --mm-node-fg: #1a202c;
+  --mm-root-radius: 4px;
+  --mm-main-radius: 4px;
+  --mm-node-radius: 3px;
+  --mm-root-size: 24px;
+  --mm-main-size: 16px;
+  --mm-node-size: 13px;
+  --mm-main-weight: 500;
+  --mm-toggle-border: #94a3b8;
+  --mm-edge-w1: 2px;
+  --mm-edge-w2: 1.5px;
+  --mm-edge-w3: 1.25px;
+}
+.theme-dark .gg-mm-root[data-theme="business"] {
+  --mm-line: #7d8da3;
+  --mm-root-bg: #24405f;
+  --mm-main-bg: #2c5282;
+  --mm-node-bg: #232a35;
+  --mm-node-fg: #e2e8f0;
+}
+
+/* ---------- 暖阳：橙调，大圆角 ---------- */
+.gg-mm-root[data-theme="warm"] {
+  --mm-line: #a3714f;
+  --mm-root-bg: #c2410c;
+  --mm-root-fg: #fff7ed;
+  --mm-main-bg: #fed7aa;
+  --mm-main-fg: #7c2d12;
+  --mm-node-bg: #fff7ed;
+  --mm-node-fg: #431407;
+  --mm-root-radius: 18px;
+  --mm-main-radius: 14px;
+  --mm-node-radius: 10px;
+  --mm-root-pad: 16px 30px;
+  --mm-main-pad: 9px 18px;
+  --mm-node-pad: 6px 12px;
+  --mm-toggle-border: #c08457;
+  --mm-toggle-fg: #8a5a3b;
+}
+.theme-dark .gg-mm-root[data-theme="warm"] {
+  --mm-line: #c08d6a;
+  --mm-root-bg: #9a3412;
+  --mm-main-bg: #57320f;
+  --mm-main-fg: #fed7aa;
+  --mm-node-bg: #33241a;
+  --mm-node-fg: #fde3c7;
+}
+
+/* ---------- 极简：黑白描边，发丝线 ---------- */
+.gg-mm-root[data-theme="mono"] {
+  --mm-line: #a1a1aa;
+  --mm-root-bg: #18181b;
+  --mm-root-fg: #fafafa;
+  --mm-main-bg: transparent;
+  --mm-main-fg: #18181b;
+  --mm-node-bg: transparent;
+  --mm-node-fg: #27272a;
+  --mm-node-border: 1px solid #d4d4d8;
+  --mm-root-radius: 2px;
+  --mm-main-radius: 2px;
+  --mm-node-radius: 2px;
+  --mm-root-size: 22px;
+  --mm-main-size: 15px;
+  --mm-node-size: 13px;
+  --mm-main-weight: 600;
+  --mm-root-pad: 14px 26px;
+  --mm-edge-w1: 1.5px;
+  --mm-edge-w2: 1.25px;
+  --mm-edge-w3: 1px;
+  --mm-toggle-border: #a1a1aa;
+}
+.theme-dark .gg-mm-root[data-theme="mono"] {
+  --mm-line: #71717a;
+  --mm-root-bg: #fafafa;
+  --mm-root-fg: #18181b;
+  --mm-main-fg: #f4f4f5;
+  --mm-node-fg: #d4d4d8;
+  --mm-node-border: 1px solid #3f3f46;
+  --mm-toggle-border: #52525b;
+}
+
+/* ---------- 森林：绿调分支 ---------- */
+.gg-mm-root[data-theme="forest"] {
+  --mm-line: #4d7c0f;
+  --mm-root-bg: #14532d;
+  --mm-root-fg: #ecfdf5;
+  --mm-node-bg: #f0fdf4;
+  --mm-node-fg: #14532d;
+  --mm-branch-fg: #14532d;
+  --mm-root-radius: 12px;
+  --mm-main-radius: 10px;
+  --mm-node-radius: 8px;
+  --mm-branch-0: #a7e0b0;
+  --mm-branch-1: #bfe5a0;
+  --mm-branch-2: #93ddc8;
+  --mm-branch-3: #d9e8a0;
+  --mm-branch-4: #a3d9d0;
+  --mm-branch-5: #c7e3b8;
+  --mm-toggle-border: #86a86b;
+}
+.theme-dark .gg-mm-root[data-theme="forest"] {
+  --mm-line: #7aa04a;
+  --mm-root-bg: #1a4d33;
+  --mm-node-bg: #1f2c22;
+  --mm-node-fg: #d6f0dc;
+  --mm-branch-fg: #0f2d1a;
+  --mm-branch-0: #6aa878;
+  --mm-branch-1: #86ab68;
+  --mm-branch-2: #5ea48f;
+  --mm-branch-3: #9aab63;
+  --mm-branch-4: #6ba299;
+  --mm-branch-5: #8aa87e;
+}
+
+/* ---------- 线条：除中心主题外都是纯文字，统一细度的圆角折线 ---------- */
+.gg-mm-root[data-theme="line"] {
+  --mm-line: #52525b;
+  --mm-root-bg: #e4e4e7;
+  --mm-root-fg: #18181b;
+  --mm-root-border: 1px solid #a1a1aa;
+  --mm-main-bg: transparent;
+  --mm-main-fg: var(--text-normal, #1f1f1f);
+  --mm-node-bg: transparent;
+  --mm-node-fg: var(--text-normal, #1f1f1f);
+  --mm-node-border: none;
+  --mm-root-radius: 8px;
+  --mm-main-radius: 4px;
+  --mm-node-radius: 4px;
+  --mm-root-pad: 12px 24px;
+  --mm-main-pad: 4px 10px;
+  --mm-node-pad: 4px 9px;
+  --mm-root-size: 22px;
+  --mm-root-weight: 500;
+  --mm-main-size: 15px;
+  --mm-main-weight: 400;
+  --mm-node-size: 14px;
+  --mm-edge-w1: 1.5px;
+  --mm-edge-w2: 1.5px;
+  --mm-edge-w3: 1.5px;
+  --mm-toggle-border: #a1a1aa;
+}
+.theme-dark .gg-mm-root[data-theme="line"] {
+  --mm-line: #d4d4d8;
+  --mm-root-bg: #52525b;
+  --mm-root-fg: #fafafa;
+  --mm-root-border: 1px solid #d4d4d8;
+  --mm-toggle-border: #8a8a94;
+}
+
+/* ---------- 设置页与图标选择器 ---------- */
+.mm-setting-icon-preview {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-inline-end: 6px;
+  color: var(--text-normal);
+}
+.mm-setting-icon-preview.is-emoji { font-size: 17px; line-height: 1; }
+.mm-setting-icon-value {
+  margin-inline-end: 10px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-family: var(--font-monospace, monospace);
+}
+.mm-icon-picker .mm-icon-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mm-icon-picker .mm-icon-preview {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex: none;
+  font-size: 16px;
+  line-height: 1;
+}
+.mm-icon-picker .mm-icon-label { flex: 1 1 auto; }
+.mm-icon-picker .mm-icon-tag {
+  flex: none;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--background-modifier-hover);
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+/* ---------- 属性面板里的 icon 一行 ---------- */
+.mm-icon-prop-preview {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  margin-inline-end: 6px;
+  color: var(--text-muted);
+  vertical-align: -4px;
+}
+.mm-icon-prop-preview.is-emoji { font-size: 15px; line-height: 1; }
+/* 值里带冒号会被当成 scheme:path，Obsidian 画成外链；这里还原成普通文本 */
+.metadata-property.mm-icon-prop .metadata-property-value .metadata-link-inner {
+  color: var(--text-normal);
+  text-decoration: none;
+  cursor: default;
+  pointer-events: none;
+}
+.metadata-property.mm-icon-prop .metadata-property-value .metadata-link-flair { display: none; }
+
+/* 预览可点，点开图标选择器 */
+.mm-icon-prop-preview {
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.1s ease, color 0.1s ease;
+}
+.mm-icon-prop-preview:hover,
+.mm-icon-prop-preview:focus-visible {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+  outline: none;
+}
+
+/* 静态时只显示图标本身；点进去编辑（focus-within）再把取值文本露出来 */
+.metadata-property.mm-icon-prop:not(:focus-within) .metadata-property-value > :not(.mm-icon-prop-preview) {
+  display: none;
+}
+/* 值那一格塌成图标宽度后仍要能点进去编辑 */
+.metadata-property.mm-icon-prop .metadata-property-value {
+  min-height: var(--metadata-input-height, 22px);
+}
+
+/* ---------- 自定义主题编辑器 ---------- */
+.modal.mm-theme-modal { width: min(1100px, 94vw); max-width: none; }
+.mm-theme-editor {
+  display: grid;
+  grid-template-columns: minmax(300px, 400px) minmax(0, 1fr);
+  gap: 16px;
+  height: min(620px, 70vh);
+}
+.mm-theme-controls { overflow-y: auto; padding-right: 8px; }
+.mm-theme-controls .setting-item { padding: 8px 0; }
+.mm-theme-section { margin: 14px 0 4px; font-size: var(--font-ui-small, 13px); color: var(--text-muted); }
+.mm-theme-controls input.mm-theme-num { width: 64px; text-align: right; }
+.mm-theme-controls .setting-item-control:has(.mm-theme-num) .slider-value { display: none; }
+.mm-theme-tiers { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 6px; }
+.mm-theme-tiers button.is-active { background: var(--interactive-accent); color: var(--text-on-accent); }
+.mm-theme-preview {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.mm-theme-preview-label { position: absolute; left: 10px; top: 8px; z-index: 3; font-size: 12px; color: var(--text-faint); }
+.mm-theme-preview-canvas { position: relative; flex: 1; min-height: 0; }
+/* 预览只能看：不响应点击、双击、右键、拖拽和滚轮，也就不会进编辑、弹菜单 */
+.mm-theme-preview-canvas, .mm-theme-preview-canvas * { pointer-events: none !important; }
+@media (max-width: 760px) {
+  .mm-theme-editor { grid-template-columns: 1fr; height: auto; }
+  .mm-theme-controls { max-height: 45vh; }
+  .mm-theme-preview-canvas { height: 280px; flex: none; }
+}
+.mm-theme-preview .mm-toolbar { display: none; }
+.mm-toolbar.is-empty { display: none; }
+
+/* 右键菜单开着时藏起节点浮动工具栏，关掉菜单再回来 */
+.gg-mm-root.is-menu-open .mm-nodebar { visibility: hidden; }
+
+/* ---------- 背诵模式（只改显示，不写文件） ---------- */
+/* 复习时用不上编辑工具栏，点题目也不让它盖住选项 */
+.gg-mm-root.is-recite .mm-nodebar { visibility: hidden; }
+/* ==高亮== 遮住文字、保留原来的高亮颜色（彩色高亮、荧光笔各是各的颜色），底下一道横线，点一下揭开 */
+.gg-mm-root.is-recite .mm-label mark:not(.is-revealed) {
+  color: transparent;
+  box-shadow: inset 0 -1.5px 0 var(--mm-selection);
+  cursor: pointer;
+}
+.gg-mm-root.is-recite .mm-label mark:not(.is-revealed) * { visibility: hidden; }
+.gg-mm-root.is-recite .mm-label mark.is-revealed { cursor: pointer; }
+/* 选择题：没揭晓时所有选项都像没勾；揭晓后正确的变绿、错误的变淡 */
+.gg-mm-root.is-recite .mm-task { cursor: default; }
+.gg-mm-root.is-recite .gg-mm-node.is-option:not(.is-option-shown) .mm-task.is-done { background: none; opacity: 0.7; }
+.gg-mm-root.is-recite .gg-mm-node.is-option.is-option-shown.is-correct { box-shadow: 0 0 0 2px #2fb344; }
+.gg-mm-root.is-recite .gg-mm-node.is-option.is-option-shown.is-correct .mm-task { background: #2fb344; border-color: #2fb344; opacity: 1; }
+.gg-mm-root.is-recite .gg-mm-node.is-option.is-option-shown:not(.is-correct) { opacity: 0.4; }
+/* 题目上的「单选 / 多选」标签：点它揭晓 / 收起答案 */
+.gg-mm-root:not(.is-recite) .mm-quiz-tag { display: none; }
+.gg-mm-root.is-recite .mm-quiz-tag {
+  flex: none;
+  cursor: pointer;
+  margin-left: 6px;
+  padding: 0 5px;
+  border-radius: 4px;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--mm-selection);
+  background: color-mix(in srgb, var(--mm-selection) 14%, transparent);
+}
+.gg-mm-root.is-recite .mm-quiz-tag:hover { background: color-mix(in srgb, var(--mm-selection) 24%, transparent); }
+.gg-mm-root.is-recite .mm-quiz-tag.is-shown { color: #fff; background: var(--mm-selection); }
+
+/* 答案：节点连同子树盖上一层，答案节点上写提示，点一下揭开；折叠按钮照常能点 */
+.gg-mm-root.is-recite .gg-mm-node.is-answer { cursor: pointer; }
+.gg-mm-root.is-recite .gg-mm-node.is-answer-covered { cursor: pointer; }
+.gg-mm-root.is-recite .gg-mm-node.is-answer-covered > :not(.mm-toggle) { visibility: hidden; }
+.gg-mm-root.is-recite .gg-mm-node.is-answer-covered::before {
+  content: attr(data-answer);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: inherit;
+  font-size: 12px;
+  color: var(--text-muted);
+  background:
+    repeating-linear-gradient(135deg, transparent 0 6px, rgba(127, 127, 127, 0.1) 6px 12px),
+    var(--mm-bg, var(--background-primary));
+  box-shadow: inset 0 0 0 1px rgba(127, 127, 127, 0.25);
+}
+.gg-mm-root.is-recite :is(.mm-callout, .mm-callout-tail, .mm-note-card, .mm-note-link).is-answer-covered { visibility: hidden; }
+
+/* 设置「嵌入的脑图隐藏工具栏」：阅读模式不显示；编辑模式和白板卡片里鼠标移上来或焦点在图里时才显示。
+   改图的时候（is-editable）也一样，鼠标移开、点到外面就收起来 */
+body.gg-mm-embed-toolbar-autohide .markdown-preview-view .gg-mm-root.is-embedded:not(.is-editable):not(.canvas-node *) .mm-toolbar { display: none; }
+body.gg-mm-embed-toolbar-autohide :is(.markdown-source-view, .canvas-node) .gg-mm-root.is-embedded .mm-toolbar { transition: opacity 0.15s; }
+body.gg-mm-embed-toolbar-autohide :is(.markdown-source-view, .canvas-node) .gg-mm-root.is-embedded:not(:hover):not(:focus-within) .mm-toolbar { opacity: 0; pointer-events: none; }
+
+/* 白板卡片里的嵌入脑图：铺满卡片 */
+.mm-file-embed.mm-in-canvas { height: 100%; }
+.mm-file-embed.mm-in-canvas > .mm-codeblock { height: 100% !important; }
+
+/* 标注：节点旁的圆角气泡，尖角（svg 里的三角形）指向节点；边框和尖角用分支色 */
+.mm-callout {
+  position: absolute;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: 240px;
+  padding: 5px 10px;
+  border: 1.5px solid var(--mm-callout-color, var(--mm-line));
+  border-radius: 10px;
+  background: var(--mm-callout-bg, var(--mm-bg, var(--background-primary)));
+  font-family: var(--mm-font);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--mm-callout-fg, inherit);
+  cursor: default;
+  user-select: none;
+  overflow-wrap: anywhere;
+}
+.mm-callout .mm-link { color: var(--link-color, var(--mm-selection)); }
+.mm-callout.is-editing { cursor: text; user-select: text; min-width: 60px; }
+.mm-callout.is-editing .mm-callout-text { white-space: pre-wrap; outline: none; }
+/* 隐藏标注时临时浮出的一条：盖在节点上面，带阴影区分 */
+.mm-callout.is-peek {
+  z-index: 5;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+.mm-callout-tail {
+  fill: var(--mm-callout-color, var(--mm-line));
+  stroke: none;
+}
+.mm-callout-icon {
+  font-size: 0.95em;
+  opacity: 0.6;
+  cursor: pointer;
+}
+.mm-callout-icon:hover { opacity: 1; }
+
+/* 展开的备注：挂在节点下方的框，边框和底色取分支色的淡色；内容超出最大高度时在框里滚动 */
+.mm-note-card {
+  position: absolute;
+  box-sizing: border-box;
+  width: max-content;
+  min-width: 80px;
+  max-width: calc(var(--mm-note-max-w, 320px) * var(--mm-font-scale, 1));
+  border: 1px solid color-mix(in srgb, var(--mm-note-color, var(--mm-line)) 40%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--mm-note-color, var(--mm-line)) 6%, var(--mm-bg, var(--background-primary, #fff)));
+  color: var(--text-normal, #1f1f1f);
+  font-family: var(--mm-font);
+  font-size: calc(12.5px * var(--mm-font-scale, 1));
+  line-height: 1.55;
+  cursor: default;
+}
+.mm-note-card-body {
+  box-sizing: border-box;
+  max-height: calc(var(--mm-note-max-h, 240px) * var(--mm-font-scale, 1));
+  overflow: auto;
+  padding: 6px 10px;
+  overflow-wrap: anywhere;
+  user-select: text;
+  -webkit-user-select: text;
+}
+.gg-mm-root .mm-note-card-body { font-size: inherit; }
+.mm-note-card-body.is-plain { white-space: pre-wrap; }
+.mm-note-card.is-overflow .mm-note-card-body {
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent);
+}
+/* 右下角的手柄：拖动单独调这一条的宽高，双击恢复默认 */
+.mm-note-card-resize {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 14px;
+  height: 14px;
+  cursor: nwse-resize;
+  opacity: 0;
+  border-bottom-right-radius: 8px;
+  background: linear-gradient(135deg, transparent 0 55%, color-mix(in srgb, var(--mm-note-color, var(--mm-line)) 70%, transparent) 55% 62%, transparent 62% 72%, color-mix(in srgb, var(--mm-note-color, var(--mm-line)) 70%, transparent) 72% 79%, transparent 79%);
+  transition: opacity 0.12s;
+  touch-action: none;
+}
+.mm-note-card:hover .mm-note-card-resize,
+.mm-note-card.is-resizing .mm-note-card-resize { opacity: 1; }
+.mm-note-card.is-resizing { user-select: none; -webkit-user-select: none; }
+.mm-note-card-fold {
+  all: unset;
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: var(--mm-bg, var(--background-primary, #fff));
+  color: var(--text-muted, #777);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+.mm-note-card-fold .mm-icon { font-size: 12px; }
+.mm-note-card:hover .mm-note-card-fold { opacity: 0.85; }
+.mm-note-card-fold:hover { opacity: 1; color: var(--mm-selection); }
+.mm-note-link {
+  fill: none;
+  stroke: var(--mm-note-color, var(--mm-line));
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.7;
+}
+
+/* 「显示隐藏的节点」：带 %%hide%% 的节点半透明、虚线框 */
+.gg-mm-node.is-hidden-node { opacity: 0.45; outline: 1.5px dashed var(--text-faint, #999); outline-offset: 2px; }
+.gg-mm-node.is-hidden-node.is-selected { opacity: 0.75; }
+
+/* 节点里的表格（%%table%%）：标题在上、表格在下，表格自己一块底色，节点配了深色也看得清 */
+/* 用网格不用折行的 flex：折行 flex 容器按「排成一行」算 max-content，节点会多出标题那么宽的空白 */
+.gg-mm-node.has-table { display: grid; grid-template-columns: repeat(4, max-content); justify-content: start; align-items: center; column-gap: 6px; max-width: none; }
+.gg-mm-root .gg-mm-node.has-table.has-width { max-width: none; }
+.gg-mm-node .mm-node-table {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  min-width: 0;
+  font-size: calc(14px * var(--mm-font-scale, 1));
+  font-weight: var(--font-normal, 400);
+  line-height: normal;
+  color: var(--text-normal);
+  overflow-wrap: normal;
+  cursor: auto;
+}
+/*
+ * 加行、加列的按钮放在节点里面：表格右边、下边各留一条 18px 的窄带，两个按钮一样大、都在节点框里。
+ * 节点自己右边、下边的内边距相应收小，表格四周的空白和标题那边差不多
+ */
+.gg-mm-node.has-table { padding-left: 6px; padding-right: 6px; padding-bottom: 6px; }
+/* 标题行和节点左边对齐（节点左内边距收小了，标题补回来） */
+.gg-mm-node.has-table > .mm-label, .gg-mm-node.has-table > .mm-num { margin-left: 12px; }
+/* 只放了表格、没有标题：标题行不占位置（编辑时照常出现），上边也留 18px */
+.gg-mm-node.has-table.no-title:not(.is-editing) > .mm-label { display: none; }
+.gg-mm-node.has-table.no-title:not(.is-editing) { padding-top: 6px; row-gap: 0; }
+.gg-mm-node.has-table.no-title:not(.is-editing) .mm-node-table .ggt { padding-top: 18px; }
+/* 四边留一样宽（18px）：表格在节点里居中；左边、上边这条放行手柄和左上角的表格按钮 */
+.gg-mm-node .mm-node-table .ggt { margin: 0; padding: 6px 18px 18px 18px; max-width: none; }
+/*
+ * 大表格：没拖过宽度的列最宽 240、文字换行；整张表最宽 / 最高按设置（默认 640 / 480），超出在节点里滚动，
+ * 表头吸在顶上。节点设了宽度时表格跟着节点宽，不伸出框外
+ */
+.gg-mm-node .mm-node-table .ggt-cell.is-auto-width .ggt-content { max-width: calc(240px * var(--mm-font-scale, 1)); }
+.gg-mm-node .mm-node-table .ggt-scroll {
+  max-width: calc(var(--mm-table-max-w, 640px) * var(--mm-font-scale, 1));
+  max-height: calc(var(--mm-table-max-h, 480px) * var(--mm-font-scale, 1));
+  overflow: auto;
+  overscroll-behavior: contain;
+  /* 细滚动条，鼠标在节点上才显示 */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+.gg-mm-node:hover .mm-node-table .ggt-scroll { scrollbar-color: var(--scrollbar-thumb-bg, rgba(0, 0, 0, 0.2)) transparent; }
+/* 最后一列是 minmax(0, 1fr)：横跨所有列的表格不会把网格撑得比节点宽 */
+.gg-mm-node.has-table.has-width { grid-template-columns: repeat(3, max-content) minmax(0, 1fr); }
+.gg-mm-node.has-width .mm-node-table .ggt { max-width: 100%; }
+/* 滚动区右边、下边留了 12px（加列 / 加行按钮的位置），用负的外边距补回来；最宽也要加上这 12px，不然表格放得下时也多出 12px，一直淡出、能滚 */
+.gg-mm-node.has-width .mm-node-table .ggt-scroll { max-width: calc(100% + 12px); }
+.gg-mm-node .mm-node-table .ggt thead .ggt-cell { position: sticky; top: 0; z-index: 3; background-color: var(--background-primary); background-image: linear-gradient(var(--ggt-head-bg), var(--ggt-head-bg)); }
+/* 冻结的标题列在表头里也要压在别的表头格上面：表头格为了吸顶各自是 z-index 3，冻结格只有 2 时左右滑动会被后面的表头格盖住 */
+.gg-mm-node .mm-node-table .ggt.is-freeze thead .ggt-cell.is-frozen { z-index: 4; }
+.gg-mm-node .mm-node-table .ggt:is([data-preset="minimal"], [data-preset="academic"]) thead .ggt-cell:not([data-bg]) { background-image: none; }
+.gg-mm-node .mm-node-table .ggt .ggt-table thead .ggt-cell[data-bg] { background-color: var(--background-primary); background-image: linear-gradient(var(--ggt-cell-bg), var(--ggt-cell-bg)); }
+.gg-mm-node .mm-node-table .ggt button.ggt-add-col { top: 6px; bottom: 18px; right: 0; width: 16px; height: auto; }
+.gg-mm-node .mm-node-table .ggt button.ggt-add-row { left: 18px; right: 18px; bottom: 0; height: 16px; width: auto; }
+.gg-mm-node .mm-node-table .ggt-table { background: var(--background-primary); }
+
+/* 同级编号：标题前面的 1. 2. 3.，比文字淡一点，不能编辑 */
+.gg-mm-node .mm-num { flex: none; align-self: flex-start; color: var(--mm-node-fg); opacity: 0.6; font-variant-numeric: tabular-nums; user-select: none; }
+.gg-mm-node.has-table .mm-num { grid-row: 1; }
+.mm-outline-text .mm-num { color: var(--text-muted); }
+
+/* 完成的任务显示删除线（设置打开时；背诵模式里勾选框是答案，不加） */
+body.mm-strike-done .gg-mm-root:not(.is-recite) .mm-label:has(> .mm-task.is-done) { text-decoration: line-through; color: var(--text-muted); }
+
+/* ==== gogoga-table 同步开始（scripts/sync-table.mjs 生成，别直接改） ==== */
+/*
+ * gogoga Table
+ * 默认样式参考 Notion 的简单表格：直角、极淡的分隔线、表头一点浅底，靠留白分层。
+ * 颜色全部取 Obsidian 主题变量，换主题、深浅色都跟着变。
+ */
+
+.ggt {
+  --ggt-line: var(--table-border-color, var(--background-modifier-border));
+  --ggt-head-bg: rgba(var(--mono-rgb-100), 0.035);
+  --ggt-zebra: rgba(var(--mono-rgb-100), 0.025);
+  --ggt-hover: rgba(var(--mono-rgb-100), 0.03);
+  --ggt-sel: var(--interactive-accent);
+  --ggt-sel-soft: rgba(var(--interactive-accent-rgb, 72, 54, 153), 0.08);
+  --ggt-pad-y: 7px;
+  --ggt-pad-x: 10px;
+  --ggt-font-size: var(--table-text-size, 0.93em);
+  position: relative;
+  margin: 0.4em 0 0.8em;
+  padding: 10px 26px 26px 14px;
+  margin-left: -14px;
+  width: fit-content;
+  max-width: calc(100% + 40px);
+  box-sizing: border-box;
+}
+.ggt[data-density="compact"] { --ggt-pad-y: 3px; --ggt-pad-x: 8px; }
+
+/* 右边、下边留出位置：骑在表格右下角的填充柄（连同它放大的点击范围）不会被裁掉，也不会把表格撑出横向滚动 */
+.ggt-scroll { overflow-x: auto; overflow-y: visible; padding: 0 12px 12px 0; margin: 0 -12px -12px 0; }
+.ggt-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: auto;
+  width: max-content;
+  min-width: 0;
+  max-width: none;
+  margin: 0 !important;
+  font-size: var(--ggt-font-size);
+  line-height: 1.5;
+}
+.ggt-table col { min-width: 40px; }
+.ggt .ggt-cell {
+  position: relative;
+  padding: 0;
+  min-width: 80px;
+  border: 0;
+  border-right: 1px solid var(--ggt-line);
+  border-bottom: 1px solid var(--ggt-line);
+  background: transparent;
+  vertical-align: top;
+  text-align: left;
+  font-weight: inherit;
+  color: var(--text-normal);
+}
+/* 第一列才有左边框（按列号，不按 :first-child：第一列被合并盖住的行，第一个元素是第二列） */
+.ggt .ggt-table .ggt-cell[data-c="0"] { border-left: 1px solid var(--ggt-line); }
+.ggt .ggt-table thead .ggt-cell { border-top: 1px solid var(--ggt-line); background: var(--ggt-head-bg); font-weight: var(--font-semibold, 600); }
+.ggt .ggt-cell[data-align="center"] { text-align: center; }
+.ggt .ggt-cell[data-align="right"] { text-align: right; }
+
+.ggt-content {
+  padding: var(--ggt-pad-y) var(--ggt-pad-x);
+  min-height: calc(1.5em + 2 * var(--ggt-pad-y));
+  /* 渲染出来的 Markdown 自己会把换行变成 <br>，这里再保留换行符就会多出一个空行 */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  cursor: default;
+}
+/* 没有 Markdown 渲染（纯文字显示）时，换行靠这里保留 */
+.ggt-content.is-plain { white-space: pre-wrap; }
+.ggt-content > :first-child { margin-top: 0; }
+.ggt-content > :last-child { margin-bottom: 0; }
+.ggt-content p { margin: 0; }
+.ggt-content.is-empty::after { content: "\200b"; }
+
+/* 悬停、选中 */
+.ggt:not(.is-readonly) .ggt-cell:hover { box-shadow: inset 0 0 0 999px var(--ggt-hover); }
+/* 不加 z-index：大表格里改一格的层级要整张表重排（2 万格约 15ms），选中框画在格子里面，也用不着它 */
+.ggt .ggt-cell.is-selected { box-shadow: inset 0 0 0 2px var(--ggt-sel) !important; }
+.ggt .ggt-cell.is-sel-head { background-image: linear-gradient(var(--ggt-sel-soft), var(--ggt-sel-soft)); }
+
+/* 选中时藏在格子里的输入框；编辑时变成这一格的编辑框 */
+.ggt-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  resize: none;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: var(--ggt-pad-y) var(--ggt-pad-x) !important;
+  margin: 0;
+  font: inherit;
+  line-height: inherit;
+  color: inherit;
+  text-align: inherit;
+  border-radius: 0 !important;
+  overflow: hidden;
+}
+/* 编辑中：内容区换成看不见的原文撑开高度，编辑框盖在上面 */
+.ggt-cell.is-editing .ggt-content { visibility: hidden; white-space: pre-wrap; }
+.ggt-cell.is-editing .ggt-input {
+  opacity: 1;
+  pointer-events: auto;
+  caret-color: var(--ggt-sel);
+}
+
+/* 底色：主题的颜色调淡，深浅色都合适。颜色放在变量里，真正上色的规则在后面（要压过表头、预设的底色） */
+.ggt .ggt-cell[data-bg="gray"] { --ggt-cell-bg: rgba(var(--mono-rgb-100), 0.07); }
+.ggt .ggt-cell[data-bg="red"] { --ggt-cell-bg: rgba(var(--color-red-rgb), 0.14); }
+.ggt .ggt-cell[data-bg="orange"] { --ggt-cell-bg: rgba(var(--color-orange-rgb), 0.15); }
+.ggt .ggt-cell[data-bg="yellow"] { --ggt-cell-bg: rgba(var(--color-yellow-rgb), 0.18); }
+.ggt .ggt-cell[data-bg="green"] { --ggt-cell-bg: rgba(var(--color-green-rgb), 0.14); }
+.ggt .ggt-cell[data-bg="blue"] { --ggt-cell-bg: rgba(var(--color-blue-rgb), 0.13); }
+.ggt .ggt-cell[data-bg="purple"] { --ggt-cell-bg: rgba(var(--color-purple-rgb), 0.13); }
+
+/* 预设：斑马纹 */
+/* 冻结列不刷斑马纹：它要保持不透明，挡住往左滚到它底下的列（刷成半透明的浅灰会露出底下的字） */
+.ggt[data-preset="zebra"] tbody tr:nth-child(even) .ggt-cell:not([data-bg]):not(.is-frozen) { background: var(--ggt-zebra); }
+/* 预设：极简线（只有横线，表头下面一道深线） */
+.ggt[data-preset="minimal"] .ggt-cell { border-left: 0 !important; border-right: 0; }
+.ggt[data-preset="minimal"] thead .ggt-cell { background: transparent; border-top: 0; border-bottom: 1.5px solid var(--text-normal); }
+
+/* 列宽线：鼠标靠近任意两列之间的竖线时出现，贯穿整张表 */
+.ggt-resize {
+  position: absolute;
+  z-index: 5;
+  width: 9px;
+  cursor: col-resize;
+  touch-action: none;
+  display: none;
+}
+.ggt-resize.is-shown, .ggt-resize.is-active { display: block; }
+.ggt-resize::after { content: ""; position: absolute; top: 0; bottom: 0; left: 3px; width: 2px; border-radius: 1px; background: var(--ggt-sel); opacity: 0.7; }
+.ggt-resize.is-active::after { opacity: 1; }
+.ggt.is-resizing, .ggt.is-resizing * { cursor: col-resize !important; user-select: none; }
+
+/* 行、列手柄：悬停时出现在边框上 */
+.ggt button.ggt-handle {
+  position: absolute;
+  height: auto;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--ggt-line);
+  border-radius: 5px;
+  background: var(--background-primary);
+  color: var(--text-muted);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s;
+}
+.ggt button.ggt-handle.is-shown { opacity: 1; pointer-events: auto; }
+.ggt button.ggt-handle:hover { color: var(--text-normal); border-color: var(--ggt-sel); }
+/* 尺寸写在和上面同样权重的选择器上：不然会被上面的 height: auto 盖掉（行手柄曾被压成 14×14，图标只露一半） */
+.ggt button.ggt-handle svg { width: 15px; height: 15px; flex: none; }
+.ggt button.ggt-row-handle { width: 18px; height: 28px; transform: translate(-50%, -50%); }
+.ggt button.ggt-col-handle { width: 28px; height: 18px; transform: translate(-50%, -50%); }
+
+/* 加行、加列 */
+.ggt button.ggt-add {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-faint);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s, background 0.12s;
+  box-shadow: none;
+}
+.ggt-add svg { width: 14px; height: 14px; }
+.ggt:hover button.ggt-add { opacity: 1; }
+.ggt button.ggt-add:hover { background: rgba(var(--mono-rgb-100), 0.06); color: var(--text-normal); }
+.ggt-add-col { top: 10px; bottom: 26px; right: 4px; width: 18px; height: auto; }
+.ggt-add-row { left: 14px; right: 26px; bottom: 4px; height: 18px; width: auto; }
+.ggt.is-readonly .ggt-add, .ggt.is-readonly .ggt-handle { display: none; }
+
+/* 弹出菜单 */
+.ggt-menu {
+  position: fixed;
+  z-index: var(--layer-menu, 65);
+  min-width: 200px;
+  max-height: calc(100vh - 16px);
+  overflow-y: auto;
+  padding: 4px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m, 8px);
+  background: var(--background-primary);
+  box-shadow: var(--shadow-l, 0 8px 24px rgba(0, 0, 0, 0.16));
+  font-size: var(--font-ui-small, 13px);
+}
+.ggt-menu button.ggt-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  width: 100%;
+  height: auto;
+  padding: 5px 8px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-normal);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+.ggt-menu button.ggt-menu-item:hover:not(:disabled) { background: var(--background-modifier-hover); }
+.ggt-menu button.ggt-menu-item:disabled { opacity: 0.4; cursor: default; }
+.ggt-menu button.ggt-menu-item.is-danger:not(:disabled) { color: var(--text-error); }
+.ggt-menu-icon { display: inline-flex; width: 16px; color: var(--text-muted); }
+.ggt-menu-icon svg { width: 15px; height: 15px; }
+.ggt-menu-check { margin-left: auto; display: inline-flex; color: var(--ggt-sel, var(--interactive-accent)); }
+.ggt-menu-check svg { width: 14px; height: 14px; }
+.ggt-menu-sep { height: 1px; margin: 4px 6px; background: var(--background-modifier-border); }
+.ggt-menu-label { padding: 4px 8px 2px; color: var(--text-faint); font-size: 0.92em; }
+.ggt-menu-swatches { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 8px 6px; }
+.ggt-menu button.ggt-swatch {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 5px;
+  background: var(--background-primary);
+  box-shadow: none;
+  cursor: pointer;
+}
+.ggt-menu button.ggt-swatch:hover { border-color: var(--text-muted); }
+.ggt-menu button.ggt-swatch.is-checked { outline: 2px solid var(--interactive-accent); outline-offset: 1px; }
+.ggt-menu button.ggt-swatch[data-bg="none"] { background: linear-gradient(135deg, transparent 45%, var(--text-faint) 45%, var(--text-faint) 55%, transparent 55%), var(--background-primary); }
+.ggt-menu button.ggt-swatch[data-bg="gray"] { background: rgba(var(--mono-rgb-100), 0.12); }
+.ggt-menu button.ggt-swatch[data-bg="red"] { background: rgba(var(--color-red-rgb), 0.3); }
+.ggt-menu button.ggt-swatch[data-bg="orange"] { background: rgba(var(--color-orange-rgb), 0.3); }
+.ggt-menu button.ggt-swatch[data-bg="yellow"] { background: rgba(var(--color-yellow-rgb), 0.35); }
+.ggt-menu button.ggt-swatch[data-bg="green"] { background: rgba(var(--color-green-rgb), 0.3); }
+.ggt-menu button.ggt-swatch[data-bg="blue"] { background: rgba(var(--color-blue-rgb), 0.3); }
+.ggt-menu button.ggt-swatch[data-bg="purple"] { background: rgba(var(--color-purple-rgb), 0.3); }
+
+/* 手机：手柄和加号一直显示、放大，手指能点中 */
+.is-mobile .ggt-add, .is-phone .ggt-add { opacity: 0.8; }
+.is-mobile .ggt button.ggt-row-handle { width: 24px; height: 36px; }
+.is-mobile .ggt button.ggt-col-handle { width: 36px; height: 24px; }
+.is-mobile .ggt button.ggt-handle svg { width: 18px; height: 18px; }
+.is-mobile .ggt-menu-item { padding: 9px 10px; }
+.is-mobile .ggt-swatch { width: 30px; height: 30px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ggt-handle, .ggt-add, .ggt-resize::after { transition: none; }
+}
+
+/* 拖动行列：被拖的那一行 / 列淡一点，落点处一条强调色的线 */
+.ggt .ggt-cell.is-drag-source { opacity: 0.45; }
+.ggt.is-dragging, .ggt.is-dragging * { cursor: grabbing !important; user-select: none; }
+.ggt-drop-line { position: absolute; z-index: 5; background: var(--ggt-sel); border-radius: 1px; pointer-events: none; }
+.ggt-drop-line.is-row { height: 2px; }
+.ggt-drop-line.is-col { width: 2px; }
+.ggt button.ggt-handle { cursor: grab; }
+
+/* 多格选区 */
+/* 选了一片：一个蓝框框住整片，格子不上色（原来的底色照样看得见），里面的当前格也不再单独描边 */
+.ggt-scroll { position: relative; }
+/* 框里铺一层同色系的浅色（铺在框这一层，整片均匀；格子原来的底色透得出来） */
+.ggt-range-box { position: absolute; display: none; z-index: 2; border: 2px solid var(--ggt-sel); border-radius: 2px; background: color-mix(in srgb, var(--ggt-sel) 8%, transparent); pointer-events: none; box-sizing: border-box; }
+.ggt-range-box.is-shown { display: block; }
+/* 选区不含冻结列时，选框放到冻结列下面：滚到冻结列底下的那部分被挡住，不再半透明地盖在冻结列上 */
+.ggt-range-box.is-under-frozen { z-index: 1; }
+.ggt.has-range .ggt-cell.is-selected { box-shadow: none !important; }
+.ggt .ggt-cell.is-merged { vertical-align: middle; }
+
+/* 表头吸顶：贴着时表头要不透明，压在内容上面 */
+.ggt thead { position: relative; z-index: 3; }
+/* 表头吸顶：滚动驱动动画，位置由浏览器按外面容器的滚动位置算（范围由 JS 在布局变化时写进变量） */
+.ggt-y-host { scroll-timeline: --ggt-y block; }
+@keyframes ggt-stick { from { transform: translateY(0); } to { transform: translateY(var(--ggt-stick-len)); } }
+.ggt.is-sd .ggt-table thead { animation: ggt-stick linear both; animation-timing-function: steps(var(--ggt-stick-steps, 1000), end); animation-timeline: --ggt-y; animation-range: var(--ggt-stick-a) var(--ggt-stick-b); }
+/* 原生吸顶（不用横向滚动的表格）：表头 position: sticky，贴着外面滚动区的顶端；横向滚动的容器换成不滚动，免得表头贴到它上面 */
+.ggt.is-native-stick .ggt-scroll { overflow: visible; }
+.ggt.is-native-stick .ggt-table thead { position: sticky; top: var(--ggt-sticky-top, 0px); z-index: 3; }
+.ggt.is-stuck thead .ggt-cell { background-color: var(--background-primary); background-image: linear-gradient(var(--ggt-head-bg), var(--ggt-head-bg)); box-shadow: 0 1px 0 var(--ggt-line); }
+
+/* 横向能滚时，被截断的那一边淡出，提示还有内容（遮罩直接作用在滚动区的可见边缘上，不会和截断的位置错开） */
+.ggt { --ggt-fade: 40px; }
+.ggt.can-right .ggt-scroll { -webkit-mask-image: linear-gradient(to left, transparent, #000 var(--ggt-fade)); mask-image: linear-gradient(to left, transparent, #000 var(--ggt-fade)); }
+.ggt.can-left:not(.is-freeze) .ggt-scroll { -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--ggt-fade)); mask-image: linear-gradient(to right, transparent, #000 var(--ggt-fade)); }
+.ggt.can-left.can-right:not(.is-freeze) .ggt-scroll { -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--ggt-fade), #000 calc(100% - var(--ggt-fade)), transparent); mask-image: linear-gradient(to right, transparent, #000 var(--ggt-fade), #000 calc(100% - var(--ggt-fade)), transparent); }
+.ggt button.ggt-handle { touch-action: none; }
+
+/* 实时预览里包表格的那层默认带 contain: paint，会把伸到表格外面的行手柄、加号裁掉一半 */
+/* Obsidian 的规则是 .markdown-source-view.mod-cm6 .cm-content > [contenteditable="false"] { contain: paint !important }，要比它更具体才盖得住 */
+.markdown-source-view.mod-cm6 .cm-content > .ggt-lp[contenteditable="false"] { contain: none !important; }
+/* 表格上下的外边距要包在这层里：不然边距透到外面，编辑器量块高度时量不到，
+   每张表格让后面所有行的位置少算 18px，几张表之后点段落会落到下一行（点标题上面的段落选中了标题） */
+.markdown-source-view.mod-cm6 .cm-content > .ggt-lp { display: flow-root; }
+
+/* 表头的行手柄拖不动，只能点开菜单 */
+.ggt button.ggt-row-handle.is-fixed { cursor: pointer; }
+.ggt.has-range .ggt-cell.is-sel-head { background-image: none; }
+
+/* 下拉填充：选区右下角的小方块，拖动时虚线框出要填的地方 */
+.ggt-fill { position: absolute; z-index: 6; display: none; width: 8px; height: 8px; box-sizing: border-box; border: 1.5px solid var(--background-primary); border-radius: 2px; background: var(--ggt-sel); cursor: crosshair; touch-action: none; }
+.ggt-fill.is-shown { display: block; }
+.ggt-fill::before { content: ""; position: absolute; inset: -6px; }
+.is-mobile .ggt-fill { width: 14px; height: 14px; border-radius: 4px; }
+.ggt-fill-preview { position: absolute; z-index: 3; display: none; border: 1.5px dashed var(--ggt-sel); border-radius: 2px; pointer-events: none; box-sizing: border-box; }
+.ggt-fill-preview.is-shown { display: block; }
+.ggt.is-filling, .ggt.is-filling * { cursor: crosshair !important; user-select: none; }
+
+/* 表格左上角的按钮：鼠标在表格上时出现，点开是整张表的设置 */
+.ggt button.ggt-corner { position: absolute; z-index: 4; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; padding: 0; transform: translate(-50%, -50%); border: 1px solid var(--ggt-line); border-radius: 6px; background: var(--background-primary); color: var(--text-muted); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06); cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.12s; }
+.ggt:hover button.ggt-corner, .ggt button.ggt-corner:focus-visible { opacity: 1; pointer-events: auto; }
+.ggt button.ggt-corner:hover { color: var(--text-normal); border-color: var(--ggt-sel); }
+.ggt button.ggt-corner svg { width: 14px; height: 14px; }
+.is-mobile .ggt button.ggt-corner { opacity: 1; pointer-events: auto; width: 28px; height: 28px; }
+.ggt.is-readonly button.ggt-corner { display: none; }
+
+/* 导出 PDF、打印：只留表格本身，手柄、加号、按钮、选区都不要 */
+@media print {
+  .ggt-handle, .ggt-add, .ggt-corner, .ggt-resize, .ggt-fill, .ggt-fill-preview, .ggt-range-box, .ggt-cross-band, .ggt-input { display: none !important; }
+  .ggt .ggt-scroll { -webkit-mask-image: none !important; mask-image: none !important; }
+  .ggt .ggt-cell.is-selected { box-shadow: none !important; }
+  .ggt-scroll { overflow: visible !important; }
+  /* 纸宽有限：表格最宽到页面宽，不让右边被裁掉（设了列宽的表格导出时按比例换成百分比，见 reading.ts） */
+  .ggt .ggt-table { max-width: 100% !important; }
+  .ggt .ggt-cell { min-width: 0; }
+}
+
+/* 勾选框：和 Obsidian 任务列表的勾选框一个样子 */
+.ggt-content .ggt-check { margin: 0 6px 0 0; vertical-align: -2px; cursor: pointer; }
+.ggt-check-text > p { display: inline; }
+.ggt-check:checked + .ggt-check-text { color: var(--text-faint); text-decoration: line-through; }
+
+/* 编辑格子时的 [[ 链接、# 标签补全 */
+.ggt-suggest { position: fixed; z-index: var(--layer-menu, 65); min-width: 200px; max-width: 360px; max-height: 280px; overflow-y: auto; padding: 4px; border: 1px solid var(--background-modifier-border); border-radius: var(--radius-m, 8px); background: var(--background-primary); box-shadow: var(--shadow-l, 0 8px 24px rgba(0, 0, 0, 0.16)); font-size: var(--font-ui-small, 13px); }
+.ggt-suggest-item { padding: 5px 8px; border-radius: 5px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ggt-suggest-item.is-active { background: var(--background-modifier-hover); }
+
+/* 插入表格：悬停网格选行列数 */
+.ggt-grid { display: grid; grid-template-columns: repeat(8, 22px); gap: 4px; padding: 4px 0; }
+.ggt-grid-cell { width: 22px; height: 22px; border: 1px solid var(--background-modifier-border); border-radius: 4px; cursor: pointer; }
+.ggt-grid-cell.is-on { background: color-mix(in srgb, var(--interactive-accent) 22%, transparent); border-color: var(--interactive-accent); }
+.ggt-grid-hint { margin-top: 8px; color: var(--text-muted); font-size: var(--font-ui-small, 13px); }
+.ggt-grid-modal { width: auto; }
+
+/* 文字颜色：用主题的颜色，深浅色都清楚 */
+.ggt .ggt-cell[data-fg="gray"] { color: var(--text-muted); }
+.ggt .ggt-cell[data-fg="red"] { color: var(--color-red); }
+.ggt .ggt-cell[data-fg="orange"] { color: var(--color-orange); }
+.ggt .ggt-cell[data-fg="yellow"] { color: var(--color-yellow); }
+.ggt .ggt-cell[data-fg="green"] { color: var(--color-green); }
+.ggt .ggt-cell[data-fg="blue"] { color: var(--color-blue); }
+.ggt .ggt-cell[data-fg="purple"] { color: var(--color-purple); }
+.ggt-menu button.ggt-swatch.is-text { background: var(--background-primary); font-weight: 700; font-size: 13px; line-height: 1; color: var(--text-normal); }
+.ggt-menu button.ggt-swatch.is-text[data-fg="none"] { background: var(--background-primary); color: var(--text-normal); }
+.ggt-menu button.ggt-swatch.is-text[data-fg="gray"] { color: var(--text-muted); }
+.ggt-menu button.ggt-swatch.is-text[data-fg="red"] { color: var(--color-red); }
+.ggt-menu button.ggt-swatch.is-text[data-fg="orange"] { color: var(--color-orange); }
+.ggt-menu button.ggt-swatch.is-text[data-fg="yellow"] { color: var(--color-yellow); }
+.ggt-menu button.ggt-swatch.is-text[data-fg="green"] { color: var(--color-green); }
+.ggt-menu button.ggt-swatch.is-text[data-fg="blue"] { color: var(--color-blue); }
+.ggt-menu button.ggt-swatch.is-text[data-fg="purple"] { color: var(--color-purple); }
+
+/* 标题列：第一列和表头一样的浅底、加粗 */
+.ggt .ggt-cell.is-head-col { background-color: var(--ggt-head-bg); font-weight: var(--font-semibold, 600); }
+
+/* 三线表：顶线、表头下线、底线，没有竖线和中间的横线 */
+.ggt[data-preset="academic"] .ggt-cell { border-left: 0 !important; border-right: 0; border-bottom: 0; background: transparent; }
+.ggt[data-preset="academic"] thead .ggt-cell { border-top: 1.5px solid var(--text-normal); border-bottom: 1px solid var(--text-normal); background: transparent; }
+.ggt[data-preset="academic"] tbody tr:last-child .ggt-cell { border-bottom: 1.5px solid var(--text-normal); }
+
+/* 合计行：加粗，上面一道线 */
+.ggt .ggt-cell.is-total-row { font-weight: var(--font-semibold, 600); border-top: 1.5px solid var(--ggt-line-strong, var(--text-faint)); }
+
+/* 状态标签：圆角小块，颜色取主题色调淡 */
+.ggt-pill { display: inline-block; padding: 0 8px; border-radius: 10px; font-size: 0.92em; line-height: 1.6; white-space: nowrap; color: var(--text-normal); background: rgba(var(--mono-rgb-100), 0.08); }
+.ggt-pill[data-c="red"] { background: rgba(var(--color-red-rgb), 0.18); color: var(--color-red); }
+.ggt-pill[data-c="orange"] { background: rgba(var(--color-orange-rgb), 0.18); color: var(--color-orange); }
+.ggt-pill[data-c="yellow"] { background: rgba(var(--color-yellow-rgb), 0.22); color: color-mix(in srgb, var(--color-yellow) 70%, var(--text-normal)); }
+.ggt-pill[data-c="green"] { background: rgba(var(--color-green-rgb), 0.18); color: var(--color-green); }
+.ggt-pill[data-c="blue"] { background: rgba(var(--color-blue-rgb), 0.16); color: var(--color-blue); }
+.ggt-pill[data-c="purple"] { background: rgba(var(--color-purple-rgb), 0.16); color: var(--color-purple); }
+.ggt-pill[data-c="gray"] { background: rgba(var(--mono-rgb-100), 0.08); color: var(--text-muted); }
+
+/* 格子里的列表：缩进收窄到一个字左右，去掉上下间距（Obsidian 正文的列表缩进放在格子里太宽） */
+.ggt .ggt-cell .ggt-content ul, .ggt .ggt-cell .ggt-content ol { margin: 0; padding-inline-start: 1.3em; }
+.ggt-content ul ul, .ggt-content ol ol, .ggt-content ul ol, .ggt-content ol ul { padding-inline-start: 1.1em; }
+/* Obsidian 给列表项上下各加了一点内边距（优先级比这里高），表格里不要 */
+.ggt .ggt-cell .ggt-content li { margin: 0; padding-top: 0; padding-bottom: 0; }
+.ggt-content li > p { margin: 0; }
+.ggt-content .list-bullet { margin-inline-start: -0.9em; }
+.ggt-content ul > li.task-list-item, .ggt-content ol > li.task-list-item { margin-inline-start: 0; }
+
+/* 列表项下面的表格（实时预览）：按缩进层数往右挪，和列表项的文字对齐 */
+.markdown-source-view.mod-cm6 .cm-content > .ggt-lp.is-in-list { padding-inline-start: calc(var(--list-indent, 2.25em) * var(--ggt-depth, 1)); }
+
+/*
+ * 格子自己的底色压过一切默认底色：表头的浅灰、标题列、斑马纹、极简线和三线表的透明表头。
+ * 表头吸顶时底下要不透明：先铺页面底色，再叠一层格子的颜色
+ */
+.ggt .ggt-table .ggt-cell[data-bg] { background-color: var(--ggt-cell-bg); }
+.ggt.is-stuck .ggt-table thead .ggt-cell[data-bg] { background-color: var(--background-primary); background-image: linear-gradient(var(--ggt-cell-bg), var(--ggt-cell-bg)); }
+/*
+ * 能吸顶的表格（原生吸顶 / 滚动驱动）：表头格子一直先铺页面底色，再叠表头的浅灰，看起来和不铺一样。
+ * is-stuck 是滚动之后 JS 才加的，快速滑动时表头已经贴到顶上、类还没加，半透明的表头会透出底下正文的笔画
+ */
+.ggt { --ggt-head-tint: var(--ggt-head-bg); }
+.ggt[data-preset="minimal"], .ggt[data-preset="academic"] { --ggt-head-tint: transparent; }
+.ggt.is-native-stick .ggt-table thead .ggt-cell, .ggt.is-sd .ggt-table thead .ggt-cell { background-color: var(--background-primary); background-image: linear-gradient(var(--ggt-head-tint), var(--ggt-head-tint)); }
+.ggt.is-stuck.is-native-stick .ggt-table thead .ggt-cell, .ggt.is-stuck.is-sd .ggt-table thead .ggt-cell { background-image: linear-gradient(var(--ggt-head-bg), var(--ggt-head-bg)); }
+.ggt.is-native-stick .ggt-table thead .ggt-cell[data-bg], .ggt.is-sd .ggt-table thead .ggt-cell[data-bg] { background-image: linear-gradient(var(--ggt-cell-bg), var(--ggt-cell-bg)); }
+/* 表格位置带小数时（阅读视图常见），格子各自对齐到像素，两行表头之间、表头顶边会留一条一像素的缝透出正文：整个表头底下再垫一层；吸顶时往上多垫一点 */
+.ggt.is-native-stick .ggt-table thead::before, .ggt.is-sd .ggt-table thead::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--background-primary); pointer-events: none; }
+.ggt.is-stuck.is-native-stick .ggt-table thead::before, .ggt.is-stuck.is-sd .ggt-table thead::before { top: -2px; }
+
+/* 冻结标题列：左右滚动时第一列贴在左边。底下要不透明，先铺页面底色，再叠标题列（或格子）的颜色 */
+.ggt { --ggt-frozen-tint: var(--ggt-head-bg); }
+.ggt[data-preset="minimal"], .ggt[data-preset="academic"] { --ggt-frozen-tint: transparent; }
+.ggt.is-freeze .ggt-table .ggt-cell.is-frozen { position: sticky; left: 0; z-index: 2; background-color: var(--background-primary); background-image: linear-gradient(var(--ggt-frozen-tint), var(--ggt-frozen-tint)); }
+.ggt.is-freeze .ggt-table thead .ggt-cell.is-frozen { background-image: linear-gradient(var(--ggt-head-bg), var(--ggt-head-bg)); }
+.ggt.is-freeze[data-preset="minimal"] .ggt-table thead .ggt-cell.is-frozen, .ggt.is-freeze[data-preset="academic"] .ggt-table thead .ggt-cell.is-frozen { background-image: none; }
+.ggt.is-freeze .ggt-table .ggt-cell.is-frozen[data-bg] { background-image: linear-gradient(var(--ggt-cell-bg), var(--ggt-cell-bg)); }
+/* 滚动过后：冻结列右边出一道阴影，表示后面的格子从它底下滑过 */
+.ggt.is-freeze.can-left .ggt-cell.is-frozen:not(.is-selected) { box-shadow: 6px 0 6px -6px rgba(0, 0, 0, 0.18); }
+.theme-dark .ggt.is-freeze.can-left .ggt-cell.is-frozen:not(.is-selected) { box-shadow: 6px 0 6px -6px rgba(0, 0, 0, 0.5); }
+
+/* 十字高亮（设置里开）：选中格子所在的整行、整列铺一层淡色 */
+.ggt { --ggt-cross: color-mix(in srgb, var(--interactive-accent) 9%, transparent); }
+/* 盖在表格上的四条色带（在格子文字上面，颜色很淡）；冻结列的格子在色带上面，它们自己加 is-cross */
+.ggt-cross-band { position: absolute; display: none; z-index: 1; background: var(--ggt-cross); pointer-events: none; }
+.ggt-cross-band.is-shown { display: block; }
+.ggt .ggt-cell.is-cross { box-shadow: inset 0 0 0 999px var(--ggt-cross); }
+
+/* 编辑格子时选中文字浮出的格式栏（设置「编辑格子时选中文字显示格式栏」）：挂在 body 上，按视口定位 */
+.ggt-format-bar {
+  position: fixed;
+  z-index: var(--layer-popover, 30);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px 4px;
+  border-radius: 8px;
+  background: var(--background-primary, #fff);
+  border: 1px solid var(--background-modifier-border, #e3e3e3);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ggt-format-bar .ggt-format-btn {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 4px;
+  border-radius: 5px;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--text-normal, #1f1f1f);
+  cursor: pointer;
+}
+.ggt-format-bar .ggt-format-btn:hover { background: var(--background-modifier-hover, rgba(0, 0, 0, 0.06)); }
+.ggt-format-bar .ggt-format-btn.is-bold { font-weight: 700; }
+.ggt-format-bar .ggt-format-btn.is-italic { font-style: italic; font-family: Georgia, serif; }
+.ggt-format-bar .ggt-format-btn.is-strike { text-decoration: line-through; }
+.ggt-format-bar .ggt-format-btn.is-underline { text-decoration: underline; }
+.ggt-format-bar .ggt-format-btn.is-color { font-weight: 700; }
+.ggt-format-bar .ggt-format-btn.is-bg { width: 20px; min-width: 20px; height: 18px; margin: 0 2px; font-size: 11px; font-weight: 600; }
+.ggt-format-bar .ggt-format-btn svg { width: 15px; height: 15px; }
+.ggt-format-bar .ggt-format-btn.is-bg[data-highlight="red"] { background: var(--highlight-background-red, rgba(var(--color-red-rgb, 233, 49, 71), 0.3)); }
+.ggt-format-bar .ggt-format-btn.is-bg[data-highlight="orange"] { background: var(--highlight-background-orange, rgba(var(--color-orange-rgb, 236, 117, 0), 0.3)); }
+.ggt-format-bar .ggt-format-btn.is-bg[data-highlight="yellow"] { background: var(--highlight-background-yellow, rgba(var(--color-yellow-rgb, 224, 172, 0), 0.3)); }
+.ggt-format-bar .ggt-format-btn.is-bg[data-highlight="green"] { background: var(--highlight-background-green, rgba(var(--color-green-rgb, 8, 185, 78), 0.3)); }
+.ggt-format-bar .ggt-format-btn.is-bg[data-highlight="blue"] { background: var(--highlight-background-blue, rgba(var(--color-blue-rgb, 8, 109, 221), 0.3)); }
+.ggt-format-bar .ggt-format-btn.is-bg[data-highlight="purple"] { background: var(--highlight-background-purple, rgba(var(--color-purple-rgb, 120, 82, 238), 0.3)); }
+.ggt-format-sep { width: 1px; height: 16px; margin: 0 3px; background: var(--background-modifier-border, #e3e3e3); }
+
+/* 「编辑格子时直接显示格式」：编辑框是 CodeMirror，外观和 textarea 一样（Obsidian 编辑器的样式也会套到这个嵌套的编辑器上，要压回去） */
+/* CodeMirror 自带的样式把根元素设成 position: relative !important，要压回绝对定位（盖在格子上、不占位置） */
+.ggt .ggt-cell .ggt-input.ggt-input-cm { position: absolute !important; display: flex; flex-direction: column; contain: strict; }
+/* contain：编辑框里的变化（CodeMirror 量尺寸、改样式）不让整张表重新排版，大表格点格子不卡 */
+.ggt .ggt-input.ggt-input-cm .cm-scroller { overflow: hidden !important; font-family: inherit !important; line-height: inherit !important; padding: 0 !important; }
+.ggt .ggt-input.ggt-input-cm .cm-content { padding: 0 !important; min-height: 0 !important; caret-color: var(--ggt-sel); font: inherit !important; color: inherit !important; max-width: none !important; white-space: pre-wrap; }
+.ggt .ggt-input.ggt-input-cm .cm-line { padding: 0 !important; text-indent: 0 !important; }
+.ggt .ggt-input.ggt-input-cm.cm-focused { outline: none !important; }
+.ggt .ggt-input.ggt-input-cm .cm-gutters { display: none !important; }
+.ggt .ggt-input.ggt-input-cm .cm-cursor { border-left-color: var(--ggt-sel); }
+.ggt .ggt-input.ggt-input-cm .cm-selectionBackground { background: var(--text-selection) !important; }
+.ggt .ggt-input-cm .ggt-ed-strong { font-weight: 700; }
+.ggt .ggt-input-cm .ggt-ed-em { font-style: italic; }
+.ggt .ggt-input-cm .ggt-ed-del { text-decoration: line-through; }
+.ggt .ggt-input-cm .ggt-ed-u { text-decoration: underline; }
+.ggt .ggt-input-cm .ggt-ed-code { padding: 0 0.3em; border-radius: 3px; background: rgba(127, 127, 127, 0.18); font-family: var(--font-monospace, monospace); }
+.ggt .ggt-input-cm .ggt-ed-mark { background: var(--text-highlight-bg, rgba(255, 210, 0, 0.45)); border-radius: 2px; color: inherit; }
+.ggt .ggt-input-cm .ggt-ed-syntax { opacity: 0.45; }
+.ggt .ggt-input-cm .ggt-ed-mark[data-highlight="red"] { background: var(--highlight-background-red, rgba(var(--color-red-rgb, 233, 49, 71), 0.3)); }
+.ggt .ggt-input-cm .ggt-ed-mark[data-highlight="orange"] { background: var(--highlight-background-orange, rgba(var(--color-orange-rgb, 236, 117, 0), 0.3)); }
+.ggt .ggt-input-cm .ggt-ed-mark[data-highlight="yellow"] { background: var(--highlight-background-yellow, rgba(var(--color-yellow-rgb, 224, 172, 0), 0.3)); }
+.ggt .ggt-input-cm .ggt-ed-mark[data-highlight="green"] { background: var(--highlight-background-green, rgba(var(--color-green-rgb, 8, 185, 78), 0.3)); }
+.ggt .ggt-input-cm .ggt-ed-mark[data-highlight="blue"] { background: var(--highlight-background-blue, rgba(var(--color-blue-rgb, 8, 109, 221), 0.3)); }
+.ggt .ggt-input-cm .ggt-ed-mark[data-highlight="purple"] { background: var(--highlight-background-purple, rgba(var(--color-purple-rgb, 120, 82, 238), 0.3)); }
+
+/* 阅读视图：Obsidian 给表格套的 .el-table 会横向滚动、裁掉超出的部分，骑在表格左边线上的行手柄、左上角按钮会被切掉半边。
+   接管了的表格横向滚动由 .ggt-scroll 自己负责，这一层不用滚动（这样长表格在阅读视图里也能用原生吸顶）。Obsidian 在它上面写了内联的 overflow-x: auto，要 !important 才盖得住 */
+.markdown-rendered .el-table:has(> .ggt-reading) { overflow: visible !important; }
+/* ==== gogoga-table 同步结束 ==== */
+
+/* 「在笔记里隐藏格式标签」：Markdown 笔记实时预览里藏起标签后的效果 */
+.markdown-source-view .mm-note-u { text-decoration: underline; }
+/* 笔记里画好的颜色标签段：加粗、斜体跟着外层的文字颜色（主题给加粗单独设的颜色会把红字里的加粗变回黑色），和脑图节点里一样 */
+.markdown-source-view .mm-note-tags span[style*="color"] :is(strong, b, em, i) { color: inherit; }
+.markdown-source-view .mm-note-mark { background-color: var(--text-highlight-bg); color: var(--text-normal); border-radius: 2px; }
+/* 「在笔记里隐藏脑图节点标记」：行尾的 %%…%% 缩成的小灰点，悬停看原文，点一下露出来 */
+.markdown-source-view .mm-note-marker { display: inline-block; width: 6px; height: 6px; margin: 0 0 0.15em 0.4em; border-radius: 50%; background: var(--text-faint); opacity: 0.6; vertical-align: middle; cursor: pointer; }
+.markdown-source-view .mm-note-marker:hover { opacity: 1; background: var(--text-muted); }
+.markdown-source-view .mm-note-marker-hidden { display: inline-block; width: 0; height: 1em; overflow: hidden; vertical-align: text-bottom; }
+
+/* Markdown 笔记里选中文字浮出的格式栏（「在笔记里选中文字时显示格式栏」）：挂在 body 上，按视口定位 */
+.mm-format-bar.mm-note-format-bar { position: fixed; z-index: var(--layer-popover, 30); }
+.mm-note-format-bar .mm-icon { display: flex; }
+.mm-note-format-bar .mm-icon svg { width: 15px; height: 15px; }
+
+/* 「在笔记里显示节点颜色」：带颜色的节点文字铺一层同色淡底，颜色和脑图里的命名颜色一致 */
+.mm-note-node-color {
+  --mm-note-color: #dcdce2;
+  background: color-mix(in srgb, var(--mm-note-color) 55%, transparent);
+  border-radius: 4px;
+  padding: 1px 3px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.mm-note-node-color[data-color="red"] { --mm-note-color: #f9a3a3; }
+.mm-note-node-color[data-color="orange"] { --mm-note-color: #fbc98d; }
+.mm-note-node-color[data-color="yellow"] { --mm-note-color: #f7e48e; }
+.mm-note-node-color[data-color="green"] { --mm-note-color: #a3e5a2; }
+.mm-note-node-color[data-color="teal"] { --mm-note-color: #93e3d6; }
+.mm-note-node-color[data-color="blue"] { --mm-note-color: #8edbf7; }
+.mm-note-node-color[data-color="purple"] { --mm-note-color: #d4b5f5; }
+.mm-note-node-color[data-color="pink"] { --mm-note-color: #f8b8da; }
+.mm-note-node-color[data-color="gray"] { --mm-note-color: #dcdce2; }
+.theme-dark .mm-note-node-color { background: color-mix(in srgb, var(--mm-note-color) 75%, transparent); }
+.theme-dark .mm-note-node-color[data-color="red"] { --mm-note-color: #8c3b3b; }
+.theme-dark .mm-note-node-color[data-color="orange"] { --mm-note-color: #8c5a2b; }
+.theme-dark .mm-note-node-color[data-color="yellow"] { --mm-note-color: #7a6a22; }
+.theme-dark .mm-note-node-color[data-color="green"] { --mm-note-color: #2f6b3a; }
+.theme-dark .mm-note-node-color[data-color="teal"] { --mm-note-color: #23615a; }
+.theme-dark .mm-note-node-color[data-color="blue"] { --mm-note-color: #2a5a78; }
+.theme-dark .mm-note-node-color[data-color="purple"] { --mm-note-color: #5a3e82; }
+.theme-dark .mm-note-node-color[data-color="pink"] { --mm-note-color: #7a3860; }
+.theme-dark .mm-note-node-color[data-color="gray"] { --mm-note-color: #45454e; }
+/* 自定义色（#hex）深色模式下淡一些，字还看得清 */
+.theme-dark .mm-note-node-color:not([data-color]) { background: color-mix(in srgb, var(--mm-note-color) 40%, transparent); }
+
+/* 设置页：工具栏按钮的清单（图标 + 名字，关掉的行变浅） */
+.mm-setting-bar-icon { display: inline-flex; width: 16px; height: 16px; margin-right: 8px; vertical-align: -3px; color: var(--text-muted); }
+.mm-setting-bar-icon svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mm-setting-bar-off .setting-item-name { color: var(--text-faint); }
+.mm-setting-bar-grip { display: flex; align-items: center; margin-right: 6px; color: var(--text-faint); cursor: grab; touch-action: none; }
+.mm-setting-bar-grip.is-hidden { display: none; }
+.mm-setting-bar-grip svg { width: 16px; height: 16px; }
+.mm-setting-bar-grip:hover { color: var(--text-muted); }
+.mm-setting-bar-row.is-drag-sibling { transition: transform 120ms ease; }
+.mm-setting-bar-row.is-dragging { position: relative; z-index: 2; background: var(--background-primary); box-shadow: var(--shadow-s); border-radius: var(--radius-s); cursor: grabbing; }
+.mm-setting-bar-row.is-dragging .mm-setting-bar-grip { cursor: grabbing; }
+
+/* 带颜色的文字做成链接：保持文字原来的颜色，下划线表示是链接（脑图画布里、脑图笔记用 Markdown 打开时） */
+.gg-mm-root .mm-color .mm-link, .gg-mm-root .mm-link:has(.mm-color) { text-decoration: underline; text-underline-offset: 2px; }
+.gg-mm-root .mm-color .mm-link { color: inherit; }
+.gg-mm-note span[style*="color"] a.internal-link { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+
+/* 文字颜色选单：每项前面一个带颜色的 A */
+.mm-textcolor-menu .mm-textcolor-a { display: inline-block; width: 1.2em; margin-right: 6px; font-weight: 700; text-align: center; }
