@@ -47,7 +47,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -363,58 +363,16 @@
       "smart-composer:Open smart composer": false
     }
   },
-  "floating": {
-    "id": "70d84ea69b8e85fe",
-    "type": "floating",
-    "children": [
-      {
-        "id": "67d1c2fe6692e418",
-        "type": "window",
-        "children": [
-          {
-            "id": "11ad2369815a11ea",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "d052bf28bb0037b5",
-                "type": "leaf",
-                "pinned": true,
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "pinned": true,
-                  "icon": "lucide-file",
-                  "title": "简单逻辑学Z"
-                }
-              }
-            ]
-          }
-        ],
-        "direction": "vertical",
-        "x": -954,
-        "y": 344,
-        "width": 754,
-        "height": 752,
-        "maximize": false,
-        "zoom": -1
-      }
-    ]
-  },
-  "active": "5bf4b7b0c860e5e1",
+  "active": "667a600022d25893",
   "lastOpenFiles": [
     "Diary/2026/20261112.md",
+    "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
     "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw",
     "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md",
     "assets/Designer (7).png",
     "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw",
     "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw",
     "assets/Designer (6).png",
-    "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
     "assets/Designer (5).png",
     "assets/Designer (3).png",
     "assets/file-20261112011109789.png",
