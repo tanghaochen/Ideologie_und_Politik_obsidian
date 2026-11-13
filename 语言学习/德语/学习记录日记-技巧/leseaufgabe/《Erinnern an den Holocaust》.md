@@ -28,23 +28,23 @@ Heute spricht sie mit jungen Menschen über ihre Geschichte . Besonders der wach
 Welche Aussage fasst den Text am besten zusammen?
 a) Der Respekt vor Gedenkstätten nimmt ab, und ==zugleich== wird es schwieriger, die Erinnerung an den Holocaust ==weiterzugeben==.
 b) In Deutschland wird derzeit diskutiert, ob Gedenkstätten für KZ-Opfer noch ==zeitgemäß== sind.
-c) Eine Holocaust-Überlebende fordert strengere Gesetze gegen Antisemitismus.
+c) Eine Holocaust-Überlebende fordert strengere ==Gesetze== gegen Antisemitismus.
 
 **Frage 2 – Detail / Synonym**
 Wie beschreibt der Direktor der Stiftung Buchenwald die ==Vorfälle== in der Gedenkstätte?
 a) Sie hätten in den vergangenen Jahren ==zugenommen==.
 b) Sie ==gingen== fast immer von ausländischen Jugendgruppen aus.
-c) Sie würden von den Mitarbeitenden der Gedenkstätte nicht ernst genommen.
+c) Sie würden von den Mitarbeitenden der Gedenkstätte nicht ==ernst== genommen.
 
 **Frage 3 – Implikation**
 Was drückt Wagner mit seiner Bemerkung aus, man töte die Menschen ein zweites Mal?
-a) Die Zerstörung der Gedenkbäume verletzt die Opfer erneut in ihrer Würde.
-b) Die Täter müssten genauso bestraft werden wie damals die Nationalsozialisten.
-c) Die Opfer seien in der Gedenkstätte nur unzureichend dokumentiert.
+a) Die Zerstörung der Gedenkbäume verletzt die Opfer ==erneut== in ihrer Würde.
+b) Die Täter müssten ==genauso== ==bestraft== werden wie damals die Nationalsozialisten.
+c) Die Opfer seien in der Gedenkstätte nur ==unzureichend== dokumentiert.
 
 **Frage 4 – Umformulierung / Attitüde**
-Wie steht ein Teil der Bevölkerung laut Text zur deutschen Erinnerungskultur?
-a) Manche halten sie für eine einseitige Schuldzuweisung und weisen sie deshalb zurück.
+==Wie steht== ein Teil der Bevölkerung ==laut Text== zur deutschen Erinnerungskultur?
+a) Manche halten sie für eine ==einseitige Schuldzuweisung== und weisen sie deshalb zurück.
 b) Viele wünschen sich mehr staatliche Unterstützung für die Gedenkstätten.
 c) Die Mehrheit der Deutschen interessiert sich nicht mehr für die NS-Zeit.
 
@@ -56,9 +56,9 @@ c) Weil Jugendliche heute deutlich weniger über Geschichte wissen als früher.
 
 **Frage 6 – Bewertung / Methode**
 Wie beurteilt Wagner lange Vorträge vor Schulklassen?
-a) Er hält sie für wenig wirksam, weil die Jugendlichen einen eigenen Zugang zur Geschichte brauchen.
-b) Er hält sie für sinnvoll, solange Überlebende selbst sprechen.
-c) Er hält sie nur bei älteren Schülern für angebracht, nicht bei Jugendlichen.
+a) Er hält sie für wenig ==wirksam==, weil die Jugendlichen einen eigenen ==Zugang== zur Geschichte brauchen.
+b) Er hält sie für sinnvoll, ==solange== Überlebende selbst sprechen.
+c) Er hält sie nur bei älteren ==Schülern== für angebracht, nicht bei Jugendlichen.
 
 **Frage 7 – 长难句（逻辑/隐含含义）**
 Im Text heißt es: *„Sie sollen auch erkennen, dass die NS-Zeit keine abgeschlossene Geschichte ist.“* Was bedeutet das im Kontext?

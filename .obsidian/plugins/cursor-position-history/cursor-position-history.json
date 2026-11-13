@@ -3941,7 +3941,47 @@
   },
   "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md": {
     "scrollState": {
-      "top": 2752.800048828125,
+      "top": 2632.800048828125,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 1036,
+      "height": 1522,
+      "width": 1048
+    },
+    "cursor": {
+      "from": {
+        "ch": 33,
+        "line": 60
+      },
+      "to": {
+        "ch": 41,
+        "line": 60
+      }
+    }
+  },
+  "语言学习/德语/学习记录日记-技巧/leseaufgabe/提示词和解答.md": {
+    "scrollState": {
+      "top": 1560,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 1036,
+      "height": 1522,
+      "width": 1048
+    },
+    "cursor": {
+      "from": {
+        "ch": 188,
+        "line": 1295
+      },
+      "to": {
+        "ch": 188,
+        "line": 1295
+      }
+    }
+  },
+  "file:C:/Users/17741/Downloads/注释.md": {
+    "scrollState": {
+      "top": 79.20000457763672,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 1036,
@@ -3951,15 +3991,15 @@
     "cursor": {
       "from": {
         "ch": 0,
-        "line": 25
+        "line": 0
       },
       "to": {
         "ch": 0,
-        "line": 73
+        "line": 0
       }
     }
   },
-  "语言学习/德语/学习记录日记-技巧/leseaufgabe/未命名.md": {
+  "file:C:/Users/17741/Downloads/注释 (2026-11-14 01-01-10).md": {
     "scrollState": {
       "top": 0,
       "left": 0,
@@ -3970,12 +4010,32 @@
     },
     "cursor": {
       "from": {
-        "ch": 188,
-        "line": 1295
+        "ch": 0,
+        "line": 0
       },
       "to": {
-        "ch": 188,
-        "line": 1295
+        "ch": 0,
+        "line": 28
+      }
+    }
+  },
+  "_AI-Diagrams/未命名.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 1036,
+      "height": 1522,
+      "width": 1048
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 0
+      },
+      "to": {
+        "ch": 0,
+        "line": 0
       }
     }
   }
