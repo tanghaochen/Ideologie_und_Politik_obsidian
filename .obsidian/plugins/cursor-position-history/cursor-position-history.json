@@ -461,21 +461,21 @@
   },
   "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md": {
     "scrollState": {
-      "top": 600,
+      "top": 774,
       "left": 0,
-      "clientHeight": 1516,
-      "clientWidth": 1134,
-      "height": 1516,
-      "width": 1146
+      "clientHeight": 1522,
+      "clientWidth": 1370,
+      "height": 1522,
+      "width": 1382
     },
     "cursor": {
       "from": {
-        "ch": 24,
-        "line": 41
+        "ch": 4,
+        "line": 45
       },
       "to": {
-        "ch": 0,
-        "line": 40
+        "ch": 21,
+        "line": 47
       }
     }
   },
@@ -2981,12 +2981,12 @@
   },
   "语言学习/德语/公共知识语法/10句型/从句合集/关系从句/关系从句.md": {
     "scrollState": {
-      "top": 5550,
+      "top": 4789.2001953125,
       "left": 0,
       "clientHeight": 1522,
-      "clientWidth": 1035,
+      "clientWidth": 1036,
       "height": 1522,
-      "width": 1047
+      "width": 1048
     },
     "cursor": {
       "from": {
@@ -3081,12 +3081,12 @@
   },
   "语言学习/德语/公共知识语法/10句型/从句合集/关系从句/各种关系代词区别对比.md": {
     "scrollState": {
-      "top": 6158.400390625,
+      "top": 6468,
       "left": 0,
       "clientHeight": 1522,
-      "clientWidth": 1301,
+      "clientWidth": 1036,
       "height": 1522,
-      "width": 1313
+      "width": 1048
     },
     "cursor": {
       "from": {
@@ -3301,7 +3301,7 @@
   },
   "语言学习/德语/公共知识语法/10句型/从句合集/关系从句/超齐全版系统讲解关系从句.md": {
     "scrollState": {
-      "top": 4532.39990234375,
+      "top": 0,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 1036,
@@ -3310,12 +3310,12 @@
     },
     "cursor": {
       "from": {
-        "ch": 24,
-        "line": 151
+        "ch": 0,
+        "line": 0
       },
       "to": {
-        "ch": 24,
-        "line": 151
+        "ch": 0,
+        "line": 0
       }
     }
   },
@@ -3936,6 +3936,46 @@
       "to": {
         "ch": 0,
         "line": 48
+      }
+    }
+  },
+  "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md": {
+    "scrollState": {
+      "top": 2752.800048828125,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 1036,
+      "height": 1522,
+      "width": 1048
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 25
+      },
+      "to": {
+        "ch": 0,
+        "line": 73
+      }
+    }
+  },
+  "语言学习/德语/学习记录日记-技巧/leseaufgabe/未命名.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 1036,
+      "height": 1522,
+      "width": 1048
+    },
+    "cursor": {
+      "from": {
+        "ch": 188,
+        "line": 1295
+      },
+      "to": {
+        "ch": 188,
+        "line": 1295
       }
     }
   }

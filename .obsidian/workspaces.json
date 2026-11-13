@@ -693,194 +693,71 @@
         "type": "split",
         "children": [
           {
-            "id": "ff5d945606200819",
+            "id": "3bc015e7f0f64eeb",
             "type": "tabs",
-            "dimension": 34.03341288782816,
             "children": [
               {
-                "id": "4941ed643b059f3a",
-                "type": "leaf",
-                "state": {
-                  "type": "excalidraw",
-                  "state": {
-                    "file": "语言学习/德语/公共知识语法/格; 限定词.md"
-                  },
-                  "icon": "excalidraw-icon",
-                  "title": "格; 限定词"
-                }
-              },
-              {
-                "id": "9be7e4bb836fa99e",
-                "type": "leaf",
-                "state": {
-                  "type": "excalidraw",
-                  "state": {
-                    "file": "语言学习/德语/公共知识语法/从句.md"
-                  },
-                  "icon": "excalidraw-icon",
-                  "title": "从句"
-                }
-              },
-              {
-                "id": "7f26734a40576a36",
+                "id": "b396f74b1dec3e21",
                 "type": "leaf",
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
+                    "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
                     "mode": "source",
                     "source": false,
                     "backlinks": false
                   },
                   "icon": "lucide-file",
-                  "title": "听说读写 以及学习外语的核心方法"
-                }
-              },
-              {
-                "id": "fe8729b9f803ac4b",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/email Reklamation Bürostuhl – ErgoSitz 24.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "email Reklamation Bürostuhl – ErgoSitz 24"
-                }
-              },
-              {
-                "id": "c15b930b39ac1c30",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl"
+                  "title": "《Erinnern an den Holocaust》"
                 }
               }
-            ],
-            "currentTab": 4
+            ]
           },
           {
-            "id": "b5dbd09e7753bfc0",
-            "type": "tabs",
-            "dimension": 65.96658711217184,
+            "id": "3f4797f1cf032a12",
+            "type": "split",
             "children": [
               {
-                "id": "086d9cbe40e64179",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/对话练习.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "对话练习"
-                }
+                "id": "ca5d38080bc71ab3",
+                "type": "tabs",
+                "children": [
+                  {
+                    "id": "b759e66aa4fb2711",
+                    "type": "leaf",
+                    "state": {
+                      "type": "mindmap",
+                      "state": {
+                        "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md"
+                      },
+                      "icon": "mindmap-tree",
+                      "title": "《Erinnern an den Holocaust》"
+                    }
+                  }
+                ]
               },
               {
-                "id": "5b9ac5c4ba35d39a",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/观点发表（Stellungnahme）：对一篇文章或评论表示赞同、反驳或部分赞同.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "观点发表（Stellungnahme）：对一篇文章或评论表示赞同、反驳或部分赞同"
-                }
-              },
-              {
-                "id": "c52ecd87abcfe178",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/单词/背单词-数量与范围频率可能性确定性程度必要性重要性.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "背单词-数量与范围频率可能性确定性程度必要性重要性"
-                }
-              },
-              {
-                "id": "90aae133c29aaddb",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述物品的摆放：位置、姿态与排列.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "描述物品的摆放：位置、姿态与排列"
-                }
-              },
-              {
-                "id": "f05b7cbb17d90fd2",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/间接引语（新闻体）：第一、第二虚拟式与介词连接体系.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "间接引语（新闻体）：第一、第二虚拟式与介词连接体系"
-                }
-              },
-              {
-                "id": "bcbbea41d655326c",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "未命名"
-                }
-              },
-              {
-                "id": "e07fc50f5bf19b7f",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/公共知识语法/连词成对.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "连词成对"
-                }
+                "id": "4679dcaf02fa313f",
+                "type": "tabs",
+                "children": [
+                  {
+                    "id": "8273a369856b9641",
+                    "type": "leaf",
+                    "state": {
+                      "type": "markdown",
+                      "state": {
+                        "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
+                        "mode": "source",
+                        "source": false,
+                        "backlinks": false
+                      },
+                      "icon": "lucide-file",
+                      "title": "《Erinnern an den Holocaust》"
+                    }
+                  }
+                ]
               }
             ],
-            "currentTab": 4
+            "direction": "horizontal"
           }
         ],
         "direction": "vertical"
@@ -1037,8 +914,8 @@
                 "state": {
                   "type": "mxmind-view",
                   "state": {},
-                  "icon": "network",
-                  "title": "Mxmind"
+                  "icon": "lucide-ghost",
+                  "title": "mxmind-view"
                 }
               },
               {
@@ -1122,6 +999,7 @@
       },
       "left-ribbon": {
         "hiddenItems": {
+          "gogoga-mindmap:新建思维导图": false,
           "smart-composer:Open smart composer": false,
           "ostracon-ob:获取MN数据": false,
           "obsidian-local-images-plus:Local Images Plus  0.17.1\r\nLocalize attachments (plugin folder)": false,
@@ -1136,7 +1014,6 @@
           "workspaces:管理工作区布局": false,
           "templater-obsidian:Templater": false,
           "table-editor-obsidian:Advanced Tables Toolbar": true,
-          "mxmind:Mxmind": true,
           "audio-recorder:开始/结束录音": true,
           "obsidian-git:Open Git source control": true,
           "pexels-banner:🚩 Pixel Banner Menu": true,
@@ -1152,8 +1029,8 @@
           "periodic-notes:Open today": false
         }
       },
-      "active": "f05b7cbb17d90fd2",
-      "mtime": "2026-11-12T00:03:27+08:00"
+      "active": "8273a369856b9641",
+      "mtime": "2026-11-13T23:57:29+08:00"
     },
     "生词": {
       "main": {
@@ -2296,7 +2173,352 @@
       },
       "active": "3150f47d33f68a91",
       "mtime": "2026-10-24T01:34:45+08:00"
+    },
+    "阅读": {
+      "main": {
+        "id": "f5de525c029043e4",
+        "type": "split",
+        "children": [
+          {
+            "id": "3bc015e7f0f64eeb",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "b396f74b1dec3e21",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "《Erinnern an den Holocaust》"
+                }
+              }
+            ]
+          },
+          {
+            "id": "3f4797f1cf032a12",
+            "type": "split",
+            "children": [
+              {
+                "id": "ca5d38080bc71ab3",
+                "type": "tabs",
+                "children": [
+                  {
+                    "id": "b759e66aa4fb2711",
+                    "type": "leaf",
+                    "state": {
+                      "type": "mindmap",
+                      "state": {
+                        "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md"
+                      },
+                      "icon": "mindmap-tree",
+                      "title": "《Erinnern an den Holocaust》"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "4679dcaf02fa313f",
+                "type": "tabs",
+                "children": [
+                  {
+                    "id": "8273a369856b9641",
+                    "type": "leaf",
+                    "state": {
+                      "type": "markdown",
+                      "state": {
+                        "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
+                        "mode": "source",
+                        "source": false,
+                        "backlinks": false
+                      },
+                      "icon": "lucide-file",
+                      "title": "《Erinnern an den Holocaust》"
+                    }
+                  }
+                ]
+              }
+            ],
+            "direction": "horizontal"
+          }
+        ],
+        "direction": "vertical"
+      },
+      "left": {
+        "id": "dde9718a6f30ff5d",
+        "type": "split",
+        "children": [
+          {
+            "id": "69b90f7608974d6b",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "abbd6433f71b711a",
+                "type": "leaf",
+                "state": {
+                  "type": "bookmarks",
+                  "state": {
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-bookmark",
+                  "title": "书签"
+                }
+              },
+              {
+                "id": "2bdbb354e1190468",
+                "type": "leaf",
+                "state": {
+                  "type": "search",
+                  "state": {
+                    "query": "",
+                    "matchingCase": true,
+                    "explainSearch": false,
+                    "collapseAll": false,
+                    "extraContext": false,
+                    "sortOrder": "alphabetical"
+                  },
+                  "icon": "lucide-search",
+                  "title": "搜索"
+                }
+              },
+              {
+                "id": "232e94f80ffd93ce",
+                "type": "leaf",
+                "state": {
+                  "type": "recent-files",
+                  "state": {},
+                  "icon": "clock",
+                  "title": "Recent files"
+                }
+              },
+              {
+                "id": "5962dcef85933e57",
+                "type": "leaf",
+                "state": {
+                  "type": "notebook-navigator",
+                  "state": {},
+                  "icon": "notebook-navigator",
+                  "title": "Notebook Navigator"
+                }
+              }
+            ],
+            "currentTab": 3
+          }
+        ],
+        "direction": "horizontal",
+        "width": 425.5125274658203
+      },
+      "right": {
+        "id": "b2bf97bc0c7f8080",
+        "type": "split",
+        "children": [
+          {
+            "id": "0ed9c27411998641",
+            "type": "tabs",
+            "dimension": 75.59779276517474,
+            "children": [
+              {
+                "id": "dd8c0de9236cf3b8",
+                "type": "leaf",
+                "state": {
+                  "type": "quiet-outline",
+                  "state": {},
+                  "icon": "lines-of-text",
+                  "title": "Quiet Outline"
+                }
+              },
+              {
+                "id": "36c96029ae4dd065",
+                "type": "leaf",
+                "state": {
+                  "type": "copilot-chat-view",
+                  "state": {},
+                  "icon": "message-square",
+                  "title": "Copilot Quick Chat"
+                }
+              },
+              {
+                "id": "fc8efd10765ae511",
+                "type": "leaf",
+                "state": {
+                  "type": "git-view",
+                  "state": {},
+                  "icon": "git-pull-request",
+                  "title": "Source Control"
+                }
+              },
+              {
+                "id": "2cc3d386c974b5b6",
+                "type": "leaf",
+                "state": {
+                  "type": "git-history-view",
+                  "state": {},
+                  "icon": "history",
+                  "title": "History"
+                }
+              },
+              {
+                "id": "d3ec81ed4c00a968",
+                "type": "leaf",
+                "state": {
+                  "type": "advanced-tables-toolbar",
+                  "state": {},
+                  "icon": "spreadsheet",
+                  "title": "Advanced Tables"
+                }
+              },
+              {
+                "id": "cf2b910cbf6b6677",
+                "type": "leaf",
+                "state": {
+                  "type": "file-properties",
+                  "state": {
+                    "file": "思想思维心理哲学/个人问题处理/芜湖.md"
+                  },
+                  "icon": "lucide-info",
+                  "title": "笔记属性"
+                }
+              },
+              {
+                "id": "7492b847e238b9e1",
+                "type": "leaf",
+                "state": {
+                  "type": "calendar",
+                  "state": {},
+                  "icon": "calendar-with-checkmark",
+                  "title": "Calendar"
+                }
+              },
+              {
+                "id": "7bcc90c64e14a360",
+                "type": "leaf",
+                "state": {
+                  "type": "mxmind-view",
+                  "state": {},
+                  "icon": "lucide-ghost",
+                  "title": "mxmind-view"
+                }
+              },
+              {
+                "id": "0f758d49a646ce9e",
+                "type": "leaf",
+                "state": {
+                  "type": "tag",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "useHierarchy": true,
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-tags",
+                  "title": "标签"
+                }
+              },
+              {
+                "id": "2166e25004a3aa52",
+                "type": "leaf",
+                "state": {
+                  "type": "all-properties",
+                  "state": {
+                    "sortOrder": "frequency",
+                    "showSearch": false,
+                    "searchQuery": ""
+                  },
+                  "icon": "lucide-archive",
+                  "title": "添加笔记属性"
+                }
+              }
+            ]
+          },
+          {
+            "id": "28e75bfc7e894da7",
+            "type": "tabs",
+            "dimension": 24.40220723482526,
+            "children": [
+              {
+                "id": "c3592eded90586bf",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "file-properties",
+                  "state": {
+                    "file": "语言学习/德语/公共知识语法/语法快查必背语法canvas.md"
+                  },
+                  "pinned": true,
+                  "icon": "lucide-info",
+                  "title": "语法快查必背语法canvas的笔记属性"
+                }
+              },
+              {
+                "id": "5020f6b7d22ceb0b",
+                "type": "leaf",
+                "state": {
+                  "type": "footnotes",
+                  "state": {
+                    "file": "思想思维心理哲学/个人问题处理/芜湖.md"
+                  },
+                  "icon": "lucide-file-signature",
+                  "title": "脚注"
+                }
+              },
+              {
+                "id": "e377fe748686f28e",
+                "type": "leaf",
+                "state": {
+                  "type": "notebook-navigator-calendar",
+                  "state": {},
+                  "icon": "lucide-calendar-days",
+                  "title": "日历"
+                }
+              }
+            ],
+            "currentTab": 2
+          }
+        ],
+        "direction": "horizontal",
+        "width": 507.5
+      },
+      "left-ribbon": {
+        "hiddenItems": {
+          "gogoga-mindmap:新建思维导图": false,
+          "smart-composer:Open smart composer": false,
+          "ostracon-ob:获取MN数据": false,
+          "obsidian-local-images-plus:Local Images Plus  0.17.1\r\nLocalize attachments (plugin folder)": false,
+          "media-extended:打开媒体库": true,
+          "media-extended:打开媒体快速切换器": true,
+          "mermaid-tools:Open Mermaid Toolbar": true,
+          "canvas:新建白板": true,
+          "omnisearch:Omnisearch": true,
+          "pdf-plus:PDF++: Toggle auto-copy": true,
+          "pdf-plus:PDF++: Toggle auto-focus": true,
+          "pdf-plus:PDF++: Toggle auto-paste": true,
+          "workspaces:管理工作区布局": false,
+          "templater-obsidian:Templater": false,
+          "table-editor-obsidian:Advanced Tables Toolbar": true,
+          "audio-recorder:开始/结束录音": true,
+          "obsidian-git:Open Git source control": true,
+          "pexels-banner:🚩 Pixel Banner Menu": true,
+          "vscode-editor:新建代码文件": true,
+          "darlal-switcher-plus:Open in Headings Mode": true,
+          "darlal-switcher-plus:Open Symbols for the active editor": true,
+          "command-palette:打开命令面板": true,
+          "daily-notes:打开/创建今天的日记": false,
+          "obsidian-excalidraw-plugin:新建绘图文件": false,
+          "realclaudian:Open Claudian": false,
+          "copilot:Open Copilot Agent Chat": false,
+          "notebook-navigator:Notebook Navigator": false,
+          "periodic-notes:Open today": false
+        }
+      },
+      "active": "8273a369856b9641",
+      "mtime": "2026-11-13T23:58:11+08:00"
     }
   },
-  "active": "D写作"
+  "active": "阅读"
 }
