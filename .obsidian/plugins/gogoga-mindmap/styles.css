@@ -2275,7 +2275,7 @@ body.mm-strike-done .gg-mm-root:not(.is-recite) .mm-label:has(> .mm-task.is-done
   --ggt-font-size: var(--table-text-size, 0.93em);
   position: relative;
   margin: 0.4em 0 0.8em;
-  padding: 10px 26px 26px 14px;
+  padding: 10px 26px calc(26px + var(--ggt-sb, 0px)) 14px;
   margin-left: -14px;
   width: fit-content;
   max-width: calc(100% + 40px);
@@ -2297,6 +2297,9 @@ body.mm-strike-done .gg-mm-root:not(.is-recite) .mm-label:has(> .mm-task.is-done
   line-height: 1.5;
 }
 .ggt-table col { min-width: 40px; }
+/* 设置「表格默认撑满页面宽度」：没设过列宽的表铺满，各列按内容比例分；内容更宽时照样横向滚动 */
+.ggt.is-full { width: auto; }
+.ggt.is-full .ggt-table { width: 100%; }
 .ggt .ggt-cell {
   position: relative;
   padding: 0;
@@ -2329,6 +2332,9 @@ body.mm-strike-done .gg-mm-root:not(.is-recite) .mm-label:has(> .mm-task.is-done
 .ggt-content > :first-child { margin-top: 0; }
 .ggt-content > :last-child { margin-bottom: 0; }
 .ggt-content p { margin: 0; }
+/* 格子里的图片：截图动辄上千像素宽，不限制会把整列撑开；列宽设得比 320 窄时跟着列宽 */
+.ggt-content .internal-embed.image-embed { display: inline-block; max-width: 320px; }
+.ggt-content img { max-width: 100%; height: auto; vertical-align: middle; }
 .ggt-content.is-empty::after { content: "\200b"; }
 
 /* 悬停、选中 */
@@ -2442,7 +2448,7 @@ body.mm-strike-done .gg-mm-root:not(.is-recite) .mm-label:has(> .mm-task.is-done
 .ggt-add svg { width: 14px; height: 14px; }
 .ggt:hover button.ggt-add { opacity: 1; }
 .ggt button.ggt-add:hover { background: rgba(var(--mono-rgb-100), 0.06); color: var(--text-normal); }
-.ggt-add-col { top: 10px; bottom: 26px; right: 4px; width: 18px; height: auto; }
+.ggt-add-col { top: 10px; bottom: calc(26px + var(--ggt-sb, 0px)); right: 4px; width: 18px; height: auto; }
 .ggt-add-row { left: 14px; right: 26px; bottom: 4px; height: 18px; width: auto; }
 .ggt.is-readonly .ggt-add, .ggt.is-readonly .ggt-handle { display: none; }
 
@@ -2775,6 +2781,26 @@ body.mm-strike-done .gg-mm-root:not(.is-recite) .mm-label:has(> .mm-task.is-done
 /* 阅读视图：Obsidian 给表格套的 .el-table 会横向滚动、裁掉超出的部分，骑在表格左边线上的行手柄、左上角按钮会被切掉半边。
    接管了的表格横向滚动由 .ggt-scroll 自己负责，这一层不用滚动（这样长表格在阅读视图里也能用原生吸顶）。Obsidian 在它上面写了内联的 overflow-x: auto，要 !important 才盖得住 */
 .markdown-rendered .el-table:has(> .ggt-reading) { overflow: visible !important; }
+
+/* 双击格子里的图片看大图 */
+.ggt-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--layer-modal, 50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.78);
+  cursor: zoom-out;
+}
+.ggt-lightbox img {
+  max-width: 92vw;
+  max-height: 92vh;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+}
+.ggt-content img { cursor: zoom-in; }
 /* ==== gogoga-table 同步结束 ==== */
 
 /* 「在笔记里隐藏格式标签」：Markdown 笔记实时预览里藏起标签后的效果 */

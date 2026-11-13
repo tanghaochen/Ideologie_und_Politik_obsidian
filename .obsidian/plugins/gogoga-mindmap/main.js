@@ -805,6 +805,7 @@ var en = {
   "menu.unhideNode": "Unhide",
   "menu.copy": "Copy",
   "menu.copyImage": "Copy image",
+  "menu.deleteImage": "Delete image",
   "menu.addCallout": "Add callout",
   "menu.editCallout": "Edit callout",
   "menu.removeCallout": "Remove callout",
@@ -831,6 +832,7 @@ var en = {
   "notice.cannotHeading": "This level can't be converted to headings: its parent isn't a heading, or it's already at heading level 6",
   "notice.saveImageUnsupported": "Saving images isn't supported here",
   "notice.saveImageFailed": "Failed to save image: {error}",
+  "notice.xmindTaken": "gogoga Mind Map: another plugin already opens .xmind files, so .xmind files stay with that plugin. Mind maps in notes are not affected.",
   "notice.imageAddedToNote": "Image added to this node's note",
   "notice.noBlockId": "This node has no block ID yet; one can only be generated while editing",
   "notice.copied": "Copied {link}",
@@ -1019,6 +1021,12 @@ var en = {
   "settings.notesExpanded.name": "Expand notes",
   "settings.quoteListNotes.name": "Write notes under list items as blockquotes (> before each line)",
   "settings.quoteListNotes.desc": "In Obsidian, indented lines right below a list item count as part of that item's text, so styles like a first-line indent line up badly. With this on, a list item's note is written with > before every line, which makes it a separate blockquote inside the item. The mind map strips one > when reading, so you won't see them in the note. Only notes you change are rewritten. Notes under headings and node tables are not affected.",
+  "settings.noteCardShow.name": "Show in expanded notes",
+  "settings.noteCardShow.desc": 'What the note box under a node shows. With only list items, the box shows list items (with their indented sub-items and continuation lines) and hides paragraphs \u2014 handy when "Only headings as nodes" puts long explanations in notes and you only want the conclusions in the map. Nodes with nothing to show keep just the note icon. Only the display changes: the note popover, editing and your file always have the full note.',
+  "settings.noteCardShow.all": "Everything",
+  "settings.noteCardShow.list": "List items only",
+  "settings.noteCardShow.ordered": "Ordered lists only",
+  "settings.noteCardShow.unordered": "Bullet lists only",
   "settings.notesExpanded.desc": "Show node notes in a box under the node, and move the nodes around it out of the way, instead of opening them from the note icon. This sets the default; the note button on the toolbar switches a single map and is remembered per file. Nothing is written to your notes.",
   "settings.noteMaxHeight.name": "Maximum height of expanded notes",
   "settings.noteMaxHeight.desc": "Longer notes scroll inside their box. In pixels, scaled with the node text size.",
@@ -1461,6 +1469,7 @@ var zh = {
   "menu.unhideNode": "\u53D6\u6D88\u9690\u85CF",
   "menu.copy": "\u590D\u5236",
   "menu.copyImage": "\u590D\u5236\u56FE\u7247",
+  "menu.deleteImage": "\u5220\u9664\u56FE\u7247",
   "menu.addCallout": "\u6DFB\u52A0\u6807\u6CE8",
   "menu.editCallout": "\u7F16\u8F91\u6807\u6CE8",
   "menu.removeCallout": "\u5220\u9664\u6807\u6CE8",
@@ -1486,6 +1495,7 @@ var zh = {
   "notice.cannotHeading": "\u8FD9\u4E00\u5C42\u4E0D\u80FD\u8F6C\u4E3A\u6807\u9898\uFF1A\u7236\u8282\u70B9\u4E0D\u662F\u6807\u9898\uFF0C\u6216\u5DF2\u7ECF\u662F\u516D\u7EA7\u6807\u9898",
   "notice.saveImageUnsupported": "\u5F53\u524D\u73AF\u5883\u4E0D\u652F\u6301\u4FDD\u5B58\u56FE\u7247",
   "notice.saveImageFailed": "\u4FDD\u5B58\u56FE\u7247\u5931\u8D25\uFF1A{error}",
+  "notice.xmindTaken": "gogoga \u8111\u56FE\uFF1A\u5DF2\u7ECF\u6709\u522B\u7684\u63D2\u4EF6\u5728\u6253\u5F00 .xmind \u6587\u4EF6\uFF0C.xmind \u7EE7\u7EED\u4EA4\u7ED9\u5B83\u6253\u5F00\u3002\u7B14\u8BB0\u91CC\u7684\u8111\u56FE\u4E0D\u53D7\u5F71\u54CD\u3002",
   "notice.imageAddedToNote": "\u56FE\u7247\u5DF2\u52A0\u5230\u8FD9\u4E2A\u8282\u70B9\u7684\u5907\u6CE8\u91CC",
   "notice.noBlockId": "\u8FD9\u4E2A\u8282\u70B9\u8FD8\u6CA1\u6709\u5757 id\uFF0C\u9700\u8981\u5728\u53EF\u7F16\u8F91\u72B6\u6001\u4E0B\u751F\u6210",
   "notice.copied": "\u5DF2\u590D\u5236 {link}",
@@ -1671,6 +1681,12 @@ var zh = {
   "settings.notesExpanded.name": "\u5907\u6CE8\u5C55\u5F00\u663E\u793A",
   "settings.quoteListNotes.name": "\u5217\u8868\u9879\u4E0B\u7684\u5907\u6CE8\u5199\u6210\u5F15\u7528\u5757\uFF08\u6BCF\u884C\u524D\u52A0 >\uFF09",
   "settings.quoteListNotes.desc": "Obsidian \u628A\u7D27\u8DDF\u5728\u5217\u8868\u9879\u4E0B\u9762\u7684\u7F29\u8FDB\u884C\u5F53\u6210\u8FD9\u4E00\u9879\u6587\u5B57\u7684\u7EED\u884C\uFF0C\u9996\u884C\u7F29\u8FDB\u4E4B\u7C7B\u7684\u6837\u5F0F\u4F1A\u5BF9\u4E0D\u9F50\u3002\u6253\u5F00\u540E\uFF0C\u5217\u8868\u9879\u7684\u5907\u6CE8\u6BCF\u884C\u524D\u52A0 > \u5199\u8FDB\u6587\u4EF6\uFF0C\u6210\u4E3A\u8FD9\u4E00\u9879\u91CC\u4E00\u4E2A\u72EC\u7ACB\u7684\u5F15\u7528\u5757\uFF1B\u8111\u56FE\u8BFB\u7684\u65F6\u5019\u53BB\u6389\u4E00\u5C42 >\uFF0C\u5907\u6CE8\u91CC\u770B\u4E0D\u5230\u3002\u53EA\u6539\u5199\u4F60\u6539\u52A8\u8FC7\u7684\u5907\u6CE8\u3002\u6807\u9898\u4E0B\u7684\u5907\u6CE8\u3001\u8282\u70B9\u91CC\u7684\u8868\u683C\u4E0D\u53D7\u5F71\u54CD\u3002",
+  "settings.noteCardShow.name": "\u5C55\u5F00\u7684\u5907\u6CE8\u91CC\u663E\u793A",
+  "settings.noteCardShow.desc": "\u8282\u70B9\u4E0B\u9762\u7684\u5907\u6CE8\u6846\u91CC\u663E\u793A\u4EC0\u4E48\u3002\u9009\u53EA\u663E\u793A\u5217\u8868\u9879\u65F6\uFF0C\u6846\u91CC\u53EA\u7559\u5217\u8868\u9879\uFF08\u8FDE\u540C\u5B83\u4E0B\u9762\u7F29\u8FDB\u7684\u5B50\u9879\u3001\u7EED\u884C\uFF09\uFF0C\u6BB5\u843D\u6587\u5B57\u4E0D\u663E\u793A\uFF1A\u5F00\u7740\u300C\u53EA\u628A\u6807\u9898\u5F53\u8282\u70B9\u300D\u65F6\uFF0C\u6807\u9898\u4E0B\u7684\u5927\u6BB5\u89E3\u91CA\u90FD\u5728\u5907\u6CE8\u91CC\uFF0C\u7528\u5B83\u53EF\u4EE5\u5728\u8111\u56FE\u91CC\u53EA\u770B\u7ED3\u8BBA\u3002\u6311\u5B8C\u6CA1\u6709\u5185\u5BB9\u7684\u8282\u70B9\u53EA\u7559\u5907\u6CE8\u56FE\u6807\u3002\u53EA\u6539\u663E\u793A\uFF1A\u70B9\u5907\u6CE8\u56FE\u6807\u5F39\u51FA\u7684\u7A97\u53E3\u3001\u7F16\u8F91\u5907\u6CE8\u65F6\u548C\u6587\u4EF6\u91CC\u90FD\u662F\u5B8C\u6574\u5185\u5BB9\u3002",
+  "settings.noteCardShow.all": "\u5168\u90E8",
+  "settings.noteCardShow.list": "\u53EA\u663E\u793A\u5217\u8868\u9879",
+  "settings.noteCardShow.ordered": "\u53EA\u663E\u793A\u6709\u5E8F\u5217\u8868",
+  "settings.noteCardShow.unordered": "\u53EA\u663E\u793A\u65E0\u5E8F\u5217\u8868",
   "settings.notesExpanded.desc": "\u8282\u70B9\u7684\u5907\u6CE8\u76F4\u63A5\u663E\u793A\u5728\u8282\u70B9\u4E0B\u65B9\u7684\u6846\u91CC\uFF0C\u5468\u56F4\u7684\u8282\u70B9\u81EA\u52A8\u8BA9\u5F00\uFF0C\u4E0D\u7528\u518D\u70B9\u5907\u6CE8\u56FE\u6807\u5F39\u7A97\u770B\u3002\u8FD9\u91CC\u662F\u9ED8\u8BA4\u503C\uFF1B\u5DE5\u5177\u680F\u7684\u5907\u6CE8\u6309\u94AE\u53EA\u5207\u6362\u5F53\u524D\u8FD9\u5F20\u56FE\uFF0C\u6309\u6587\u4EF6\u8BB0\u4F4F\u3002\u4E0D\u5F80\u7B14\u8BB0\u91CC\u5199\u4EFB\u4F55\u4E1C\u897F\u3002",
   "settings.noteMaxHeight.name": "\u5C55\u5F00\u5907\u6CE8\u7684\u6700\u5927\u9AD8\u5EA6",
   "settings.noteMaxHeight.desc": "\u8D85\u51FA\u7684\u90E8\u5206\u5728\u6846\u91CC\u6EDA\u52A8\u3002\u5355\u4F4D\u662F\u50CF\u7D20\uFF0C\u8DDF\u7740\u300C\u8282\u70B9\u5B57\u53F7\u300D\u4E00\u8D77\u7F29\u653E\u3002",
@@ -2121,9 +2137,9 @@ function parseTable(lines, meta = null) {
   const delim = splitRow(lines[1]);
   if (header.length !== delim.length) return null;
   const rows = [header, ...lines.slice(2).map(splitRow)];
-  const width = Math.max(...rows.map((r3) => r3.length));
-  const cells = rows.map((r3) => Array.from({ length: width }, (_, i) => cellFromSource(r3[i] ?? "")));
-  const align = Array.from({ length: width }, (_, i) => i < delim.length ? alignOf(delim[i]) : null);
+  const width2 = Math.max(...rows.map((r3) => r3.length));
+  const cells = rows.map((r3) => Array.from({ length: width2 }, (_, i) => cellFromSource(r3[i] ?? "")));
+  const align = Array.from({ length: width2 }, (_, i) => i < delim.length ? alignOf(delim[i]) : null);
   const all = [lines[0], lines[1], ...lines.slice(2)];
   return {
     cells,
@@ -2149,9 +2165,9 @@ function displayWidth(s) {
 function isWide(cp) {
   return cp >= 4352 && cp <= 4447 || cp >= 11904 && cp <= 12350 || cp >= 12353 && cp <= 13311 || cp >= 13312 && cp <= 19903 || cp >= 19968 && cp <= 40959 || cp >= 40960 && cp <= 42191 || cp >= 44032 && cp <= 55203 || cp >= 63744 && cp <= 64255 || cp >= 65072 && cp <= 65103 || cp >= 65280 && cp <= 65376 || cp >= 65504 && cp <= 65510 || cp >= 127744 && cp <= 128591 || cp >= 129280 && cp <= 129535 || cp >= 131072 && cp <= 262141;
 }
-function delimCell(a, width) {
-  if (!width) return a === "center" ? ":---:" : a === "right" ? "---:" : a === "left" ? ":---" : "---";
-  const n = Math.max(3, width);
+function delimCell(a, width2) {
+  if (!width2) return a === "center" ? ":---:" : a === "right" ? "---:" : a === "left" ? ":---" : "---";
+  const n = Math.max(3, width2);
   if (a === "center") return ":" + "-".repeat(Math.max(1, n - 2)) + ":";
   if (a === "right") return "-".repeat(Math.max(2, n - 1)) + ":";
   if (a === "left") return ":" + "-".repeat(Math.max(2, n - 1));
@@ -3383,12 +3399,16 @@ function parseMarkdown(src, opts = {}) {
       const split = splitMarker(tok.text);
       const { text } = split;
       let { marker } = split;
-      const next = tokens[ti + 1];
+      let k = ti + 1;
+      while (tokens[k]?.t === "line" && tokens[k].raw.trim() === "") k++;
+      const next = tokens[k];
+      let markerGap = 0;
       if (next?.t === "line" && next.raw.trim() !== "") {
         const own = splitMarker(next.raw.trim());
-        if (own.text === "") {
+        if (own.text === "" && (k === ti + 1 || Object.keys(own.marker).length)) {
           marker = mergeMarker(marker, own.marker);
-          ti++;
+          markerGap = k - ti - 1;
+          ti = k;
         }
       }
       if (!seenRoot && rootFromHeading) {
@@ -3407,6 +3427,7 @@ function parseMarkdown(src, opts = {}) {
         root.calloutColor = marker.calloutColor;
         root.anchor = marker.anchor;
         root.rels = marker.rels;
+        root.markerGap = markerGap || void 0;
         root.level = 1;
         root.kind = "heading";
         opts.lines?.set(root, lineNo);
@@ -3419,6 +3440,7 @@ function parseMarkdown(src, opts = {}) {
         while (headingStack.length > 1 && headingStack[headingStack.length - 1].level >= tok.level) headingStack.pop();
         const parent = headingStack[headingStack.length - 1];
         const node = createNode({ parent, kind: "heading", level: tok.level, text, color: marker.color, folded: marker.folded, box: marker.box, summary: marker.summary, width: marker.width, side: marker.side, float: marker.float, callout: marker.callout, calloutColor: marker.calloutColor, hidden: marker.hidden, table: marker.table, numbered: marker.num, anchor: marker.anchor, rels: marker.rels, topicSpan: marker.summaryTopic });
+        if (markerGap) node.markerGap = markerGap;
         parent.children.push(node);
         headingStack.push(node);
         opts.lines?.set(node, lineNo);
@@ -3567,7 +3589,10 @@ function serializeMarkdown(doc) {
     if (!tight) ensureBlank();
     out.push(`${"#".repeat(level)} ${node.text}`.trimEnd());
     const marker = formatMarker(node).trim();
-    if (marker) out.push(marker);
+    if (marker) {
+      for (let i = 0; i < (node.markerGap ?? 0); i++) out.push("");
+      out.push(marker);
+    }
     lastNode = node;
     nodeEnd = out.length;
     if (node.note) {
@@ -4294,6 +4319,13 @@ var zh2 = {
   fmtClear: "\u6E05\u9664\u6587\u5B57\u989C\u8272\u548C\u8367\u5149\u7B14",
   deleteCols: "\u5220\u9664 {n} \u5217",
   deleteTable: "\u5220\u9664\u8868\u683C",
+  copyTable: "\u590D\u5236\u6574\u5F20\u8868\u683C",
+  copyMarkdown: "\u590D\u5236\u4E3A Markdown \u8868\u683C\uFF08\u4E0D\u5E26\u6837\u5F0F\uFF09",
+  copyImage: "\u590D\u5236\u56FE\u7247",
+  copiedImage: "\u5DF2\u590D\u5236\u56FE\u7247",
+  deleteImage: "\u5220\u9664\u56FE\u7247",
+  copiedTable: "\u5DF2\u590D\u5236\u8868\u683C\uFF1A\u7C98\u5230\u5176\u4ED6\u7B14\u8BB0\u4F1A\u4FDD\u7559\u989C\u8272\u3001\u5217\u5BBD\u3001\u5408\u5E76",
+  copiedMarkdown: "\u5DF2\u590D\u5236 Markdown \u8868\u683C",
   indentTable: "\u589E\u52A0\u7F29\u8FDB\uFF08\u6302\u5230\u4E0A\u9762\u7684\u5217\u8868\u9879\u4E0B\uFF09",
   outdentTable: "\u51CF\u5C11\u7F29\u8FDB\uFF08\u79FB\u51FA\u5217\u8868\uFF09",
   moveRowUp: "\u4E0A\u79FB\u4E00\u884C",
@@ -4409,6 +4441,13 @@ var en2 = {
   fmtClear: "Clear text and highlighter colors",
   deleteCols: "Delete {n} columns",
   deleteTable: "Delete table",
+  copyTable: "Copy whole table",
+  copyMarkdown: "Copy as Markdown table (no styles)",
+  copyImage: "Copy image",
+  copiedImage: "Image copied",
+  deleteImage: "Delete image",
+  copiedTable: "Table copied: pasting into another note keeps colors, widths and merges",
+  copiedMarkdown: "Markdown table copied",
   indentTable: "Indent (under the list item above)",
   outdentTable: "Outdent (move out of the list)",
   moveRowUp: "Move row up",
@@ -5718,6 +5757,98 @@ var History = class {
   }
 };
 
+// src/note-filter.ts
+var ITEM_RE = /^([ \t]*)(?:([-*+])|(\d{1,9})[.)])(?:[ \t]+|$)/;
+var FENCE_RE3 = /^[ \t]*(`{3,}|~{3,})/;
+function width(ws) {
+  let w = 0;
+  for (const ch of ws) w += ch === "	" ? 4 - w % 4 : 1;
+  return w;
+}
+function leading(line) {
+  return /^[ \t]*/.exec(line)[0];
+}
+function dedent2(line, n) {
+  let w = 0;
+  let i = 0;
+  while (i < line.length && w < n && (line[i] === " " || line[i] === "	")) {
+    w += line[i] === "	" ? 4 - w % 4 : 1;
+    i++;
+  }
+  return line.slice(i);
+}
+function noteCardParts(note, mode) {
+  if (mode === "all") return note.trim() ? [note] : [];
+  const lines = note.split("\n");
+  const parts = [];
+  let cur = [];
+  let lastKept = -2;
+  let fence = null;
+  let i = 0;
+  const flush = () => {
+    while (cur.length && !cur[cur.length - 1].trim()) cur.pop();
+    if (cur.length) parts.push(cur.join("\n"));
+    cur = [];
+  };
+  while (i < lines.length) {
+    const line = lines[i];
+    const f = FENCE_RE3.exec(line);
+    if (fence) {
+      if (f && f[1][0] === fence[0] && f[1].length >= fence.length) fence = null;
+      i++;
+      continue;
+    }
+    if (f) {
+      fence = f[1];
+      i++;
+      continue;
+    }
+    const m = ITEM_RE.exec(line);
+    const ordered = !!m?.[3];
+    const hit = m && (mode === "list" || (mode === "ordered" ? ordered : !ordered));
+    if (!hit || /^[ \t]*([-*_])([ \t]*\1){2,}[ \t]*$/.test(line)) {
+      i++;
+      continue;
+    }
+    const base = width(m[1]);
+    const block = [dedent2(line, base)];
+    let j = i + 1;
+    let inner = null;
+    while (j < lines.length) {
+      const l = lines[j];
+      const ff = FENCE_RE3.exec(l);
+      if (inner) {
+        if (ff && ff[1][0] === inner[0] && ff[1].length >= inner.length) inner = null;
+        block.push(dedent2(l, base));
+        j++;
+        continue;
+      }
+      if (!l.trim()) {
+        let k = j + 1;
+        while (k < lines.length && !lines[k].trim()) k++;
+        if (k < lines.length && width(leading(lines[k])) > base) {
+          for (; j < k; j++) block.push("");
+          continue;
+        }
+        break;
+      }
+      if (width(leading(l)) <= base) break;
+      if (ff) inner = ff[1];
+      block.push(dedent2(l, base));
+      j++;
+    }
+    let gap = lastKept >= 0;
+    for (let k = Math.max(0, lastKept + 1); gap && k < i; k++) if (lines[k].trim()) gap = false;
+    if (!(lastKept >= 0 && gap)) flush();
+    else if (i - lastKept > 1) cur.push("");
+    cur.push(...block);
+    lastKept = j - 1;
+    i = j;
+  }
+  flush();
+  return parts;
+}
+
 // src/format-bar.ts
 function highlightFormat(kind, color) {
   if (kind === "bg" && color === THEME_HIGHLIGHT) return { kind: "highlight" };
@@ -6706,8 +6837,8 @@ function splitAltParam(alt) {
 }
 var IMG_WIKI_RE = /!\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/;
 var IMG_MD_RE = /!\[([^\]]*)\]\(([^)\s]+)\)/;
-function setImageWidth(text, width) {
-  const w = width === null ? null : Math.max(1, Math.round(width));
+function setImageWidth(text, width2) {
+  const w = width2 === null ? null : Math.max(1, Math.round(width2));
   const wiki = IMG_WIKI_RE.exec(text);
   const md = IMG_MD_RE.exec(text);
   const first = wiki && md ? wiki.index <= md.index ? "wiki" : "md" : wiki ? "wiki" : md ? "md" : null;
@@ -6797,9 +6928,9 @@ function image(link2, param, alt, opts) {
   img.src = src;
   img.alt = alt;
   img.draggable = false;
-  const width = param && /^\d+$/.test(param.trim()) ? Number(param) : null;
-  if (width) {
-    img.style.width = `${Math.max(IMAGE_MIN_WIDTH, Math.min(imageMaxWidth, width))}px`;
+  const width2 = param && /^\d+$/.test(param.trim()) ? Number(param) : null;
+  if (width2) {
+    img.style.width = `${Math.max(IMAGE_MIN_WIDTH, Math.min(imageMaxWidth, width2))}px`;
     img.classList.add("has-size");
   }
   img.addEventListener("load", () => opts.onImageLoad?.());
@@ -6815,15 +6946,15 @@ function isPdfCrop(link2) {
 function pdfCrop(target, param, opts) {
   const parts = (param ?? "").split("|");
   const last = parts[parts.length - 1].trim();
-  const width = /^\d+$/.test(last) ? Number(last) : null;
-  const label = parts.filter((p, i) => p.trim() && !(i === parts.length - 1 && width !== null)).join("|");
+  const width2 = /^\d+$/.test(last) ? Number(last) : null;
+  const label = parts.filter((p, i) => p.trim() && !(i === parts.length - 1 && width2 !== null)).join("|");
   const box = createSpan();
   box.className = "mm-pdf-crop";
   const ok = opts.renderPdfCrop?.(target, box, (img) => {
     img.classList.add("mm-img");
     img.draggable = false;
-    if (width) {
-      img.style.width = `${Math.max(IMAGE_MIN_WIDTH, Math.min(imageMaxWidth, width))}px`;
+    if (width2) {
+      img.style.width = `${Math.max(IMAGE_MIN_WIDTH, Math.min(imageMaxWidth, width2))}px`;
       img.classList.add("has-size");
     }
     opts.onImageLoad?.();
@@ -7436,11 +7567,11 @@ function fillSeries(source, count, backward = false, copy = false) {
     const nums = ms.map((m) => Number(m[2]));
     const step = n === 1 ? 1 : (nums[n - 1] - nums[0]) / (n - 1);
     if (Number.isInteger(step) && nums.every((v, i) => v === nums[0] + step * i)) {
-      const width = ms[0][2].length;
-      const zeroPad = ms[0][2].startsWith("0") && width > 1;
+      const width2 = ms[0][2].length;
+      const zeroPad = ms[0][2].startsWith("0") && width2 > 1;
       for (let k = 1; k <= count; k++) {
         const v = nums[0] + step * at(k);
-        const body = v < 0 ? String(v) : zeroPad ? String(v).padStart(width, "0") : String(v);
+        const body = v < 0 ? String(v) : zeroPad ? String(v).padStart(width2, "0") : String(v);
         out.push(ms[0][1] + body + ms[0][3]);
       }
       return out;
@@ -7732,10 +7863,10 @@ function clearCells(t3, cells) {
 function pasteGrid(t3, r3, c, grid) {
   if (!grid.length) return t3;
   let n = cloneTable(t3);
-  const width = Math.max(...grid.map((row) => row.length));
+  const width2 = Math.max(...grid.map((row) => row.length));
   const total = () => hasTotal(n) && r3 < rowCount(n) - 1 ? 1 : 0;
   while (rowCount(n) - total() < r3 + grid.length) n = insertRow(n, rowCount(n));
-  while (colCount(n) < c + width) n = insertCol(n, colCount(n));
+  while (colCount(n) < c + width2) n = insertCol(n, colCount(n));
   grid.forEach((row, i) => row.forEach((v, j) => n.cells[r3 + i][c + j] = v));
   return n;
 }
@@ -8019,6 +8150,55 @@ function setOptionColor(t3, c, value, color) {
 function normalize2(t3) {
   return computeTotals(syncOptions(t3));
 }
+function subTable(t3, rect) {
+  const r1 = Math.max(0, rect.r1);
+  const c1 = Math.max(0, rect.c1);
+  const r22 = Math.min(rowCount(t3) - 1, rect.r2);
+  const c2 = Math.min(colCount(t3) - 1, rect.c2);
+  if (r1 === 0 && c1 === 0 && r22 === rowCount(t3) - 1 && c2 === colCount(t3) - 1) return cloneTable(t3);
+  const cols = (a) => a ? a.slice(c1, c2 + 1) : void 0;
+  const shift = (m) => {
+    if (!m) return void 0;
+    const out = {};
+    for (const [k, v] of Object.entries(m)) {
+      const p = parseRef(k);
+      if (p && p.r >= r1 && p.r <= r22 && p.c >= c1 && p.c <= c2) out[cellRef(p.r - r1, p.c - c1)] = v;
+    }
+    return out;
+  };
+  const meta = { ...cloneMeta(t3.meta) };
+  const oldHead = headRows(t3);
+  const head = r1 < oldHead ? Math.max(1, oldHead - r1) : 1;
+  if (head > 1) meta.head = head;
+  else delete meta.head;
+  meta.w = cols(t3.meta.w);
+  meta.opts = cols(t3.meta.opts);
+  meta.calc = hasTotal(t3) && r22 === rowCount(t3) - 1 ? cols(t3.meta.calc) : void 0;
+  meta.bg = shift(t3.meta.bg);
+  meta.fg = shift(t3.meta.fg);
+  if (c1 > 0) {
+    delete meta.headerCol;
+    delete meta.freeze;
+  }
+  const crosses = (m) => m.r1 < head && m.r2 >= head;
+  meta.merge = merges(t3).map((m) => ({ r1: Math.max(m.r1, r1) - r1, c1: Math.max(m.c1, c1) - c1, r2: Math.min(m.r2, r22) - r1, c2: Math.min(m.c2, c2) - c1 })).filter((m) => m.r1 <= m.r2 && m.c1 <= m.c2 && (m.r1 !== m.r2 || m.c1 !== m.c2) && !crosses(m)).map(rangeRef);
+  if (!meta.merge.length) delete meta.merge;
+  if (meta.bg && !Object.keys(meta.bg).length) delete meta.bg;
+  if (meta.fg && !Object.keys(meta.fg).length) delete meta.fg;
+  for (const k of Object.keys(meta)) if (meta[k] === void 0) delete meta[k];
+  const cells = t3.cells.slice(r1, r22 + 1).map((row) => row.slice(c1, c2 + 1));
+  for (const m of merges(t3)) {
+    const nr = Math.max(m.r1, r1);
+    const nc = Math.max(m.c1, c1);
+    if ((nr !== m.r1 || nc !== m.c1) && nr <= Math.min(m.r2, r22) && nc <= Math.min(m.c2, c2)) cells[nr - r1][nc - c1] = t3.cells[m.r1][m.c1];
+  }
+  return {
+    cells,
+    align: t3.align.slice(c1, c2 + 1),
+    meta,
+    style: { ...t3.style }
+  };
+}
 
 // src/table/core/clipboard.ts
 function tsvCell(s) {
@@ -8090,6 +8270,10 @@ function toHTML(grid, headerRow) {
     return `<tr>${row.map((c) => `<${tag2}>${esc(c).replace(/\n/g, "<br>")}</${tag2}>`).join("")}</tr>`;
   });
   return `<table>${rows.join("")}</table>`;
+}
+var SOURCE_ATTR = "data-ggt-src";
+function sourceAttr(lines) {
+  return ` ${SOURCE_ATTR}="${encodeURIComponent(lines.join("\n"))}"`;
 }
 
 // src/table/core/format.ts
@@ -8671,6 +8855,7 @@ function visibleSelection2(view) {
 var TextareaInput = class {
   constructor(doc) {
     this.cleanups = [];
+    this.comp = false;
     this.el = doc.createElement("textarea");
     this.el.className = "ggt-input";
     this.el.rows = 1;
@@ -8713,6 +8898,9 @@ var TextareaInput = class {
   sizingText() {
     return this.el.value;
   }
+  get composing() {
+    return this.comp;
+  }
   bind(h) {
     const on = (type, fn) => {
       this.el.addEventListener(type, fn);
@@ -8724,7 +8912,14 @@ var TextareaInput = class {
     on("paste", (ev) => h.paste(ev));
     on("input", () => h.input());
     for (const type of ["select", "keyup", "mouseup"]) on(type, () => h.select());
-    on("compositionstart", () => h.compositionstart());
+    on("compositionstart", () => {
+      this.comp = true;
+      h.compositionstart();
+    });
+    on("compositionend", () => {
+      this.comp = false;
+      h.input();
+    });
     on("blur", () => h.blur());
   }
   destroy() {
@@ -8768,6 +8963,10 @@ var CodeMirrorInput = class {
             this.handlers?.compositionstart();
             return false;
           },
+          compositionend: () => {
+            later(() => this.handlers?.input());
+            return false;
+          },
           blur: () => {
             queueMicrotask(() => {
               if (!this.handlers) return;
@@ -8802,6 +9001,9 @@ var CodeMirrorInput = class {
   }
   get el() {
     return this.view.dom;
+  }
+  get composing() {
+    return !!this._view?.composing;
   }
   detach() {
     this._view?.dom.remove();
@@ -8899,6 +9101,8 @@ var TableEditor = class {
     this.suggest = null;
     this.resize = null;
     this.destroyed = false;
+    /** 横向滚动条占的高度（覆盖式滚动条是 0） */
+    this.scrollbarH = 0;
     /** 上一次长按开菜单的时间（安卓随后还会来一次右键事件，忽略掉） */
     this.longPressAt = -Infinity;
     this.cleanups = [];
@@ -9103,6 +9307,11 @@ var TableEditor = class {
       const sc2 = this.scroller;
       this.root.classList.toggle("can-left", sc2.scrollLeft > 1);
       this.root.classList.toggle("can-right", sc2.scrollLeft + sc2.clientWidth < sc2.scrollWidth - 1);
+      const bar = Math.max(0, sc2.offsetHeight - sc2.clientHeight);
+      if (bar !== this.scrollbarH) {
+        this.scrollbarH = bar;
+        this.root.style.setProperty("--ggt-sb", `${bar}px`);
+      }
       this.stickHeader();
       this.placeHandles();
       if (this.root.classList.contains("is-freeze") && this.crossBands.some((b) => b.classList.contains("is-shown"))) this.markCross();
@@ -9231,6 +9440,7 @@ var TableEditor = class {
     const d = this.root.dataset;
     d.preset = this.table.meta.style ?? d.defPreset ?? "default";
     d.density = this.table.meta.density ?? d.defDensity ?? "comfortable";
+    this.root.classList.toggle("is-full", d.defFull === "1" && !this.table.meta.w?.some((x) => x != null));
   }
   // ---------- 渲染 ----------
   render() {
@@ -9742,6 +9952,24 @@ var TableEditor = class {
       this.dragSelect(ev);
     });
     this.on(this.tableEl, "click", (ev) => {
+      const link2 = ev.target.closest("a.internal-link");
+      if (!link2 || !link2.closest(".ggt-cell") || !this.host.openLink) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      this.host.openLink(link2.dataset.href ?? link2.getAttribute("href") ?? "", ev);
+    });
+    this.on(this.tableEl, "auxclick", (ev) => {
+      const link2 = ev.target.closest("a.internal-link");
+      if (!link2 || ev.button !== 1 || !this.host.openLink) return;
+      ev.preventDefault();
+      this.host.openLink(link2.dataset.href ?? link2.getAttribute("href") ?? "", ev);
+    });
+    this.on(this.tableEl, "mouseover", (ev) => {
+      const link2 = ev.target.closest("a.internal-link");
+      const href = link2?.dataset.href ?? link2?.getAttribute("href");
+      if (link2 && href) this.host.hoverLink?.(ev, href, link2);
+    });
+    this.on(this.tableEl, "click", (ev) => {
       const box = ev.target.closest("input.ggt-check");
       const cell = box?.closest(".ggt-cell");
       if (!box || !cell) return;
@@ -9752,8 +9980,36 @@ var TableEditor = class {
     });
     this.on(this.tableEl, "dblclick", (ev) => {
       const target = ev.target;
+      const img = !this.editing && target.closest(".ggt-cell") ? target.closest(".ggt-content img") : null;
+      if (img) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.openLightbox(img);
+        return;
+      }
       if (target.closest(".ggt-cell") && !this.editing) this.startEdit(true);
     });
+    this.on(this.tableEl, "contextmenu", (ev) => {
+      const target = ev.target;
+      const cellEl = target.closest(".ggt-cell");
+      if (!cellEl || this.editing && this.input.contains(target)) return;
+      const p = { r: Number(cellEl.dataset.r), c: Number(cellEl.dataset.c) };
+      const img = target.closest(".ggt-content img");
+      if (img && this.host.imageMenu) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        const link2 = img.closest(".internal-embed")?.getAttribute("src") ?? null;
+        this.host.imageMenu(ev, img, link2, link2 && !this.host.readonly ? () => this.removeEmbed(p, link2) : null);
+        return;
+      }
+      const a = target.closest(".ggt-content a.internal-link");
+      const href = a?.dataset.href ?? a?.getAttribute("href");
+      if (a && href && this.host.linkMenu) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.host.linkMenu(ev, href);
+      }
+    }, { capture: true });
     this.on(this.tableEl, "contextmenu", (ev) => {
       const cell = ev.target.closest(".ggt-cell");
       if (!cell || this.host.readonly || this.editing && this.input.contains(ev.target)) return;
@@ -9829,6 +10085,7 @@ var TableEditor = class {
     this.on(doc, "pointerdown", (ev) => {
       const target = ev.target;
       if (this.formatBar?.contains(target)) return;
+      if (this.suggest?.el.contains(target)) return;
       if (this.popover && !this.popover.contains(target)) this.closePopover();
       if (this.sel && !this.root.contains(target) && !(this.popover && this.popover.contains(target))) {
         if (this.editing) this.commit();
@@ -10121,6 +10378,19 @@ var TableEditor = class {
   updateSuggest() {
     if (!this.editing) return this.closeSuggest();
     const el = this.input;
+    if (el.composing) return;
+    {
+      const v = el.value;
+      const caret = el.selectionStart;
+      let text = v;
+      const cn = text.slice(0, caret).lastIndexOf("\u3010\u3010");
+      if (cn >= 0 && text.slice(0, caret).lastIndexOf("[[") < cn) text = text.slice(0, cn) + "[[" + text.slice(cn + 2);
+      if (text.slice(0, caret).endsWith("\u3011\u3011")) text = text.slice(0, caret - 2) + "]]" + text.slice(caret);
+      if (text !== v) {
+        el.value = text;
+        el.setSelectionRange(caret, caret);
+      }
+    }
     const before = el.value.slice(0, el.selectionStart);
     const link2 = /\[\[([^[\]|#^\n]*)$/.exec(before);
     const tag2 = /(?:^|\s)#([^\s#[\]|,.;:!?，。；：！？]*)$/.exec(before);
@@ -10327,19 +10597,54 @@ var TableEditor = class {
     const grid = this.rangeGrid();
     const r3 = this.rangeRect();
     ev.clipboardData.setData("text/plain", toTSV(grid));
-    ev.clipboardData.setData("text/html", r3 ? this.styledHTML(r3) : toHTML(grid, false));
+    ev.clipboardData.setData("text/html", r3 ? this.styledHTML(r3, this.sourceOf(r3)) : toHTML(grid, false));
     if (cut && !this.host.readonly) this.applyKeepRange(clearCells(this.table, this.rangeCells()));
   }
   /**
    * 带样式的 HTML：格子实际显示的底色、文字颜色、加粗、对齐、列宽、合并都写成内联样式，
    * 粘到 Word、飞书、邮件里保留样子。标上 data-ggt，粘回我们自己的表格时用纯文本（Markdown 原文）
    */
-  styledHTML(rect) {
+  /** 这片格子截成的表格原文（带设置注释）：至少 2 行 2 列才算一张表，不然返回 null */
+  sourceOf(rect) {
+    if (rect.r2 - rect.r1 < 1 || rect.c2 - rect.c1 < 1) return null;
+    return serializeTable(subTable(this.table, rect));
+  }
+  /** 表格菜单里的复制：整张表带样式（粘到别的笔记原样还原），或者只要 Markdown 表格 */
+  copyWhole(markdownOnly) {
+    if (this.editing) this.commit();
+    const tb = this.table;
+    const lines = markdownOnly ? serializeTable({ ...tb, meta: {} }) : serializeTable(tb);
+    const text = lines.join("\n");
+    const win = this.root.ownerDocument.defaultView ?? window;
+    const clip = win.navigator.clipboard;
+    const done = () => this.host.notice?.(t2(markdownOnly ? "copiedMarkdown" : "copiedTable"));
+    const html = this.styledHTML({ r1: 0, c1: 0, r2: rowCount(tb) - 1, c2: colCount(tb) - 1 }, lines, markdownOnly);
+    const item = new win.ClipboardItem({
+      "text/plain": new win.Blob([text], { type: "text/plain" }),
+      "text/html": new win.Blob([html], { type: "text/html" })
+    });
+    void clip.write([item]).then(done);
+  }
+  /**
+   * 复制出去的 HTML 表格（粘到 Word、飞书、邮件）。颜色一律按浅色主题取、半透明的叠在白底上算成实色：
+   * 暗色主题下屏幕上的表头、标签是深底浅字，原样带过去在白纸上很难看。plain：只要表格，不带任何颜色
+   */
+  styledHTML(rect, source = null, plain = false) {
+    const body = this.root.ownerDocument.body;
+    const dark = body.classList.contains("theme-dark");
+    if (dark && !plain) body.classList.replace("theme-dark", "theme-light");
+    try {
+      return this.buildHTML(rect, source, plain);
+    } finally {
+      if (dark && !plain) body.classList.replace("theme-light", "theme-dark");
+    }
+  }
+  buildHTML(rect, source, plain) {
     const tb = this.table;
     const esc2 = (v) => v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     const win = this.root.ownerDocument.defaultView ?? window;
     const cols = Array.from(this.tableEl.querySelectorAll("col"));
-    let html = '<table data-ggt="1" style="border-collapse:collapse">';
+    let html = `<table data-ggt="1"${source ? sourceAttr(source) : ""} style="border-collapse:collapse">`;
     html += "<colgroup>";
     const k = this.scale();
     for (let c = rect.c1; c <= rect.c2; c++) html += `<col style="width:${Math.round((cols[c]?.getBoundingClientRect().width ?? 80 * k) / k)}px">`;
@@ -10355,8 +10660,9 @@ var TableEditor = class {
         const a = tb.align[c];
         if (a) styles.push(`text-align:${a}`);
         if (cs) {
-          if (cs.backgroundColor && !/rgba\(\s*0,\s*0,\s*0,\s*0\s*\)|transparent/.test(cs.backgroundColor)) styles.push(`background-color:${cs.backgroundColor}`);
-          if (fgOf(tb, r3, c)) styles.push(`color:${cs.color}`);
+          const bg = plain ? null : onWhite(cs.backgroundColor);
+          if (bg && bg !== "rgb(255, 255, 255)") styles.push(`background-color:${bg}`);
+          if (!plain && fgOf(tb, r3, c)) styles.push(`color:${onWhite(cs.color) ?? cs.color}`);
           if (Number(cs.fontWeight) >= 600) styles.push("font-weight:600");
         }
         let span = "";
@@ -10373,8 +10679,9 @@ var TableEditor = class {
           clone.querySelectorAll("input.ggt-check").forEach((b) => b.replaceWith(b.checked ? "\u2611 " : "\u2610 "));
           clone.querySelectorAll(".ggt-pill").forEach((pill, i) => {
             const orig = content.querySelectorAll(".ggt-pill")[i];
-            const ps = orig ? win.getComputedStyle(orig) : null;
-            if (ps) pill.setAttribute("style", `background:${ps.backgroundColor};color:${ps.color};padding:0 8px;border-radius:10px`);
+            const ps = orig && !plain ? win.getComputedStyle(orig) : null;
+            if (ps) pill.setAttribute("style", `background:${onWhite(ps.backgroundColor) ?? ps.backgroundColor};color:${onWhite(ps.color) ?? ps.color};padding:0 8px;border-radius:10px`);
+            else pill.removeAttribute("style");
           });
           clone.querySelectorAll("textarea").forEach((x) => x.remove());
           clone.querySelectorAll(":scope > p").forEach((para, i) => {
@@ -10391,8 +10698,14 @@ var TableEditor = class {
     return html + "</table>";
   }
   onPaste(ev) {
-    if (this.editing || !this.sel || this.host.readonly || !ev.clipboardData) return;
-    const grid = gridFromClipboard(ev.clipboardData, this.root.ownerDocument);
+    if (!this.sel || this.host.readonly || !ev.clipboardData) return;
+    const grid = this.editing ? null : gridFromClipboard(ev.clipboardData, this.root.ownerDocument);
+    const image2 = this.host.saveImage && !(grid && (grid.length > 1 || grid[0].length > 1)) ? imageFrom(ev.clipboardData) : null;
+    if (image2) {
+      ev.preventDefault();
+      void this.pasteImage(image2);
+      return;
+    }
     if (!grid) return;
     ev.preventDefault();
     const r3 = this.rangeRect() ?? { r1: this.sel.r, c1: this.sel.c, r2: this.sel.r, c2: this.sel.c };
@@ -10409,6 +10722,54 @@ var TableEditor = class {
     this.anchor = null;
     this.apply(next, { r: r3.r1, c: r3.c1 });
     if (grid.length > 1 || grid[0].length > 1) this.setSel({ r: r3.r1 + grid.length - 1, c: r3.c1 + Math.max(...grid.map((x) => x.length)) - 1 }, true, true);
+  }
+  /** 从格子里去掉一张图的嵌入 ![[文件名]]（带 |100 这类尺寸的也算），前后多出的空格一起收掉 */
+  removeEmbed(p, link2) {
+    const cur = shownText(this.table, p.r, p.c);
+    const esc2 = link2.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const next = cur.replace(new RegExp(`[ \\t]?!\\[\\[${esc2}(?:\\|[^\\]]*)?\\]\\]`), "").trim();
+    if (next !== cur) this.apply(editCell(this.table, p.r, p.c, next), p);
+  }
+  /** 双击格子里的图片：盖住整个窗口看原图，点一下或按 Esc 关掉 */
+  openLightbox(img) {
+    const doc = this.root.ownerDocument;
+    if (doc.querySelector(".ggt-lightbox")) return;
+    const box = doc.body.appendChild(doc.createElement("div"));
+    box.className = "ggt-lightbox";
+    const big = box.appendChild(doc.createElement("img"));
+    big.src = img.currentSrc || img.src;
+    big.alt = img.alt;
+    const close = () => {
+      box.remove();
+      doc.removeEventListener("keydown", onKey, true);
+    };
+    const onKey = (ev) => {
+      if (ev.key !== "Escape") return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      close();
+    };
+    box.addEventListener("click", close);
+    doc.addEventListener("keydown", onKey, true);
+  }
+  /** 图片存好以后插进格子：编辑中插在光标处；只是选中就接在格子原有内容后面（不覆盖） */
+  async pasteImage(file) {
+    const p = this.sel;
+    const editing = this.editing;
+    const from = editing ? this.input.selectionStart : 0;
+    const to = editing ? this.input.selectionEnd : 0;
+    const md = await this.host.saveImage?.(file);
+    if (!md || this.destroyed || !p) return;
+    if (editing && this.editing && this.sel?.r === p.r && this.sel.c === p.c) {
+      const v = this.input.value;
+      this.input.value = v.slice(0, from) + md + v.slice(to);
+      this.input.setSelectionRange(from + md.length, from + md.length);
+      this.autosize();
+      return;
+    }
+    if (this.editing) this.commit();
+    const cur = shownText(this.table, p.r, p.c);
+    this.apply(editCell(this.table, p.r, p.c, cur.trim() ? `${cur} ${md}` : md), p);
   }
   // ---------- 触屏 ----------
   /**
@@ -10784,6 +11145,9 @@ var TableEditor = class {
       { title: t2("fitWidth"), icon: "move-horizontal", run: () => keep(setWidths(this.table, this.fitWidths())) },
       { title: t2("autoWidthAll"), icon: "move-horizontal", disabled: !tb.meta.w?.some((x) => x != null), run: () => keep(autoWidthAll(this.table)) },
       { title: t2("clearAllBg"), icon: "paintbrush", disabled: !Object.keys(tb.meta.bg ?? {}).length && !Object.keys(tb.meta.fg ?? {}).length, run: () => keep(clearAllBg(this.table)) },
+      { separator: true },
+      { title: t2("copyTable"), icon: "copy", run: () => this.copyWhole(false) },
+      { title: t2("copyMarkdown"), icon: "file-code", run: () => this.copyWhole(true) },
       ...this.host.indentTable ? [
         { separator: true },
         ...[1, -1].map((dir) => ({
@@ -11095,6 +11459,24 @@ function htmlCellText(el) {
   };
   walk2(el);
   return parts.join("").replace(/\u00a0/g, " ").trim();
+}
+function onWhite(color) {
+  const m = /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:\s*[,/]\s*([\d.]+%?))?\s*\)/.exec(color);
+  if (!m) return /transparent/.test(color) ? null : color;
+  let a = m[4] === void 0 ? 1 : parseFloat(m[4]);
+  if (m[4]?.endsWith("%")) a /= 100;
+  if (a <= 0) return null;
+  const mix = (v) => Math.round(parseFloat(v) * a + 255 * (1 - a));
+  return `rgb(${mix(m[1])}, ${mix(m[2])}, ${mix(m[3])})`;
+}
+function imageFrom(data) {
+  for (const f of Array.from(data.files ?? [])) if (f.type.startsWith("image/")) return f;
+  for (const it of Array.from(data.items ?? [])) {
+    if (it.kind !== "file" || !it.type.startsWith("image/")) continue;
+    const f = it.getAsFile();
+    if (f) return f;
+  }
+  return null;
 }
 function gridFromClipboard(data, doc) {
   const html = data.getData("text/html");
@@ -12245,7 +12627,7 @@ var MindMapCanvas = class _MindMapCanvas {
         n.addEventListener("pointerdown", (ev) => ev.stopPropagation());
         n.addEventListener("click", (ev) => {
           ev.stopPropagation();
-          if (this.notesExpanded) this.toggleNoteCard(live());
+          if (this.notesExpanded && this.cardText(live())) this.toggleNoteCard(live());
           else this.toggleNotePopover(live());
         });
         el.append(n);
@@ -16240,6 +16622,12 @@ var MindMapCanvas = class _MindMapCanvas {
       }
     });
     this.reflow();
+    if (!isNew) {
+      const win = this.el.ownerDocument.defaultView ?? window;
+      win.requestAnimationFrame(() => {
+        if (this.editing === node) this.updateFormatBar();
+      });
+    }
   }
   /** 新节点的默认名字：主题1、主题2……，接着同级里已有的最大编号往下排 */
   defaultNodeName(node) {
@@ -17478,7 +17866,7 @@ var MindMapCanvas = class _MindMapCanvas {
       if (link2) links.push(`![[${link2}]]`);
     }
     if (!links.length) return;
-    node.note = normalizeNote([unescapeNote(node.note), ...links].filter(Boolean).join("\n"), node.kind === "list");
+    node.note = this.storeNote(node, [unescapeNote(node.note), ...links].filter(Boolean).join("\n"));
     this.opts.host?.notice?.(t("notice.imageAddedToNote"));
     if (this.editing !== node) this.render();
     this.notify();
@@ -17826,6 +18214,23 @@ var MindMapCanvas = class _MindMapCanvas {
     if (!node.note) return "";
     return this.nodeTable(node) ? noteRest(node.note) : node.note;
   }
+  /**
+   * 编辑后的备注原文 → 存储形式。只把标题当节点时，标题下备注里的列表读回来还是备注，不用包成 > [!note]
+   * （和写文件时一样）；以前这里没管，开着这个设置编辑一次带列表的标题备注，整段就被改写成标注块
+   */
+  storeNote(node, plain) {
+    return normalizeNote(plain, node.kind === "list", !!this.doc?.style.headingsOnly && node.kind !== "list");
+  }
+  /**
+   * 展开的卡片里显示的那部分备注：按设置只挑列表项时，原文里不挨着的几段之间插一个看不见的注释，
+   * 免得两处各自从 1 开始的有序列表被接成一个。空串表示没有可显示的（只留图标，点开弹窗看全文）
+   */
+  cardText(node) {
+    const note = this.noteShown(node);
+    const mode = this.opts.noteCardFilter?.() ?? "all";
+    if (mode === "all" || !note) return note;
+    return noteCardParts(note, mode).join("\n\n<!-- -->\n\n");
+  }
   /** 在节点里（标题下面）挂一张表格编辑器 */
   mountTable(first, el, table) {
     const id = first.id;
@@ -17881,6 +18286,25 @@ var MindMapCanvas = class _MindMapCanvas {
         return host.listTags().filter((x) => x.toLowerCase().includes(q)).slice(0, 12);
       } : void 0,
       readonly: !editable,
+      // 表格菜单「复制整张表格」「复制为 Markdown 表格」完成后的提示
+      notice: host?.notice,
+      // 格子里的双链：和节点里的链接一样打开（按「链接打开位置」设置，⌘/Ctrl 点新标签），悬停预览
+      openLink: host?.openLink ? (href, ev) => host.openLink(href, true, ev) : void 0,
+      hoverLink: host?.hoverLink,
+      // 右键格子里的双链：原生链接菜单
+      linkMenu: host?.linkContextMenu ? (ev, href) => host.linkContextMenu(ev, href, []) : void 0,
+      // 右键格子里的图片：复制图片 + 原生文件菜单 + 删除图片（Obsidian 的确认框，删了再把嵌入从格子里去掉）
+      imageMenu: host?.linkContextMenu ? (ev, img, link2, remove) => {
+        const extra = [{ title: t("menu.copyImage"), icon: "copy", run: () => void this.copyImage(img) }];
+        if (link2 && remove && host.deleteLinkedFile)
+          extra.push({ title: t("menu.deleteImage"), icon: "trash-2", warning: true, run: () => void host.deleteLinkedFile(link2).then((ok) => ok && remove()) });
+        host.linkContextMenu(ev, link2 ?? "", extra);
+      } : void 0,
+      // 往格子里粘贴截图：和往节点里粘贴图片一样存成附件
+      saveImage: editable && host?.saveBinary ? async (file) => {
+        const link2 = await this.saveImageFile(file);
+        return link2 ? `![[${link2}]]` : null;
+      } : void 0,
       // 表格左上角菜单里的「删除表格」：只删表格，节点留着
       onDeleteTable: editable ? () => this.deleteNodeTable(live()) : void 0
     };
@@ -17970,9 +18394,10 @@ var MindMapCanvas = class _MindMapCanvas {
       const note = this.noteShown(n);
       if (note) {
         const card = this.cardState.get(n.id);
-        const shown = this.notesExpanded && !card?.collapsed;
+        const text = this.notesExpanded ? this.cardText(n) : "";
+        const shown = this.notesExpanded && !card?.collapsed && !!text;
         const icon2 = this.els.get(n.id)?.querySelector(".mm-note-icon");
-        const state = !this.notesExpanded ? "popover" : shown ? "open" : "closed";
+        const state = !this.notesExpanded || !text ? "popover" : shown ? "open" : "closed";
         if (icon2 && icon2.dataset.state !== state) {
           icon2.dataset.state = state;
           icon2.classList.toggle("is-expanded", shown);
@@ -17986,12 +18411,12 @@ var MindMapCanvas = class _MindMapCanvas {
             this.noteEls.set(n.id, el);
           }
           this.noteNode.set(el, n);
-          if (el.dataset.raw !== note) {
-            el.dataset.raw = note;
+          if (el.dataset.raw !== text) {
+            el.dataset.raw = text;
             const body = el.querySelector(".mm-note-card-body");
             body.empty();
             body.scrollTop = 0;
-            this.fillNoteBody(body, note);
+            this.fillNoteBody(body, text);
           }
           this.applyCardSize(el, this.cardDrag?.id === n.id ? { ...card, ...this.cardDrag.size } : card);
         }
@@ -18327,7 +18752,7 @@ var MindMapCanvas = class _MindMapCanvas {
         if (preview2 && scope) scope.render(preview2, ta.value);
       };
       const apply = () => {
-        const next = normalizeNote(ta.value.replace(/\s+$/, ""), node.kind === "list");
+        const next = this.storeNote(node, ta.value.replace(/\s+$/, ""));
         if (next === node.note) return false;
         node.note = next;
         return true;
@@ -18383,7 +18808,7 @@ var MindMapCanvas = class _MindMapCanvas {
           ta.dispatchEvent(new Event("input"));
           return;
         }
-        node.note = normalizeNote([unescapeNote(node.note), text].filter(Boolean).join("\n"), node.kind === "list");
+        node.note = this.storeNote(node, [unescapeNote(node.note), text].filter(Boolean).join("\n"));
         this.render();
         this.notify();
       };
@@ -18942,6 +19367,7 @@ var DEFAULT_SETTINGS = {
   spacingScale: 100,
   fontScale: 100,
   notesExpanded: false,
+  noteCardShow: "all",
   notePreview: false,
   formatBar: false,
   copyPlain: false,
@@ -19019,6 +19445,8 @@ var MindMapSettingTab = class extends import_obsidian7.PluginSettingTab {
         return p.reloadMaps();
       case "notesExpanded":
         return syncNotesExpandedAll();
+      case "noteCardShow":
+        return redrawAllCanvases();
       case "toolbarPosition":
         return p.applyToolbarPosition();
       case "embedToolbar":
@@ -19128,6 +19556,13 @@ var MindMapSettingTab = class extends import_obsidian7.PluginSettingTab {
       ),
       page(t("settings.group.notes"), t("settings.page.notes"), [
         toggle("notesExpanded", t("settings.notesExpanded.name"), t("settings.notesExpanded.desc")),
+        dropdown(
+          "noteCardShow",
+          t("settings.noteCardShow.name"),
+          t("settings.noteCardShow.desc"),
+          { all: t("settings.noteCardShow.all"), list: t("settings.noteCardShow.list"), ordered: t("settings.noteCardShow.ordered"), unordered: t("settings.noteCardShow.unordered") },
+          ["list", "\u5217\u8868", "\u6709\u5E8F", "\u65E0\u5E8F", "\u7ED3\u8BBA", "\u5907\u6CE8\u5361\u7247"]
+        ),
         toggle("quoteListNotes", t("settings.quoteListNotes.name"), t("settings.quoteListNotes.desc"), ["blockquote", "\u5F15\u7528", ">", "\u9996\u884C\u7F29\u8FDB"]),
         this.sizeSetting("noteMaxHeight", t("settings.noteMaxHeight.name"), t("settings.noteMaxHeight.desc"), 120, 800, t("settings.resetNoteHeight")),
         this.sizeSetting("noteMaxWidth", t("settings.noteMaxWidth.name"), t("settings.noteMaxWidth.desc"), 160, 960, t("settings.resetNoteWidth")),
@@ -19820,7 +20255,7 @@ async function buildSvg(canvas, opts = {}) {
   const bounds = canvas.getBounds();
   if (!bounds) throw new Error(t("export.nothing"));
   const pad = opts.padding ?? 32;
-  const width = Math.ceil(bounds.w + pad * 2);
+  const width2 = Math.ceil(bounds.w + pad * 2);
   const height = Math.ceil(bounds.h + pad * 2);
   const ox = -bounds.x + pad;
   const oy = -bounds.y + pad;
@@ -19882,8 +20317,8 @@ async function buildSvg(canvas, opts = {}) {
     fontCss = await collectFontCss(families);
     if (clone.querySelector("mjx-container")) fontCss += await collectMathJaxCss();
   }
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">` + (fontCss ? `<defs><style>${fontCss}</style></defs>` : "") + (bg ? `<rect width="100%" height="100%" fill="${bg}"/>` : "") + `<g transform="translate(${ox} ${oy})">${boxes.join("")}${paths.join("")}</g><foreignObject x="0" y="0" width="${width}" height="${height}"><div xmlns="http://www.w3.org/1999/xhtml" style="position:relative;width:${width}px;height:${height}px;overflow:hidden">${xhtml}</div></foreignObject></svg>`;
-  return { svg, width, height };
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width2}" height="${height}" viewBox="0 0 ${width2} ${height}">` + (fontCss ? `<defs><style>${fontCss}</style></defs>` : "") + (bg ? `<rect width="100%" height="100%" fill="${bg}"/>` : "") + `<g transform="translate(${ox} ${oy})">${boxes.join("")}${paths.join("")}</g><foreignObject x="0" y="0" width="${width2}" height="${height}"><div xmlns="http://www.w3.org/1999/xhtml" style="position:relative;width:${width2}px;height:${height}px;overflow:hidden">${xhtml}</div></foreignObject></svg>`;
+  return { svg, width: width2, height };
 }
 async function svgToPng(exp, scale = 2) {
   const img = new Image();
@@ -20135,6 +20570,10 @@ var OutlinePanel = class {
 
 // src/view.ts
 var VIEW_TYPE_MINDMAP = "mindmap";
+var VIEW_TYPE_MINDMAP_FALLBACK = "gogoga-mindmap";
+function useFallbackViewType() {
+  VIEW_TYPE_MINDMAP = VIEW_TYPE_MINDMAP_FALLBACK;
+}
 function foldedSignature(doc) {
   const out = [];
   walk(doc.root, (n) => {
@@ -20429,6 +20868,7 @@ var MindMapView = class extends import_obsidian8.TextFileView {
         if (this.file) this.plugin.setCalloutsHidden(this.file.path, hidden);
       },
       notesExpanded: () => this.plugin.isNotesExpanded(this.file?.path ?? ""),
+      noteCardFilter: () => this.plugin.settings.noteCardShow,
       onNotesExpandedChange: (expanded) => {
         if (this.file) this.plugin.setNotesExpanded(this.file.path, expanded);
       },
@@ -21595,10 +22035,10 @@ function packagePath(src) {
   const m = /^xap:(.+)$/.exec((src ?? "").trim());
   return m ? m[1] : null;
 }
-function imageOf(src, width, align) {
+function imageOf(src, width2, align) {
   const path = packagePath(src);
   if (!path) return void 0;
-  const w = Number.isFinite(width) && width > 0 ? Math.round(width) : void 0;
+  const w = Number.isFinite(width2) && width2 > 0 ? Math.round(width2) : void 0;
   return { src: path, width: w, after: align === "bottom" || align === "right" || void 0 };
 }
 function applyBoundary(topic, range, title) {
@@ -22187,6 +22627,7 @@ var MindMapEmbed = class extends import_obsidian12.Component {
         caretAtEnd: () => settings.editCaret === "end",
         dragToFloat: () => settings.dragToFloat,
         notesExpanded: () => settings.notesExpanded,
+        noteCardFilter: () => settings.noteCardShow,
         notePopoverSize: this.plugin.notePopoverSize,
         host: this.plugin.canvasHost(() => this.ctx.sourcePath, this),
         onOpenFile: () => void this.plugin.app.workspace.openLinkText(this.file.path, this.ctx.sourcePath),
@@ -22541,9 +22982,24 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     void (0, import_obsidian13.loadMathJax)().then(() => this.mathReady = true).catch(() => void 0);
     void (0, import_obsidian13.loadPrism)().catch(() => void 0);
     this.registerHoverLinkSource(HOVER_SOURCE, { display: t("hover.display"), defaultMod: true });
-    this.registerView(VIEW_TYPE_MINDMAP, (leaf) => new MindMapView(leaf, this));
+    try {
+      this.registerView(VIEW_TYPE_MINDMAP, (leaf) => new MindMapView(leaf, this));
+    } catch (e) {
+      console.warn(`gogoga Mind Map: view type "${VIEW_TYPE_MINDMAP}" is taken by another plugin, using "${VIEW_TYPE_MINDMAP_FALLBACK}"`, e);
+      useFallbackViewType();
+      this.registerView(VIEW_TYPE_MINDMAP, (leaf) => new MindMapView(leaf, this));
+    }
     this.registerView(VIEW_TYPE_XMIND, (leaf) => new XmindView(leaf, this));
-    this.registerExtensions(["xmind"], VIEW_TYPE_XMIND);
+    try {
+      this.registerExtensions(["xmind"], VIEW_TYPE_XMIND);
+    } catch (e) {
+      console.warn("gogoga Mind Map: .xmind is opened by another plugin", e);
+      if (!this.settings.xmindTakenNoticed) {
+        new import_obsidian13.Notice(t("notice.xmindTaken"), 1e4);
+        this.settings.xmindTakenNoticed = true;
+        void this.saveSettings();
+      }
+    }
     this.addSettingTab(new MindMapSettingTab(this.app, this));
     this.patchSetViewState();
     this.registerCodeBlock();
@@ -23627,6 +24083,7 @@ ${topics}`;
         caretAtEnd: () => this.settings.editCaret === "end",
         dragToFloat: () => this.settings.dragToFloat,
         notesExpanded: () => this.settings.notesExpanded,
+        noteCardFilter: () => this.settings.noteCardShow,
         notePopoverSize: this.notePopoverSize,
         host: this.canvasHost(() => ctx.sourcePath, child),
         onChange: (d) => {
@@ -23699,7 +24156,12 @@ ${topics}`;
       ctx.addChild(child);
     };
     this.registerMarkdownCodeBlockProcessor("gogoga-mindmap", processor);
-    if (this.settings.claimMindmapBlock) this.registerMarkdownCodeBlockProcessor("mindmap", processor);
+    if (this.settings.claimMindmapBlock)
+      try {
+        this.registerMarkdownCodeBlockProcessor("mindmap", processor);
+      } catch (e) {
+        console.warn("gogoga Mind Map: the mindmap code block is taken by another plugin; use gogoga-mindmap", e);
+      }
   }
   /** 把新的块内容写回宿主笔记：文件在编辑器里打开就走编辑器，否则直接改文件 */
   async replaceCodeBlock(ctx, el, expectedInner, nextInner) {
@@ -23999,6 +24461,21 @@ ${topics}`;
         if (!mod && this.revealInOpenPdf(href, sourcePath())) return;
         if (mod === "split" || !mod && this.settings.linkOpen === "split") void this.openInLinkSplit(href, sourcePath());
         else void this.app.workspace.openLinkText(href, sourcePath(), mod || (this.settings.linkOpen === "tab" ? "tab" : false));
+      },
+      linkContextMenu: (ev, linktext, extra) => {
+        const menu = new import_obsidian13.Menu();
+        for (const x of extra)
+          menu.addItem((item) => {
+            item.setSection(x.warning ? "danger" : "action").setTitle(x.title).setIcon(x.icon).onClick(() => x.run());
+            if (x.warning) item.setWarning(true);
+          });
+        const ws = this.app.workspace;
+        if (linktext) ws.handleLinkContextMenu?.(menu, linktext, sourcePath());
+        menu.showAtMouseEvent(ev);
+      },
+      deleteLinkedFile: async (linktext) => {
+        const file = this.app.metadataCache.getFirstLinkpathDest(linktext, sourcePath());
+        return file ? this.app.fileManager.promptForDeletion(file) : false;
       },
       hoverLink: hoverParent ? (event, linktext, targetEl) => {
         this.app.workspace.trigger("hover-link", { event, source: HOVER_SOURCE, hoverParent, targetEl, linktext, sourcePath: sourcePath() });

@@ -27,7 +27,6 @@
   "table-editor-obsidian",
   "calendar",
   "any-block",
-  "xmind-linker",
   "obsidian-path-title",
   "copilot",
   "obsidian-local-images-plus",
@@ -73,5 +72,6 @@
   "obsidian-custom-attachment-location",
   "smart-composer",
   "gogoga-table",
-  "advanced-multi-column"
+  "advanced-multi-column",
+  "gogoga-mindmap"
 ]
