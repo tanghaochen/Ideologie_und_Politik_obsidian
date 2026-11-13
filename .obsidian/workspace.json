@@ -71,9 +71,21 @@
               "icon": "lucide-file",
               "title": "zu的不定式"
             }
+          },
+          {
+            "id": "2c9024670a5e486c",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/其他句式.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "其他句式"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -345,10 +357,10 @@
       "gogoga-mindmap:新建思维导图": false
     }
   },
-  "active": "40cee72bac1cf4e4",
+  "active": "2c9024670a5e486c",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/10句型/从句合集/关系从句/关系从句.md",
     "语言学习/德语/公共知识语法/10句型/zu的不定式.md",
+    "语言学习/德语/公共知识语法/10句型/从句合集/关系从句/关系从句.md",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/1名词/不定式.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/关系从句/各种关系代词区别对比.md",
