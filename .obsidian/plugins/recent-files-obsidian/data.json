@@ -1,8 +1,32 @@
 {
   "recentFiles": [
     {
+      "basename": "从句",
+      "path": "语言学习/德语/公共知识语法/从句.md"
+    },
+    {
       "basename": "代副词",
       "path": "语言学习/德语/公共知识语法/4副词/代副词.md"
+    },
+    {
+      "basename": "动词、形容词、名词与支配第四格宾语的 介词的固定搭配",
+      "path": "语言学习/德语/公共知识语法/1词/动词、形容词、名词与支配第四格宾语的 介词的固定搭配.md"
+    },
+    {
+      "basename": "名词",
+      "path": "语言学习/德语/公共知识语法/名词.md"
+    },
+    {
+      "basename": "格; 限定词",
+      "path": "语言学习/德语/公共知识语法/格; 限定词.md"
+    },
+    {
+      "basename": "介词",
+      "path": "语言学习/德语/公共知识语法/介词.md"
+    },
+    {
+      "basename": "da-构成的代副词",
+      "path": "语言学习/德语/公共知识语法/10句型/代词/da-构成的代副词.md"
     },
     {
       "basename": "其他句式",
@@ -15,10 +39,6 @@
     {
       "basename": "关系从句",
       "path": "语言学习/德语/公共知识语法/10句型/从句合集/关系从句/关系从句.md"
-    },
-    {
-      "basename": "从句",
-      "path": "语言学习/德语/公共知识语法/从句.md"
     },
     {
       "basename": "不定式",
@@ -79,10 +99,6 @@
     {
       "basename": "介词与格",
       "path": "Marginnote/介词与格.md"
-    },
-    {
-      "basename": "介词",
-      "path": "语言学习/德语/公共知识语法/介词.md"
     },
     {
       "basename": "描述物品的摆放：位置、姿态与排列",
@@ -149,10 +165,6 @@
       "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/描述一个人在房间里做各种动作（Tätigkeiten im Haushalt）.md"
     },
     {
-      "basename": "格; 限定词",
-      "path": "语言学习/德语/公共知识语法/格; 限定词.md"
-    },
-    {
       "basename": "购物与客服沟通：线下购物与网店的售前、下单、售后、退换货",
       "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/购物与客服沟通：线下购物与网店的售前、下单、售后、退换货.md"
     },
@@ -187,18 +199,6 @@
     {
       "basename": "主项",
       "path": "思想思维心理哲学/阅读/简单逻辑学/术语/主项.md"
-    },
-    {
-      "basename": "原因状语从句与让步从句 weil, da,obwohl,wobei...",
-      "path": "语言学习/德语/公共知识语法/10句型/从句合集/原因状语从句与让步从句 weil, da,obwohl,wobei....md"
-    },
-    {
-      "basename": "ein komplettes Handyverbot",
-      "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/ein komplettes Handyverbot.md"
-    },
-    {
-      "basename": "所有字母符号关系表达SPMA...",
-      "path": "思想思维心理哲学/阅读/简单逻辑学/术语/所有字母符号关系表达SPMA....md"
     }
   ],
   "omittedPaths": [],
