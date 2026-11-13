@@ -236,6 +236,11 @@
       "id": "obsidian-advanced-uri:copy-uri-block",
       "name": "纯外部链接",
       "icon": "links-going-out"
+    },
+    {
+      "id": "gogoga-mindmap:open-preview",
+      "name": "gogoga Mind Map: Markdown 和思维导图分屏对照",
+      "icon": "map"
     }
   ],
   "followingCommands": [

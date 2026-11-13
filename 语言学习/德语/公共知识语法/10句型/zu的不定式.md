@@ -1,3 +1,7 @@
+---
+mindmap: true
+icon: lucide:mindmap-tree
+---
 # 带zu的不定式
 
 ## 目的
@@ -282,6 +286,7 @@ graph LR
 
 
 # 不带 zu 的不定式
+%%box=2%%
 
 既然我们上一节课已经彻底搞懂了 `zu` 是如何作为“挂钩”把主句和后面的动词车厢连起来的，那么今天，我们来看看德语里的**“VIP 磁悬浮列车”——不带 `zu` 的不定式 (Infinitiv ohne zu)**。
 
@@ -323,9 +328,9 @@ graph TD
 
 ---
 
-### 👁️ 第二大门派：感官动词 (Wahrnehmungsverben) —— 所见即所得
+### 感官动词 眼耳鼻身意
 
-当你用眼睛看 (sehen)、耳朵听 (hören)、身体感觉 (spüren/fühlen) 时，你感知到的那个动作，直接用动词原形放在句尾。因为你的感官和动作之间是没有距离的，所以不需要 `zu`。
+当你用眼睛看 (sehen)、耳朵听 (hören)、身体感觉 (spüren/fühlen) 时，你感知到的那个动作，直接用动词原形放在句尾。<font color="#ff0000">因为你的感官和动作之间是没有距离的</font>，所以不需要 `zu`。
 
 - **【租房纠纷 / 邻里生活实战】**
     - _Ich **höre** meinen Nachbarn jeden Abend laut Klavier **spielen**._ (我每天晚上都**听到**我的邻居大声地**弹**钢琴。)
@@ -333,7 +338,7 @@ graph TD
 
 ---
 
-### 🏃 第三大门派：运动动词 (Bewegungsverben) —— 行动派的干脆
+### 运动动词  运动本身和目的动作是一气呵成的
 
 当你“去”(gehen)、“开车去”(fahren)、“来”(kommen) 做某事时，运动本身和目的动作是一气呵成的。
 
