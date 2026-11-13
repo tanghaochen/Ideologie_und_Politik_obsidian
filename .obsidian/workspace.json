@@ -27,7 +27,7 @@
             "id": "b0fa694532006511",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "mindmap",
               "state": {
                 "file": "语言学习/德语/公共知识语法/10句型/从句合集/关系从句/超齐全版系统讲解关系从句.md",
                 "mode": "source",
@@ -338,8 +338,8 @@
       "realclaudian:Open Claudian": false,
       "copilot:Open Copilot Agent Chat": false,
       "notebook-navigator:Notebook Navigator": false,
-      "periodic-notes:Open today": false,
-      "gogoga-mindmap:新建思维导图": false
+      "gogoga-mindmap:新建思维导图": false,
+      "periodic-notes:Open today": false
     }
   },
   "active": "f201f9731ed05217",
