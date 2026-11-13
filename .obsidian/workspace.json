@@ -6,104 +6,57 @@
       {
         "id": "ff5d945606200819",
         "type": "tabs",
-        "dimension": 49.976133651551315,
+        "dimension": 62.280285035629454,
         "children": [
           {
-            "id": "2404a1c6f90f8fed",
+            "id": "e44e0054e8784156",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/关系从句/关系从句.md",
+                "file": "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "关系从句"
+              "title": "werden所有变化合集"
             }
           },
           {
-            "id": "b0fa694532006511",
-            "type": "leaf",
-            "state": {
-              "type": "mindmap",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/关系从句/超齐全版系统讲解关系从句.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "超齐全版系统讲解关系从句"
-            }
-          }
-        ]
-      },
-      {
-        "id": "5c6f05d24a515594",
-        "type": "tabs",
-        "dimension": 50.023866348448685,
-        "children": [
-          {
-            "id": "4091ed587915bc65",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/从句.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "从句"
-            }
-          },
-          {
-            "id": "1219538cc1ef3eef",
+            "id": "88af6026ba3d66d4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/代词/da-构成的代副词.md",
+                "file": "语言学习/德语/单词/生词/2026-11.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "da-构成的代副词"
-            }
-          },
-          {
-            "id": "1694703597e717e6",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/4副词/代副词.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "代副词"
-            }
-          },
-          {
-            "id": "844a474bd29852e2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/1词/动词、形容词、名词与支配第四格宾语的 介词的固定搭配.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "动词、形容词、名词与支配第四格宾语的 介词的固定搭配"
+              "title": "2026-11"
             }
           }
         ],
         "currentTab": 1
+      },
+      {
+        "id": "b5dbd09e7753bfc0",
+        "type": "tabs",
+        "dimension": 37.719714964370546,
+        "children": [
+          {
+            "id": "476da2a53369c094",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
+            }
+          }
+        ]
       }
     ],
     "direction": "vertical"
@@ -171,7 +124,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 425.5125274658203
+    "width": 415.9125213623047
   },
   "right": {
     "id": "b2bf97bc0c7f8080",
@@ -195,11 +148,13 @@
           {
             "id": "36c96029ae4dd065",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "copilot-chat-view",
               "state": {},
+              "pinned": true,
               "icon": "message-square",
-              "title": "Copilot Quick Chat"
+              "title": "Copilot (Quick Chat)"
             }
           },
           {
@@ -345,6 +300,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "gogoga-mindmap:新建思维导图": false,
       "smart-composer:Open smart composer": false,
       "ostracon-ob:获取MN数据": false,
       "obsidian-local-images-plus:Local Images Plus  0.17.1\r\nLocalize attachments (plugin folder)": false,
@@ -371,12 +327,15 @@
       "realclaudian:Open Claudian": false,
       "copilot:Open Copilot Agent Chat": false,
       "notebook-navigator:Notebook Navigator": false,
-      "gogoga-mindmap:新建思维导图": false,
       "periodic-notes:Open today": false
     }
   },
-  "active": "1219538cc1ef3eef",
+  "active": "88af6026ba3d66d4",
   "lastOpenFiles": [
+    "语言学习/德语/单词/生词/26-10.md",
+    "语言学习/德语/单词/生词/2026-11.md",
+    "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
+    "语言学习/德语/公共知识语法/10句型/代词/da-构成的代副词.md",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/公共知识语法/4副词/代副词.md",
     "语言学习/德语/公共知识语法/10句型/逗号规则.md",
@@ -386,7 +345,6 @@
     "语言学习/德语/公共知识语法/名词.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
     "语言学习/德语/公共知识语法/介词.md",
-    "语言学习/德语/公共知识语法/10句型/代词/da-构成的代副词.md",
     "语言学习/德语/公共知识语法/其他句式.md",
     "语言学习/德语/公共知识语法/10句型/zu的不定式.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/关系从句/关系从句.md",
@@ -402,9 +360,6 @@
     "语言学习/德语/公共知识语法/连词成对.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/间接引语（新闻体）：第一、第二虚拟式与介词连接体系.md",
     "Diary/2026/20261112.md",
-    "语言学习/德语/公共知识语法/5介词/德语介词如何“引出信息”：über bei von 及其他.md",
-    "语言学习/德语/公共知识语法/10句型/疑问句/疑问词.md",
-    "Marginnote/介词与格.md",
     "Blockspace Bridge",
     "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw",
     "assets/Designer (7).png",
