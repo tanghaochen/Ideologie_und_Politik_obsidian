@@ -333,16 +333,14 @@ c) Jugendliche sollen im ==Alltag== weniger Fehler machen.
 - 变位部分占第二位，前缀 ab 在句末。从句中则还原：`..., weil manche Menschen die Erinnerungskultur ablehnen.`
 
 ### 3.4 同义替换专项（考试识别用）
-
 | 表达 A | 表达 B | 共同语义 | 使用区别 |
 |---|---|---|---|
-| etwas ablehnen | etwas zurückweisen | 拒绝、反对 | ablehnen 最通用；zurückweisen 更正式，多用于“指控、要求、批评” |
-| immer häufiger passieren | zunehmen / sich häufen | 越来越频繁 | zunehmen 用于数量/频率趋势；sich häufen 强调“事件密集出现” |
-| von etwas berichten | etwas schildern / von etwas erzählen | 讲述、报道 | berichten 中性偏新闻；schildern 强调细致描绘；erzählen 偏口语 |
-| sich Sorgen machen um | besorgt sein wegen / beunruhigt sein über | 担忧 | Sorgen machen 动性强、口语+书面皆可；besorgt sein wegen 更书面，需 Gen./Dat. |
-| eine abgeschlossene Geschichte | eine Sache, die vorbei ist | 已终结的事 | ⚠ 注意：`abgeschlossen` 在此 ≠ „erforscht“（研究完成），考试常在此设陷阱 |
-| etwas für sich (selbst) erarbeiten | sich (Dat.) etwas aneignen | 自主学习掌握 | erarbeiten 强调“通过工作/研究获得”；aneignen 更强调“内化为自己的” |
-
+| **etwas ablehnen** 拒绝、反对<br>例：Manche Menschen **lehnen** die deutsche Erinnerungskultur **ab**.<br>有些人拒绝德国的记忆文化。 | **etwas zurückweisen** 驳回、拒绝（正式）<br>例：Der Direktor **wies** die Kritik an der Gedenkstätte **zurück**.<br>馆长驳回了对纪念馆的批评。 | 拒绝、反对 | ablehnen 最通用；zurückweisen 更正式，多用于“指控、要求、批评” |
+| **immer häufiger passieren** 越来越频繁地发生<br>例：Solche Vorfälle **passieren** in Gedenkstätten **immer häufiger**.<br>这类事件在纪念馆里越来越频繁地发生。 | **zunehmen** 增加、增长<br>例：Der Antisemitismus **nimmt** in Deutschland **zu**.<br>德国的反犹主义在增加。<br><br>**sich häufen** 密集出现、频发<br>例：In letzter Zeit **häufen sich** die antisemitischen Vorfälle.<br>近来反犹事件频发。 | 越来越频繁 | zunehmen 用于数量/频率趋势；sich häufen 强调“事件密集出现” |
+| **von etwas berichten** 讲述、报道<br>例：Die Zeitzeugin **berichtet vom** Holocaust.<br>这位见证人讲述大屠杀。 | **etwas schildern** 细致描绘<br>例：Sie **schildert** ihre Erlebnisse im Lager sehr genau.<br>她非常细致地描绘了在集中营的经历。<br><br>**von etwas erzählen** 讲述（口语）<br>例：Meine Oma **erzählt** oft **von** ihrer Kindheit.<br>我奶奶常讲她童年的故事。 | 讲述、报道 | berichten 中性偏新闻；schildern 强调细致描绘；erzählen 偏口语 |
+| **sich Sorgen machen um + Akk.** 为……担忧<br>例：Wagner **macht** sich **Sorgen um** die Erinnerung an die Opfer.<br>瓦格纳为遇难者的记忆担忧。 | **besorgt sein wegen + Gen./Dat.** 因……而担忧<br>例：Die Fachleute **sind wegen** der Entwicklung **besorgt**.<br>专家们对这一发展感到担忧。<br><br>**beunruhigt sein über + Akk.** 对……感到不安<br>例：Viele **sind über** den wachsenden Antisemitismus **beunruhigt**.<br>许多人对日益增长的反犹主义感到不安。 | 担忧 | Sorgen machen 动性强、口语+书面皆可；besorgt sein wegen 更书面，需 Gen./Dat. |
+| **eine abgeschlossene Geschichte** 一件已了结的事<br>例：Für viele junge Leute **ist** der Holocaust **eine abgeschlossene Geschichte**.<br>对许多年轻人来说，大屠杀已是过去的事。 | **eine Sache, die vorbei ist** 一件已经过去的事<br>例：Für sie **ist** die NS-Zeit **eine Sache, die vorbei ist**.<br>对他们来说，纳粹时期是已经过去的事。 | 已终结的事 | ⚠ 注意：`abgeschlossen` 在此 ≠ „erforscht“（研究完成），考试常在此设陷阱 |
+| **etwas für sich (selbst) erarbeiten** 自主钻研掌握<br>例：Die Jugendlichen **erarbeiten** die Geschichte **für sich selbst**.<br>青少年自己去钻研掌握这段历史。 | **sich (Dat.) etwas aneignen** 把……内化为自己的<br>例：So **eignen sich** die Schüler das Wissen **selbst an**.<br>这样学生们就把这些知识变成了自己的。 | 自主学习掌握 | erarbeiten 强调“通过工作/研究获得”；aneignen 更强调“内化为自己的” |
 ---
 
 ## 模块四：生活化造句与主动迁移
@@ -353,6 +351,7 @@ c) Jugendliche sollen im ==Alltag== weniger Fehler machen.
 ### 4.1 本次训练结构（A 级优先）
 
 S1 `Es gibt immer weniger + N (Pl.), die ... können.`（趋势）
+
 S4 `Jd. findet, damit + Verb + man ...`（评价/后果）
 S3 `Für + Akk. ist ... weit weg.`（评价/群体差异）
 
@@ -363,18 +362,21 @@ S3 `Für + Akk. ist ... weit weg.`（评价/群体差异）
 结构公式：`Es gibt immer weniger + N (Pl.), die ... können.`
 功能类别：趋势（Entwicklung）
 中文提示：说一个你身边正在发生的社会变化。例如：在你所在的城市，能负担得起一套自己住房的家庭越来越少；或者：愿意长期从事护理工作的年轻人越来越少。用一句完整的德语表达出来，注意关系从句的动词位置。
+Es gibt immer weniger Familie, die selbst unternehmen können.
 
 **任务 2**
 等级：A
 结构公式：`Jd. findet, damit + Verb + man ...`
 功能类别：评价（Bewertung）/ 后果
 中文提示：对某种日常行为做出负面评价并说出后果。例如：你的同事认为，天天点外卖不仅浪费包装，还让人失去做饭的能力；或者：你认为，在会议上一直看手机等于不尊重发言的人。用一句德语表达，注意 „damit“ 放在句首时主句的语序。
+Meiner Kollegte findet, damit kaufen Man die geliferen food.
 
 **任务 3**
 等级：A
 结构公式：`Für + Akk. ist ... (sehr) weit weg.`
 功能类别：评价（Bewertung）/ 群体差异
 中文提示：说明不同群体对同一件事的距离感差异。例如：对你的父母来说，网上办理一切手续仍然很遥远；或者：对很多年轻人来说，“退休规划”这个话题还非常遥远。用一句德语表达。
+Für meiner Vater ist er am funktierenden Internet weit weg.
 
 > [!tip]- 点击展开：模块四德语造句参考答案
 >
