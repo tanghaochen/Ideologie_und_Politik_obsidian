@@ -1,0 +1,204 @@
+/* ── 插入弹窗 ── */
+.cc-modal {
+  width: min(520px, 92vw);
+}
+.cc-modal .modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 4px;
+}
+.cc-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-right: 32px; /* 给右上角的关闭按钮让位 */
+}
+.cc-chip {
+  font-size: var(--font-ui-small);
+}
+.cc-header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cc-header-row .cc-title-input {
+  flex: 1;
+  min-width: 0;
+}
+.cc-header-preview {
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-smaller);
+  color: var(--text-faint);
+  user-select: none;
+}
+.cc-textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+.cc-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cc-footer .mod-cta {
+  margin-left: auto;
+}
+.cc-hint {
+  font-size: var(--font-ui-smaller);
+  color: var(--text-faint);
+}
+.cc-settings-btn {
+  color: var(--text-faint);
+}
+.cc-empty {
+  color: var(--text-muted);
+  padding: 12px 0;
+}
+.is-phone .cc-hint {
+  display: none;
+}
+
+/* ── callout 右上角的复制按钮 ── */
+.cc-copy-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 2px;
+  color: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+.cc-copy-btn svg {
+  width: 14px;
+  height: 14px;
+}
+/* 主题给折叠箭头写了 margin-left: auto，会和复制按钮平分空白，把复制按钮挤到中间；选择器要比主题的更具体 */
+.callout > .callout-title > .cc-copy-btn + .callout-fold {
+  margin-left: 4px;
+}
+body:not(.is-mobile) .callout-title:hover > .cc-copy-btn,
+body:not(.is-mobile) .callout:hover > .callout-title > .cc-copy-btn {
+  opacity: 0.55;
+  pointer-events: auto;
+}
+body:not(.is-mobile) .cc-copy-btn:hover {
+  opacity: 1;
+}
+/* 手机没有悬停，常亮但淡一点 */
+.is-mobile .cc-copy-btn {
+  opacity: 0.4;
+  pointer-events: auto;
+}
+
+/* ── 设置页：一行一个模板，点开在同一张卡片里编辑 ── */
+.cc-settings .cc-tpl-row {
+  flex-wrap: wrap;
+  cursor: pointer;
+}
+.cc-settings .cc-tpl-row .setting-item-description {
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-smaller);
+}
+.cc-settings .cc-tpl-row > .cc-tpl-panel {
+  flex-basis: 100%;
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  align-items: center;
+  gap: 10px 16px;
+  padding-top: 12px;
+  cursor: default;
+}
+.cc-settings .cc-field-label {
+  font-size: var(--font-ui-small);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.cc-settings .cc-field-label.cc-top {
+  align-self: start;
+  padding-top: 6px;
+}
+.cc-settings .cc-field-control {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+.cc-settings .cc-field-control > input,
+.cc-settings .cc-field-control > textarea {
+  flex: 1;
+  min-width: 0;
+}
+.cc-settings .cc-field-control > textarea {
+  resize: vertical;
+}
+
+/* 类型选择器：带图标 */
+.cc-type-picker {
+  position: relative;
+}
+.cc-type-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cc-type-current,
+.cc-type-opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cc-type-icon {
+  display: flex;
+  color: var(--cc-icon-color, inherit);
+}
+.cc-type-icon svg {
+  width: 16px;
+  height: 16px;
+}
+.cc-type-chevron {
+  display: flex;
+  color: var(--text-muted);
+}
+.cc-type-chevron svg {
+  width: 14px;
+  height: 14px;
+}
+.cc-type-pop {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  text-align: left;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(120px, 1fr));
+  gap: 2px;
+  padding: 6px;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-l);
+}
+.cc-type-opt {
+  padding: 6px 10px;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  font-size: var(--font-ui-small);
+}
+.cc-type-opt:hover {
+  background: var(--background-modifier-hover);
+}
+.cc-type-opt.is-selected {
+  background: var(--background-modifier-active-hover);
+  font-weight: 600;
+}
+
+/* 实时预览里 callout 右上角原生的「编辑这个区块」按钮会盖住复制按钮；点 callout 正文一样能进源码 */
+.cc-copy-on .cm-embed-block.cm-callout > .embed-actions .edit-block-button {
+  display: none;
+}
