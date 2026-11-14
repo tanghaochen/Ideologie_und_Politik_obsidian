@@ -61,16 +61,16 @@ b) Er hält sie für sinnvoll, ==solange== Überlebende selbst sprechen.
 c) Er hält sie nur bei älteren ==Schülern== für angebracht, nicht bei Jugendlichen.
 
 **Frage 7 – 长难句（逻辑/隐含含义）**
-Im Text heißt es: *„Sie sollen auch erkennen, dass die NS-Zeit keine abgeschlossene Geschichte ist.“* Was bedeutet das im Kontext?
-a) Ausgrenzung und Diskriminierung existieren auch in der Gegenwart.
+Im Text heißt es: *„Sie sollen auch erkennen, dass die NS-Zeit keine ==abgeschlossene== Geschichte ist.“* Was bedeutet das im Kontext?
+a) ==Ausgrenzung== und ==Diskriminierung== existieren auch in der ==Gegenwart==.
 b) Die historische Forschung zum Nationalsozialismus ist noch nicht abgeschlossen.
-c) Der Nationalsozialismus wird im Unterricht zu früh behandelt.
+c) Der Nationalsozialismus wird im ==Unterricht== zu früh behandelt.
 
 **Frage 8 – 长难句（转述与评价）**
 Was bedeutet Eva Umlaufs Botschaft *„Ihr müsst nicht perfekt sein. Ihr müsst nur wach sein.“*?
-a) Jugendliche sollen aufmerksam sein und Unrecht wahrnehmen, statt fehlerfrei zu sein.
+a) Jugendliche sollen ==aufmerksam== sein und ==Unrecht== ==wahrnehmen==, statt ==fehlerfrei== zu sein.
 b) Jugendliche sollen sich erst politisch bilden, bevor sie sich engagieren.
-c) Jugendliche sollen im Alltag weniger Fehler machen.
+c) Jugendliche sollen im ==Alltag== weniger Fehler machen.
 
 ---
 
@@ -277,18 +277,16 @@ c) Jugendliche sollen im Alltag weniger Fehler machen.
 ## 模块三：B2 高频词块、句式与语言功能提取
 
 ### 3.1 高频词块与固定搭配（A/B 级）
-
 | 德语表达 | 中文含义 | 格支配 | 原文例句 | 同义表达 |
 |---|---|---|---|---|
-| sich (Dat.) Sorgen machen um | 为……担忧 | sich + Dat. + **um + Akk.** | „Wagner macht sich Sorgen um die Erinnerung an die Opfer der NS-Zeit.“ | besorgt sein wegen + Gen./Dat.; sich beunruhigt zeigen über + Akk. |
-| jdm. Sorgen machen | 使某人担忧 | **jdm. (Dat.)** Sorgen machen | „Besonders der wachsende Antisemitismus macht ihr Sorgen.“ | jdn. beunruhigen; jdm. zu denken geben |
-| Kritik an (+ Dat.) | 对……的批评 | **an + Dat.** | „... und Kritik an der deutschen Erinnerungskultur machen Fachleuten Sorgen.“ | Kritik üben an + Dat.; etwas kritisieren |
-| sich mit etwas beschäftigen | 致力于/研究某事 | **mit + Dat.** | „... beschäftigt sich auch die Ausstellung ... mit der Frage, wie ...“ | sich einer Sache widmen; sich mit einer Frage auseinandersetzen |
-| von etwas berichten | 讲述/报道某事 | **von + Dat.** | „... Zeitzeuginnen und Zeitzeugen, die vom Holocaust berichten können.“ | von etwas erzählen; etwas schildern |
-| etwas (Akk.) ablehnen | 拒绝、反对某事 | **+ Akk.**（可分：lehnt ... ab） | „Manche Menschen lehnen die deutsche Erinnerungskultur ab.“ | etwas zurückweisen; gegen etwas sein |
-| auf etwas achten | 留意、关注某事 | **auf + Akk.** | „Achtet auf euer Land.“ | aufpassen auf + Akk.; ein Auge haben auf + Akk. |
-| etwas weitergeben / vermitteln | 传承、传递 | **+ Akk.**（可分：gibt ... weiter） | „Wie kann die Erinnerung an die NS-Verbrechen in Zukunft weitergegeben werden?“ | etwas vermitteln; etwas an die nächste Generation tragen |
-
+| sich (Dat.) Sorgen machen um | 为……担忧 | sich + Dat. + **um + Akk.** | „Wagner macht sich Sorgen um die Erinnerung an die Opfer der NS-Zeit.“<br>瓦格纳为纳粹时期遇难者的记忆感到担忧。 | besorgt sein wegen + Gen./Dat.; sich beunruhigt zeigen über + Akk. |
+| jdm. Sorgen machen | 使某人担忧 | **jdm. (Dat.)** Sorgen machen | „Besonders der wachsende Antisemitismus macht ihr Sorgen.“<br>尤其是日益增长的反犹主义让她担忧。 | jdn. beunruhigen; jdm. zu denken geben |
+| Kritik an (+ Dat.) | 对……的批评 | **an + Dat.** | „... und Kritik an der deutschen Erinnerungskultur machen Fachleuten Sorgen.“<br>……以及对德国记忆文化的批评让专家们担忧。 | Kritik üben an + Dat.; etwas kritisieren |
+| sich mit etwas beschäftigen | 致力于/研究某事 | **mit + Dat.** | „... beschäftigt sich auch die Ausstellung ... mit der Frage, wie ...“<br>……展览也探讨了……这一问题。 | sich einer Sache widmen; sich mit einer Frage auseinandersetzen |
+| von etwas berichten | 讲述/报道某事 | **von + Dat.** | „... Zeitzeuginnen und Zeitzeugen, die vom Holocaust berichten können.“<br>……能够讲述大屠杀的见证者。 | von etwas erzählen; etwas schildern |
+| etwas (Akk.) ablehnen | 拒绝、反对某事 | **+ Akk.**（可分：lehnt ... ab） | „Manche Menschen lehnen die deutsche Erinnerungskultur ab.“<br>有些人拒绝德国的记忆文化。 | etwas zurückweisen; gegen etwas sein |
+| auf etwas achten | 留意、关注某事 | **auf + Akk.** | „Achtet auf euer Land.“<br>留意你们的国家。 | aufpassen auf + Akk.; ein Auge haben auf + Akk. |
+| etwas weitergeben / vermitteln | 传承、传递 | **+ Akk.**（可分：gibt ... weiter） | „Wie kann die Erinnerung an die NS-Verbrechen in Zukunft weitergegeben werden?“<br>对纳粹罪行的记忆未来该如何传承下去？ | etwas vermitteln; etwas an die nächste Generation tragen |
 ### 3.2 核心句式提取
 
 | 编号 | 等级 | 结构公式 | 原文例句 | 中文翻译 | 功能类别 | 适用场景 |
@@ -652,7 +650,8 @@ S3 `Für + Akk. ist ... weit weg.`（评价/群体差异）
 - 3 a v
 - 4 c a x
 - 5a v
-
+- 7 a
+- 8 a
 # 生词
 
 

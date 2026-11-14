@@ -3941,7 +3941,7 @@
   },
   "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md": {
     "scrollState": {
-      "top": 2354.400146484375,
+      "top": 11114.400390625,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 1131,
@@ -3950,32 +3950,32 @@
     },
     "cursor": {
       "from": {
-        "ch": 33,
-        "line": 60
+        "ch": 0,
+        "line": 289
       },
       "to": {
-        "ch": 41,
-        "line": 60
+        "ch": 0,
+        "line": 289
       }
     }
   },
   "语言学习/德语/学习记录日记-技巧/leseaufgabe/提示词和解答.md": {
     "scrollState": {
-      "top": 1560,
+      "top": 9.600000381469727,
       "left": 0,
       "clientHeight": 1522,
-      "clientWidth": 1036,
+      "clientWidth": 1131,
       "height": 1522,
-      "width": 1048
+      "width": 1143
     },
     "cursor": {
       "from": {
-        "ch": 188,
-        "line": 1295
+        "ch": 27,
+        "line": 20
       },
       "to": {
-        "ch": 188,
-        "line": 1295
+        "ch": 27,
+        "line": 20
       }
     }
   },
