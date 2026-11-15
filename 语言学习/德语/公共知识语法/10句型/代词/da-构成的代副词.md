@@ -134,3 +134,11 @@ mindmap
     - _教材原句：_ Ich muss mich beeilen, **damit** der Bericht rechtzeitig fertig wird.
     - **【家庭融入场景】** Ich lerne jeden Tag hart Deutsch, **damit** meine Kinder hier ein besseres Leben haben. (我每天刻苦学德语，是为了让我的孩子们在这里有更好的生活。)
 - “占位符” [[Vorwort#^dn78es]]
+
+
+|句子里的 damit|怎么认（触发条件）|动词位置|例句|
+|---|---|---|---|
+|代副词“用这个、靠这个”|能换成 **dadurch / mit dieser Sache**，指代前文提到的事|普通状语位置；放句首时变位动词紧随第二位|**Damit tötet** man die Menschen ein zweites Mal.|
+|代副词“对某事（满意、同意等）”|与 **zufrieden mit**、**anfangen mit** 这类搭配连用|句中状语位，语序不变|Ich bin **damit** zufrieden. / **Damit** fange ich an.|
+|从属连词“为了、以便”|能换成 **um … zu**，表目的，主从句主语不同|动词居末，变位动词在最后|Ich lerne Deutsch, **damit** ich dort studieren **kann**.|
+|目的从句提前|同上，只是整句移到句首|从句动词居末；主句变位动词紧跟逗号|**Damit** du es **weißt**, **komme** ich später.|
