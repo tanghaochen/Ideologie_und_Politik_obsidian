@@ -142,12 +142,12 @@ user-one：
 #### 0.5.1.3 微软账户 microsoft
 用于登录 office
 A14324@fczz.onmicrosoft.com
-password: t 1774189597 Asd!@#
+password: `t1774189597Asd!@#`
 
 
 ---
 hc@51888.onmicrosoft.com
-1774189597 Asd!@# 
+`1774189597Asd!@#`
 可使用 office copilot and oneDrive storage has 5 T
 
 1774189597@qq.com

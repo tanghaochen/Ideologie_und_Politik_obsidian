@@ -6,7 +6,7 @@
       {
         "id": "3bc015e7f0f64eeb",
         "type": "tabs",
-        "dimension": 75.32219570405728,
+        "dimension": 62.62529832935561,
         "children": [
           {
             "id": "b396f74b1dec3e21",
@@ -37,14 +37,29 @@
               "icon": "lucide-file",
               "title": "26-10"
             }
+          },
+          {
+            "id": "fcdc535171169ab0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/10句型/代词/da-构成的代副词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "da-构成的代副词"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       },
       {
         "id": "3f4797f1cf032a12",
         "type": "split",
-        "dimension": 24.67780429594272,
+        "dimension": 37.37470167064439,
         "children": [
           {
             "id": "ca5d38080bc71ab3",
@@ -368,8 +383,10 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "9c199cc49a6a3d79",
+  "active": "fcdc535171169ab0",
   "lastOpenFiles": [
+    "语言学习/德语/单词/生词/26-10.md",
+    "电脑、软件、系统/ps-tang.md",
     "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
     "语言学习/德语/单词/生词/2026-11.md",
     "Diary/2026/20261112.md",
@@ -391,14 +408,12 @@
     "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
     "语言学习/德语/公共知识语法/4副词/代副词.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/间接引语（新闻体）：第一、第二虚拟式与介词连接体系.md",
-    "语言学习/德语/单词/生词/26-10.md",
     "语言学习/德语/公共知识语法/10句型/代词/da-构成的代副词.md",
     "语言学习/德语/公共知识语法/10句型/逗号规则.md",
     "assets/file-20261113202019316.png",
     "assets/file-20261113201944676.png",
     "语言学习/德语/公共知识语法/1词/动词、形容词、名词与支配第四格宾语的 介词的固定搭配.md",
     "语言学习/德语/公共知识语法/名词.md",
-    "语言学习/德语/公共知识语法/格; 限定词.md",
     "Blockspace Bridge",
     "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw",
     "assets/Designer (7).png",
