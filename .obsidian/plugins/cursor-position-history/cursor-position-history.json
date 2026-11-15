@@ -3941,7 +3941,7 @@
   },
   "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md": {
     "scrollState": {
-      "top": 15339.6005859375,
+      "top": 15219.6005859375,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 1330,
@@ -3951,11 +3951,11 @@
     "cursor": {
       "from": {
         "ch": 0,
-        "line": 358
+        "line": 353
       },
       "to": {
         "ch": 0,
-        "line": 379
+        "line": 353
       }
     }
   },
