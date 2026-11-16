@@ -1861,21 +1861,21 @@
   },
   "电脑、软件、系统/ps-tang.md": {
     "scrollState": {
-      "top": 5014.80029296875,
+      "top": 4492.80029296875,
       "left": 0,
-      "clientHeight": 1474,
+      "clientHeight": 1522,
       "clientWidth": 1300,
-      "height": 1474,
+      "height": 1522,
       "width": 1312
     },
     "cursor": {
       "from": {
-        "ch": 42,
-        "line": 164
+        "ch": 18,
+        "line": 153
       },
       "to": {
-        "ch": 42,
-        "line": 164
+        "ch": 18,
+        "line": 153
       }
     }
   },
