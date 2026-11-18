@@ -6,7 +6,6 @@
       {
         "id": "3bc015e7f0f64eeb",
         "type": "tabs",
-        "dimension": 62.62529832935561,
         "children": [
           {
             "id": "b396f74b1dec3e21",
@@ -24,144 +23,67 @@
             }
           },
           {
-            "id": "dff200aa5038d7c4",
+            "id": "52603972a51e39df",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/代词/da-构成的代副词.md",
+                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "da-构成的代副词"
+              "title": "Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl"
             }
           },
           {
-            "id": "36a41160fdb27e45",
+            "id": "9b28058e4e918635",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "电脑、软件、系统/ps-tang.md",
+                "file": "Diary/2026/20261118.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "ps-tang"
+              "title": "20261118"
             }
           },
           {
-            "id": "c8cb8c7ae11f9aaf",
+            "id": "6b48fe78b6a6e3eb",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/原因状语从句与让步从句 weil, da,obwohl,wobei....md",
+                "file": "语言学习/德语/单词/生词/26-8.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "原因状语从句与让步从句 weil, da,obwohl,wobei..."
+              "title": "26-8"
             }
           },
           {
-            "id": "a6fb82352d7bc028",
+            "id": "2c599ddd4704d4ef",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/疑问句/疑问词.md",
+                "file": "Diary/2026/20261117.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "疑问词"
-            }
-          },
-          {
-            "id": "bdbd09de70ee9680",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/从句合集/关系从句/各种关系代词区别对比.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "各种关系代词区别对比"
-            }
-          },
-          {
-            "id": "89cb4645cad2d3b2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/Anmerkungen zum persönlichen deutschen Aufsatz/Datierungsstudien/难句解析.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "难句解析"
+              "title": "20261117"
             }
           }
         ],
-        "currentTab": 6
-      },
-      {
-        "id": "3f4797f1cf032a12",
-        "type": "split",
-        "dimension": 37.37470167064439,
-        "children": [
-          {
-            "id": "ca5d38080bc71ab3",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "b759e66aa4fb2711",
-                "type": "leaf",
-                "state": {
-                  "type": "mindmap",
-                  "state": {
-                    "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md"
-                  },
-                  "icon": "mindmap-tree",
-                  "title": "《Erinnern an den Holocaust》"
-                }
-              }
-            ]
-          },
-          {
-            "id": "4679dcaf02fa313f",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "8273a369856b9641",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "《Erinnern an den Holocaust》"
-                }
-              }
-            ]
-          }
-        ],
-        "direction": "horizontal"
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -350,16 +272,6 @@
               "icon": "lucide-archive",
               "title": "添加笔记属性"
             }
-          },
-          {
-            "id": "02b4c98c9d3789ee",
-            "type": "leaf",
-            "state": {
-              "type": "ostracon-inbox-view",
-              "state": {},
-              "icon": "inbox",
-              "title": "MN 卡片"
-            }
           }
         ]
       },
@@ -400,7 +312,7 @@
             "state": {
               "type": "notebook-navigator-calendar",
               "state": {},
-              "icon": "lucide-calendar-days",
+              "icon": "calendar-days",
               "title": "日历"
             }
           }
@@ -409,14 +321,14 @@
       }
     ],
     "direction": "horizontal",
-    "width": 507.5
+    "width": 395.099853515625
   },
   "left-ribbon": {
     "hiddenItems": {
+      "obsidian-local-images-plus:Local Images Plus  0.19.3\r\nLocalize attachments (plugin folder)": false,
       "gogoga-mindmap:新建思维导图": false,
       "smart-composer:Open smart composer": false,
       "ostracon-ob:获取MN数据": false,
-      "obsidian-local-images-plus:Local Images Plus  0.17.1\r\nLocalize attachments (plugin folder)": false,
       "media-extended:打开媒体库": true,
       "media-extended:打开媒体快速切换器": true,
       "mermaid-tools:Open Mermaid Toolbar": true,
@@ -443,54 +355,53 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "89cb4645cad2d3b2",
+  "active": "6b48fe78b6a6e3eb",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/10句型/从句合集/关系从句/各种关系代词区别对比.md",
-    "语言学习/德语/公共知识语法/10句型/疑问句/疑问词.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/原因状语从句与让步从句 weil, da,obwohl,wobei....md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/8  特殊疑问词wo和介词in_笔记.md",
-    "电脑、软件、系统/ps-tang.md",
-    "语言学习/德语/公共知识语法/10句型/代词/da-构成的代副词.md",
-    "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
-    "语言学习/德语/单词/生词/26-10.md",
-    "语言学习/德语/单词/生词/2026-11.md",
-    "Diary/2026/20261112.md",
-    "语言学习/德语/学习记录日记-技巧/leseaufgabe/提示词和解答.md",
+    "Diary/2026/20261118.md",
+    "pixel-banner-images/作文.jpg",
+    "pixel-banner-images",
+    "Diary/2026/20261117.md",
+    "assets/buliten board.png",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md",
+    "国家/中国/KPI与民主.md",
+    "思想思维心理哲学/个人问题处理/学习计划框架/思想学习.md",
+    "assets/file-20261118141223379.png",
+    "思想思维心理哲学/个人问题处理/学习计划框架",
+    "file:E:/AI workpace/德语A2_歌德模拟考试/README.md",
     "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md",
-    "语言学习/德语/公共知识语法/时态/第一将来时和第一虚拟式的区别.md",
-    "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
-    "_AI-Diagrams/未命名.md",
-    "copilot/copilot-conversations/笔记清洗与标题添加@20261114_010929.md",
-    "file:C:/Users/17741/Downloads/注释.md",
-    "file:C:/Users/17741/Downloads/注释 (2026-11-14 01-01-10).md",
-    "copilot/copilot-conversations/笔记清洗与标题整理@20261114_010750.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/关系从句/超齐全版系统讲解关系从句.md",
-    "语言学习/德语/公共知识语法/10句型/从句合集/关系从句/关系从句.md",
+    "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
+    "Diary/2026/20261112.md",
+    "思想思维心理哲学/DW个人人生思想架构.md",
+    "思想思维心理哲学/过度劳累.md",
+    "思想思维心理哲学/个人与社会的关系/DW 社会个人关系模型.md",
+    "思想思维心理哲学/日常记录总结/个人架构.md",
+    "_AI-Diagrams/时代国家个人/四国对比-中德美与落后国家.excalidraw",
+    "国家/出国/德国/德国双元制.md",
+    "语言学习/德语/公共知识语法/格; 限定词.md",
+    "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
+    "assets/1794745508852-0.png",
+    "assets/Designer (12).png",
+    "assets/1794742127458-0 (1).png",
+    "assets/1794745241048-0 (1).png",
+    "assets/_图片生成提示词：《鱼、网与天地——关于规则、认知、自由与自我超越的哲学思考》__ 一、整体创作目标 (2).png",
+    "assets/1794804864532-0.png",
+    "assets/Designer (15).png",
+    "语言学习/德语/公共知识语法/10句型/代词/da-构成的代副词.md",
+    "语言学习/德语/公共知识语法/2动词/第二分词;过去分词 ge....md",
+    "语言学习/德语/单词/动词用法/小品词 doch，nach，ja，mal，denn。语气润滑剂.md",
+    "语言学习/德语/单词/生词/26-9.md",
+    "copilot/copilot-conversations/表格格式优化失败@20261117_165754.md",
+    "语言学习/德语/学习记录日记-技巧/写作知识/所以写作论点，词汇、格式、模板、句子.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Benzin_im_Blut.md",
+    "语言学习/德语/学习记录日记-技巧/写作知识/DW逻辑和论点表达模型.md",
     "语言学习/德语/公共知识语法/从句.md",
     "语言学习/德语/学习记录日记-技巧/leseaufgabe",
-    "语言学习/德语/公共知识语法/10句型/从句合集/前置定语、后置定语以及扩展的分词定语.md",
-    "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md",
-    "语言学习/德语/公共知识语法/4副词/代副词.md",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习/间接引语（新闻体）：第一、第二虚拟式与介词连接体系.md",
-    "assets/file-20261113202019316.png",
-    "assets/file-20261113201944676.png",
     "Blockspace Bridge",
     "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw",
-    "assets/Designer (7).png",
     "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw",
     "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw",
-    "assets/Designer (6).png",
-    "assets/Designer (5).png",
-    "assets/Designer (3).png",
-    "assets/file-20261112011109789.png",
-    "assets/Designer.png",
-    "assets/非形式谬误分类思维导图-1.png",
-    "assets/识别谬误的思维导图.png",
     "copilot/memory",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/对话练习",
-    "语言学习/德语/教材/其他/德语活学活用B2-C1.pdf",
-    "语言学习/德语/公共知识语法/10句型/从句合集/关系从句",
-    "_AI-Diagrams/时代国家个人/四国对比-中德美与落后国家.excalidraw",
     "语言学习/德语/学习记录日记-技巧/2026.canvas",
     "Marginnote/Deutsch.canvas",
     "Marginnote/错题管理.canvas",

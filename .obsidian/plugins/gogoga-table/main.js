@@ -75,8 +75,31 @@ var zh = {
   fmtTextColor: "\u6587\u5B57\u989C\u8272",
   fmtHighlightColor: "\u8367\u5149\u7B14",
   fmtClear: "\u6E05\u9664\u6587\u5B57\u989C\u8272\u548C\u8367\u5149\u7B14",
+  mbDone: "\u5B8C\u6210",
+  mbUndo: "\u64A4\u9500",
+  mbRedo: "\u91CD\u505A",
+  mbLink: "\u63D2\u5165\u53CC\u94FE",
+  mbCheckbox: "\u52FE\u9009\u6846",
+  mbNewline: "\u683C\u5185\u6362\u884C",
+  mbPrevCell: "\u4E0A\u4E00\u683C",
+  mbNextCell: "\u4E0B\u4E00\u683C",
+  palTextMore: "\u66F4\u591A\u6587\u5B57\u989C\u8272",
+  palBgMore: "\u66F4\u591A\u8367\u5149\u7B14\u989C\u8272",
+  palCommon: "\u5E38\u7528",
+  palRecent: "\u6700\u8FD1\u4F7F\u7528",
+  palAlpha: "\u900F\u660E\u5EA6",
+  palCustom: "\u81EA\u5B9A\u4E49\u2026",
+  palNoText: "\u53BB\u6389\u6587\u5B57\u989C\u8272",
+  palNoHighlight: "\u53BB\u6389\u8367\u5149\u7B14",
   deleteCols: "\u5220\u9664 {n} \u5217",
   deleteTable: "\u5220\u9664\u8868\u683C",
+  copyTable: "\u590D\u5236\u6574\u5F20\u8868\u683C",
+  copyMarkdown: "\u590D\u5236\u4E3A Markdown \u8868\u683C\uFF08\u4E0D\u5E26\u6837\u5F0F\uFF09",
+  copyImage: "\u590D\u5236\u56FE\u7247",
+  copiedImage: "\u5DF2\u590D\u5236\u56FE\u7247",
+  deleteImage: "\u5220\u9664\u56FE\u7247",
+  copiedTable: "\u5DF2\u590D\u5236\u8868\u683C\uFF1A\u7C98\u5230\u5176\u4ED6\u7B14\u8BB0\u4F1A\u4FDD\u7559\u989C\u8272\u3001\u5217\u5BBD\u3001\u5408\u5E76",
+  copiedMarkdown: "\u5DF2\u590D\u5236 Markdown \u8868\u683C",
   indentTable: "\u589E\u52A0\u7F29\u8FDB\uFF08\u6302\u5230\u4E0A\u9762\u7684\u5217\u8868\u9879\u4E0B\uFF09",
   outdentTable: "\u51CF\u5C11\u7F29\u8FDB\uFF08\u79FB\u51FA\u5217\u8868\uFF09",
   moveRowUp: "\u4E0A\u79FB\u4E00\u884C",
@@ -87,6 +110,9 @@ var zh = {
   alignLeft: "\u5DE6\u5BF9\u9F50",
   alignCenter: "\u5C45\u4E2D",
   alignRight: "\u53F3\u5BF9\u9F50",
+  vAlign_top: "\u9876\u7AEF\u5BF9\u9F50",
+  vAlign_middle: "\u5782\u76F4\u5C45\u4E2D",
+  vAlign_bottom: "\u5E95\u7AEF\u5BF9\u9F50",
   color: "\u5E95\u8272",
   noColor: "\u65E0\u5E95\u8272",
   autoWidth: "\u81EA\u52A8\u5217\u5BBD",
@@ -102,6 +128,13 @@ var zh = {
   style_minimal: "\u6781\u7B80\u7EBF",
   style_academic: "\u4E09\u7EBF\u8868",
   textColor: "\u6587\u5B57\u989C\u8272",
+  fontSize: "\u6587\u5B57\u5927\u5C0F",
+  tableFontSize: "\u6574\u8868\u6587\u5B57\u5927\u5C0F",
+  fontSize_xs: "\u5F88\u5C0F",
+  fontSize_s: "\u5C0F",
+  fontSize_m: "\u6B63\u5E38",
+  fontSize_l: "\u5927",
+  fontSize_xl: "\u5F88\u5927",
   calcTitle: "\u5408\u8BA1",
   calc_sum: "\u6C42\u548C",
   calc_avg: "\u5E73\u5747",
@@ -114,6 +147,8 @@ var zh = {
   statusOff: "\u53D6\u6D88\u72B6\u6001\u5217",
   statusColor: "\u300C{v}\u300D\u7684\u989C\u8272",
   defaultText: "\u9ED8\u8BA4\u6587\u5B57\u989C\u8272",
+  foldTable: "\u6298\u53E0\u8868\u683C\uFF08\u53EA\u663E\u793A\u8868\u5934\uFF09",
+  unfoldRows: "\u25B8 \u5C55\u5F00 {n} \u884C",
   headerColumn: "\u7B2C\u4E00\u5217\u4F5C\u4E3A\u6807\u9898\u5217",
   freezeHeaderCol: "\u51BB\u7ED3\u6807\u9898\u5217\uFF08\u5DE6\u53F3\u6EDA\u52A8\u65F6\u4E0D\u52A8\uFF09",
   headerRows: "\u8868\u5934\u884C\u6570",
@@ -125,11 +160,16 @@ var zh = {
   alignAllLeft: "\u6574\u8868\u5DE6\u5BF9\u9F50",
   alignAllCenter: "\u6574\u8868\u5C45\u4E2D",
   alignAllRight: "\u6574\u8868\u53F3\u5BF9\u9F50",
+  vAlignAll_top: "\u6574\u8868\u9876\u7AEF\u5BF9\u9F50",
+  vAlignAll_middle: "\u6574\u8868\u5782\u76F4\u5C45\u4E2D",
+  vAlignAll_bottom: "\u6574\u8868\u5E95\u7AEF\u5BF9\u9F50",
   autoWidthAll: "\u6240\u6709\u5217\u6062\u590D\u81EA\u52A8\u5BBD\u5EA6",
   clearAllBg: "\u6E05\u9664\u6240\u6709\u989C\u8272",
   unmergeCells: "\u53D6\u6D88\u5408\u5E76",
   addRow: "\u52A0\u4E00\u884C",
   addCol: "\u52A0\u4E00\u5217",
+  addColFirst: "\u5728\u6700\u524D\u9762\u52A0\u4E00\u5217",
+  addRowFirst: "\u5728\u8868\u5934\u4E0B\u9762\u52A0\u4E00\u884C",
   rowMenu: "\u884C\u64CD\u4F5C",
   colMenu: "\u5217\u64CD\u4F5C",
   resize: "\u62D6\u52A8\u6539\u5217\u5BBD\uFF0C\u53CC\u51FB\u81EA\u52A8",
@@ -190,8 +230,31 @@ var en = {
   fmtTextColor: "Text color",
   fmtHighlightColor: "Highlighter",
   fmtClear: "Clear text and highlighter colors",
+  mbDone: "Done",
+  mbUndo: "Undo",
+  mbRedo: "Redo",
+  mbLink: "Insert link",
+  mbCheckbox: "Checkbox",
+  mbNewline: "New line in cell",
+  mbPrevCell: "Previous cell",
+  mbNextCell: "Next cell",
+  palTextMore: "More text colors",
+  palBgMore: "More highlighter colors",
+  palCommon: "Frequent",
+  palRecent: "Recent",
+  palAlpha: "Opacity",
+  palCustom: "Custom\u2026",
+  palNoText: "No text color",
+  palNoHighlight: "No highlighter",
   deleteCols: "Delete {n} columns",
   deleteTable: "Delete table",
+  copyTable: "Copy whole table",
+  copyMarkdown: "Copy as Markdown table (no styles)",
+  copyImage: "Copy image",
+  copiedImage: "Image copied",
+  deleteImage: "Delete image",
+  copiedTable: "Table copied: pasting into another note keeps colors, widths and merges",
+  copiedMarkdown: "Markdown table copied",
   indentTable: "Indent (under the list item above)",
   outdentTable: "Outdent (move out of the list)",
   moveRowUp: "Move row up",
@@ -202,6 +265,9 @@ var en = {
   alignLeft: "Align left",
   alignCenter: "Align center",
   alignRight: "Align right",
+  vAlign_top: "Align top",
+  vAlign_middle: "Center vertically",
+  vAlign_bottom: "Align bottom",
   color: "Background",
   noColor: "No background",
   autoWidth: "Auto width",
@@ -217,6 +283,13 @@ var en = {
   style_minimal: "Minimal",
   style_academic: "Three-line",
   textColor: "Text color",
+  fontSize: "Text size",
+  tableFontSize: "Table text size",
+  fontSize_xs: "Smallest",
+  fontSize_s: "Small",
+  fontSize_m: "Normal",
+  fontSize_l: "Large",
+  fontSize_xl: "Largest",
   calcTitle: "Total",
   calc_sum: "Sum",
   calc_avg: "Average",
@@ -229,6 +302,8 @@ var en = {
   statusOff: "Stop using as status column",
   statusColor: "Color of \u201C{v}\u201D",
   defaultText: "Default text color",
+  foldTable: "Fold table (header only)",
+  unfoldRows: "\u25B8 Show {n} rows",
   headerColumn: "First column as header",
   freezeHeaderCol: "Freeze header column (stays put when scrolling sideways)",
   headerRows: "Header rows",
@@ -240,11 +315,16 @@ var en = {
   alignAllLeft: "Align table left",
   alignAllCenter: "Center table",
   alignAllRight: "Align table right",
+  vAlignAll_top: "Align table top",
+  vAlignAll_middle: "Center table vertically",
+  vAlignAll_bottom: "Align table bottom",
   autoWidthAll: "Auto width for all columns",
   clearAllBg: "Clear all colors",
   unmergeCells: "Unmerge cells",
   addRow: "Add row",
   addCol: "Add column",
+  addColFirst: "Add column at the start",
+  addRowFirst: "Add row below the header",
   rowMenu: "Row actions",
   colMenu: "Column actions",
   resize: "Drag to resize, double-click for auto",
@@ -264,11 +344,519 @@ function t(key) {
   return (lang === "zh" ? zh : en)[key];
 }
 
+// src/core/format.ts
+var HIGHLIGHT_COLORS = { red: "\u{1F534}", orange: "\u{1F7E0}", yellow: "\u{1F7E1}", green: "\u{1F7E2}", blue: "\u{1F535}", purple: "\u{1F7E3}" };
+var HIGHLIGHT_EMOJI = {
+  "\u{1F534}": "red",
+  "\u{1F7E5}": "red",
+  "\u{1F7E0}": "orange",
+  "\u{1F7E7}": "orange",
+  "\u{1F7E1}": "yellow",
+  "\u{1F7E8}": "yellow",
+  "\u{1F7E2}": "green",
+  "\u{1F7E9}": "green",
+  "\u{1F535}": "blue",
+  "\u{1F7E6}": "blue",
+  "\u{1F7E3}": "purple",
+  "\u{1F7EA}": "purple"
+};
+function highlightColor(inner) {
+  const cp = inner.codePointAt(0);
+  if (cp === void 0) return null;
+  const ch = String.fromCodePoint(cp);
+  const color = HIGHLIGHT_EMOJI[ch];
+  return color ? { color, length: ch.length } : null;
+}
+var EMOJI_ALT = Object.keys(HIGHLIGHT_EMOJI).join("|");
+var HIGHLIGHT_OPEN_BEFORE = new RegExp(`==(?:${EMOJI_ALT})?$`, "u");
+var WHOLE_HIGHLIGHT = new RegExp(`^==(${EMOJI_ALT})?([\\s\\S]+)==$`, "u");
+var COLORED_HIGHLIGHT = new RegExp(`==(${EMOJI_ALT})(.+?)==`, "gu");
+var COLOR = String.raw`#[0-9a-fA-F]{3,8}|[a-zA-Z]+|rgba?\([\d\s.,%]+\)`;
+var COLOR_OPEN_SRC = String.raw`<span style="color:\s*(${COLOR})\s*;?\s*">`;
+var BG_OPEN_SRC = String.raw`<mark style="background(?:-color)?:\s*(${COLOR})\s*;?\s*">`;
+var TAG_RE = {
+  color: new RegExp(`${COLOR_OPEN_SRC}|</span>`, "g"),
+  bg: new RegExp(`${BG_OPEN_SRC}|</mark>`, "g")
+};
+function highlightOf(entry) {
+  return HIGHLIGHT_EMOJI[entry] ?? null;
+}
+function openTag(kind, color) {
+  return kind === "color" ? `<span style="color:${color}">` : `<mark style="background:${color}">`;
+}
+var closeTag = (kind) => kind === "color" ? "</span>" : "</mark>";
+function pairs(text, kind) {
+  const out = [];
+  const stack = [];
+  for (const m of text.matchAll(TAG_RE[kind])) {
+    const i = m.index ?? 0;
+    if (m[1] !== void 0) stack.push({ start: i, end: i + m[0].length, color: m[1] });
+    else {
+      const o = stack.pop();
+      if (o) out.push({ openStart: o.start, openEnd: o.end, closeStart: i, closeEnd: i + m[0].length, color: o.color });
+    }
+  }
+  return out;
+}
+function trimRange(text, s, e) {
+  while (s < e && /\s/.test(text[s])) s++;
+  while (e > s && /\s/.test(text[e - 1])) e--;
+  return [s, e];
+}
+function wrapLines(sel, open, close) {
+  return sel.split("\n").map((line) => {
+    const m = /^(\s*)(.*?)(\s*)$/.exec(line);
+    if (!m || !m[2]) return line;
+    return `${m[1]}${open}${m[2]}${close}${m[3]}`;
+  }).join("\n");
+}
+function toggleStrike(text, s, e) {
+  if (text.slice(s - 2, s) === "~~" && text.slice(e, e + 2) === "~~") {
+    return { text: text.slice(0, s - 2) + text.slice(s, e) + text.slice(e + 2), start: s - 2, end: e - 2 };
+  }
+  const sel = text.slice(s, e);
+  if (sel.length > 4 && sel.startsWith("~~") && sel.endsWith("~~")) {
+    return { text: text.slice(0, s) + sel.slice(2, -2) + text.slice(e), start: s, end: e - 4 };
+  }
+  const wrapped = wrapLines(sel, "~~", "~~");
+  return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + 2, end: s + wrapped.length - 2 };
+}
+function toggleUnderline(text, s, e) {
+  if (text.slice(s - 3, s) === "<u>" && text.slice(e, e + 4) === "</u>") {
+    return { text: text.slice(0, s - 3) + text.slice(s, e) + text.slice(e + 4), start: s - 3, end: e - 3 };
+  }
+  const sel = text.slice(s, e);
+  if (sel.length > 7 && sel.startsWith("<u>") && sel.endsWith("</u>") && !sel.slice(3, -4).includes("<u>")) {
+    return { text: text.slice(0, s) + sel.slice(3, -4) + text.slice(e), start: s, end: e - 7 };
+  }
+  const wrapped = wrapLines(sel, "<u>", "</u>");
+  return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + 3, end: s + wrapped.length - 4 };
+}
+function starsBefore(text, s) {
+  let n = 0;
+  while (s - n - 1 >= 0 && text[s - n - 1] === "*") n++;
+  return n;
+}
+function starsAfter(text, e) {
+  let n = 0;
+  while (e + n < text.length && text[e + n] === "*") n++;
+  return n;
+}
+function toggleHighlight(text, s, e, color) {
+  const emoji = color ? HIGHLIGHT_COLORS[color] : "";
+  const open = HIGHLIGHT_OPEN_BEFORE.exec(text.slice(0, s));
+  if (open && text.slice(e, e + 2) === "==") {
+    const was = highlightColor(open[0].slice(2))?.color;
+    const from = s - open[0].length;
+    if (was === color) return { text: text.slice(0, from) + text.slice(s, e) + text.slice(e + 2), start: from, end: from + (e - s) };
+    const opener = `==${emoji}`;
+    return { text: text.slice(0, from) + opener + text.slice(s), start: from + opener.length, end: from + opener.length + (e - s) };
+  }
+  const whole = WHOLE_HIGHLIGHT.exec(text.slice(s, e));
+  if (whole) {
+    const was = whole[1] ? HIGHLIGHT_EMOJI[whole[1]] : void 0;
+    const inner = whole[2];
+    const next = was === color ? inner : `==${emoji}${inner}==`;
+    const lead = was === color ? 0 : 2 + emoji.length;
+    return { text: text.slice(0, s) + next + text.slice(e), start: s + lead, end: s + lead + inner.length };
+  }
+  const sel = text.slice(s, e);
+  const wrapped = wrapLines(sel, `==${emoji}`, "==");
+  return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + 2 + emoji.length, end: s + wrapped.length - 2 };
+}
+function removeHighlight(text, s, e) {
+  const open = HIGHLIGHT_OPEN_BEFORE.exec(text.slice(0, s));
+  if (open && text.slice(e, e + 2) === "==") {
+    const from = s - open[0].length;
+    return { text: text.slice(0, from) + text.slice(s, e) + text.slice(e + 2), start: from, end: from + (e - s) };
+  }
+  const whole = WHOLE_HIGHLIGHT.exec(text.slice(s, e));
+  if (whole) {
+    const inner = whole[2];
+    return { text: text.slice(0, s) + inner + text.slice(e), start: s, end: s + inner.length };
+  }
+  return { text, start: s, end: e };
+}
+function clearHighlightColors(text, start, end) {
+  let out = "";
+  let last = 0;
+  let [s, e] = [start, end];
+  for (const m of text.matchAll(COLORED_HIGHLIGHT)) {
+    const from = m.index ?? 0;
+    const to = from + m[0].length;
+    if (to <= start || from >= end) continue;
+    const at = from + 2;
+    const len = m[1].length;
+    out += text.slice(last, at);
+    last = at + len;
+    if (at < start) s -= Math.min(len, start - at);
+    if (at < end) e -= Math.min(len, end - at);
+  }
+  return { text: out + text.slice(last), start: s, end: e };
+}
+function toggleMark(text, s, e, kind) {
+  const m = kind === "bold" ? "**" : "*";
+  const len = m.length;
+  const has = (before, after) => {
+    const n = Math.min(before, after);
+    return kind === "bold" ? n >= 2 : n % 2 === 1;
+  };
+  if (has(starsBefore(text, s), starsAfter(text, e))) {
+    return { text: text.slice(0, s - len) + text.slice(s, e) + text.slice(e + len), start: s - len, end: e - len };
+  }
+  const sel0 = text.slice(s, e);
+  const lead = /^\*+/.exec(sel0)?.[0].length ?? 0;
+  const tail = /\*+$/.exec(sel0)?.[0].length ?? 0;
+  if (sel0.length > lead + tail && has(lead, tail)) {
+    return { text: text.slice(0, s) + sel0.slice(len, -len) + text.slice(e), start: s, end: e - len * 2 };
+  }
+  const sel = text.slice(s, e);
+  const wrapped = wrapLines(sel, m, m);
+  return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + len, end: s + wrapped.length - len };
+}
+function dropEmpty(text, kind) {
+  const re = new RegExp(`${kind === "color" ? COLOR_OPEN_SRC : BG_OPEN_SRC}${closeTag(kind).replace("/", "\\/")}`, "g");
+  return text.replace(re, "");
+}
+var ANY_TAG = `${COLOR_OPEN_SRC}|${BG_OPEN_SRC}|</span>|</mark>`;
+var LEADING_TAG = new RegExp(`^(?:${ANY_TAG})`);
+var TRAILING_TAG = new RegExp(`(?:${ANY_TAG})$`);
+function alignToTags(text, s, e) {
+  for (let m; s < e && (m = LEADING_TAG.exec(text.slice(s, e))); ) s += m[0].length;
+  for (let m; s < e && (m = TRAILING_TAG.exec(text.slice(s, e))); ) e -= m[0].length;
+  if (s === e) return [s, e];
+  for (let changed = true; changed; ) {
+    changed = false;
+    for (const p of [...pairs(text, "color"), ...pairs(text, "bg")]) {
+      const openIn = p.openStart >= s && p.openStart < e;
+      const closeIn = p.closeEnd > s && p.closeEnd <= e;
+      if (openIn !== closeIn) {
+        s = Math.min(s, p.openStart);
+        e = Math.max(e, p.closeEnd);
+        changed = true;
+      }
+    }
+  }
+  return [s, e];
+}
+function applyColor(text, s, e, kind, color) {
+  const exact = pairs(text, kind).find((p) => p.openStart === s && p.closeEnd === e);
+  if (exact) {
+    s = exact.openEnd;
+    e = exact.closeStart;
+  }
+  const enclosing = pairs(text, kind).filter((p) => p.openEnd <= s && p.closeStart >= e).sort((a, b) => b.openEnd - a.openEnd)[0];
+  if (enclosing) {
+    const other = kind === "color" ? "bg" : "color";
+    for (let changed = true; changed; ) {
+      changed = false;
+      for (const p of pairs(text, other)) {
+        if (p.openEnd === s && p.closeStart === e && p.openStart >= enclosing.openEnd && p.closeEnd <= enclosing.closeStart) {
+          s = p.openStart;
+          e = p.closeEnd;
+          changed = true;
+        }
+      }
+    }
+  }
+  let before;
+  let after;
+  let sel = text.slice(s, e);
+  let toggledOff = false;
+  if (enclosing) {
+    const open = text.slice(enclosing.openStart, enclosing.openEnd);
+    const close = closeTag(kind);
+    before = text.slice(0, enclosing.openStart) + open + text.slice(enclosing.openEnd, s) + close;
+    after = open + text.slice(e, enclosing.closeStart) + close + text.slice(enclosing.closeEnd);
+    toggledOff = color !== null && enclosing.color.toLowerCase() === color.toLowerCase();
+  } else {
+    before = text.slice(0, s);
+    after = text.slice(e);
+  }
+  sel = sel.replace(TAG_RE[kind], "");
+  const wrapped = color !== null && !toggledOff ? wrapLines(sel, openTag(kind, color), closeTag(kind)) : sel;
+  const cleanBefore = dropEmpty(before, kind);
+  const cleanAfter = dropEmpty(after, kind);
+  const lead = wrapped === sel ? 0 : openTag(kind, color ?? "").length;
+  const tail = wrapped === sel ? 0 : closeTag(kind).length;
+  return {
+    text: cleanBefore + wrapped + cleanAfter,
+    start: cleanBefore.length + lead,
+    end: cleanBefore.length + wrapped.length - tail
+  };
+}
+function applyInlineFormat(text, start, end, fmt2) {
+  let [s, e] = start === end ? [0, text.length] : [Math.min(start, end), Math.max(start, end)];
+  [s, e] = trimRange(text, s, e);
+  [s, e] = alignToTags(text, s, e);
+  if (s === e) return { text, start, end };
+  switch (fmt2.kind) {
+    case "bold":
+    case "italic":
+      return toggleMark(text, s, e, fmt2.kind);
+    case "strike":
+      return toggleStrike(text, s, e);
+    case "underline":
+      return toggleUnderline(text, s, e);
+    case "highlight":
+      return toggleHighlight(text, s, e, fmt2.color);
+    case "color":
+      return applyColor(text, s, e, fmt2.kind, fmt2.color);
+    case "bg": {
+      const h = removeHighlight(text, s, e);
+      return applyColor(h.text, h.start, h.end, "bg", fmt2.color);
+    }
+    case "nocolor":
+      return applyColor(text, s, e, "color", null);
+    case "nobg": {
+      const b = applyColor(text, s, e, "bg", null);
+      const c = clearHighlightColors(b.text, b.start, b.end);
+      return removeHighlight(c.text, c.start, c.end);
+    }
+    case "clear": {
+      const a = applyColor(text, s, e, "color", null);
+      const b = applyColor(a.text, a.start, a.end, "bg", null);
+      return clearHighlightColors(b.text, b.start, b.end);
+    }
+  }
+}
+
+// src/core/color-palette.ts
+var THEME_HIGHLIGHT = "==";
+function highlightFormat(kind, color) {
+  if (kind === "bg" && color === THEME_HIGHLIGHT) return { kind: "highlight" };
+  const hl = kind === "bg" ? highlightOf(color) : null;
+  return hl ? { kind: "highlight", color: hl } : { kind, color };
+}
+function colorFormat(kind, color) {
+  if (color === null) return { kind: kind === "text" ? "nocolor" : "nobg" };
+  return highlightFormat(kind === "text" ? "color" : "bg", color);
+}
+function paintColor(el, color, kind) {
+  el.classList.remove("mm-hl-chip");
+  delete el.dataset.highlight;
+  el.style.removeProperty("background");
+  if (!color) return;
+  const hl = color === THEME_HIGHLIGHT ? "" : highlightOf(color);
+  if (hl !== null) {
+    el.classList.add("mm-hl-chip");
+    if (hl) el.dataset.highlight = hl;
+    return;
+  }
+  el.style.background = kind === "node" && /^[a-z]+$/i.test(color) ? `var(--mm-c-${color}, ${color})` : color;
+}
+var GRID = [
+  ["#fde2e2", "#f9b4b4", "#f07070", "#e03e3e", "#b42b2b", "#7a1d1d"],
+  ["#ffe8cc", "#ffc78a", "#ff9f43", "#f08c00", "#c06a00", "#7f4700"],
+  ["#fff3bf", "#ffe066", "#ffd43b", "#fab005", "#c99400", "#806000"],
+  ["#d3f9d8", "#8ce99a", "#51cf66", "#27ae60", "#1e7d45", "#12502c"],
+  ["#c3fae8", "#63e6be", "#20c997", "#0ca678", "#087f5b", "#054c37"],
+  ["#d0ebff", "#74c0fc", "#339af0", "#2f80ed", "#1864ab", "#0b3d6e"],
+  ["#e5dbff", "#b197fc", "#845ef7", "#7048e8", "#5235b5", "#33206f"],
+  ["#ffdeeb", "#faa2c1", "#f06595", "#d6336c", "#a61e4d", "#6b1132"],
+  ["#f1f3f5", "#ced4da", "#adb5bd", "#868e96", "#495057", "#212529"],
+  ["#ffffff", "#e9ecef", "#9aa0a6", "#5f6368", "#3c4043", "#000000"]
+];
+var RECENT_MAX = 8;
+function withAlpha(hex, alpha) {
+  let h = hex.replace(/^#/, "").toLowerCase();
+  if (h.length === 3) h = h.replace(/./g, (c) => c + c);
+  if (h.length === 8) h = h.slice(0, 6);
+  if (!/^[0-9a-f]{6}$/.test(h)) return hex;
+  const a = Math.max(0, Math.min(100, Math.round(alpha)));
+  return a >= 100 ? `#${h}` : `#${h}${Math.round(a * 255 / 100).toString(16).padStart(2, "0")}`;
+}
+function pushRecent(list, color) {
+  const c = color.toLowerCase();
+  return [color, ...list.filter((x) => x.toLowerCase() !== c)].slice(0, RECENT_MAX);
+}
+function createPalette(doc, o) {
+  const root = doc.createElement("div");
+  root.className = "mm-palette";
+  root.addEventListener("pointerdown", (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+  });
+  root.addEventListener("mousedown", (ev) => ev.preventDefault());
+  let alpha = o.defaultAlpha;
+  const preview = doc.createElement("span");
+  preview.className = "mm-palette-preview";
+  const hexOut = doc.createElement("span");
+  hexOut.className = "mm-palette-hex";
+  const show = (c) => {
+    preview.style.background = c ?? "transparent";
+    hexOut.textContent = c ?? "";
+  };
+  const swatch = (parent, title, paint, pick, hover) => {
+    const b = doc.createElement("button");
+    b.type = "button";
+    b.className = "mm-palette-swatch";
+    b.setAttribute("aria-label", title);
+    o.tip?.(b, title);
+    paint(b);
+    b.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      pick();
+    });
+    if (hover) b.addEventListener("pointerenter", () => show(hover()));
+    parent.append(b);
+    return b;
+  };
+  const section = (title) => {
+    const h = doc.createElement("div");
+    h.className = "mm-palette-title";
+    h.textContent = title;
+    root.append(h);
+    const row = doc.createElement("div");
+    row.className = "mm-palette-row";
+    root.append(row);
+    return row;
+  };
+  const common = section(o.text.common);
+  swatch(common, o.noneLabel, (b) => b.classList.add("is-none"), () => o.onPick(null));
+  for (const x of o.extras ?? []) swatch(common, x.label, x.paint, () => o.onPick(x.value));
+  for (const c of o.common) swatch(common, o.label(c), (b) => o.paint(b, c), () => o.onPick(c), () => c);
+  const grid = doc.createElement("div");
+  grid.className = "mm-palette-grid";
+  root.append(grid);
+  for (let r = 0; r < GRID[0].length; r++)
+    for (const col of GRID) {
+      const c = col[r];
+      swatch(
+        grid,
+        c,
+        (b) => b.style.background = c,
+        () => o.onPick(o.alpha ? withAlpha(c, alpha) : c),
+        () => o.alpha ? withAlpha(c, alpha) : c
+      );
+    }
+  if (o.recent.length) {
+    const recent = section(o.text.recent);
+    for (const c of o.recent) swatch(recent, o.label(c), (b) => o.paint(b, c), () => o.onPick(c), () => c);
+  }
+  if (o.alpha) {
+    const line = doc.createElement("div");
+    line.className = "mm-palette-alpha";
+    const name = doc.createElement("span");
+    name.textContent = o.text.alpha;
+    const track = doc.createElement("div");
+    track.className = "mm-palette-track";
+    const fill = doc.createElement("div");
+    fill.className = "mm-palette-fill";
+    const thumb = doc.createElement("div");
+    thumb.className = "mm-palette-thumb";
+    track.append(fill, thumb);
+    const val = doc.createElement("span");
+    val.className = "mm-palette-alpha-val";
+    const set = (a) => {
+      alpha = Math.max(0, Math.min(100, Math.round(a)));
+      fill.style.width = `${alpha}%`;
+      thumb.style.left = `${alpha}%`;
+      val.textContent = `${alpha}%`;
+    };
+    set(alpha);
+    const at = (ev) => {
+      const r = track.getBoundingClientRect();
+      set((ev.clientX - r.left) / Math.max(1, r.width) * 100);
+    };
+    track.addEventListener("pointerdown", (ev) => {
+      at(ev);
+      try {
+        track.setPointerCapture(ev.pointerId);
+      } catch {
+      }
+      const move = (e) => at(e);
+      const up = () => {
+        track.removeEventListener("pointermove", move);
+        track.removeEventListener("pointerup", up);
+        track.removeEventListener("pointercancel", up);
+      };
+      track.addEventListener("pointermove", move);
+      track.addEventListener("pointerup", up);
+      track.addEventListener("pointercancel", up);
+    });
+    line.append(name, track, val);
+    root.append(line);
+  }
+  const foot = doc.createElement("div");
+  foot.className = "mm-palette-foot";
+  const left = doc.createElement("span");
+  left.className = "mm-palette-current";
+  left.append(preview, hexOut);
+  const custom = doc.createElement("button");
+  custom.type = "button";
+  custom.className = "mm-palette-custom";
+  custom.textContent = o.text.custom;
+  custom.addEventListener("click", (ev) => {
+    ev.stopPropagation();
+    const apply = o.onCustom?.() ?? ((c) => o.onPick(c));
+    const input = doc.createElement("input");
+    input.type = "color";
+    input.className = "mm-palette-native";
+    doc.body.append(input);
+    const done = () => {
+      input.remove();
+    };
+    input.addEventListener("change", () => {
+      apply(o.alpha ? withAlpha(input.value, alpha) : input.value);
+      done();
+    });
+    input.addEventListener("blur", () => (doc.defaultView ?? window).setTimeout(done, 1e3));
+    input.click();
+  });
+  foot.append(left, custom);
+  root.append(foot);
+  show(null);
+  return root;
+}
+function createColorSplit(o) {
+  const doc = o.doc;
+  const wrap = doc.createElement("span");
+  wrap.className = `mm-color-split ${o.cls}`;
+  const main = doc.createElement("button");
+  main.type = "button";
+  main.className = "mm-color-split-main";
+  main.setAttribute("aria-label", o.title);
+  o.tip(main, o.title);
+  const face = doc.createElement("span");
+  face.className = "mm-color-split-face";
+  o.face(face);
+  const bar = doc.createElement("span");
+  bar.className = "mm-color-split-bar";
+  main.append(face, bar);
+  const caret = doc.createElement("button");
+  caret.type = "button";
+  caret.className = "mm-color-split-caret";
+  caret.setAttribute("aria-label", o.caretTitle);
+  o.tip(caret, o.caretTitle);
+  caret.textContent = "\u25BE";
+  const refresh = () => o.paintBar(bar, o.current());
+  refresh();
+  main.addEventListener("click", (ev) => {
+    ev.stopPropagation();
+    o.onApply();
+    refresh();
+  });
+  caret.addEventListener("click", (ev) => {
+    ev.stopPropagation();
+    o.onOpen(wrap);
+  });
+  wrap.refreshColor = refresh;
+  wrap.append(main, caret);
+  return wrap;
+}
+function refreshColorSplit(el) {
+  el?.refreshColor?.();
+}
+
 // src/core/table.ts
 var CELL_COLORS = ["gray", "red", "orange", "yellow", "green", "blue", "purple"];
 var CALCS = ["sum", "avg", "count", "max", "min"];
+var VALIGNS = ["middle", "bottom"];
 var TABLE_STYLES = ["default", "zebra", "minimal", "academic"];
 var TABLE_DENSITIES = ["comfortable", "compact"];
+var FONT_SIZES = [0.75, 0.85, 1, 1.15, 1.3];
+var fontSizeOk = (v) => typeof v === "number" && Number.isFinite(v) && v >= 0.5 && v <= 3;
 var META_PREFIX = "gogoga-table:";
 var META_RE = /^\s*<!--\s*gogoga-table:\s*(\{.*\})\s*-->\s*$/;
 var DELIM_CELL_RE = /^\s*:?-+:?\s*$/;
@@ -347,11 +935,17 @@ function sanitizeMeta(raw) {
   }
   if (raw.headerCol !== void 0 && raw.headerCol !== true) delete meta.headerCol;
   if (raw.freeze !== void 0 && raw.freeze !== 1) delete meta.freeze;
+  if (raw.wide !== void 0 && raw.wide !== 1) delete meta.wide;
   if (raw.head !== void 0 && !(raw.head === 2 || raw.head === 3)) delete meta.head;
   if (raw.calc !== void 0) {
     const calc = Array.isArray(raw.calc) ? raw.calc.map((x) => CALCS.includes(x) ? x : null) : [];
     if (calc.some(Boolean)) meta.calc = calc;
     else delete meta.calc;
+  }
+  if (raw.va !== void 0) {
+    const va = Array.isArray(raw.va) ? raw.va.map((x) => VALIGNS.includes(x) ? x : null) : [];
+    if (va.some(Boolean)) meta.va = va;
+    else delete meta.va;
   }
   if (raw.opts !== void 0) {
     const opts = Array.isArray(raw.opts) ? raw.opts.map((o) => {
@@ -382,6 +976,17 @@ function sanitizeMeta(raw) {
     }
     if (Object.keys(bg).length) meta.bg = bg;
     else delete meta.bg;
+  }
+  if (raw.fs !== void 0 && (!fontSizeOk(raw.fs) || raw.fs === 1)) delete meta.fs;
+  if (raw.fz !== void 0) {
+    const fz = {};
+    if (raw.fz && typeof raw.fz === "object" && !Array.isArray(raw.fz)) {
+      for (const [k, v] of Object.entries(raw.fz)) {
+        if (parseRef(k) && fontSizeOk(v) && v !== 1) fz[k] = v;
+      }
+    }
+    if (Object.keys(fz).length) meta.fz = fz;
+    else delete meta.fz;
   }
   if (raw.style !== void 0 && !TABLE_STYLES.includes(raw.style)) delete meta.style;
   if (raw.density !== void 0 && !TABLE_DENSITIES.includes(raw.density)) delete meta.density;
@@ -451,7 +1056,9 @@ function metaToWrite(meta, cols) {
   }
   if (out.bg && !Object.keys(out.bg).length) delete out.bg;
   if (out.fg && !Object.keys(out.fg).length) delete out.fg;
-  for (const key of ["calc", "opts"]) {
+  if (out.fz && !Object.keys(out.fz).length) delete out.fz;
+  if (out.fs === 1) delete out.fs;
+  for (const key of ["calc", "opts", "va"]) {
     const a = out[key];
     if (!a) continue;
     const b = a.slice(0, cols);
@@ -628,6 +1235,7 @@ function cloneMeta(m) {
   if (m.w) out.w = m.w.slice();
   if (m.bg) out.bg = { ...m.bg };
   if (m.fg) out.fg = { ...m.fg };
+  if (m.fz) out.fz = { ...m.fz };
   if (m.calc) out.calc = m.calc.slice();
   if (m.opts) out.opts = m.opts.map((o) => o ? { ...o } : null);
   if (m.merge) out.merge = m.merge.slice();
@@ -649,7 +1257,7 @@ function withHead(n, h) {
 }
 var colCount = (t2) => t2.align.length;
 function remapCells(meta, map) {
-  for (const key of ["bg", "fg"]) {
+  for (const key of ["bg", "fg", "fz"]) {
     const src = meta[key];
     if (!src) continue;
     const next = {};
@@ -686,7 +1294,7 @@ function remapMerges(meta, fr, fc, grow) {
   }
   meta.merge = out;
 }
-var COL_KEYS = ["w", "calc", "opts"];
+var COL_KEYS = ["w", "calc", "opts", "va"];
 function spliceCols(meta, n, op) {
   for (const key of COL_KEYS) {
     const src = meta[key];
@@ -788,6 +1396,24 @@ function setAlign(t2, c, a) {
   n.align[c] = a;
   return n;
 }
+function vAlignOf(t2, c) {
+  return t2.meta.va?.[c] ?? null;
+}
+function setVAlign(t2, c, v) {
+  if (c < 0 || c >= colCount(t2) || vAlignOf(t2, c) === v) return t2;
+  const n = cloneTable(t2);
+  const va = (n.meta.va ?? []).slice(0, colCount(t2));
+  while (va.length < colCount(t2)) va.push(null);
+  va[c] = v;
+  if (va.some(Boolean)) n.meta.va = va;
+  else delete n.meta.va;
+  return n;
+}
+function vAlignAll(t2, v) {
+  let n = t2;
+  for (let c = 0; c < colCount(t2); c++) n = setVAlign(n, c, v);
+  return n;
+}
 function setWidth(t2, c, w) {
   if (c < 0 || c >= colCount(t2)) return t2;
   const n = cloneTable(t2);
@@ -820,8 +1446,37 @@ function setFg(t2, cells, color) {
   n.meta.fg = fg;
   return n;
 }
+function setFontSize(t2, cells, size) {
+  const n = cloneTable(t2);
+  const fz = { ...n.meta.fz ?? {} };
+  for (const p of cells) {
+    const k = cellRef(p.r, p.c);
+    if (size && size !== 1) fz[k] = size;
+    else delete fz[k];
+  }
+  if (Object.keys(fz).length) n.meta.fz = fz;
+  else delete n.meta.fz;
+  return n;
+}
+function fontSizeOf(t2, r, c) {
+  return t2.meta.fz?.[cellRef(r, c)] ?? null;
+}
+function setTableFontSize(t2, size) {
+  if ((t2.meta.fs ?? null) === (size === 1 ? null : size)) return t2;
+  const n = cloneTable(t2);
+  if (size && size !== 1) n.meta.fs = size;
+  else delete n.meta.fs;
+  return n;
+}
 function fgOf(t2, r, c) {
   return t2.meta.fg?.[cellRef(r, c)] ?? null;
+}
+function setWide(t2, wide) {
+  if (!!t2.meta.wide === wide) return t2;
+  const n = cloneTable(t2);
+  if (wide) n.meta.wide = 1;
+  else delete n.meta.wide;
+  return n;
 }
 function setWidths(t2, ws) {
   const n = cloneTable(t2);
@@ -952,6 +1607,14 @@ function setTableLook(t2, look) {
   }
   return n;
 }
+function setFolded(t2, on) {
+  if (on === (t2.meta.fold === 1)) return t2;
+  if (on && rowCount(t2) <= headRows(t2)) return t2;
+  const n = cloneTable(t2);
+  if (on) n.meta.fold = 1;
+  else delete n.meta.fold;
+  return n;
+}
 function alignAll(t2, a) {
   const n = cloneTable(t2);
   n.align = n.align.map(() => a);
@@ -969,6 +1632,7 @@ function autoWidthAll(t2) {
   if (!t2.meta.w?.some((x) => x != null)) return t2;
   const n = cloneTable(t2);
   delete n.meta.w;
+  delete n.meta.wide;
   return n;
 }
 function mergedText(t2, m) {
@@ -1034,7 +1698,7 @@ function duplicateRow(t2, r) {
   if (r < 1 || r >= rowCount(t2)) return t2;
   const n = insertRow(t2, r + 1);
   n.cells[r + 1] = t2.cells[r].slice();
-  for (const key of ["bg", "fg"]) {
+  for (const key of ["bg", "fg", "fz"]) {
     const m = { ...n.meta[key] ?? {} };
     for (let c = 0; c < colCount(t2); c++) {
       const v = t2.meta[key]?.[cellRef(r, c)];
@@ -1049,9 +1713,10 @@ function duplicateCol(t2, c) {
   let n = insertCol(t2, c + 1);
   for (let r = 0; r < rowCount(t2); r++) n.cells[r][c + 1] = t2.cells[r][c];
   n.align[c + 1] = t2.align[c];
+  n = setVAlign(n, c + 1, vAlignOf(t2, c));
   const w = widthOf(t2, c);
   if (w) n = setWidth(n, c + 1, w);
-  for (const key of ["bg", "fg"]) {
+  for (const key of ["bg", "fg", "fz"]) {
     const m = { ...n.meta[key] ?? {} };
     for (let r = 0; r < rowCount(t2); r++) {
       const v = t2.meta[key]?.[cellRef(r, c)];
@@ -1180,6 +1845,57 @@ function setOptionColor(t2, c, value, color) {
 function normalize(t2) {
   return computeTotals(syncOptions(t2));
 }
+function subTable(t2, rect) {
+  const r1 = Math.max(0, rect.r1);
+  const c1 = Math.max(0, rect.c1);
+  const r2 = Math.min(rowCount(t2) - 1, rect.r2);
+  const c2 = Math.min(colCount(t2) - 1, rect.c2);
+  if (r1 === 0 && c1 === 0 && r2 === rowCount(t2) - 1 && c2 === colCount(t2) - 1) return cloneTable(t2);
+  const cols = (a) => a ? a.slice(c1, c2 + 1) : void 0;
+  const shift = (m) => {
+    if (!m) return void 0;
+    const out = {};
+    for (const [k, v] of Object.entries(m)) {
+      const p = parseRef(k);
+      if (p && p.r >= r1 && p.r <= r2 && p.c >= c1 && p.c <= c2) out[cellRef(p.r - r1, p.c - c1)] = v;
+    }
+    return out;
+  };
+  const meta = { ...cloneMeta(t2.meta) };
+  const oldHead = headRows(t2);
+  const head = r1 < oldHead ? Math.max(1, oldHead - r1) : 1;
+  if (head > 1) meta.head = head;
+  else delete meta.head;
+  meta.w = cols(t2.meta.w);
+  meta.opts = cols(t2.meta.opts);
+  meta.calc = hasTotal(t2) && r2 === rowCount(t2) - 1 ? cols(t2.meta.calc) : void 0;
+  meta.bg = shift(t2.meta.bg);
+  meta.fg = shift(t2.meta.fg);
+  meta.fz = shift(t2.meta.fz);
+  if (c1 > 0) {
+    delete meta.headerCol;
+    delete meta.freeze;
+  }
+  const crosses = (m) => m.r1 < head && m.r2 >= head;
+  meta.merge = merges(t2).map((m) => ({ r1: Math.max(m.r1, r1) - r1, c1: Math.max(m.c1, c1) - c1, r2: Math.min(m.r2, r2) - r1, c2: Math.min(m.c2, c2) - c1 })).filter((m) => m.r1 <= m.r2 && m.c1 <= m.c2 && (m.r1 !== m.r2 || m.c1 !== m.c2) && !crosses(m)).map(rangeRef);
+  if (!meta.merge.length) delete meta.merge;
+  if (meta.bg && !Object.keys(meta.bg).length) delete meta.bg;
+  if (meta.fg && !Object.keys(meta.fg).length) delete meta.fg;
+  if (meta.fz && !Object.keys(meta.fz).length) delete meta.fz;
+  for (const k of Object.keys(meta)) if (meta[k] === void 0) delete meta[k];
+  const cells = t2.cells.slice(r1, r2 + 1).map((row) => row.slice(c1, c2 + 1));
+  for (const m of merges(t2)) {
+    const nr = Math.max(m.r1, r1);
+    const nc = Math.max(m.c1, c1);
+    if ((nr !== m.r1 || nc !== m.c1) && nr <= Math.min(m.r2, r2) && nc <= Math.min(m.c2, c2)) cells[nr - r1][nc - c1] = t2.cells[m.r1][m.c1];
+  }
+  return {
+    cells,
+    align: t2.align.slice(c1, c2 + 1),
+    meta,
+    style: { ...t2.style }
+  };
+}
 
 // src/core/clipboard.ts
 function tsvCell(s) {
@@ -1252,260 +1968,18 @@ function toHTML(grid, headerRow) {
   });
   return `<table>${rows.join("")}</table>`;
 }
-
-// src/core/format.ts
-var HIGHLIGHT_COLORS = { red: "\u{1F534}", orange: "\u{1F7E0}", yellow: "\u{1F7E1}", green: "\u{1F7E2}", blue: "\u{1F535}", purple: "\u{1F7E3}" };
-var HIGHLIGHT_EMOJI = {
-  "\u{1F534}": "red",
-  "\u{1F7E5}": "red",
-  "\u{1F7E0}": "orange",
-  "\u{1F7E7}": "orange",
-  "\u{1F7E1}": "yellow",
-  "\u{1F7E8}": "yellow",
-  "\u{1F7E2}": "green",
-  "\u{1F7E9}": "green",
-  "\u{1F535}": "blue",
-  "\u{1F7E6}": "blue",
-  "\u{1F7E3}": "purple",
-  "\u{1F7EA}": "purple"
-};
-function highlightColor(inner) {
-  const cp = inner.codePointAt(0);
-  if (cp === void 0) return null;
-  const ch = String.fromCodePoint(cp);
-  const color = HIGHLIGHT_EMOJI[ch];
-  return color ? { color, length: ch.length } : null;
+var SOURCE_ATTR = "data-ggt-src";
+function sourceAttr(lines) {
+  return ` ${SOURCE_ATTR}="${encodeURIComponent(lines.join("\n"))}"`;
 }
-var EMOJI_ALT = Object.keys(HIGHLIGHT_EMOJI).join("|");
-var HIGHLIGHT_OPEN_BEFORE = new RegExp(`==(?:${EMOJI_ALT})?$`, "u");
-var WHOLE_HIGHLIGHT = new RegExp(`^==(${EMOJI_ALT})?([\\s\\S]+)==$`, "u");
-var COLORED_HIGHLIGHT = new RegExp(`==(${EMOJI_ALT})(.+?)==`, "gu");
-var COLOR = String.raw`#[0-9a-fA-F]{3,8}|[a-zA-Z]+|rgba?\([\d\s.,%]+\)`;
-var COLOR_OPEN_SRC = String.raw`<span style="color:\s*(${COLOR})\s*;?\s*">`;
-var BG_OPEN_SRC = String.raw`<mark style="background(?:-color)?:\s*(${COLOR})\s*;?\s*">`;
-var TAG_RE = {
-  color: new RegExp(`${COLOR_OPEN_SRC}|</span>`, "g"),
-  bg: new RegExp(`${BG_OPEN_SRC}|</mark>`, "g")
-};
-function highlightOf(entry) {
-  return HIGHLIGHT_EMOJI[entry] ?? null;
-}
-function openTag(kind, color) {
-  return kind === "color" ? `<span style="color:${color}">` : `<mark style="background:${color}">`;
-}
-var closeTag = (kind) => kind === "color" ? "</span>" : "</mark>";
-function pairs(text, kind) {
-  const out = [];
-  const stack = [];
-  for (const m of text.matchAll(TAG_RE[kind])) {
-    const i = m.index ?? 0;
-    if (m[1] !== void 0) stack.push({ start: i, end: i + m[0].length, color: m[1] });
-    else {
-      const o = stack.pop();
-      if (o) out.push({ openStart: o.start, openEnd: o.end, closeStart: i, closeEnd: i + m[0].length, color: o.color });
-    }
-  }
-  return out;
-}
-function trimRange(text, s, e) {
-  while (s < e && /\s/.test(text[s])) s++;
-  while (e > s && /\s/.test(text[e - 1])) e--;
-  return [s, e];
-}
-function wrapLines(sel, open, close) {
-  return sel.split("\n").map((line) => {
-    const m = /^(\s*)(.*?)(\s*)$/.exec(line);
-    if (!m || !m[2]) return line;
-    return `${m[1]}${open}${m[2]}${close}${m[3]}`;
-  }).join("\n");
-}
-function toggleStrike(text, s, e) {
-  if (text.slice(s - 2, s) === "~~" && text.slice(e, e + 2) === "~~") {
-    return { text: text.slice(0, s - 2) + text.slice(s, e) + text.slice(e + 2), start: s - 2, end: e - 2 };
-  }
-  const sel = text.slice(s, e);
-  if (sel.length > 4 && sel.startsWith("~~") && sel.endsWith("~~")) {
-    return { text: text.slice(0, s) + sel.slice(2, -2) + text.slice(e), start: s, end: e - 4 };
-  }
-  const wrapped = wrapLines(sel, "~~", "~~");
-  return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + 2, end: s + wrapped.length - 2 };
-}
-function toggleUnderline(text, s, e) {
-  if (text.slice(s - 3, s) === "<u>" && text.slice(e, e + 4) === "</u>") {
-    return { text: text.slice(0, s - 3) + text.slice(s, e) + text.slice(e + 4), start: s - 3, end: e - 3 };
-  }
-  const sel = text.slice(s, e);
-  if (sel.length > 7 && sel.startsWith("<u>") && sel.endsWith("</u>") && !sel.slice(3, -4).includes("<u>")) {
-    return { text: text.slice(0, s) + sel.slice(3, -4) + text.slice(e), start: s, end: e - 7 };
-  }
-  const wrapped = wrapLines(sel, "<u>", "</u>");
-  return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + 3, end: s + wrapped.length - 4 };
-}
-function starsBefore(text, s) {
-  let n = 0;
-  while (s - n - 1 >= 0 && text[s - n - 1] === "*") n++;
-  return n;
-}
-function starsAfter(text, e) {
-  let n = 0;
-  while (e + n < text.length && text[e + n] === "*") n++;
-  return n;
-}
-function toggleHighlight(text, s, e, color) {
-  const emoji = color ? HIGHLIGHT_COLORS[color] : "";
-  const open = HIGHLIGHT_OPEN_BEFORE.exec(text.slice(0, s));
-  if (open && text.slice(e, e + 2) === "==") {
-    const was = highlightColor(open[0].slice(2))?.color;
-    const from = s - open[0].length;
-    if (was === color) return { text: text.slice(0, from) + text.slice(s, e) + text.slice(e + 2), start: from, end: from + (e - s) };
-    const opener = `==${emoji}`;
-    return { text: text.slice(0, from) + opener + text.slice(s), start: from + opener.length, end: from + opener.length + (e - s) };
-  }
-  const whole = WHOLE_HIGHLIGHT.exec(text.slice(s, e));
-  if (whole) {
-    const was = whole[1] ? HIGHLIGHT_EMOJI[whole[1]] : void 0;
-    const inner = whole[2];
-    const next = was === color ? inner : `==${emoji}${inner}==`;
-    const lead = was === color ? 0 : 2 + emoji.length;
-    return { text: text.slice(0, s) + next + text.slice(e), start: s + lead, end: s + lead + inner.length };
-  }
-  const sel = text.slice(s, e);
-  const wrapped = wrapLines(sel, `==${emoji}`, "==");
-  return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + 2 + emoji.length, end: s + wrapped.length - 2 };
-}
-function clearHighlightColors(text, start, end) {
-  let out = "";
-  let last = 0;
-  let [s, e] = [start, end];
-  for (const m of text.matchAll(COLORED_HIGHLIGHT)) {
-    const from = m.index ?? 0;
-    const to = from + m[0].length;
-    if (to <= start || from >= end) continue;
-    const at = from + 2;
-    const len = m[1].length;
-    out += text.slice(last, at);
-    last = at + len;
-    if (at < start) s -= Math.min(len, start - at);
-    if (at < end) e -= Math.min(len, end - at);
-  }
-  return { text: out + text.slice(last), start: s, end: e };
-}
-function toggleMark(text, s, e, kind) {
-  const m = kind === "bold" ? "**" : "*";
-  const len = m.length;
-  const has = (before, after) => {
-    const n = Math.min(before, after);
-    return kind === "bold" ? n >= 2 : n % 2 === 1;
-  };
-  if (has(starsBefore(text, s), starsAfter(text, e))) {
-    return { text: text.slice(0, s - len) + text.slice(s, e) + text.slice(e + len), start: s - len, end: e - len };
-  }
-  const sel0 = text.slice(s, e);
-  const lead = /^\*+/.exec(sel0)?.[0].length ?? 0;
-  const tail = /\*+$/.exec(sel0)?.[0].length ?? 0;
-  if (sel0.length > lead + tail && has(lead, tail)) {
-    return { text: text.slice(0, s) + sel0.slice(len, -len) + text.slice(e), start: s, end: e - len * 2 };
-  }
-  const sel = text.slice(s, e);
-  const wrapped = wrapLines(sel, m, m);
-  return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + len, end: s + wrapped.length - len };
-}
-function dropEmpty(text, kind) {
-  const re = new RegExp(`${kind === "color" ? COLOR_OPEN_SRC : BG_OPEN_SRC}${closeTag(kind).replace("/", "\\/")}`, "g");
-  return text.replace(re, "");
-}
-var ANY_TAG = `${COLOR_OPEN_SRC}|${BG_OPEN_SRC}|</span>|</mark>`;
-var LEADING_TAG = new RegExp(`^(?:${ANY_TAG})`);
-var TRAILING_TAG = new RegExp(`(?:${ANY_TAG})$`);
-function alignToTags(text, s, e) {
-  for (let m; s < e && (m = LEADING_TAG.exec(text.slice(s, e))); ) s += m[0].length;
-  for (let m; s < e && (m = TRAILING_TAG.exec(text.slice(s, e))); ) e -= m[0].length;
-  if (s === e) return [s, e];
-  for (let changed = true; changed; ) {
-    changed = false;
-    for (const p of [...pairs(text, "color"), ...pairs(text, "bg")]) {
-      const openIn = p.openStart >= s && p.openStart < e;
-      const closeIn = p.closeEnd > s && p.closeEnd <= e;
-      if (openIn !== closeIn) {
-        s = Math.min(s, p.openStart);
-        e = Math.max(e, p.closeEnd);
-        changed = true;
-      }
-    }
-  }
-  return [s, e];
-}
-function applyColor(text, s, e, kind, color) {
-  const exact = pairs(text, kind).find((p) => p.openStart === s && p.closeEnd === e);
-  if (exact) {
-    s = exact.openEnd;
-    e = exact.closeStart;
-  }
-  const enclosing = pairs(text, kind).filter((p) => p.openEnd <= s && p.closeStart >= e).sort((a, b) => b.openEnd - a.openEnd)[0];
-  if (enclosing) {
-    const other = kind === "color" ? "bg" : "color";
-    for (let changed = true; changed; ) {
-      changed = false;
-      for (const p of pairs(text, other)) {
-        if (p.openEnd === s && p.closeStart === e && p.openStart >= enclosing.openEnd && p.closeEnd <= enclosing.closeStart) {
-          s = p.openStart;
-          e = p.closeEnd;
-          changed = true;
-        }
-      }
-    }
-  }
-  let before;
-  let after;
-  let sel = text.slice(s, e);
-  let toggledOff = false;
-  if (enclosing) {
-    const open = text.slice(enclosing.openStart, enclosing.openEnd);
-    const close = closeTag(kind);
-    before = text.slice(0, enclosing.openStart) + open + text.slice(enclosing.openEnd, s) + close;
-    after = open + text.slice(e, enclosing.closeStart) + close + text.slice(enclosing.closeEnd);
-    toggledOff = color !== null && enclosing.color.toLowerCase() === color.toLowerCase();
-  } else {
-    before = text.slice(0, s);
-    after = text.slice(e);
-  }
-  sel = sel.replace(TAG_RE[kind], "");
-  const wrapped = color !== null && !toggledOff ? wrapLines(sel, openTag(kind, color), closeTag(kind)) : sel;
-  const cleanBefore = dropEmpty(before, kind);
-  const cleanAfter = dropEmpty(after, kind);
-  const lead = wrapped === sel ? 0 : openTag(kind, color ?? "").length;
-  const tail = wrapped === sel ? 0 : closeTag(kind).length;
-  return {
-    text: cleanBefore + wrapped + cleanAfter,
-    start: cleanBefore.length + lead,
-    end: cleanBefore.length + wrapped.length - tail
-  };
-}
-function applyInlineFormat(text, start, end, fmt2) {
-  let [s, e] = start === end ? [0, text.length] : [Math.min(start, end), Math.max(start, end)];
-  [s, e] = trimRange(text, s, e);
-  [s, e] = alignToTags(text, s, e);
-  if (s === e) return { text, start, end };
-  switch (fmt2.kind) {
-    case "bold":
-    case "italic":
-      return toggleMark(text, s, e, fmt2.kind);
-    case "strike":
-      return toggleStrike(text, s, e);
-    case "underline":
-      return toggleUnderline(text, s, e);
-    case "highlight":
-      return toggleHighlight(text, s, e, fmt2.color);
-    case "color":
-    case "bg":
-      return applyColor(text, s, e, fmt2.kind, fmt2.color);
-    case "nocolor":
-      return applyColor(text, s, e, "color", null);
-    case "clear": {
-      const a = applyColor(text, s, e, "color", null);
-      const b = applyColor(a.text, a.start, a.end, "bg", null);
-      return clearHighlightColors(b.text, b.start, b.end);
-    }
+function sourceFromHTML(html) {
+  const m = new RegExp(`${SOURCE_ATTR}="([^"]*)"`).exec(html);
+  if (!m) return null;
+  try {
+    const text = decodeURIComponent(m[1]);
+    return text ? text.split("\n") : null;
+  } catch {
+    return null;
   }
 }
 
@@ -1828,6 +2302,7 @@ function visibleSelection(view) {
 var TextareaInput = class {
   constructor(doc) {
     this.cleanups = [];
+    this.comp = false;
     this.el = doc.createElement("textarea");
     this.el.className = "ggt-input";
     this.el.rows = 1;
@@ -1870,6 +2345,9 @@ var TextareaInput = class {
   sizingText() {
     return this.el.value;
   }
+  get composing() {
+    return this.comp;
+  }
   bind(h) {
     const on = (type, fn) => {
       this.el.addEventListener(type, fn);
@@ -1881,8 +2359,23 @@ var TextareaInput = class {
     on("paste", (ev) => h.paste(ev));
     on("input", () => h.input());
     for (const type of ["select", "keyup", "mouseup"]) on(type, () => h.select());
-    on("compositionstart", () => h.compositionstart());
+    on("compositionstart", () => {
+      this.comp = true;
+      h.compositionstart();
+    });
+    on("compositionend", () => {
+      this.comp = false;
+      h.input();
+    });
     on("blur", () => h.blur());
+  }
+  undo() {
+    this.el.focus();
+    this.el.ownerDocument.execCommand("undo");
+  }
+  redo() {
+    this.el.focus();
+    this.el.ownerDocument.execCommand("redo");
   }
   destroy() {
     for (const fn of this.cleanups.splice(0)) fn();
@@ -1925,6 +2418,10 @@ var CodeMirrorInput = class {
             this.handlers?.compositionstart();
             return false;
           },
+          compositionend: () => {
+            later(() => this.handlers?.input());
+            return false;
+          },
           blur: () => {
             queueMicrotask(() => {
               if (!this.handlers) return;
@@ -1960,6 +2457,9 @@ var CodeMirrorInput = class {
   get el() {
     return this.view.dom;
   }
+  get composing() {
+    return !!this._view?.composing;
+  }
   detach() {
     this._view?.dom.remove();
   }
@@ -1993,7 +2493,17 @@ var CodeMirrorInput = class {
     return visibleSelection(this.view);
   }
   focus() {
+    this.syncRoot();
     this.view.contentDOM.focus({ preventScroll: true });
+  }
+  /**
+   * 编辑器跟着它现在所在的 document 走：白板卡片编辑时 Obsidian 先在主窗口建好表格、再挪进卡片的 iframe，
+   * 编辑器还当自己在主窗口，点格子里的字时 CodeMirror 把 iframe 当成别处的焦点让它失焦，这一格就保存退出了，
+   * 光标挪不到想要的位置（B站反馈：白板里改格子只能全删重打）
+   */
+  syncRoot() {
+    const v = this._view;
+    if (v && v.dom.isConnected && v.root !== v.dom.ownerDocument) v.setRoot(v.dom.ownerDocument);
   }
   hasFocus() {
     return !!this._view?.hasFocus;
@@ -2008,6 +2518,12 @@ var CodeMirrorInput = class {
   bind(h) {
     this.handlers = h;
   }
+  undo() {
+    (0, import_commands.undo)(this.view);
+  }
+  redo() {
+    (0, import_commands.redo)(this.view);
+  }
   destroy() {
     this.handlers = null;
     this._view?.destroy();
@@ -2019,6 +2535,18 @@ var CodeMirrorInput = class {
 function sameTable(a, b) {
   return JSON.stringify([a.cells, a.align, a.meta]) === JSON.stringify([b.cells, b.align, b.meta]);
 }
+var V_ICONS = { top: "align-vertical-justify-start", middle: "align-vertical-justify-center", bottom: "align-vertical-justify-end" };
+function keepBlankLines(md) {
+  if (!/\n[ \t]*\n/.test(md)) return md;
+  const lines = md.split("\n");
+  let fence = false;
+  return lines.map((l, i) => {
+    if (/^\s*(```|~~~)/.test(l)) fence = !fence;
+    const inner = i > 0 && i < lines.length - 1;
+    return !fence && inner && !l.trim() ? "&nbsp;" : l;
+  }).join("\n");
+}
+var MIN_FIT_COL = 56;
 var PLAIN_RE = /^[\p{L}\p{N}\p{Zs},.;:!?'"()%+\-/@，。、；：！？“”‘’（）《》【】…—·]*$/u;
 function isPlainText(md) {
   if (!PLAIN_RE.test(md)) return false;
@@ -2062,6 +2590,8 @@ var TableEditor = class {
     this.anchor = null;
     /** 选区是点行 / 列手柄选的整行 / 整列：不因为碰到合并格往外扩 */
     this.lineSel = false;
+    /** 折着的表在这张编辑器里临时展开了（阅读视图点「展开」、搜索跳到藏着的行），不改文件 */
+    this.localUnfold = false;
     this.editing = false;
     /** 编辑时宿主送来的新表：等这一格改完再换上 */
     this.pending = null;
@@ -2080,6 +2610,10 @@ var TableEditor = class {
     this.suggest = null;
     this.resize = null;
     this.destroyed = false;
+    /** 横向滚动条占的高度（覆盖式滚动条是 0） */
+    this.scrollbarH = 0;
+    /** 列宽按比例缩放时缩了多少（1 = 没缩）；拖列宽时按它换算回文件里的宽度 */
+    this.fitScale = 1;
     /** 上一次长按开菜单的时间（安卓随后还会来一次右键事件，忽略掉） */
     this.longPressAt = -Infinity;
     this.cleanups = [];
@@ -2089,11 +2623,19 @@ var TableEditor = class {
     /** 表头吸顶用滚动驱动动画（否则每次滚动后用 JS 挪，旧环境、被缩放的脑图画布里走这条） */
     this.scrollDriven = false;
     this.stickKey = "";
+    /**
+     * 表头往下挪 y 像素（0 是不挪）。挪每个格子，不挪整个 thead：iOS（WebKit）给 thead 加 transform 时
+     * 文字跟着挪、格子底色留在原地，表头变透明压在正文上（#15）
+     */
+    this.headShift = 0;
     /** 十字高亮：悬停模式下鼠标所在的格子，否则（或鼠标不在表格上）选中的格子 */
     this.crossAt = null;
     // ---------- 格式栏 ----------
     this.formatBar = null;
     this.formatBarKey = "";
+    // ---------- 手机上的编辑工具条 ----------
+    this.mobileBar = null;
+    this.mobileBarCleanup = null;
     this.table = table;
     const doc = parent.ownerDocument;
     this.root = doc.createElement("div");
@@ -2129,6 +2671,13 @@ var TableEditor = class {
     this.colHandle = this.handle("ggt-col-handle", t("colMenu"), "grip-horizontal");
     this.addButton("ggt-add-col", t("addCol"), () => this.apply(insertCol(this.table, colCount(this.table)), { r: this.sel?.r ?? 0, c: colCount(this.table) }));
     this.addButton("ggt-add-row", t("addRow"), () => this.apply(insertRow(this.table, rowCount(this.table)), { r: rowCount(this.table), c: this.sel?.c ?? 0 }));
+    this.addButton("ggt-add-col-first", t("addColFirst"), () => this.apply(insertCol(this.table, 0), { r: this.sel?.r ?? 0, c: 0 }));
+    this.addButton("ggt-add-row-first", t("addRowFirst"), () => {
+      const at = headRows(this.table);
+      this.apply(insertRow(this.table, at), { r: at, c: this.sel?.c ?? 0 });
+    });
+    this.root.addEventListener("pointerenter", () => this.root.classList.add("is-hot"));
+    this.root.addEventListener("pointerleave", () => this.root.classList.remove("is-hot"));
     this.root.classList.toggle("is-readonly", !!host.readonly);
     parent.appendChild(this.root);
     this.bind();
@@ -2153,7 +2702,32 @@ var TableEditor = class {
     return this.table;
   }
   select(r, c) {
+    this.revealRow(r);
     this.setSel({ r, c }, true);
+  }
+  /** 折着的表：在这一张编辑器里先展开（不改文件），要去的那一行藏着的时候用（搜索跳过来、宿主要选某一格） */
+  revealRow(r) {
+    if (!this.folded() || r < headRows(this.table)) return;
+    this.localUnfold = true;
+    this.render();
+  }
+  /** 折叠着：注释里有 fold、没在这张编辑器里临时展开、表头下面真有行 */
+  folded() {
+    const tb = this.table;
+    return tb.meta.fold === 1 && !this.localUnfold && rowCount(tb) > headRows(tb);
+  }
+  /** 画出来的行数：折着时只有表头 */
+  shownRows() {
+    return this.folded() ? headRows(this.table) : rowCount(this.table);
+  }
+  /** 点「展开 N 行」：能改文件就去掉注释里的 fold；只读（阅读视图）只在这里展开，不改文件 */
+  unfold() {
+    if (this.host.readonly) {
+      this.localUnfold = true;
+      this.render();
+      return;
+    }
+    this.applyKeepRange(setFolded(this.table, false));
   }
   /**
    * 正在编辑的这一格按输入框里现在的文字算出来的表，不结束编辑；没在编辑或没改返回 null。
@@ -2265,8 +2839,42 @@ var TableEditor = class {
     }
     return false;
   }
+  /**
+   * 搜索跳到表格里（在文件中查找、全局搜索点进来）：第 r 行第 c 列格子里第 k 处 text 标出来、滚进视野（#15）。
+   * 和 Obsidian 标当前这一处一样，在那几个字外面画一圈强调色的框（盖在格子底色、==高亮== 上面，不会被它们盖住）；
+   * 不改格子的内容。找不到这段字（格式把字拆开了）就给整格画框
+   */
+  showMatch(r, c, text, k) {
+    this.revealRow(r);
+    const el = this.grid[r]?.[c];
+    if (!el) return;
+    clearSearchMark();
+    el.scrollIntoView({ block: "center", inline: "nearest" });
+    const content = el.querySelector(".ggt-content");
+    const range = content && text ? findTextRange(content, text, k) : null;
+    this.root.ownerDocument.addEventListener("pointerdown", clearSearchMark, { once: true, capture: true });
+    const rects = range ? Array.from(range.getClientRects()).filter((b) => b.width > 0 && b.height > 0) : [];
+    if (rects.length) {
+      const k2 = this.scale();
+      const box = el.getBoundingClientRect();
+      const layer = el.createDiv({ cls: "ggt-search-mark" });
+      for (const b of rects) {
+        layer.createDiv().setCssProps({
+          left: `${(b.left - box.left) / k2 - el.clientLeft}px`,
+          top: `${(b.top - box.top) / k2 - el.clientTop}px`,
+          width: `${b.width / k2}px`,
+          height: `${b.height / k2}px`
+        });
+      }
+      searchMarkLayer = layer;
+      return;
+    }
+    el.classList.add("is-search-hit");
+    searchMarkCell = el;
+  }
   destroy() {
     this.hideFormatBar();
+    this.hideMobileBar();
     if (lastActive === this) lastActive = null;
     this.destroyed = true;
     this.closePopover();
@@ -2284,8 +2892,14 @@ var TableEditor = class {
       const sc = this.scroller;
       this.root.classList.toggle("can-left", sc.scrollLeft > 1);
       this.root.classList.toggle("can-right", sc.scrollLeft + sc.clientWidth < sc.scrollWidth - 1);
+      const bar = Math.max(0, sc.offsetHeight - sc.clientHeight);
+      if (bar !== this.scrollbarH) {
+        this.scrollbarH = bar;
+        this.root.style.setProperty("--ggt-sb", `${bar}px`);
+      }
       this.stickHeader();
       this.placeHandles();
+      if (this.resizeBar.classList.contains("is-touch")) this.placeTouchResize();
       if (this.root.classList.contains("is-freeze") && this.crossBands.some((b) => b.classList.contains("is-shown"))) this.markCross();
     };
     const onScroll = () => win.requestAnimationFrame(update);
@@ -2324,8 +2938,20 @@ var TableEditor = class {
       findOuter();
       update();
     });
+    let parentW = -1;
+    const onParent = () => {
+      const p = this.root.parentElement;
+      const w = p ? p.clientWidth : 0;
+      if (w === parentW) return;
+      parentW = w;
+      if (!this.resize) this.fitCols();
+      onScroll();
+    };
     const ro = new win.ResizeObserver(onScroll);
     ro.observe(this.scroller);
+    const pro = new win.ResizeObserver(() => win.requestAnimationFrame(onParent));
+    if (this.root.parentElement) pro.observe(this.root.parentElement);
+    this.cleanups.push(() => pro.disconnect());
     this.cleanups.push(() => ro.disconnect());
   }
   /**
@@ -2357,17 +2983,25 @@ var TableEditor = class {
       this.root.classList.remove("is-sd");
       const pad = parseFloat((outer.ownerDocument.defaultView ?? window).getComputedStyle(outer).paddingTop) || 0;
       this.root.style.setProperty("--ggt-sticky-top", `${-pad}px`);
-      head.removeAttribute("style");
+      this.moveHead(head, 0);
       return;
     }
     if (outer && this.scrollDriven && Math.abs(this.scale() - 1) < 0.01) {
       this.stickRange(outer, head);
-      head.removeAttribute("style");
+      this.moveHead(head, 0);
       return;
     }
     this.root.classList.remove("is-sd");
-    if (stuck) head.setAttribute("style", `transform: translateY(${Math.round(offset / this.scale())}px)`);
-    else head.removeAttribute("style");
+    this.moveHead(head, stuck ? Math.round(offset / this.scale()) : 0);
+  }
+  moveHead(head, y) {
+    if (y === this.headShift && !head.hasAttribute("style")) return;
+    this.headShift = y;
+    head.removeAttribute("style");
+    for (const cell of Array.from(head.querySelectorAll(".ggt-cell"))) {
+      if (y) cell.setCssProps({ transform: `translateY(${y}px)` });
+      else cell.style.removeProperty("transform");
+    }
   }
   /**
    * 能不能用原生吸顶：表格不用横向滚动，而且表格到外面滚动区之间没有别的会滚动、会裁切的容器
@@ -2412,29 +3046,44 @@ var TableEditor = class {
     const d = this.root.dataset;
     d.preset = this.table.meta.style ?? d.defPreset ?? "default";
     d.density = this.table.meta.density ?? d.defDensity ?? "comfortable";
+    this.root.classList.toggle("is-full", d.defFull === "1" && !this.table.meta.w?.some((x) => x != null));
+    this.root.classList.toggle("is-strict", d.defStrict === "1");
+    if (this.table.meta.fs) this.root.setCssProps({ "--ggt-fs": String(this.table.meta.fs) });
+    else this.root.style.removeProperty("--ggt-fs");
   }
   // ---------- 渲染 ----------
   render() {
     const doc = this.root.ownerDocument;
     const hadFocus = this.input.hasFocus();
     const tb = this.table;
-    const rows = rowCount(tb);
+    const all = rowCount(tb);
+    const folded = this.folded();
+    const rows = this.shownRows();
     const cols = colCount(tb);
     if (this.sel) this.sel = this.canon({ r: Math.min(this.sel.r, rows - 1), c: Math.min(this.sel.c, cols - 1) });
     if (this.anchor) this.anchor = { r: Math.min(this.anchor.r, rows - 1), c: Math.min(this.anchor.c, cols - 1) };
+    this.root.classList.toggle("is-folded", folded);
     const ms = merges(tb);
     this.applyLook();
     this.tableEl.replaceChildren();
-    this.grid = Array.from({ length: rows }, () => new Array(cols));
+    this.grid = Array.from({ length: all }, () => new Array(cols));
     this.marked = [];
     this.crossed = [];
     const colgroup = this.tableEl.appendChild(doc.createElement("colgroup"));
+    const ws = Array.from({ length: cols }, (_, c) => widthOf(tb, c) ?? 0);
+    const set = ws.filter((w) => w > 0);
+    const avg = set.length ? set.reduce((a, b) => a + b, 0) / set.length : 0;
+    const total = ws.reduce((a, w) => a + (w || avg), 0);
+    if (set.length) this.tableEl.setCssProps({ "--ggt-total": `${Math.ceil(total)}px` });
+    else this.tableEl.style.removeProperty("--ggt-total");
     for (let c = 0; c < cols; c++) {
       const col = colgroup.appendChild(doc.createElement("col"));
-      const w = widthOf(tb, c);
+      const w = ws[c];
       if (w) col.style.width = `${w}px`;
+      if (set.length) col.setCssProps({ "--ggt-pct": `${((w || avg) / total * 100).toFixed(3)}%` });
     }
     const thead = this.tableEl.appendChild(doc.createElement("thead"));
+    this.headShift = 0;
     const tbody = this.tableEl.appendChild(doc.createElement("tbody"));
     const head = headRows(tb);
     const freeze = !!tb.meta.headerCol && tb.meta.freeze === 1;
@@ -2448,7 +3097,7 @@ var TableEditor = class {
         cell.className = "ggt-cell";
         if (m) {
           cell.colSpan = m.c2 - m.c1 + 1;
-          cell.rowSpan = m.r2 - m.r1 + 1;
+          cell.rowSpan = Math.min(m.r2, rows - 1) - m.r1 + 1;
           cell.classList.add("is-merged");
           for (let i = m.r1; i <= m.r2; i++) for (let j = m.c1; j <= m.c2; j++) this.grid[i][j] = cell;
         } else this.grid[r][c] = cell;
@@ -2456,23 +3105,47 @@ var TableEditor = class {
         cell.dataset.c = String(c);
         const a = tb.align[c];
         if (a) cell.dataset.align = a;
+        const va = vAlignOf(tb, c);
+        if (va) cell.dataset.valign = va;
         const bg = bgOf(tb, r, c);
         if (bg) cell.dataset.bg = bg;
         const fg = fgOf(tb, r, c);
         if (fg) cell.dataset.fg = fg;
+        const fz = fontSizeOf(tb, r, c);
+        if (fz) cell.setCssProps({ "--ggt-fz": String(fz) });
         if (tb.meta.headerCol && c === 0 && r >= head) cell.classList.add("is-head-col");
         if (freeze && c === 0 && (!m || m.c2 === 0)) cell.classList.add("is-frozen");
         if (!m && !widthOf(tb, c)) cell.classList.add("is-auto-width");
         const content = cell.appendChild(doc.createElement("div"));
         content.className = "ggt-content";
-        if (r === rows - 1 && r >= head && hasTotal(tb)) cell.classList.add("is-total-row");
+        if (r === all - 1 && r >= head && hasTotal(tb)) cell.classList.add("is-total-row");
         this.fillCell(content, r, c, m ? mergedText(tb, m) : tb.cells[r][c]);
       }
     }
+    if (folded) {
+      const bar = tbody.createEl("tr").createEl("td");
+      bar.className = "ggt-fold-bar";
+      bar.colSpan = cols;
+      const btn = bar.createEl("button");
+      btn.type = "button";
+      btn.className = "ggt-fold-btn";
+      btn.textContent = t("unfoldRows").replace("{n}", String(all - head));
+      btn.addEventListener("pointerdown", (ev) => {
+        ev.stopPropagation();
+        ev.preventDefault();
+      });
+      btn.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.unfold();
+      });
+    }
+    this.fitCols();
     this.markSel();
     if (hadFocus && this.sel) this.input.focus();
     this.stickHeader();
     if (!this.resize) this.resizeBar.classList.remove("is-shown", "is-active");
+    this.placeTouchResize();
   }
   /** 状态列的数据格画成彩色标签，别的照常 */
   fillCell(el, r, c, md) {
@@ -2509,11 +3182,11 @@ var TableEditor = class {
       if (!rest) return;
       const span = el.appendChild(el.ownerDocument.createElement("span"));
       span.className = "ggt-check-text";
-      if (this.host.renderMarkdown) this.host.renderMarkdown(span, rest);
+      if (this.host.renderMarkdown) this.host.renderMarkdown(span, keepBlankLines(rest));
       else span.textContent = rest;
       return;
     }
-    if (this.host.renderMarkdown && !isPlainText(md)) this.host.renderMarkdown(el, md);
+    if (this.host.renderMarkdown && !isPlainText(md)) this.host.renderMarkdown(el, keepBlankLines(md));
     else {
       el.textContent = md;
       if (this.host.renderMarkdown) el.dir = "auto";
@@ -2589,7 +3262,7 @@ var TableEditor = class {
   }
   /** 填充柄放在选区右下角；没选中、在编辑、只读时不显示 */
   placeFill() {
-    const box = !this.editing && !this.host.readonly ? this.selBox() : null;
+    const box = !this.editing && !this.host.readonly && !this.folded() ? this.selBox() : null;
     this.fillHandle.classList.toggle("is-shown", !!box);
     if (box) this.fillHandle.setAttribute("style", `left:${box.x + box.w - 4}px;top:${box.y + box.h - 4}px`);
   }
@@ -2692,6 +3365,7 @@ var TableEditor = class {
     this.markCross();
     if (cell) this.placeFill();
     this.placeHandles();
+    this.placeTouchResize();
   }
   // ---------- 选中、编辑 ----------
   /** extend：保留选区的另一头（Shift、拖选），否则只选这一格 */
@@ -2723,6 +3397,7 @@ var TableEditor = class {
     this.editing = true;
     cell.classList.add("is-editing");
     this.fillHandle.classList.remove("is-shown");
+    this.showMobileBar();
     if (keep) {
       this.input.reset(shownText(this.table, this.sel.r, this.sel.c));
       const end = this.input.value.length;
@@ -2757,6 +3432,7 @@ var TableEditor = class {
   commit() {
     this.closeSuggest();
     this.hideFormatBar();
+    this.hideMobileBar();
     if (!this.editing || !this.sel) return;
     const p = this.sel;
     this.editing = false;
@@ -2781,6 +3457,7 @@ var TableEditor = class {
   cancel() {
     this.closeSuggest();
     this.hideFormatBar();
+    this.hideMobileBar();
     if (!this.editing || !this.sel) return;
     this.editing = false;
     this.cellEl(this.sel)?.classList.remove("is-editing");
@@ -2815,7 +3492,7 @@ var TableEditor = class {
   /** 方向键、Tab、Enter 走格；extend 是 Shift+方向键扩大选区。从合并的格子出发时从它的边上走出去 */
   move(dr, dc, wrap = false, extend = false) {
     if (!this.sel) return;
-    const rows = rowCount(this.table);
+    const rows = this.shownRows();
     const cols = colCount(this.table);
     const m = mergeAt(this.table, this.sel.r, this.sel.c);
     let { r, c } = this.sel;
@@ -2844,7 +3521,7 @@ var TableEditor = class {
       return;
     }
     if (r >= rows) {
-      if (wrap) {
+      if (wrap && !this.folded()) {
         this.apply(insertRow(this.table, rows), { r: rows, c: 0 });
         return;
       }
@@ -2912,6 +3589,7 @@ var TableEditor = class {
         this.touched = true;
         return this.touchStart(ev, p);
       }
+      this.host.dismissMenus?.();
       ev.preventDefault();
       if (ev.button !== 0) return;
       if (ev.shiftKey && this.sel) {
@@ -2921,6 +3599,24 @@ var TableEditor = class {
       const same = this.sel && this.sel.r === p.r && this.sel.c === p.c;
       if (!same || !this.editing) this.setSel(p, true);
       this.dragSelect(ev);
+    });
+    this.on(this.tableEl, "click", (ev) => {
+      const link = ev.target.closest("a.internal-link");
+      if (!link || !link.closest(".ggt-cell") || !this.host.openLink) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      this.host.openLink(link.dataset.href ?? link.getAttribute("href") ?? "", ev);
+    });
+    this.on(this.tableEl, "auxclick", (ev) => {
+      const link = ev.target.closest("a.internal-link");
+      if (!link || ev.button !== 1 || !this.host.openLink) return;
+      ev.preventDefault();
+      this.host.openLink(link.dataset.href ?? link.getAttribute("href") ?? "", ev);
+    });
+    this.on(this.tableEl, "mouseover", (ev) => {
+      const link = ev.target.closest("a.internal-link");
+      const href = link?.dataset.href ?? link?.getAttribute("href");
+      if (link && href) this.host.hoverLink?.(ev, href, link);
     });
     this.on(this.tableEl, "click", (ev) => {
       const box = ev.target.closest("input.ggt-check");
@@ -2933,8 +3629,36 @@ var TableEditor = class {
     });
     this.on(this.tableEl, "dblclick", (ev) => {
       const target = ev.target;
+      const img = !this.editing && target.closest(".ggt-cell") ? target.closest(".ggt-content img") : null;
+      if (img) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.openLightbox(img);
+        return;
+      }
       if (target.closest(".ggt-cell") && !this.editing) this.startEdit(true);
     });
+    this.on(this.tableEl, "contextmenu", (ev) => {
+      const target = ev.target;
+      const cellEl = target.closest(".ggt-cell");
+      if (!cellEl || this.editing && this.input.contains(target)) return;
+      const p = { r: Number(cellEl.dataset.r), c: Number(cellEl.dataset.c) };
+      const img = target.closest(".ggt-content img");
+      if (img && this.host.imageMenu) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        const link = img.closest(".internal-embed")?.getAttribute("src") ?? null;
+        this.host.imageMenu(ev, img, link, link && !this.host.readonly ? () => this.removeEmbed(p, link) : null);
+        return;
+      }
+      const a = target.closest(".ggt-content a.internal-link");
+      const href = a?.dataset.href ?? a?.getAttribute("href");
+      if (a && href && this.host.linkMenu) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.host.linkMenu(ev, href);
+      }
+    }, { capture: true });
     this.on(this.tableEl, "contextmenu", (ev) => {
       const cell = ev.target.closest(".ggt-cell");
       if (!cell || this.host.readonly || this.editing && this.input.contains(ev.target)) return;
@@ -2946,13 +3670,20 @@ var TableEditor = class {
       const inRange = this.isMulti() && r && p.r >= r.r1 && p.r <= r.r2 && p.c >= r.c1 && p.c <= r.c2;
       if (!inRange) this.setSel(p, true);
       else this.input.focus();
-      this.openMenu(this.cellMenu(inRange && this.sel ? this.sel : p), ev.clientX, ev.clientY);
+      const items = this.cellMenu(inRange && this.sel ? this.sel : p);
+      this.openMenu(items, ev.clientX, ev.clientY);
+      const pop = this.popover;
+      this.host.eventMenuItems?.(ev, (extra) => {
+        if (!extra.length || this.popover !== pop) return;
+        this.openMenu([...items, { separator: true }, ...extra], ev.clientX, ev.clientY);
+      });
     });
     this.on(this.resizeBar, "pointerdown", (ev) => this.startResize(ev, this.resizeBar));
     this.on(this.fillHandle, "pointerdown", (ev) => this.fillDrag(ev));
     this.on(this.root, "ggt-restyle", () => {
       this.refreshInput();
       this.applyLook();
+      this.fitCols();
       this.markCross();
     });
     this.on(this.tableEl, "pointermove", (ev) => {
@@ -2998,7 +3729,7 @@ var TableEditor = class {
       }
     });
     this.on(this.root, "pointerleave", () => {
-      if (!this.resize) this.resizeBar.classList.remove("is-shown");
+      if (!this.resize && !this.resizeBar.classList.contains("is-touch")) this.resizeBar.classList.remove("is-shown");
       if (this.popover) return;
       this.hover = null;
       this.placeHandles();
@@ -3010,6 +3741,8 @@ var TableEditor = class {
     this.on(doc, "pointerdown", (ev) => {
       const target = ev.target;
       if (this.formatBar?.contains(target)) return;
+      if (this.mobileBar?.contains(target)) return;
+      if (this.suggest?.el.contains(target)) return;
       if (this.popover && !this.popover.contains(target)) this.closePopover();
       if (this.sel && !this.root.contains(target) && !(this.popover && this.popover.contains(target))) {
         if (this.editing) this.commit();
@@ -3043,7 +3776,7 @@ var TableEditor = class {
       } else if (ev.key === "Escape") {
         ev.preventDefault();
         ev.stopPropagation();
-        this.cancel();
+        this.commit();
       }
       ev.stopPropagation();
       return;
@@ -3090,7 +3823,8 @@ var TableEditor = class {
           this.apply(toggleCheck(this.table, this.sel.r, this.sel.c), this.sel);
           return;
         }
-        break;
+        stop();
+        return this.startEdit(true);
       case "Enter":
       case "F2":
         stop();
@@ -3159,6 +3893,17 @@ var TableEditor = class {
       return true;
     }
     if (!mark && !link) return false;
+    return this.formatMark(mark);
+  }
+  /** 按 Obsidian 命令做格式（用户把加粗、斜体这些命令改成了别的快捷键时，keys.ts 按命令调这里） */
+  formatCommand(kind) {
+    if (!this.sel || this.host.readonly) return false;
+    const marks = { bold: "**", italic: "*", strike: "~~", highlight: "==" };
+    return this.formatMark(kind === "link" ? null : marks[kind]);
+  }
+  /** mark 是 null 时插链接 */
+  formatMark(mark) {
+    if (!this.sel) return false;
     if (this.editing) {
       const kinds = { "**": { kind: "bold" }, "*": { kind: "italic" }, "~~": { kind: "strike" }, "==": { kind: "highlight" } };
       if (mark && this.input instanceof CodeMirrorInput && this.input.selectionStart !== this.input.selectionEnd) this.applyFormat(kinds[mark]);
@@ -3267,26 +4012,205 @@ var TableEditor = class {
     btn("is-italic", t("fmtItalic"), { kind: "italic" }, (b) => b.textContent = "I");
     btn("is-strike", t("fmtStrike"), { kind: "strike" }, (b) => b.textContent = "S");
     btn("is-underline", t("fmtUnderline"), { kind: "underline" }, (b) => b.textContent = "U");
-    btn("is-highlight", t("fmtHighlight"), { kind: "highlight" }, iconBtn("highlighter", "H"));
-    if (colors.text.length) sep();
-    for (const c of colors.text)
-      btn("is-color", `${t("fmtTextColor")} ${c}`, { kind: "color", color: c }, (b) => {
-        b.textContent = "A";
-        b.style.color = c;
+    sep();
+    const local = {};
+    const mem = this.host.colorMemory?.() ?? {
+      last: (k) => local[k] ?? null,
+      recent: () => [],
+      remember: (k, c) => local[k] = c
+    };
+    const common = (kind) => kind === "text" ? colors.text : colors.highlight;
+    const current = (kind) => mem.last(kind) ?? common(kind)[0] ?? (kind === "bg" ? THEME_HIGHLIGHT : null);
+    const tip = (el, text) => el.title = text;
+    let open = null;
+    const closePalette = () => {
+      open?.el.remove();
+      open = null;
+    };
+    const split = (kind) => {
+      const el = createColorSplit({
+        doc,
+        cls: kind === "text" ? "is-text-color" : "is-highlighter",
+        title: kind === "text" ? t("fmtTextColor") : t("fmtHighlightColor"),
+        caretTitle: kind === "text" ? t("palTextMore") : t("palBgMore"),
+        face: (f) => {
+          if (kind === "text") f.textContent = "A";
+          else iconBtn("highlighter", "H")(f);
+        },
+        current: () => current(kind),
+        paintBar: (b, c) => paintColor(b, c, kind),
+        tip,
+        onApply: () => {
+          const c = current(kind);
+          if (!c) return;
+          closePalette();
+          this.applyFormat(colorFormat(kind, c));
+        },
+        onOpen: (anchor) => {
+          if (open?.kind === kind) return closePalette();
+          closePalette();
+          const pick = (c, apply = (f) => this.applyFormat(f)) => {
+            closePalette();
+            if (c !== null) mem.remember(kind, c);
+            refreshColorSplit(anchor);
+            apply(colorFormat(kind, c));
+          };
+          const pal = createPalette(doc, {
+            text: { common: t("palCommon"), recent: t("palRecent"), alpha: t("palAlpha"), custom: t("palCustom") },
+            common: common(kind),
+            recent: mem.recent(kind),
+            alpha: true,
+            defaultAlpha: kind === "text" ? 100 : 60,
+            paint: (b, c) => paintColor(b, c, kind),
+            label: (c) => c === THEME_HIGHLIGHT ? t("fmtHighlight") : c,
+            noneLabel: kind === "text" ? t("palNoText") : t("palNoHighlight"),
+            extras: kind === "bg" && !common("bg").includes(THEME_HIGHLIGHT) ? [{ value: THEME_HIGHLIGHT, label: t("fmtHighlight"), paint: (b) => paintColor(b, THEME_HIGHLIGHT, "bg") }] : [],
+            onPick: (c) => pick(c),
+            onCustom: () => {
+              const apply = this.customColorTarget();
+              return (c) => pick(c, apply);
+            },
+            tip
+          });
+          pal.classList.add("ggt-format-palette");
+          bar.append(pal);
+          pal.style.left = `${Math.max(0, anchor.offsetLeft)}px`;
+          open = { kind, el: pal };
+        }
       });
-    if (colors.highlight.length) sep();
-    for (const c of colors.highlight) {
-      const hl = highlightOf(c);
-      btn("is-bg", `${t("fmtHighlightColor")} ${c}`, hl ? { kind: "highlight", color: hl } : { kind: "bg", color: c }, (b) => {
-        b.textContent = "A";
-        if (hl) b.dataset.highlight = hl;
-        else b.style.background = c;
-      });
-    }
+      bar.append(el);
+    };
+    split("text");
+    split("bg");
     sep();
     btn("is-clear", t("fmtClear"), { kind: "clear" }, iconBtn("eraser", "\u232B"));
     doc.body.append(bar);
     return bar;
+  }
+  /**
+   * 色板里点「自定义…」：系统取色器会拿走焦点，格子可能已经保存退出编辑了。先记下是哪一格、选的哪几个字，
+   * 选好颜色后还在编辑这一格就照常上格式，否则直接改这一格的源码
+   */
+  customColorTarget() {
+    const pos = this.sel ? { ...this.sel } : null;
+    const { from, to } = this.input.visibleSelection();
+    return (fmt2) => {
+      if (!pos || from === to) return;
+      if (this.editing && this.sel && this.sel.r === pos.r && this.sel.c === pos.c) {
+        this.input.focus();
+        this.input.setSelectionRange(from, to);
+        this.applyFormat(fmt2);
+        return;
+      }
+      const cur = this.table.cells[pos.r]?.[pos.c];
+      if (cur === void 0) return;
+      const r = applyInlineFormat(cur, from, to, fmt2);
+      if (r.text !== cur) this.apply(setCell(this.table, pos.r, pos.c, r.text), pos);
+    };
+  }
+  /**
+   * 手机、平板上编辑格子时，键盘上方的一排按钮：完成、撤销重做、加粗斜体删除线高亮、双链、勾选框、格内换行、上一格 / 下一格。
+   * Obsidian 自己的手机工具条在焦点离开笔记编辑器时会收起来（它的按钮也只管笔记正文），所以表格自己出一条
+   */
+  showMobileBar() {
+    const doc = this.root.ownerDocument;
+    if (this.mobileBar || this.host.readonly || !doc.body.classList.contains("is-mobile")) return;
+    const win = doc.defaultView ?? window;
+    const bar = doc.createElement("div");
+    bar.className = "ggt-mobile-bar";
+    bar.addEventListener("pointerdown", (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+    });
+    bar.addEventListener("mousedown", (ev) => ev.preventDefault());
+    const btn = (icon, fallback, title, run) => {
+      const b = doc.createElement("button");
+      b.type = "button";
+      b.className = "ggt-mobile-btn";
+      b.setAttribute("aria-label", title);
+      if (this.host.setIcon) this.host.setIcon(b, icon);
+      else b.textContent = fallback;
+      b.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        run();
+      });
+      bar.append(b);
+    };
+    const sep = () => {
+      const s = doc.createElement("span");
+      s.className = "ggt-mobile-sep";
+      bar.append(s);
+    };
+    btn("check", "\u2713", t("mbDone"), () => this.commit());
+    btn("undo-2", "\u21B6", t("mbUndo"), () => this.input.undo());
+    btn("redo-2", "\u21B7", t("mbRedo"), () => this.input.redo());
+    sep();
+    btn("bold", "B", t("fmtBold"), () => this.formatOrInsert({ kind: "bold" }, "**", "**"));
+    btn("italic", "I", t("fmtItalic"), () => this.formatOrInsert({ kind: "italic" }, "*", "*"));
+    btn("strikethrough", "S", t("fmtStrike"), () => this.formatOrInsert({ kind: "strike" }, "~~", "~~"));
+    btn("highlighter", "H", t("fmtHighlight"), () => this.formatOrInsert({ kind: "highlight" }, "==", "=="));
+    sep();
+    btn("link-2", "[[", t("mbLink"), () => this.insertAround("[[", "]]"));
+    btn("square-check", "\u2611", t("mbCheckbox"), () => this.toggleEditCheckbox());
+    btn("corner-down-left", "\u21B5", t("mbNewline"), () => this.insertAround("\n", ""));
+    sep();
+    btn("arrow-left", "\u2190", t("mbPrevCell"), () => this.editNext(-1));
+    btn("arrow-right", "\u2192", t("mbNextCell"), () => this.editNext(1));
+    doc.body.append(bar);
+    const vv = win.visualViewport;
+    const place = () => {
+      const bottom = vv ? Math.max(0, win.innerHeight - (vv.offsetTop + vv.height)) : 0;
+      bar.style.setProperty("--ggt-kb", `${Math.round(bottom)}px`);
+    };
+    place();
+    vv?.addEventListener("resize", place);
+    vv?.addEventListener("scroll", place);
+    this.mobileBarCleanup = () => {
+      vv?.removeEventListener("resize", place);
+      vv?.removeEventListener("scroll", place);
+    };
+    this.mobileBar = bar;
+  }
+  hideMobileBar() {
+    this.mobileBarCleanup?.();
+    this.mobileBarCleanup = null;
+    this.mobileBar?.remove();
+    this.mobileBar = null;
+  }
+  /** 选了字就给选中的字上格式；没选就插一对标记、光标放中间，接着打的字就是这个格式 */
+  formatOrInsert(fmt2, open, close) {
+    const { from, to } = this.input.visibleSelection();
+    if (from !== to) this.applyFormat(fmt2);
+    else this.insertAround(open, close);
+  }
+  /** 在光标（选区）两边插入 open、close，光标留在中间；插 [[ ]] 时接着弹出笔记补全 */
+  insertAround(open, close) {
+    if (!this.editing) return;
+    const el = this.input;
+    const a = el.selectionStart;
+    const b = el.selectionEnd;
+    const v = el.value;
+    el.value = v.slice(0, a) + open + v.slice(a, b) + close + v.slice(b);
+    el.setSelectionRange(a + open.length, b + open.length);
+    this.autosize();
+    this.updateSuggest();
+  }
+  /** 格子开头加上 / 去掉勾选框 */
+  toggleEditCheckbox() {
+    if (!this.editing) return;
+    const el = this.input;
+    const v = el.value;
+    const next = CHECK_RE.test(v) ? v.replace(CHECK_RE, "").trimStart() : `[ ] ${v}`;
+    el.value = next;
+    el.setSelectionRange(next.length, next.length);
+    this.autosize();
+  }
+  /** 保存这一格，接着编辑上一格 / 下一格（行尾接下一行开头，和 Tab 一样） */
+  editNext(dir) {
+    if (!this.editing) return;
+    this.commit();
+    this.move(0, dir, true);
+    this.startEdit(true);
   }
   /** ⌘K：选中的文字变成 [文字]()，光标放进括号里填网址 */
   insertLink() {
@@ -3302,6 +4226,19 @@ var TableEditor = class {
   updateSuggest() {
     if (!this.editing) return this.closeSuggest();
     const el = this.input;
+    if (el.composing) return;
+    {
+      const v = el.value;
+      const caret = el.selectionStart;
+      let text = v;
+      const cn = text.slice(0, caret).lastIndexOf("\u3010\u3010");
+      if (cn >= 0 && text.slice(0, caret).lastIndexOf("[[") < cn) text = text.slice(0, cn) + "[[" + text.slice(cn + 2);
+      if (text.slice(0, caret).endsWith("\u3011\u3011")) text = text.slice(0, caret - 2) + "]]" + text.slice(caret);
+      if (text !== v) {
+        el.value = text;
+        el.setSelectionRange(caret, caret);
+      }
+    }
     const before = el.value.slice(0, el.selectionStart);
     const link = /\[\[([^[\]|#^\n]*)$/.exec(before);
     const tag = /(?:^|\s)#([^\s#[\]|,.;:!?，。；：！？]*)$/.exec(before);
@@ -3508,19 +4445,54 @@ var TableEditor = class {
     const grid = this.rangeGrid();
     const r = this.rangeRect();
     ev.clipboardData.setData("text/plain", toTSV(grid));
-    ev.clipboardData.setData("text/html", r ? this.styledHTML(r) : toHTML(grid, false));
+    ev.clipboardData.setData("text/html", r ? this.styledHTML(r, this.sourceOf(r)) : toHTML(grid, false));
     if (cut && !this.host.readonly) this.applyKeepRange(clearCells(this.table, this.rangeCells()));
   }
   /**
    * 带样式的 HTML：格子实际显示的底色、文字颜色、加粗、对齐、列宽、合并都写成内联样式，
    * 粘到 Word、飞书、邮件里保留样子。标上 data-ggt，粘回我们自己的表格时用纯文本（Markdown 原文）
    */
-  styledHTML(rect) {
+  /** 这片格子截成的表格原文（带设置注释）：至少 2 行 2 列才算一张表，不然返回 null */
+  sourceOf(rect) {
+    if (rect.r2 - rect.r1 < 1 || rect.c2 - rect.c1 < 1) return null;
+    return serializeTable(subTable(this.table, rect));
+  }
+  /** 表格菜单里的复制：整张表带样式（粘到别的笔记原样还原），或者只要 Markdown 表格 */
+  copyWhole(markdownOnly) {
+    if (this.editing) this.commit();
+    const tb = this.table;
+    const lines = markdownOnly ? serializeTable({ ...tb, meta: {} }) : serializeTable(tb);
+    const text = lines.join("\n");
+    const win = this.root.ownerDocument.defaultView ?? window;
+    const clip = win.navigator.clipboard;
+    const done = () => this.host.notice?.(t(markdownOnly ? "copiedMarkdown" : "copiedTable"));
+    const html = this.styledHTML({ r1: 0, c1: 0, r2: rowCount(tb) - 1, c2: colCount(tb) - 1 }, lines, markdownOnly);
+    const item = new win.ClipboardItem({
+      "text/plain": new win.Blob([text], { type: "text/plain" }),
+      "text/html": new win.Blob([html], { type: "text/html" })
+    });
+    void clip.write([item]).then(done);
+  }
+  /**
+   * 复制出去的 HTML 表格（粘到 Word、飞书、邮件）。颜色一律按浅色主题取、半透明的叠在白底上算成实色：
+   * 暗色主题下屏幕上的表头、标签是深底浅字，原样带过去在白纸上很难看。plain：只要表格，不带任何颜色
+   */
+  styledHTML(rect, source = null, plain = false) {
+    const body = this.root.ownerDocument.body;
+    const dark = body.classList.contains("theme-dark");
+    if (dark && !plain) body.classList.replace("theme-dark", "theme-light");
+    try {
+      return this.buildHTML(rect, source, plain);
+    } finally {
+      if (dark && !plain) body.classList.replace("theme-light", "theme-dark");
+    }
+  }
+  buildHTML(rect, source, plain) {
     const tb = this.table;
     const esc2 = (v) => v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     const win = this.root.ownerDocument.defaultView ?? window;
     const cols = Array.from(this.tableEl.querySelectorAll("col"));
-    let html = '<table data-ggt="1" style="border-collapse:collapse">';
+    let html = `<table data-ggt="1"${source ? sourceAttr(source) : ""} style="border-collapse:collapse">`;
     html += "<colgroup>";
     const k = this.scale();
     for (let c = rect.c1; c <= rect.c2; c++) html += `<col style="width:${Math.round((cols[c]?.getBoundingClientRect().width ?? 80 * k) / k)}px">`;
@@ -3532,14 +4504,17 @@ var TableEditor = class {
         if (m && (m.r1 !== r || m.c1 !== c) && m.r1 >= rect.r1 && m.c1 >= rect.c1) continue;
         const el = this.cellEl({ r, c });
         const cs = el ? win.getComputedStyle(el) : null;
-        const styles = ["border:1px solid #d9d9d9", "padding:6px 10px", "vertical-align:top"];
+        const styles = ["border:1px solid #d9d9d9", "padding:6px 10px", `vertical-align:${vAlignOf(tb, c) ?? "top"}`];
         const a = tb.align[c];
         if (a) styles.push(`text-align:${a}`);
         if (cs) {
-          if (cs.backgroundColor && !/rgba\(\s*0,\s*0,\s*0,\s*0\s*\)|transparent/.test(cs.backgroundColor)) styles.push(`background-color:${cs.backgroundColor}`);
-          if (fgOf(tb, r, c)) styles.push(`color:${cs.color}`);
+          const bg = plain ? null : onWhite(cs.backgroundColor);
+          if (bg && bg !== "rgb(255, 255, 255)") styles.push(`background-color:${bg}`);
+          if (!plain && fgOf(tb, r, c)) styles.push(`color:${onWhite(cs.color) ?? cs.color}`);
           if (Number(cs.fontWeight) >= 600) styles.push("font-weight:600");
         }
+        const size = (tb.meta.fs ?? 1) * (fontSizeOf(tb, r, c) ?? 1);
+        if (!plain && size !== 1) styles.push(`font-size:${Math.round(size * 100)}%`);
         let span = "";
         if (m && m.r1 === r && m.c1 === c) {
           const cs2 = Math.min(m.c2, rect.c2) - c + 1;
@@ -3554,8 +4529,9 @@ var TableEditor = class {
           clone.querySelectorAll("input.ggt-check").forEach((b) => b.replaceWith(b.checked ? "\u2611 " : "\u2610 "));
           clone.querySelectorAll(".ggt-pill").forEach((pill, i) => {
             const orig = content.querySelectorAll(".ggt-pill")[i];
-            const ps = orig ? win.getComputedStyle(orig) : null;
-            if (ps) pill.setAttribute("style", `background:${ps.backgroundColor};color:${ps.color};padding:0 8px;border-radius:10px`);
+            const ps = orig && !plain ? win.getComputedStyle(orig) : null;
+            if (ps) pill.setAttribute("style", `background:${onWhite(ps.backgroundColor) ?? ps.backgroundColor};color:${onWhite(ps.color) ?? ps.color};padding:0 8px;border-radius:10px`);
+            else pill.removeAttribute("style");
           });
           clone.querySelectorAll("textarea").forEach((x) => x.remove());
           clone.querySelectorAll(":scope > p").forEach((para, i) => {
@@ -3572,8 +4548,14 @@ var TableEditor = class {
     return html + "</table>";
   }
   onPaste(ev) {
-    if (this.editing || !this.sel || this.host.readonly || !ev.clipboardData) return;
-    const grid = gridFromClipboard(ev.clipboardData, this.root.ownerDocument);
+    if (!this.sel || this.host.readonly || !ev.clipboardData) return;
+    const grid = this.editing ? null : gridFromClipboard(ev.clipboardData, this.root.ownerDocument);
+    const image = this.host.saveImage && !(grid && (grid.length > 1 || grid[0].length > 1)) ? imageFrom(ev.clipboardData) : null;
+    if (image) {
+      ev.preventDefault();
+      void this.pasteImage(image);
+      return;
+    }
     if (!grid) return;
     ev.preventDefault();
     const r = this.rangeRect() ?? { r1: this.sel.r, c1: this.sel.c, r2: this.sel.r, c2: this.sel.c };
@@ -3590,6 +4572,54 @@ var TableEditor = class {
     this.anchor = null;
     this.apply(next, { r: r.r1, c: r.c1 });
     if (grid.length > 1 || grid[0].length > 1) this.setSel({ r: r.r1 + grid.length - 1, c: r.c1 + Math.max(...grid.map((x) => x.length)) - 1 }, true, true);
+  }
+  /** 从格子里去掉一张图的嵌入 ![[文件名]]（带 |100 这类尺寸的也算），前后多出的空格一起收掉 */
+  removeEmbed(p, link) {
+    const cur = shownText(this.table, p.r, p.c);
+    const esc2 = link.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const next = cur.replace(new RegExp(`[ \\t]?!\\[\\[${esc2}(?:\\|[^\\]]*)?\\]\\]`), "").trim();
+    if (next !== cur) this.apply(editCell(this.table, p.r, p.c, next), p);
+  }
+  /** 双击格子里的图片：盖住整个窗口看原图，点一下或按 Esc 关掉 */
+  openLightbox(img) {
+    const doc = this.root.ownerDocument;
+    if (doc.querySelector(".ggt-lightbox")) return;
+    const box = doc.body.appendChild(doc.createElement("div"));
+    box.className = "ggt-lightbox";
+    const big = box.appendChild(doc.createElement("img"));
+    big.src = img.currentSrc || img.src;
+    big.alt = img.alt;
+    const close = () => {
+      box.remove();
+      doc.removeEventListener("keydown", onKey, true);
+    };
+    const onKey = (ev) => {
+      if (ev.key !== "Escape") return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      close();
+    };
+    box.addEventListener("click", close);
+    doc.addEventListener("keydown", onKey, true);
+  }
+  /** 图片存好以后插进格子：编辑中插在光标处；只是选中就接在格子原有内容后面（不覆盖） */
+  async pasteImage(file) {
+    const p = this.sel;
+    const editing = this.editing;
+    const from = editing ? this.input.selectionStart : 0;
+    const to = editing ? this.input.selectionEnd : 0;
+    const md = await this.host.saveImage?.(file);
+    if (!md || this.destroyed || !p) return;
+    if (editing && this.editing && this.sel?.r === p.r && this.sel.c === p.c) {
+      const v = this.input.value;
+      this.input.value = v.slice(0, from) + md + v.slice(to);
+      this.input.setSelectionRange(from + md.length, from + md.length);
+      this.autosize();
+      return;
+    }
+    if (this.editing) this.commit();
+    const cur = shownText(this.table, p.r, p.c);
+    this.apply(editCell(this.table, p.r, p.c, cur.trim() ? `${cur} ${md}` : md), p);
   }
   // ---------- 触屏 ----------
   /**
@@ -3633,6 +4663,7 @@ var TableEditor = class {
   /** 指针离哪条列边线（每列的右边）不到 4 像素，就把调列宽的线放到那里；不在附近就藏起来 */
   placeResizeBar(x, y) {
     const bar = this.resizeBar;
+    bar.classList.remove("is-touch");
     const t2 = this.tableEl.getBoundingClientRect();
     let hit = -1;
     let at = 0;
@@ -3665,16 +4696,43 @@ var TableEditor = class {
     bar.setAttribute("style", `left:${(at - base.left) / k - 4}px;top:${(t2.top - base.top) / k}px;height:${t2.height / k}px`);
     bar.classList.add("is-shown");
   }
+  /**
+   * 触屏上没有「鼠标移到列边线」：点选一格后，在这一列的右边线上放一个能拖的把手（同一根调列宽的线，带个圆点），
+   * 拖动改列宽、双击恢复自动列宽。只在最近一次是用手指点的、选着一格时出现（轻点进了编辑也在，拖之前先保存这一格）
+   */
+  placeTouchResize() {
+    const bar = this.resizeBar;
+    if (this.resize) return;
+    const cell = this.touched && this.sel && !this.isMulti() && !this.host.readonly ? this.cellEl(this.sel) : null;
+    if (!cell || !cell.isConnected) {
+      if (bar.classList.contains("is-touch")) bar.classList.remove("is-shown", "is-touch");
+      return;
+    }
+    const c = Number(cell.dataset.c) + (cell.colSpan || 1) - 1;
+    const col = this.tableEl.querySelectorAll("col")[c];
+    if (!col) return;
+    const t2 = this.tableEl.getBoundingClientRect();
+    const base = this.root.getBoundingClientRect();
+    const k = this.scale();
+    const at = col.getBoundingClientRect().right;
+    bar.dataset.c = String(c);
+    bar.setAttribute("style", `left:${(at - base.left) / k - 4}px;top:${(t2.top - base.top) / k}px;height:${t2.height / k}px`);
+    const cb = cell.getBoundingClientRect();
+    bar.style.setProperty("--ggt-grip-y", `${(cb.top + cb.height / 2 - t2.top) / k}px`);
+    bar.classList.add("is-shown", "is-touch");
+  }
   startResize(ev, handle) {
     if (this.host.readonly) return;
     ev.preventDefault();
     ev.stopPropagation();
+    if (this.editing) this.commit();
     const c = Number(handle.dataset.c);
     const col = this.tableEl.querySelectorAll("col")[c];
     if (!col || Number.isNaN(c)) return;
     const k = this.scale();
-    this.resize = { c, startX: ev.clientX, startW: col.getBoundingClientRect().width / k, col };
+    this.resize = { c, startX: ev.clientX, startW: col.getBoundingClientRect().width / k, col, fitW: this.root.classList.contains("is-fit") ? parseFloat(this.tableEl.style.width) || 0 : 0, scale: this.fitScale };
     const startLeft = parseFloat(handle.style.left) || 0;
+    const grip = handle.style.getPropertyValue("--ggt-grip-y");
     handle.classList.add("is-active");
     this.root.classList.add("is-resizing");
     try {
@@ -3686,9 +4744,11 @@ var TableEditor = class {
       if (!r) return;
       const w = Math.max(40, Math.round(r.startW + (e.clientX - r.startX) / k));
       r.col.style.width = `${w}px`;
+      if (r.fitW) this.tableEl.style.width = `${r.fitW - r.startW + w}px`;
       const tr = this.tableEl.getBoundingClientRect();
       const base = this.root.getBoundingClientRect();
       handle.setAttribute("style", `left:${startLeft + (w - r.startW)}px;top:${(tr.top - base.top) / k}px;height:${tr.height / k}px`);
+      if (grip) handle.style.setProperty("--ggt-grip-y", grip);
       this.placeHandles();
     };
     const up = () => {
@@ -3701,7 +4761,18 @@ var TableEditor = class {
       this.resize = null;
       if (!r) return;
       const w = parseFloat(r.col.style.width);
-      if (Math.abs(w - r.startW) >= 1) this.apply(setWidth(this.table, r.c, w));
+      if (Math.abs(w - r.startW) < 1) {
+        this.fitCols();
+        return;
+      }
+      const fit = this.root.dataset.defFit === "1";
+      const avail = this.availWidth();
+      const wide = fit && avail > 0 && this.tableEl.offsetWidth > avail + 1;
+      if (wide) this.apply(setWide(r.scale !== 1 ? setWidths(this.table, this.colWidths()) : setWidth(this.table, r.c, w), true));
+      else {
+        const n = setWidth(this.table, r.c, Math.round(w / r.scale));
+        this.apply(fit ? setWide(n, false) : n);
+      }
     };
     handle.addEventListener("pointermove", move);
     handle.addEventListener("pointerup", up);
@@ -3788,7 +4859,7 @@ var TableEditor = class {
       if (!dragging) {
         if (this.editing) this.commit();
         this.anchor = row ? { r: p.r, c: 0 } : { r: 0, c: p.c };
-        this.sel = row ? { r: p.r, c: colCount(this.table) - 1 } : { r: rowCount(this.table) - 1, c: p.c };
+        this.sel = row ? { r: p.r, c: colCount(this.table) - 1 } : { r: this.shownRows() - 1, c: p.c };
         this.lineSel = true;
         this.markSel();
         this.input.focus();
@@ -3872,7 +4943,7 @@ var TableEditor = class {
       const el = this.cellEl(q);
       return !!el && el.getBoundingClientRect().left <= vis.left + 1;
     };
-    const rowP = (h && atRowStart(h) ? h : null) ?? lineRow ?? touchSel;
+    const rowP = this.folded() ? null : (h && atRowStart(h) ? h : null) ?? lineRow ?? touchSel;
     const colP = (h && h.r < head ? h : null) ?? lineCol ?? touchSel;
     this.rowHandle.classList.toggle("is-shown", !!rowP);
     this.colHandle.classList.toggle("is-shown", !!colP);
@@ -3933,6 +5004,7 @@ var TableEditor = class {
     const align = (a, title, icon) => ({
       title,
       icon,
+      inline: true,
       checked: tb.align.every((x) => (x ?? "left") === a),
       run: () => keep(alignAll(this.table, a))
     });
@@ -3944,27 +5016,54 @@ var TableEditor = class {
       { title: t("rowSpacing") },
       dens(null),
       ...TABLE_DENSITIES.map((x) => dens(x)),
+      ...this.sizeItems(t("tableFontSize"), tb.meta.fs ?? 1, (v) => keep(setTableFontSize(this.table, v))),
       { separator: true },
+      { title: t("align") },
       align("left", t("alignAllLeft"), "align-left"),
       align("center", t("alignAllCenter"), "align-center"),
       align("right", t("alignAllRight"), "align-right"),
+      ...["top", "middle", "bottom"].map((v) => {
+        const val = v === "top" ? null : v;
+        return {
+          title: t(`vAlignAll_${v}`),
+          icon: V_ICONS[v],
+          inline: true,
+          checked: Array.from({ length: colCount(tb) }, (_, c) => vAlignOf(tb, c)).every((x) => x === val),
+          run: () => keep(vAlignAll(this.table, val))
+        };
+      }),
       { separator: true },
-      { title: t("headerRows") },
+      // 表头行数排成一排（1 2 3），菜单矮一些，矮窗口里不用滚
       ...Array.from({ length: MAX_HEAD_ROWS }, (_, i) => ({
+        chipText: String(i + 1),
+        rowLabel: i === 0 ? t("headerRows") : void 0,
         title: t("headerRowsN").replace("{n}", String(i + 1)),
         checked: headRows(tb) === i + 1,
         disabled: headRows(tb) !== i + 1 && !canSetHead(tb, i + 1),
         run: () => keep(setTableLook(this.table, { head: i + 1 }))
       })),
       { separator: true },
+      {
+        title: t("foldTable"),
+        icon: "chevrons-down-up",
+        checked: tb.meta.fold === 1,
+        disabled: tb.meta.fold !== 1 && rowCount(tb) <= headRows(tb),
+        run: () => {
+          this.localUnfold = false;
+          keep(setFolded(this.table, this.table.meta.fold !== 1));
+        }
+      },
       { title: t("headerColumn"), icon: "panel-left", checked: !!tb.meta.headerCol, run: () => keep(setTableLook(this.table, { headerCol: !this.table.meta.headerCol })) },
       // 冻结是标题列的选项：标题列开着才出现
       ...tb.meta.headerCol ? [{ title: t("freezeHeaderCol"), icon: "pin", checked: tb.meta.freeze === 1, run: () => keep(setTableLook(this.table, { freeze: this.table.meta.freeze !== 1 })) }] : [],
       { separator: true },
       { title: t("distributeCols"), icon: "columns-3", run: () => keep(setWidths(this.table, this.colWidths().map((_, _i, all) => all.reduce((a, b) => a + b, 0) / all.length))) },
-      { title: t("fitWidth"), icon: "move-horizontal", run: () => keep(setWidths(this.table, this.fitWidths())) },
+      { title: t("fitWidth"), icon: "move-horizontal", run: () => keep(setWide(setWidths(this.table, this.fitWidths()), false)) },
       { title: t("autoWidthAll"), icon: "move-horizontal", disabled: !tb.meta.w?.some((x) => x != null), run: () => keep(autoWidthAll(this.table)) },
       { title: t("clearAllBg"), icon: "paintbrush", disabled: !Object.keys(tb.meta.bg ?? {}).length && !Object.keys(tb.meta.fg ?? {}).length, run: () => keep(clearAllBg(this.table)) },
+      { separator: true },
+      { title: t("copyTable"), icon: "copy", run: () => this.copyWhole(false) },
+      { title: t("copyMarkdown"), icon: "file-code", run: () => this.copyWhole(true) },
       ...this.host.indentTable ? [
         { separator: true },
         ...[1, -1].map((dir) => ({
@@ -3995,6 +5094,43 @@ var TableEditor = class {
   colWidths() {
     const k = this.scale();
     return Array.from(this.tableEl.querySelectorAll("col")).map((c) => c.getBoundingClientRect().width / k);
+  }
+  /**
+   * 设置「列宽按比例缩放」（#10）：设过列宽的表格比正文宽时，各列按现在的比例缩到正好放下，不出横向滚动条。
+   * 只改显示（col 的 style），文件里还是原来的像素列宽。每列最窄 MIN_FIT_COL，列太多缩不下的照样横向滚动
+   */
+  fitCols() {
+    const tb = this.table;
+    const t2 = this.tableEl;
+    const cols = Array.from(t2.querySelectorAll("colgroup > col"));
+    if (this.fitScale !== 1 || this.root.classList.contains("is-fit")) {
+      cols.forEach((col, c) => {
+        const w = widthOf(tb, c);
+        col.style.width = w ? `${w}px` : "";
+      });
+      t2.style.removeProperty("width");
+      this.root.classList.remove("is-fit");
+      this.fitScale = 1;
+    }
+    if (this.root.dataset.defFit !== "1" || tb.meta.wide || !tb.meta.w?.some((x) => x != null) || this.resize) return;
+    const avail = this.availWidth();
+    const natural = t2.offsetWidth;
+    if (avail <= 0 || !natural || natural <= avail + 1) return;
+    const k = this.scale();
+    const ws = cols.map((c) => c.getBoundingClientRect().width / k);
+    const sum = ws.reduce((a, b) => a + b, 0);
+    if (!sum) return;
+    const f = avail / sum;
+    const px = ws.map((w) => Math.max(MIN_FIT_COL, Math.floor(w * f)));
+    cols.forEach((col, c) => col.style.width = `${px[c]}px`);
+    t2.style.width = `${px.reduce((a, b) => a + b, 0)}px`;
+    this.root.classList.add("is-fit");
+    this.fitScale = f;
+  }
+  /** 正文给表格的宽度（量外层，表格自己比它宽时就要横向滚动） */
+  availWidth() {
+    const host = this.root.parentElement;
+    return host ? host.clientWidth - 2 : 0;
   }
   /** 撑满页面：按现在各列的比例放大 / 缩小到正文的可用宽度 */
   fitWidths() {
@@ -4063,6 +5199,10 @@ var TableEditor = class {
       { separator: true },
       ...this.statusColorItems(p),
       ...this.colorItems(cells),
+      ...(() => {
+        const sizes = new Set(cells.map((q) => fontSizeOf(tb, q.r, q.c) ?? 1));
+        return this.sizeItems(t("fontSize"), sizes.size === 1 ? [...sizes][0] : void 0, (v) => this.applyKeepRange(setFontSize(this.table, cells, v)));
+      })(),
       { separator: true },
       { title: CHECK_RE.test(tb.cells[p.r][p.c]) ? t("removeCheckbox") : t("addCheckbox"), icon: "square-check", disabled: multi, run: () => this.apply(setCell(tb, p.r, p.c, CHECK_RE.test(tb.cells[p.r][p.c]) ? tb.cells[p.r][p.c].replace(CHECK_RE, "").trimStart() : `[ ] ${tb.cells[p.r][p.c]}`.trimEnd()), p) },
       { title: t("clearCell"), icon: "eraser", disabled: !cells.some((c) => tb.cells[c.r][c.c]), run: () => this.apply(clearCells(tb, cells), this.sel ?? p) },
@@ -4153,6 +5293,7 @@ var TableEditor = class {
     const item = (a, title, icon) => ({
       title,
       icon,
+      inline: true,
       checked: one === a,
       run: () => {
         const k = keep();
@@ -4165,7 +5306,36 @@ var TableEditor = class {
         }
       }
     });
-    return [item("left", t("alignLeft"), "align-left"), item("center", t("alignCenter"), "align-center"), item("right", t("alignRight"), "align-right")];
+    const vCur = new Set(cols.map((x) => vAlignOf(this.table, x)));
+    const vOne = vCur.size === 1 ? [...vCur][0] : void 0;
+    const vItem = (v) => {
+      const val = v === "top" ? null : v;
+      return {
+        title: t(`vAlign_${v}`),
+        icon: V_ICONS[v],
+        inline: true,
+        checked: vOne === val,
+        run: () => {
+          const k = keep();
+          let next = this.table;
+          for (const x of cols) next = setVAlign(next, x, val);
+          this.apply(next, k.sel ?? void 0);
+          if (k.anchor) {
+            this.anchor = k.anchor;
+            this.markSel();
+          }
+        }
+      };
+    };
+    return [
+      { title: t("align") },
+      item("left", t("alignLeft"), "align-left"),
+      item("center", t("alignCenter"), "align-center"),
+      item("right", t("alignRight"), "align-right"),
+      vItem("top"),
+      vItem("middle"),
+      vItem("bottom")
+    ];
   }
   /** 底色：一排色块，标题是「底色」 */
   colorItems(cells) {
@@ -4182,6 +5352,11 @@ var TableEditor = class {
       ...CELL_COLORS.map((color) => ({ swatch: color, textSwatch: true, title: t(color), checked: oneFg === color, run: () => this.applyKeepRange(setFg(this.table, cells, color)) }))
     ];
   }
+  /** 文字大小：一排大小不同的「A」。current 是现在的倍数（几格不一样时是 undefined，哪个都不勾） */
+  sizeItems(title, current, set) {
+    const names = ["fontSize_xs", "fontSize_s", "fontSize_m", "fontSize_l", "fontSize_xl"];
+    return FONT_SIZES.map((v, i) => ({ sizeChip: v, rowLabel: i === 0 ? title : void 0, title: t(names[i]), checked: current === v, run: () => set(v === 1 ? null : v) }));
+  }
   /** 自己画的弹出菜单：样式统一，色块能排成一行，手机上也好点 */
   openMenu(items, x, y) {
     this.closePopover();
@@ -4196,8 +5371,32 @@ var TableEditor = class {
         if (pop.lastElementChild && !pop.lastElementChild.classList.contains("ggt-menu-sep")) pop.appendChild(doc.createElement("div")).className = "ggt-menu-sep";
         continue;
       }
+      if (item.sizeChip || item.chipText) {
+        if (!swatches || !swatches.classList.contains("ggt-menu-sizes")) {
+          swatches = pop.appendChild(doc.createElement("div"));
+          swatches.className = "ggt-menu-sizes";
+          if (item.rowLabel) {
+            const label = swatches.appendChild(doc.createElement("span"));
+            label.className = "ggt-menu-sizes-label";
+            label.textContent = item.rowLabel;
+          }
+        }
+        const b2 = swatches.appendChild(doc.createElement("button"));
+        b2.type = "button";
+        b2.className = "ggt-size-chip" + (item.checked ? " is-checked" : "");
+        b2.textContent = item.chipText ?? "A";
+        if (item.sizeChip) b2.setCssProps({ "--ggt-chip": String(item.sizeChip) });
+        b2.disabled = !!item.disabled;
+        b2.setAttribute("aria-label", item.title ?? "");
+        b2.title = item.title ?? "";
+        b2.addEventListener("click", () => {
+          this.closePopover();
+          item.run?.();
+        });
+        continue;
+      }
       if (item.swatch) {
-        if (!swatches) {
+        if (!swatches || !swatches.classList.contains("ggt-menu-swatches")) {
           swatches = pop.appendChild(doc.createElement("div"));
           swatches.className = "ggt-menu-swatches";
         }
@@ -4216,6 +5415,29 @@ var TableEditor = class {
         });
         continue;
       }
+      if (item.inline && item.run) {
+        if (!swatches || !swatches.classList.contains("ggt-menu-icons")) {
+          swatches = pop.appendChild(doc.createElement("div"));
+          swatches.className = "ggt-menu-icons";
+        }
+        if (item.inline && swatches.childElementCount && swatches.lastElementChild.dataset.group !== (item.icon?.startsWith("align-vertical") ? "v" : "h")) swatches.appendChild(doc.createElement("span")).className = "ggt-menu-icons-sep";
+        const b2 = swatches.appendChild(doc.createElement("button"));
+        b2.type = "button";
+        b2.className = "ggt-menu-item is-icon" + (item.checked ? " is-checked" : "");
+        b2.dataset.group = item.icon?.startsWith("align-vertical") ? "v" : "h";
+        b2.disabled = !!item.disabled;
+        b2.setAttribute("role", "menuitem");
+        b2.setAttribute("aria-label", item.title ?? "");
+        b2.title = item.title ?? "";
+        if (item.icon && this.host.setIcon) this.host.setIcon(b2, item.icon);
+        else b2.textContent = (item.title ?? "").slice(0, 2);
+        b2.addEventListener("click", () => {
+          this.closePopover();
+          item.run?.();
+        });
+        continue;
+      }
+      if (swatches?.classList.contains("ggt-menu-icons")) swatches = null;
       if (!item.run) {
         swatches = null;
         const label = pop.appendChild(doc.createElement("div"));
@@ -4231,6 +5453,7 @@ var TableEditor = class {
       const ic = b.appendChild(doc.createElement("span"));
       ic.className = "ggt-menu-icon";
       if (item.icon && this.host.setIcon) this.host.setIcon(ic, item.icon);
+      else if (item.iconNode) ic.appendChild(item.iconNode.cloneNode(true));
       b.appendChild(doc.createElement("span")).textContent = item.title ?? "";
       if (item.checked) {
         const ck = b.appendChild(doc.createElement("span"));
@@ -4263,6 +5486,44 @@ var TableEditor = class {
     this.popover = null;
   }
 };
+var searchMarkLayer = null;
+var searchMarkCell = null;
+function clearSearchMark() {
+  window.CSS?.highlights?.delete("ggt-search");
+  searchMarkLayer?.remove();
+  searchMarkLayer = null;
+  searchMarkCell?.classList.remove("is-search-hit");
+  searchMarkCell = null;
+}
+function findTextRange(root, text, k) {
+  const doc = root.ownerDocument;
+  const walker = doc.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  let all = "";
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    nodes.push(n);
+    all += n.data;
+  }
+  const hits = [];
+  for (let i = all.indexOf(text); i >= 0; i = all.indexOf(text, i + text.length)) hits.push(i);
+  if (!hits.length) return null;
+  const start = hits[Math.min(k, hits.length - 1)];
+  const at = (pos) => {
+    let acc = 0;
+    for (const n of nodes) {
+      if (pos <= acc + n.data.length) return [n, pos - acc];
+      acc += n.data.length;
+    }
+    const last = nodes[nodes.length - 1];
+    return [last, last.data.length];
+  };
+  const range = doc.createRange();
+  const [sn, so] = at(start);
+  const [en2, eo] = at(start + text.length);
+  range.setStart(sn, so);
+  range.setEnd(en2, eo);
+  return range;
+}
 function htmlCellText(el) {
   const parts = [];
   const walk = (n) => {
@@ -4276,6 +5537,24 @@ function htmlCellText(el) {
   };
   walk(el);
   return parts.join("").replace(/\u00a0/g, " ").trim();
+}
+function onWhite(color) {
+  const m = /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:\s*[,/]\s*([\d.]+%?))?\s*\)/.exec(color);
+  if (!m) return /transparent/.test(color) ? null : color;
+  let a = m[4] === void 0 ? 1 : parseFloat(m[4]);
+  if (m[4]?.endsWith("%")) a /= 100;
+  if (a <= 0) return null;
+  const mix = (v) => Math.round(parseFloat(v) * a + 255 * (1 - a));
+  return `rgb(${mix(m[1])}, ${mix(m[2])}, ${mix(m[3])})`;
+}
+function imageFrom(data) {
+  for (const f of Array.from(data.files ?? [])) if (f.type.startsWith("image/")) return f;
+  for (const it of Array.from(data.items ?? [])) {
+    if (it.kind !== "file" || !it.type.startsWith("image/")) continue;
+    const f = it.getAsFile();
+    if (f) return f;
+  }
+  return null;
 }
 function gridFromClipboard(data, doc) {
   const html = data.getData("text/html");
@@ -4514,6 +5793,17 @@ function pastedGrid(data, doc) {
   const width2 = Math.max(...grid.map((r) => r.length));
   return width2 >= 2 ? grid : null;
 }
+function pastedSource(data) {
+  const html = data.getData("text/html");
+  if (!html || !/data-ggt="1"/.test(html)) return null;
+  const lines = sourceFromHTML(html);
+  if (!lines) return null;
+  const last = lines[lines.length - 1];
+  const meta = parseMetaLine(last);
+  const body = meta ? lines.slice(0, -1) : lines;
+  const t2 = parseTable(body, meta);
+  return t2 && t2.cells.length >= 2 ? lines : null;
+}
 function gridToTable(grid) {
   const width2 = Math.max(...grid.map((r) => r.length));
   const t2 = emptyTable(grid.length, width2);
@@ -4574,6 +5864,13 @@ var import_obsidian3 = require("obsidian");
 
 // src/obsidian/keys.ts
 var import_obsidian2 = require("obsidian");
+var FORMAT_COMMANDS = {
+  "editor:toggle-bold": "bold",
+  "editor:toggle-italics": "italic",
+  "editor:toggle-strikethrough": "strike",
+  "editor:toggle-highlight": "highlight",
+  "editor:insert-link": "link"
+};
 function editorHotkeys(app) {
   const a = app;
   const hm = a.hotkeyManager;
@@ -4582,7 +5879,7 @@ function editorHotkeys(app) {
   for (const c of cmds) {
     if (!c.editorCallback && !c.editorCheckCallback) continue;
     const keys = hm?.getHotkeys(c.id) ?? hm?.getDefaultHotkeys(c.id) ?? [];
-    out.push(...keys);
+    out.push(...keys.map((k) => ({ ...k, command: c.id })));
   }
   return out;
 }
@@ -4606,8 +5903,9 @@ function guardEditorHotkeys(app, editor) {
       const id = [...hk.modifiers].sort().join("+") + "+" + hk.key.toLowerCase();
       if (seen.has(id)) continue;
       seen.add(id);
+      const format = hk.command ? FORMAT_COMMANDS[hk.command] : void 0;
       scope.register(hk.modifiers, hk.key, (ev) => {
-        editor.formatKey(ev);
+        if (!editor.formatKey(ev) && format) editor.formatCommand(format);
         return false;
       });
     }
@@ -4637,42 +5935,189 @@ var DEFAULT_SETTINGS = {
   density: "comfortable",
   crosshair: "off",
   formatBar: false,
-  richEdit: false
+  richEdit: false,
+  readingReadonly: true,
+  fullWidth: false,
+  fitCols: true,
+  strictStyle: true,
+  cellPadX: 10
 };
-function makeFactory(app, settings) {
+function linkContextMenu(app, menu, linktext, sourcePath) {
+  const ws = app.workspace;
+  ws.handleLinkContextMenu?.(menu, linktext, sourcePath);
+}
+function foreignMenuItems(menu) {
+  const raw = menu.items;
+  if (!Array.isArray(raw)) return [];
+  const out = [];
+  for (const r of raw) {
+    const title = r?.titleEl?.textContent?.trim();
+    if (!title || r.submenu || typeof r.handleEvent !== "function" || r.dom?.hasClass("is-label")) continue;
+    out.push({
+      title,
+      iconNode: r.iconEl?.firstElementChild ?? void 0,
+      disabled: !!r.disabled,
+      checked: !!r.checked,
+      danger: !!r.dom?.hasClass("is-warning"),
+      run: () => r.handleEvent?.(new MouseEvent("click"))
+    });
+  }
+  return out;
+}
+async function copyImage(img) {
+  try {
+    const doc = img.ownerDocument;
+    const win = doc.defaultView ?? window;
+    const blob = await (await fetch(img.currentSrc || img.src)).blob();
+    let png = blob;
+    if (blob.type !== "image/png") {
+      const bmp = await win.createImageBitmap(blob);
+      const canvas = doc.createElement("canvas");
+      canvas.width = bmp.width;
+      canvas.height = bmp.height;
+      canvas.getContext("2d")?.drawImage(bmp, 0, 0);
+      png = await new Promise((ok, fail) => canvas.toBlob((b) => b ? ok(b) : fail(new Error("toBlob")), "image/png"));
+    }
+    await win.navigator.clipboard.write([new win.ClipboardItem({ "image/png": png })]);
+    return true;
+  } catch (e) {
+    new import_obsidian3.Notice(e.message);
+    return false;
+  }
+}
+var shownMenu = null;
+function keepMenu(menu) {
+  shownMenu = menu;
+  menu.onHide(() => {
+    if (shownMenu === menu) shownMenu = null;
+  });
+}
+function stamp(d = /* @__PURE__ */ new Date()) {
+  const p = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+}
+function makeFactory(app, settings, persist = () => {
+}) {
+  const colorMemory = {
+    last: (k) => settings().colorMemory?.last?.[k] ?? null,
+    recent: (k) => settings().colorMemory?.recent?.[k] ?? [],
+    remember: (k, c) => {
+      var _a;
+      const m = (_a = settings()).colorMemory ?? (_a.colorMemory = {});
+      m.last = { ...m.last ?? {}, [k]: c };
+      m.recent = { ...m.recent ?? {}, [k]: pushRecent(m.recent?.[k] ?? [], c) };
+      persist();
+    }
+  };
   return {
     enabled: () => settings().enabled,
-    host: (sourcePath, owner, own) => ({
-      renderMarkdown: (el, md) => {
-        void import_obsidian3.MarkdownRenderer.render(app, md, el, sourcePath, owner);
-      },
-      setIcon: (el, name) => (0, import_obsidian3.setIcon)(el, name),
-      richEdit: () => settings().richEdit,
-      formatColors: () => settings().formatBar ? { text: FORMAT_TEXT_COLORS, highlight: FORMAT_HIGHLIGHT_COLORS } : null,
-      // [[ 补全：笔记按名字找（名字开头的排前面），插的是 Obsidian 生成的最短链接
-      suggestLinks: (query) => {
-        const q = query.toLowerCase();
-        const files = app.vault.getFiles().filter((f) => f.basename.toLowerCase().includes(q));
-        files.sort((a, b) => Number(b.basename.toLowerCase().startsWith(q)) - Number(a.basename.toLowerCase().startsWith(q)) || a.basename.length - b.basename.length);
-        return files.slice(0, 12).map((f) => {
-          const text = app.metadataCache.fileToLinktext(f, sourcePath, true);
-          return text;
-        });
-      },
-      // # 补全：库里已有的标签
-      suggestTags: (query) => {
-        const q = query.toLowerCase();
-        const all = Object.keys(app.metadataCache.getTags?.() ?? {}).map((x) => x.replace(/^#/, ""));
-        return all.filter((x) => x.toLowerCase().includes(q)).sort((a, b) => Number(b.toLowerCase().startsWith(q)) - Number(a.toLowerCase().startsWith(q)) || a.length - b.length).slice(0, 12);
-      },
-      ...own
-    }),
+    readingReadonly: () => settings().readingReadonly,
+    host: (sourcePath, owner, own) => {
+      const hoverParent = { hoverPopover: null };
+      return {
+        renderMarkdown: (el, md) => {
+          void import_obsidian3.MarkdownRenderer.render(app, md, el, sourcePath, owner);
+        },
+        setIcon: (el, name) => (0, import_obsidian3.setIcon)(el, name),
+        notice: (message) => new import_obsidian3.Notice(message),
+        // 格子里的双链：照 Obsidian 的习惯，⌘/Ctrl 点在新标签打开，⌘⌥ 点在右侧分屏
+        openLink: (href, ev) => {
+          void app.workspace.openLinkText(href, sourcePath, import_obsidian3.Keymap.isModEvent(ev));
+        },
+        // 悬停预览：和笔记里的链接一样（实时预览里要按住 ⌘/Ctrl，按「页面预览」设置）
+        hoverLink: (event, linktext, targetEl) => {
+          app.workspace.trigger("hover-link", {
+            event,
+            source: "editor",
+            hoverParent,
+            targetEl,
+            linktext,
+            sourcePath
+          });
+        },
+        // 右键格子里的双链：和笔记里一样的原生菜单（新标签页打开、重命名、移动、在访达中显示……，别的插件加的项也在）
+        // 用 Menu.forEvent：这次右键只有一个菜单，别的插件（比如 adjustable-media）往同一个右键事件里加的项也进这个菜单。
+        // 自己 new Menu() 的话，别的插件会另弹一个菜单把这个顶掉，开着「原生菜单」时就什么都看不到（#9）。它会在下一刻自己弹出来
+        linkMenu: (ev, href) => {
+          const menu = import_obsidian3.Menu.forEvent(ev);
+          keepMenu(menu);
+          linkContextMenu(app, menu, href, sourcePath);
+        },
+        // 右键格子里的图片：复制图片 + 原生的文件菜单 + 删除图片（删文件前用 Obsidian 自己的确认框，删了再把格子里的嵌入去掉）
+        imageMenu: (ev, img, link, remove) => {
+          const menu = import_obsidian3.Menu.forEvent(ev);
+          keepMenu(menu);
+          menu.addItem(
+            (item) => item.setSection("action").setTitle(t("copyImage")).setIcon("copy").onClick(() => void copyImage(img).then((ok) => ok && new import_obsidian3.Notice(t("copiedImage"))))
+          );
+          const file = link ? app.metadataCache.getFirstLinkpathDest(link, sourcePath) : null;
+          if (link && file) linkContextMenu(app, menu, link, sourcePath);
+          if (file && remove)
+            menu.addItem(
+              (item) => item.setSection("danger").setTitle(t("deleteImage")).setIcon("trash-2").setWarning(true).onClick(async () => {
+                if (await app.fileManager.promptForDeletion(file)) remove();
+              })
+            );
+        },
+        dismissMenus: () => shownMenu?.hide(),
+        // 右键普通格子：表格弹的是自己画的菜单。别的插件用 Menu.forEvent 往这次右键里加项，Obsidian 会另弹一个只有那几项的菜单
+        // （开着「原生菜单」时还盖在表格菜单上面，#9）。这里先认领这次右键的菜单，不让它弹，把里面的项交给表格菜单
+        eventMenuItems: (ev, take) => {
+          const menu = import_obsidian3.Menu.forEvent(ev);
+          menu.showAtMouseEvent = () => {
+            take(foreignMenuItems(menu));
+            return menu;
+          };
+        },
+        // 粘贴的图片按 Obsidian 的附件设置存，名字和 Obsidian 自己粘贴的一样
+        saveImage: async (file) => {
+          try {
+            const ext = (file.type.split("/")[1] || "png").replace("jpeg", "jpg").replace(/\+.*$/, "");
+            const name = file.name && file.name !== "image.png" ? file.name : `Pasted image ${stamp()}.${ext}`;
+            const path = await app.fileManager.getAvailablePathForAttachment(name, sourcePath);
+            const saved = await app.vault.createBinary(path, await file.arrayBuffer());
+            return `![[${app.metadataCache.fileToLinktext(saved, sourcePath)}]]`;
+          } catch (e) {
+            new import_obsidian3.Notice(e.message);
+            return null;
+          }
+        },
+        richEdit: () => settings().richEdit,
+        formatColors: () => settings().formatBar ? { text: FORMAT_TEXT_COLORS, highlight: FORMAT_HIGHLIGHT_COLORS } : null,
+        colorMemory: () => colorMemory,
+        // [[ 补全：笔记按名字找（名字开头的排前面），插的是 Obsidian 生成的最短链接
+        suggestLinks: (query) => {
+          const q = query.toLowerCase();
+          const files = app.vault.getFiles().filter((f) => f.basename.toLowerCase().includes(q));
+          files.sort((a, b) => Number(b.basename.toLowerCase().startsWith(q)) - Number(a.basename.toLowerCase().startsWith(q)) || a.basename.length - b.basename.length);
+          return files.slice(0, 12).map((f) => {
+            const text = app.metadataCache.fileToLinktext(f, sourcePath, true);
+            return text;
+          });
+        },
+        // # 补全：库里已有的标签
+        suggestTags: (query) => {
+          const q = query.toLowerCase();
+          const all = Object.keys(
+            app.metadataCache.getTags?.() ?? {}
+          ).map((x) => x.replace(/^#/, ""));
+          return all.filter((x) => x.toLowerCase().includes(q)).sort((a, b) => Number(b.toLowerCase().startsWith(q)) - Number(a.toLowerCase().startsWith(q)) || a.length - b.length).slice(0, 12);
+        },
+        ...own
+      };
+    },
     attach: (editor) => guardEditorHotkeys(app, editor),
     // 设置里的是默认值：表格自己在注释里定了样式就用表格的（编辑器收到 ggt-restyle 后重新套）
     style: (root) => {
       root.dataset.defPreset = settings().preset;
       root.dataset.defDensity = settings().density;
       root.dataset.cross = settings().crosshair;
+      root.dataset.defFull = settings().fullWidth ? "1" : "";
+      root.dataset.defFit = settings().fitCols ? "1" : "";
+      root.dataset.defStrict = settings().strictStyle ? "1" : "";
+      const pad = settings().cellPadX;
+      if (pad !== 10 && [4, 6, 8].includes(pad)) root.style.setProperty("--ggt-pad-user", `${pad}px`);
+      else root.style.removeProperty("--ggt-pad-user");
       root.dispatchEvent(new Event("ggt-restyle"));
     }
   };
@@ -4867,6 +6312,64 @@ var TableWidget = class extends import_view3.WidgetType {
     return 38 * this.table.cells.length + 40;
   }
 };
+var revealEffect = import_state3.StateEffect.define();
+function cellOfRange(doc, tableFrom, from, to) {
+  const first = doc.lineAt(tableFrom).number;
+  const line = doc.lineAt(from);
+  if (to > line.to) return null;
+  const idx = line.number - first;
+  if (idx === 1) return null;
+  const r = idx === 0 ? 0 : idx - 1;
+  const t2 = line.text;
+  const off = from - line.from;
+  const lead = t2.length - t2.trimStart().length;
+  let pipes = 0;
+  let cellStart = lead;
+  for (let i = lead; i < off; i++) {
+    if (t2[i] === "\\") {
+      i++;
+      continue;
+    }
+    if (t2[i] === "|") {
+      pipes++;
+      cellStart = i + 1;
+    }
+  }
+  for (let i = off; i < to - line.from; i++) if (t2[i] === "|" && t2[i - 1] !== "\\") return null;
+  const c = t2.trimStart().startsWith("|") ? pipes - 1 : pipes;
+  if (c < 0) return null;
+  const text = doc.sliceString(from, to);
+  const before = t2.slice(cellStart, off);
+  let k = 0;
+  for (let i = before.indexOf(text); i >= 0; i = before.indexOf(text, i + text.length)) k++;
+  return { r, c, text, k };
+}
+function findBarOpen(view) {
+  const box = view.dom.closest(".workspace-leaf-content")?.querySelector(".document-search-container");
+  return !!box && box.offsetParent !== null;
+}
+function findBarMatch(view, tables) {
+  if (!tables || tables.size === 0) return null;
+  const want = findBarOpen(view) ? ["obsidian-search-match-highlight", "is-flashing"] : ["is-flashing"];
+  const sources = view.state.facet(import_view3.EditorView.decorations).map((d) => typeof d === "function" ? d(view) : d);
+  let out = null;
+  tables.between(0, view.state.doc.length, (tFrom, tTo, value) => {
+    if (!value.spec.widget) return void 0;
+    for (const set of sources) {
+      set.between(tFrom, tTo, (from, to, d) => {
+        const cls = d.spec.class ?? "";
+        if (from >= tFrom && to <= tTo && to > from && want.some((w) => cls.split(/\s+/).includes(w))) {
+          out = { tableFrom: tFrom, from, to };
+          return false;
+        }
+        return void 0;
+      });
+      if (out) return false;
+    }
+    return void 0;
+  });
+  return out;
+}
 function blockAt(view, dom) {
   let pos;
   try {
@@ -4963,6 +6466,17 @@ function livePreviewTables(factory) {
       let moved = false;
       let append = false;
       const pointer = !tr.docChanged && tr.isUserEvent("select.pointer");
+      let reveal = null;
+      const main = tr.state.selection.main;
+      if (!tr.docChanged && !main.empty && !tr.annotation(import_state3.Transaction.userEvent)) {
+        deco.between(main.from, main.from, (from, to, value) => {
+          if (value.spec.widget && main.from >= from && main.to <= to) {
+            reveal = { tableFrom: from, from: main.from, to: main.to };
+            return false;
+          }
+          return void 0;
+        });
+      }
       const ranges = tr.state.selection.ranges.map((r) => {
         let head = r.head;
         let anchor = r.anchor;
@@ -5011,7 +6525,7 @@ function livePreviewTables(factory) {
       return {
         changes: tr.changes,
         selection: import_state3.EditorSelection.create(ranges, tr.state.selection.mainIndex),
-        effects: tr.effects,
+        effects: reveal ? [...tr.effects, revealEffect.of(reveal)] : tr.effects,
         scrollIntoView: tr.scrollIntoView,
         annotations: tr.annotation(import_state3.Transaction.userEvent) ? [import_state3.Transaction.userEvent.of(tr.annotation(import_state3.Transaction.userEvent))] : []
       };
@@ -5049,7 +6563,42 @@ function livePreviewTables(factory) {
       return tr;
     })
   );
-  return [field, keepCursorOut, blockReformat];
+  let shown = "";
+  let fromBar = false;
+  clearSearchMark();
+  const revealListener = import_view3.EditorView.updateListener.of((u) => {
+    let hit = null;
+    for (const tr of u.transactions) for (const e of tr.effects) if (e.is(revealEffect)) hit = e.value;
+    const bar = findBarOpen(u.view);
+    if (!hit) hit = findBarMatch(u.view, u.state.field(field, false));
+    if (!hit) {
+      if (shown && (u.selectionSet || u.docChanged || bar || fromBar)) {
+        shown = "";
+        clearSearchMark();
+      }
+      return;
+    }
+    const key = `${hit.from}:${hit.to}`;
+    if (key === shown && !u.docChanged) return;
+    shown = key;
+    fromBar = bar;
+    const where = cellOfRange(u.state.doc, hit.tableFrom, hit.from, hit.to);
+    if (!where) return;
+    const view = u.view;
+    const at = hit.tableFrom;
+    view.dom.win.requestAnimationFrame(() => {
+      let node = null;
+      try {
+        node = view.domAtPos(at + 1).node;
+      } catch {
+        return;
+      }
+      const el = node.instanceOf(HTMLElement) ? node : node.parentElement;
+      const wrap = el?.closest(".ggt-lp") ?? el?.querySelector(".ggt-lp") ?? null;
+      wrap?.ggtEditor?.showMatch(where.r, where.c, where.text, where.k);
+    });
+  });
+  return [field, keepCursorOut, blockReformat, revealListener];
 }
 function parseAt(doc, from, to) {
   const a = doc.lineAt(Math.max(0, Math.min(from, doc.length))).number;
@@ -5138,7 +6687,7 @@ function domSize(tableEl) {
   const rows = Array.from(tableEl.rows);
   return [rows.length, rows[0]?.cells.length ?? 0];
 }
-async function exportProcessor(app, factory, el, ctx) {
+async function exportProcessor(app, factory, el, ctx, strict = false) {
   const file = app.vault.getAbstractFileByPath(ctx.sourcePath);
   if (!(file instanceof import_obsidian5.TFile)) return;
   const tables = Array.from(el.querySelectorAll("table")).filter(
@@ -5150,21 +6699,27 @@ async function exportProcessor(app, factory, el, ctx) {
   const promises = ctx.promises;
   const local = [];
   const sized = [];
+  const pairs2 = [];
   let bi = 0;
   for (const tableEl of tables) {
     const [rows, cols] = domSize(tableEl);
     let hit = -1;
     for (let j = bi; j < blocks.length; j++) {
       const t2 = blockTable(lines, blocks[j]);
-      if (t2 && t2.cells.length === rows && (t2.cells[0]?.length ?? 0) === cols) {
+      if (t2 && t2.cells.length === rows && (t2.cells[0]?.length ?? 0) === cols && (!strict || headerLooksSame(tableEl, t2))) {
         hit = j;
         break;
       }
     }
-    if (hit < 0) continue;
-    const table = blockTable(lines, blocks[hit]);
+    const table = hit < 0 ? null : blockTable(lines, blocks[hit]);
+    if (!table) {
+      if (strict) return;
+      continue;
+    }
     bi = hit + 1;
-    if (!table) continue;
+    pairs2.push([tableEl, table]);
+  }
+  for (const [tableEl, table] of pairs2) {
     const holder = createDiv({ cls: "ggt-reading" });
     tableEl.replaceWith(holder);
     const child = new TableChild(holder);
@@ -5182,7 +6737,10 @@ async function exportProcessor(app, factory, el, ctx) {
     const editor = new TableEditor(holder, table, host);
     child.editor = editor;
     factory.style(editor.root);
-    if (table.meta.w?.some((w) => w)) sized.push(editor);
+    if (table.meta.w?.some((w) => w)) {
+      if (strict) fitStoredWidths(editor.root, table.meta.w);
+      else sized.push(editor);
+    }
   }
   if (!sized.length) return;
   await Promise.all(local);
@@ -5204,12 +6762,52 @@ function fitWidths(root) {
   cols.forEach((col, c) => col.setCssStyles({ width: `${(widths2[c] / total * 100).toFixed(3)}%` }));
   tableEl.setCssStyles({ tableLayout: "fixed", width: `min(100%, ${Math.ceil(total)}px)` });
 }
+var squash2 = (s) => s.replace(/\s+/g, "");
+function headerLooksSame(tableEl, table) {
+  const head = tableEl.rows[0];
+  if (!head) return false;
+  return Array.from(head.cells).every((cell, c) => {
+    const shown = squash2(cell.textContent ?? "");
+    if (!shown || cell.querySelector(".math, img, .internal-embed, a")) return true;
+    return squash2(table.cells[0]?.[c] ?? "").includes(shown);
+  });
+}
+var pendingDetached = /* @__PURE__ */ new Map();
+var detachedTimer = 0;
+function queueDetached(app, factory, el, ctx) {
+  pendingDetached.set(el, ctx);
+  if (detachedTimer) return;
+  detachedTimer = window.setTimeout(() => {
+    detachedTimer = 0;
+    const roots = /* @__PURE__ */ new Map();
+    for (const [sec, c] of pendingDetached) {
+      let root = sec;
+      while (root.parentElement) root = root.parentElement;
+      if (root.isConnected || roots.has(root)) continue;
+      roots.set(root, c);
+    }
+    pendingDetached.clear();
+    for (const [root, c] of roots) void exportProcessor(app, factory, root, c, true);
+  }, 0);
+}
+function fitStoredWidths(root, stored) {
+  const tableEl = root.querySelector("table.ggt-table");
+  const cols = tableEl ? Array.from(tableEl.querySelectorAll("colgroup > col")) : [];
+  if (!tableEl || !cols.length) return;
+  const set = stored.filter((w) => !!w && w > 0);
+  const avg = set.reduce((a, b) => a + b, 0) / set.length;
+  const widths2 = cols.map((_, c) => stored[c] || avg);
+  const total = widths2.reduce((a, b) => a + b, 0);
+  cols.forEach((col, c) => col.setCssStyles({ width: `${(widths2[c] / total * 100).toFixed(3)}%` }));
+  tableEl.setCssStyles({ tableLayout: "fixed", width: `min(100%, ${Math.ceil(total)}px)` });
+}
 function readingProcessor(app, factory) {
   return async (el, ctx) => {
     if (!factory.enabled()) return;
     const info = ctx.getSectionInfo(el);
     if (!info) {
       if (el.closest(".print")) await exportProcessor(app, factory, el, ctx);
+      else if (!el.isConnected && el.querySelector("table")) queueDetached(app, factory, el, ctx);
       return;
     }
     const text = info.text || await sectionText(app, ctx, info.text);
@@ -5255,6 +6853,8 @@ function readingProcessor(app, factory) {
       child.extra = holder.ggtSplit ?? [];
       ctx.addChild(child);
       const editor = new TableEditor(holder, table, factory.host(ctx.sourcePath, child, {
+        // 设置「阅读视图里表格只读」（默认开）：和 Obsidian 的阅读视图一致，点格子不进编辑、没有手柄和加号
+        readonly: factory.readingReadonly(),
         onChange: (next, prev) => {
           const file = app.vault.getAbstractFileByPath(ctx.sourcePath);
           if (!(file instanceof import_obsidian5.TFile)) return;
@@ -5324,11 +6924,18 @@ var TablePlugin = class extends import_obsidian6.Plugin {
     this.extensions = [];
     this.livePreview = null;
     this.factory = null;
+    this.persistTimer = null;
   }
   async onload() {
     setLanguage(typeof import_obsidian6.getLanguage === "function" ? (0, import_obsidian6.getLanguage)() : window.localStorage.getItem("language"));
     this.settings = { ...DEFAULT_SETTINGS, ...await this.loadData() };
-    const factory = makeFactory(this.app, () => this.settings);
+    const factory = makeFactory(this.app, () => this.settings, () => {
+      if (this.persistTimer !== null) window.clearTimeout(this.persistTimer);
+      this.persistTimer = window.setTimeout(() => {
+        this.persistTimer = null;
+        void this.saveData(this.settings);
+      }, 1e3);
+    });
     this.factory = factory;
     this.livePreview = livePreviewTables(factory);
     if (this.settings.enabled) this.extensions.push(this.livePreview);
@@ -5354,10 +6961,12 @@ var TablePlugin = class extends import_obsidian6.Plugin {
     this.registerEvent(
       this.app.workspace.on("editor-paste", (evt, editor) => {
         if (evt.defaultPrevented || !this.settings.enabled || !evt.clipboardData) return;
-        const grid = pastedGrid(evt.clipboardData, activeDocument);
-        if (!grid || !canPasteTableAt(editor)) return;
+        const source = pastedSource(evt.clipboardData);
+        const grid = source ? null : pastedGrid(evt.clipboardData, activeDocument);
+        const lines = source ?? (grid ? serializeTable(gridToTable(grid)) : null);
+        if (!lines || !canPasteTableAt(editor)) return;
         evt.preventDefault();
-        insertTableAtSelection(editor, serializeTable(gridToTable(grid)));
+        insertTableAtSelection(editor, lines);
       })
     );
     for (const id of TABLE_COMMANDS) {
@@ -5415,9 +7024,47 @@ var TableSettingTab = class extends import_obsidian6.PluginSettingTab {
         await this.plugin.saveSettings();
       })
     );
+    new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u683C\u5B50\u5DE6\u53F3\u5185\u8FB9\u8DDD" : "Cell side padding").setDesc(zh2 ? "\u683C\u5B50\u91CC\u6587\u5B57\u79BB\u5DE6\u53F3\u8FB9\u6846\u591A\u8FDC\u3002\u5ACC\u683C\u5B50\u4E24\u8FB9\u7A7A\u5F97\u591A\u53EF\u4EE5\u8C03\u5C0F\uFF1B\u884C\u8DDD\u9009\u300C\u7D27\u51D1\u300D\u7684\u8868\u683C\u6700\u591A 8\u3002" : "How far text sits from a cell's left and right borders. Lower it if cells feel too roomy; Compact tables use at most 8.").addDropdown(
+      (dd) => dd.addOptions(zh2 ? { "4": "4\uFF08\u5F88\u7A84\uFF09", "6": "6", "8": "8", "10": "10\uFF08\u9ED8\u8BA4\uFF09" } : { "4": "4 (tight)", "6": "6", "8": "8", "10": "10 (default)" }).setValue(String(s.cellPadX)).onChange(async (v) => {
+        s.cellPadX = Number(v);
+        await this.plugin.saveSettings();
+      })
+    );
     new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u884C\u8DDD" : "Row spacing").addDropdown(
       (dd) => dd.addOptions(zh2 ? { comfortable: "\u8212\u9002", compact: "\u7D27\u51D1" } : { comfortable: "Comfortable", compact: "Compact" }).setValue(s.density).onChange(async (v) => {
         s.density = v;
+        await this.plugin.saveSettings();
+      })
+    );
+    new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u8868\u683C\u9ED8\u8BA4\u6491\u6EE1\u9875\u9762\u5BBD\u5EA6" : "Tables fill the page width").setDesc(
+      zh2 ? "\u6CA1\u62D6\u8FC7\u5217\u5BBD\u7684\u8868\u683C\u94FA\u6EE1\u6B63\u6587\u5BBD\u5EA6\uFF0C\u5404\u5217\u6309\u5185\u5BB9\u591A\u5C11\u5206\uFF1B\u62D6\u8FC7\u5217\u5BBD\u7684\u8868\u683C\u8FD8\u6309\u8BBE\u7684\u5BBD\u5EA6\u3002\u53EA\u6539\u663E\u793A\uFF0C\u4E0D\u5F80\u7B14\u8BB0\u91CC\u5199\u4E1C\u897F\u3002\u5355\u5F20\u8868\u4E5F\u53EF\u4EE5\u7528\u8868\u683C\u5DE6\u4E0A\u89D2\u83DC\u5355\u91CC\u7684\u300C\u6491\u6EE1\u9875\u9762\u5BBD\u5EA6\u300D\u3002" : "Tables whose column widths you haven't set stretch to the page width, with columns sized by their content; tables with set widths keep them. Display only \u2014 nothing is written to your notes. For a single table you can also use Fit to page width in its table menu."
+    ).addToggle(
+      (tg) => tg.setValue(s.fullWidth).onChange(async (v) => {
+        s.fullWidth = v;
+        await this.plugin.saveSettings();
+      })
+    );
+    new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u8868\u683C\u6837\u5F0F\u4F18\u5148\u4E8E\u4E3B\u9898" : "Table style over theme").setDesc(
+      zh2 ? "\u6709\u7684\u4E3B\u9898\uFF08OnePage\u3001Minimal\u3001Blue Topaz\u3001Border\u3001phycat \u7B49\uFF09\u4F1A\u7528 !important \u6539\u8868\u683C\u7684\u8FB9\u6846\u3001\u8868\u5934\u5E95\u8272\u548C\u6587\u5B57\u989C\u8272\uFF0C\u628A\u8868\u683C\u63D2\u4EF6\u7684\u6837\u5F0F\u76D6\u6389\u3002\u6253\u5F00\u540E\u8868\u683C\u6309\u63D2\u4EF6\u81EA\u5DF1\u7684\u6837\u5F0F\u753B\uFF08\u8FB9\u6846\u3001\u8868\u5934\u3001\u6781\u7B80\u7EBF\u548C\u4E09\u7EBF\u8868\u8FD9\u4E9B\u6837\u5F0F\uFF09\uFF0C\u5173\u6389\u5C31\u8BA9\u4E3B\u9898\u7684\u8868\u683C\u6837\u5F0F\u751F\u6548\u3002" : "Some themes (OnePage, Minimal, Blue Topaz, Border, phycat and others) restyle table borders, header backgrounds and text colors with !important, overriding this plugin. On: tables keep this plugin's look (borders, header, the Minimal and Three-line styles). Off: the theme's table style wins."
+    ).addToggle(
+      (tg) => tg.setValue(s.strictStyle).onChange(async (v) => {
+        s.strictStyle = v;
+        await this.plugin.saveSettings();
+      })
+    );
+    new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u5217\u5BBD\u6309\u6BD4\u4F8B\u7F29\u653E" : "Scale column widths to fit").setDesc(
+      zh2 ? "\u62D6\u8FC7\u5217\u5BBD\u7684\u8868\u683C\u6BD4\u6B63\u6587\u5BBD\u65F6\uFF08\u6BD4\u5982\u6253\u5F00\u4E86\u4FA7\u680F\uFF09\uFF0C\u5404\u5217\u6309\u6BD4\u4F8B\u7F29\u5C0F\u5230\u6B63\u597D\u653E\u4E0B\uFF0C\u4E0D\u51FA\u6A2A\u5411\u6EDA\u52A8\u6761\uFF1B\u6B63\u6587\u53D8\u5BBD\u540E\u6062\u590D\u539F\u6765\u7684\u5BBD\u5EA6\u3002\u53EA\u6539\u663E\u793A\uFF0C\u7B14\u8BB0\u91CC\u8FD8\u662F\u539F\u6765\u7684\u5217\u5BBD\u3002\u5217\u592A\u591A\u3001\u7F29\u5230\u5F88\u7A84\u65F6\u7167\u6837\u6A2A\u5411\u6EDA\u52A8\u3002" : "When a table with set column widths is wider than the page (say, with a sidebar open), its columns shrink proportionally to fit instead of scrolling sideways, and grow back when there's room. Display only \u2014 your notes keep the original widths. Tables with too many columns still scroll."
+    ).addToggle(
+      (tg) => tg.setValue(s.fitCols).onChange(async (v) => {
+        s.fitCols = v;
+        await this.plugin.saveSettings();
+      })
+    );
+    new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u9605\u8BFB\u89C6\u56FE\u91CC\u8868\u683C\u53EA\u8BFB" : "Read-only tables in Reading view").setDesc(
+      zh2 ? "\u548C Obsidian \u7684\u9605\u8BFB\u89C6\u56FE\u4E00\u81F4\uFF1A\u8868\u683C\u53EA\u770B\u4E0D\u6539\uFF0C\u70B9\u683C\u5B50\u4E0D\u4F1A\u8FDB\u5165\u7F16\u8F91\uFF0C\u6CA1\u6709\u624B\u67C4\u548C\u52A0\u53F7\uFF0C\u94FE\u63A5\u7167\u5E38\u80FD\u70B9\u3002\u5173\u6389\u540E\u5728\u9605\u8BFB\u89C6\u56FE\u91CC\u4E5F\u80FD\u76F4\u63A5\u6539\u8868\u683C\u3002" : "Like the rest of Reading view: tables are view-only, clicking a cell doesn't start editing, and there are no handles or add buttons; links still work. Turn off to edit tables directly in Reading view."
+    ).addToggle(
+      (tg) => tg.setValue(s.readingReadonly).onChange(async (v) => {
+        s.readingReadonly = v;
         await this.plugin.saveSettings();
       })
     );

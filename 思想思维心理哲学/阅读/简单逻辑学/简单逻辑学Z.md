@@ -533,7 +533,7 @@
 
 “常识 更接近本源,服务于推理的基本原则。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=101&annotation=T94SET7L)) |
 
-# “第 5 章 非逻辑思维的主要形式” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=103&annotation=E4H4RQWG)) |
+# “第 5 章 非逻辑思维的主要形式”
 
 “形式谬误”,顾名思义,问题出现在形 式上,或是论证结构上” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=104&annotation=UW5EQBI5)) |
 
@@ -545,7 +545,7 @@
 
 “错误推理通常以直接作用于人的情感的方式来战胜正确推理。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=105&annotation=WV8ZA4XF)) |
 
-## “01 否定前件” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=106&annotation=T49Q8KCM)) |
+## 01 否定前件
 
 “A→B -A 所以,-B 举例如下: 如果路易斯在跑步,那么他在移动。 路易斯没有跑步。 所以,他没有移动。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=106&annotation=ML8N49QV)) |
 
@@ -555,32 +555,59 @@
 
 “,这种情况下得出的结论可能是正确的,但不是必然正确 的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=107&annotation=BPTWY2GD)) |
 
-## “3 中项不周延” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=108&annotation=4QTBLGLW)) |
+## “3 中项不周延”
 
 “几个纳粹党人是恺撒俱乐部的成员。 汉斯是恺撒俱乐部的成员。 所以,汉斯是纳粹党人。 分析 这是个错误推理” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=108&annotation=99WYI9U2)) |
 
-## “04 偷换概念” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=109&annotation=MBKETKRA)) |
+## “04 偷换概念” ^v3vat7
 
 “多义词或多义字,顾名思义,肯定不只有一个意思。多义词带来的潜 在问题是模糊不清。如果我们有意无意地通过语言运用的方式产生了模 糊不清,这无疑将产生谬误。谬误同时产生于当我们以欺骗为目的、故意 使用多义词时。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=109&annotation=KVKTLBCZ)) |
 
 “鬼是迷信的人所说的人死后的灵魂。 他心里有鬼,所以目光闪烁。 所以,他心里有人死后的灵魂。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=109&annotation=Z5RCG2P2)) |
 
-## “05 窃取论题” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=111&annotation=LXDFJ27Q)) |
+## “05 窃取论题” ^rssesf
 
 “造成这种谬误的原因是缺乏真实前提为结论提供充足的支持。这种 谬误的重要标志是:把有待证明的观点当做不证自明的前提条件。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=111&annotation=6E7XVJQN)) |
 
 “窃取论题谬误的另一种叫法是循环论证,有时也称为恶性循环。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=112&annotation=GE7CY2TJ)) |
-
 ## “06 虚假假设” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=113&annotation=2ZD42Z2C)) |
 
 “评判假设的一 个基本标准是:命题不能违反矛盾律。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=113&annotation=C9Z3MREQ)) |
 
 “假设必须要小心谨慎。虚假假设可以被证明是假的,因为事实 完全与之对立。如果一个论证以一个错误的假设开始,那么它必将以一 个错误的结论结束。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=113&annotation=BRZMN2BT)) |
 
-## “07 稻草人谬误” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=114&annotation=B33JFK3S)) |
+## “07 稻草人谬误” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=114&annotation=B33JFK3S)) | ^awxt9x
 
 “我们要对事不对人,要紧扣论证中给定的论点。在与他 人辩论的过程当中,如果你为了削弱对方的论点而故意扭曲其论证过 程,那就犯了稻草人谬误” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=114&annotation=V2XVMNBP)) |
+### 例 1：校园，最典型
 
+> 甲：小学生作业太多，睡眠普遍不足，我支持把作业量减少一些。
+> 
+> 乙：你的意思是让孩子整天玩、什么都不学？那以后怎么跟别人竞争？
+
+- 原主张：减少一部分作业（有量、有理由）
+- 稻草人：完全取消学习（极端化 + 抹掉理由）
+- 荒谬之处只在稻草人身上；“减少作业”本身并没有被触及。
+
+### 例 2：呼应你笔记里的逻辑题
+
+> 甲：否定前件这种推理形式无效，即从 P→Q 和 ¬P 推不出 ¬Q。
+> 
+> 乙：照你这么说，所有条件推理都靠不住，那整个演绎逻辑你都不要了？
+
+- 原主张：某个具体推理图式无效
+- 稻草人：全部条件推理/全部逻辑无效
+- 手法：从“有些”跳到“所有”，量词放大。
+
+### 例 3：公共政策
+
+> 甲：我倾向提高最低工资，以缓解低收入者的生活压力。
+> 
+> 乙：你想让小企业全部关门、让大批人失业吗？
+
+- 原主张：提高最低工资（一个措施）
+- 稻草人：不惜一切代价提高、无视企业承受力（一个不管后果的立场）
+- 乙还把有争议的因果后果当作既定事实塞进稻草人里。
 ## “08 误用传统” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=115&annotation=FEZZIPQF)) |
 
 “习惯会对我们的生活产生重大影 响,如果不分析实际上是否值得就遵循习惯做事,我们就会成为习惯 的奴隶。在评价给定的实践时,我们关注的焦点应该是实践本身,而不 是它的历史。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=115&annotation=D5ILFWRL)) |
@@ -625,10 +652,12 @@
 
 “以你对 X 学院的了解,彼得或许 确实不是一名合格的人选。但是,这不是必然的。一颗闪亮的新星是可能 出自于类似 X 学院之类的学校的。你所犯谬误的根源如下:知道一个来 源一般是坏的,于是认定出于这个来源的所有都一定是坏的。这并不必 然成立。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=123&annotation=8BMUACKN)) |
 
-## “16 止于分析” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=124&annotation=W9QPDA6W)) |
+## “16 止于分析” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=124&annotation=W9QPDA6W)) | ^ezlo1g
 
 “是分解只能针对合成的产物,而 且仅仅分解是不够的,我们还要能把它们重新组合成整体。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=124&annotation=BDL8A3PR)) |
+“爱德华喜欢拆卸汽车。他可以把任何款式的汽车拆开,但是不能把它们重新 组装起来上路行驶。通过这点,我们可以自信地得出结论:实际上爱德华对汽车 的了解并没有那么多。他可以分析,但不能组合。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=124&annotation=UBZSQMJU)) |
 
+“清楚这些组成部分是如何相互联系、相互作用,最终组成一个整体的。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=124&annotation=XGVEB5PS)) |
 ## “17 简化主义” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=125&annotation=LRPBWIMR)) |
 
 “这种谬误发生于当我们选择性地只对整体的一部分加以关注之 时。例如,当我们只把精神放在一个人的缺点上,并因此认为我们已 经完全了解这个人的本质时,这个谬误就正在发挥作用。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=125&annotation=AY7CFTDX)) |

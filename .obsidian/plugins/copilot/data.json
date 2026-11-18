@@ -567,6 +567,8 @@
       "minimax-m3"
     ]
   },
+  "connectors": [],
+  "customConnectors": [],
   "autoAddActiveContentToContext": true,
   "docProcessorBackend": "plus",
   "autonomousAgentMaxIterations": 4,

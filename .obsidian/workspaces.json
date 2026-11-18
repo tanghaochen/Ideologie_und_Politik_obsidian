@@ -2182,6 +2182,7 @@
           {
             "id": "3bc015e7f0f64eeb",
             "type": "tabs",
+            "dimension": 62.62529832935561,
             "children": [
               {
                 "id": "b396f74b1dec3e21",
@@ -2203,6 +2204,7 @@
           {
             "id": "3f4797f1cf032a12",
             "type": "split",
+            "dimension": 37.37470167064439,
             "children": [
               {
                 "id": "ca5d38080bc71ab3",
@@ -2339,8 +2341,8 @@
                 "state": {
                   "type": "copilot-chat-view",
                   "state": {},
-                  "icon": "message-square",
-                  "title": "Copilot Quick Chat"
+                  "icon": "lucide-ghost",
+                  "title": "copilot-chat-view"
                 }
               },
               {
@@ -2433,6 +2435,16 @@
                   "icon": "lucide-archive",
                   "title": "添加笔记属性"
                 }
+              },
+              {
+                "id": "02b4c98c9d3789ee",
+                "type": "leaf",
+                "state": {
+                  "type": "ostracon-inbox-view",
+                  "state": {},
+                  "icon": "inbox",
+                  "title": "MN 卡片"
+                }
               }
             ]
           },
@@ -2473,7 +2485,7 @@
                 "state": {
                   "type": "notebook-navigator-calendar",
                   "state": {},
-                  "icon": "lucide-calendar-days",
+                  "icon": "calendar-days",
                   "title": "日历"
                 }
               }
@@ -2513,12 +2525,13 @@
           "realclaudian:Open Claudian": false,
           "copilot:Open Copilot Agent Chat": false,
           "notebook-navigator:Notebook Navigator": false,
-          "periodic-notes:Open today": false
+          "periodic-notes:Open today": false,
+          "obsidian-local-images-plus:Local Images Plus  0.19.3\r\nLocalize attachments (plugin folder)": false
         }
       },
-      "active": "8273a369856b9641",
-      "mtime": "2026-11-13T23:58:11+08:00"
+      "active": "b396f74b1dec3e21",
+      "mtime": "2026-11-16T20:24:28+08:00"
     }
   },
-  "active": "阅读"
+  "active": "D写作"
 }

@@ -23,10 +23,141 @@ __export(main_exports, {
   default: () => MindMapPlugin
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian13 = require("obsidian");
+
+// src/split.ts
+var KEEP_RE = /!?\[\[[^\]]*\]\]|!?\[[^\]]*\]\([^)]*\)|`[^`]*`|\$\$?[^$]*\$\$?|<[^>]+>|https?:\/\/\S+/g;
+function parseCustomSplits(text) {
+  const out = [];
+  for (const line of text.split("\n")) {
+    const s = line.trim();
+    if (!s) continue;
+    const m = /^(.*?)[：:]\s*(\S.*)$/.exec(s);
+    const name = m ? m[1].trim() : "";
+    const chars = Array.from(new Set(Array.from((m ? m[2] : s).replace(/\s+/g, "")))).join("");
+    if (!chars) continue;
+    out.push({ name: name || chars, chars });
+  }
+  return out;
+}
+var RULE_CHARS = { comma: "\uFF0C\u3001\uFF1B;,", period: "\u3002\uFF01\uFF1F!?.", semicolon: "\uFF1B;" };
+function keepSpans(text) {
+  const keep = [];
+  for (const m of text.matchAll(KEEP_RE)) keep.push([m.index, m.index + m[0].length]);
+  return keep;
+}
+function splitChars(text, chars, keepDelims) {
+  const keep = keepSpans(text);
+  const parts = [];
+  let start = 0;
+  for (let i = 0; i < text.length; i++) {
+    const span = keep.find(([a, b]) => i >= a && i < b);
+    if (span) {
+      i = span[1] - 1;
+      continue;
+    }
+    const c = text[i];
+    if (!chars.includes(c)) continue;
+    if ((c === "," || c === ".") && /\d/.test(text[i - 1] ?? "") && /\d/.test(text[i + 1] ?? "")) continue;
+    let j = i;
+    while (j + 1 < text.length && chars.includes(text[j + 1])) j++;
+    parts.push(keepDelims ? text.slice(start, j + 1) : text.slice(start, i));
+    start = j + 1;
+    i = j;
+  }
+  parts.push(text.slice(start));
+  return parts.map((p) => keepDelims ? p.trim() : p.trim().replace(/[。．]+$/, "").trim()).filter(Boolean);
+}
+var CN_DIGITS = { \u4E00: 1, \u4E8C: 2, \u4E09: 3, \u56DB: 4, \u4E94: 5, \u516D: 6, \u4E03: 7, \u516B: 8, \u4E5D: 9 };
+function chineseValue(s) {
+  if (s === "\u5341") return 10;
+  const m = /^([一二三四五六七八九])?十([一二三四五六七八九])?$/.exec(s);
+  if (m) return (m[1] ? CN_DIGITS[m[1]] : 1) * 10 + (m[2] ? CN_DIGITS[m[2]] : 0);
+  return s.length === 1 && CN_DIGITS[s] ? CN_DIGITS[s] : null;
+}
+var ROMAN = { i: 1, v: 5, x: 10, l: 50, c: 100 };
+function romanValue(s) {
+  const t3 = s.toLowerCase();
+  let v = 0;
+  for (let i = 0; i < t3.length; i++) {
+    const a = ROMAN[t3[i]];
+    const b = ROMAN[t3[i + 1]] ?? 0;
+    v += a < b ? -a : a;
+  }
+  return v > 0 && v < 100 ? v : null;
+}
+var MARK_RE = /[(（](\d{1,3})[)）]|(\d{1,3})(?:[.．](?!\d)|[、)）])|([①-⑳])|[(（]([一二三四五六七八九十]{1,3})[)）]|([一二三四五六七八九十]{1,3})[、.．)）]|\b([IVXLC]{1,6}|[ivxlc]{1,6})(?:[.．、)）])/g;
+function findMarks(text) {
+  const keep = keepSpans(text);
+  const marks = [];
+  for (const m of text.matchAll(MARK_RE)) {
+    const at = m.index;
+    if (keep.some(([a, b]) => at >= a && at < b)) continue;
+    const before = text[at - 1];
+    const bounded = !!(m[1] || m[3] || m[4]);
+    if (at > 0 && !bounded && !/[\s，。、；;,.：:！？!?）)】\]]/.test(before)) continue;
+    let value = null;
+    let family;
+    if (m[1] || m[2]) {
+      family = "arabic";
+      value = Number(m[1] ?? m[2]);
+    } else if (m[3]) {
+      family = "circled";
+      value = m[3].charCodeAt(0) - 9312 + 1;
+    } else if (m[4] || m[5]) {
+      family = "chinese";
+      value = chineseValue(m[4] ?? m[5]);
+    } else {
+      family = m[6] === m[6].toUpperCase() ? "ROMAN" : "roman";
+      value = romanValue(m[6]);
+    }
+    if (value === null) continue;
+    let end = at + m[0].length;
+    while (end < text.length && /[\s.．、，,:：)）]/.test(text[end])) end++;
+    marks.push({ at, end, family, value });
+  }
+  return marks;
+}
+function bestChain(marks) {
+  let best = [];
+  for (let i = 0; i < marks.length; i++) {
+    const chain = [marks[i]];
+    for (let j = i + 1; j < marks.length; j++) {
+      const last = chain[chain.length - 1];
+      if (marks[j].family === last.family && marks[j].value === last.value + 1) chain.push(marks[j]);
+    }
+    if (chain.length > best.length) best = chain;
+  }
+  return best.length >= 2 ? best : null;
+}
+var TRAIL_RE = /[\s，、；;,。．]+$/;
+function splitNumbers(text, keepDelims) {
+  const chain = bestChain(findMarks(text));
+  if (!chain) return null;
+  const lead = text.slice(0, chain[0].at).trim();
+  const parts = chain.map((m, i) => {
+    const stop = i + 1 < chain.length ? chain[i + 1].at : text.length;
+    const seg = keepDelims ? text.slice(m.at, stop) : text.slice(m.end, stop);
+    return keepDelims ? seg.trim() : seg.replace(TRAIL_RE, "").trim();
+  }).filter(Boolean);
+  return parts.length >= 2 ? { lead, parts } : null;
+}
+function splitText(text, rule, keepDelims = false) {
+  if (rule.kind === "number") return splitNumbers(text, keepDelims);
+  const chars = rule.kind === "chars" ? rule.chars : RULE_CHARS[rule.kind];
+  if (!chars) return null;
+  const parts = splitChars(text, chars, keepDelims);
+  return parts.length >= 2 ? { lead: "", parts } : null;
+}
+
+// src/main.ts
+var import_obsidian14 = require("obsidian");
 
 // src/bar-layout.ts
-var NODEBAR_DEFAULT = ["colors", "textColor", "highlight", "child", "sibling", "marker", "note", "box", "link", "copy", "paste", "trash", "!rel", "!table", "!fold", "!moveUp", "!moveDown"];
+var NODEBAR_DEFAULT = ["colors", "textColor", "highlight", "child", "sibling", "marker", "note", "!media", "box", "link", "copy", "paste", "trash", "!rel", "!table", "!fold", "!moveUp", "!moveDown"];
+var NODEBAR_DEFAULT_MOBILE = NODEBAR_DEFAULT.map((id) => id === "!media" ? "media" : id);
+function nodebarDefault(mobile) {
+  return mobile ? NODEBAR_DEFAULT_MOBILE : NODEBAR_DEFAULT;
+}
 var TOOLBAR_DEFAULT = [
   "outline",
   "lock",
@@ -50,9 +181,10 @@ var TOOLBAR_DEFAULT = [
   "notes",
   "hidden",
   "recite",
-  "layers"
+  "layers",
+  "quick"
 ];
-var EMBED_TOOLBAR_DEFAULT = ["embed", ...TOOLBAR_DEFAULT.map((id) => `!${id}`)];
+var EMBED_TOOLBAR_DEFAULT = ["embed", "!expand", ...TOOLBAR_DEFAULT.map((id) => `!${id}`)];
 var parse = (s) => s.startsWith("!") ? { id: s.slice(1), on: false } : { id: s, on: true };
 function isSep(id) {
   return /^sep\d+$/.test(id);
@@ -242,6 +374,19 @@ function toggleHighlight(text, s, e, color) {
   const wrapped = wrapLines(sel, `==${emoji}`, "==");
   return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + 2 + emoji.length, end: s + wrapped.length - 2 };
 }
+function removeHighlight(text, s, e) {
+  const open = HIGHLIGHT_OPEN_BEFORE.exec(text.slice(0, s));
+  if (open && text.slice(e, e + 2) === "==") {
+    const from = s - open[0].length;
+    return { text: text.slice(0, from) + text.slice(s, e) + text.slice(e + 2), start: from, end: from + (e - s) };
+  }
+  const whole = WHOLE_HIGHLIGHT.exec(text.slice(s, e));
+  if (whole) {
+    const inner = whole[2];
+    return { text: text.slice(0, s) + inner + text.slice(e), start: s, end: s + inner.length };
+  }
+  return { text, start: s, end: e };
+}
 function clearHighlightColors(text, start, end) {
   let out = "";
   let last = 0;
@@ -369,13 +514,17 @@ function applyInlineFormat(text, start, end, fmt2) {
     case "highlight":
       return toggleHighlight(text, s, e, fmt2.color);
     case "color":
-    case "bg":
       return applyColor(text, s, e, fmt2.kind, fmt2.color);
+    case "bg": {
+      const h = removeHighlight(text, s, e);
+      return applyColor(h.text, h.start, h.end, "bg", fmt2.color);
+    }
     case "nocolor":
       return applyColor(text, s, e, "color", null);
     case "nobg": {
       const b = applyColor(text, s, e, "bg", null);
-      return clearHighlightColors(b.text, b.start, b.end);
+      const c = clearHighlightColors(b.text, b.start, b.end);
+      return removeHighlight(c.text, c.start, c.end);
     }
     case "clear": {
       const a = applyColor(text, s, e, "color", null);
@@ -385,1354 +534,17 @@ function applyInlineFormat(text, start, end, fmt2) {
   }
 }
 
-// src/i18n.ts
-var en = {
-  // 命令、功能区、菜单
-  "command.toggleView": "Toggle between mind map and Markdown",
-  "command.openPreview": "Markdown and mind map side by side",
-  "command.newMindMap": "New mind map",
-  "command.linkNote": "Link to note or create note",
-  "command.toggleOutline": "Toggle outline panel",
-  "command.toggleHidden": "Show / stop showing hidden nodes",
-  "command.addListIcons": "Add file list icons to existing mind map notes",
-  "command.focusBranch": "Focus on selected branch",
-  "command.exitFocus": "Exit focus",
-  "command.copyNodeLink": "Copy node link",
-  "command.search": "Search nodes",
-  "command.expandAll": "Expand all nodes",
-  "command.collapseAll": "Collapse all nodes",
-  "command.toggleFold": "Fold or unfold the selected node",
-  "command.showLevel": "Show {n} levels below the selected node (whole map when nothing or the central topic is selected)",
-  "command.fitBranch": "Zoom to the selected branch",
-  "command.toggleBox": "Add or remove a boundary",
-  "command.toggleRecite": "Toggle recite mode",
-  "command.togglePdfExcerpt": "Toggle PDF auto-excerpt into this mind map",
-  "action.stopExcerpt": "PDF auto-excerpt is on. Click to stop",
-  "notice.excerptOn": "PDF auto-excerpt is on: every link PDF++ copies is added under the selected node of this mind map. Turn on auto-copy in PDF++ to add a selection as soon as you make it",
-  "notice.excerptOff": "PDF auto-excerpt is off",
-  "notice.excerptNeedsPdfPlus": "PDF auto-excerpt needs the PDF++ plugin installed and enabled",
-  "pdfExcerpt.status": "Link copied & added to the mind map",
-  "command.toggleLock": "Lock / unlock editing",
-  "command.editCallout": "Add / edit callout",
-  "command.addRel": "Add relationship from the selected node",
-  "command.toggleCallouts": "Show / hide callouts",
-  "command.toggleNotes": "Expand / collapse notes",
-  "command.exportPng": "Export as PNG",
-  "command.exportSvg": "Export as SVG",
-  "command.copyPng": "Copy as image",
-  "menu.openAsMarkdown": "Open as Markdown",
-  "menu.openAsMindMap": "Open as mind map",
-  // main.ts
-  "hover.display": "Mind map",
-  "notice.setIconFirst": "Set an icon value in settings first",
-  "notice.allHaveIcons": "All mind map notes already have an icon",
-  "notice.iconsAdded": "Added an icon to {count} mind map notes",
-  "log.iconWriteFailed": "Failed to write the icon to {path}",
-  "notice.created": "Created {path}",
-  "notice.writeBackFailed": "Failed to write back to the code block: {error}",
-  "notice.rootNoRoom": "Can't save the central topic: this code block already uses headings 6 levels deep, and adding a top-level heading for the central topic would push them past the limit.",
-  "notice.rootBadName": `The central topic is the note's file name, so it can't contain any of these characters: \\ / : * ? " < > | # ^ [ ]`,
-  "notice.rootNameTaken": `Can't rename the note to "{name}": a file with that name already exists here.`,
-  "notice.externalConflict": "{file} was changed outside the mind map, overlapping unsaved edits here. Kept the mind map version",
-  "error.fileNotFound": "File not found: {path}",
-  "error.blockNotFound": "Couldn't find this code block in the note",
-  "notice.createNoteFailed": "Failed to create note: {error}",
-  "newFile.baseName": "Untitled mind map",
-  "newFile.topic": "Topic {n}",
-  "notice.templateMissing": "Template note not found: {path}. Used the default content instead.",
-  "notice.headingLinksUpdated": "Updated {n} link(s) to this note's headings",
-  // view.ts
-  "view.displayText": "Mind map",
-  "error.noOpenFile": "No file is open",
-  "notice.exported": "Exported {path}",
-  "notice.exportFailed": "Export failed: {error}",
-  "notice.copiedAsImage": "Copied as image",
-  "notice.copyFailedWithError": "Copy failed: {error}",
-  // xmind-view.ts / xmind.ts
-  "xmind.convert": "Convert to Markdown note",
-  "xmind.readFailed": "Couldn't read {name}: {error}",
-  "xmind.converted": "Converted to {path}",
-  "xmind.sheet": "Sheet {n}",
-  "xmind.notZip": "Not a valid zip file",
-  "xmind.zipCorrupt": "The zip directory is corrupted",
-  "xmind.unsupportedCompression": "Unsupported compression method {method}",
-  "xmind.noContent": "Couldn't find content.json or content.xml; this may not be an XMind file",
-  "xmind.lost": "Not supported yet, so not shown and not kept when converting: {items}",
-  "xmind.lost.sep": ", ",
-  "xmind.lost.detached": "{n} floating topics",
-  "xmind.lost.relationships": "{n} relationships",
-  "xmind.lost.summaries": "{n} summaries",
-  "xmind.lost.comments": "{n} comments",
-  "xmind.lost.images": "{n} images missing from the file",
-  // export.ts
-  "export.readFailed": "Read failed",
-  "export.nothing": "Nothing to export",
-  "export.svgRenderFailed": "SVG rendering failed",
-  "export.noCanvas": "Couldn't create the canvas",
-  "export.pngEncodeFailed": "PNG encoding failed",
-  // 结构、主题、工具栏位置、颜色、标记分组
-  "structure.logicRight": "Logic chart (rightward)",
-  "structure.mindmap": "Mind map (left and right)",
-  "structure.orgDown": "Org chart (downward)",
-  "structure.treeRight": "Tree chart",
-  "structure.timelineH": "Timeline (horizontal, one side)",
-  "structure.timelineHAlt": "Timeline (horizontal, alternating)",
-  "structure.timelineVRight": "Timeline (vertical, rightward)",
-  "structure.timelineVLeft": "Timeline (vertical, leftward)",
-  "structure.timelineVAlt": "Timeline (vertical, alternating)",
-  "theme.label": "{name} \xB7 {desc}",
-  "theme.snow": "Snow",
-  "theme.snow.desc": "Dark center, gray nodes",
-  "theme.rainbow": "Rainbow",
-  "theme.rainbow.desc": "One color per branch, curves",
-  "theme.business": "Business",
-  "theme.business.desc": "Blue tones, elbow lines",
-  "theme.warm": "Warm",
-  "theme.warm.desc": "Orange tones, rounded curves",
-  "theme.mono": "Mono",
-  "theme.mono.desc": "Black-and-white outlines, thin lines",
-  "theme.line": "Line",
-  "theme.line.desc": "Text-only nodes, thin elbow lines",
-  "theme.forest": "Forest",
-  "theme.forest.desc": "Green-toned branches, curves",
-  "toolbarPos.bottom": "Bottom (horizontal)",
-  "toolbarPos.top": "Top (horizontal)",
-  "toolbarPos.left": "Left (vertical)",
-  "toolbarPos.right": "Right (vertical)",
-  "color.red": "Red",
-  "color.orange": "Orange",
-  "color.yellow": "Yellow",
-  "color.green": "Green",
-  "color.teal": "Teal",
-  "color.blue": "Blue",
-  "color.purple": "Purple",
-  "color.pink": "Pink",
-  "color.gray": "Gray",
-  "marker.priority": "Priority",
-  "marker.progress": "Progress",
-  "marker.flags": "Flags",
-  "marker.symbols": "Symbols",
-  "marker.custom": "Custom",
-  "marker.recite": "Recite",
-  "marker.answerTip": "Answer: covered in recite mode (with its children), click to reveal",
-  // inline.ts
-  "inline.toggleTask": "Click to toggle",
-  "inline.activate": "Activate",
-  // canvas.ts：工具栏
-  "canvas.themeTip": "Theme: {name} \xB7 click to switch",
-  "canvas.structureTip": "Structure: {name} \xB7 click to switch",
-  "canvas.doneEditing": "Done editing, back to read-only",
-  "canvas.editEmbedded": "Edit this mind map \xB7 changes are written back to the code block",
-  "canvas.openEmbeddedFile": "Open this mind map to edit it",
-  "canvas.recite": "Recite mode \xB7 hide ==highlights== and quiz answers, click to reveal",
-  "canvas.toggleCallouts": "Show / hide callouts",
-  "canvas.showCallouts": "Show callouts",
-  "canvas.hideCallouts": "Hide callouts",
-  "canvas.viewCallout": "View callout",
-  "canvas.calloutPlaceholder": "Callout",
-  "canvas.singleChoice": "Single",
-  "canvas.multiChoice": "Multiple",
-  "canvas.answerCovered": "Answer \xB7 click to reveal",
-  "canvas.lockEditing": "Lock editing (view only: zoom, pan and fold still work)",
-  "canvas.unlockEditing": "Editing is locked \xB7 click to unlock",
-  "canvas.toolbarContextTip": "Right-click to change the toolbar position",
-  "canvas.outline": "Outline panel \xB7 tree list, rename and change levels",
-  "canvas.zoomOut": "Zoom out {key}",
-  "canvas.zoomLevel": "Current zoom \xB7 click to reset to 100%",
-  "canvas.zoomIn": "Zoom in {key}",
-  "canvas.fit": "Fit to canvas \xB7 zoom to show all nodes {key}",
-  "canvas.center": "Back to center \xB7 center the central topic at 100% zoom",
-  "canvas.undo": "Undo {key}",
-  "canvas.redo": "Redo {key}",
-  "canvas.search": "Search nodes {key}",
-  "canvas.foldLevels": "Fold levels \xB7 expand all or show only the first few levels",
-  // canvas.ts：节点
-  "canvas.centralTopic": "Central topic",
-  "canvas.splitSyncOn": "Syncing with the Markdown beside: on (click to turn off)",
-  "canvas.splitSyncOff": "Syncing with the Markdown beside: off (click to turn on)",
-  "canvas.newTopicName": "Topic {n}",
-  "canvas.frameShield": "Double-click the player or click the activate button to play it and follow its links",
-  "canvas.viewNote": "View note",
-  "canvas.toggleNotes": "Expand / collapse notes",
-  "canvas.expandNotes": "Expand notes under their nodes",
-  "canvas.collapseNotes": "Collapse notes",
-  "canvas.expandNote": "Expand this note",
-  "canvas.collapseNote": "Collapse this note",
-  "canvas.showHidden": "Show hidden nodes",
-  "canvas.hideHidden": "Stop showing hidden nodes",
-  "canvas.resizeNote": "Drag to resize this note; double-click to reset",
-  "canvas.boxTitleDefault": "Boundary",
-  "theme.custom.desc": "custom",
-  "theme.custom.missing": "Custom theme (missing)",
-  "customTheme.heading": "Custom themes",
-  "customTheme.new": "New custom theme",
-  "customTheme.newDesc": "Pick a built-in theme to start from, then adjust it.",
-  "customTheme.create": "Create",
-  "customTheme.defaultName": "My theme {n}",
-  "customTheme.basedOn": "Based on {base}",
-  "customTheme.edit": "Edit",
-  "customTheme.duplicate": "Duplicate",
-  "customTheme.copyName": "{name} copy",
-  "customTheme.delete": "Delete",
-  "customTheme.deleteConfirm": `Delete the custom theme "{name}"? Notes that use it fall back to the default theme; their content isn't affected.`,
-  "customTheme.editTitle": "Edit custom theme",
-  "customTheme.preview": "Live preview",
-  "customTheme.cancel": "Cancel",
-  "customTheme.save": "Save",
-  "customTheme.untitled": "Untitled theme",
-  "customTheme.name": "Name",
-  "customTheme.base": "Base theme",
-  "customTheme.baseDesc": "Changing it refills the values below from that theme.",
-  "customTheme.overall": "Overall",
-  "customTheme.edge": "Lines",
-  "customTheme.branchColors": "One color per branch",
-  "customTheme.spacing": "Spacing",
-  "customTheme.spacing.compact": "Compact",
-  "customTheme.spacing.normal": "Normal",
-  "customTheme.spacing.loose": "Loose",
-  "customTheme.byLevel": "By level",
-  "customTheme.tier0": "Central topic",
-  "customTheme.tier1": "Main topics",
-  "customTheme.tier2": "Subtopics",
-  "customTheme.tier3": "Level 3 and deeper",
-  "customTheme.fontSize": "Font size",
-  "customTheme.bold": "Bold",
-  "customTheme.italic": "Italic",
-  "customTheme.textColor": "Text color",
-  "customTheme.shape": "Shape",
-  "customTheme.shape.fill": "Filled",
-  "customTheme.shape.none": "No background",
-  "customTheme.shape.underline": "Underline",
-  "customTheme.fill": "Background",
-  "customTheme.radius": "Corner radius",
-  "customTheme.border": "Border",
-  "customTheme.border.none": "None",
-  "customTheme.border.solid": "Solid",
-  "customTheme.border.dashed": "Dashed",
-  "customTheme.borderWidth": "Border width",
-  "customTheme.borderColor": "Border color",
-  "customTheme.width": "Maximum width",
-  "customTheme.widthDesc": "Short text keeps its own width; longer text wraps at the maximum. A width dragged on a single node still wins.",
-  "customTheme.width.auto": "Default",
-  "customTheme.width.custom": "Custom",
-  "customTheme.widthPx": "Maximum width",
-  "customTheme.align": "Align widths in this level",
-  "customTheme.alignDesc": "Every node in the level takes the width of the widest one, so they line up. Nodes with a dragged width keep their own.",
-  "customTheme.lineColor": "Line into this level: color",
-  "customTheme.lineWidth": "Line into this level: width",
-  "canvas.edgeTip": "Lines: {name}",
-  "edge.theme": "Theme default",
-  "edge.curve": "Curved",
-  "edge.elbow": "Right-angled",
-  "edge.straight": "Straight",
-  "edge.dashed": "Dashed",
-  "edge.rounded": "Rounded corners",
-  "canvas.resizeWidth": "Drag to set the width \xB7 double-click to reset",
-  "canvas.expandChildren": "Expand {count} child nodes /",
-  "canvas.collapseBranch": "Collapse this branch /",
-  "canvas.colorTip": "{color} \xB7 color the selected nodes",
-  "canvas.clearColor": "Clear color",
-  "canvas.addChildTip": "Add child node {key}",
-  "canvas.addSiblingTip": "Add sibling node {key}",
-  "canvas.markersTip": "Markers \xB7 priority, progress, flags, symbols",
-  "canvas.noteTip": "Note \xB7 supports Markdown, including lists",
-  "canvas.boxTip": "Boundary {key} \xB7 add one, or click again for title / remove",
-  "canvas.linkTip": "Link to a note, or create one by name {key}",
-  "canvas.copyTip": "Copy this subtree {key}",
-  "canvas.pasteTip": "Paste as child node {key}",
-  "canvas.deleteTip": "Delete node and its subtree {key}",
-  "canvas.resizeFrame": "Drag to resize. Shift-drag changes height only. Double-click to reset to 560\xD7315",
-  "canvas.resizeImage": "Drag to resize the image, double-click to restore the original size",
-  "canvas.notePlaceholder": "Note (supports Markdown, including lists)",
-  "canvas.clearMarkers": "Clear all markers",
-  "canvas.wholeMap": "Whole map",
-  "canvas.emptyNode": "Empty",
-  "canvas.untitled": "Untitled",
-  // canvas.ts：折叠层级、搜索
-  "canvas.expandAll": "Expand all",
-  "canvas.mainTopicsOnly": "Show main topics only",
-  "canvas.showToLevel": "Show up to level {n}",
-  "canvas.searchPlaceholder": "Search nodes",
-  "canvas.prevMatch": "Previous match {key}",
-  "canvas.nextMatch": "Next match {key}",
-  "canvas.closeSearch": "Close search {key}",
-  // canvas.ts：右键菜单
-  "menu.edit": "Edit",
-  "menu.addChild": "Add child node",
-  "menu.addSibling": "Add sibling node",
-  "menu.insertBefore": "Insert sibling before",
-  "menu.insertParent": "Insert parent node",
-  "menu.insertGroup": "Insert",
-  "menu.foldGroup": "Fold & view",
-  "menu.boxGroup": "Boundary",
-  "menu.summaryGroup": "Summary",
-  "menu.more": "More",
-  "menu.newFloat": "New floating topic here",
-  "menu.toFloat": "Make floating topic",
-  "menu.attachFloat": "Attach to central topic",
-  "menu.revealInMarkdown": "Show in Markdown",
-  "menu.exitFocus": "Exit focus",
-  "menu.focusBranch": "Focus on this branch",
-  "menu.expand": "Expand",
-  "menu.collapse": "Collapse",
-  "menu.expandBranch": "Expand all sub-branches",
-  "menu.expandNextLevel": "Show next level only",
-  "menu.collapseBranch": "Collapse all sub-branches",
-  "menu.expandLevel": "Expand one level",
-  "menu.collapseLevel": "Collapse one level",
-  "menu.openLink": 'Open "{target}"',
-  "menu.unlink": "Remove link",
-  "menu.linkNote": "Link to note\u2026",
-  "menu.editNote": "Edit note",
-  "menu.addNote": "Add note",
-  "menu.deleteNote": "Delete note",
-  "bar.nodebarPage": "Floating toolbar buttons",
-  "bar.nodebarPageDesc": "Which buttons the toolbar above the selected node shows, and in what order. Some extra buttons are off by default.",
-  "bar.toolbarPage": "Main toolbar buttons",
-  "bar.toolbarPageDesc": "Which buttons the mind map's main toolbar shows, and in what order.",
-  "bar.count": "{n} of {total} shown",
-  "bar.reset": "Restore defaults",
-  "bar.nodebarDesc": "Turn a button off to hide it; drag the handle on the left or use the arrows to reorder. Changes apply to open mind maps right away.",
-  "bar.toolbarDesc": "Turn a button off to hide it; drag the handle on the left or use the arrows to reorder. Divider lines can be moved or hidden too; a divider with no button on one side isn't shown.",
-  "bar.resetButton": "Restore",
-  "bar.moveUp": "Move up",
-  "bar.moveDown": "Move down",
-  "bar.sep": "Divider",
-  "bar.sepDesc": "A short vertical line between groups of buttons",
-  "bar.colors": "Colors",
-  "bar.child": "Add child node",
-  "bar.sibling": "Add sibling node",
-  "bar.marker": "Markers",
-  "bar.note": "Note",
-  "bar.box": "Boundary",
-  "bar.link": "Link to note",
-  "bar.copy": "Copy",
-  "bar.paste": "Paste",
-  "bar.trash": "Delete",
-  "bar.rel": "Add relationship",
-  "bar.table": "Insert table",
-  "bar.fold": "Collapse / expand",
-  "bar.outline": "Outline",
-  "bar.lock": "Lock",
-  "bar.splitSync": "Sync with split Markdown",
-  "bar.structure": "Structure",
-  "bar.palette": "Theme",
-  "bar.edge": "Branch lines",
-  "bar.zoomOut": "Zoom out",
-  "bar.zoom": "Zoom level",
-  "bar.zoomIn": "Zoom in",
-  "bar.fit": "Fit to view",
-  "bar.center": "Center",
-  "bar.undo": "Undo",
-  "bar.redo": "Redo",
-  "bar.search": "Search",
-  "bar.callout": "Show / hide callouts",
-  "bar.notes": "Expand / collapse notes",
-  "bar.hidden": "Show hidden nodes",
-  "bar.recite": "Recite mode",
-  "bar.layers": "Expand to level",
-  "menu.addRel": "Add relationship",
-  "menu.textColor": "Text color",
-  "canvas.textColorTip": "Text color",
-  "canvas.defaultTextColor": "Default",
-  "bar.textColor": "Text color",
-  "bar.highlight": "Highlighter",
-  "settings.colorAdd": "Add a color",
-  "settings.colorRaw": "Edit as text",
-  "settings.colorChips": "Edit as swatches",
-  "settings.colorRemove": "Remove this color",
-  "palette.common": "Frequent",
-  "palette.recent": "Recent",
-  "palette.alpha": "Opacity",
-  "palette.custom": "Custom\u2026",
-  "palette.noText": "No text color",
-  "palette.noHighlight": "No highlighter",
-  "palette.noNodeColor": "No color",
-  "palette.themeHighlight": "Theme highlight (==text==)",
-  "palette.textApply": "Text color: {color}",
-  "palette.textMore": "More text colors",
-  "palette.bgApply": "Highlighter: {color}",
-  "palette.bgMore": "More highlighter colors",
-  "palette.nodeMore": "More node colors",
-  "palette.none": "None",
-  "canvas.foldTip": "Collapse / expand {key}",
-  "canvas.moveUpTip": "Move up {key}",
-  "canvas.moveDownTip": "Move down {key}",
-  "menu.editRelLabel": "Edit text",
-  "menu.reverseRel": "Reverse direction",
-  "menu.resetRelCurve": "Reset curve",
-  "menu.deleteRel": "Delete relationship",
-  "canvas.relHint": "Click the node to connect to \xB7 Esc to cancel",
-  "menu.splitByPunctuation": "Split into subtopics at commas",
-  "canvas.jumpToPdf": "Go to this spot in the PDF",
-  "menu.markers": "Markers\u2026",
-  "menu.task": "Task checkbox",
-  "menu.addBox": "Add boundary",
-  "menu.fitBranch": "Zoom to this branch",
-  "menu.resetWidth": "Reset to automatic width",
-  "menu.relGoSource": "Go to start",
-  "menu.relGoTarget": "Go to end",
-  "menu.removeBox": "Remove boundary",
-  "menu.addSummary": "Add summary",
-  "menu.editSummary": "Edit summary",
-  "menu.removeSummary": "Remove summary",
-  "menu.addSummaryTopic": "Add subtopic  Tab",
-  "menu.summaryToText": "Convert to plain summary",
-  "canvas.summaryDefault": "Summary",
-  "command.toggleSummary": "Add or remove a summary",
-  "command.toggleNumbering": "Number the selected nodes and their siblings (on / off)",
-  "command.addChild": "Add child node",
-  "command.addSibling": "Add sibling node",
-  "command.insertBefore": "Insert sibling before",
-  "command.insertParent": "Insert parent node (wrap the selected nodes)",
-  "command.revealInMarkdown": "Show the selected node in Markdown",
-  "command.editNode": "Edit node",
-  "command.deleteNode": "Delete node and its subtree",
-  "command.deleteNodeOnly": "Delete this node only (keep its children)",
-  "command.moveUp": "Move node up",
-  "command.moveDown": "Move node down",
-  "command.outdent": "Promote node (move out a level)",
-  "command.indent": "Demote node (move under previous sibling)",
-  "command.expandBranch": "Expand all sub-branches of the selected node",
-  "command.collapseBranch": "Collapse all sub-branches of the selected node",
-  "command.expandLevel": "Expand one more level of the selected branch",
-  "command.collapseLevel": "Collapse one level of the selected branch",
-  "menu.addBoxTitle": "Add boundary title",
-  "menu.editBoxTitle": "Edit boundary title",
-  "menu.toHeading": "Convert level to headings",
-  "menu.toList": "Convert level to lists",
-  "menu.hideNode": "Hide in mind map",
-  "menu.unhideNode": "Unhide",
-  "menu.copy": "Copy",
-  "menu.copyImage": "Copy image",
-  "menu.deleteImage": "Delete image",
-  "menu.addCallout": "Add callout",
-  "menu.editCallout": "Edit callout",
-  "menu.removeCallout": "Remove callout",
-  "menu.calloutColor": "Callout color",
-  "menu.insertTable": "Insert table",
-  "menu.tableChild": "Child node with a table",
-  "menu.numbering": "Number siblings (1. 2. 3.)",
-  "menu.tableInNode": "Show table in node",
-  "menu.tableToNote": "Move table back to note",
-  "menu.deleteTable": "Delete table",
-  "menu.cut": "Cut",
-  "menu.pasteChild": "Paste as child node",
-  "menu.copyNodeLink": "Copy node link",
-  "menu.delete": "Delete",
-  "menu.deleteOnly": "Delete this node only",
-  "menu.extendRange": "Extend range by one node",
-  "menu.shrinkRange": "Shrink range by one node",
-  "menu.paste": "Paste",
-  "menu.fit": "Fit to canvas",
-  // canvas.ts：提示
-  "notice.promotedToHeading": "Headings can't come before list items at the same level, so {count} item(s) after it became headings: {names}. Press {key} to undo.",
-  "notice.nodesHidden": 'Hid {count} node(s) from the mind map (marked %%hide%%, still in the note). Turn on "Show hidden nodes" in the toolbar to see or unhide them.',
-  "notice.tooDeepForHeadings": `With "Only headings as nodes" on, nodes deeper than heading level 6 are saved as part of the heading's note.`,
-  "notice.cannotHeading": "This level can't be converted to headings: its parent isn't a heading, or it's already at heading level 6",
-  "notice.saveImageUnsupported": "Saving images isn't supported here",
-  "notice.saveImageFailed": "Failed to save image: {error}",
-  "notice.xmindTaken": "gogoga Mind Map: another plugin already opens .xmind files, so .xmind files stay with that plugin. Mind maps in notes are not affected.",
-  "notice.imageAddedToNote": "Image added to this node's note",
-  "notice.noBlockId": "This node has no block ID yet; one can only be generated while editing",
-  "notice.copied": "Copied {link}",
-  "notice.copyFailed": "Copy failed",
-  "notice.imageCopied": "Image copied",
-  // outline.ts
-  "outline.title": "Outline",
-  "outline.close": "Close outline panel",
-  // 选择器
-  "picker.navigate": "Navigate",
-  "picker.use": "Use",
-  "picker.link": "Link",
-  "picker.dismiss": "Dismiss",
-  "iconPicker.placeholder": "Search icon names, or paste an emoji",
-  "iconPicker.useEmoji": "Use this emoji",
-  "iconPicker.builtIn": "Built-in",
-  "notePicker.placeholder": "Type a note name to link an existing note or create a new one",
-  "notePicker.create": 'Create note "{name}"',
-  "propertyIcon.choose": "Choose icon",
-  "propertyIcon.chooseCurrent": "Choose icon \xB7 current: {value}",
-  // settings.ts
-  "settings.structure.name": "Default structure",
-  "settings.structure.desc": "Layout for new files. Override it per file with mindmap-structure in the frontmatter.",
-  "settings.theme.name": "Default theme",
-  "settings.theme.desc": "Theme for new files. The palette button in the toolbar switches the theme per file and writes the choice to mindmap-theme.",
-  "settings.fileNameAsRoot.name": "Use the file name as the central topic",
-  "settings.fileNameAsRoot.desc": "Off: a note's only level-1 heading becomes the central topic. On: the central topic is always the file name and the level-1 heading becomes a first-level branch. Only changes how notes are shown; the file stays the same.",
-  "settings.headingLevel.name": "Deepest heading level",
-  "settings.headingLevel.desc": "When adding nodes, levels deeper than this are written back as list items instead of headings. Existing content keeps its format.",
-  "settings.headingLevel.h2": "H2 (main topics)",
-  "settings.template.name": "Template for new mind maps",
-  "settings.template.desc": "Pick a note whose content becomes the starting content of every new mind map. Supports {{title}}, {{date}} and {{time}} (also {{date:YYYY-MM-DD}} with a format), like the core Templates plugin. Leave empty to start with Topic 1/2/3.",
-  "settings.template.placeholder": "Path of the template note",
-  "settings.indent.name": "List indentation for new files",
-  "settings.indent.desc": "Existing files keep the indentation detected in the file.",
-  "settings.indent.tab": "Tab",
-  "settings.indent.spaces": "{n} spaces",
-  "settings.listIcon.name": "Icon in the file list",
-  "settings.listIcon.desc": `Written to the note's icon property, which file list plugins such as Notebook Navigator and Iconize use to show an icon. This isn't a core Obsidian property, so without such a plugin it's just an ordinary property. Only affects notes created or converted from now on; for existing notes, run the command "{command}".`,
-  "settings.listIcon.none": "Not written",
-  "settings.listIcon.choose": "Choose icon",
-  "settings.listIcon.reset": "Restore default",
-  "settings.listIcon.clear": "Don't write an icon",
-  "settings.toolbar.name": "Toolbar position",
-  "settings.support.name": "Support the author",
-  "settings.support.desc": "This plugin is free and open source. If it helps you, you can support it on afdian.",
-  "settings.support.button": "\u2615 Open afdian",
-  "settings.touchToggles.name": "Fold buttons on touch screens",
-  "settings.touchToggles.desc": "Phones and tablets have no hover, so the fold button (the circle after a node with children) is always shown by default. Choose \u201COnly when selected\u201D to show it like on desktop: on the selected node and on folded branches only. Folding an open branch then takes two taps: select the node, then tap the button.",
-  "settings.touchToggles.always": "Always shown",
-  "settings.touchToggles.selected": "Only when selected or folded",
-  "settings.rememberView.name": "Remember the mind map view",
-  "settings.rememberView.desc": 'On: switching adds mindmap: true to the properties, so the note always opens as a mind map. Off: only the current tab switches and the file is left alone, so it opens as Markdown next time. To write and watch side by side, use the command "Markdown and mind map side by side".',
-  "settings.toolbar.desc": "Top and bottom are horizontal bars, left and right are vertical bars. You can also right-click the toolbar to change it.",
-  "settings.nodeColors.name": "Node colors",
-  "settings.nodeColors.desc": "Colors in the floating toolbar and the callout color menu. Click a color to change it, \xD7 to remove, drag to reorder, + to add. Built-in names (red, orange, \u2026) follow the theme and dark mode; colors picked from the palette stay the same everywhere. The \xB7\xB7\xB7 button after the colors in the toolbar picks any other color.",
-  "settings.showNodebar.name": "Floating toolbar on selected nodes",
-  "settings.showNodebar.desc": `The small toolbar (colors, add child, markers\u2026) above the selected node. Turn it off if it gets in the way of clicking nearby nodes; everything on it is also in the node's context menu. The "Toggle the floating toolbar" command switches it from anywhere (bind a hotkey in Settings \u2192 Hotkeys).`,
-  "settings.group.open": "Opening and display",
-  "settings.group.newMap": "New maps",
-  "settings.group.parse": "How Markdown becomes nodes",
-  "settings.group.edit": "Editing and interaction",
-  "settings.group.toolbar": "Toolbars and colors",
-  "settings.group.markers": "Markers",
-  "settings.group.notes": "Notes",
-  "settings.group.sync": "Side by side with Markdown",
-  "settings.group.markdown": "Markdown and embeds",
-  "settings.page.open": "What a map shows when opened, default layout and theme, spacing and font size",
-  "settings.page.edit": "Editing nodes, the mouse wheel and dragging, copying, custom markers",
-  "settings.page.toolbar": "Toolbar position, the floating toolbar, node colors, text and highlighter colors",
-  "settings.page.notes": "How notes show, their size, preview while editing",
-  "settings.page.markdown": "How headings and lists become nodes, side-by-side sync, folding along, code blocks and embeds",
-  "settings.page.newMap": "Template, indentation, central topic, the icon in the file list",
-  "settings.page.colorCount": "{n} node colors",
-  "settings.page.themeCount": "{n}",
-  "settings.group.noteDisplay": "In Markdown notes",
-  "settings.group.embed": "Embeds",
-  "settings.customThemes.desc": "Make your own themes from a built-in one: font sizes, colors, borders and lines for each level.",
-  "settings.wheel.name": "Mouse wheel",
-  "settings.wheel.desc": "Pan: the wheel scrolls the map, Cmd/Ctrl + wheel zooms. Zoom: the wheel zooms, Shift + wheel scrolls.",
-  "settings.wheel.pan": "Pan",
-  "settings.wheel.zoom": "Zoom",
-  "settings.rememberViewport.name": "Remember where you left off",
-  "settings.rememberViewport.desc": "Reopening a mind map, or switching back from Markdown, restores its last position, zoom and selection. Kept for the 50 most recent files, outside your notes.",
-  "settings.openView.name": "When opening a map",
-  "settings.openView.desc": "How a map is shown when there is no remembered position (first time opened, or remembering is off).",
-  "settings.openView.fit": "Fit the whole map",
-  "settings.openView.center": "Central topic at 100%",
-  "settings.syncSplit.name": "Sync with Markdown side by side",
-  "settings.syncSplit.desc": "When the same note is open as a mind map and as Markdown at the same time: selecting a node scrolls the Markdown to its line, and moving the cursor in Markdown selects the matching node.",
-  "settings.followExpand.name": "Expand collapsed nodes when syncing",
-  "settings.followExpand.desc": 'With "Sync with Markdown side by side" on, moving the cursor in Markdown to a line inside a collapsed branch expands the map down to that node, instead of selecting the collapsed ancestor. Expanding is saved to the note like any other expand.',
-  "settings.foldFollow.name": "Fold Markdown along with the map",
-  "settings.foldFollow.desc": "Branches collapsed in the map are also folded in the Markdown editor and reading view of the same note, and expanded when you expand them in the map. Folds you make yourself in Markdown are left alone; folding in Markdown does not change the map.",
-  "settings.customMarkers.name": "Custom markers",
-  "settings.customMarkers.desc": "Emoji or symbols, separated by spaces; they show up as a Custom group in the marker panel. Letters, digits and ASCII symbols are ignored, since node text often starts with them.",
-  "settings.customMarkersExclusive.name": "Only one custom marker per node",
-  "settings.customMarkersExclusive.desc": "Like priority: picking one replaces the other custom marker on the node.",
-  "settings.claimBlock.name": "Render ```mindmap code blocks",
-  "settings.claimBlock.desc": "```gogoga-mindmap always works. Turn this off if another plugin (such as Markmind) should handle ```mindmap blocks. Takes effect after reloading the plugin or restarting Obsidian.",
-  "settings.linkOpen.name": "Open note links in",
-  "settings.linkOpen.desc": "Where a click on a note link in a node or note opens it. Right split keeps the mind map on the left and reuses the same split for the next link. \u2318-click (Ctrl-click) always opens a new tab, \u2318\u2325-click (Ctrl+Alt-click) the right split.",
-  "settings.linkOpen.current": "Current tab",
-  "settings.linkOpen.tab": "New tab",
-  "settings.linkOpen.split": "Right split",
-  "settings.editCaret.name": "When editing a node",
-  "settings.editCaret.desc": "Select all: typing replaces the text. Cursor at end: typing continues it (\u2318A / Ctrl+A still selects all).",
-  "settings.editCaret.select": "Select all text",
-  "settings.editCaret.end": "Put the cursor at the end",
-  "settings.dragToFloat.name": "Drag a topic to empty space",
-  "settings.dragToFloat.desc": "Off: dropping on empty space cancels the drag. On (XMind style): the topic and its branch become a floating topic there.",
-  "settings.leftDrag.name": "Left-drag on empty space",
-  "settings.leftDrag.desc": "Pan: dragging moves the map, Shift + drag selects. Select (XMind style): dragging draws a selection box, right- or middle-drag moves the map. In both, holding the right button and dragging moves the map even when you press on a node; a right-click without dragging still opens the menu.",
-  "settings.leftDrag.pan": "Pan",
-  "settings.leftDrag.select": "Select",
-  "settings.hover.name": "Hover preview for linked nodes",
-  "settings.hover.desc": 'Ctrl-hover (\u2318-hover on macOS) over a node that links to a note to see a preview of the note, as elsewhere in Obsidian. To show it without holding a key, find "{source}" in the settings of the Page preview core plugin.',
-  "settings.followActive.name": "Follow the active note",
-  "settings.followActive.desc": "When a mind map is open beside a Markdown note, switching to another note in the editor shows that note in the mind map too. Pinned mind map tabs stay where they are.",
-  "settings.spacing.name": "Node spacing",
-  "settings.spacing.desc": "Scales the gaps between nodes in every theme. 100% is the theme's own spacing.",
-  "settings.fontScale.name": "Node text size",
-  "settings.fontScale.desc": "Scales node text in every theme, including custom themes. 100% is the theme's own size.",
-  "settings.reset": "Reset to 100%",
-  "settings.resetNoteHeight": "Reset to 240",
-  "settings.notePreview.name": "Preview notes while editing",
-  "settings.notePreview.desc": "When you edit a note, show how it renders next to the text box (below it when the window is narrow), updated as you type: formulas, lists, images and links look as they do in reading view. Applies the next time you edit a note.",
-  "settings.formatBar.name": "Format bar when selecting text",
-  "settings.formatBar.desc": 'While editing a node, selecting part of the text shows a small bar above it: bold, italic, strikethrough, underline, text color and highlighter (click the left part to reuse the last color, \u25BE opens the palette), clear and link. Without it, use the commands (bind your own hotkeys in Settings \u2192 Hotkeys). The "Toggle the format bar" command switches this setting.',
-  "settings.textColors.name": "Text colors",
-  "settings.textColors.desc": 'The "Frequent" row in the text color palette (format bar and floating toolbar), also used by the "Text color 1\u20135" commands. Saved as <span style="color:\u2026">, which Markdown shows too.',
-  "settings.highlightColors.name": "Highlighter colors",
-  "settings.highlightColors.desc": `The "Frequent" row in the highlighter palette, also used by the "Highlighter color 1\u20135" commands. A bit of transparency keeps text readable in dark themes. Saved as <mark style="background:\u2026">, the same as the Highlightr plugin; \u{1F534} and the like use Obsidian's own colored highlight (==\u{1F534}text==, Obsidian 1.15+), which follows the theme.`,
-  "settings.copyPlain.name": "Copy nodes without map markers",
-  "settings.copyPlain.desc": "Copied nodes go to the clipboard as plain Markdown, without the %%\u2026%% markers for width, folding, callouts and the like. Pasting back into a map still restores them.",
-  "settings.hideTagsInNotes.name": "Hide format tags in notes",
-  "settings.hideTagsInNotes.desc": 'In the Live Preview of Markdown notes, hide the HTML tags the mind map writes for text colors, highlighter colors and underline (<span style="color:\u2026">, <mark style="background:\u2026">, <mark>, <u>) and show the formatting instead, as in the node editor. Deleting or typing next to them keeps the tags paired. Source mode, code blocks, math and frontmatter are left alone.',
-  "settings.colorsInNotes.name": "Node colors in notes",
-  "settings.colorsInNotes.desc": "In mind map notes opened as Markdown (Live Preview and reading view, so PDF export too), give the text of colored headings and list items a light background in the node's color. The colors are only shown; change them in the mind map.",
-  "settings.formatBarInNotes.name": "Format bar when selecting text in notes",
-  "settings.formatBarInNotes.desc": 'In the Live Preview of Markdown notes (any note, not only mind maps), selecting text shows the same bar as in the mind map: bold, italic, strikethrough, underline, highlight, text colors, highlighter colors and clear. The formatting is written the same way, so it shows in both the note and the mind map. Desktop only; not in source mode, code blocks, math or frontmatter. The "Toggle the format bar in notes" command switches it.',
-  "settings.markersInNotes.name": "Node markers in notes",
-  "settings.markersInNotes.desc": "How the %%\u2026%% marker the mind map keeps at the end of a line (color, fold, relationships\u2026) looks in the Live Preview of mind map notes. Small dot: hover it to see the text, click it to edit. Hidden: nothing shows; edit it in source mode or in the mind map. Either way, typing at the end of the line, Enter, deleting and joining lines keep the marker at the end so nothing is lost. Your own comments that aren't markers are left alone.",
-  "settings.markersInNotes.show": "Show as is",
-  "settings.markersInNotes.dot": "Small dot",
-  "settings.markersInNotes.hide": "Hidden",
-  "settings.hideSyntax.name": "Keep format marks hidden while editing",
-  "settings.hideSyntax.desc": "While editing a node, ** == ~~ and other format marks stay hidden even when the cursor is right next to bold or highlighted text, so the line width doesn't jump. When off, the marks show up while the cursor is at the formatted text, like Obsidian's live preview.",
-  "settings.newNodeName.name": "Name new nodes Topic 1, Topic 2\u2026",
-  "settings.newNodeName.desc": 'A new node starts as "Topic 1" (numbered after its siblings), selected so typing replaces it. Pressing Enter or Esc without typing keeps it, so you can add several nodes in a row and fill them in later. When off, a new node you leave empty goes away.',
-  "settings.autoNumber.name": "Start numbering by typing 1.",
-  "settings.autoNumber.desc": 'While editing a node, typing "1. " or "1\u3001" at the start numbers it and its siblings (1. 2. 3.), and the typed number is removed; new siblings are numbered automatically. When off, the typed number stays as text; you can still number a group from the right-click menu \u2192 Number siblings.',
-  "settings.strikeDoneTasks.name": "Strike through completed tasks",
-  "settings.strikeDoneTasks.desc": "Nodes whose task box is checked ([x]) show their text struck through and dimmed, like Markdown task lists. Not applied in recite mode, where checked boxes are answers.",
-  "settings.widthHandleOnHover.name": "Resize width from the right edge on hover",
-  "settings.widthHandleOnHover.desc": "Hovering over any node's right edge shows the width handle: drag it to change the width without selecting the node first; double-click it to go back to automatic width, or to stretch wrapped text to one line. The selected node's handle also stays hidden until you point at the edge. When off, only the selected node has the handle.",
-  "settings.centerOnSelect.name": "Center the selected node",
-  "settings.centerOnSelect.desc": "Selecting a node by clicking, with the arrow keys, or by adding one with Tab or Enter smoothly moves it to the middle of the canvas. Shift/\u2318 multi-select, marquee selection and dragging don't move the canvas. When off, the canvas only moves when the node is out of view.",
-  "settings.pasteLinkTitle.name": "Fetch page titles for pasted links",
-  "settings.pasteLinkTitle.desc": "When pasting a web address while editing a node with no text selected, fetch the page title and turn it into [title](address). Selecting text first and pasting an address always links the selected text.",
-  "settings.cleanAttachments.name": "Clean up unused images when deleting nodes",
-  "settings.cleanAttachments.desc": `After you delete a node, or an image inside a node, in the mind map: if no other note or canvas in the vault still uses that image attachment, move it to the trash (following Obsidian's "Deleted files" setting). Undo brings the file back. Only images are touched.`,
-  "notice.viewStateReset": "\u201C{file}\u201D couldn't be opened with its saved view state (position, zoom, lock, notes), so that state was reset. The note itself is unchanged.",
-  "notice.attachmentsCleaned": "Moved {n} unused image(s) to the trash. Undo restores them.",
-  "format.bold": "Bold",
-  "format.italic": "Italic",
-  "format.strike": "Strikethrough",
-  "format.underline": "Underline ({key})",
-  "format.highlight": "Highlight (==text==)",
-  "format.textColor": "Text color {color}",
-  "format.highlightColor": "Highlighter {color}",
-  "format.link": "Link to a note {key}",
-  "format.clear": "Clear text and highlighter colors",
-  "command.formatBold": "Bold the selected text",
-  "command.formatItalic": "Italicize the selected text",
-  "command.formatUnderline": "Underline the selected text",
-  "command.formatHighlight": "Highlight the selected text",
-  "command.formatTextColor": "Text color {n}",
-  "command.formatHighlightColor": "Highlighter color {n}",
-  "command.formatClear": "Clear text and highlighter colors",
-  "command.toggleNodebar": "Toggle the floating toolbar (selected nodes)",
-  "command.toggleFormatBar": "Toggle the format bar (text selected while editing a node)",
-  "command.toggleNoteFormatBar": "Toggle the format bar in notes",
-  "notice.toggledOn": "On: {name}",
-  "notice.toggledOff": "Off: {name}",
-  "settings.notesExpanded.name": "Expand notes",
-  "settings.quoteListNotes.name": "Write notes under list items as blockquotes (> before each line)",
-  "settings.quoteListNotes.desc": "In Obsidian, indented lines right below a list item count as part of that item's text, so styles like a first-line indent line up badly. With this on, a list item's note is written with > before every line, which makes it a separate blockquote inside the item. The mind map strips one > when reading, so you won't see them in the note. Only notes you change are rewritten. Notes under headings and node tables are not affected.",
-  "settings.noteCardShow.name": "Show in expanded notes",
-  "settings.noteCardShow.desc": 'What the note box under a node shows. With only list items, the box shows list items (with their indented sub-items and continuation lines) and hides paragraphs \u2014 handy when "Only headings as nodes" puts long explanations in notes and you only want the conclusions in the map. Nodes with nothing to show keep just the note icon. Only the display changes: the note popover, editing and your file always have the full note.',
-  "settings.noteCardShow.all": "Everything",
-  "settings.noteCardShow.list": "List items only",
-  "settings.noteCardShow.ordered": "Ordered lists only",
-  "settings.noteCardShow.unordered": "Bullet lists only",
-  "settings.notesExpanded.desc": "Show node notes in a box under the node, and move the nodes around it out of the way, instead of opening them from the note icon. This sets the default; the note button on the toolbar switches a single map and is remembered per file. Nothing is written to your notes.",
-  "settings.noteMaxHeight.name": "Maximum height of expanded notes",
-  "settings.noteMaxHeight.desc": "Longer notes scroll inside their box. In pixels, scaled with the node text size.",
-  "settings.noteMaxWidth.name": "Maximum width of expanded notes",
-  "settings.noteMaxWidth.desc": "Wider boxes show images in notes larger. In pixels, scaled with the node text size. Drag the corner of a single note to give it its own size.",
-  "settings.resetNoteWidth": "Reset to 320",
-  "settings.imageThumbWidth.name": "Default image size",
-  "settings.imageThumbWidth.desc": "How wide images without a set width appear in nodes (height at most 3/4 of it; in the central topic 4/3 of it). In pixels. Drag an image's corner to give it its own size.",
-  "settings.imageMaxWidth.name": "Maximum image width",
-  "settings.imageMaxWidth.desc": "How far you can drag an image's corner. Images whose width in the note is larger show at this width; the note isn't changed. In pixels.",
-  "settings.resetImageThumb": "Reset to 240",
-  "settings.resetImageMax": "Reset to 800",
-  "settings.tableMaxWidth.name": "Maximum width of tables in nodes",
-  "settings.tableMaxWidth.desc": "Wider tables scroll sideways inside the node. Columns you haven't resized are at most 240 wide and wrap their text. In pixels, scaled with the node text size.",
-  "settings.tableMaxHeight.name": "Maximum height of tables in nodes",
-  "settings.tableMaxHeight.desc": "Taller tables scroll inside the node with the header row kept at the top. Scrolling anywhere on such a node scrolls the table, and the node stays put. In pixels, scaled with the node text size.",
-  "settings.resetTableWidth": "Reset to 640",
-  "settings.resetTableHeight": "Reset to 480",
-  "settings.embedToolbar.name": "Toolbar",
-  "settings.embedToolbar.desc": "Full: the same as an opened mind map. Custom: pick the buttons below; by default only the open / edit button. Auto-hide: no toolbar in reading view; in editing view and on canvas cards it shows only while the mouse is over the map or the map has focus.",
-  "settings.embedToolbar.full": "Full",
-  "settings.embedToolbar.custom": "Custom",
-  "settings.embedToolbar.autohide": "Auto-hide",
-  "bar.embedPage": "Toolbar of embedded maps",
-  "bar.embedPageDesc": "For mind maps embedded in notes and canvas cards (mindmap code blocks and ![[note]] embeds): full, custom buttons, or auto-hide.",
-  "bar.embed": "Open / edit this mind map",
-  "bar.embedDesc": "Embedded notes show \u201COpen this mind map\u201D; code blocks show \u201CEdit / Done\u201D",
-  "settings.outlineWrap.name": "Show full titles in the outline",
-  "settings.outlineWrap.desc": "Long titles in the mind map's outline panel wrap onto more lines instead of being cut off.",
-  "settings.headingsOnly.name": "Only headings as nodes",
-  "settings.headingsOnly.desc": "Mind maps of notes show only headings as nodes; lists and paragraphs under a heading become its note, kept exactly as written. Code-block mind maps are not affected.",
-  "settings.codeBlockHeight.name": "Maximum height of embedded code blocks",
-  "settings.codeBlockHeight.desc": "Embedded mindmap code blocks fit their content, up to this height in pixels."
-};
-var zh = {
-  "command.toggleView": "\u5728\u601D\u7EF4\u5BFC\u56FE\u548C Markdown \u4E4B\u95F4\u5207\u6362",
-  "command.openPreview": "Markdown \u548C\u601D\u7EF4\u5BFC\u56FE\u5206\u5C4F\u5BF9\u7167",
-  "command.newMindMap": "\u65B0\u5EFA\u601D\u7EF4\u5BFC\u56FE",
-  "command.linkNote": "\u94FE\u63A5\u5230\u7B14\u8BB0 / \u65B0\u5EFA\u7B14\u8BB0",
-  "command.toggleOutline": "\u5207\u6362\u5927\u7EB2\u9762\u677F",
-  "command.toggleHidden": "\u663E\u793A / \u4E0D\u663E\u793A\u9690\u85CF\u7684\u8282\u70B9",
-  "command.addListIcons": "\u7ED9\u5DF2\u6709\u8111\u56FE\u7B14\u8BB0\u8865\u4E0A\u5217\u8868\u56FE\u6807",
-  "command.focusBranch": "\u805A\u7126\u9009\u4E2D\u5206\u652F",
-  "command.exitFocus": "\u9000\u51FA\u805A\u7126",
-  "command.copyNodeLink": "\u590D\u5236\u8282\u70B9\u94FE\u63A5",
-  "command.search": "\u641C\u7D22\u8282\u70B9",
-  "command.expandAll": "\u5C55\u5F00\u5168\u90E8\u8282\u70B9",
-  "command.collapseAll": "\u6298\u53E0\u5168\u90E8\u8282\u70B9",
-  "command.toggleFold": "\u6298\u53E0 / \u5C55\u5F00\u9009\u4E2D\u8282\u70B9",
-  "command.showLevel": "\u9009\u4E2D\u8282\u70B9\u5F80\u4E0B\u53EA\u663E\u793A {n} \u5C42\uFF08\u6CA1\u9009\u6216\u9009\u4E2D\u4E2D\u5FC3\u4E3B\u9898\u65F6\u4E3A\u6574\u5F20\u56FE\uFF09",
-  "command.fitBranch": "\u7F29\u653E\u5230\u9009\u4E2D\u5206\u652F",
-  "command.toggleBox": "\u6DFB\u52A0 / \u79FB\u9664\u5916\u6846",
-  "command.toggleRecite": "\u5207\u6362\u80CC\u8BF5\u6A21\u5F0F",
-  "command.togglePdfExcerpt": "PDF \u81EA\u52A8\u6458\u5F55\u5230\u8FD9\u5F20\u8111\u56FE\uFF08\u5F00/\u5173\uFF09",
-  "action.stopExcerpt": "PDF \u81EA\u52A8\u6458\u5F55\u4E2D\uFF0C\u70B9\u51FB\u505C\u6B62",
-  "notice.excerptOn": "\u5DF2\u5F00\u59CB PDF \u81EA\u52A8\u6458\u5F55\uFF1APDF++ \u6BCF\u590D\u5236\u4E00\u6B21\u94FE\u63A5\uFF0C\u5C31\u52A0\u5230\u8FD9\u5F20\u8111\u56FE\u7684\u9009\u4E2D\u8282\u70B9\u4E0B\u3002\u5728 PDF++ \u8BBE\u7F6E\u91CC\u6253\u5F00 Auto-copy\uFF0C\u9009\u4E2D\u6587\u5B57\u5C31\u76F4\u63A5\u52A0\u8FDB\u6765",
-  "notice.excerptOff": "\u5DF2\u505C\u6B62 PDF \u81EA\u52A8\u6458\u5F55",
-  "notice.excerptNeedsPdfPlus": "PDF \u81EA\u52A8\u6458\u5F55\u9700\u8981\u5148\u5B89\u88C5\u5E76\u542F\u7528 PDF++ \u63D2\u4EF6",
-  "pdfExcerpt.status": "\u5DF2\u590D\u5236\u5E76\u52A0\u5230\u8111\u56FE",
-  "command.toggleLock": "\u9501\u5B9A / \u89E3\u9501\u7F16\u8F91",
-  "command.editCallout": "\u6DFB\u52A0 / \u7F16\u8F91\u6807\u6CE8",
-  "command.addRel": "\u4ECE\u9009\u4E2D\u7684\u8282\u70B9\u6DFB\u52A0\u5173\u8054\u7EBF",
-  "command.toggleCallouts": "\u663E\u793A / \u9690\u85CF\u6807\u6CE8",
-  "command.toggleNotes": "\u5C55\u5F00 / \u6536\u8D77\u5907\u6CE8",
-  "command.exportPng": "\u5BFC\u51FA\u4E3A PNG",
-  "command.exportSvg": "\u5BFC\u51FA\u4E3A SVG",
-  "command.copyPng": "\u590D\u5236\u4E3A\u56FE\u7247",
-  "menu.openAsMarkdown": "\u4EE5 Markdown \u6253\u5F00",
-  "menu.openAsMindMap": "\u4EE5\u601D\u7EF4\u5BFC\u56FE\u6253\u5F00",
-  "hover.display": "\u601D\u7EF4\u5BFC\u56FE",
-  "notice.setIconFirst": "\u5148\u5728\u8BBE\u7F6E\u91CC\u586B\u4E00\u4E2A\u56FE\u6807\u503C",
-  "notice.allHaveIcons": "\u6240\u6709\u8111\u56FE\u7B14\u8BB0\u90FD\u5DF2\u7ECF\u6709\u56FE\u6807\u4E86",
-  "notice.iconsAdded": "\u5DF2\u7ED9 {count} \u7BC7\u8111\u56FE\u7B14\u8BB0\u8865\u4E0A\u56FE\u6807",
-  "log.iconWriteFailed": "\u7ED9 {path} \u5199\u56FE\u6807\u5931\u8D25",
-  "notice.created": "\u5DF2\u521B\u5EFA {path}",
-  "notice.writeBackFailed": "\u5199\u56DE\u4EE3\u7801\u5757\u5931\u8D25\uFF1A{error}",
-  "notice.rootNoRoom": "\u4E2D\u5FC3\u4E3B\u9898\u5B58\u4E0D\u4E0B\uFF1A\u4EE3\u7801\u5757\u91CC\u7684\u6807\u9898\u5DF2\u7ECF\u7528\u5230\u516D\u7EA7\uFF0C\u8981\u7ED9\u4E2D\u5FC3\u4E3B\u9898\u8865\u4E00\u884C\u4E00\u7EA7\u6807\u9898\uFF0C\u539F\u6765\u7684\u6807\u9898\u90FD\u5F97\u964D\u4E00\u7EA7\uFF0C\u4F1A\u8D85\u8FC7\u4E0A\u9650\u3002",
-  "notice.rootBadName": '\u4E2D\u5FC3\u4E3B\u9898\u5C31\u662F\u7B14\u8BB0\u7684\u6587\u4EF6\u540D\uFF0C\u4E0D\u80FD\u542B\u6709\u8FD9\u4E9B\u5B57\u7B26\uFF1A\\ / : * ? " < > | # ^ [ ]',
-  "notice.rootNameTaken": "\u7B14\u8BB0\u6539\u4E0D\u6210\u300C{name}\u300D\uFF1A\u540C\u4E00\u4E2A\u6587\u4EF6\u5939\u91CC\u5DF2\u7ECF\u6709\u540C\u540D\u6587\u4EF6\u4E86\u3002",
-  "notice.externalConflict": "{file} \u5728\u5916\u90E8\u88AB\u6539\u52A8\uFF0C\u548C\u8111\u56FE\u91CC\u8FD8\u6CA1\u4FDD\u5B58\u7684\u7F16\u8F91\u6539\u5230\u4E86\u540C\u4E00\u5904\uFF0C\u5DF2\u4FDD\u7559\u8111\u56FE\u91CC\u7684\u7248\u672C",
-  "error.fileNotFound": "\u627E\u4E0D\u5230\u6587\u4EF6 {path}",
-  "error.blockNotFound": "\u5728\u7B14\u8BB0\u91CC\u627E\u4E0D\u5230\u8FD9\u4E2A\u4EE3\u7801\u5757",
-  "notice.createNoteFailed": "\u65B0\u5EFA\u7B14\u8BB0\u5931\u8D25\uFF1A{error}",
-  "newFile.baseName": "\u672A\u547D\u540D\u601D\u7EF4\u5BFC\u56FE",
-  "newFile.topic": "\u4E3B\u9898 {n}",
-  "notice.templateMissing": "\u627E\u4E0D\u5230\u6A21\u677F\u7B14\u8BB0\uFF1A{path}\uFF0C\u5DF2\u7528\u9ED8\u8BA4\u5185\u5BB9\u65B0\u5EFA\u3002",
-  "notice.headingLinksUpdated": "\u5DF2\u66F4\u65B0 {n} \u5904\u6307\u5411\u8FD9\u7BC7\u7B14\u8BB0\u6807\u9898\u7684\u94FE\u63A5",
-  "view.displayText": "\u601D\u7EF4\u5BFC\u56FE",
-  "error.noOpenFile": "\u6CA1\u6709\u6253\u5F00\u7684\u6587\u4EF6",
-  "notice.exported": "\u5DF2\u5BFC\u51FA {path}",
-  "notice.exportFailed": "\u5BFC\u51FA\u5931\u8D25\uFF1A{error}",
-  "notice.copiedAsImage": "\u5DF2\u590D\u5236\u4E3A\u56FE\u7247",
-  "notice.copyFailedWithError": "\u590D\u5236\u5931\u8D25\uFF1A{error}",
-  "xmind.convert": "\u8F6C\u6362\u4E3A Markdown \u7B14\u8BB0",
-  "xmind.readFailed": "\u65E0\u6CD5\u8BFB\u53D6 {name}\uFF1A{error}",
-  "xmind.converted": "\u5DF2\u8F6C\u6362\u4E3A {path}",
-  "xmind.sheet": "\u5DE5\u4F5C\u8868 {n}",
-  "xmind.notZip": "\u4E0D\u662F\u6709\u6548\u7684 zip \u6587\u4EF6",
-  "xmind.zipCorrupt": "zip \u76EE\u5F55\u635F\u574F",
-  "xmind.unsupportedCompression": "\u4E0D\u652F\u6301\u7684\u538B\u7F29\u65B9\u5F0F {method}",
-  "xmind.noContent": "\u627E\u4E0D\u5230 content.json \u6216 content.xml\uFF0C\u53EF\u80FD\u4E0D\u662F XMind \u6587\u4EF6",
-  "xmind.lost": "\u4EE5\u4E0B\u5185\u5BB9\u6682\u4E0D\u652F\u6301\uFF0C\u4E0D\u4F1A\u663E\u793A\uFF0C\u8F6C\u6362\u65F6\u4E5F\u4E0D\u4F1A\u4FDD\u7559\uFF1A{items}",
-  "xmind.lost.sep": "\u3001",
-  "xmind.lost.detached": "{n} \u4E2A\u81EA\u7531\u4E3B\u9898",
-  "xmind.lost.relationships": "{n} \u6761\u8054\u7CFB\u7EBF",
-  "xmind.lost.summaries": "{n} \u4E2A\u6982\u8981",
-  "xmind.lost.comments": "{n} \u6761\u8BC4\u8BBA",
-  "xmind.lost.images": "{n} \u5F20\u56FE\u7247\uFF08\u6587\u4EF6\u91CC\u7F3A\u56FE\u7247\uFF09",
-  "export.readFailed": "\u8BFB\u53D6\u5931\u8D25",
-  "export.nothing": "\u6CA1\u6709\u53EF\u5BFC\u51FA\u7684\u5185\u5BB9",
-  "export.svgRenderFailed": "SVG \u6E32\u67D3\u5931\u8D25",
-  "export.noCanvas": "\u65E0\u6CD5\u521B\u5EFA\u753B\u5E03",
-  "export.pngEncodeFailed": "PNG \u7F16\u7801\u5931\u8D25",
-  "structure.logicRight": "\u903B\u8F91\u56FE\uFF08\u5411\u53F3\uFF09",
-  "structure.mindmap": "\u601D\u7EF4\u5BFC\u56FE\uFF08\u5DE6\u53F3\u5206\u5E03\uFF09",
-  "structure.orgDown": "\u7EC4\u7EC7\u7ED3\u6784\u56FE\uFF08\u5411\u4E0B\uFF09",
-  "structure.treeRight": "\u6811\u5F62\u56FE",
-  "structure.timelineH": "\u6A2A\u5411\u65F6\u95F4\u8F74\uFF08\u540C\u4FA7\uFF09",
-  "structure.timelineHAlt": "\u6A2A\u5411\u65F6\u95F4\u8F74\uFF08\u4E0A\u4E0B\u4EA4\u9519\uFF09",
-  "structure.timelineVRight": "\u7EB5\u5411\u65F6\u95F4\u8F74\uFF08\u5411\u53F3\uFF09",
-  "structure.timelineVLeft": "\u7EB5\u5411\u65F6\u95F4\u8F74\uFF08\u5411\u5DE6\uFF09",
-  "structure.timelineVAlt": "\u7EB5\u5411\u65F6\u95F4\u8F74\uFF08\u5DE6\u53F3\u4EA4\u9519\uFF09",
-  "theme.label": "{name} \xB7 {desc}",
-  "theme.snow": "\u96EA\u677E",
-  "theme.snow.desc": "\u6DF1\u8272\u4E2D\u5FC3\uFF0C\u7070\u5E95\u8282\u70B9",
-  "theme.rainbow": "\u5F69\u8679",
-  "theme.rainbow.desc": "\u5206\u652F\u5404\u4E00\u8272\uFF0C\u66F2\u7EBF",
-  "theme.business": "\u5546\u52A1",
-  "theme.business.desc": "\u84DD\u8272\u7CFB\uFF0C\u76F4\u89D2\u6298\u7EBF",
-  "theme.warm": "\u6696\u9633",
-  "theme.warm.desc": "\u6A59\u8C03\uFF0C\u5927\u5706\u89D2\u66F2\u7EBF",
-  "theme.mono": "\u6781\u7B80",
-  "theme.mono.desc": "\u9ED1\u767D\u63CF\u8FB9\uFF0C\u7EC6\u7EBF",
-  "theme.line": "\u7EBF\u6761",
-  "theme.line.desc": "\u7EAF\u6587\u5B57\u8282\u70B9\uFF0C\u7EC6\u6298\u7EBF",
-  "theme.forest": "\u68EE\u6797",
-  "theme.forest.desc": "\u7EFF\u8C03\u5206\u652F\uFF0C\u66F2\u7EBF",
-  "toolbarPos.bottom": "\u4E0B\u65B9\uFF08\u6C34\u5E73\uFF09",
-  "toolbarPos.top": "\u4E0A\u65B9\uFF08\u6C34\u5E73\uFF09",
-  "toolbarPos.left": "\u5DE6\u4FA7\uFF08\u5782\u76F4\uFF09",
-  "toolbarPos.right": "\u53F3\u4FA7\uFF08\u5782\u76F4\uFF09",
-  "color.red": "\u7EA2\u8272",
-  "color.orange": "\u6A59\u8272",
-  "color.yellow": "\u9EC4\u8272",
-  "color.green": "\u7EFF\u8272",
-  "color.teal": "\u9752\u8272",
-  "color.blue": "\u84DD\u8272",
-  "color.purple": "\u7D2B\u8272",
-  "color.pink": "\u7C89\u8272",
-  "color.gray": "\u7070\u8272",
-  "marker.priority": "\u4F18\u5148\u7EA7",
-  "marker.progress": "\u8FDB\u5EA6",
-  "marker.flags": "\u65D7\u5E1C",
-  "marker.symbols": "\u7B26\u53F7",
-  "marker.custom": "\u81EA\u5B9A\u4E49",
-  "marker.recite": "\u80CC\u8BF5",
-  "marker.answerTip": "\u7B54\u6848\uFF1A\u80CC\u8BF5\u6A21\u5F0F\u4E0B\u8FDE\u540C\u5B50\u8282\u70B9\u4E00\u8D77\u906E\u4F4F\uFF0C\u70B9\u4E00\u4E0B\u63ED\u5F00",
-  "inline.toggleTask": "\u70B9\u51FB\u5207\u6362",
-  "inline.activate": "\u6FC0\u6D3B",
-  "canvas.themeTip": "\u4E3B\u9898\uFF1A{name} \xB7 \u70B9\u51FB\u5207\u6362",
-  "canvas.structureTip": "\u7ED3\u6784\uFF1A{name} \xB7 \u70B9\u51FB\u5207\u6362",
-  "canvas.doneEditing": "\u5B8C\u6210\u7F16\u8F91\uFF0C\u56DE\u5230\u53EA\u8BFB",
-  "canvas.editEmbedded": "\u7F16\u8F91\u8FD9\u5F20\u8111\u56FE \xB7 \u6539\u52A8\u5199\u56DE\u4EE3\u7801\u5757",
-  "canvas.openEmbeddedFile": "\u6253\u5F00\u8FD9\u5F20\u8111\u56FE\u8FDB\u884C\u7F16\u8F91",
-  "canvas.recite": "\u80CC\u8BF5\u6A21\u5F0F \xB7 \u906E\u4F4F ==\u9AD8\u4EAE== \u548C\u9009\u62E9\u9898\u7B54\u6848\uFF0C\u70B9\u4E00\u4E0B\u63ED\u6653",
-  "canvas.toggleCallouts": "\u663E\u793A / \u9690\u85CF\u6807\u6CE8",
-  "canvas.showCallouts": "\u663E\u793A\u6807\u6CE8",
-  "canvas.hideCallouts": "\u9690\u85CF\u6807\u6CE8",
-  "canvas.viewCallout": "\u67E5\u770B\u6807\u6CE8",
-  "canvas.calloutPlaceholder": "\u6807\u6CE8",
-  "canvas.singleChoice": "\u5355\u9009",
-  "canvas.multiChoice": "\u591A\u9009",
-  "canvas.answerCovered": "\u7B54\u6848 \xB7 \u70B9\u4E00\u4E0B\u63ED\u5F00",
-  "canvas.lockEditing": "\u9501\u5B9A\u7F16\u8F91\uFF08\u53EA\u80FD\u67E5\u770B\uFF1A\u7F29\u653E\u3001\u5E73\u79FB\u3001\u6298\u53E0\u7167\u5E38\uFF09",
-  "canvas.unlockEditing": "\u5DF2\u9501\u5B9A\u7F16\u8F91 \xB7 \u70B9\u4E00\u4E0B\u89E3\u9501",
-  "canvas.toolbarContextTip": "\u53F3\u952E\u53EF\u5207\u6362\u5DE5\u5177\u680F\u4F4D\u7F6E",
-  "canvas.outline": "\u5927\u7EB2\u9762\u677F \xB7 \u6811\u5F62\u5217\u8868\uFF0C\u53EF\u6539\u540D\u548C\u8C03\u5C42\u7EA7",
-  "canvas.zoomOut": "\u7F29\u5C0F {key}",
-  "canvas.zoomLevel": "\u5F53\u524D\u7F29\u653E \xB7 \u70B9\u51FB\u56DE\u5230 100%",
-  "canvas.zoomIn": "\u653E\u5927 {key}",
-  "canvas.fit": "\u9002\u5E94\u753B\u5E03 \xB7 \u7F29\u653E\u5230\u770B\u5F97\u89C1\u5168\u90E8\u8282\u70B9 {key}",
-  "canvas.center": "\u56DE\u5230\u4E2D\u5FC3 \xB7 \u4E2D\u5FC3\u4E3B\u9898\u5C45\u4E2D\uFF0C\u7F29\u653E 100%",
-  "canvas.undo": "\u64A4\u9500 {key}",
-  "canvas.redo": "\u91CD\u505A {key}",
-  "canvas.search": "\u641C\u7D22\u8282\u70B9 {key}",
-  "canvas.foldLevels": "\u6298\u53E0\u5C42\u7EA7 \xB7 \u5C55\u5F00\u5168\u90E8\u6216\u53EA\u770B\u524D\u51E0\u5C42",
-  "canvas.centralTopic": "\u4E2D\u5FC3\u4E3B\u9898",
-  "canvas.splitSyncOn": "\u548C\u65C1\u8FB9\u7684 Markdown \u8054\u52A8\uFF1A\u5F00\uFF08\u70B9\u4E00\u4E0B\u5173\u6389\uFF09",
-  "canvas.splitSyncOff": "\u548C\u65C1\u8FB9\u7684 Markdown \u8054\u52A8\uFF1A\u5173\uFF08\u70B9\u4E00\u4E0B\u6253\u5F00\uFF09",
-  "canvas.newTopicName": "\u4E3B\u9898{n}",
-  "canvas.frameShield": "\u53CC\u51FB\u753B\u9762\u6216\u70B9\u300C\u6FC0\u6D3B\u300D\uFF0C\u4E4B\u540E\u624D\u80FD\u64AD\u653E\u548C\u8DF3\u8F6C",
-  "canvas.viewNote": "\u67E5\u770B\u5907\u6CE8",
-  "canvas.toggleNotes": "\u5C55\u5F00 / \u6536\u8D77\u5907\u6CE8",
-  "canvas.expandNotes": "\u5728\u8282\u70B9\u4E0B\u65B9\u5C55\u5F00\u5907\u6CE8",
-  "canvas.collapseNotes": "\u6536\u8D77\u5907\u6CE8",
-  "canvas.expandNote": "\u5C55\u5F00\u8FD9\u6761\u5907\u6CE8",
-  "canvas.collapseNote": "\u6536\u8D77\u8FD9\u6761\u5907\u6CE8",
-  "canvas.showHidden": "\u663E\u793A\u9690\u85CF\u7684\u8282\u70B9",
-  "canvas.hideHidden": "\u4E0D\u518D\u663E\u793A\u9690\u85CF\u7684\u8282\u70B9",
-  "canvas.resizeNote": "\u62D6\u52A8\u8C03\u6574\u8FD9\u6761\u5907\u6CE8\u7684\u5927\u5C0F\uFF0C\u53CC\u51FB\u6062\u590D\u9ED8\u8BA4",
-  "canvas.boxTitleDefault": "\u5916\u6846",
-  "theme.custom.desc": "\u81EA\u5B9A\u4E49",
-  "theme.custom.missing": "\u81EA\u5B9A\u4E49\u4E3B\u9898\uFF08\u672A\u627E\u5230\uFF09",
-  "customTheme.heading": "\u81EA\u5B9A\u4E49\u4E3B\u9898",
-  "customTheme.new": "\u65B0\u5EFA\u81EA\u5B9A\u4E49\u4E3B\u9898",
-  "customTheme.newDesc": "\u5148\u9009\u4E00\u4E2A\u5185\u7F6E\u4E3B\u9898\u4F5C\u4E3A\u8D77\u70B9\uFF0C\u5728\u5B83\u7684\u57FA\u7840\u4E0A\u6539\u3002",
-  "customTheme.create": "\u65B0\u5EFA",
-  "customTheme.defaultName": "\u6211\u7684\u4E3B\u9898 {n}",
-  "customTheme.basedOn": "\u57FA\u4E8E\u300C{base}\u300D",
-  "customTheme.edit": "\u7F16\u8F91",
-  "customTheme.duplicate": "\u590D\u5236",
-  "customTheme.copyName": "{name} \u526F\u672C",
-  "customTheme.delete": "\u5220\u9664",
-  "customTheme.deleteConfirm": "\u5220\u9664\u81EA\u5B9A\u4E49\u4E3B\u9898\u300C{name}\u300D\uFF1F\u7528\u5B83\u7684\u7B14\u8BB0\u4F1A\u9000\u56DE\u9ED8\u8BA4\u4E3B\u9898\uFF0C\u7B14\u8BB0\u5185\u5BB9\u4E0D\u53D7\u5F71\u54CD\u3002",
-  "customTheme.editTitle": "\u7F16\u8F91\u81EA\u5B9A\u4E49\u4E3B\u9898",
-  "customTheme.preview": "\u5B9E\u65F6\u9884\u89C8",
-  "customTheme.cancel": "\u53D6\u6D88",
-  "customTheme.save": "\u4FDD\u5B58",
-  "customTheme.untitled": "\u672A\u547D\u540D\u4E3B\u9898",
-  "customTheme.name": "\u540D\u79F0",
-  "customTheme.base": "\u57FA\u7840\u4E3B\u9898",
-  "customTheme.baseDesc": "\u6362\u57FA\u7840\u4E3B\u9898\u4F1A\u6309\u5B83\u91CD\u65B0\u586B\u4E00\u904D\u4E0B\u9762\u7684\u503C\u3002",
-  "customTheme.overall": "\u6574\u4F53",
-  "customTheme.edge": "\u8FDE\u7EBF",
-  "customTheme.branchColors": "\u5206\u652F\u5404\u4E00\u8272",
-  "customTheme.spacing": "\u95F4\u8DDD",
-  "customTheme.spacing.compact": "\u7D27\u51D1",
-  "customTheme.spacing.normal": "\u6807\u51C6",
-  "customTheme.spacing.loose": "\u5BBD\u677E",
-  "customTheme.byLevel": "\u6309\u5C42\u7EA7",
-  "customTheme.tier0": "\u4E2D\u5FC3\u4E3B\u9898",
-  "customTheme.tier1": "\u4E3B\u4E3B\u9898",
-  "customTheme.tier2": "\u5B50\u4E3B\u9898",
-  "customTheme.tier3": "\u7B2C 3 \u5C42\u53CA\u4EE5\u4E0B",
-  "customTheme.fontSize": "\u5B57\u53F7",
-  "customTheme.bold": "\u7C97\u4F53",
-  "customTheme.italic": "\u659C\u4F53",
-  "customTheme.textColor": "\u6587\u5B57\u989C\u8272",
-  "customTheme.shape": "\u5916\u5F62",
-  "customTheme.shape.fill": "\u6709\u80CC\u666F",
-  "customTheme.shape.none": "\u65E0\u80CC\u666F",
-  "customTheme.shape.underline": "\u4E0B\u5212\u7EBF",
-  "customTheme.fill": "\u80CC\u666F\u8272",
-  "customTheme.radius": "\u5706\u89D2",
-  "customTheme.border": "\u8FB9\u6846",
-  "customTheme.border.none": "\u65E0",
-  "customTheme.border.solid": "\u5B9E\u7EBF",
-  "customTheme.border.dashed": "\u865A\u7EBF",
-  "customTheme.borderWidth": "\u8FB9\u6846\u7C97\u7EC6",
-  "customTheme.borderColor": "\u8FB9\u6846\u989C\u8272",
-  "customTheme.width": "\u6700\u5927\u5BBD\u5EA6",
-  "customTheme.widthDesc": "\u5185\u5BB9\u77ED\u5C31\u6309\u5185\u5BB9\u5BBD\u5EA6\uFF0C\u8D85\u8FC7\u5C31\u5728\u6700\u5927\u5BBD\u5EA6\u5904\u6362\u884C\uFF1B\u5355\u4E2A\u8282\u70B9\u62D6\u51FA\u6765\u7684\u5BBD\u5EA6\u4ECD\u7136\u4F18\u5148\u3002",
-  "customTheme.width.auto": "\u9ED8\u8BA4",
-  "customTheme.width.custom": "\u81EA\u5B9A\u4E49",
-  "customTheme.widthPx": "\u6700\u5927\u5BBD\u5EA6",
-  "customTheme.align": "\u540C\u5C42\u5BBD\u5EA6\u5BF9\u9F50",
-  "customTheme.alignDesc": "\u8FD9\u4E00\u5C42\u7684\u8282\u70B9\u7EDF\u4E00\u6210\u540C\u5C42\u6700\u5BBD\u90A3\u4E2A\u7684\u5BBD\u5EA6\uFF0C\u6392\u5F97\u6574\u9F50\uFF1B\u5355\u72EC\u62D6\u8FC7\u5BBD\u5EA6\u7684\u8282\u70B9\u4FDD\u6301\u81EA\u5DF1\u7684\u5BBD\u5EA6\u3002",
-  "customTheme.lineColor": "\u8FDE\u5230\u8FD9\u4E00\u5C42\u7684\u7EBF\uFF1A\u989C\u8272",
-  "customTheme.lineWidth": "\u8FDE\u5230\u8FD9\u4E00\u5C42\u7684\u7EBF\uFF1A\u7C97\u7EC6",
-  "canvas.edgeTip": "\u8FDE\u7EBF\uFF1A{name}",
-  "edge.theme": "\u8DDF\u968F\u4E3B\u9898",
-  "edge.curve": "\u66F2\u7EBF",
-  "edge.elbow": "\u76F4\u89D2\u6298\u7EBF",
-  "edge.straight": "\u76F4\u7EBF",
-  "edge.dashed": "\u865A\u7EBF",
-  "edge.rounded": "\u5706\u89D2\u62D0\u89D2",
-  "canvas.resizeWidth": "\u62D6\u52A8\u6539\u5BBD\u5EA6 \xB7 \u53CC\u51FB\u6062\u590D\u81EA\u52A8",
-  "canvas.expandChildren": "\u5C55\u5F00 {count} \u4E2A\u5B50\u8282\u70B9 /",
-  "canvas.collapseBranch": "\u6298\u53E0\u8FD9\u4E00\u652F /",
-  "canvas.colorTip": "{color} \xB7 \u7ED9\u9009\u4E2D\u7684\u8282\u70B9\u4E0A\u8272",
-  "canvas.clearColor": "\u6E05\u9664\u989C\u8272",
-  "canvas.addChildTip": "\u6DFB\u52A0\u5B50\u8282\u70B9 {key}",
-  "canvas.addSiblingTip": "\u6DFB\u52A0\u5144\u5F1F\u8282\u70B9 {key}",
-  "canvas.markersTip": "\u6807\u8BB0 \xB7 \u4F18\u5148\u7EA7\u3001\u8FDB\u5EA6\u3001\u65D7\u5E1C\u3001\u7B26\u53F7",
-  "canvas.noteTip": "\u5907\u6CE8 \xB7 \u652F\u6301 Markdown\uFF0C\u53EF\u5199\u5217\u8868",
-  "canvas.boxTip": "\u5916\u6846 {key} \xB7 \u518D\u70B9\u4E00\u6B21\u53EF\u52A0\u6807\u9898\u6216\u79FB\u9664",
-  "canvas.linkTip": "\u94FE\u63A5\u5230\u7B14\u8BB0\uFF0C\u6216\u6309\u540D\u5B57\u65B0\u5EFA {key}",
-  "canvas.copyTip": "\u590D\u5236\u8FD9\u68F5\u5B50\u6811 {key}",
-  "canvas.pasteTip": "\u7C98\u8D34\u4E3A\u5B50\u8282\u70B9 {key}",
-  "canvas.deleteTip": "\u5220\u9664\u8282\u70B9\u53CA\u5176\u5B50\u6811 {key}",
-  "canvas.resizeFrame": "\u62D6\u52A8\u6539\u5927\u5C0F\uFF08\u6309\u4F4F Shift \u5355\u72EC\u8C03\u9AD8\u5EA6\uFF09\uFF0C\u53CC\u51FB\u6062\u590D 560\xD7315",
-  "canvas.resizeImage": "\u62D6\u52A8\u6539\u56FE\u7247\u5927\u5C0F\uFF0C\u53CC\u51FB\u6062\u590D\u539F\u59CB\u5C3A\u5BF8",
-  "canvas.notePlaceholder": "\u5907\u6CE8\uFF08\u652F\u6301 Markdown\uFF0C\u53EF\u4EE5\u5199\u5217\u8868\uFF09",
-  "canvas.clearMarkers": "\u6E05\u9664\u5168\u90E8\u6807\u8BB0",
-  "canvas.wholeMap": "\u5168\u56FE",
-  "canvas.emptyNode": "\uFF08\u7A7A\uFF09",
-  "canvas.untitled": "\u672A\u547D\u540D",
-  "canvas.expandAll": "\u5C55\u5F00\u5168\u90E8",
-  "canvas.mainTopicsOnly": "\u53EA\u663E\u793A\u4E3B\u4E3B\u9898",
-  "canvas.showToLevel": "\u663E\u793A\u5230\u7B2C {n} \u5C42",
-  "canvas.searchPlaceholder": "\u641C\u7D22\u8282\u70B9",
-  "canvas.prevMatch": "\u4E0A\u4E00\u4E2A\u5339\u914D {key}",
-  "canvas.nextMatch": "\u4E0B\u4E00\u4E2A\u5339\u914D {key}",
-  "canvas.closeSearch": "\u5173\u95ED\u641C\u7D22 {key}",
-  "menu.edit": "\u7F16\u8F91",
-  "menu.addChild": "\u6DFB\u52A0\u5B50\u8282\u70B9",
-  "menu.addSibling": "\u6DFB\u52A0\u5144\u5F1F\u8282\u70B9",
-  "menu.insertBefore": "\u5728\u524D\u9762\u63D2\u5165\u8282\u70B9",
-  "menu.insertParent": "\u63D2\u5165\u7236\u8282\u70B9",
-  "menu.insertGroup": "\u63D2\u5165",
-  "menu.foldGroup": "\u6298\u53E0\u4E0E\u89C6\u56FE",
-  "menu.boxGroup": "\u5916\u6846",
-  "menu.summaryGroup": "\u6982\u8981",
-  "menu.more": "\u66F4\u591A",
-  "menu.newFloat": "\u5728\u8FD9\u91CC\u65B0\u5EFA\u81EA\u7531\u4E3B\u9898",
-  "menu.toFloat": "\u8F6C\u4E3A\u81EA\u7531\u4E3B\u9898",
-  "menu.attachFloat": "\u6302\u56DE\u4E2D\u5FC3\u4E3B\u9898",
-  "menu.revealInMarkdown": "\u5728 Markdown \u4E2D\u5B9A\u4F4D",
-  "menu.exitFocus": "\u9000\u51FA\u805A\u7126",
-  "menu.focusBranch": "\u805A\u7126\u6B64\u5206\u652F",
-  "menu.expand": "\u5C55\u5F00",
-  "menu.collapse": "\u6298\u53E0",
-  "menu.expandBranch": "\u5C55\u5F00\u5168\u90E8\u5B50\u5206\u652F",
-  "menu.expandNextLevel": "\u53EA\u5C55\u5F00\u4E0B\u4E00\u7EA7",
-  "menu.collapseBranch": "\u6298\u53E0\u5168\u90E8\u5B50\u5206\u652F",
-  "menu.expandLevel": "\u5C55\u5F00\u4E00\u7EA7",
-  "menu.collapseLevel": "\u6298\u53E0\u4E00\u7EA7",
-  "menu.openLink": "\u6253\u5F00\u300C{target}\u300D",
-  "menu.unlink": "\u53D6\u6D88\u94FE\u63A5",
-  "menu.linkNote": "\u94FE\u63A5\u5230\u7B14\u8BB0\u2026",
-  "menu.editNote": "\u7F16\u8F91\u5907\u6CE8",
-  "menu.addNote": "\u6DFB\u52A0\u5907\u6CE8",
-  "menu.deleteNote": "\u5220\u9664\u5907\u6CE8",
-  "bar.nodebarPage": "\u6D6E\u52A8\u5DE5\u5177\u680F\u7684\u6309\u94AE",
-  "bar.nodebarPageDesc": "\u9009\u4E2D\u8282\u70B9\u65F6\u4E0A\u65B9\u90A3\u6392\u5DE5\u5177\u663E\u793A\u54EA\u4E9B\u6309\u94AE\u3001\u6309\u4EC0\u4E48\u987A\u5E8F\uFF1B\u8FD8\u6709\u51E0\u4E2A\u9ED8\u8BA4\u4E0D\u663E\u793A\u7684\u53EF\u9009\u6309\u94AE\u3002",
-  "bar.toolbarPage": "\u4E3B\u5DE5\u5177\u680F\u7684\u6309\u94AE",
-  "bar.toolbarPageDesc": "\u8111\u56FE\u4E3B\u5DE5\u5177\u680F\u663E\u793A\u54EA\u4E9B\u6309\u94AE\u3001\u6309\u4EC0\u4E48\u987A\u5E8F\u3002",
-  "bar.count": "\u663E\u793A {n} / {total} \u4E2A",
-  "bar.reset": "\u6062\u590D\u9ED8\u8BA4",
-  "bar.nodebarDesc": "\u5173\u6389\u5F00\u5173\u5C31\u4E0D\u663E\u793A\uFF1B\u6309\u4F4F\u5DE6\u8FB9\u7684\u628A\u624B\u62D6\u52A8\uFF0C\u6216\u8005\u7528\u7BAD\u5934\u8C03\u987A\u5E8F\u3002\u6539\u5B8C\u6253\u5F00\u7740\u7684\u8111\u56FE\u9A6C\u4E0A\u751F\u6548\u3002",
-  "bar.toolbarDesc": "\u5173\u6389\u5F00\u5173\u5C31\u4E0D\u663E\u793A\uFF1B\u6309\u4F4F\u5DE6\u8FB9\u7684\u628A\u624B\u62D6\u52A8\uFF0C\u6216\u8005\u7528\u7BAD\u5934\u8C03\u987A\u5E8F\u3002\u5206\u9694\u7EBF\u4E5F\u80FD\u632A\u3001\u80FD\u5173\uFF1B\u4E00\u8FB9\u6CA1\u6709\u6309\u94AE\u7684\u5206\u9694\u7EBF\u4E0D\u663E\u793A\u3002",
-  "bar.resetButton": "\u6062\u590D",
-  "bar.moveUp": "\u4E0A\u79FB",
-  "bar.moveDown": "\u4E0B\u79FB",
-  "bar.sep": "\u5206\u9694\u7EBF",
-  "bar.sepDesc": "\u6309\u94AE\u5206\u7EC4\u4E4B\u95F4\u7684\u4E00\u6761\u77ED\u7AD6\u7EBF",
-  "bar.colors": "\u989C\u8272",
-  "bar.child": "\u6DFB\u52A0\u5B50\u8282\u70B9",
-  "bar.sibling": "\u6DFB\u52A0\u540C\u7EA7\u8282\u70B9",
-  "bar.marker": "\u6807\u8BB0",
-  "bar.note": "\u5907\u6CE8",
-  "bar.box": "\u5916\u6846",
-  "bar.link": "\u94FE\u63A5\u5230\u7B14\u8BB0",
-  "bar.copy": "\u590D\u5236",
-  "bar.paste": "\u7C98\u8D34",
-  "bar.trash": "\u5220\u9664",
-  "bar.rel": "\u6DFB\u52A0\u5173\u8054\u7EBF",
-  "bar.table": "\u63D2\u5165\u8868\u683C",
-  "bar.fold": "\u6298\u53E0 / \u5C55\u5F00",
-  "bar.outline": "\u5927\u7EB2",
-  "bar.lock": "\u9501\u5B9A",
-  "bar.splitSync": "\u548C\u5206\u5C4F\u7684 Markdown \u8054\u52A8",
-  "bar.structure": "\u7ED3\u6784",
-  "bar.palette": "\u4E3B\u9898",
-  "bar.edge": "\u8FDE\u7EBF\u6837\u5F0F",
-  "bar.zoomOut": "\u7F29\u5C0F",
-  "bar.zoom": "\u7F29\u653E\u6BD4\u4F8B",
-  "bar.zoomIn": "\u653E\u5927",
-  "bar.fit": "\u9002\u5E94\u753B\u5E03",
-  "bar.center": "\u56DE\u5230\u4E2D\u5FC3",
-  "bar.undo": "\u64A4\u9500",
-  "bar.redo": "\u91CD\u505A",
-  "bar.search": "\u641C\u7D22",
-  "bar.callout": "\u663E\u793A / \u9690\u85CF\u6807\u6CE8",
-  "bar.notes": "\u5C55\u5F00 / \u6536\u8D77\u5907\u6CE8",
-  "bar.hidden": "\u663E\u793A\u9690\u85CF\u7684\u8282\u70B9",
-  "bar.recite": "\u80CC\u8BF5\u6A21\u5F0F",
-  "bar.layers": "\u5C55\u5F00\u5230\u7B2C\u51E0\u5C42",
-  "menu.addRel": "\u6DFB\u52A0\u5173\u8054\u7EBF",
-  "menu.textColor": "\u6587\u5B57\u989C\u8272",
-  "canvas.textColorTip": "\u6587\u5B57\u989C\u8272",
-  "canvas.defaultTextColor": "\u9ED8\u8BA4",
-  "bar.textColor": "\u6587\u5B57\u989C\u8272",
-  "bar.highlight": "\u8367\u5149\u7B14",
-  "settings.colorAdd": "\u65B0\u589E\u989C\u8272",
-  "settings.colorRaw": "\u76F4\u63A5\u5199\u8272\u503C",
-  "settings.colorChips": "\u7528\u8272\u5757\u7F16\u8F91",
-  "settings.colorRemove": "\u5220\u6389\u8FD9\u4E2A\u989C\u8272",
-  "palette.common": "\u5E38\u7528",
-  "palette.recent": "\u6700\u8FD1\u4F7F\u7528",
-  "palette.alpha": "\u900F\u660E\u5EA6",
-  "palette.custom": "\u81EA\u5B9A\u4E49\u2026",
-  "palette.noText": "\u53BB\u6389\u6587\u5B57\u989C\u8272",
-  "palette.noHighlight": "\u53BB\u6389\u8367\u5149\u7B14",
-  "palette.noNodeColor": "\u65E0\u989C\u8272",
-  "palette.themeHighlight": "\u4E3B\u9898\u9AD8\u4EAE\uFF08==\u6587\u5B57==\uFF09",
-  "palette.textApply": "\u6587\u5B57\u989C\u8272\uFF1A{color}",
-  "palette.textMore": "\u66F4\u591A\u6587\u5B57\u989C\u8272",
-  "palette.bgApply": "\u8367\u5149\u7B14\uFF1A{color}",
-  "palette.bgMore": "\u66F4\u591A\u8367\u5149\u7B14\u989C\u8272",
-  "palette.nodeMore": "\u66F4\u591A\u8282\u70B9\u989C\u8272",
-  "palette.none": "\u65E0",
-  "canvas.foldTip": "\u6298\u53E0 / \u5C55\u5F00 {key}",
-  "canvas.moveUpTip": "\u4E0A\u79FB {key}",
-  "canvas.moveDownTip": "\u4E0B\u79FB {key}",
-  "menu.editRelLabel": "\u7F16\u8F91\u6587\u5B57",
-  "menu.reverseRel": "\u53CD\u8F6C\u65B9\u5411",
-  "menu.resetRelCurve": "\u6062\u590D\u9ED8\u8BA4\u5F2F\u66F2",
-  "menu.deleteRel": "\u5220\u9664\u5173\u8054\u7EBF",
-  "canvas.relHint": "\u70B9\u8981\u8FDE\u5230\u7684\u8282\u70B9 \xB7 Esc \u53D6\u6D88",
-  "menu.splitByPunctuation": "\u6309\u6807\u70B9\u62C6\u6210\u5B50\u8282\u70B9",
-  "canvas.jumpToPdf": "\u8DF3\u5230 PDF \u91CC\u8FD9\u4E2A\u4F4D\u7F6E",
-  "menu.markers": "\u6807\u8BB0\u2026",
-  "menu.task": "\u4EFB\u52A1\u590D\u9009\u6846",
-  "menu.addBox": "\u6DFB\u52A0\u5916\u6846",
-  "menu.fitBranch": "\u7F29\u653E\u5230\u6B64\u5206\u652F",
-  "menu.resetWidth": "\u6062\u590D\u81EA\u52A8\u5BBD\u5EA6",
-  "menu.relGoSource": "\u8DF3\u5230\u8D77\u70B9",
-  "menu.relGoTarget": "\u8DF3\u5230\u7EC8\u70B9",
-  "menu.removeBox": "\u79FB\u9664\u5916\u6846",
-  "menu.addSummary": "\u6DFB\u52A0\u6982\u8981",
-  "menu.editSummary": "\u7F16\u8F91\u6982\u8981",
-  "menu.removeSummary": "\u79FB\u9664\u6982\u8981",
-  "menu.addSummaryTopic": "\u6DFB\u52A0\u5B50\u4E3B\u9898  Tab",
-  "menu.summaryToText": "\u8F6C\u4E3A\u666E\u901A\u6982\u8981",
-  "canvas.summaryDefault": "\u6982\u8981",
-  "command.toggleSummary": "\u6DFB\u52A0 / \u79FB\u9664\u6982\u8981",
-  "command.toggleNumbering": "\u9009\u4E2D\u8282\u70B9\u7684\u540C\u7EA7\u7F16\u53F7\uFF08\u5F00 / \u5173\uFF09",
-  "command.addChild": "\u6DFB\u52A0\u5B50\u8282\u70B9",
-  "command.addSibling": "\u6DFB\u52A0\u5144\u5F1F\u8282\u70B9",
-  "command.insertBefore": "\u5728\u524D\u9762\u63D2\u5165\u8282\u70B9",
-  "command.insertParent": "\u63D2\u5165\u7236\u8282\u70B9\uFF08\u628A\u9009\u4E2D\u7684\u8282\u70B9\u6536\u8FDB\u53BB\uFF09",
-  "command.revealInMarkdown": "\u5728 Markdown \u4E2D\u5B9A\u4F4D\u9009\u4E2D\u7684\u8282\u70B9",
-  "command.editNode": "\u7F16\u8F91\u8282\u70B9",
-  "command.deleteNode": "\u5220\u9664\u8282\u70B9\u53CA\u5176\u5B50\u6811",
-  "command.deleteNodeOnly": "\u4EC5\u5220\u9664\u6B64\u8282\u70B9\uFF08\u4FDD\u7559\u5B50\u8282\u70B9\uFF09",
-  "command.moveUp": "\u8282\u70B9\u4E0A\u79FB",
-  "command.moveDown": "\u8282\u70B9\u4E0B\u79FB",
-  "command.outdent": "\u8282\u70B9\u5347\u7EA7\uFF08\u79FB\u5230\u4E0A\u4E00\u5C42\uFF09",
-  "command.indent": "\u8282\u70B9\u964D\u7EA7\uFF08\u6302\u5230\u524D\u4E00\u4E2A\u5144\u5F1F\u4E0B\uFF09",
-  "command.expandBranch": "\u5C55\u5F00\u9009\u4E2D\u8282\u70B9\u7684\u5168\u90E8\u5B50\u5206\u652F",
-  "command.collapseBranch": "\u6298\u53E0\u9009\u4E2D\u8282\u70B9\u7684\u5168\u90E8\u5B50\u5206\u652F",
-  "command.expandLevel": "\u9009\u4E2D\u7684\u5206\u652F\u5C55\u5F00\u4E00\u7EA7",
-  "command.collapseLevel": "\u9009\u4E2D\u7684\u5206\u652F\u6298\u53E0\u4E00\u7EA7",
-  "menu.addBoxTitle": "\u6DFB\u52A0\u5916\u6846\u6807\u9898",
-  "menu.editBoxTitle": "\u7F16\u8F91\u5916\u6846\u6807\u9898",
-  "menu.toHeading": "\u672C\u7EA7\u8F6C\u4E3A\u6807\u9898",
-  "menu.toList": "\u672C\u7EA7\u8F6C\u4E3A\u5217\u8868",
-  "menu.hideNode": "\u5728\u8111\u56FE\u4E2D\u9690\u85CF",
-  "menu.unhideNode": "\u53D6\u6D88\u9690\u85CF",
-  "menu.copy": "\u590D\u5236",
-  "menu.copyImage": "\u590D\u5236\u56FE\u7247",
-  "menu.deleteImage": "\u5220\u9664\u56FE\u7247",
-  "menu.addCallout": "\u6DFB\u52A0\u6807\u6CE8",
-  "menu.editCallout": "\u7F16\u8F91\u6807\u6CE8",
-  "menu.removeCallout": "\u5220\u9664\u6807\u6CE8",
-  "menu.calloutColor": "\u6807\u6CE8\u989C\u8272",
-  "menu.insertTable": "\u63D2\u5165\u8868\u683C",
-  "menu.tableChild": "\u8868\u683C\u5B50\u8282\u70B9",
-  "menu.numbering": "\u540C\u7EA7\u7F16\u53F7\uFF081. 2. 3.\uFF09",
-  "menu.tableInNode": "\u8868\u683C\u663E\u793A\u5728\u8282\u70B9\u91CC",
-  "menu.tableToNote": "\u8868\u683C\u653E\u56DE\u5907\u6CE8",
-  "menu.deleteTable": "\u5220\u9664\u8868\u683C",
-  "menu.cut": "\u526A\u5207",
-  "menu.pasteChild": "\u7C98\u8D34\u4E3A\u5B50\u8282\u70B9",
-  "menu.copyNodeLink": "\u590D\u5236\u8282\u70B9\u94FE\u63A5",
-  "menu.delete": "\u5220\u9664",
-  "menu.deleteOnly": "\u4EC5\u5220\u9664\u6B64\u8282\u70B9\uFF08\u4FDD\u7559\u5B50\u8282\u70B9\uFF09",
-  "menu.extendRange": "\u8303\u56F4\u591A\u62EC\u4E00\u4E2A\u8282\u70B9",
-  "menu.shrinkRange": "\u8303\u56F4\u5C11\u62EC\u4E00\u4E2A\u8282\u70B9",
-  "menu.paste": "\u7C98\u8D34",
-  "menu.fit": "\u9002\u5E94\u753B\u5E03",
-  "notice.promotedToHeading": "\u540C\u4E00\u5C42\u91CC\u6807\u9898\u4E0D\u80FD\u6392\u5728\u5217\u8868\u524D\u9762\uFF0C\u5DF2\u628A\u540E\u9762\u7684 {count} \u9879\u5347\u4E3A\u6807\u9898\uFF1A{names}\u3002\u6309 {key} \u53EF\u4EE5\u64A4\u9500\u3002",
-  "notice.nodesHidden": "\u5DF2\u5728\u8111\u56FE\u4E2D\u9690\u85CF {count} \u4E2A\u8282\u70B9\uFF08\u6253\u4E0A\u4E86 %%hide%%\uFF0C\u7B14\u8BB0\u91CC\u8FD8\u5728\uFF09\u3002\u70B9\u5DE5\u5177\u680F\u300C\u663E\u793A\u9690\u85CF\u7684\u8282\u70B9\u300D\u53EF\u4EE5\u770B\u5230\u6216\u53D6\u6D88\u9690\u85CF\u3002",
-  "notice.tooDeepForHeadings": "\u6253\u5F00\u4E86\u300C\u53EA\u628A\u6807\u9898\u5F53\u8282\u70B9\u300D\uFF0C\u6BD4\u516D\u7EA7\u6807\u9898\u66F4\u6DF1\u7684\u8282\u70B9\u4F1A\u5B58\u6210\u4E0A\u4E00\u7EA7\u6807\u9898\u7684\u5907\u6CE8\u3002",
-  "notice.cannotHeading": "\u8FD9\u4E00\u5C42\u4E0D\u80FD\u8F6C\u4E3A\u6807\u9898\uFF1A\u7236\u8282\u70B9\u4E0D\u662F\u6807\u9898\uFF0C\u6216\u5DF2\u7ECF\u662F\u516D\u7EA7\u6807\u9898",
-  "notice.saveImageUnsupported": "\u5F53\u524D\u73AF\u5883\u4E0D\u652F\u6301\u4FDD\u5B58\u56FE\u7247",
-  "notice.saveImageFailed": "\u4FDD\u5B58\u56FE\u7247\u5931\u8D25\uFF1A{error}",
-  "notice.xmindTaken": "gogoga \u8111\u56FE\uFF1A\u5DF2\u7ECF\u6709\u522B\u7684\u63D2\u4EF6\u5728\u6253\u5F00 .xmind \u6587\u4EF6\uFF0C.xmind \u7EE7\u7EED\u4EA4\u7ED9\u5B83\u6253\u5F00\u3002\u7B14\u8BB0\u91CC\u7684\u8111\u56FE\u4E0D\u53D7\u5F71\u54CD\u3002",
-  "notice.imageAddedToNote": "\u56FE\u7247\u5DF2\u52A0\u5230\u8FD9\u4E2A\u8282\u70B9\u7684\u5907\u6CE8\u91CC",
-  "notice.noBlockId": "\u8FD9\u4E2A\u8282\u70B9\u8FD8\u6CA1\u6709\u5757 id\uFF0C\u9700\u8981\u5728\u53EF\u7F16\u8F91\u72B6\u6001\u4E0B\u751F\u6210",
-  "notice.copied": "\u5DF2\u590D\u5236 {link}",
-  "notice.copyFailed": "\u590D\u5236\u5931\u8D25",
-  "notice.imageCopied": "\u5DF2\u590D\u5236\u56FE\u7247",
-  "outline.title": "\u5927\u7EB2",
-  "outline.close": "\u5173\u95ED\u5927\u7EB2\u9762\u677F",
-  "picker.navigate": "\u9009\u62E9",
-  "picker.use": "\u4F7F\u7528",
-  "picker.link": "\u94FE\u63A5",
-  "picker.dismiss": "\u53D6\u6D88",
-  "iconPicker.placeholder": "\u641C\u7D22\u56FE\u6807\u540D\uFF0C\u6216\u76F4\u63A5\u7C98\u8D34\u4E00\u4E2A emoji",
-  "iconPicker.useEmoji": "\u4F7F\u7528\u8FD9\u4E2A emoji",
-  "iconPicker.builtIn": "\u63D2\u4EF6\u81EA\u5E26",
-  "notePicker.placeholder": "\u8F93\u5165\u7B14\u8BB0\u540D\uFF1A\u9009\u62E9\u5DF2\u6709\u7B14\u8BB0\uFF0C\u6216\u56DE\u8F66\u65B0\u5EFA",
-  "notePicker.create": "\u65B0\u5EFA\u7B14\u8BB0\u300C{name}\u300D",
-  "propertyIcon.choose": "\u9009\u62E9\u56FE\u6807",
-  "propertyIcon.chooseCurrent": "\u9009\u62E9\u56FE\u6807 \xB7 \u5F53\u524D {value}",
-  "settings.structure.name": "\u9ED8\u8BA4\u7ED3\u6784",
-  "settings.structure.desc": "\u65B0\u6587\u4EF6\u7684\u5E03\u5C40\u3002\u5355\u4E2A\u6587\u4EF6\u53EF\u5728 frontmatter \u91CC\u7528 mindmap-structure \u8986\u76D6\u3002",
-  "settings.theme.name": "\u9ED8\u8BA4\u4E3B\u9898",
-  "settings.theme.desc": "\u65B0\u6587\u4EF6\u7528\u7684\u4E3B\u9898\u3002\u5DE5\u5177\u680F\u7684\u8C03\u8272\u76D8\u6309\u94AE\u53EF\u4EE5\u6309\u6587\u4EF6\u5207\u6362\uFF0C\u5207\u6362\u7ED3\u679C\u4F1A\u5199\u8FDB mindmap-theme\u3002",
-  "settings.fileNameAsRoot.name": "\u7528\u6587\u4EF6\u540D\u4F5C\u4E2D\u5FC3\u4E3B\u9898",
-  "settings.fileNameAsRoot.desc": "\u5173\u95ED\u65F6\uFF0C\u7B14\u8BB0\u91CC\u552F\u4E00\u7684\u4E00\u7EA7\u6807\u9898\u5C31\u662F\u4E2D\u5FC3\u4E3B\u9898\uFF1B\u6253\u5F00\u540E\u4E2D\u5FC3\u4E3B\u9898\u59CB\u7EC8\u662F\u6587\u4EF6\u540D\uFF0C\u4E00\u7EA7\u6807\u9898\u4F5C\u4E3A\u7B2C\u4E00\u7EA7\u5206\u652F\u3002\u53EA\u6539\u53D8\u663E\u793A\u65B9\u5F0F\uFF0C\u4E0D\u6539\u6587\u4EF6\u5185\u5BB9\u3002",
-  "settings.headingLevel.name": "\u6807\u9898\u7684\u6700\u6DF1\u7EA7\u522B",
-  "settings.headingLevel.desc": "\u65B0\u5EFA\u8282\u70B9\u65F6\uFF0C\u6BD4\u8FD9\u66F4\u6DF1\u7684\u5C42\u7EA7\u7528\u5217\u8868\u800C\u4E0D\u662F\u6807\u9898\u5199\u56DE\u3002\u5DF2\u6709\u5185\u5BB9\u7684\u5199\u6CD5\u4E0D\u53D7\u5F71\u54CD\u3002",
-  "settings.headingLevel.h2": "H2\uFF08\u4E3B\u4E3B\u9898\uFF09",
-  "settings.template.name": "\u65B0\u5EFA\u601D\u7EF4\u5BFC\u56FE\u7684\u6A21\u677F",
-  "settings.template.desc": "\u9009\u4E00\u7BC7\u7B14\u8BB0\uFF0C\u65B0\u5EFA\u601D\u7EF4\u5BFC\u56FE\u65F6\u7528\u5B83\u7684\u5185\u5BB9\u4F5C\u4E3A\u521D\u59CB\u5185\u5BB9\u3002\u652F\u6301 {{title}}\u3001{{date}}\u3001{{time}}\uFF0C\u4E5F\u53EF\u4EE5\u5199 {{date:YYYY-MM-DD}} \u6307\u5B9A\u683C\u5F0F\uFF0C\u548C\u6838\u5FC3\u63D2\u4EF6\u300C\u6A21\u677F\u300D\u4E00\u6837\u3002\u7559\u7A7A\u5C31\u7528\u9ED8\u8BA4\u7684\u300C\u4E3B\u9898 1/2/3\u300D\u3002",
-  "settings.template.placeholder": "\u6A21\u677F\u7B14\u8BB0\u7684\u8DEF\u5F84",
-  "settings.indent.name": "\u65B0\u6587\u4EF6\u7684\u5217\u8868\u7F29\u8FDB",
-  "settings.indent.desc": "\u5DF2\u6709\u6587\u4EF6\u4F1A\u6CBF\u7528\u6587\u4EF6\u91CC\u68C0\u6D4B\u5230\u7684\u7F29\u8FDB\u3002",
-  "settings.indent.tab": "Tab",
-  "settings.indent.spaces": "{n} \u7A7A\u683C",
-  "settings.listIcon.name": "\u6587\u4EF6\u5217\u8868\u91CC\u7684\u56FE\u6807",
-  "settings.listIcon.desc": "\u5199\u8FDB\u7B14\u8BB0\u7684 icon \u5C5E\u6027\uFF0CNotebook Navigator\u3001Iconize \u7B49\u6587\u4EF6\u5217\u8868\u4F1A\u636E\u6B64\u663E\u793A\u56FE\u6807\u3002\u8FD9\u4E0D\u662F Obsidian \u6838\u5FC3\u5C5E\u6027\uFF0C\u6CA1\u88C5\u8FD9\u7C7B\u63D2\u4EF6\u65F6\u5B83\u53EA\u662F\u4E00\u884C\u666E\u901A\u5C5E\u6027\u3002\u53EA\u5F71\u54CD\u4E4B\u540E\u65B0\u5EFA\u6216\u8F6C\u6362\u7684\u7B14\u8BB0\uFF1B\u5DF2\u6709\u7684\u7528\u547D\u4EE4\u300C{command}\u300D\u6279\u91CF\u8865\u3002",
-  "settings.listIcon.none": "\u4E0D\u5199\u5165",
-  "settings.listIcon.choose": "\u9009\u62E9\u56FE\u6807",
-  "settings.listIcon.reset": "\u6062\u590D\u9ED8\u8BA4",
-  "settings.listIcon.clear": "\u4E0D\u5199\u5165\u56FE\u6807",
-  "settings.toolbar.name": "\u5DE5\u5177\u680F\u4F4D\u7F6E",
-  "settings.support.name": "\u652F\u6301\u4F5C\u8005",
-  "settings.support.desc": "\u63D2\u4EF6\u514D\u8D39\u5F00\u6E90\u3002\u5982\u679C\u5B83\u5E2E\u5230\u4E86\u4F60\uFF0C\u6B22\u8FCE\u5728\u7231\u53D1\u7535\u652F\u6301\u4E00\u4E0B\u3002",
-  "settings.support.button": "\u2615 \u53BB\u7231\u53D1\u7535",
-  "settings.touchToggles.name": "\u89E6\u5C4F\u4E0A\u7684\u6298\u53E0\u6309\u94AE",
-  "settings.touchToggles.desc": "\u624B\u673A\u548C\u5E73\u677F\u6CA1\u6709\u9F20\u6807\u60AC\u505C\uFF0C\u5E26\u5B50\u8282\u70B9\u7684\u8282\u70B9\u540E\u9762\u7684\u6298\u53E0\u6309\u94AE\uFF08\u5706\u5708\uFF09\u9ED8\u8BA4\u4E00\u76F4\u663E\u793A\u3002\u9009\u300C\u53EA\u5728\u9009\u4E2D\u548C\u5DF2\u6298\u53E0\u65F6\u663E\u793A\u300D\u5C31\u548C\u7535\u8111\u4E0A\u4E00\u6837\uFF1A\u53EA\u6709\u9009\u4E2D\u7684\u8282\u70B9\u548C\u5DF2\u7ECF\u6298\u53E0\u7684\u5206\u652F\u663E\u793A\u3002\u8FD9\u6837\u6298\u53E0\u4E00\u4E2A\u5C55\u5F00\u7684\u5206\u652F\u8981\u70B9\u4E24\u4E0B\uFF1A\u5148\u70B9\u8282\u70B9\u9009\u4E2D\uFF0C\u518D\u70B9\u6309\u94AE\u3002",
-  "settings.touchToggles.always": "\u4E00\u76F4\u663E\u793A",
-  "settings.touchToggles.selected": "\u53EA\u5728\u9009\u4E2D\u548C\u5DF2\u6298\u53E0\u65F6\u663E\u793A",
-  "settings.rememberView.name": "\u5207\u6362\u6210\u601D\u7EF4\u5BFC\u56FE\u65F6\u8BB0\u4F4F",
-  "settings.rememberView.desc": "\u5F00\u542F\uFF1A\u5207\u6362\u65F6\u5728\u5C5E\u6027\u91CC\u5199\u5165 mindmap: true\uFF0C\u4EE5\u540E\u6253\u5F00\u8FD9\u7BC7\u7B14\u8BB0\u90FD\u662F\u601D\u7EF4\u5BFC\u56FE\u3002\u5173\u95ED\uFF1A\u53EA\u5207\u6362\u5F53\u524D\u6807\u7B7E\u9875\uFF0C\u4E0D\u6539\u6587\u4EF6\uFF0C\u4E0B\u6B21\u6253\u5F00\u8FD8\u662F Markdown\u3002\u53EA\u60F3\u8FB9\u5199\u8FB9\u770B\uFF0C\u4E5F\u53EF\u4EE5\u7528\u547D\u4EE4\u300CMarkdown \u548C\u601D\u7EF4\u5BFC\u56FE\u5206\u5C4F\u5BF9\u7167\u300D\u3002",
-  "settings.toolbar.desc": "\u4E0A\u4E0B\u662F\u6C34\u5E73\u6761\uFF0C\u5DE6\u53F3\u662F\u5782\u76F4\u6761\u3002\u5728\u5DE5\u5177\u680F\u4E0A\u53F3\u952E\u4E5F\u80FD\u5207\u6362\u3002",
-  "settings.nodeColors.name": "\u8282\u70B9\u989C\u8272",
-  "settings.nodeColors.desc": "\u6D6E\u52A8\u5DE5\u5177\u680F\u548C\u6807\u6CE8\u989C\u8272\u83DC\u5355\u91CC\u5217\u51FA\u7684\u989C\u8272\u3002\u70B9\u8272\u5757\u6362\u989C\u8272\uFF0C\xD7 \u5220\u9664\uFF0C\u62D6\u52A8\u8C03\u987A\u5E8F\uFF0C+ \u65B0\u589E\u3002\u5185\u7F6E\u7684\u989C\u8272\u540D\uFF08\u7EA2\u3001\u6A59\u2026\u2026\uFF09\u4F1A\u8DDF\u7740\u4E3B\u9898\u548C\u6697\u8272\u6A21\u5F0F\u53D8\uFF1B\u8272\u677F\u91CC\u9009\u7684\u989C\u8272\u5728\u54EA\u91CC\u90FD\u662F\u8FD9\u4E2A\u989C\u8272\u3002\u5DE5\u5177\u680F\u91CC\u989C\u8272\u540E\u9762\u7684\u300C\xB7\xB7\xB7\u300D\u53EF\u4EE5\u4E34\u65F6\u9009\u522B\u7684\u989C\u8272\u3002",
-  "settings.showNodebar.name": "\u9009\u4E2D\u8282\u70B9\u65F6\u663E\u793A\u6D6E\u52A8\u5DE5\u5177\u680F",
-  "settings.showNodebar.desc": "\u9009\u4E2D\u8282\u70B9\u65F6\u4E0A\u65B9\u90A3\u6392\u5C0F\u5DE5\u5177\uFF08\u989C\u8272\u3001\u52A0\u5B50\u8282\u70B9\u3001\u6807\u8BB0\u2026\u2026\uFF09\u3002\u6321\u7740\u70B9\u65C1\u8FB9\u7684\u8282\u70B9\u65F6\u53EF\u4EE5\u5173\u6389\uFF0C\u4E0A\u9762\u7684\u64CD\u4F5C\u53F3\u952E\u83DC\u5355\u91CC\u90FD\u6709\u3002\u547D\u4EE4\u300C\u5207\u6362\u6D6E\u52A8\u5DE5\u5177\u680F\u300D\u53EF\u4EE5\u968F\u65F6\u5F00\u5173\uFF08\u5728\u300C\u8BBE\u7F6E \u2192 \u5FEB\u6377\u952E\u300D\u91CC\u7ED1\u952E\uFF09\u3002",
-  "settings.group.open": "\u6253\u5F00\u4E0E\u663E\u793A",
-  "settings.group.newMap": "\u65B0\u5EFA\u8111\u56FE",
-  "settings.group.parse": "Markdown \u600E\u4E48\u53D8\u6210\u8282\u70B9",
-  "settings.group.edit": "\u7F16\u8F91\u4E0E\u64CD\u4F5C",
-  "settings.group.toolbar": "\u5DE5\u5177\u680F\u4E0E\u989C\u8272",
-  "settings.group.markers": "\u6807\u8BB0",
-  "settings.group.notes": "\u5907\u6CE8",
-  "settings.group.sync": "\u548C Markdown \u5206\u5C4F\u8054\u52A8",
-  "settings.group.markdown": "Markdown \u4E0E\u5D4C\u5165",
-  "settings.page.open": "\u6253\u5F00\u8111\u56FE\u65F6\u663E\u793A\u4EC0\u4E48\u3001\u9ED8\u8BA4\u7ED3\u6784\u548C\u4E3B\u9898\u3001\u8282\u70B9\u95F4\u8DDD\u548C\u5B57\u53F7",
-  "settings.page.edit": "\u7F16\u8F91\u8282\u70B9\u3001\u9F20\u6807\u6EDA\u8F6E\u548C\u62D6\u52A8\u3001\u590D\u5236\u3001\u81EA\u5B9A\u4E49\u6807\u8BB0",
-  "settings.page.toolbar": "\u5DE5\u5177\u680F\u4F4D\u7F6E\u3001\u6D6E\u52A8\u5DE5\u5177\u680F\u3001\u8282\u70B9\u989C\u8272\u3001\u6587\u5B57\u989C\u8272\u548C\u8367\u5149\u7B14",
-  "settings.page.notes": "\u5907\u6CE8\u600E\u4E48\u663E\u793A\u3001\u591A\u5927\u3001\u7F16\u8F91\u65F6\u9884\u89C8",
-  "settings.page.markdown": "\u6807\u9898\u548C\u5217\u8868\u600E\u4E48\u53D8\u6210\u8282\u70B9\u3001\u5206\u5C4F\u8054\u52A8\u3001\u6298\u53E0\u8DDF\u968F\u3001\u4EE3\u7801\u5757\u548C\u5D4C\u5165",
-  "settings.page.newMap": "\u6A21\u677F\u3001\u7F29\u8FDB\u3001\u4E2D\u5FC3\u4E3B\u9898\u3001\u6587\u4EF6\u5217\u8868\u91CC\u7684\u56FE\u6807",
-  "settings.page.colorCount": "{n} \u79CD\u8282\u70B9\u989C\u8272",
-  "settings.page.themeCount": "{n} \u4E2A",
-  "settings.group.noteDisplay": "\u5728\u7B14\u8BB0\u91CC\u663E\u793A",
-  "settings.group.embed": "\u5D4C\u5165",
-  "settings.customThemes.desc": "\u4ECE\u5185\u7F6E\u4E3B\u9898\u51FA\u53D1\u505A\u81EA\u5DF1\u7684\u4E3B\u9898\uFF1A\u6309\u5C42\u7EA7\u6539\u5B57\u53F7\u3001\u989C\u8272\u3001\u8FB9\u6846\u548C\u8FDE\u7EBF\u3002",
-  "settings.wheel.name": "\u9F20\u6807\u6EDA\u8F6E",
-  "settings.wheel.desc": "\u5E73\u79FB\uFF1A\u6EDA\u8F6E\u79FB\u52A8\u753B\u5E03\uFF0CCmd/Ctrl + \u6EDA\u8F6E\u7F29\u653E\u3002\u7F29\u653E\uFF1A\u6EDA\u8F6E\u76F4\u63A5\u7F29\u653E\uFF0CShift + \u6EDA\u8F6E\u79FB\u52A8\u753B\u5E03\u3002",
-  "settings.wheel.pan": "\u5E73\u79FB",
-  "settings.wheel.zoom": "\u7F29\u653E",
-  "settings.rememberViewport.name": "\u8BB0\u4F4F\u4E0A\u6B21\u7684\u4F4D\u7F6E",
-  "settings.rememberViewport.desc": "\u91CD\u65B0\u6253\u5F00\u8111\u56FE\u3001\u6216\u4ECE Markdown \u5207\u56DE\u6765\u65F6\uFF0C\u6062\u590D\u4E0A\u6B21\u7684\u4F4D\u7F6E\u3001\u7F29\u653E\u548C\u9009\u4E2D\u7684\u8282\u70B9\u3002\u53EA\u8BB0\u6700\u8FD1 50 \u4E2A\u6587\u4EF6\uFF0C\u5B58\u5728\u63D2\u4EF6\u8BBE\u7F6E\u91CC\uFF0C\u4E0D\u5199\u8FDB\u7B14\u8BB0\u3002",
-  "settings.openView.name": "\u6253\u5F00\u8111\u56FE\u65F6",
-  "settings.openView.desc": "\u6CA1\u6709\u8BB0\u4F4F\u7684\u4F4D\u7F6E\u65F6\uFF08\u7B2C\u4E00\u6B21\u6253\u5F00\uFF0C\u6216\u5173\u6389\u4E86\u8BB0\u4F4F\u4F4D\u7F6E\uFF09\u600E\u4E48\u663E\u793A\u3002",
-  "settings.openView.fit": "\u9002\u5E94\u753B\u5E03\uFF08\u663E\u793A\u6574\u5F20\u56FE\uFF09",
-  "settings.openView.center": "\u4E2D\u5FC3\u4E3B\u9898\uFF0C100% \u5927\u5C0F",
-  "settings.syncSplit.name": "\u548C Markdown \u5206\u5C4F\u8054\u52A8",
-  "settings.syncSplit.desc": "\u540C\u4E00\u7BC7\u7B14\u8BB0\u7684\u8111\u56FE\u548C Markdown \u540C\u65F6\u5F00\u7740\u65F6\uFF1A\u9009\u4E2D\u8111\u56FE\u8282\u70B9\uFF0CMarkdown \u6EDA\u5230\u5BF9\u5E94\u90A3\u4E00\u884C\uFF1B\u5728 Markdown \u91CC\u79FB\u52A8\u5149\u6807\uFF0C\u8111\u56FE\u9009\u4E2D\u5BF9\u5E94\u7684\u8282\u70B9\u3002",
-  "settings.followExpand.name": "\u8054\u52A8\u5B9A\u4F4D\u65F6\u5C55\u5F00\u6298\u53E0\u7684\u8282\u70B9",
-  "settings.followExpand.desc": "\u6253\u5F00\u300C\u548C Markdown \u5206\u5C4F\u8054\u52A8\u300D\u65F6\uFF0CMarkdown \u5149\u6807\u79FB\u5230\u6298\u53E0\u7740\u7684\u5206\u652F\u91CC\uFF0C\u8111\u56FE\u5C55\u5F00\u5230\u5BF9\u5E94\u7684\u90A3\u4E2A\u8282\u70B9\uFF0C\u800C\u4E0D\u662F\u53EA\u9009\u4E2D\u6298\u53E0\u7740\u7684\u4E0A\u7EA7\u3002\u5C55\u5F00\u4F1A\u548C\u5E73\u65F6\u4E00\u6837\u5199\u8FDB\u7B14\u8BB0\u3002",
-  "settings.foldFollow.name": "Markdown \u8DDF\u7740\u8111\u56FE\u6298\u53E0",
-  "settings.foldFollow.desc": "\u8111\u56FE\u91CC\u6298\u53E0\u7684\u5206\u652F\uFF0C\u5728\u540C\u4E00\u7BC7\u7B14\u8BB0\u7684 Markdown \u7F16\u8F91\u5668\u548C\u9605\u8BFB\u89C6\u56FE\u91CC\u4E5F\u6298\u8D77\u6765\uFF1B\u5728\u8111\u56FE\u91CC\u5C55\u5F00\uFF0CMarkdown \u4E5F\u8DDF\u7740\u5C55\u5F00\u3002\u5728 Markdown \u91CC\u81EA\u5DF1\u6298\u7684\u4E0D\u53D7\u5F71\u54CD\uFF1B\u5728 Markdown \u91CC\u6298\u53E0\u4E0D\u4F1A\u6539\u8111\u56FE\u3002",
-  "settings.customMarkers.name": "\u81EA\u5B9A\u4E49\u6807\u8BB0",
-  "settings.customMarkers.desc": "\u586B emoji \u6216\u7B26\u53F7\uFF0C\u7528\u7A7A\u683C\u9694\u5F00\uFF0C\u4F1A\u51FA\u73B0\u5728\u6807\u8BB0\u9762\u677F\u7684\u300C\u81EA\u5B9A\u4E49\u300D\u4E00\u7EC4\u91CC\u3002\u5B57\u6BCD\u3001\u6570\u5B57\u548C\u82F1\u6587\u7B26\u53F7\u4F1A\u88AB\u5FFD\u7565\uFF0C\u56E0\u4E3A\u8282\u70B9\u6587\u5B57\u7ECF\u5E38\u4EE5\u5B83\u4EEC\u5F00\u5934\u3002",
-  "settings.customMarkersExclusive.name": "\u81EA\u5B9A\u4E49\u6807\u8BB0\u6BCF\u4E2A\u8282\u70B9\u53EA\u80FD\u9009\u4E00\u4E2A",
-  "settings.customMarkersExclusive.desc": "\u50CF\u4F18\u5148\u7EA7\u4E00\u6837\uFF1A\u9009\u4E86\u4E00\u4E2A\u4F1A\u66FF\u6362\u6389\u8282\u70B9\u4E0A\u7684\u53E6\u4E00\u4E2A\u81EA\u5B9A\u4E49\u6807\u8BB0\u3002",
-  "settings.claimBlock.name": "\u6E32\u67D3 ```mindmap \u4EE3\u7801\u5757",
-  "settings.claimBlock.desc": "```gogoga-mindmap \u59CB\u7EC8\u53EF\u7528\u3002\u5982\u679C\u60F3\u8BA9 Markmind \u7B49\u5176\u4ED6\u63D2\u4EF6\u5904\u7406 ```mindmap \u4EE3\u7801\u5757\uFF0C\u5C31\u5173\u6389\u8FD9\u9879\u3002\u91CD\u65B0\u52A0\u8F7D\u63D2\u4EF6\u6216\u91CD\u542F Obsidian \u540E\u751F\u6548\u3002",
-  "settings.linkOpen.name": "\u70B9\u94FE\u63A5\u65F6\u6253\u5F00\u5728",
-  "settings.linkOpen.desc": "\u70B9\u8282\u70B9\u3001\u5907\u6CE8\u91CC\u7684\u7B14\u8BB0\u94FE\u63A5\u65F6\u5728\u54EA\u91CC\u6253\u5F00\u3002\u9009\u300C\u53F3\u4FA7\u5206\u5C4F\u300D\u65F6\u8111\u56FE\u7559\u5728\u5DE6\u8FB9\uFF0C\u4E0B\u4E00\u4E2A\u94FE\u63A5\u8FD8\u5728\u540C\u4E00\u4E2A\u5206\u5C4F\u91CC\u6253\u5F00\u3002\u2318 \u70B9\uFF08Ctrl \u70B9\uFF09\u603B\u662F\u65B0\u6807\u7B7E\u9875\uFF0C\u2318\u2325 \u70B9\uFF08Ctrl+Alt \u70B9\uFF09\u603B\u662F\u53F3\u4FA7\u5206\u5C4F\u3002",
-  "settings.linkOpen.current": "\u5F53\u524D\u6807\u7B7E\u9875",
-  "settings.linkOpen.tab": "\u65B0\u6807\u7B7E\u9875",
-  "settings.linkOpen.split": "\u53F3\u4FA7\u5206\u5C4F",
-  "settings.editCaret.name": "\u8FDB\u5165\u7F16\u8F91\u8282\u70B9\u65F6",
-  "settings.editCaret.desc": "\u5168\u9009\u6587\u5B57\uFF1A\u6253\u5B57\u76F4\u63A5\u66FF\u6362\u3002\u5149\u6807\u5728\u672B\u5C3E\uFF1A\u6253\u5B57\u63A5\u7740\u5199\uFF08\u2318A / Ctrl+A \u4ECD\u53EF\u5168\u9009\uFF09\u3002",
-  "settings.editCaret.select": "\u5168\u9009\u6587\u5B57",
-  "settings.editCaret.end": "\u5149\u6807\u653E\u5728\u672B\u5C3E",
-  "settings.dragToFloat.name": "\u628A\u8282\u70B9\u62D6\u5230\u7A7A\u767D\u5904\u53D8\u6210\u81EA\u7531\u4E3B\u9898",
-  "settings.dragToFloat.desc": "\u5173\uFF1A\u62D6\u5230\u7A7A\u767D\u5904\u677E\u624B\u7B49\u4E8E\u53D6\u6D88\u3002\u5F00\uFF08XMind \u7684\u4E60\u60EF\uFF09\uFF1A\u8282\u70B9\u8FDE\u540C\u5206\u652F\u5728\u90A3\u91CC\u53D8\u6210\u81EA\u7531\u4E3B\u9898\u3002",
-  "settings.leftDrag.name": "\u5DE6\u952E\u62D6\u52A8\u7A7A\u767D\u5904",
-  "settings.leftDrag.desc": "\u5E73\u79FB\uFF1A\u62D6\u52A8\u79FB\u52A8\u753B\u5E03\uFF0C\u6309\u4F4F Shift \u62D6\u52A8\u6846\u9009\u3002\u6846\u9009\uFF08XMind \u7684\u4E60\u60EF\uFF09\uFF1A\u62D6\u52A8\u753B\u6846\u9009\u4E2D\u8282\u70B9\uFF0C\u53F3\u952E\u6216\u4E2D\u952E\u62D6\u52A8\u79FB\u52A8\u753B\u5E03\u3002\u4E24\u79CD\u6A21\u5F0F\u4E0B\u90FD\u53EF\u4EE5\u6309\u4F4F\u53F3\u952E\u62D6\u52A8\u753B\u5E03\uFF0C\u6309\u5728\u8282\u70B9\u4E0A\u4E5F\u884C\uFF1B\u53F3\u952E\u70B9\u4E00\u4E0B\u4E0D\u62D6\uFF0C\u7167\u5E38\u5F39\u83DC\u5355\u3002",
-  "settings.leftDrag.pan": "\u5E73\u79FB",
-  "settings.leftDrag.select": "\u6846\u9009",
-  "settings.hover.name": "\u94FE\u63A5\u8282\u70B9\u7684\u60AC\u505C\u9884\u89C8",
-  "settings.hover.desc": "\u6309\u4F4F \u2318 / Ctrl \u628A\u9F20\u6807\u505C\u5728\u94FE\u63A5\u5230\u7B14\u8BB0\u7684\u8282\u70B9\u4E0A\uFF0C\u4F1A\u5F39\u51FA\u7B14\u8BB0\u9884\u89C8\uFF0C\u548C Obsidian \u5176\u4ED6\u5730\u65B9\u4E00\u81F4\u3002\u60F3\u4E0D\u6309\u952E\u5C31\u663E\u793A\uFF0C\u53BB\u6838\u5FC3\u63D2\u4EF6\u300C\u9875\u9762\u9884\u89C8\u300D\u7684\u8BBE\u7F6E\u91CC\u627E\u300C{source}\u300D\u90A3\u4E00\u9879\u3002",
-  "settings.followActive.name": "\u8DDF\u968F\u5F53\u524D\u7B14\u8BB0",
-  "settings.followActive.desc": "\u8111\u56FE\u5F00\u5728 Markdown \u7B14\u8BB0\u65C1\u8FB9\u65F6\uFF0C\u5728\u7F16\u8F91\u5668\u91CC\u5207\u6362\u5230\u522B\u7684\u7B14\u8BB0\uFF0C\u8111\u56FE\u4E5F\u8DDF\u7740\u663E\u793A\u90A3\u7BC7\u7B14\u8BB0\u3002\u56FA\u5B9A\uFF08\u9489\u4F4F\uFF09\u7684\u8111\u56FE\u6807\u7B7E\u9875\u4E0D\u8DDF\u968F\u3002",
-  "settings.spacing.name": "\u8282\u70B9\u95F4\u8DDD",
-  "settings.spacing.desc": "\u6309\u6BD4\u4F8B\u653E\u5927\u6216\u7F29\u5C0F\u6240\u6709\u4E3B\u9898\u91CC\u8282\u70B9\u4E4B\u95F4\u7684\u95F4\u8DDD\uFF0C100% \u662F\u4E3B\u9898\u539F\u672C\u7684\u95F4\u8DDD\u3002",
-  "settings.fontScale.name": "\u8282\u70B9\u5B57\u53F7",
-  "settings.fontScale.desc": "\u6309\u6BD4\u4F8B\u653E\u5927\u6216\u7F29\u5C0F\u6240\u6709\u4E3B\u9898\uFF08\u5305\u62EC\u81EA\u5B9A\u4E49\u4E3B\u9898\uFF09\u7684\u8282\u70B9\u6587\u5B57\uFF0C100% \u662F\u4E3B\u9898\u539F\u672C\u7684\u5B57\u53F7\u3002",
-  "settings.reset": "\u6062\u590D 100%",
-  "settings.resetNoteHeight": "\u6062\u590D 240",
-  "settings.notePreview.name": "\u7F16\u8F91\u5907\u6CE8\u65F6\u5206\u680F\u9884\u89C8",
-  "settings.notePreview.desc": "\u7F16\u8F91\u5907\u6CE8\u65F6\uFF0C\u5728\u8F93\u5165\u6846\u65C1\u8FB9\uFF08\u7A97\u53E3\u7A84\u65F6\u5728\u4E0B\u9762\uFF09\u5B9E\u65F6\u663E\u793A\u6E32\u67D3\u6548\u679C\uFF1A\u516C\u5F0F\u3001\u5217\u8868\u3001\u56FE\u7247\u3001\u53CC\u94FE\u548C\u9605\u8BFB\u89C6\u56FE\u91CC\u4E00\u6837\u3002\u4E0B\u6B21\u7F16\u8F91\u5907\u6CE8\u65F6\u751F\u6548\u3002",
-  "settings.formatBar.name": "\u9009\u4E2D\u6587\u5B57\u65F6\u663E\u793A\u683C\u5F0F\u680F",
-  "settings.formatBar.desc": "\u7F16\u8F91\u8282\u70B9\u65F6\u9009\u4E2D\u4E00\u6BB5\u6587\u5B57\uFF0C\u4E0A\u65B9\u6D6E\u51FA\u4E00\u6392\u6309\u94AE\uFF1A\u52A0\u7C97\u3001\u659C\u4F53\u3001\u5220\u9664\u7EBF\u3001\u4E0B\u5212\u7EBF\u3001\u6587\u5B57\u989C\u8272\u548C\u8367\u5149\u7B14\uFF08\u70B9\u5DE6\u8FB9\u76F4\u63A5\u7528\u4E0A\u6B21\u7684\u989C\u8272\uFF0C\u70B9 \u25BE \u6253\u5F00\u8272\u677F\uFF09\u3001\u6E05\u9664\u548C\u94FE\u63A5\u3002\u4E0D\u6253\u5F00\u4E5F\u80FD\u7528\u547D\u4EE4\uFF08\u53EF\u4EE5\u5728\u300C\u8BBE\u7F6E \u2192 \u5FEB\u6377\u952E\u300D\u91CC\u7ED1\u952E\uFF09\u3002\u547D\u4EE4\u300C\u5207\u6362\u683C\u5F0F\u680F\u300D\u53EF\u4EE5\u968F\u65F6\u5F00\u5173\u8FD9\u4E2A\u8BBE\u7F6E\u3002",
-  "settings.textColors.name": "\u5E38\u7528\u6587\u5B57\u989C\u8272",
-  "settings.textColors.desc": '\u6587\u5B57\u989C\u8272\u8272\u677F\u91CC\u300C\u5E38\u7528\u300D\u90A3\u4E00\u6392\uFF08\u683C\u5F0F\u680F\u3001\u6D6E\u52A8\u5DE5\u5177\u680F\u90FD\u662F\uFF09\uFF0C\u4E5F\u662F\u300C\u6587\u5B57\u989C\u8272 1\u20135\u300D\u547D\u4EE4\u7528\u7684\u989C\u8272\u3002\u5B58\u6210 <span style="color:\u2026">\uFF0CMarkdown \u91CC\u4E5F\u663E\u793A\u989C\u8272\u3002',
-  "settings.highlightColors.name": "\u5E38\u7528\u8367\u5149\u7B14\u989C\u8272",
-  "settings.highlightColors.desc": '\u8367\u5149\u7B14\u8272\u677F\u91CC\u300C\u5E38\u7528\u300D\u90A3\u4E00\u6392\uFF0C\u4E5F\u662F\u300C\u8367\u5149\u7B14\u989C\u8272 1\u20135\u300D\u547D\u4EE4\u7528\u7684\u5E95\u8272\u3002\u5E26\u4E00\u70B9\u900F\u660E\u5728\u6697\u8272\u4E3B\u9898\u4E0B\u6587\u5B57\u4E5F\u770B\u5F97\u6E05\u3002\u5B58\u6210 <mark style="background:\u2026">\uFF0C\u548C Highlightr \u63D2\u4EF6\u5199\u6CD5\u4E00\u6837\uFF1B\u{1F534} \u8FD9\u7C7B\u662F Obsidian \u81EA\u5E26\u7684\u5F69\u8272\u9AD8\u4EAE\uFF08==\u{1F534}\u6587\u5B57==\uFF0CObsidian 1.15 \u8D77\uFF09\uFF0C\u989C\u8272\u8DDF\u7740\u4E3B\u9898\u8D70\u3002',
-  "settings.copyPlain.name": "\u590D\u5236\u8282\u70B9\u65F6\u53BB\u6389\u8111\u56FE\u6807\u8BB0",
-  "settings.copyPlain.desc": "\u590D\u5236\u7684\u8282\u70B9\u5728\u526A\u8D34\u677F\u91CC\u662F\u5E72\u51C0\u7684 Markdown\uFF0C\u4E0D\u5E26\u5BBD\u5EA6\u3001\u6298\u53E0\u3001\u6807\u6CE8\u8FD9\u4E9B %%\u2026%% \u6807\u8BB0\uFF0C\u65B9\u4FBF\u8D34\u5230\u522B\u5904\u3002\u7C98\u56DE\u8111\u56FE\u65F6\u7167\u6837\u8FD8\u539F\u8FD9\u4E9B\u4FE1\u606F\u3002",
-  "settings.hideTagsInNotes.name": "\u5728\u7B14\u8BB0\u91CC\u9690\u85CF\u683C\u5F0F\u6807\u7B7E",
-  "settings.hideTagsInNotes.desc": 'Markdown \u7B14\u8BB0\u7684\u5B9E\u65F6\u9884\u89C8\u91CC\uFF0C\u628A\u8111\u56FE\u5199\u7684\u6587\u5B57\u989C\u8272\u3001\u8367\u5149\u7B14\u989C\u8272\u3001\u4E0B\u5212\u7EBF\u7684 HTML \u6807\u7B7E\uFF08<span style="color:\u2026">\u3001<mark style="background:\u2026">\u3001<mark>\u3001<u>\uFF09\u85CF\u8D77\u6765\uFF0C\u76F4\u63A5\u663E\u793A\u6210\u6548\u679C\uFF0C\u548C\u7F16\u8F91\u8282\u70B9\u65F6\u4E00\u6837\u3002\u5728\u65C1\u8FB9\u5220\u5B57\u3001\u6253\u5B57\u65F6\u6807\u7B7E\u4FDD\u6301\u6210\u5BF9\u3002\u6E90\u7801\u6A21\u5F0F\u3001\u4EE3\u7801\u5757\u3001\u516C\u5F0F\u3001frontmatter \u91CC\u4E0D\u52A8\u3002',
-  "settings.colorsInNotes.name": "\u5728\u7B14\u8BB0\u91CC\u663E\u793A\u8282\u70B9\u989C\u8272",
-  "settings.colorsInNotes.desc": "\u8111\u56FE\u7B14\u8BB0\u7528 Markdown \u6253\u5F00\u65F6\uFF08\u5B9E\u65F6\u9884\u89C8\u548C\u9605\u8BFB\u89C6\u56FE\uFF0C\u5BFC\u51FA PDF \u4E5F\u4E00\u6837\uFF09\uFF0C\u5E26\u989C\u8272\u7684\u6807\u9898\u3001\u5217\u8868\u9879\u7684\u6587\u5B57\u94FA\u4E00\u5C42\u540C\u8272\u7684\u6DE1\u5E95\u3002\u53EA\u662F\u663E\u793A\uFF0C\u6539\u989C\u8272\u8FD8\u662F\u5728\u8111\u56FE\u91CC\u6539\u3002",
-  "settings.formatBarInNotes.name": "\u5728\u7B14\u8BB0\u91CC\u9009\u4E2D\u6587\u5B57\u65F6\u663E\u793A\u683C\u5F0F\u680F",
-  "settings.formatBarInNotes.desc": "Markdown \u7B14\u8BB0\u7684\u5B9E\u65F6\u9884\u89C8\u91CC\uFF08\u6240\u6709\u7B14\u8BB0\uFF0C\u4E0D\u53EA\u662F\u8111\u56FE\u7B14\u8BB0\uFF09\u9009\u4E2D\u4E00\u6BB5\u6587\u5B57\uFF0C\u4E0A\u65B9\u6D6E\u51FA\u548C\u8111\u56FE\u91CC\u4E00\u6837\u7684\u683C\u5F0F\u680F\uFF1A\u52A0\u7C97\u3001\u659C\u4F53\u3001\u5220\u9664\u7EBF\u3001\u4E0B\u5212\u7EBF\u3001\u9AD8\u4EAE\u3001\u6587\u5B57\u989C\u8272\u3001\u8367\u5149\u7B14\u548C\u6E05\u9664\u3002\u5199\u8FDB\u6587\u4EF6\u7684\u683C\u5F0F\u548C\u8111\u56FE\u4E00\u6837\uFF0C\u7B14\u8BB0\u91CC\u6807\u7684\u91CD\u70B9\u8111\u56FE\u91CC\u7167\u6837\u663E\u793A\u3002\u53EA\u5728\u7535\u8111\u4E0A\uFF1B\u6E90\u7801\u6A21\u5F0F\u3001\u4EE3\u7801\u5757\u3001\u516C\u5F0F\u3001frontmatter \u91CC\u4E0D\u51FA\u73B0\u3002\u547D\u4EE4\u300C\u5207\u6362\u7B14\u8BB0\u91CC\u7684\u683C\u5F0F\u680F\u300D\u53EF\u4EE5\u968F\u65F6\u5F00\u5173\u3002",
-  "settings.markersInNotes.name": "\u7B14\u8BB0\u91CC\u7684\u8111\u56FE\u8282\u70B9\u6807\u8BB0",
-  "settings.markersInNotes.desc": "\u8111\u56FE\u7B14\u8BB0\u7684\u5B9E\u65F6\u9884\u89C8\u91CC\uFF0C\u884C\u5C3E\u8BB0\u989C\u8272\u3001\u6298\u53E0\u3001\u5173\u8054\u7EBF\u7B49\u7684 %%\u2026%% \u6807\u8BB0\u600E\u4E48\u663E\u793A\u3002\u5C0F\u5706\u70B9\uFF1A\u60AC\u505C\u770B\u539F\u6587\uFF0C\u70B9\u4E00\u4E0B\u9732\u51FA\u6765\u53EF\u4EE5\u6539\u3002\u5B8C\u5168\u9690\u85CF\uFF1A\u4EC0\u4E48\u90FD\u4E0D\u663E\u793A\uFF0C\u8981\u6539\u5C31\u5207\u5230\u6E90\u7801\u6A21\u5F0F\u6216\u5728\u8111\u56FE\u91CC\u6539\u3002\u85CF\u8D77\u6765\u65F6\uFF0C\u5728\u884C\u5C3E\u6253\u5B57\u3001\u56DE\u8F66\u3001\u5220\u5B57\u3001\u63A5\u884C\uFF0C\u6807\u8BB0\u90FD\u59CB\u7EC8\u7559\u5728\u884C\u5C3E\uFF0C\u4E0D\u4F1A\u4E22\u3002\u4E0D\u662F\u8111\u56FE\u6807\u8BB0\u7684\u666E\u901A\u6CE8\u91CA\u4E0D\u52A8\u3002",
-  "settings.markersInNotes.show": "\u539F\u6837\u663E\u793A",
-  "settings.markersInNotes.dot": "\u7F29\u6210\u5C0F\u5706\u70B9",
-  "settings.markersInNotes.hide": "\u5B8C\u5168\u9690\u85CF",
-  "settings.hideSyntax.name": "\u7F16\u8F91\u65F6\u4E0D\u9732\u51FA\u683C\u5F0F\u6807\u8BB0",
-  "settings.hideSyntax.desc": "\u7F16\u8F91\u8282\u70B9\u65F6\uFF0C\u5149\u6807\u6328\u7740\u52A0\u7C97\u3001\u8367\u5149\u7B14\u8FD9\u4E9B\u683C\u5F0F\u4E5F\u4E0D\u9732\u51FA ** == ~~ \u7B49\u6807\u8BB0\uFF0C\u4E00\u884C\u7684\u957F\u5EA6\u4E0D\u4F1A\u8DF3\u3002\u5173\u6389\u65F6\u5149\u6807\u505C\u5728\u683C\u5F0F\u4E0A\u4F1A\u9732\u51FA\u6807\u8BB0\uFF0C\u548C Obsidian \u7684\u5B9E\u65F6\u9884\u89C8\u4E00\u6837\u3002",
-  "settings.newNodeName.name": "\u65B0\u5EFA\u7684\u8282\u70B9\u81EA\u5E26\u540D\u5B57\u300C\u4E3B\u98981\u300D",
-  "settings.newNodeName.desc": "\u65B0\u5EFA\u8282\u70B9\u65F6\u5148\u586B\u4E0A\u300C\u4E3B\u98981\u300D\uFF08\u6309\u540C\u7EA7\u5DF2\u6709\u7684\u7F16\u53F7\u5F80\u4E0B\u6392\uFF09\uFF0C\u5E76\u4E14\u6574\u4E2A\u9009\u4E2D\uFF0C\u6253\u5B57\u5C31\u66FF\u6362\u3002\u4E0D\u5199\u5B57\u76F4\u63A5\u56DE\u8F66\u6216\u6309 Esc \u4E5F\u4F1A\u7559\u7740\uFF0C\u65B9\u4FBF\u4E00\u53E3\u6C14\u52A0\u597D\u51E0\u4E2A\u8282\u70B9\u518D\u6162\u6162\u586B\u3002\u5173\u6389\u65F6\u6CA1\u5199\u5B57\u7684\u65B0\u8282\u70B9\u4E0D\u4FDD\u7559\u3002",
-  "settings.autoNumber.name": "\u6253\u300C1.\u300D\u5F00\u59CB\u7F16\u53F7",
-  "settings.autoNumber.desc": "\u7F16\u8F91\u8282\u70B9\u65F6\u5728\u5F00\u5934\u6253\u300C1. \u300D\u6216\u300C1\u3001\u300D\uFF0C\u8FD9\u4E00\u7EC4\u540C\u7EA7\u5C31\u5E26\u4E0A\u7F16\u53F7\uFF081. 2. 3.\uFF09\uFF0C\u6253\u7684\u6570\u5B57\u81EA\u52A8\u53BB\u6389\uFF0C\u4E4B\u540E\u65B0\u52A0\u7684\u540C\u7EA7\u4E5F\u81EA\u52A8\u7F16\u53F7\u3002\u5173\u6389\u65F6\u6253\u7684\u6570\u5B57\u539F\u6837\u7559\u5728\u6587\u5B57\u91CC\uFF0C\u7167\u6837\u53EF\u4EE5\u53F3\u952E \u2192\u300C\u540C\u7EA7\u7F16\u53F7\u300D\u3002",
-  "settings.strikeDoneTasks.name": "\u5B8C\u6210\u7684\u4EFB\u52A1\u663E\u793A\u5220\u9664\u7EBF",
-  "settings.strikeDoneTasks.desc": "\u52FE\u4E0A\u4E86\u7684\u4EFB\u52A1\u8282\u70B9\uFF08[x]\uFF09\u6587\u5B57\u52A0\u5220\u9664\u7EBF\u3001\u989C\u8272\u53D8\u6DE1\uFF0C\u548C Markdown \u4EFB\u52A1\u5217\u8868\u4E00\u6837\u3002\u80CC\u8BF5\u6A21\u5F0F\u91CC\u52FE\u9009\u6846\u662F\u7B54\u6848\uFF0C\u4E0D\u52A0\u3002",
-  "settings.widthHandleOnHover.name": "\u9F20\u6807\u79FB\u5230\u8282\u70B9\u53F3\u8FB9\u7F18\u5C31\u80FD\u8C03\u5BBD\u5EA6",
-  "settings.widthHandleOnHover.desc": "\u9F20\u6807\u79FB\u5230\u4EFB\u610F\u8282\u70B9\u7684\u53F3\u8FB9\u7F18\u4F1A\u51FA\u73B0\u5BBD\u5EA6\u624B\u67C4\uFF0C\u4E0D\u7528\u5148\u9009\u4E2D\u8282\u70B9\u5C31\u80FD\u76F4\u63A5\u62D6\u52A8\u6539\u5BBD\uFF1B\u53CC\u51FB\u6062\u590D\u81EA\u52A8\u5BBD\u5EA6\uFF0C\u6587\u5B57\u6298\u4E86\u884C\u7684\u62C9\u6210\u4E00\u884C\u3002\u6253\u5F00\u540E\u9009\u4E2D\u7684\u8282\u70B9\u4E5F\u4E00\u6837\uFF0C\u7AD6\u6761\u5E73\u65F6\u4E0D\u663E\u793A\uFF0C\u6307\u5230\u53F3\u8FB9\u7F18\u624D\u51FA\u73B0\u3002\u5173\u6389\u65F6\u53EA\u6709\u9009\u4E2D\u7684\u8282\u70B9\u6709\u624B\u67C4\u3002",
-  "settings.centerOnSelect.name": "\u9009\u4E2D\u8282\u70B9\u65F6\u81EA\u52A8\u5C45\u4E2D",
-  "settings.centerOnSelect.desc": "\u70B9\u9009\u8282\u70B9\u3001\u7528\u65B9\u5411\u952E\u5207\u6362\u3001\u6309 Tab / Enter \u65B0\u5EFA\u8282\u70B9\u65F6\uFF0C\u628A\u9009\u4E2D\u7684\u8282\u70B9\u5E73\u6ED1\u79FB\u5230\u753B\u5E03\u4E2D\u95F4\u3002\u6309\u4F4F Shift/\u2318 \u591A\u9009\u3001\u6846\u9009\u3001\u62D6\u52A8\u8282\u70B9\u65F6\u4E0D\u79FB\u52A8\u3002\u5173\u6389\u65F6\u53EA\u5728\u8282\u70B9\u51FA\u4E86\u89C6\u91CE\u65F6\u624D\u632A\u56DE\u6765\u3002",
-  "settings.pasteLinkTitle.name": "\u7C98\u8D34\u7F51\u5740\u65F6\u6293\u53D6\u7F51\u9875\u6807\u9898",
-  "settings.pasteLinkTitle.desc": "\u7F16\u8F91\u8282\u70B9\u65F6\u6CA1\u9009\u4E2D\u6587\u5B57\u76F4\u63A5\u7C98\u8D34\u7F51\u5740\uFF0C\u4F1A\u53BB\u6293\u7F51\u9875\u7684\u6807\u9898\uFF0C\u7C98\u6210 [\u6807\u9898](\u7F51\u5740)\u3002\u5148\u9009\u4E2D\u6587\u5B57\u518D\u7C98\u8D34\u7F51\u5740\uFF0C\u603B\u662F\u628A\u9009\u4E2D\u7684\u6587\u5B57\u53D8\u6210\u94FE\u63A5\uFF0C\u4E0D\u53D7\u8FD9\u4E00\u9879\u5F71\u54CD\u3002",
-  "settings.cleanAttachments.name": "\u5220\u9664\u8282\u70B9\u65F6\u6E05\u7406\u4E0D\u518D\u4F7F\u7528\u7684\u56FE\u7247",
-  "settings.cleanAttachments.desc": "\u5728\u8111\u56FE\u91CC\u5220\u6389\u8282\u70B9\u6216\u8282\u70B9\u91CC\u7684\u56FE\u7247\u540E\uFF0C\u5982\u679C\u8FD9\u5F20\u56FE\u7247\u9644\u4EF6\u5728\u5E93\u91CC\u5DF2\u7ECF\u6CA1\u6709\u522B\u7684\u7B14\u8BB0\u6216\u767D\u677F\u7528\u5230\uFF0C\u5C31\u79FB\u5230\u56DE\u6536\u7AD9\uFF08\u6309 Obsidian\u300C\u5220\u9664\u6587\u4EF6\u300D\u7684\u8BBE\u7F6E\uFF09\u3002\u64A4\u9500\u80FD\u628A\u6587\u4EF6\u6062\u590D\u3002\u53EA\u5904\u7406\u56FE\u7247\u3002",
-  "notice.viewStateReset": "\u300C{file}\u300D\u6309\u4E0A\u6B21\u8BB0\u4E0B\u7684\u4F4D\u7F6E\u3001\u7F29\u653E\u3001\u9501\u5B9A\u548C\u5907\u6CE8\u72B6\u6001\u6253\u4E0D\u5F00\uFF0C\u5DF2\u91CD\u7F6E\u8FD9\u4E9B\u8BB0\u5F55\uFF0C\u7B14\u8BB0\u5185\u5BB9\u6CA1\u52A8\u3002",
-  "notice.attachmentsCleaned": "\u5DF2\u628A {n} \u5F20\u4E0D\u518D\u4F7F\u7528\u7684\u56FE\u7247\u79FB\u5230\u56DE\u6536\u7AD9\uFF0C\u64A4\u9500\u53EF\u6062\u590D",
-  "format.bold": "\u52A0\u7C97",
-  "format.italic": "\u659C\u4F53",
-  "format.strike": "\u5220\u9664\u7EBF",
-  "format.underline": "\u4E0B\u5212\u7EBF\uFF08{key}\uFF09",
-  "format.highlight": "\u9AD8\u4EAE\uFF08==\u6587\u5B57==\uFF09",
-  "format.textColor": "\u6587\u5B57\u989C\u8272 {color}",
-  "format.highlightColor": "\u8367\u5149\u7B14 {color}",
-  "format.link": "\u94FE\u63A5\u5230\u7B14\u8BB0 {key}",
-  "format.clear": "\u6E05\u9664\u6587\u5B57\u989C\u8272\u548C\u8367\u5149\u7B14",
-  "command.formatBold": "\u52A0\u7C97\u9009\u4E2D\u7684\u6587\u5B57",
-  "command.formatItalic": "\u9009\u4E2D\u7684\u6587\u5B57\u8BBE\u4E3A\u659C\u4F53",
-  "command.formatUnderline": "\u7ED9\u9009\u4E2D\u7684\u6587\u5B57\u52A0\u4E0B\u5212\u7EBF",
-  "command.formatHighlight": "\u9AD8\u4EAE\u9009\u4E2D\u7684\u6587\u5B57",
-  "command.formatTextColor": "\u6587\u5B57\u989C\u8272 {n}",
-  "command.formatHighlightColor": "\u8367\u5149\u7B14\u989C\u8272 {n}",
-  "command.formatClear": "\u6E05\u9664\u6587\u5B57\u989C\u8272\u548C\u8367\u5149\u7B14",
-  "command.toggleNodebar": "\u5207\u6362\u6D6E\u52A8\u5DE5\u5177\u680F\uFF08\u9009\u4E2D\u8282\u70B9\u65F6\uFF09",
-  "command.toggleFormatBar": "\u5207\u6362\u683C\u5F0F\u680F\uFF08\u7F16\u8F91\u8282\u70B9\u65F6\u9009\u4E2D\u6587\u5B57\uFF09",
-  "command.toggleNoteFormatBar": "\u5207\u6362\u7B14\u8BB0\u91CC\u7684\u683C\u5F0F\u680F",
-  "notice.toggledOn": "\u5DF2\u6253\u5F00\uFF1A{name}",
-  "notice.toggledOff": "\u5DF2\u5173\u95ED\uFF1A{name}",
-  "settings.notesExpanded.name": "\u5907\u6CE8\u5C55\u5F00\u663E\u793A",
-  "settings.quoteListNotes.name": "\u5217\u8868\u9879\u4E0B\u7684\u5907\u6CE8\u5199\u6210\u5F15\u7528\u5757\uFF08\u6BCF\u884C\u524D\u52A0 >\uFF09",
-  "settings.quoteListNotes.desc": "Obsidian \u628A\u7D27\u8DDF\u5728\u5217\u8868\u9879\u4E0B\u9762\u7684\u7F29\u8FDB\u884C\u5F53\u6210\u8FD9\u4E00\u9879\u6587\u5B57\u7684\u7EED\u884C\uFF0C\u9996\u884C\u7F29\u8FDB\u4E4B\u7C7B\u7684\u6837\u5F0F\u4F1A\u5BF9\u4E0D\u9F50\u3002\u6253\u5F00\u540E\uFF0C\u5217\u8868\u9879\u7684\u5907\u6CE8\u6BCF\u884C\u524D\u52A0 > \u5199\u8FDB\u6587\u4EF6\uFF0C\u6210\u4E3A\u8FD9\u4E00\u9879\u91CC\u4E00\u4E2A\u72EC\u7ACB\u7684\u5F15\u7528\u5757\uFF1B\u8111\u56FE\u8BFB\u7684\u65F6\u5019\u53BB\u6389\u4E00\u5C42 >\uFF0C\u5907\u6CE8\u91CC\u770B\u4E0D\u5230\u3002\u53EA\u6539\u5199\u4F60\u6539\u52A8\u8FC7\u7684\u5907\u6CE8\u3002\u6807\u9898\u4E0B\u7684\u5907\u6CE8\u3001\u8282\u70B9\u91CC\u7684\u8868\u683C\u4E0D\u53D7\u5F71\u54CD\u3002",
-  "settings.noteCardShow.name": "\u5C55\u5F00\u7684\u5907\u6CE8\u91CC\u663E\u793A",
-  "settings.noteCardShow.desc": "\u8282\u70B9\u4E0B\u9762\u7684\u5907\u6CE8\u6846\u91CC\u663E\u793A\u4EC0\u4E48\u3002\u9009\u53EA\u663E\u793A\u5217\u8868\u9879\u65F6\uFF0C\u6846\u91CC\u53EA\u7559\u5217\u8868\u9879\uFF08\u8FDE\u540C\u5B83\u4E0B\u9762\u7F29\u8FDB\u7684\u5B50\u9879\u3001\u7EED\u884C\uFF09\uFF0C\u6BB5\u843D\u6587\u5B57\u4E0D\u663E\u793A\uFF1A\u5F00\u7740\u300C\u53EA\u628A\u6807\u9898\u5F53\u8282\u70B9\u300D\u65F6\uFF0C\u6807\u9898\u4E0B\u7684\u5927\u6BB5\u89E3\u91CA\u90FD\u5728\u5907\u6CE8\u91CC\uFF0C\u7528\u5B83\u53EF\u4EE5\u5728\u8111\u56FE\u91CC\u53EA\u770B\u7ED3\u8BBA\u3002\u6311\u5B8C\u6CA1\u6709\u5185\u5BB9\u7684\u8282\u70B9\u53EA\u7559\u5907\u6CE8\u56FE\u6807\u3002\u53EA\u6539\u663E\u793A\uFF1A\u70B9\u5907\u6CE8\u56FE\u6807\u5F39\u51FA\u7684\u7A97\u53E3\u3001\u7F16\u8F91\u5907\u6CE8\u65F6\u548C\u6587\u4EF6\u91CC\u90FD\u662F\u5B8C\u6574\u5185\u5BB9\u3002",
-  "settings.noteCardShow.all": "\u5168\u90E8",
-  "settings.noteCardShow.list": "\u53EA\u663E\u793A\u5217\u8868\u9879",
-  "settings.noteCardShow.ordered": "\u53EA\u663E\u793A\u6709\u5E8F\u5217\u8868",
-  "settings.noteCardShow.unordered": "\u53EA\u663E\u793A\u65E0\u5E8F\u5217\u8868",
-  "settings.notesExpanded.desc": "\u8282\u70B9\u7684\u5907\u6CE8\u76F4\u63A5\u663E\u793A\u5728\u8282\u70B9\u4E0B\u65B9\u7684\u6846\u91CC\uFF0C\u5468\u56F4\u7684\u8282\u70B9\u81EA\u52A8\u8BA9\u5F00\uFF0C\u4E0D\u7528\u518D\u70B9\u5907\u6CE8\u56FE\u6807\u5F39\u7A97\u770B\u3002\u8FD9\u91CC\u662F\u9ED8\u8BA4\u503C\uFF1B\u5DE5\u5177\u680F\u7684\u5907\u6CE8\u6309\u94AE\u53EA\u5207\u6362\u5F53\u524D\u8FD9\u5F20\u56FE\uFF0C\u6309\u6587\u4EF6\u8BB0\u4F4F\u3002\u4E0D\u5F80\u7B14\u8BB0\u91CC\u5199\u4EFB\u4F55\u4E1C\u897F\u3002",
-  "settings.noteMaxHeight.name": "\u5C55\u5F00\u5907\u6CE8\u7684\u6700\u5927\u9AD8\u5EA6",
-  "settings.noteMaxHeight.desc": "\u8D85\u51FA\u7684\u90E8\u5206\u5728\u6846\u91CC\u6EDA\u52A8\u3002\u5355\u4F4D\u662F\u50CF\u7D20\uFF0C\u8DDF\u7740\u300C\u8282\u70B9\u5B57\u53F7\u300D\u4E00\u8D77\u7F29\u653E\u3002",
-  "settings.noteMaxWidth.name": "\u5C55\u5F00\u5907\u6CE8\u7684\u6700\u5927\u5BBD\u5EA6",
-  "settings.noteMaxWidth.desc": "\u6846\u8D8A\u5BBD\uFF0C\u5907\u6CE8\u91CC\u7684\u56FE\u7247\u663E\u793A\u5F97\u8D8A\u5927\u3002\u5355\u4F4D\u662F\u50CF\u7D20\uFF0C\u8DDF\u7740\u300C\u8282\u70B9\u5B57\u53F7\u300D\u4E00\u8D77\u7F29\u653E\u3002\u60F3\u5355\u72EC\u8C03\u67D0\u4E00\u6761\uFF0C\u62D6\u5B83\u53F3\u4E0B\u89D2\u3002",
-  "settings.resetNoteWidth": "\u6062\u590D 320",
-  "settings.imageThumbWidth.name": "\u56FE\u7247\u9ED8\u8BA4\u5927\u5C0F",
-  "settings.imageThumbWidth.desc": "\u6CA1\u8BBE\u8FC7\u5BBD\u5EA6\u7684\u56FE\u7247\u5728\u8282\u70B9\u91CC\u663E\u793A\u591A\u5BBD\uFF08\u9AD8\u5EA6\u6700\u591A\u662F\u5B83\u7684 3/4\uFF0C\u4E2D\u5FC3\u4E3B\u9898\u91CC\u662F\u5B83\u7684 4/3\uFF09\u3002\u5355\u4F4D\u662F\u50CF\u7D20\u3002\u60F3\u5355\u72EC\u8C03\u67D0\u4E00\u5F20\uFF0C\u62D6\u5B83\u53F3\u4E0B\u89D2\u3002",
-  "settings.imageMaxWidth.name": "\u56FE\u7247\u6700\u5927\u5BBD\u5EA6",
-  "settings.imageMaxWidth.desc": "\u62D6\u56FE\u7247\u53F3\u4E0B\u89D2\u6700\u591A\u80FD\u653E\u591A\u5BBD\u3002\u7B14\u8BB0\u91CC\u5199\u7684\u5BBD\u5EA6\u6BD4\u5B83\u5927\u7684\uFF0C\u6309\u5B83\u663E\u793A\uFF0C\u4E0D\u6539\u7B14\u8BB0\u3002\u5355\u4F4D\u662F\u50CF\u7D20\u3002",
-  "settings.resetImageThumb": "\u6062\u590D 240",
-  "settings.resetImageMax": "\u6062\u590D 800",
-  "settings.tableMaxWidth.name": "\u8282\u70B9\u91CC\u8868\u683C\u7684\u6700\u5927\u5BBD\u5EA6",
-  "settings.tableMaxWidth.desc": "\u66F4\u5BBD\u7684\u8868\u683C\u5728\u8282\u70B9\u91CC\u5DE6\u53F3\u6EDA\u52A8\u3002\u6CA1\u62D6\u8FC7\u5BBD\u5EA6\u7684\u5217\u6700\u5BBD 240\uFF0C\u8D85\u51FA\u7684\u6587\u5B57\u6362\u884C\u3002\u5355\u4F4D\u662F\u50CF\u7D20\uFF0C\u8DDF\u7740\u300C\u8282\u70B9\u5B57\u53F7\u300D\u4E00\u8D77\u7F29\u653E\u3002",
-  "settings.tableMaxHeight.name": "\u8282\u70B9\u91CC\u8868\u683C\u7684\u6700\u5927\u9AD8\u5EA6",
-  "settings.tableMaxHeight.desc": "\u66F4\u9AD8\u7684\u8868\u683C\u5728\u8282\u70B9\u91CC\u4E0A\u4E0B\u6EDA\u52A8\uFF0C\u8868\u5934\u7559\u5728\u9876\u4E0A\u3002\u9F20\u6807\u5728\u8FD9\u79CD\u8282\u70B9\u4E0A\u4EFB\u4F55\u4F4D\u7F6E\u6ED1\u52A8\u90FD\u53EA\u6EDA\u8868\u683C\uFF0C\u8282\u70B9\u4E0D\u52A8\u3002\u5355\u4F4D\u662F\u50CF\u7D20\uFF0C\u8DDF\u7740\u300C\u8282\u70B9\u5B57\u53F7\u300D\u4E00\u8D77\u7F29\u653E\u3002",
-  "settings.resetTableWidth": "\u6062\u590D 640",
-  "settings.resetTableHeight": "\u6062\u590D 480",
-  "settings.embedToolbar.name": "\u5DE5\u5177\u680F",
-  "settings.embedToolbar.desc": "\u5B8C\u6574\uFF1A\u548C\u6253\u5F00\u7684\u8111\u56FE\u4E00\u6837\u3002\u81EA\u5B9A\u4E49\uFF1A\u5728\u4E0B\u9762\u9009\u663E\u793A\u54EA\u4E9B\u6309\u94AE\uFF0C\u9ED8\u8BA4\u53EA\u7559\u300C\u6253\u5F00 / \u7F16\u8F91\u300D\u3002\u81EA\u52A8\u9690\u85CF\uFF1A\u9605\u8BFB\u6A21\u5F0F\u4E0B\u4E0D\u663E\u793A\uFF1B\u7F16\u8F91\u6A21\u5F0F\u548C\u767D\u677F\u5361\u7247\u91CC\uFF0C\u9F20\u6807\u79FB\u5230\u8111\u56FE\u4E0A\u3001\u6216\u8005\u7126\u70B9\u5728\u8111\u56FE\u91CC\u65F6\u624D\u663E\u793A\u3002",
-  "settings.embedToolbar.full": "\u5B8C\u6574",
-  "settings.embedToolbar.custom": "\u81EA\u5B9A\u4E49",
-  "settings.embedToolbar.autohide": "\u81EA\u52A8\u9690\u85CF",
-  "bar.embedPage": "\u5D4C\u5165\u7684\u8111\u56FE\u7684\u5DE5\u5177\u680F",
-  "bar.embedPageDesc": "\u7B14\u8BB0\u548C\u767D\u677F\u5361\u7247\u91CC\u5D4C\u5165\u7684\u8111\u56FE\uFF08```mindmap \u4EE3\u7801\u5757\u548C ![[\u7B14\u8BB0]] \u5D4C\u5165\uFF09\uFF1A\u5B8C\u6574\u3001\u81EA\u5B9A\u4E49\u6309\u94AE\uFF0C\u6216\u8005\u81EA\u52A8\u9690\u85CF\u3002",
-  "bar.embed": "\u6253\u5F00 / \u7F16\u8F91\u8FD9\u5F20\u8111\u56FE",
-  "bar.embedDesc": "\u5D4C\u5165\u7684\u7B14\u8BB0\u662F\u300C\u6253\u5F00\u8FD9\u5F20\u8111\u56FE\u300D\uFF1B\u4EE3\u7801\u5757\u662F\u300C\u7F16\u8F91 / \u5B8C\u6210\u300D",
-  "settings.outlineWrap.name": "\u5927\u7EB2\u663E\u793A\u5B8C\u6574\u6807\u9898",
-  "settings.outlineWrap.desc": "\u8111\u56FE\u5927\u7EB2\u9762\u677F\u91CC\u592A\u957F\u7684\u6807\u9898\u6362\u884C\u663E\u793A\u5168\u6587\uFF0C\u4E0D\u518D\u7701\u7565\u6210\u4E00\u884C\u3002",
-  "settings.headingsOnly.name": "\u53EA\u628A\u6807\u9898\u5F53\u8282\u70B9",
-  "settings.headingsOnly.desc": "\u7B14\u8BB0\u7684\u8111\u56FE\u53EA\u628A\u6807\u9898\u5F53\u8282\u70B9\uFF0C\u6807\u9898\u4E0B\u9762\u7684\u5217\u8868\u548C\u6BB5\u843D\u7B97\u4F5C\u5B83\u7684\u5907\u6CE8\uFF0C\u539F\u6837\u4FDD\u7559\u3002\u4EE3\u7801\u5757\u91CC\u7684\u8111\u56FE\u4E0D\u53D7\u5F71\u54CD\u3002",
-  "settings.codeBlockHeight.name": "\u4EE3\u7801\u5757\u5D4C\u5165\u7684\u6700\u5927\u9AD8\u5EA6",
-  "settings.codeBlockHeight.desc": "```mindmap \u4EE3\u7801\u5757\u6309\u5185\u5BB9\u81EA\u9002\u5E94\u9AD8\u5EA6\uFF0C\u4F46\u4E0D\u8D85\u8FC7\u8FD9\u4E2A\u503C\uFF08\u50CF\u7D20\uFF09\u3002"
-};
-var current = en;
-function setLocale(lang2) {
-  current = lang2.toLowerCase().startsWith("zh") ? zh : en;
-}
-function t(key, vars) {
-  const text = current[key] ?? en[key];
-  if (!vars) return text;
-  return text.replace(/\{(\w+)\}/g, (m, name) => name in vars ? String(vars[name]) : m);
-}
-
 // src/color-palette.ts
 var THEME_HIGHLIGHT = "==";
+function highlightFormat(kind, color) {
+  if (kind === "bg" && color === THEME_HIGHLIGHT) return { kind: "highlight" };
+  const hl = kind === "bg" ? highlightOf(color) : null;
+  return hl ? { kind: "highlight", color: hl } : { kind, color };
+}
+function colorFormat(kind, color) {
+  if (color === null) return { kind: kind === "text" ? "nocolor" : "nobg" };
+  return highlightFormat(kind === "text" ? "color" : "bg", color);
+}
 function paintColor(el, color, kind) {
   el.classList.remove("mm-hl-chip");
   delete el.dataset.highlight;
@@ -1813,7 +625,7 @@ function createPalette(doc, o) {
     root.append(row);
     return row;
   };
-  const common = section(t("palette.common"));
+  const common = section(o.text.common);
   swatch(common, o.noneLabel, (b) => b.classList.add("is-none"), () => o.onPick(null));
   for (const x of o.extras ?? []) swatch(common, x.label, x.paint, () => o.onPick(x.value));
   for (const c of o.common) swatch(common, o.label(c), (b) => o.paint(b, c), () => o.onPick(c), () => c);
@@ -1832,14 +644,14 @@ function createPalette(doc, o) {
       );
     }
   if (o.recent.length) {
-    const recent = section(t("palette.recent"));
+    const recent = section(o.text.recent);
     for (const c of o.recent) swatch(recent, o.label(c), (b) => o.paint(b, c), () => o.onPick(c), () => c);
   }
   if (o.alpha) {
     const line = doc.createElement("div");
     line.className = "mm-palette-alpha";
     const name = doc.createElement("span");
-    name.textContent = t("palette.alpha");
+    name.textContent = o.text.alpha;
     const track = doc.createElement("div");
     track.className = "mm-palette-track";
     const fill = doc.createElement("div");
@@ -1887,7 +699,7 @@ function createPalette(doc, o) {
   const custom = doc.createElement("button");
   custom.type = "button";
   custom.className = "mm-palette-custom";
-  custom.textContent = t("palette.custom");
+  custom.textContent = o.text.custom;
   custom.addEventListener("click", (ev) => {
     ev.stopPropagation();
     const apply = o.onCustom?.() ?? ((c) => o.onPick(c));
@@ -2000,8 +812,11 @@ function replaceBlock(text, range, nextInner) {
 // src/table/core/table.ts
 var CELL_COLORS = ["gray", "red", "orange", "yellow", "green", "blue", "purple"];
 var CALCS = ["sum", "avg", "count", "max", "min"];
+var VALIGNS = ["middle", "bottom"];
 var TABLE_STYLES = ["default", "zebra", "minimal", "academic"];
 var TABLE_DENSITIES = ["comfortable", "compact"];
+var FONT_SIZES = [0.75, 0.85, 1, 1.15, 1.3];
+var fontSizeOk = (v) => typeof v === "number" && Number.isFinite(v) && v >= 0.5 && v <= 3;
 var META_PREFIX = "gogoga-table:";
 var META_RE = /^\s*<!--\s*gogoga-table:\s*(\{.*\})\s*-->\s*$/;
 var DELIM_CELL_RE = /^\s*:?-+:?\s*$/;
@@ -2080,11 +895,17 @@ function sanitizeMeta(raw) {
   }
   if (raw.headerCol !== void 0 && raw.headerCol !== true) delete meta.headerCol;
   if (raw.freeze !== void 0 && raw.freeze !== 1) delete meta.freeze;
+  if (raw.wide !== void 0 && raw.wide !== 1) delete meta.wide;
   if (raw.head !== void 0 && !(raw.head === 2 || raw.head === 3)) delete meta.head;
   if (raw.calc !== void 0) {
     const calc = Array.isArray(raw.calc) ? raw.calc.map((x) => CALCS.includes(x) ? x : null) : [];
     if (calc.some(Boolean)) meta.calc = calc;
     else delete meta.calc;
+  }
+  if (raw.va !== void 0) {
+    const va = Array.isArray(raw.va) ? raw.va.map((x) => VALIGNS.includes(x) ? x : null) : [];
+    if (va.some(Boolean)) meta.va = va;
+    else delete meta.va;
   }
   if (raw.opts !== void 0) {
     const opts = Array.isArray(raw.opts) ? raw.opts.map((o) => {
@@ -2115,6 +936,17 @@ function sanitizeMeta(raw) {
     }
     if (Object.keys(bg).length) meta.bg = bg;
     else delete meta.bg;
+  }
+  if (raw.fs !== void 0 && (!fontSizeOk(raw.fs) || raw.fs === 1)) delete meta.fs;
+  if (raw.fz !== void 0) {
+    const fz = {};
+    if (raw.fz && typeof raw.fz === "object" && !Array.isArray(raw.fz)) {
+      for (const [k, v] of Object.entries(raw.fz)) {
+        if (parseRef(k) && fontSizeOk(v) && v !== 1) fz[k] = v;
+      }
+    }
+    if (Object.keys(fz).length) meta.fz = fz;
+    else delete meta.fz;
   }
   if (raw.style !== void 0 && !TABLE_STYLES.includes(raw.style)) delete meta.style;
   if (raw.density !== void 0 && !TABLE_DENSITIES.includes(raw.density)) delete meta.density;
@@ -2184,7 +1016,9 @@ function metaToWrite(meta, cols) {
   }
   if (out.bg && !Object.keys(out.bg).length) delete out.bg;
   if (out.fg && !Object.keys(out.fg).length) delete out.fg;
-  for (const key of ["calc", "opts"]) {
+  if (out.fz && !Object.keys(out.fz).length) delete out.fz;
+  if (out.fs === 1) delete out.fs;
+  for (const key of ["calc", "opts", "va"]) {
     const a = out[key];
     if (!a) continue;
     const b = a.slice(0, cols);
@@ -2995,13 +1829,13 @@ function markerText(s) {
 }
 function calloutToMarker(s) {
   let open = false;
-  return s.replace(/"/g, () => {
+  return s.replace(/<(span|mark) style="([^"<>]*)">/g, "<$1 style='$2'>").replace(/"/g, () => {
     open = !open;
     return open ? "\u201C" : "\u201D";
   }).replace(/%{2,}/g, "%").split(/\r?\n/).map((l) => l.trim()).join("<br>").replace(/^(<br>)+|(<br>)+$/g, "").trim();
 }
 function calloutFromMarker(s) {
-  return s.replace(/<br\s*\/?>/gi, "\n").trim();
+  return s.replace(/<br\s*\/?>/gi, "\n").replace(/<(span|mark) style='([^'<>]*)'>/g, '<$1 style="$2">').trim();
 }
 function splitMarker(text) {
   const m = MARKER_RE.exec(text);
@@ -3727,7 +2561,11 @@ function convertLevelKind(node, kind, style) {
 function frontmatterValue(frontmatter, key) {
   const re = new RegExp(`^${key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}:[ \\t]*(.*?)[ \\t]*$`, "m");
   const m = re.exec(frontmatter);
-  return m ? m[1].replace(/^["']|["']$/g, "") : null;
+  if (!m) return null;
+  const raw = m[1];
+  const q = /^(["'])(.*)\1(?:[ \t]+#.*)?$/.exec(raw);
+  if (q) return q[2];
+  return raw.replace(/[ \t]+#.*$/, "").replace(/^["']|["']$/g, "");
 }
 function setFrontmatterValue(frontmatter, key, value) {
   const lines = frontmatter ? frontmatter.split("\n") : ["---", "---"];
@@ -3796,29 +2634,6 @@ function foldPlan(src, rule = {}) {
   const lineOf = /* @__PURE__ */ new Map();
   for (const [node, l] of sorted) lineOf.set(pathOf(node), l);
   return { nodeLines: new Set(lines.values()), lineOf, folds, paths };
-}
-var SPLIT_KEEP_RE = /!?\[\[[^\]]*\]\]|!?\[[^\]]*\]\([^)]*\)|`[^`]*`|\$\$?[^$]*\$\$?|<[^>]+>|https?:\/\/\S+/g;
-function splitByPunctuation(text) {
-  const keep = [];
-  for (const m of text.matchAll(SPLIT_KEEP_RE)) keep.push([m.index, m.index + m[0].length]);
-  const parts = [];
-  let start = 0;
-  for (let i = 0; i < text.length; i++) {
-    const span = keep.find(([a, b]) => i >= a && i < b);
-    if (span) {
-      i = span[1] - 1;
-      continue;
-    }
-    const c = text[i];
-    const comma = c === "," && !(/\d/.test(text[i - 1] ?? "") && /\d/.test(text[i + 1] ?? ""));
-    if ("\uFF0C\u3001\uFF1B;".includes(c) || comma) {
-      parts.push(text.slice(start, i));
-      start = i + 1;
-    }
-  }
-  parts.push(text.slice(start));
-  const out = parts.map((p) => p.trim().replace(/[。．]+$/, "").trim()).filter(Boolean);
-  return out.length >= 2 ? out : null;
 }
 
 // src/node-table.ts
@@ -4201,6 +3016,1501 @@ function htmlCharset(contentType, head) {
 
 // src/pdf-excerpt.ts
 var import_obsidian = require("obsidian");
+
+// src/i18n.ts
+var en = {
+  // 命令、功能区、菜单
+  "command.toggleView": "Toggle between mind map and Markdown",
+  "command.openPreview": "Markdown and mind map side by side",
+  "command.swapSides": "Swap Markdown and mind map sides",
+  "command.newMindMap": "New mind map",
+  "command.linkNote": "Link to note or create note",
+  "command.toggleOutline": "Toggle outline panel",
+  "command.toggleHidden": "Show / stop showing hidden nodes",
+  "command.addListIcons": "Add file list icons to existing mind map notes",
+  "command.focusBranch": "Focus on selected branch",
+  "command.exitFocus": "Exit focus",
+  "command.copyNodeLink": "Copy node link",
+  "command.search": "Search nodes",
+  "command.expandAll": "Expand all nodes",
+  "command.collapseAll": "Collapse all nodes",
+  "command.toggleFold": "Fold or unfold the selected node",
+  "command.showLevel": "Show {n} levels below the selected node (whole map when nothing or the central topic is selected)",
+  "command.fitBranch": "Zoom to the selected branch",
+  "command.toggleBox": "Add or remove a boundary",
+  "command.toggleRecite": "Toggle recite mode",
+  "command.togglePdfExcerpt": "Toggle PDF auto-excerpt into this mind map",
+  "action.stopExcerpt": "PDF auto-excerpt is on. Click to stop",
+  "notice.excerptOn": "PDF auto-excerpt is on: every link PDF++ copies is added under the selected node of this mind map. Turn on auto-copy in PDF++ to add a selection as soon as you make it",
+  "notice.excerptOff": "PDF auto-excerpt is off",
+  "notice.excerptNeedsPdfPlus": "PDF auto-excerpt needs the PDF++ plugin installed and enabled",
+  "pdfExcerpt.status": "Link copied & added to the mind map",
+  "command.toggleLock": "Lock / unlock editing",
+  "command.editCallout": "Add / edit callout",
+  "command.addRel": "Add relationship from the selected node",
+  "command.toggleCallouts": "Show / hide callouts",
+  "command.toggleNotes": "Expand / collapse notes",
+  "command.exportPng": "Export as PNG",
+  "command.exportSvg": "Export as SVG",
+  "command.exportPdf": "Export as PDF",
+  "command.copyPng": "Copy as image",
+  "menu.openAsMarkdown": "Open as Markdown",
+  "menu.openAsMindMap": "Open as mind map",
+  // main.ts
+  "hover.display": "Mind map",
+  "notice.setIconFirst": "Set an icon value in settings first",
+  "notice.allHaveIcons": "All mind map notes already have an icon",
+  "notice.iconsAdded": "Added an icon to {count} mind map notes",
+  "log.iconWriteFailed": "Failed to write the icon to {path}",
+  "notice.created": "Created {path}",
+  "notice.writeBackFailed": "Failed to write back to the code block: {error}",
+  "notice.rootNoRoom": "Can't save the central topic: this code block already uses headings 6 levels deep, and adding a top-level heading for the central topic would push them past the limit.",
+  "notice.rootBadName": `The central topic is the note's file name, so it can't contain any of these characters: \\ / : * ? " < > | # ^ [ ]`,
+  "notice.rootNameTaken": `Can't rename the note to "{name}": a file with that name already exists here.`,
+  "notice.externalConflict": "{file} was changed outside the mind map, overlapping unsaved edits here. Kept the mind map version",
+  "error.fileNotFound": "File not found: {path}",
+  "error.blockNotFound": "Couldn't find this code block in the note",
+  "notice.createNoteFailed": "Failed to create note: {error}",
+  "newFile.baseName": "Untitled mind map",
+  "newFile.topic": "Topic {n}",
+  "notice.templateMissing": "Template note not found: {path}. Used the default content instead.",
+  "notice.headingLinksUpdated": "Updated {n} link(s) to this note's headings",
+  // view.ts
+  "view.displayText": "Mind map",
+  "error.noOpenFile": "No file is open",
+  "notice.exported": "Exported {path}",
+  "notice.exportFailed": "Export failed: {error}",
+  "notice.copiedAsImage": "Copied as image",
+  "notice.copyFailedWithError": "Copy failed: {error}",
+  // xmind-view.ts / xmind.ts
+  "xmind.convert": "Convert to Markdown note",
+  "xmind.readFailed": "Couldn't read {name}: {error}",
+  "xmind.converted": "Converted to {path}",
+  "xmind.sheet": "Sheet {n}",
+  "xmind.notZip": "Not a valid zip file",
+  "xmind.zipCorrupt": "The zip directory is corrupted",
+  "xmind.unsupportedCompression": "Unsupported compression method {method}",
+  "xmind.noContent": "Couldn't find content.json or content.xml; this may not be an XMind file",
+  "xmind.lost": "Not supported yet, so not shown and not kept when converting: {items}",
+  "xmind.lost.sep": ", ",
+  "xmind.lost.detached": "{n} floating topics",
+  "xmind.lost.relationships": "{n} relationships",
+  "xmind.lost.summaries": "{n} summaries",
+  "xmind.lost.comments": "{n} comments",
+  "xmind.lost.images": "{n} images missing from the file",
+  // export.ts
+  "export.readFailed": "Read failed",
+  "export.nothing": "Nothing to export",
+  "export.pdfDesktopOnly": "PDF export is only available on desktop",
+  "export.svgRenderFailed": "SVG rendering failed",
+  "export.noCanvas": "Couldn't create the canvas",
+  "export.pngEncodeFailed": "PNG encoding failed",
+  // 结构、主题、工具栏位置、颜色、标记分组
+  "structure.logicRight": "Logic chart (rightward)",
+  "structure.mindmap": "Mind map (left and right)",
+  "structure.orgDown": "Org chart (downward)",
+  "structure.treeRight": "Tree chart",
+  "structure.timelineH": "Timeline (horizontal, one side)",
+  "structure.timelineHAlt": "Timeline (horizontal, alternating)",
+  "structure.timelineVRight": "Timeline (vertical, rightward)",
+  "structure.timelineVLeft": "Timeline (vertical, leftward)",
+  "structure.timelineVAlt": "Timeline (vertical, alternating)",
+  "structure.fishboneRight": "Fishbone (head on the right)",
+  "structure.fishboneLeft": "Fishbone (head on the left)",
+  "theme.label": "{name} \xB7 {desc}",
+  "theme.snow": "Snow",
+  "theme.snow.desc": "Dark center, gray nodes",
+  "theme.rainbow": "Rainbow",
+  "theme.rainbow.desc": "One color per branch, curves",
+  "theme.business": "Business",
+  "theme.business.desc": "Blue tones, elbow lines",
+  "theme.warm": "Warm",
+  "theme.warm.desc": "Orange tones, rounded curves",
+  "theme.mono": "Mono",
+  "theme.mono.desc": "Black-and-white outlines, thin lines",
+  "theme.line": "Line",
+  "theme.line.desc": "Text-only nodes, thin elbow lines",
+  "theme.forest": "Forest",
+  "theme.forest.desc": "Green-toned branches, curves",
+  "toolbarPos.bottom": "Bottom (horizontal)",
+  "toolbarPos.top": "Top (horizontal)",
+  "toolbarPos.left": "Left (vertical)",
+  "toolbarPos.right": "Right (vertical)",
+  "color.red": "Red",
+  "color.orange": "Orange",
+  "color.yellow": "Yellow",
+  "color.green": "Green",
+  "color.teal": "Teal",
+  "color.blue": "Blue",
+  "color.purple": "Purple",
+  "color.pink": "Pink",
+  "color.gray": "Gray",
+  "marker.priority": "Priority",
+  "marker.progress": "Progress",
+  "marker.flags": "Flags",
+  "marker.symbols": "Symbols",
+  "marker.custom": "Custom",
+  "marker.recite": "Recite",
+  "marker.answerTip": "Answer: covered in recite mode (with its children), click to reveal",
+  // inline.ts
+  "inline.toggleTask": "Click to toggle",
+  "inline.activate": "Activate",
+  // canvas.ts：工具栏
+  "canvas.themeTip": "Theme: {name} \xB7 click to switch",
+  "canvas.structureTip": "Structure: {name} \xB7 click to switch",
+  "canvas.doneEditing": "Done editing, back to read-only",
+  "canvas.editEmbedded": "Edit this mind map \xB7 changes are written back to the code block",
+  "canvas.bigEdit": "Edit in a large window",
+  "blockEditor.title": "Edit mind map \xB7 {name}",
+  "canvas.openEmbeddedFile": "Open this mind map to edit it",
+  "canvas.quickSettings": "Quick settings \xB7 editing, splitting and other everyday options",
+  "canvas.quickSettingsTitle": "Quick settings",
+  "canvas.recite": "Recite mode \xB7 hide ==highlights== and quiz answers, click to reveal",
+  "canvas.toggleCallouts": "Show / hide callouts",
+  "canvas.showCallouts": "Show callouts",
+  "canvas.hideCallouts": "Hide callouts",
+  "canvas.viewCallout": "View callout",
+  "canvas.calloutPlaceholder": "Callout",
+  "canvas.singleChoice": "Single",
+  "canvas.multiChoice": "Multiple",
+  "canvas.answerCovered": "Answer \xB7 click to reveal",
+  "canvas.lockEditing": "Lock editing (view only: zoom, pan and fold still work)",
+  "canvas.unlockEditing": "Editing is locked \xB7 click to unlock",
+  "canvas.toolbarContextTip": "Right-click to change the toolbar position",
+  "canvas.outline": "Outline panel \xB7 tree list, rename and change levels",
+  "canvas.zoomOut": "Zoom out {key}",
+  "canvas.zoomLevel": "Current zoom \xB7 click to reset to 100%",
+  "canvas.zoomIn": "Zoom in {key}",
+  "canvas.fit": "Fit to canvas \xB7 zoom to show all nodes {key}",
+  "canvas.center": "Back to center \xB7 center the central topic at 100% zoom",
+  "canvas.undo": "Undo {key}",
+  "canvas.redo": "Redo {key}",
+  "canvas.search": "Search nodes {key}",
+  "canvas.foldLevels": "Fold levels \xB7 expand all or show only the first few levels",
+  // canvas.ts：节点
+  "canvas.centralTopic": "Central topic",
+  "canvas.splitSyncOn": "Syncing with the Markdown beside: on (click to turn off)",
+  "canvas.splitSyncOff": "Syncing with the Markdown beside: off (click to turn on)",
+  "canvas.newTopicName": "Topic {n}",
+  "canvas.frameShield": "Double-click the player or click the activate button to play it and follow its links",
+  "canvas.viewNote": "View note",
+  "canvas.toggleNotes": "Expand / collapse notes",
+  "canvas.expandNotes": "Expand notes under their nodes",
+  "canvas.collapseNotes": "Collapse notes",
+  "canvas.expandNote": "Expand this note",
+  "canvas.collapseNote": "Collapse this note",
+  "canvas.showHidden": "Show hidden nodes",
+  "canvas.hideHidden": "Stop showing hidden nodes",
+  "canvas.resizeNote": "Drag to resize this note; double-click to reset",
+  "canvas.boxTitleDefault": "Boundary",
+  "theme.custom.desc": "custom",
+  "theme.custom.missing": "Custom theme (missing)",
+  "customTheme.heading": "Custom themes",
+  "customTheme.new": "New custom theme",
+  "customTheme.newDesc": "Pick a built-in theme to start from, then adjust it.",
+  "customTheme.create": "Create",
+  "customTheme.defaultName": "My theme {n}",
+  "customTheme.basedOn": "Based on {base}",
+  "customTheme.edit": "Edit",
+  "customTheme.duplicate": "Duplicate",
+  "customTheme.copyName": "{name} copy",
+  "customTheme.delete": "Delete",
+  "customTheme.deleteConfirm": `Delete the custom theme "{name}"? Notes that use it fall back to the default theme; their content isn't affected.`,
+  "customTheme.editTitle": "Edit custom theme",
+  "customTheme.preview": "Live preview",
+  "customTheme.cancel": "Cancel",
+  "customTheme.save": "Save",
+  "customTheme.untitled": "Untitled theme",
+  "customTheme.name": "Name",
+  "customTheme.base": "Base theme",
+  "customTheme.baseDesc": "Changing it refills the values below from that theme.",
+  "customTheme.overall": "Overall",
+  "customTheme.edge": "Lines",
+  "customTheme.branchColors": "One color per branch",
+  "customTheme.spacing": "Spacing",
+  "customTheme.spacing.compact": "Compact",
+  "customTheme.spacing.normal": "Normal",
+  "customTheme.spacing.loose": "Loose",
+  "customTheme.byLevel": "By level",
+  "customTheme.tier0": "Central topic",
+  "customTheme.tier1": "Main topics",
+  "customTheme.tier2": "Subtopics",
+  "customTheme.tier3": "Level 3 and deeper",
+  "customTheme.fontSize": "Font size",
+  "customTheme.bold": "Bold",
+  "customTheme.italic": "Italic",
+  "customTheme.textColor": "Text color",
+  "customTheme.shape": "Shape",
+  "customTheme.shape.fill": "Filled",
+  "customTheme.shape.none": "No background",
+  "customTheme.shape.underline": "Underline",
+  "customTheme.fill": "Background",
+  "customTheme.radius": "Corner radius",
+  "customTheme.border": "Border",
+  "customTheme.border.none": "None",
+  "customTheme.border.solid": "Solid",
+  "customTheme.border.dashed": "Dashed",
+  "customTheme.borderWidth": "Border width",
+  "customTheme.borderColor": "Border color",
+  "customTheme.width": "Maximum width",
+  "customTheme.widthDesc": "Short text keeps its own width; longer text wraps at the maximum. A width dragged on a single node still wins.",
+  "customTheme.width.auto": "Default",
+  "customTheme.width.custom": "Custom",
+  "customTheme.widthPx": "Maximum width",
+  "customTheme.align": "Align widths in this level",
+  "customTheme.alignDesc": "Every node in the level takes the width of the widest one, so they line up. Nodes with a dragged width keep their own.",
+  "customTheme.lineColor": "Line into this level: color",
+  "customTheme.lineWidth": "Line into this level: width",
+  "canvas.edgeTip": "Lines: {name}",
+  "edge.theme": "Theme default",
+  "edge.curve": "Curved",
+  "edge.elbow": "Right-angled",
+  "edge.straight": "Straight",
+  "edge.dashed": "Dashed",
+  "edge.rounded": "Rounded corners",
+  "canvas.resizeWidth": "Drag to set the width \xB7 double-click to reset",
+  "canvas.expandChildren": "Expand {count} child nodes /",
+  "canvas.collapseBranch": "Collapse this branch /",
+  "canvas.colorTip": "{color} \xB7 color the selected nodes",
+  "canvas.clearColor": "Clear color",
+  "canvas.addChildTip": "Add child node {key}",
+  "canvas.addSiblingTip": "Add sibling node {key}",
+  "canvas.markersTip": "Markers \xB7 priority, progress, flags, symbols",
+  "canvas.noteTip": "Note \xB7 supports Markdown, including lists",
+  "canvas.boxTip": "Boundary {key} \xB7 add one, or click again for title / remove",
+  "canvas.linkTip": "Link to a note, or create one by name {key}",
+  "canvas.copyTip": "Copy this subtree {key}",
+  "canvas.pasteTip": "Paste as child node {key}",
+  "canvas.deleteTip": "Delete node and its subtree {key}",
+  "canvas.resizeFrame": "Drag to resize. Shift-drag changes height only. Double-click to reset to 560\xD7315",
+  "canvas.resizeImage": "Drag to resize the image, double-click to restore the original size",
+  "canvas.resizeVideo": "Drag to resize the video, double-click to restore the default size",
+  "canvas.notePlaceholder": "Note (supports Markdown, including lists)",
+  "canvas.clearMarkers": "Clear all markers",
+  "canvas.wholeMap": "Whole map",
+  "canvas.emptyNode": "Empty",
+  "canvas.untitled": "Untitled",
+  // canvas.ts：折叠层级、搜索
+  "canvas.expandAll": "Expand all",
+  "canvas.mainTopicsOnly": "Show main topics only",
+  "canvas.showToLevel": "Show up to level {n}",
+  "canvas.searchPlaceholder": "Search nodes",
+  "canvas.prevMatch": "Previous match {key}",
+  "canvas.nextMatch": "Next match {key}",
+  "canvas.closeSearch": "Close search {key}",
+  // canvas.ts：右键菜单
+  "menu.edit": "Edit",
+  "menu.addChild": "Add child node",
+  "menu.addSibling": "Add sibling node",
+  "menu.insertBefore": "Insert sibling before",
+  "menu.insertParent": "Insert parent node",
+  "menu.insertGroup": "Insert",
+  "menu.foldGroup": "Fold & view",
+  "menu.boxGroup": "Boundary",
+  "menu.summaryGroup": "Summary",
+  "menu.more": "More",
+  "menu.newFloat": "New floating topic here",
+  "menu.toFloat": "Make floating topic",
+  "menu.attachFloat": "Attach to central topic",
+  "menu.revealInMarkdown": "Show in Markdown",
+  "menu.exitFocus": "Exit focus",
+  "menu.focusBranch": "Focus on this branch",
+  "menu.expand": "Expand",
+  "menu.collapse": "Collapse",
+  "menu.expandBranch": "Expand all sub-branches",
+  "menu.expandNextLevel": "Show next level only",
+  "menu.collapseBranch": "Collapse all sub-branches",
+  "menu.expandLevel": "Expand one level",
+  "menu.collapseLevel": "Collapse one level",
+  "menu.openLink": 'Open "{target}"',
+  "menu.unlink": "Remove link",
+  "menu.linkNote": "Link to note\u2026",
+  "menu.editNote": "Edit note",
+  "menu.addNote": "Add note",
+  "menu.deleteNote": "Delete note",
+  "bar.nodebarPage": "Floating toolbar buttons",
+  "bar.nodebarPageDesc": "Which buttons the toolbar above the selected node shows, and in what order. Some extra buttons are off by default.",
+  "bar.toolbarPage": "Main toolbar buttons",
+  "bar.toolbarPageDesc": "Which buttons the mind map's main toolbar shows, and in what order.",
+  "bar.count": "{n} of {total} shown",
+  "bar.reset": "Restore defaults",
+  "bar.nodebarDesc": "Turn a button off to hide it; drag the handle on the left or use the arrows to reorder. Changes apply to open mind maps right away.",
+  "bar.toolbarDesc": "Turn a button off to hide it; drag the handle on the left or use the arrows to reorder. Divider lines can be moved or hidden too; a divider with no button on one side isn't shown.",
+  "bar.resetButton": "Restore",
+  "bar.moveUp": "Move up",
+  "bar.moveDown": "Move down",
+  "bar.sep": "Divider",
+  "bar.sepDesc": "A short vertical line between groups of buttons",
+  "bar.colors": "Colors",
+  "bar.child": "Add child node",
+  "bar.sibling": "Add sibling node",
+  "bar.marker": "Markers",
+  "bar.note": "Note",
+  "bar.box": "Boundary",
+  "bar.link": "Link to note",
+  "bar.copy": "Copy",
+  "bar.paste": "Paste",
+  "bar.trash": "Delete",
+  "bar.rel": "Add relationship",
+  "bar.table": "Insert table",
+  "bar.media": "Insert image or video",
+  "bar.fold": "Collapse / expand",
+  "bar.outline": "Outline",
+  "bar.lock": "Lock",
+  "bar.splitSync": "Sync with split Markdown",
+  "bar.structure": "Structure",
+  "bar.palette": "Theme",
+  "bar.edge": "Branch lines",
+  "bar.zoomOut": "Zoom out",
+  "bar.zoom": "Zoom level",
+  "bar.zoomIn": "Zoom in",
+  "bar.fit": "Fit to view",
+  "bar.center": "Center",
+  "bar.undo": "Undo",
+  "bar.redo": "Redo",
+  "bar.search": "Search",
+  "bar.callout": "Show / hide callouts",
+  "bar.notes": "Expand / collapse notes",
+  "bar.hidden": "Show hidden nodes",
+  "bar.recite": "Recite mode",
+  "bar.layers": "Expand to level",
+  "bar.quick": "Quick settings",
+  "menu.addRel": "Add relationship",
+  "menu.textColor": "Text color",
+  "canvas.textColorTip": "Text color",
+  "canvas.defaultTextColor": "Default",
+  "bar.textColor": "Text color",
+  "bar.highlight": "Highlighter",
+  "settings.colorAdd": "Add a color",
+  "settings.colorRaw": "Edit as text",
+  "settings.colorChips": "Edit as swatches",
+  "settings.colorRemove": "Remove this color",
+  "palette.common": "Frequent",
+  "palette.recent": "Recent",
+  "palette.alpha": "Opacity",
+  "palette.custom": "Custom\u2026",
+  "palette.noText": "No text color",
+  "palette.noHighlight": "No highlighter",
+  "palette.noNodeColor": "No color",
+  "palette.themeHighlight": "Theme highlight (==text==)",
+  "palette.textApply": "Text color: {color}",
+  "palette.textMore": "More text colors",
+  "palette.bgApply": "Highlighter: {color}",
+  "palette.bgMore": "More highlighter colors",
+  "palette.nodeMore": "More node colors",
+  "palette.none": "None",
+  "canvas.foldTip": "Collapse / expand {key}",
+  "canvas.moveUpTip": "Move up {key}",
+  "canvas.moveDownTip": "Move down {key}",
+  "menu.editRelLabel": "Edit text",
+  "menu.reverseRel": "Reverse direction",
+  "menu.resetRelCurve": "Reset curve",
+  "menu.deleteRel": "Delete relationship",
+  "canvas.relHint": "Click the node to connect to \xB7 Esc to cancel",
+  "menu.splitByPunctuation": "Split into subtopics at commas",
+  "canvas.jumpToPdf": "Go to this spot in the PDF",
+  "menu.markers": "Markers\u2026",
+  "menu.task": "Task checkbox",
+  "menu.addBox": "Add boundary",
+  "menu.fitBranch": "Zoom to this branch",
+  "menu.resetWidth": "Reset to automatic width",
+  "menu.relGoSource": "Go to start",
+  "menu.relGoTarget": "Go to end",
+  "menu.removeBox": "Remove boundary",
+  "menu.addSummary": "Add summary",
+  "menu.editSummary": "Edit summary",
+  "menu.removeSummary": "Remove summary",
+  "menu.addSummaryTopic": "Add subtopic  Tab",
+  "menu.summaryToText": "Convert to plain summary",
+  "canvas.summaryDefault": "Summary",
+  "command.toggleSummary": "Add or remove a summary",
+  "command.toggleNumbering": "Number the selected nodes and their siblings (on / off)",
+  "command.addChild": "Add child node",
+  "command.addSibling": "Add sibling node",
+  "command.insertBefore": "Insert sibling before",
+  "command.insertParent": "Insert parent node (wrap the selected nodes)",
+  "command.revealInMarkdown": "Show the selected node in Markdown",
+  "command.editNode": "Edit node",
+  "command.deleteNode": "Delete node and its subtree",
+  "command.deleteNodeOnly": "Delete this node only (keep its children)",
+  "command.moveUp": "Move node up",
+  "command.moveDown": "Move node down",
+  "command.outdent": "Promote node (move out a level)",
+  "command.indent": "Demote node (move under previous sibling)",
+  "command.expandBranch": "Expand all sub-branches of the selected node",
+  "command.collapseBranch": "Collapse all sub-branches of the selected node",
+  "command.expandLevel": "Expand one more level of the selected branch",
+  "command.collapseLevel": "Collapse one level of the selected branch",
+  "menu.addBoxTitle": "Add boundary title",
+  "menu.editBoxTitle": "Edit boundary title",
+  "menu.toHeading": "Convert level to headings",
+  "menu.toList": "Convert level to lists",
+  "menu.hideNode": "Hide in mind map",
+  "menu.unhideNode": "Unhide",
+  "menu.copy": "Copy",
+  "menu.copyImage": "Copy image",
+  "menu.deleteImage": "Delete image",
+  "menu.addCallout": "Add callout",
+  "menu.editCallout": "Edit callout",
+  "menu.removeCallout": "Remove callout",
+  "menu.calloutColor": "Callout color",
+  "menu.calloutGroup": "Callout",
+  "menu.insertTable": "Insert table",
+  "menu.insertMedia": "Insert image or video",
+  "menu.tableChild": "Child node with a table",
+  "menu.numbering": "Number siblings (1. 2. 3.)",
+  "menu.tableInNode": "Show table in node",
+  "menu.tableToNote": "Move table back to note",
+  "menu.deleteTable": "Delete table",
+  "menu.cut": "Cut",
+  "menu.pasteChild": "Paste as child node",
+  "menu.copyNodeLink": "Copy node link",
+  "menu.delete": "Delete",
+  "menu.deleteOnly": "Delete this node only",
+  "menu.extendRange": "Extend range by one node",
+  "menu.shrinkRange": "Shrink range by one node",
+  "menu.paste": "Paste",
+  "menu.fit": "Fit to canvas",
+  // canvas.ts：提示
+  "notice.promotedToHeading": "Headings can't come before list items at the same level, so {count} item(s) after it became headings: {names}. Press {key} to undo.",
+  "notice.nodesHidden": 'Hid {count} node(s) from the mind map (marked %%hide%%, still in the note). Turn on "Show hidden nodes" in the toolbar to see or unhide them.',
+  "notice.tooDeepForHeadings": `With "Only headings as nodes" on, nodes deeper than heading level 6 are saved as part of the heading's note.`,
+  "notice.cannotHeading": "This level can't be converted to headings: its parent isn't a heading, or it's already at heading level 6",
+  "notice.saveImageUnsupported": "Saving images isn't supported here",
+  "notice.saveImageFailed": "Failed to save image: {error}",
+  "notice.xmindTaken": "gogoga Mind Map: another plugin already opens .xmind files, so .xmind files stay with that plugin. Mind maps in notes are not affected.",
+  "notice.imageAddedToNote": "Image added to this node's note",
+  "notice.noBlockId": "This node has no block ID yet; one can only be generated while editing",
+  "notice.copied": "Copied {link}",
+  "notice.copyFailed": "Copy failed",
+  "notice.imageCopied": "Image copied",
+  // outline.ts
+  "outline.title": "Outline",
+  "outline.close": "Close outline panel",
+  // 选择器
+  "picker.navigate": "Navigate",
+  "picker.use": "Use",
+  "picker.link": "Link",
+  "picker.dismiss": "Dismiss",
+  "iconPicker.placeholder": "Search icon names, or paste an emoji",
+  "iconPicker.useEmoji": "Use this emoji",
+  "iconPicker.builtIn": "Built-in",
+  "notePicker.placeholder": "Type a note name to link an existing note or create a new one",
+  "notePicker.create": 'Create note "{name}"',
+  "propertyIcon.choose": "Choose icon",
+  "propertyIcon.chooseCurrent": "Choose icon \xB7 current: {value}",
+  // settings.ts
+  "settings.structure.name": "Default structure",
+  "settings.structure.desc": "Layout for new files. Override it per file with mindmap-structure in the frontmatter.",
+  "settings.theme.name": "Default theme",
+  "settings.theme.desc": "Theme for new files. The palette button in the toolbar switches the theme per file and writes the choice to mindmap-theme.",
+  "settings.fileNameAsRoot.name": "Use the file name as the central topic",
+  "settings.fileNameAsRoot.desc": "Off: a note's only level-1 heading becomes the central topic. On: the central topic is always the file name and the level-1 heading becomes a first-level branch. Only changes how notes are shown; the file stays the same.",
+  "settings.headingLevel.name": "Deepest heading level",
+  "settings.headingLevel.desc": "When adding nodes, levels deeper than this are written back as list items instead of headings. Existing content keeps its format.",
+  "settings.headingLevel.h2": "H2 (main topics)",
+  "settings.template.name": "Template for new mind maps",
+  "settings.template.desc": "Pick a note whose content becomes the starting content of every new mind map. Supports {{title}}, {{date}} and {{time}} (also {{date:YYYY-MM-DD}} with a format), like the core Templates plugin. Leave empty to start with Topic 1/2/3.",
+  "settings.template.placeholder": "Path of the template note",
+  "settings.indent.name": "List indentation for new files",
+  "settings.indent.desc": "Existing files keep the indentation detected in the file.",
+  "settings.indent.tab": "Tab",
+  "settings.indent.spaces": "{n} spaces",
+  "settings.listIcon.name": "Icon in the file list",
+  "settings.listIcon.desc": `Written to the note's icon property, which file list plugins such as Notebook Navigator and Iconize use to show an icon. This isn't a core Obsidian property, so without such a plugin it's just an ordinary property. Only affects notes created or converted from now on; for existing notes, run the command "{command}".`,
+  "settings.listIcon.none": "Not written",
+  "settings.listIcon.choose": "Choose icon",
+  "settings.listIcon.reset": "Restore default",
+  "settings.listIcon.clear": "Don't write an icon",
+  "settings.toolbar.name": "Toolbar position",
+  "settings.support.name": "Support the author",
+  "settings.support.desc": "This plugin is free and open source. If it helps you, you can support it on afdian.",
+  "settings.support.button": "\u2615 Open afdian",
+  "settings.touchToggles.name": "Fold buttons on touch screens",
+  "settings.touchToggles.desc": "Phones and tablets have no hover, so the fold button (the circle after a node with children) is always shown by default. Choose \u201COnly when selected\u201D to show it like on desktop: on the selected node and on folded branches only. Folding an open branch then takes two taps: select the node, then tap the button.",
+  "settings.touchToggles.always": "Always shown",
+  "settings.touchToggles.selected": "Only when selected or folded",
+  "quick.touchToggles.always": "Always",
+  "quick.touchToggles.selected": "When selected",
+  "settings.rememberView.name": "Remember the mind map view",
+  "settings.rememberView.desc": 'On: switching adds mindmap: true to the properties, so the note always opens as a mind map. Off: only the current tab switches and the file is left alone, so it opens as Markdown next time. To write and watch side by side, use the command "Markdown and mind map side by side".',
+  "settings.toolbar.desc": "Top and bottom are horizontal bars, left and right are vertical bars. You can also right-click the toolbar to change it.",
+  "settings.nodeColors.name": "Node colors",
+  "settings.nodeColors.desc": "Colors in the floating toolbar and the callout color menu. Click a color to change it, \xD7 to remove, drag to reorder, + to add. Built-in names (red, orange, \u2026) follow the theme and dark mode; colors picked from the palette stay the same everywhere. The \xB7\xB7\xB7 button after the colors in the toolbar picks any other color.",
+  "settings.showNodebar.name": "Floating toolbar on selected nodes",
+  "settings.showNodebar.desc": `The small toolbar (colors, add child, markers\u2026) above the selected node. Turn it off if it gets in the way of clicking nearby nodes; everything on it is also in the node's context menu. The "Toggle the floating toolbar" command switches it from anywhere (bind a hotkey in Settings \u2192 Hotkeys).`,
+  "settings.group.open": "Opening and display",
+  "settings.group.newMap": "New maps",
+  "settings.group.parse": "How Markdown becomes nodes",
+  "settings.group.edit": "Editing and interaction",
+  "settings.group.toolbar": "Toolbars and colors",
+  "settings.group.markers": "Markers",
+  "settings.group.notes": "Notes",
+  "settings.group.sync": "Side by side with Markdown",
+  "settings.group.markdown": "Markdown and embeds",
+  "settings.page.open": "What a map shows when opened, default layout and theme, spacing and font size",
+  "settings.page.edit": "Editing nodes, the mouse wheel and dragging, copying, custom markers",
+  "settings.page.toolbar": "Toolbar position, the floating toolbar, node colors, text and highlighter colors",
+  "settings.page.notes": "How notes show, their size, preview while editing",
+  "settings.page.markdown": "How headings and lists become nodes, side-by-side sync, folding along, code blocks and embeds",
+  "settings.page.newMap": "Template, indentation, central topic, the icon in the file list",
+  "settings.page.colorCount": "{n} node colors",
+  "settings.page.themeCount": "{n}",
+  "settings.group.noteDisplay": "In Markdown notes",
+  "settings.group.embed": "Embeds",
+  "settings.customThemes.desc": "Make your own themes from a built-in one: font sizes, colors, borders and lines for each level.",
+  "settings.embedWheel.name": "Mouse wheel over embedded maps",
+  "settings.embedWheel.desc": "For mind maps embedded in a note (![[map]] or a code block). Click first: the wheel scrolls the note until you click the map, then it pans the map (click outside to give it back); hold Ctrl / \u2318 to zoom at any time. Always pan the map: the wheel always moves the map, as before.",
+  "settings.embedWheel.click": "Click the map first",
+  "settings.embedWheel.always": "Always pan the map",
+  "canvas.wheelHint": "Click the map to pan with the wheel \xB7 {key} + wheel to zoom",
+  "settings.wheel.name": "Mouse wheel",
+  "settings.wheel.desc": "Pan: the wheel scrolls the map, Cmd/Ctrl + wheel zooms. Zoom: the wheel zooms, Shift + wheel scrolls.",
+  "settings.wheel.pan": "Pan",
+  "settings.wheel.zoom": "Zoom",
+  "settings.rememberViewport.name": "Remember where you left off",
+  "settings.rememberViewport.desc": "Reopening a mind map, or switching back from Markdown, restores its last position, zoom and selection. Kept for the 50 most recent files, outside your notes.",
+  "settings.openView.name": "When opening a map",
+  "settings.openView.desc": "How a map is shown when there is no remembered position (first time opened, or remembering is off).",
+  "settings.openView.fit": "Fit the whole map",
+  "settings.openView.center": "Central topic at 100%",
+  "settings.syncSplit.name": "Sync with Markdown side by side",
+  "settings.syncSplit.desc": "When the same note is open as a mind map and as Markdown at the same time: selecting a node scrolls the Markdown to its line, and moving the cursor in Markdown selects the matching node.",
+  "settings.splitMapSide.name": "Mind map side in side by side",
+  "settings.splitMapSide.desc": 'Which side the mind map goes on when "Markdown and mind map side by side" has to split the window. If the window is already split, the other side opens in the pane next to it and nothing moves.',
+  "settings.splitMapSide.right": "Right",
+  "settings.splitMapSide.left": "Left",
+  "settings.followExpand.name": "Expand collapsed nodes when syncing",
+  "settings.followExpand.desc": 'With "Sync with Markdown side by side" on, moving the cursor in Markdown to a line inside a collapsed branch expands the map down to that node, instead of selecting the collapsed ancestor. Expanding is saved to the note like any other expand.',
+  "settings.foldFollow.name": "Fold Markdown along with the map",
+  "settings.foldFollow.desc": "Branches collapsed in the map are also folded in the Markdown editor and reading view of the same note, and expanded when you expand them in the map. Folds you make yourself in Markdown are left alone; folding in Markdown does not change the map.",
+  "settings.customMarkers.name": "Custom markers",
+  "settings.customMarkers.desc": "Emoji or symbols, separated by spaces; they show up as a Custom group in the marker panel. Letters, digits and ASCII symbols are ignored, since node text often starts with them.",
+  "settings.customMarkersExclusive.name": "Only one custom marker per node",
+  "settings.customMarkersExclusive.desc": "Like priority: picking one replaces the other custom marker on the node.",
+  "settings.claimBlock.name": "Render ```mindmap code blocks",
+  "settings.claimBlock.desc": "```gogoga-mindmap always works. Turn this off if another plugin (such as Markmind) should handle ```mindmap blocks. Takes effect after reloading the plugin or restarting Obsidian.",
+  "settings.linkOpen.name": "Open note links in",
+  "settings.linkOpen.desc": "Where a click on a note link in a node or note opens it. Right split keeps the mind map on the left and reuses the same split for the next link. \u2318-click (Ctrl-click) always opens a new tab, \u2318\u2325-click (Ctrl+Alt-click) the right split.",
+  "settings.linkOpen.current": "Current tab",
+  "settings.linkOpen.tab": "New tab",
+  "settings.linkOpen.split": "Right split",
+  "settings.linkFocusNote.name": "Focus the note after opening it in a split",
+  "settings.linkFocusNote.desc": "After a link opens in the right split, move the focus to that note, so shortcuts like close tab act on it. Off: the focus stays on the mind map so you can keep adding nodes.",
+  "settings.linkReuseOpen.name": "Jump to the note if it's already open",
+  "settings.linkReuseOpen.desc": "When the linked note is already open in another tab or split, go there instead of opening it again; in a mind map the linked heading or block is selected. Handy with two maps side by side. \u2318-click (Ctrl-click) still opens a new tab.",
+  "settings.newNoteFolder.name": "Folder for new notes from the map",
+  "settings.newNoteFolder.desc": "Where a note is created when you make a new linked note from a node, or click a link to a note that doesn't exist yet.",
+  "settings.newNoteFolder.default": "Same as Obsidian's new file location",
+  "settings.newNoteFolder.map": "Same folder as the mind map",
+  "settings.newNoteFolder.mapSub": "Folder named after the mind map, next to it",
+  "settings.newNoteFolder.custom": "A folder of your choice",
+  "settings.newNoteFolderPath.name": "Folder for new notes",
+  "settings.newNoteFolderPath.desc": `Used when "Folder for new notes from the map" is set to a folder of your choice. Created if it doesn't exist.`,
+  "settings.newNoteFolderPath.placeholder": "e.g. Notes/From maps",
+  "settings.keepBlankLines.name": "Keep blank lines in topics",
+  "settings.keepBlankLines.desc": "When a topic has several lines (Shift+Enter), keep the empty lines between them instead of removing them on save \u2014 handy for spacing out longer text. Empty lines at the start and end are still removed. Off by default.",
+  "settings.keepEdgeSpaces.name": "Keep spaces at the start and end of topics",
+  "settings.keepEdgeSpaces.desc": "Markdown drops spaces at the start and end of a list item or heading. With this on, they're saved as &nbsp; in the note and show as ordinary spaces while you edit the topic. Off: they're removed on save, as before.",
+  "settings.splitKeepOriginal.name": "Keep the original text when splitting",
+  "settings.splitKeepOriginal.desc": "On: Split into subtopics adds the pieces as subtopics and leaves the text alone. Off: splitting a whole topic replaces it with the pieces at the same level (the first piece keeps its subtopics, note and color); splitting selected text removes that text from the topic.",
+  "settings.splitKeepDelims.name": "Keep separators when splitting",
+  "settings.splitKeepDelims.desc": "On: punctuation stays at the end of each piece and numbering (1. / \u4E00\u3001 / I.) at the start. Off: they are removed, along with the punctuation or space right after a number.",
+  "settings.customSplits.name": "Custom splits",
+  "settings.customSplits.desc": "Extra ways to split, shown under Split into subtopics. One per line: a name, a colon, then the characters to split at \u2014 e.g. Periods and semicolons: \u3002\uFF1B",
+  "settings.customSplits.placeholder": "Periods and semicolons: \u3002\uFF1B",
+  "menu.splitInto": "Split into subtopics",
+  "split.comma": "At commas, enumeration commas, semicolons",
+  "split.period": "At periods, question and exclamation marks",
+  "split.semicolon": "At semicolons",
+  "split.number": "At numbering (1. / \u4E00\u3001 / I.)",
+  "split.none": "Nothing to split into two or more pieces",
+  "bar.split": "Split the selected text into subtopics",
+  "settings.editCaret.name": "When editing a node",
+  "settings.editCaret.desc": "Select all: typing replaces the text. Cursor at end: typing continues it (\u2318A / Ctrl+A still selects all).",
+  "settings.editCaret.select": "Select all text",
+  "settings.editCaret.end": "Put the cursor at the end",
+  "settings.dragToFloat.name": "Drag a topic to empty space",
+  "settings.dragToFloat.desc": "Off: dropping on empty space cancels the drag. On (XMind style): the topic and its branch become a floating topic there.",
+  "settings.leftDrag.name": "Left-drag on empty space",
+  "settings.leftDrag.desc": "Pan: dragging moves the map, Shift + drag selects. Select (XMind style): dragging draws a selection box, right- or middle-drag moves the map. In both, holding the right button and dragging moves the map even when you press on a node; a right-click without dragging still opens the menu.",
+  "settings.leftDrag.pan": "Pan",
+  "settings.leftDrag.select": "Select",
+  "settings.hover.name": "Hover preview for linked nodes",
+  "settings.hover.desc": 'Ctrl-hover (\u2318-hover on macOS) over a node that links to a note to see a preview of the note, as elsewhere in Obsidian. To show it without holding a key, find "{source}" in the settings of the Page preview core plugin.',
+  "settings.followActive.name": "Follow the active note",
+  "settings.followActive.desc": "When a mind map is open beside a Markdown note, switching to another note in the editor shows that note in the mind map too. Pinned mind map tabs stay where they are.",
+  "settings.spacing.name": "Node spacing",
+  "settings.spacing.desc": "Scales the gaps between nodes in every theme. 100% is the theme's own spacing.",
+  "settings.fontScale.name": "Node text size",
+  "settings.fontScale.desc": "Scales node text in every theme, including custom themes. 100% is the theme's own size.",
+  "settings.reset": "Reset to 100%",
+  "settings.resetNoteHeight": "Reset to 240",
+  "settings.notePreview.name": "Preview notes while editing",
+  "settings.notePreview.desc": "When you edit a note, show how it renders next to the text box (below it when the window is narrow), updated as you type: formulas, lists, images and links look as they do in reading view. Applies the next time you edit a note.",
+  "settings.formatBar.name": "Format bar when selecting text",
+  "settings.formatBar.desc": 'While editing a node, selecting part of the text shows a small bar above it: bold, italic, strikethrough, underline, text color and highlighter (click the left part to reuse the last color, \u25BE opens the palette), clear and link. Without it, use the commands (bind your own hotkeys in Settings \u2192 Hotkeys). The "Toggle the format bar" command switches this setting.',
+  "settings.textColors.name": "Text colors",
+  "settings.textColors.desc": 'The "Frequent" row in the text color palette (format bar and floating toolbar), also used by the "Text color 1\u20135" commands. Saved as <span style="color:\u2026">, which Markdown shows too.',
+  "settings.highlightColors.name": "Highlighter colors",
+  "settings.highlightColors.desc": `The "Frequent" row in the highlighter palette, also used by the "Highlighter color 1\u20135" commands. A bit of transparency keeps text readable in dark themes. Saved as <mark style="background:\u2026">, the same as the Highlightr plugin; \u{1F534} and the like use Obsidian's own colored highlight (==\u{1F534}text==, Obsidian 1.15+), which follows the theme.`,
+  "settings.copyPlain.name": "Copy nodes without map markers",
+  "settings.copyPlain.desc": "Copied nodes go to the clipboard as plain Markdown, without the %%\u2026%% markers for width, folding, callouts and the like. Pasting back into a map still restores them.",
+  "settings.hideTagsInNotes.name": "Hide format tags in notes",
+  "settings.hideTagsInNotes.desc": 'In the Live Preview of Markdown notes, hide the HTML tags the mind map writes for text colors, highlighter colors and underline (<span style="color:\u2026">, <mark style="background:\u2026">, <mark>, <u>) and show the formatting instead, as in the node editor. Deleting or typing next to them keeps the tags paired. Source mode, code blocks, math and frontmatter are left alone.',
+  "settings.colorsInNotes.name": "Node colors in notes",
+  "settings.colorsInNotes.desc": "In mind map notes opened as Markdown (Live Preview and reading view, so PDF export too), give the text of colored headings and list items a light background in the node's color. The colors are only shown; change them in the mind map.",
+  "settings.formatBarInNotes.name": "Format bar when selecting text in notes",
+  "settings.formatBarInNotes.desc": 'In the Live Preview of Markdown notes (any note, not only mind maps), selecting text shows the same bar as in the mind map: bold, italic, strikethrough, underline, highlight, text colors, highlighter colors and clear. The formatting is written the same way, so it shows in both the note and the mind map. Desktop only; not in source mode, code blocks, math or frontmatter. The "Toggle the format bar in notes" command switches it.',
+  "settings.markersInNotes.name": "Node markers in notes",
+  "settings.markersInNotes.desc": "How the %%\u2026%% marker the mind map keeps at the end of a line (color, fold, relationships\u2026) looks in the Live Preview of mind map notes. Small dot: hover it to see the text, click it to edit. Hidden: nothing shows; edit it in source mode or in the mind map. Either way, typing at the end of the line, Enter, deleting and joining lines keep the marker at the end so nothing is lost. Your own comments that aren't markers are left alone.",
+  "settings.markersInNotes.show": "Show as is",
+  "settings.markersInNotes.dot": "Small dot",
+  "settings.markersInNotes.hide": "Hidden",
+  "settings.hideSyntax.name": "Keep format marks hidden while editing",
+  "settings.hideSyntax.desc": "While editing a node, ** == ~~ and other format marks stay hidden even when the cursor is right next to bold or highlighted text, so the line width doesn't jump. When off, the marks show up while the cursor is at the formatted text, like Obsidian's live preview.",
+  "settings.newNodeName.name": "Name new nodes Topic 1, Topic 2\u2026",
+  "settings.newNodeName.desc": 'A new node starts as "Topic 1" (numbered after its siblings), selected so typing replaces it. Pressing Enter or Esc without typing keeps it, so you can add several nodes in a row and fill them in later. When off, a new node you leave empty goes away.',
+  "settings.autoNumber.name": "Start numbering by typing 1.",
+  "settings.autoNumber.desc": 'While editing a node, typing "1. " or "1\u3001" at the start numbers it and its siblings (1. 2. 3.), and the typed number is removed; new siblings are numbered automatically. When off, the typed number stays as text; you can still number a group from the right-click menu \u2192 Number siblings.',
+  "settings.strikeDoneTasks.name": "Strike through completed tasks",
+  "settings.strikeDoneTasks.desc": "Nodes whose task box is checked ([x]) show their text struck through and dimmed, like Markdown task lists. Not applied in recite mode, where checked boxes are answers.",
+  "settings.widthHandleOnHover.name": "Resize width from the right edge on hover",
+  "settings.widthHandleOnHover.desc": "Hovering over any node's right edge shows the width handle: drag it to change the width without selecting the node first; double-click it to go back to automatic width, or to stretch wrapped text to one line. The selected node's handle also stays hidden until you point at the edge. When off, only the selected node has the handle.",
+  "settings.centerOnSelect.name": "Center the selected node",
+  "settings.centerOnSelect.desc": "Selecting a node by clicking, with the arrow keys, or by adding one with Tab or Enter smoothly moves it to the middle of the canvas. Shift/\u2318 multi-select, marquee selection and dragging don't move the canvas. When off, the canvas only moves when the node is out of view.",
+  "settings.pasteLinkTitle.name": "Fetch page titles for pasted links",
+  "settings.pasteLinkTitle.desc": "When pasting a web address while editing a node with no text selected, fetch the page title and turn it into [title](address). Selecting text first and pasting an address always links the selected text.",
+  "settings.cleanAttachments.name": "Clean up unused images when deleting nodes",
+  "settings.cleanAttachments.desc": `After you delete a node, or an image inside a node, in the mind map: if no other note or canvas in the vault still uses that image attachment, move it to the trash (following Obsidian's "Deleted files" setting). Undo brings the file back. Only images are touched.`,
+  "notice.viewStateReset": "\u201C{file}\u201D couldn't be opened with its saved view state (position, zoom, lock, notes), so that state was reset. The note itself is unchanged.",
+  "notice.attachmentsCleaned": "Moved {n} unused image(s) to the trash. Undo restores them.",
+  "format.bold": "Bold",
+  "format.italic": "Italic",
+  "format.strike": "Strikethrough",
+  "format.underline": "Underline ({key})",
+  "format.highlight": "Highlight (==text==)",
+  "format.textColor": "Text color {color}",
+  "format.highlightColor": "Highlighter {color}",
+  "format.link": "Link to a note {key}",
+  "format.clear": "Clear text and highlighter colors",
+  "command.formatBold": "Bold the selected text",
+  "command.formatItalic": "Italicize the selected text",
+  "command.formatUnderline": "Underline the selected text",
+  "command.formatHighlight": "Highlight the selected text",
+  "command.formatTextColor": "Text color {n}",
+  "command.formatHighlightColor": "Highlighter color {n}",
+  "command.formatClear": "Clear text and highlighter colors",
+  "command.toggleNodebar": "Toggle the floating toolbar (selected nodes)",
+  "command.toggleFormatBar": "Toggle the format bar (text selected while editing a node)",
+  "command.toggleNoteFormatBar": "Toggle the format bar in notes",
+  "notice.toggledOn": "On: {name}",
+  "notice.toggledOff": "Off: {name}",
+  "settings.notesExpanded.name": "Expand notes",
+  "settings.quoteListNotes.name": "Write notes under list items as blockquotes (> before each line)",
+  "settings.quoteListNotes.desc": "In Obsidian, indented lines right below a list item count as part of that item's text, so styles like a first-line indent line up badly. With this on, a list item's note is written with > before every line, which makes it a separate blockquote inside the item. The mind map strips one > when reading, so you won't see them in the note. Only notes you change are rewritten. Notes under headings and node tables are not affected.",
+  "settings.taskProgress.name": "Task progress",
+  "settings.taskProgress.desc": "On the node right above a checklist (a node that isn't a task itself but has tasks as children), show how many of the tasks below it are done. Every task connected below counts, sub-tasks included; tasks under a plain node in between count toward that node instead. Not shown in recite mode (there these are multiple-choice questions, and the count would give the answer away). Display only \u2014 nothing is written to your file.",
+  "settings.taskProgress.off": "Off",
+  "settings.taskProgress.percent": "Percentage (20%)",
+  "settings.taskProgress.count": "Done / total (1/5)",
+  "settings.taskProgress.both": "Both (1/5 \xB7 20%)",
+  "canvas.taskProgress": "{done} of {total} tasks done",
+  "settings.taskProgressPos.name": "Task progress position",
+  "settings.taskProgressPos.desc": "After the node text keeps the map compact; on its own line below the text is easier to spot but makes those nodes taller.",
+  "settings.taskProgressPos.end": "After the text",
+  "settings.taskProgressPos.below": "Below the text",
+  "settings.noteCardShow.name": "Show in expanded notes",
+  "settings.noteCardShow.desc": 'What the note box under a node shows. With only list items, the box shows list items (with their indented sub-items and continuation lines) and hides paragraphs \u2014 handy when "Only headings as nodes" puts long explanations in notes and you only want the conclusions in the map. Nodes with nothing to show keep just the note icon. Only the display changes: the note popover, editing and your file always have the full note.',
+  "settings.noteCardShow.all": "Everything",
+  "settings.noteCardShow.list": "List items only",
+  "settings.noteCardShow.ordered": "Ordered lists only",
+  "settings.noteCardShow.unordered": "Bullet lists only",
+  "settings.notesExpanded.desc": "Show node notes in a box under the node, and move the nodes around it out of the way, instead of opening them from the note icon. This sets the default; the note button on the toolbar switches a single map and is remembered per file. Nothing is written to your notes.",
+  "settings.noteMaxHeight.name": "Maximum height of expanded notes",
+  "settings.noteMaxHeight.desc": "Longer notes scroll inside their box. In pixels, scaled with the node text size.",
+  "settings.noteFontSize.name": "Note text size",
+  "settings.noteFontSize.desc": "Font size of the text in the note window and in expanded note cards, in pixels. Default 13.",
+  "settings.resetNoteFontSize": "Back to 13",
+  "settings.noteMaxWidth.name": "Maximum width of expanded notes",
+  "settings.noteMaxWidth.desc": "Wider boxes show images in notes larger. In pixels, scaled with the node text size. Drag the corner of a single note to give it its own size.",
+  "settings.resetNoteWidth": "Reset to 320",
+  "settings.imageThumbWidth.name": "Default image size",
+  "settings.imageThumbWidth.desc": "How wide images without a set width appear in nodes (height at most 3/4 of it; in the central topic 4/3 of it). In pixels. Drag an image's corner to give it its own size.",
+  "settings.imageMaxWidth.name": "Maximum image width",
+  "settings.imageMaxWidth.desc": "How far you can drag an image's corner. Images whose width in the note is larger show at this width; the note isn't changed. In pixels.",
+  "settings.resetImageThumb": "Reset to 240",
+  "settings.resetImageMax": "Reset to 800",
+  "settings.tableMaxWidth.name": "Maximum width of tables in nodes",
+  "settings.tableMaxWidth.desc": "Wider tables scroll sideways inside the node. Columns you haven't resized are at most 240 wide and wrap their text. In pixels, scaled with the node text size.",
+  "settings.tableMaxHeight.name": "Maximum height of tables in nodes",
+  "settings.tableMaxHeight.desc": "Taller tables scroll inside the node with the header row kept at the top. Scrolling anywhere on such a node scrolls the table, and the node stays put. In pixels, scaled with the node text size.",
+  "settings.resetTableWidth": "Reset to 640",
+  "settings.resetTableHeight": "Reset to 480",
+  "settings.embedToolbar.name": "Toolbar",
+  "settings.embedToolbar.desc": "Full: the same as an opened mind map. Custom: pick the buttons below; by default only the open / edit button. Auto-hide: no toolbar in reading view; in editing view and on canvas cards it shows only while the mouse is over the map or the map has focus.",
+  "settings.embedToolbar.full": "Full",
+  "settings.embedToolbar.custom": "Custom",
+  "settings.embedToolbar.autohide": "Auto-hide",
+  "bar.embedPage": "Toolbar of embedded maps",
+  "bar.embedPageDesc": "For mind maps embedded in notes and canvas cards (mindmap code blocks and ![[note]] embeds): full, custom buttons, or auto-hide.",
+  "bar.embed": "Open / edit this mind map",
+  "bar.embedDesc": "Embedded notes show \u201COpen this mind map\u201D; code blocks show \u201CEdit / Done\u201D",
+  "bar.expand": "Edit in a large window",
+  "bar.expandDesc": "Code blocks only",
+  "settings.outlineWrap.name": "Show full titles in the outline",
+  "settings.outlineWrap.desc": "Long titles in the mind map's outline panel wrap onto more lines instead of being cut off.",
+  "settings.headingsOnly.name": "Only headings as nodes",
+  "settings.headingsOnly.desc": "Mind maps of notes show only headings as nodes; lists and paragraphs under a heading become its note, kept exactly as written. Code-block mind maps are not affected.",
+  "settings.codeBlockHeight.name": "Maximum height of embedded code blocks",
+  "settings.codeBlockHeight.desc": "Embedded mindmap code blocks fit their content, up to this height in pixels."
+};
+var zh = {
+  "command.toggleView": "\u5728\u601D\u7EF4\u5BFC\u56FE\u548C Markdown \u4E4B\u95F4\u5207\u6362",
+  "command.openPreview": "Markdown \u548C\u601D\u7EF4\u5BFC\u56FE\u5206\u5C4F\u5BF9\u7167",
+  "command.swapSides": "\u5206\u5C4F\u5BF9\u7167\uFF1A\u5DE6\u53F3\u4E92\u6362",
+  "command.newMindMap": "\u65B0\u5EFA\u601D\u7EF4\u5BFC\u56FE",
+  "command.linkNote": "\u94FE\u63A5\u5230\u7B14\u8BB0 / \u65B0\u5EFA\u7B14\u8BB0",
+  "command.toggleOutline": "\u5207\u6362\u5927\u7EB2\u9762\u677F",
+  "command.toggleHidden": "\u663E\u793A / \u4E0D\u663E\u793A\u9690\u85CF\u7684\u8282\u70B9",
+  "command.addListIcons": "\u7ED9\u5DF2\u6709\u8111\u56FE\u7B14\u8BB0\u8865\u4E0A\u5217\u8868\u56FE\u6807",
+  "command.focusBranch": "\u805A\u7126\u9009\u4E2D\u5206\u652F",
+  "command.exitFocus": "\u9000\u51FA\u805A\u7126",
+  "command.copyNodeLink": "\u590D\u5236\u8282\u70B9\u94FE\u63A5",
+  "command.search": "\u641C\u7D22\u8282\u70B9",
+  "command.expandAll": "\u5C55\u5F00\u5168\u90E8\u8282\u70B9",
+  "command.collapseAll": "\u6298\u53E0\u5168\u90E8\u8282\u70B9",
+  "command.toggleFold": "\u6298\u53E0 / \u5C55\u5F00\u9009\u4E2D\u8282\u70B9",
+  "command.showLevel": "\u9009\u4E2D\u8282\u70B9\u5F80\u4E0B\u53EA\u663E\u793A {n} \u5C42\uFF08\u6CA1\u9009\u6216\u9009\u4E2D\u4E2D\u5FC3\u4E3B\u9898\u65F6\u4E3A\u6574\u5F20\u56FE\uFF09",
+  "command.fitBranch": "\u7F29\u653E\u5230\u9009\u4E2D\u5206\u652F",
+  "command.toggleBox": "\u6DFB\u52A0 / \u79FB\u9664\u5916\u6846",
+  "command.toggleRecite": "\u5207\u6362\u80CC\u8BF5\u6A21\u5F0F",
+  "command.togglePdfExcerpt": "PDF \u81EA\u52A8\u6458\u5F55\u5230\u8FD9\u5F20\u8111\u56FE\uFF08\u5F00/\u5173\uFF09",
+  "action.stopExcerpt": "PDF \u81EA\u52A8\u6458\u5F55\u4E2D\uFF0C\u70B9\u51FB\u505C\u6B62",
+  "notice.excerptOn": "\u5DF2\u5F00\u59CB PDF \u81EA\u52A8\u6458\u5F55\uFF1APDF++ \u6BCF\u590D\u5236\u4E00\u6B21\u94FE\u63A5\uFF0C\u5C31\u52A0\u5230\u8FD9\u5F20\u8111\u56FE\u7684\u9009\u4E2D\u8282\u70B9\u4E0B\u3002\u5728 PDF++ \u8BBE\u7F6E\u91CC\u6253\u5F00 Auto-copy\uFF0C\u9009\u4E2D\u6587\u5B57\u5C31\u76F4\u63A5\u52A0\u8FDB\u6765",
+  "notice.excerptOff": "\u5DF2\u505C\u6B62 PDF \u81EA\u52A8\u6458\u5F55",
+  "notice.excerptNeedsPdfPlus": "PDF \u81EA\u52A8\u6458\u5F55\u9700\u8981\u5148\u5B89\u88C5\u5E76\u542F\u7528 PDF++ \u63D2\u4EF6",
+  "pdfExcerpt.status": "\u5DF2\u590D\u5236\u5E76\u52A0\u5230\u8111\u56FE",
+  "command.toggleLock": "\u9501\u5B9A / \u89E3\u9501\u7F16\u8F91",
+  "command.editCallout": "\u6DFB\u52A0 / \u7F16\u8F91\u6807\u6CE8",
+  "command.addRel": "\u4ECE\u9009\u4E2D\u7684\u8282\u70B9\u6DFB\u52A0\u5173\u8054\u7EBF",
+  "command.toggleCallouts": "\u663E\u793A / \u9690\u85CF\u6807\u6CE8",
+  "command.toggleNotes": "\u5C55\u5F00 / \u6536\u8D77\u5907\u6CE8",
+  "command.exportPng": "\u5BFC\u51FA\u4E3A PNG",
+  "command.exportSvg": "\u5BFC\u51FA\u4E3A SVG",
+  "command.exportPdf": "\u5BFC\u51FA\u4E3A PDF",
+  "command.copyPng": "\u590D\u5236\u4E3A\u56FE\u7247",
+  "menu.openAsMarkdown": "\u4EE5 Markdown \u6253\u5F00",
+  "menu.openAsMindMap": "\u4EE5\u601D\u7EF4\u5BFC\u56FE\u6253\u5F00",
+  "hover.display": "\u601D\u7EF4\u5BFC\u56FE",
+  "notice.setIconFirst": "\u5148\u5728\u8BBE\u7F6E\u91CC\u586B\u4E00\u4E2A\u56FE\u6807\u503C",
+  "notice.allHaveIcons": "\u6240\u6709\u8111\u56FE\u7B14\u8BB0\u90FD\u5DF2\u7ECF\u6709\u56FE\u6807\u4E86",
+  "notice.iconsAdded": "\u5DF2\u7ED9 {count} \u7BC7\u8111\u56FE\u7B14\u8BB0\u8865\u4E0A\u56FE\u6807",
+  "log.iconWriteFailed": "\u7ED9 {path} \u5199\u56FE\u6807\u5931\u8D25",
+  "notice.created": "\u5DF2\u521B\u5EFA {path}",
+  "notice.writeBackFailed": "\u5199\u56DE\u4EE3\u7801\u5757\u5931\u8D25\uFF1A{error}",
+  "notice.rootNoRoom": "\u4E2D\u5FC3\u4E3B\u9898\u5B58\u4E0D\u4E0B\uFF1A\u4EE3\u7801\u5757\u91CC\u7684\u6807\u9898\u5DF2\u7ECF\u7528\u5230\u516D\u7EA7\uFF0C\u8981\u7ED9\u4E2D\u5FC3\u4E3B\u9898\u8865\u4E00\u884C\u4E00\u7EA7\u6807\u9898\uFF0C\u539F\u6765\u7684\u6807\u9898\u90FD\u5F97\u964D\u4E00\u7EA7\uFF0C\u4F1A\u8D85\u8FC7\u4E0A\u9650\u3002",
+  "notice.rootBadName": '\u4E2D\u5FC3\u4E3B\u9898\u5C31\u662F\u7B14\u8BB0\u7684\u6587\u4EF6\u540D\uFF0C\u4E0D\u80FD\u542B\u6709\u8FD9\u4E9B\u5B57\u7B26\uFF1A\\ / : * ? " < > | # ^ [ ]',
+  "notice.rootNameTaken": "\u7B14\u8BB0\u6539\u4E0D\u6210\u300C{name}\u300D\uFF1A\u540C\u4E00\u4E2A\u6587\u4EF6\u5939\u91CC\u5DF2\u7ECF\u6709\u540C\u540D\u6587\u4EF6\u4E86\u3002",
+  "notice.externalConflict": "{file} \u5728\u5916\u90E8\u88AB\u6539\u52A8\uFF0C\u548C\u8111\u56FE\u91CC\u8FD8\u6CA1\u4FDD\u5B58\u7684\u7F16\u8F91\u6539\u5230\u4E86\u540C\u4E00\u5904\uFF0C\u5DF2\u4FDD\u7559\u8111\u56FE\u91CC\u7684\u7248\u672C",
+  "error.fileNotFound": "\u627E\u4E0D\u5230\u6587\u4EF6 {path}",
+  "error.blockNotFound": "\u5728\u7B14\u8BB0\u91CC\u627E\u4E0D\u5230\u8FD9\u4E2A\u4EE3\u7801\u5757",
+  "notice.createNoteFailed": "\u65B0\u5EFA\u7B14\u8BB0\u5931\u8D25\uFF1A{error}",
+  "newFile.baseName": "\u672A\u547D\u540D\u601D\u7EF4\u5BFC\u56FE",
+  "newFile.topic": "\u4E3B\u9898 {n}",
+  "notice.templateMissing": "\u627E\u4E0D\u5230\u6A21\u677F\u7B14\u8BB0\uFF1A{path}\uFF0C\u5DF2\u7528\u9ED8\u8BA4\u5185\u5BB9\u65B0\u5EFA\u3002",
+  "notice.headingLinksUpdated": "\u5DF2\u66F4\u65B0 {n} \u5904\u6307\u5411\u8FD9\u7BC7\u7B14\u8BB0\u6807\u9898\u7684\u94FE\u63A5",
+  "view.displayText": "\u601D\u7EF4\u5BFC\u56FE",
+  "error.noOpenFile": "\u6CA1\u6709\u6253\u5F00\u7684\u6587\u4EF6",
+  "notice.exported": "\u5DF2\u5BFC\u51FA {path}",
+  "notice.exportFailed": "\u5BFC\u51FA\u5931\u8D25\uFF1A{error}",
+  "notice.copiedAsImage": "\u5DF2\u590D\u5236\u4E3A\u56FE\u7247",
+  "notice.copyFailedWithError": "\u590D\u5236\u5931\u8D25\uFF1A{error}",
+  "xmind.convert": "\u8F6C\u6362\u4E3A Markdown \u7B14\u8BB0",
+  "xmind.readFailed": "\u65E0\u6CD5\u8BFB\u53D6 {name}\uFF1A{error}",
+  "xmind.converted": "\u5DF2\u8F6C\u6362\u4E3A {path}",
+  "xmind.sheet": "\u5DE5\u4F5C\u8868 {n}",
+  "xmind.notZip": "\u4E0D\u662F\u6709\u6548\u7684 zip \u6587\u4EF6",
+  "xmind.zipCorrupt": "zip \u76EE\u5F55\u635F\u574F",
+  "xmind.unsupportedCompression": "\u4E0D\u652F\u6301\u7684\u538B\u7F29\u65B9\u5F0F {method}",
+  "xmind.noContent": "\u627E\u4E0D\u5230 content.json \u6216 content.xml\uFF0C\u53EF\u80FD\u4E0D\u662F XMind \u6587\u4EF6",
+  "xmind.lost": "\u4EE5\u4E0B\u5185\u5BB9\u6682\u4E0D\u652F\u6301\uFF0C\u4E0D\u4F1A\u663E\u793A\uFF0C\u8F6C\u6362\u65F6\u4E5F\u4E0D\u4F1A\u4FDD\u7559\uFF1A{items}",
+  "xmind.lost.sep": "\u3001",
+  "xmind.lost.detached": "{n} \u4E2A\u81EA\u7531\u4E3B\u9898",
+  "xmind.lost.relationships": "{n} \u6761\u8054\u7CFB\u7EBF",
+  "xmind.lost.summaries": "{n} \u4E2A\u6982\u8981",
+  "xmind.lost.comments": "{n} \u6761\u8BC4\u8BBA",
+  "xmind.lost.images": "{n} \u5F20\u56FE\u7247\uFF08\u6587\u4EF6\u91CC\u7F3A\u56FE\u7247\uFF09",
+  "export.readFailed": "\u8BFB\u53D6\u5931\u8D25",
+  "export.nothing": "\u6CA1\u6709\u53EF\u5BFC\u51FA\u7684\u5185\u5BB9",
+  "export.pdfDesktopOnly": "\u5BFC\u51FA PDF \u53EA\u80FD\u5728\u7535\u8111\u4E0A\u7528",
+  "export.svgRenderFailed": "SVG \u6E32\u67D3\u5931\u8D25",
+  "export.noCanvas": "\u65E0\u6CD5\u521B\u5EFA\u753B\u5E03",
+  "export.pngEncodeFailed": "PNG \u7F16\u7801\u5931\u8D25",
+  "structure.logicRight": "\u903B\u8F91\u56FE\uFF08\u5411\u53F3\uFF09",
+  "structure.mindmap": "\u601D\u7EF4\u5BFC\u56FE\uFF08\u5DE6\u53F3\u5206\u5E03\uFF09",
+  "structure.orgDown": "\u7EC4\u7EC7\u7ED3\u6784\u56FE\uFF08\u5411\u4E0B\uFF09",
+  "structure.treeRight": "\u6811\u5F62\u56FE",
+  "structure.timelineH": "\u6A2A\u5411\u65F6\u95F4\u8F74\uFF08\u540C\u4FA7\uFF09",
+  "structure.timelineHAlt": "\u6A2A\u5411\u65F6\u95F4\u8F74\uFF08\u4E0A\u4E0B\u4EA4\u9519\uFF09",
+  "structure.timelineVRight": "\u7EB5\u5411\u65F6\u95F4\u8F74\uFF08\u5411\u53F3\uFF09",
+  "structure.timelineVLeft": "\u7EB5\u5411\u65F6\u95F4\u8F74\uFF08\u5411\u5DE6\uFF09",
+  "structure.timelineVAlt": "\u7EB5\u5411\u65F6\u95F4\u8F74\uFF08\u5DE6\u53F3\u4EA4\u9519\uFF09",
+  "structure.fishboneRight": "\u9C7C\u9AA8\u56FE\uFF08\u9C7C\u5934\u5411\u53F3\uFF09",
+  "structure.fishboneLeft": "\u9C7C\u9AA8\u56FE\uFF08\u9C7C\u5934\u5411\u5DE6\uFF09",
+  "theme.label": "{name} \xB7 {desc}",
+  "theme.snow": "\u96EA\u677E",
+  "theme.snow.desc": "\u6DF1\u8272\u4E2D\u5FC3\uFF0C\u7070\u5E95\u8282\u70B9",
+  "theme.rainbow": "\u5F69\u8679",
+  "theme.rainbow.desc": "\u5206\u652F\u5404\u4E00\u8272\uFF0C\u66F2\u7EBF",
+  "theme.business": "\u5546\u52A1",
+  "theme.business.desc": "\u84DD\u8272\u7CFB\uFF0C\u76F4\u89D2\u6298\u7EBF",
+  "theme.warm": "\u6696\u9633",
+  "theme.warm.desc": "\u6A59\u8C03\uFF0C\u5927\u5706\u89D2\u66F2\u7EBF",
+  "theme.mono": "\u6781\u7B80",
+  "theme.mono.desc": "\u9ED1\u767D\u63CF\u8FB9\uFF0C\u7EC6\u7EBF",
+  "theme.line": "\u7EBF\u6761",
+  "theme.line.desc": "\u7EAF\u6587\u5B57\u8282\u70B9\uFF0C\u7EC6\u6298\u7EBF",
+  "theme.forest": "\u68EE\u6797",
+  "theme.forest.desc": "\u7EFF\u8C03\u5206\u652F\uFF0C\u66F2\u7EBF",
+  "toolbarPos.bottom": "\u4E0B\u65B9\uFF08\u6C34\u5E73\uFF09",
+  "toolbarPos.top": "\u4E0A\u65B9\uFF08\u6C34\u5E73\uFF09",
+  "toolbarPos.left": "\u5DE6\u4FA7\uFF08\u5782\u76F4\uFF09",
+  "toolbarPos.right": "\u53F3\u4FA7\uFF08\u5782\u76F4\uFF09",
+  "color.red": "\u7EA2\u8272",
+  "color.orange": "\u6A59\u8272",
+  "color.yellow": "\u9EC4\u8272",
+  "color.green": "\u7EFF\u8272",
+  "color.teal": "\u9752\u8272",
+  "color.blue": "\u84DD\u8272",
+  "color.purple": "\u7D2B\u8272",
+  "color.pink": "\u7C89\u8272",
+  "color.gray": "\u7070\u8272",
+  "marker.priority": "\u4F18\u5148\u7EA7",
+  "marker.progress": "\u8FDB\u5EA6",
+  "marker.flags": "\u65D7\u5E1C",
+  "marker.symbols": "\u7B26\u53F7",
+  "marker.custom": "\u81EA\u5B9A\u4E49",
+  "marker.recite": "\u80CC\u8BF5",
+  "marker.answerTip": "\u7B54\u6848\uFF1A\u80CC\u8BF5\u6A21\u5F0F\u4E0B\u8FDE\u540C\u5B50\u8282\u70B9\u4E00\u8D77\u906E\u4F4F\uFF0C\u70B9\u4E00\u4E0B\u63ED\u5F00",
+  "inline.toggleTask": "\u70B9\u51FB\u5207\u6362",
+  "inline.activate": "\u6FC0\u6D3B",
+  "canvas.themeTip": "\u4E3B\u9898\uFF1A{name} \xB7 \u70B9\u51FB\u5207\u6362",
+  "canvas.structureTip": "\u7ED3\u6784\uFF1A{name} \xB7 \u70B9\u51FB\u5207\u6362",
+  "canvas.doneEditing": "\u5B8C\u6210\u7F16\u8F91\uFF0C\u56DE\u5230\u53EA\u8BFB",
+  "canvas.editEmbedded": "\u7F16\u8F91\u8FD9\u5F20\u8111\u56FE \xB7 \u6539\u52A8\u5199\u56DE\u4EE3\u7801\u5757",
+  "canvas.bigEdit": "\u5927\u7A97\u53E3\u7F16\u8F91",
+  "blockEditor.title": "\u7F16\u8F91\u8111\u56FE \xB7 {name}",
+  "canvas.openEmbeddedFile": "\u6253\u5F00\u8FD9\u5F20\u8111\u56FE\u8FDB\u884C\u7F16\u8F91",
+  "canvas.quickSettings": "\u5FEB\u6377\u8BBE\u7F6E \xB7 \u7F16\u8F91\u3001\u62C6\u5206\u8FD9\u4E9B\u5E38\u8C03\u7684\u8BBE\u7F6E",
+  "canvas.quickSettingsTitle": "\u5FEB\u6377\u8BBE\u7F6E",
+  "canvas.recite": "\u80CC\u8BF5\u6A21\u5F0F \xB7 \u906E\u4F4F ==\u9AD8\u4EAE== \u548C\u9009\u62E9\u9898\u7B54\u6848\uFF0C\u70B9\u4E00\u4E0B\u63ED\u6653",
+  "canvas.toggleCallouts": "\u663E\u793A / \u9690\u85CF\u6807\u6CE8",
+  "canvas.showCallouts": "\u663E\u793A\u6807\u6CE8",
+  "canvas.hideCallouts": "\u9690\u85CF\u6807\u6CE8",
+  "canvas.viewCallout": "\u67E5\u770B\u6807\u6CE8",
+  "canvas.calloutPlaceholder": "\u6807\u6CE8",
+  "canvas.singleChoice": "\u5355\u9009",
+  "canvas.multiChoice": "\u591A\u9009",
+  "canvas.answerCovered": "\u7B54\u6848 \xB7 \u70B9\u4E00\u4E0B\u63ED\u5F00",
+  "canvas.lockEditing": "\u9501\u5B9A\u7F16\u8F91\uFF08\u53EA\u80FD\u67E5\u770B\uFF1A\u7F29\u653E\u3001\u5E73\u79FB\u3001\u6298\u53E0\u7167\u5E38\uFF09",
+  "canvas.unlockEditing": "\u5DF2\u9501\u5B9A\u7F16\u8F91 \xB7 \u70B9\u4E00\u4E0B\u89E3\u9501",
+  "canvas.toolbarContextTip": "\u53F3\u952E\u53EF\u5207\u6362\u5DE5\u5177\u680F\u4F4D\u7F6E",
+  "canvas.outline": "\u5927\u7EB2\u9762\u677F \xB7 \u6811\u5F62\u5217\u8868\uFF0C\u53EF\u6539\u540D\u548C\u8C03\u5C42\u7EA7",
+  "canvas.zoomOut": "\u7F29\u5C0F {key}",
+  "canvas.zoomLevel": "\u5F53\u524D\u7F29\u653E \xB7 \u70B9\u51FB\u56DE\u5230 100%",
+  "canvas.zoomIn": "\u653E\u5927 {key}",
+  "canvas.fit": "\u9002\u5E94\u753B\u5E03 \xB7 \u7F29\u653E\u5230\u770B\u5F97\u89C1\u5168\u90E8\u8282\u70B9 {key}",
+  "canvas.center": "\u56DE\u5230\u4E2D\u5FC3 \xB7 \u4E2D\u5FC3\u4E3B\u9898\u5C45\u4E2D\uFF0C\u7F29\u653E 100%",
+  "canvas.undo": "\u64A4\u9500 {key}",
+  "canvas.redo": "\u91CD\u505A {key}",
+  "canvas.search": "\u641C\u7D22\u8282\u70B9 {key}",
+  "canvas.foldLevels": "\u6298\u53E0\u5C42\u7EA7 \xB7 \u5C55\u5F00\u5168\u90E8\u6216\u53EA\u770B\u524D\u51E0\u5C42",
+  "canvas.centralTopic": "\u4E2D\u5FC3\u4E3B\u9898",
+  "canvas.splitSyncOn": "\u548C\u65C1\u8FB9\u7684 Markdown \u8054\u52A8\uFF1A\u5F00\uFF08\u70B9\u4E00\u4E0B\u5173\u6389\uFF09",
+  "canvas.splitSyncOff": "\u548C\u65C1\u8FB9\u7684 Markdown \u8054\u52A8\uFF1A\u5173\uFF08\u70B9\u4E00\u4E0B\u6253\u5F00\uFF09",
+  "canvas.newTopicName": "\u4E3B\u9898{n}",
+  "canvas.frameShield": "\u53CC\u51FB\u753B\u9762\u6216\u70B9\u300C\u6FC0\u6D3B\u300D\uFF0C\u4E4B\u540E\u624D\u80FD\u64AD\u653E\u548C\u8DF3\u8F6C",
+  "canvas.viewNote": "\u67E5\u770B\u5907\u6CE8",
+  "canvas.toggleNotes": "\u5C55\u5F00 / \u6536\u8D77\u5907\u6CE8",
+  "canvas.expandNotes": "\u5728\u8282\u70B9\u4E0B\u65B9\u5C55\u5F00\u5907\u6CE8",
+  "canvas.collapseNotes": "\u6536\u8D77\u5907\u6CE8",
+  "canvas.expandNote": "\u5C55\u5F00\u8FD9\u6761\u5907\u6CE8",
+  "canvas.collapseNote": "\u6536\u8D77\u8FD9\u6761\u5907\u6CE8",
+  "canvas.showHidden": "\u663E\u793A\u9690\u85CF\u7684\u8282\u70B9",
+  "canvas.hideHidden": "\u4E0D\u518D\u663E\u793A\u9690\u85CF\u7684\u8282\u70B9",
+  "canvas.resizeNote": "\u62D6\u52A8\u8C03\u6574\u8FD9\u6761\u5907\u6CE8\u7684\u5927\u5C0F\uFF0C\u53CC\u51FB\u6062\u590D\u9ED8\u8BA4",
+  "canvas.boxTitleDefault": "\u5916\u6846",
+  "theme.custom.desc": "\u81EA\u5B9A\u4E49",
+  "theme.custom.missing": "\u81EA\u5B9A\u4E49\u4E3B\u9898\uFF08\u672A\u627E\u5230\uFF09",
+  "customTheme.heading": "\u81EA\u5B9A\u4E49\u4E3B\u9898",
+  "customTheme.new": "\u65B0\u5EFA\u81EA\u5B9A\u4E49\u4E3B\u9898",
+  "customTheme.newDesc": "\u5148\u9009\u4E00\u4E2A\u5185\u7F6E\u4E3B\u9898\u4F5C\u4E3A\u8D77\u70B9\uFF0C\u5728\u5B83\u7684\u57FA\u7840\u4E0A\u6539\u3002",
+  "customTheme.create": "\u65B0\u5EFA",
+  "customTheme.defaultName": "\u6211\u7684\u4E3B\u9898 {n}",
+  "customTheme.basedOn": "\u57FA\u4E8E\u300C{base}\u300D",
+  "customTheme.edit": "\u7F16\u8F91",
+  "customTheme.duplicate": "\u590D\u5236",
+  "customTheme.copyName": "{name} \u526F\u672C",
+  "customTheme.delete": "\u5220\u9664",
+  "customTheme.deleteConfirm": "\u5220\u9664\u81EA\u5B9A\u4E49\u4E3B\u9898\u300C{name}\u300D\uFF1F\u7528\u5B83\u7684\u7B14\u8BB0\u4F1A\u9000\u56DE\u9ED8\u8BA4\u4E3B\u9898\uFF0C\u7B14\u8BB0\u5185\u5BB9\u4E0D\u53D7\u5F71\u54CD\u3002",
+  "customTheme.editTitle": "\u7F16\u8F91\u81EA\u5B9A\u4E49\u4E3B\u9898",
+  "customTheme.preview": "\u5B9E\u65F6\u9884\u89C8",
+  "customTheme.cancel": "\u53D6\u6D88",
+  "customTheme.save": "\u4FDD\u5B58",
+  "customTheme.untitled": "\u672A\u547D\u540D\u4E3B\u9898",
+  "customTheme.name": "\u540D\u79F0",
+  "customTheme.base": "\u57FA\u7840\u4E3B\u9898",
+  "customTheme.baseDesc": "\u6362\u57FA\u7840\u4E3B\u9898\u4F1A\u6309\u5B83\u91CD\u65B0\u586B\u4E00\u904D\u4E0B\u9762\u7684\u503C\u3002",
+  "customTheme.overall": "\u6574\u4F53",
+  "customTheme.edge": "\u8FDE\u7EBF",
+  "customTheme.branchColors": "\u5206\u652F\u5404\u4E00\u8272",
+  "customTheme.spacing": "\u95F4\u8DDD",
+  "customTheme.spacing.compact": "\u7D27\u51D1",
+  "customTheme.spacing.normal": "\u6807\u51C6",
+  "customTheme.spacing.loose": "\u5BBD\u677E",
+  "customTheme.byLevel": "\u6309\u5C42\u7EA7",
+  "customTheme.tier0": "\u4E2D\u5FC3\u4E3B\u9898",
+  "customTheme.tier1": "\u4E3B\u4E3B\u9898",
+  "customTheme.tier2": "\u5B50\u4E3B\u9898",
+  "customTheme.tier3": "\u7B2C 3 \u5C42\u53CA\u4EE5\u4E0B",
+  "customTheme.fontSize": "\u5B57\u53F7",
+  "customTheme.bold": "\u7C97\u4F53",
+  "customTheme.italic": "\u659C\u4F53",
+  "customTheme.textColor": "\u6587\u5B57\u989C\u8272",
+  "customTheme.shape": "\u5916\u5F62",
+  "customTheme.shape.fill": "\u6709\u80CC\u666F",
+  "customTheme.shape.none": "\u65E0\u80CC\u666F",
+  "customTheme.shape.underline": "\u4E0B\u5212\u7EBF",
+  "customTheme.fill": "\u80CC\u666F\u8272",
+  "customTheme.radius": "\u5706\u89D2",
+  "customTheme.border": "\u8FB9\u6846",
+  "customTheme.border.none": "\u65E0",
+  "customTheme.border.solid": "\u5B9E\u7EBF",
+  "customTheme.border.dashed": "\u865A\u7EBF",
+  "customTheme.borderWidth": "\u8FB9\u6846\u7C97\u7EC6",
+  "customTheme.borderColor": "\u8FB9\u6846\u989C\u8272",
+  "customTheme.width": "\u6700\u5927\u5BBD\u5EA6",
+  "customTheme.widthDesc": "\u5185\u5BB9\u77ED\u5C31\u6309\u5185\u5BB9\u5BBD\u5EA6\uFF0C\u8D85\u8FC7\u5C31\u5728\u6700\u5927\u5BBD\u5EA6\u5904\u6362\u884C\uFF1B\u5355\u4E2A\u8282\u70B9\u62D6\u51FA\u6765\u7684\u5BBD\u5EA6\u4ECD\u7136\u4F18\u5148\u3002",
+  "customTheme.width.auto": "\u9ED8\u8BA4",
+  "customTheme.width.custom": "\u81EA\u5B9A\u4E49",
+  "customTheme.widthPx": "\u6700\u5927\u5BBD\u5EA6",
+  "customTheme.align": "\u540C\u5C42\u5BBD\u5EA6\u5BF9\u9F50",
+  "customTheme.alignDesc": "\u8FD9\u4E00\u5C42\u7684\u8282\u70B9\u7EDF\u4E00\u6210\u540C\u5C42\u6700\u5BBD\u90A3\u4E2A\u7684\u5BBD\u5EA6\uFF0C\u6392\u5F97\u6574\u9F50\uFF1B\u5355\u72EC\u62D6\u8FC7\u5BBD\u5EA6\u7684\u8282\u70B9\u4FDD\u6301\u81EA\u5DF1\u7684\u5BBD\u5EA6\u3002",
+  "customTheme.lineColor": "\u8FDE\u5230\u8FD9\u4E00\u5C42\u7684\u7EBF\uFF1A\u989C\u8272",
+  "customTheme.lineWidth": "\u8FDE\u5230\u8FD9\u4E00\u5C42\u7684\u7EBF\uFF1A\u7C97\u7EC6",
+  "canvas.edgeTip": "\u8FDE\u7EBF\uFF1A{name}",
+  "edge.theme": "\u8DDF\u968F\u4E3B\u9898",
+  "edge.curve": "\u66F2\u7EBF",
+  "edge.elbow": "\u76F4\u89D2\u6298\u7EBF",
+  "edge.straight": "\u76F4\u7EBF",
+  "edge.dashed": "\u865A\u7EBF",
+  "edge.rounded": "\u5706\u89D2\u62D0\u89D2",
+  "canvas.resizeWidth": "\u62D6\u52A8\u6539\u5BBD\u5EA6 \xB7 \u53CC\u51FB\u6062\u590D\u81EA\u52A8",
+  "canvas.expandChildren": "\u5C55\u5F00 {count} \u4E2A\u5B50\u8282\u70B9 /",
+  "canvas.collapseBranch": "\u6298\u53E0\u8FD9\u4E00\u652F /",
+  "canvas.colorTip": "{color} \xB7 \u7ED9\u9009\u4E2D\u7684\u8282\u70B9\u4E0A\u8272",
+  "canvas.clearColor": "\u6E05\u9664\u989C\u8272",
+  "canvas.addChildTip": "\u6DFB\u52A0\u5B50\u8282\u70B9 {key}",
+  "canvas.addSiblingTip": "\u6DFB\u52A0\u5144\u5F1F\u8282\u70B9 {key}",
+  "canvas.markersTip": "\u6807\u8BB0 \xB7 \u4F18\u5148\u7EA7\u3001\u8FDB\u5EA6\u3001\u65D7\u5E1C\u3001\u7B26\u53F7",
+  "canvas.noteTip": "\u5907\u6CE8 \xB7 \u652F\u6301 Markdown\uFF0C\u53EF\u5199\u5217\u8868",
+  "canvas.boxTip": "\u5916\u6846 {key} \xB7 \u518D\u70B9\u4E00\u6B21\u53EF\u52A0\u6807\u9898\u6216\u79FB\u9664",
+  "canvas.linkTip": "\u94FE\u63A5\u5230\u7B14\u8BB0\uFF0C\u6216\u6309\u540D\u5B57\u65B0\u5EFA {key}",
+  "canvas.copyTip": "\u590D\u5236\u8FD9\u68F5\u5B50\u6811 {key}",
+  "canvas.pasteTip": "\u7C98\u8D34\u4E3A\u5B50\u8282\u70B9 {key}",
+  "canvas.deleteTip": "\u5220\u9664\u8282\u70B9\u53CA\u5176\u5B50\u6811 {key}",
+  "canvas.resizeFrame": "\u62D6\u52A8\u6539\u5927\u5C0F\uFF08\u6309\u4F4F Shift \u5355\u72EC\u8C03\u9AD8\u5EA6\uFF09\uFF0C\u53CC\u51FB\u6062\u590D 560\xD7315",
+  "canvas.resizeImage": "\u62D6\u52A8\u6539\u56FE\u7247\u5927\u5C0F\uFF0C\u53CC\u51FB\u6062\u590D\u539F\u59CB\u5C3A\u5BF8",
+  "canvas.resizeVideo": "\u62D6\u52A8\u6539\u89C6\u9891\u5927\u5C0F\uFF0C\u53CC\u51FB\u6062\u590D\u9ED8\u8BA4\u5927\u5C0F",
+  "canvas.notePlaceholder": "\u5907\u6CE8\uFF08\u652F\u6301 Markdown\uFF0C\u53EF\u4EE5\u5199\u5217\u8868\uFF09",
+  "canvas.clearMarkers": "\u6E05\u9664\u5168\u90E8\u6807\u8BB0",
+  "canvas.wholeMap": "\u5168\u56FE",
+  "canvas.emptyNode": "\uFF08\u7A7A\uFF09",
+  "canvas.untitled": "\u672A\u547D\u540D",
+  "canvas.expandAll": "\u5C55\u5F00\u5168\u90E8",
+  "canvas.mainTopicsOnly": "\u53EA\u663E\u793A\u4E3B\u4E3B\u9898",
+  "canvas.showToLevel": "\u663E\u793A\u5230\u7B2C {n} \u5C42",
+  "canvas.searchPlaceholder": "\u641C\u7D22\u8282\u70B9",
+  "canvas.prevMatch": "\u4E0A\u4E00\u4E2A\u5339\u914D {key}",
+  "canvas.nextMatch": "\u4E0B\u4E00\u4E2A\u5339\u914D {key}",
+  "canvas.closeSearch": "\u5173\u95ED\u641C\u7D22 {key}",
+  "menu.edit": "\u7F16\u8F91",
+  "menu.addChild": "\u6DFB\u52A0\u5B50\u8282\u70B9",
+  "menu.addSibling": "\u6DFB\u52A0\u5144\u5F1F\u8282\u70B9",
+  "menu.insertBefore": "\u5728\u524D\u9762\u63D2\u5165\u8282\u70B9",
+  "menu.insertParent": "\u63D2\u5165\u7236\u8282\u70B9",
+  "menu.insertGroup": "\u63D2\u5165",
+  "menu.foldGroup": "\u6298\u53E0\u4E0E\u89C6\u56FE",
+  "menu.boxGroup": "\u5916\u6846",
+  "menu.summaryGroup": "\u6982\u8981",
+  "menu.more": "\u66F4\u591A",
+  "menu.newFloat": "\u5728\u8FD9\u91CC\u65B0\u5EFA\u81EA\u7531\u4E3B\u9898",
+  "menu.toFloat": "\u8F6C\u4E3A\u81EA\u7531\u4E3B\u9898",
+  "menu.attachFloat": "\u6302\u56DE\u4E2D\u5FC3\u4E3B\u9898",
+  "menu.revealInMarkdown": "\u5728 Markdown \u4E2D\u5B9A\u4F4D",
+  "menu.exitFocus": "\u9000\u51FA\u805A\u7126",
+  "menu.focusBranch": "\u805A\u7126\u6B64\u5206\u652F",
+  "menu.expand": "\u5C55\u5F00",
+  "menu.collapse": "\u6298\u53E0",
+  "menu.expandBranch": "\u5C55\u5F00\u5168\u90E8\u5B50\u5206\u652F",
+  "menu.expandNextLevel": "\u53EA\u5C55\u5F00\u4E0B\u4E00\u7EA7",
+  "menu.collapseBranch": "\u6298\u53E0\u5168\u90E8\u5B50\u5206\u652F",
+  "menu.expandLevel": "\u5C55\u5F00\u4E00\u7EA7",
+  "menu.collapseLevel": "\u6298\u53E0\u4E00\u7EA7",
+  "menu.openLink": "\u6253\u5F00\u300C{target}\u300D",
+  "menu.unlink": "\u53D6\u6D88\u94FE\u63A5",
+  "menu.linkNote": "\u94FE\u63A5\u5230\u7B14\u8BB0\u2026",
+  "menu.editNote": "\u7F16\u8F91\u5907\u6CE8",
+  "menu.addNote": "\u6DFB\u52A0\u5907\u6CE8",
+  "menu.deleteNote": "\u5220\u9664\u5907\u6CE8",
+  "bar.nodebarPage": "\u6D6E\u52A8\u5DE5\u5177\u680F\u7684\u6309\u94AE",
+  "bar.nodebarPageDesc": "\u9009\u4E2D\u8282\u70B9\u65F6\u4E0A\u65B9\u90A3\u6392\u5DE5\u5177\u663E\u793A\u54EA\u4E9B\u6309\u94AE\u3001\u6309\u4EC0\u4E48\u987A\u5E8F\uFF1B\u8FD8\u6709\u51E0\u4E2A\u9ED8\u8BA4\u4E0D\u663E\u793A\u7684\u53EF\u9009\u6309\u94AE\u3002",
+  "bar.toolbarPage": "\u4E3B\u5DE5\u5177\u680F\u7684\u6309\u94AE",
+  "bar.toolbarPageDesc": "\u8111\u56FE\u4E3B\u5DE5\u5177\u680F\u663E\u793A\u54EA\u4E9B\u6309\u94AE\u3001\u6309\u4EC0\u4E48\u987A\u5E8F\u3002",
+  "bar.count": "\u663E\u793A {n} / {total} \u4E2A",
+  "bar.reset": "\u6062\u590D\u9ED8\u8BA4",
+  "bar.nodebarDesc": "\u5173\u6389\u5F00\u5173\u5C31\u4E0D\u663E\u793A\uFF1B\u6309\u4F4F\u5DE6\u8FB9\u7684\u628A\u624B\u62D6\u52A8\uFF0C\u6216\u8005\u7528\u7BAD\u5934\u8C03\u987A\u5E8F\u3002\u6539\u5B8C\u6253\u5F00\u7740\u7684\u8111\u56FE\u9A6C\u4E0A\u751F\u6548\u3002",
+  "bar.toolbarDesc": "\u5173\u6389\u5F00\u5173\u5C31\u4E0D\u663E\u793A\uFF1B\u6309\u4F4F\u5DE6\u8FB9\u7684\u628A\u624B\u62D6\u52A8\uFF0C\u6216\u8005\u7528\u7BAD\u5934\u8C03\u987A\u5E8F\u3002\u5206\u9694\u7EBF\u4E5F\u80FD\u632A\u3001\u80FD\u5173\uFF1B\u4E00\u8FB9\u6CA1\u6709\u6309\u94AE\u7684\u5206\u9694\u7EBF\u4E0D\u663E\u793A\u3002",
+  "bar.resetButton": "\u6062\u590D",
+  "bar.moveUp": "\u4E0A\u79FB",
+  "bar.moveDown": "\u4E0B\u79FB",
+  "bar.sep": "\u5206\u9694\u7EBF",
+  "bar.sepDesc": "\u6309\u94AE\u5206\u7EC4\u4E4B\u95F4\u7684\u4E00\u6761\u77ED\u7AD6\u7EBF",
+  "bar.colors": "\u989C\u8272",
+  "bar.child": "\u6DFB\u52A0\u5B50\u8282\u70B9",
+  "bar.sibling": "\u6DFB\u52A0\u540C\u7EA7\u8282\u70B9",
+  "bar.marker": "\u6807\u8BB0",
+  "bar.note": "\u5907\u6CE8",
+  "bar.box": "\u5916\u6846",
+  "bar.link": "\u94FE\u63A5\u5230\u7B14\u8BB0",
+  "bar.copy": "\u590D\u5236",
+  "bar.paste": "\u7C98\u8D34",
+  "bar.trash": "\u5220\u9664",
+  "bar.rel": "\u6DFB\u52A0\u5173\u8054\u7EBF",
+  "bar.table": "\u63D2\u5165\u8868\u683C",
+  "bar.media": "\u63D2\u5165\u56FE\u7247\u6216\u89C6\u9891",
+  "bar.fold": "\u6298\u53E0 / \u5C55\u5F00",
+  "bar.outline": "\u5927\u7EB2",
+  "bar.lock": "\u9501\u5B9A",
+  "bar.splitSync": "\u548C\u5206\u5C4F\u7684 Markdown \u8054\u52A8",
+  "bar.structure": "\u7ED3\u6784",
+  "bar.palette": "\u4E3B\u9898",
+  "bar.edge": "\u8FDE\u7EBF\u6837\u5F0F",
+  "bar.zoomOut": "\u7F29\u5C0F",
+  "bar.zoom": "\u7F29\u653E\u6BD4\u4F8B",
+  "bar.zoomIn": "\u653E\u5927",
+  "bar.fit": "\u9002\u5E94\u753B\u5E03",
+  "bar.center": "\u56DE\u5230\u4E2D\u5FC3",
+  "bar.undo": "\u64A4\u9500",
+  "bar.redo": "\u91CD\u505A",
+  "bar.search": "\u641C\u7D22",
+  "bar.callout": "\u663E\u793A / \u9690\u85CF\u6807\u6CE8",
+  "bar.notes": "\u5C55\u5F00 / \u6536\u8D77\u5907\u6CE8",
+  "bar.hidden": "\u663E\u793A\u9690\u85CF\u7684\u8282\u70B9",
+  "bar.recite": "\u80CC\u8BF5\u6A21\u5F0F",
+  "bar.layers": "\u5C55\u5F00\u5230\u7B2C\u51E0\u5C42",
+  "bar.quick": "\u5FEB\u6377\u8BBE\u7F6E",
+  "menu.addRel": "\u6DFB\u52A0\u5173\u8054\u7EBF",
+  "menu.textColor": "\u6587\u5B57\u989C\u8272",
+  "canvas.textColorTip": "\u6587\u5B57\u989C\u8272",
+  "canvas.defaultTextColor": "\u9ED8\u8BA4",
+  "bar.textColor": "\u6587\u5B57\u989C\u8272",
+  "bar.highlight": "\u8367\u5149\u7B14",
+  "settings.colorAdd": "\u65B0\u589E\u989C\u8272",
+  "settings.colorRaw": "\u76F4\u63A5\u5199\u8272\u503C",
+  "settings.colorChips": "\u7528\u8272\u5757\u7F16\u8F91",
+  "settings.colorRemove": "\u5220\u6389\u8FD9\u4E2A\u989C\u8272",
+  "palette.common": "\u5E38\u7528",
+  "palette.recent": "\u6700\u8FD1\u4F7F\u7528",
+  "palette.alpha": "\u900F\u660E\u5EA6",
+  "palette.custom": "\u81EA\u5B9A\u4E49\u2026",
+  "palette.noText": "\u53BB\u6389\u6587\u5B57\u989C\u8272",
+  "palette.noHighlight": "\u53BB\u6389\u8367\u5149\u7B14",
+  "palette.noNodeColor": "\u65E0\u989C\u8272",
+  "palette.themeHighlight": "\u4E3B\u9898\u9AD8\u4EAE\uFF08==\u6587\u5B57==\uFF09",
+  "palette.textApply": "\u6587\u5B57\u989C\u8272\uFF1A{color}",
+  "palette.textMore": "\u66F4\u591A\u6587\u5B57\u989C\u8272",
+  "palette.bgApply": "\u8367\u5149\u7B14\uFF1A{color}",
+  "palette.bgMore": "\u66F4\u591A\u8367\u5149\u7B14\u989C\u8272",
+  "palette.nodeMore": "\u66F4\u591A\u8282\u70B9\u989C\u8272",
+  "palette.none": "\u65E0",
+  "canvas.foldTip": "\u6298\u53E0 / \u5C55\u5F00 {key}",
+  "canvas.moveUpTip": "\u4E0A\u79FB {key}",
+  "canvas.moveDownTip": "\u4E0B\u79FB {key}",
+  "menu.editRelLabel": "\u7F16\u8F91\u6587\u5B57",
+  "menu.reverseRel": "\u53CD\u8F6C\u65B9\u5411",
+  "menu.resetRelCurve": "\u6062\u590D\u9ED8\u8BA4\u5F2F\u66F2",
+  "menu.deleteRel": "\u5220\u9664\u5173\u8054\u7EBF",
+  "canvas.relHint": "\u70B9\u8981\u8FDE\u5230\u7684\u8282\u70B9 \xB7 Esc \u53D6\u6D88",
+  "menu.splitByPunctuation": "\u6309\u6807\u70B9\u62C6\u6210\u5B50\u8282\u70B9",
+  "canvas.jumpToPdf": "\u8DF3\u5230 PDF \u91CC\u8FD9\u4E2A\u4F4D\u7F6E",
+  "menu.markers": "\u6807\u8BB0\u2026",
+  "menu.task": "\u4EFB\u52A1\u590D\u9009\u6846",
+  "menu.addBox": "\u6DFB\u52A0\u5916\u6846",
+  "menu.fitBranch": "\u7F29\u653E\u5230\u6B64\u5206\u652F",
+  "menu.resetWidth": "\u6062\u590D\u81EA\u52A8\u5BBD\u5EA6",
+  "menu.relGoSource": "\u8DF3\u5230\u8D77\u70B9",
+  "menu.relGoTarget": "\u8DF3\u5230\u7EC8\u70B9",
+  "menu.removeBox": "\u79FB\u9664\u5916\u6846",
+  "menu.addSummary": "\u6DFB\u52A0\u6982\u8981",
+  "menu.editSummary": "\u7F16\u8F91\u6982\u8981",
+  "menu.removeSummary": "\u79FB\u9664\u6982\u8981",
+  "menu.addSummaryTopic": "\u6DFB\u52A0\u5B50\u4E3B\u9898  Tab",
+  "menu.summaryToText": "\u8F6C\u4E3A\u666E\u901A\u6982\u8981",
+  "canvas.summaryDefault": "\u6982\u8981",
+  "command.toggleSummary": "\u6DFB\u52A0 / \u79FB\u9664\u6982\u8981",
+  "command.toggleNumbering": "\u9009\u4E2D\u8282\u70B9\u7684\u540C\u7EA7\u7F16\u53F7\uFF08\u5F00 / \u5173\uFF09",
+  "command.addChild": "\u6DFB\u52A0\u5B50\u8282\u70B9",
+  "command.addSibling": "\u6DFB\u52A0\u5144\u5F1F\u8282\u70B9",
+  "command.insertBefore": "\u5728\u524D\u9762\u63D2\u5165\u8282\u70B9",
+  "command.insertParent": "\u63D2\u5165\u7236\u8282\u70B9\uFF08\u628A\u9009\u4E2D\u7684\u8282\u70B9\u6536\u8FDB\u53BB\uFF09",
+  "command.revealInMarkdown": "\u5728 Markdown \u4E2D\u5B9A\u4F4D\u9009\u4E2D\u7684\u8282\u70B9",
+  "command.editNode": "\u7F16\u8F91\u8282\u70B9",
+  "command.deleteNode": "\u5220\u9664\u8282\u70B9\u53CA\u5176\u5B50\u6811",
+  "command.deleteNodeOnly": "\u4EC5\u5220\u9664\u6B64\u8282\u70B9\uFF08\u4FDD\u7559\u5B50\u8282\u70B9\uFF09",
+  "command.moveUp": "\u8282\u70B9\u4E0A\u79FB",
+  "command.moveDown": "\u8282\u70B9\u4E0B\u79FB",
+  "command.outdent": "\u8282\u70B9\u5347\u7EA7\uFF08\u79FB\u5230\u4E0A\u4E00\u5C42\uFF09",
+  "command.indent": "\u8282\u70B9\u964D\u7EA7\uFF08\u6302\u5230\u524D\u4E00\u4E2A\u5144\u5F1F\u4E0B\uFF09",
+  "command.expandBranch": "\u5C55\u5F00\u9009\u4E2D\u8282\u70B9\u7684\u5168\u90E8\u5B50\u5206\u652F",
+  "command.collapseBranch": "\u6298\u53E0\u9009\u4E2D\u8282\u70B9\u7684\u5168\u90E8\u5B50\u5206\u652F",
+  "command.expandLevel": "\u9009\u4E2D\u7684\u5206\u652F\u5C55\u5F00\u4E00\u7EA7",
+  "command.collapseLevel": "\u9009\u4E2D\u7684\u5206\u652F\u6298\u53E0\u4E00\u7EA7",
+  "menu.addBoxTitle": "\u6DFB\u52A0\u5916\u6846\u6807\u9898",
+  "menu.editBoxTitle": "\u7F16\u8F91\u5916\u6846\u6807\u9898",
+  "menu.toHeading": "\u672C\u7EA7\u8F6C\u4E3A\u6807\u9898",
+  "menu.toList": "\u672C\u7EA7\u8F6C\u4E3A\u5217\u8868",
+  "menu.hideNode": "\u5728\u8111\u56FE\u4E2D\u9690\u85CF",
+  "menu.unhideNode": "\u53D6\u6D88\u9690\u85CF",
+  "menu.copy": "\u590D\u5236",
+  "menu.copyImage": "\u590D\u5236\u56FE\u7247",
+  "menu.deleteImage": "\u5220\u9664\u56FE\u7247",
+  "menu.addCallout": "\u6DFB\u52A0\u6807\u6CE8",
+  "menu.editCallout": "\u7F16\u8F91\u6807\u6CE8",
+  "menu.removeCallout": "\u5220\u9664\u6807\u6CE8",
+  "menu.calloutColor": "\u6807\u6CE8\u989C\u8272",
+  "menu.calloutGroup": "\u6807\u6CE8",
+  "menu.insertTable": "\u63D2\u5165\u8868\u683C",
+  "menu.insertMedia": "\u63D2\u5165\u56FE\u7247\u6216\u89C6\u9891",
+  "menu.tableChild": "\u8868\u683C\u5B50\u8282\u70B9",
+  "menu.numbering": "\u540C\u7EA7\u7F16\u53F7\uFF081. 2. 3.\uFF09",
+  "menu.tableInNode": "\u8868\u683C\u663E\u793A\u5728\u8282\u70B9\u91CC",
+  "menu.tableToNote": "\u8868\u683C\u653E\u56DE\u5907\u6CE8",
+  "menu.deleteTable": "\u5220\u9664\u8868\u683C",
+  "menu.cut": "\u526A\u5207",
+  "menu.pasteChild": "\u7C98\u8D34\u4E3A\u5B50\u8282\u70B9",
+  "menu.copyNodeLink": "\u590D\u5236\u8282\u70B9\u94FE\u63A5",
+  "menu.delete": "\u5220\u9664",
+  "menu.deleteOnly": "\u4EC5\u5220\u9664\u6B64\u8282\u70B9\uFF08\u4FDD\u7559\u5B50\u8282\u70B9\uFF09",
+  "menu.extendRange": "\u8303\u56F4\u591A\u62EC\u4E00\u4E2A\u8282\u70B9",
+  "menu.shrinkRange": "\u8303\u56F4\u5C11\u62EC\u4E00\u4E2A\u8282\u70B9",
+  "menu.paste": "\u7C98\u8D34",
+  "menu.fit": "\u9002\u5E94\u753B\u5E03",
+  "notice.promotedToHeading": "\u540C\u4E00\u5C42\u91CC\u6807\u9898\u4E0D\u80FD\u6392\u5728\u5217\u8868\u524D\u9762\uFF0C\u5DF2\u628A\u540E\u9762\u7684 {count} \u9879\u5347\u4E3A\u6807\u9898\uFF1A{names}\u3002\u6309 {key} \u53EF\u4EE5\u64A4\u9500\u3002",
+  "notice.nodesHidden": "\u5DF2\u5728\u8111\u56FE\u4E2D\u9690\u85CF {count} \u4E2A\u8282\u70B9\uFF08\u6253\u4E0A\u4E86 %%hide%%\uFF0C\u7B14\u8BB0\u91CC\u8FD8\u5728\uFF09\u3002\u70B9\u5DE5\u5177\u680F\u300C\u663E\u793A\u9690\u85CF\u7684\u8282\u70B9\u300D\u53EF\u4EE5\u770B\u5230\u6216\u53D6\u6D88\u9690\u85CF\u3002",
+  "notice.tooDeepForHeadings": "\u6253\u5F00\u4E86\u300C\u53EA\u628A\u6807\u9898\u5F53\u8282\u70B9\u300D\uFF0C\u6BD4\u516D\u7EA7\u6807\u9898\u66F4\u6DF1\u7684\u8282\u70B9\u4F1A\u5B58\u6210\u4E0A\u4E00\u7EA7\u6807\u9898\u7684\u5907\u6CE8\u3002",
+  "notice.cannotHeading": "\u8FD9\u4E00\u5C42\u4E0D\u80FD\u8F6C\u4E3A\u6807\u9898\uFF1A\u7236\u8282\u70B9\u4E0D\u662F\u6807\u9898\uFF0C\u6216\u5DF2\u7ECF\u662F\u516D\u7EA7\u6807\u9898",
+  "notice.saveImageUnsupported": "\u5F53\u524D\u73AF\u5883\u4E0D\u652F\u6301\u4FDD\u5B58\u56FE\u7247",
+  "notice.saveImageFailed": "\u4FDD\u5B58\u56FE\u7247\u5931\u8D25\uFF1A{error}",
+  "notice.xmindTaken": "gogoga \u8111\u56FE\uFF1A\u5DF2\u7ECF\u6709\u522B\u7684\u63D2\u4EF6\u5728\u6253\u5F00 .xmind \u6587\u4EF6\uFF0C.xmind \u7EE7\u7EED\u4EA4\u7ED9\u5B83\u6253\u5F00\u3002\u7B14\u8BB0\u91CC\u7684\u8111\u56FE\u4E0D\u53D7\u5F71\u54CD\u3002",
+  "notice.imageAddedToNote": "\u56FE\u7247\u5DF2\u52A0\u5230\u8FD9\u4E2A\u8282\u70B9\u7684\u5907\u6CE8\u91CC",
+  "notice.noBlockId": "\u8FD9\u4E2A\u8282\u70B9\u8FD8\u6CA1\u6709\u5757 id\uFF0C\u9700\u8981\u5728\u53EF\u7F16\u8F91\u72B6\u6001\u4E0B\u751F\u6210",
+  "notice.copied": "\u5DF2\u590D\u5236 {link}",
+  "notice.copyFailed": "\u590D\u5236\u5931\u8D25",
+  "notice.imageCopied": "\u5DF2\u590D\u5236\u56FE\u7247",
+  "outline.title": "\u5927\u7EB2",
+  "outline.close": "\u5173\u95ED\u5927\u7EB2\u9762\u677F",
+  "picker.navigate": "\u9009\u62E9",
+  "picker.use": "\u4F7F\u7528",
+  "picker.link": "\u94FE\u63A5",
+  "picker.dismiss": "\u53D6\u6D88",
+  "iconPicker.placeholder": "\u641C\u7D22\u56FE\u6807\u540D\uFF0C\u6216\u76F4\u63A5\u7C98\u8D34\u4E00\u4E2A emoji",
+  "iconPicker.useEmoji": "\u4F7F\u7528\u8FD9\u4E2A emoji",
+  "iconPicker.builtIn": "\u63D2\u4EF6\u81EA\u5E26",
+  "notePicker.placeholder": "\u8F93\u5165\u7B14\u8BB0\u540D\uFF1A\u9009\u62E9\u5DF2\u6709\u7B14\u8BB0\uFF0C\u6216\u56DE\u8F66\u65B0\u5EFA",
+  "notePicker.create": "\u65B0\u5EFA\u7B14\u8BB0\u300C{name}\u300D",
+  "propertyIcon.choose": "\u9009\u62E9\u56FE\u6807",
+  "propertyIcon.chooseCurrent": "\u9009\u62E9\u56FE\u6807 \xB7 \u5F53\u524D {value}",
+  "settings.structure.name": "\u9ED8\u8BA4\u7ED3\u6784",
+  "settings.structure.desc": "\u65B0\u6587\u4EF6\u7684\u5E03\u5C40\u3002\u5355\u4E2A\u6587\u4EF6\u53EF\u5728 frontmatter \u91CC\u7528 mindmap-structure \u8986\u76D6\u3002",
+  "settings.theme.name": "\u9ED8\u8BA4\u4E3B\u9898",
+  "settings.theme.desc": "\u65B0\u6587\u4EF6\u7528\u7684\u4E3B\u9898\u3002\u5DE5\u5177\u680F\u7684\u8C03\u8272\u76D8\u6309\u94AE\u53EF\u4EE5\u6309\u6587\u4EF6\u5207\u6362\uFF0C\u5207\u6362\u7ED3\u679C\u4F1A\u5199\u8FDB mindmap-theme\u3002",
+  "settings.fileNameAsRoot.name": "\u7528\u6587\u4EF6\u540D\u4F5C\u4E2D\u5FC3\u4E3B\u9898",
+  "settings.fileNameAsRoot.desc": "\u5173\u95ED\u65F6\uFF0C\u7B14\u8BB0\u91CC\u552F\u4E00\u7684\u4E00\u7EA7\u6807\u9898\u5C31\u662F\u4E2D\u5FC3\u4E3B\u9898\uFF1B\u6253\u5F00\u540E\u4E2D\u5FC3\u4E3B\u9898\u59CB\u7EC8\u662F\u6587\u4EF6\u540D\uFF0C\u4E00\u7EA7\u6807\u9898\u4F5C\u4E3A\u7B2C\u4E00\u7EA7\u5206\u652F\u3002\u53EA\u6539\u53D8\u663E\u793A\u65B9\u5F0F\uFF0C\u4E0D\u6539\u6587\u4EF6\u5185\u5BB9\u3002",
+  "settings.headingLevel.name": "\u6807\u9898\u7684\u6700\u6DF1\u7EA7\u522B",
+  "settings.headingLevel.desc": "\u65B0\u5EFA\u8282\u70B9\u65F6\uFF0C\u6BD4\u8FD9\u66F4\u6DF1\u7684\u5C42\u7EA7\u7528\u5217\u8868\u800C\u4E0D\u662F\u6807\u9898\u5199\u56DE\u3002\u5DF2\u6709\u5185\u5BB9\u7684\u5199\u6CD5\u4E0D\u53D7\u5F71\u54CD\u3002",
+  "settings.headingLevel.h2": "H2\uFF08\u4E3B\u4E3B\u9898\uFF09",
+  "settings.template.name": "\u65B0\u5EFA\u601D\u7EF4\u5BFC\u56FE\u7684\u6A21\u677F",
+  "settings.template.desc": "\u9009\u4E00\u7BC7\u7B14\u8BB0\uFF0C\u65B0\u5EFA\u601D\u7EF4\u5BFC\u56FE\u65F6\u7528\u5B83\u7684\u5185\u5BB9\u4F5C\u4E3A\u521D\u59CB\u5185\u5BB9\u3002\u652F\u6301 {{title}}\u3001{{date}}\u3001{{time}}\uFF0C\u4E5F\u53EF\u4EE5\u5199 {{date:YYYY-MM-DD}} \u6307\u5B9A\u683C\u5F0F\uFF0C\u548C\u6838\u5FC3\u63D2\u4EF6\u300C\u6A21\u677F\u300D\u4E00\u6837\u3002\u7559\u7A7A\u5C31\u7528\u9ED8\u8BA4\u7684\u300C\u4E3B\u9898 1/2/3\u300D\u3002",
+  "settings.template.placeholder": "\u6A21\u677F\u7B14\u8BB0\u7684\u8DEF\u5F84",
+  "settings.indent.name": "\u65B0\u6587\u4EF6\u7684\u5217\u8868\u7F29\u8FDB",
+  "settings.indent.desc": "\u5DF2\u6709\u6587\u4EF6\u4F1A\u6CBF\u7528\u6587\u4EF6\u91CC\u68C0\u6D4B\u5230\u7684\u7F29\u8FDB\u3002",
+  "settings.indent.tab": "Tab",
+  "settings.indent.spaces": "{n} \u7A7A\u683C",
+  "settings.listIcon.name": "\u6587\u4EF6\u5217\u8868\u91CC\u7684\u56FE\u6807",
+  "settings.listIcon.desc": "\u5199\u8FDB\u7B14\u8BB0\u7684 icon \u5C5E\u6027\uFF0CNotebook Navigator\u3001Iconize \u7B49\u6587\u4EF6\u5217\u8868\u4F1A\u636E\u6B64\u663E\u793A\u56FE\u6807\u3002\u8FD9\u4E0D\u662F Obsidian \u6838\u5FC3\u5C5E\u6027\uFF0C\u6CA1\u88C5\u8FD9\u7C7B\u63D2\u4EF6\u65F6\u5B83\u53EA\u662F\u4E00\u884C\u666E\u901A\u5C5E\u6027\u3002\u53EA\u5F71\u54CD\u4E4B\u540E\u65B0\u5EFA\u6216\u8F6C\u6362\u7684\u7B14\u8BB0\uFF1B\u5DF2\u6709\u7684\u7528\u547D\u4EE4\u300C{command}\u300D\u6279\u91CF\u8865\u3002",
+  "settings.listIcon.none": "\u4E0D\u5199\u5165",
+  "settings.listIcon.choose": "\u9009\u62E9\u56FE\u6807",
+  "settings.listIcon.reset": "\u6062\u590D\u9ED8\u8BA4",
+  "settings.listIcon.clear": "\u4E0D\u5199\u5165\u56FE\u6807",
+  "settings.toolbar.name": "\u5DE5\u5177\u680F\u4F4D\u7F6E",
+  "settings.support.name": "\u652F\u6301\u4F5C\u8005",
+  "settings.support.desc": "\u63D2\u4EF6\u514D\u8D39\u5F00\u6E90\u3002\u5982\u679C\u5B83\u5E2E\u5230\u4E86\u4F60\uFF0C\u6B22\u8FCE\u5728\u7231\u53D1\u7535\u652F\u6301\u4E00\u4E0B\u3002",
+  "settings.support.button": "\u2615 \u53BB\u7231\u53D1\u7535",
+  "settings.touchToggles.name": "\u89E6\u5C4F\u4E0A\u7684\u6298\u53E0\u6309\u94AE",
+  "settings.touchToggles.desc": "\u624B\u673A\u548C\u5E73\u677F\u6CA1\u6709\u9F20\u6807\u60AC\u505C\uFF0C\u5E26\u5B50\u8282\u70B9\u7684\u8282\u70B9\u540E\u9762\u7684\u6298\u53E0\u6309\u94AE\uFF08\u5706\u5708\uFF09\u9ED8\u8BA4\u4E00\u76F4\u663E\u793A\u3002\u9009\u300C\u53EA\u5728\u9009\u4E2D\u548C\u5DF2\u6298\u53E0\u65F6\u663E\u793A\u300D\u5C31\u548C\u7535\u8111\u4E0A\u4E00\u6837\uFF1A\u53EA\u6709\u9009\u4E2D\u7684\u8282\u70B9\u548C\u5DF2\u7ECF\u6298\u53E0\u7684\u5206\u652F\u663E\u793A\u3002\u8FD9\u6837\u6298\u53E0\u4E00\u4E2A\u5C55\u5F00\u7684\u5206\u652F\u8981\u70B9\u4E24\u4E0B\uFF1A\u5148\u70B9\u8282\u70B9\u9009\u4E2D\uFF0C\u518D\u70B9\u6309\u94AE\u3002",
+  "settings.touchToggles.always": "\u4E00\u76F4\u663E\u793A",
+  "settings.touchToggles.selected": "\u53EA\u5728\u9009\u4E2D\u548C\u5DF2\u6298\u53E0\u65F6\u663E\u793A",
+  "quick.touchToggles.always": "\u4E00\u76F4\u663E\u793A",
+  "quick.touchToggles.selected": "\u9009\u4E2D\u65F6\u663E\u793A",
+  "settings.rememberView.name": "\u5207\u6362\u6210\u601D\u7EF4\u5BFC\u56FE\u65F6\u8BB0\u4F4F",
+  "settings.rememberView.desc": "\u5F00\u542F\uFF1A\u5207\u6362\u65F6\u5728\u5C5E\u6027\u91CC\u5199\u5165 mindmap: true\uFF0C\u4EE5\u540E\u6253\u5F00\u8FD9\u7BC7\u7B14\u8BB0\u90FD\u662F\u601D\u7EF4\u5BFC\u56FE\u3002\u5173\u95ED\uFF1A\u53EA\u5207\u6362\u5F53\u524D\u6807\u7B7E\u9875\uFF0C\u4E0D\u6539\u6587\u4EF6\uFF0C\u4E0B\u6B21\u6253\u5F00\u8FD8\u662F Markdown\u3002\u53EA\u60F3\u8FB9\u5199\u8FB9\u770B\uFF0C\u4E5F\u53EF\u4EE5\u7528\u547D\u4EE4\u300CMarkdown \u548C\u601D\u7EF4\u5BFC\u56FE\u5206\u5C4F\u5BF9\u7167\u300D\u3002",
+  "settings.toolbar.desc": "\u4E0A\u4E0B\u662F\u6C34\u5E73\u6761\uFF0C\u5DE6\u53F3\u662F\u5782\u76F4\u6761\u3002\u5728\u5DE5\u5177\u680F\u4E0A\u53F3\u952E\u4E5F\u80FD\u5207\u6362\u3002",
+  "settings.nodeColors.name": "\u8282\u70B9\u989C\u8272",
+  "settings.nodeColors.desc": "\u6D6E\u52A8\u5DE5\u5177\u680F\u548C\u6807\u6CE8\u989C\u8272\u83DC\u5355\u91CC\u5217\u51FA\u7684\u989C\u8272\u3002\u70B9\u8272\u5757\u6362\u989C\u8272\uFF0C\xD7 \u5220\u9664\uFF0C\u62D6\u52A8\u8C03\u987A\u5E8F\uFF0C+ \u65B0\u589E\u3002\u5185\u7F6E\u7684\u989C\u8272\u540D\uFF08\u7EA2\u3001\u6A59\u2026\u2026\uFF09\u4F1A\u8DDF\u7740\u4E3B\u9898\u548C\u6697\u8272\u6A21\u5F0F\u53D8\uFF1B\u8272\u677F\u91CC\u9009\u7684\u989C\u8272\u5728\u54EA\u91CC\u90FD\u662F\u8FD9\u4E2A\u989C\u8272\u3002\u5DE5\u5177\u680F\u91CC\u989C\u8272\u540E\u9762\u7684\u300C\xB7\xB7\xB7\u300D\u53EF\u4EE5\u4E34\u65F6\u9009\u522B\u7684\u989C\u8272\u3002",
+  "settings.showNodebar.name": "\u9009\u4E2D\u8282\u70B9\u65F6\u663E\u793A\u6D6E\u52A8\u5DE5\u5177\u680F",
+  "settings.showNodebar.desc": "\u9009\u4E2D\u8282\u70B9\u65F6\u4E0A\u65B9\u90A3\u6392\u5C0F\u5DE5\u5177\uFF08\u989C\u8272\u3001\u52A0\u5B50\u8282\u70B9\u3001\u6807\u8BB0\u2026\u2026\uFF09\u3002\u6321\u7740\u70B9\u65C1\u8FB9\u7684\u8282\u70B9\u65F6\u53EF\u4EE5\u5173\u6389\uFF0C\u4E0A\u9762\u7684\u64CD\u4F5C\u53F3\u952E\u83DC\u5355\u91CC\u90FD\u6709\u3002\u547D\u4EE4\u300C\u5207\u6362\u6D6E\u52A8\u5DE5\u5177\u680F\u300D\u53EF\u4EE5\u968F\u65F6\u5F00\u5173\uFF08\u5728\u300C\u8BBE\u7F6E \u2192 \u5FEB\u6377\u952E\u300D\u91CC\u7ED1\u952E\uFF09\u3002",
+  "settings.group.open": "\u6253\u5F00\u4E0E\u663E\u793A",
+  "settings.group.newMap": "\u65B0\u5EFA\u8111\u56FE",
+  "settings.group.parse": "Markdown \u600E\u4E48\u53D8\u6210\u8282\u70B9",
+  "settings.group.edit": "\u7F16\u8F91\u4E0E\u64CD\u4F5C",
+  "settings.group.toolbar": "\u5DE5\u5177\u680F\u4E0E\u989C\u8272",
+  "settings.group.markers": "\u6807\u8BB0",
+  "settings.group.notes": "\u5907\u6CE8",
+  "settings.group.sync": "\u548C Markdown \u5206\u5C4F\u8054\u52A8",
+  "settings.group.markdown": "Markdown \u4E0E\u5D4C\u5165",
+  "settings.page.open": "\u6253\u5F00\u8111\u56FE\u65F6\u663E\u793A\u4EC0\u4E48\u3001\u9ED8\u8BA4\u7ED3\u6784\u548C\u4E3B\u9898\u3001\u8282\u70B9\u95F4\u8DDD\u548C\u5B57\u53F7",
+  "settings.page.edit": "\u7F16\u8F91\u8282\u70B9\u3001\u9F20\u6807\u6EDA\u8F6E\u548C\u62D6\u52A8\u3001\u590D\u5236\u3001\u81EA\u5B9A\u4E49\u6807\u8BB0",
+  "settings.page.toolbar": "\u5DE5\u5177\u680F\u4F4D\u7F6E\u3001\u6D6E\u52A8\u5DE5\u5177\u680F\u3001\u8282\u70B9\u989C\u8272\u3001\u6587\u5B57\u989C\u8272\u548C\u8367\u5149\u7B14",
+  "settings.page.notes": "\u5907\u6CE8\u600E\u4E48\u663E\u793A\u3001\u591A\u5927\u3001\u7F16\u8F91\u65F6\u9884\u89C8",
+  "settings.page.markdown": "\u6807\u9898\u548C\u5217\u8868\u600E\u4E48\u53D8\u6210\u8282\u70B9\u3001\u5206\u5C4F\u8054\u52A8\u3001\u6298\u53E0\u8DDF\u968F\u3001\u4EE3\u7801\u5757\u548C\u5D4C\u5165",
+  "settings.page.newMap": "\u6A21\u677F\u3001\u7F29\u8FDB\u3001\u4E2D\u5FC3\u4E3B\u9898\u3001\u6587\u4EF6\u5217\u8868\u91CC\u7684\u56FE\u6807",
+  "settings.page.colorCount": "{n} \u79CD\u8282\u70B9\u989C\u8272",
+  "settings.page.themeCount": "{n} \u4E2A",
+  "settings.group.noteDisplay": "\u5728\u7B14\u8BB0\u91CC\u663E\u793A",
+  "settings.group.embed": "\u5D4C\u5165",
+  "settings.customThemes.desc": "\u4ECE\u5185\u7F6E\u4E3B\u9898\u51FA\u53D1\u505A\u81EA\u5DF1\u7684\u4E3B\u9898\uFF1A\u6309\u5C42\u7EA7\u6539\u5B57\u53F7\u3001\u989C\u8272\u3001\u8FB9\u6846\u548C\u8FDE\u7EBF\u3002",
+  "settings.embedWheel.name": "\u5D4C\u5165\u7684\u8111\u56FE\u4E0A\u6EDA\u52A8\u9F20\u6807\u6EDA\u8F6E",
+  "settings.embedWheel.desc": "\u7B14\u8BB0\u91CC\u5D4C\u5165\u7684\u8111\u56FE\uFF08![[\u8111\u56FE]] \u6216\u4EE3\u7801\u5757\uFF09\u3002\u5148\u70B9\u4E00\u4E0B\uFF1A\u6CA1\u70B9\u8FC7\u65F6\u6EDA\u8F6E\u7167\u5E38\u6EDA\u7B14\u8BB0\uFF0C\u70B9\u4E00\u4E0B\u8111\u56FE\u540E\u6EDA\u8F6E\u624D\u62FF\u6765\u5E73\u79FB\u8111\u56FE\uFF0C\u70B9\u5230\u5916\u9762\u518D\u8FD8\u7ED9\u7B14\u8BB0\uFF1B\u6309\u4F4F \u2318 / Ctrl \u6EDA\u52A8\u968F\u65F6\u90FD\u80FD\u7F29\u653E\u3002\u76F4\u63A5\u5E73\u79FB\u8111\u56FE\uFF1A\u9F20\u6807\u5728\u8111\u56FE\u4E0A\u6EDA\u8F6E\u5C31\u5E73\u79FB\u8111\u56FE\uFF08\u539F\u6765\u7684\u505A\u6CD5\uFF09\u3002",
+  "settings.embedWheel.click": "\u5148\u70B9\u4E00\u4E0B\u8111\u56FE",
+  "settings.embedWheel.always": "\u76F4\u63A5\u5E73\u79FB\u8111\u56FE",
+  "canvas.wheelHint": "\u70B9\u4E00\u4E0B\u8111\u56FE\u540E\u53EF\u4EE5\u7528\u6EDA\u8F6E\u5E73\u79FB \xB7 {key} + \u6EDA\u8F6E\u7F29\u653E",
+  "settings.wheel.name": "\u9F20\u6807\u6EDA\u8F6E",
+  "settings.wheel.desc": "\u5E73\u79FB\uFF1A\u6EDA\u8F6E\u79FB\u52A8\u753B\u5E03\uFF0CCmd/Ctrl + \u6EDA\u8F6E\u7F29\u653E\u3002\u7F29\u653E\uFF1A\u6EDA\u8F6E\u76F4\u63A5\u7F29\u653E\uFF0CShift + \u6EDA\u8F6E\u79FB\u52A8\u753B\u5E03\u3002",
+  "settings.wheel.pan": "\u5E73\u79FB",
+  "settings.wheel.zoom": "\u7F29\u653E",
+  "settings.rememberViewport.name": "\u8BB0\u4F4F\u4E0A\u6B21\u7684\u4F4D\u7F6E",
+  "settings.rememberViewport.desc": "\u91CD\u65B0\u6253\u5F00\u8111\u56FE\u3001\u6216\u4ECE Markdown \u5207\u56DE\u6765\u65F6\uFF0C\u6062\u590D\u4E0A\u6B21\u7684\u4F4D\u7F6E\u3001\u7F29\u653E\u548C\u9009\u4E2D\u7684\u8282\u70B9\u3002\u53EA\u8BB0\u6700\u8FD1 50 \u4E2A\u6587\u4EF6\uFF0C\u5B58\u5728\u63D2\u4EF6\u8BBE\u7F6E\u91CC\uFF0C\u4E0D\u5199\u8FDB\u7B14\u8BB0\u3002",
+  "settings.openView.name": "\u6253\u5F00\u8111\u56FE\u65F6",
+  "settings.openView.desc": "\u6CA1\u6709\u8BB0\u4F4F\u7684\u4F4D\u7F6E\u65F6\uFF08\u7B2C\u4E00\u6B21\u6253\u5F00\uFF0C\u6216\u5173\u6389\u4E86\u8BB0\u4F4F\u4F4D\u7F6E\uFF09\u600E\u4E48\u663E\u793A\u3002",
+  "settings.openView.fit": "\u9002\u5E94\u753B\u5E03\uFF08\u663E\u793A\u6574\u5F20\u56FE\uFF09",
+  "settings.openView.center": "\u4E2D\u5FC3\u4E3B\u9898\uFF0C100% \u5927\u5C0F",
+  "settings.syncSplit.name": "\u548C Markdown \u5206\u5C4F\u8054\u52A8",
+  "settings.syncSplit.desc": "\u540C\u4E00\u7BC7\u7B14\u8BB0\u7684\u8111\u56FE\u548C Markdown \u540C\u65F6\u5F00\u7740\u65F6\uFF1A\u9009\u4E2D\u8111\u56FE\u8282\u70B9\uFF0CMarkdown \u6EDA\u5230\u5BF9\u5E94\u90A3\u4E00\u884C\uFF1B\u5728 Markdown \u91CC\u79FB\u52A8\u5149\u6807\uFF0C\u8111\u56FE\u9009\u4E2D\u5BF9\u5E94\u7684\u8282\u70B9\u3002",
+  "settings.splitMapSide.name": "\u5206\u5C4F\u5BF9\u7167\u65F6\u8111\u56FE\u5728",
+  "settings.splitMapSide.desc": "\u300CMarkdown \u548C\u601D\u7EF4\u5BFC\u56FE\u5206\u5C4F\u5BF9\u7167\u300D\u8981\u65B0\u5206\u4E00\u5C4F\u65F6\uFF0C\u8111\u56FE\u653E\u5728\u54EA\u8FB9\u3002\u5DF2\u7ECF\u5206\u597D\u5C4F\u7684\uFF0C\u53E6\u4E00\u8FB9\u76F4\u63A5\u5F00\u5728\u65C1\u8FB9\u90A3\u4E2A\u5206\u5C4F\u91CC\uFF0C\u54EA\u8FB9\u90FD\u4E0D\u632A\u3002",
+  "settings.splitMapSide.right": "\u53F3\u8FB9",
+  "settings.splitMapSide.left": "\u5DE6\u8FB9",
+  "settings.followExpand.name": "\u8054\u52A8\u5B9A\u4F4D\u65F6\u5C55\u5F00\u6298\u53E0\u7684\u8282\u70B9",
+  "settings.followExpand.desc": "\u6253\u5F00\u300C\u548C Markdown \u5206\u5C4F\u8054\u52A8\u300D\u65F6\uFF0CMarkdown \u5149\u6807\u79FB\u5230\u6298\u53E0\u7740\u7684\u5206\u652F\u91CC\uFF0C\u8111\u56FE\u5C55\u5F00\u5230\u5BF9\u5E94\u7684\u90A3\u4E2A\u8282\u70B9\uFF0C\u800C\u4E0D\u662F\u53EA\u9009\u4E2D\u6298\u53E0\u7740\u7684\u4E0A\u7EA7\u3002\u5C55\u5F00\u4F1A\u548C\u5E73\u65F6\u4E00\u6837\u5199\u8FDB\u7B14\u8BB0\u3002",
+  "settings.foldFollow.name": "Markdown \u8DDF\u7740\u8111\u56FE\u6298\u53E0",
+  "settings.foldFollow.desc": "\u8111\u56FE\u91CC\u6298\u53E0\u7684\u5206\u652F\uFF0C\u5728\u540C\u4E00\u7BC7\u7B14\u8BB0\u7684 Markdown \u7F16\u8F91\u5668\u548C\u9605\u8BFB\u89C6\u56FE\u91CC\u4E5F\u6298\u8D77\u6765\uFF1B\u5728\u8111\u56FE\u91CC\u5C55\u5F00\uFF0CMarkdown \u4E5F\u8DDF\u7740\u5C55\u5F00\u3002\u5728 Markdown \u91CC\u81EA\u5DF1\u6298\u7684\u4E0D\u53D7\u5F71\u54CD\uFF1B\u5728 Markdown \u91CC\u6298\u53E0\u4E0D\u4F1A\u6539\u8111\u56FE\u3002",
+  "settings.customMarkers.name": "\u81EA\u5B9A\u4E49\u6807\u8BB0",
+  "settings.customMarkers.desc": "\u586B emoji \u6216\u7B26\u53F7\uFF0C\u7528\u7A7A\u683C\u9694\u5F00\uFF0C\u4F1A\u51FA\u73B0\u5728\u6807\u8BB0\u9762\u677F\u7684\u300C\u81EA\u5B9A\u4E49\u300D\u4E00\u7EC4\u91CC\u3002\u5B57\u6BCD\u3001\u6570\u5B57\u548C\u82F1\u6587\u7B26\u53F7\u4F1A\u88AB\u5FFD\u7565\uFF0C\u56E0\u4E3A\u8282\u70B9\u6587\u5B57\u7ECF\u5E38\u4EE5\u5B83\u4EEC\u5F00\u5934\u3002",
+  "settings.customMarkersExclusive.name": "\u81EA\u5B9A\u4E49\u6807\u8BB0\u6BCF\u4E2A\u8282\u70B9\u53EA\u80FD\u9009\u4E00\u4E2A",
+  "settings.customMarkersExclusive.desc": "\u50CF\u4F18\u5148\u7EA7\u4E00\u6837\uFF1A\u9009\u4E86\u4E00\u4E2A\u4F1A\u66FF\u6362\u6389\u8282\u70B9\u4E0A\u7684\u53E6\u4E00\u4E2A\u81EA\u5B9A\u4E49\u6807\u8BB0\u3002",
+  "settings.claimBlock.name": "\u6E32\u67D3 ```mindmap \u4EE3\u7801\u5757",
+  "settings.claimBlock.desc": "```gogoga-mindmap \u59CB\u7EC8\u53EF\u7528\u3002\u5982\u679C\u60F3\u8BA9 Markmind \u7B49\u5176\u4ED6\u63D2\u4EF6\u5904\u7406 ```mindmap \u4EE3\u7801\u5757\uFF0C\u5C31\u5173\u6389\u8FD9\u9879\u3002\u91CD\u65B0\u52A0\u8F7D\u63D2\u4EF6\u6216\u91CD\u542F Obsidian \u540E\u751F\u6548\u3002",
+  "settings.linkOpen.name": "\u70B9\u94FE\u63A5\u65F6\u6253\u5F00\u5728",
+  "settings.linkOpen.desc": "\u70B9\u8282\u70B9\u3001\u5907\u6CE8\u91CC\u7684\u7B14\u8BB0\u94FE\u63A5\u65F6\u5728\u54EA\u91CC\u6253\u5F00\u3002\u9009\u300C\u53F3\u4FA7\u5206\u5C4F\u300D\u65F6\u8111\u56FE\u7559\u5728\u5DE6\u8FB9\uFF0C\u4E0B\u4E00\u4E2A\u94FE\u63A5\u8FD8\u5728\u540C\u4E00\u4E2A\u5206\u5C4F\u91CC\u6253\u5F00\u3002\u2318 \u70B9\uFF08Ctrl \u70B9\uFF09\u603B\u662F\u65B0\u6807\u7B7E\u9875\uFF0C\u2318\u2325 \u70B9\uFF08Ctrl+Alt \u70B9\uFF09\u603B\u662F\u53F3\u4FA7\u5206\u5C4F\u3002",
+  "settings.linkOpen.current": "\u5F53\u524D\u6807\u7B7E\u9875",
+  "settings.linkOpen.tab": "\u65B0\u6807\u7B7E\u9875",
+  "settings.linkOpen.split": "\u53F3\u4FA7\u5206\u5C4F",
+  "settings.linkFocusNote.name": "\u5206\u5C4F\u6253\u5F00\u94FE\u63A5\u540E\u628A\u7126\u70B9\u653E\u5230\u7B14\u8BB0",
+  "settings.linkFocusNote.desc": "\u5728\u53F3\u4FA7\u5206\u5C4F\u6253\u5F00\u94FE\u63A5\u540E\uFF0C\u7126\u70B9\u79FB\u5230\u6253\u5F00\u7684\u7B14\u8BB0\u4E0A\uFF0C\u5173\u95ED\u6807\u7B7E\u9875\u8FD9\u7C7B\u5FEB\u6377\u952E\u4F5C\u7528\u5728\u7B14\u8BB0\u4E0A\u3002\u5173\u7740\u65F6\u7126\u70B9\u7559\u5728\u8111\u56FE\u4E0A\uFF0C\u65B9\u4FBF\u63A5\u7740\u52A0\u8282\u70B9\u3002",
+  "settings.linkReuseOpen.name": "\u94FE\u63A5\u7684\u7B14\u8BB0\u5DF2\u7ECF\u5F00\u7740\u65F6\u76F4\u63A5\u8DF3\u5230\u90A3\u91CC",
+  "settings.linkReuseOpen.desc": "\u70B9\u94FE\u63A5\u65F6\uFF0C\u94FE\u5230\u7684\u7B14\u8BB0\u5DF2\u7ECF\u5728\u522B\u7684\u6807\u7B7E\u9875\u6216\u5206\u5C4F\u91CC\u5F00\u7740\uFF0C\u5C31\u8DF3\u5230\u90A3\u91CC\uFF0C\u4E0D\u518D\u5F00\u4E00\u4E2A\uFF1B\u662F\u8111\u56FE\u7684\u8BDD\u9009\u4E2D\u94FE\u5230\u7684\u6807\u9898\u3001\u5757\u5BF9\u5E94\u7684\u8282\u70B9\u3002\u4E24\u5F20\u8111\u56FE\u5DE6\u53F3\u5E76\u6392\u65F6\u597D\u7528\u3002\u2318 \u70B9\uFF08Ctrl \u70B9\uFF09\u7167\u65E7\u65B0\u6807\u7B7E\u9875\u6253\u5F00\u3002",
+  "settings.newNoteFolder.name": "\u4ECE\u8111\u56FE\u65B0\u5EFA\u7684\u7B14\u8BB0\u653E\u5728",
+  "settings.newNoteFolder.desc": "\u4ECE\u8282\u70B9\u65B0\u5EFA\u94FE\u63A5\u7B14\u8BB0\uFF0C\u6216\u8005\u70B9\u8FD8\u4E0D\u5B58\u5728\u7684\u7B14\u8BB0\u94FE\u63A5\u65F6\uFF0C\u65B0\u7B14\u8BB0\u5EFA\u5728\u54EA\u91CC\u3002",
+  "settings.newNoteFolder.default": "\u8DDF\u968F Obsidian \u7684\u65B0\u6587\u4EF6\u4F4D\u7F6E",
+  "settings.newNoteFolder.map": "\u8111\u56FE\u6240\u5728\u7684\u6587\u4EF6\u5939",
+  "settings.newNoteFolder.mapSub": "\u8111\u56FE\u65C1\u8FB9\u548C\u5B83\u540C\u540D\u7684\u6587\u4EF6\u5939",
+  "settings.newNoteFolder.custom": "\u6307\u5B9A\u7684\u6587\u4EF6\u5939",
+  "settings.newNoteFolderPath.name": "\u65B0\u7B14\u8BB0\u7684\u6587\u4EF6\u5939",
+  "settings.newNoteFolderPath.desc": "\u300C\u4ECE\u8111\u56FE\u65B0\u5EFA\u7684\u7B14\u8BB0\u653E\u5728\u300D\u9009\u4E86\u300C\u6307\u5B9A\u7684\u6587\u4EF6\u5939\u300D\u65F6\u7528\u8FD9\u4E2A\uFF1B\u6587\u4EF6\u5939\u4E0D\u5B58\u5728\u4F1A\u81EA\u52A8\u5EFA\u3002",
+  "settings.newNoteFolderPath.placeholder": "\u4F8B\u5982 \u7B14\u8BB0/\u6765\u81EA\u8111\u56FE",
+  "settings.keepBlankLines.name": "\u4FDD\u7559\u8282\u70B9\u91CC\u7684\u7A7A\u884C",
+  "settings.keepBlankLines.desc": "\u8282\u70B9\u91CC\u6709\u597D\u51E0\u884C\uFF08Shift+\u56DE\u8F66\u6362\u884C\uFF09\u65F6\uFF0C\u4E2D\u95F4\u7A7A\u51FA\u6765\u7684\u884C\u4FDD\u5B58\u65F6\u7559\u7740\uFF0C\u4E0D\u518D\u62B9\u6389\uFF0C\u6587\u5B57\u591A\u65F6\u7A7A\u4E00\u884C\u770B\u7740\u66F4\u6E05\u695A\u3002\u5F00\u5934\u548C\u7ED3\u5C3E\u591A\u51FA\u6765\u7684\u7A7A\u884C\u7167\u6837\u53BB\u6389\u3002\u9ED8\u8BA4\u5173\u3002",
+  "settings.keepEdgeSpaces.name": "\u4FDD\u7559\u8282\u70B9\u5F00\u5934\u7ED3\u5C3E\u7684\u7A7A\u683C",
+  "settings.keepEdgeSpaces.desc": "Markdown \u5217\u8868\u9879\u3001\u6807\u9898\u5F00\u5934\u7ED3\u5C3E\u7684\u7A7A\u683C\u5B58\u4E0D\u4F4F\u3002\u6253\u5F00\u540E\u8FD9\u4E9B\u7A7A\u683C\u5728\u7B14\u8BB0\u91CC\u5199\u6210 &nbsp;\uFF0C\u7F16\u8F91\u8282\u70B9\u65F6\u663E\u793A\u6210\u666E\u901A\u7A7A\u683C\u3002\u5173\u7740\u65F6\u548C\u4EE5\u524D\u4E00\u6837\uFF0C\u4FDD\u5B58\u65F6\u53BB\u6389\u3002",
+  "settings.splitKeepOriginal.name": "\u62C6\u5206\u65F6\u4FDD\u7559\u539F\u6587\u5B57",
+  "settings.splitKeepOriginal.desc": "\u6253\u5F00\uFF1A\u300C\u62C6\u6210\u5B50\u8282\u70B9\u300D\u628A\u62C6\u51FA\u6765\u7684\u51E0\u6BB5\u52A0\u6210\u5B50\u8282\u70B9\uFF0C\u539F\u6765\u7684\u6587\u5B57\u4E0D\u52A8\u3002\u5173\u6389\uFF1A\u6574\u4E2A\u8282\u70B9\u62C6\u5206\u65F6\uFF0C\u7531\u62C6\u51FA\u6765\u7684\u51E0\u6BB5\u4EE3\u66FF\u5B83\u3001\u653E\u5728\u539F\u6765\u90A3\u4E00\u5C42\uFF08\u7B2C\u4E00\u6BB5\u7559\u7740\u539F\u8282\u70B9\u7684\u5B50\u8282\u70B9\u3001\u5907\u6CE8\u3001\u989C\u8272\uFF09\uFF1B\u53EA\u62C6\u9009\u4E2D\u7684\u6587\u5B57\u65F6\uFF0C\u628A\u9009\u4E2D\u7684\u90A3\u6BB5\u4ECE\u8282\u70B9\u91CC\u53BB\u6389\u3002",
+  "settings.splitKeepDelims.name": "\u62C6\u5206\u65F6\u4FDD\u7559\u62C6\u5206\u7B26\u53F7",
+  "settings.splitKeepDelims.desc": "\u6253\u5F00\uFF1A\u6807\u70B9\u7559\u5728\u6BCF\u6BB5\u672B\u5C3E\uFF0C\u5E8F\u53F7\uFF081. / \u4E00\u3001 / I.\uFF09\u7559\u5728\u6BCF\u6BB5\u5F00\u5934\u3002\u5173\u6389\uFF1A\u90FD\u53BB\u6389\uFF0C\u5E8F\u53F7\u540E\u9762\u7D27\u8DDF\u7684\u6807\u70B9\u3001\u7A7A\u683C\u4E00\u8D77\u53BB\u6389\u3002",
+  "settings.customSplits.name": "\u81EA\u5B9A\u4E49\u62C6\u5206\u65B9\u5F0F",
+  "settings.customSplits.desc": "\u52A0\u5728\u300C\u62C6\u6210\u5B50\u8282\u70B9\u300D\u83DC\u5355\u91CC\u7684\u62C6\u5206\u65B9\u5F0F\u3002\u6BCF\u884C\u4E00\u4E2A\uFF1A\u540D\u79F0\u3001\u5192\u53F7\uFF0C\u518D\u5199\u6309\u54EA\u4E9B\u7B26\u53F7\u62C6\uFF0C\u6BD4\u5982\u300C\u53E5\u53F7\u5206\u53F7\uFF1A\u3002\uFF1B\u300D",
+  "settings.customSplits.placeholder": "\u53E5\u53F7\u5206\u53F7\uFF1A\u3002\uFF1B",
+  "menu.splitInto": "\u62C6\u6210\u5B50\u8282\u70B9",
+  "split.comma": "\u6309\u9017\u53F7\u3001\u987F\u53F7\u3001\u5206\u53F7",
+  "split.period": "\u6309\u53E5\u53F7\u3001\u95EE\u53F7\u3001\u53F9\u53F7",
+  "split.semicolon": "\u6309\u5206\u53F7",
+  "split.number": "\u6309\u5E8F\u53F7\uFF081. / \u4E00\u3001 / I.\uFF09",
+  "split.none": "\u62C6\u4E0D\u51FA\u4E24\u6BB5\u4EE5\u4E0A",
+  "bar.split": "\u628A\u9009\u4E2D\u7684\u6587\u5B57\u62C6\u6210\u5B50\u8282\u70B9",
+  "settings.editCaret.name": "\u8FDB\u5165\u7F16\u8F91\u8282\u70B9\u65F6",
+  "settings.editCaret.desc": "\u5168\u9009\u6587\u5B57\uFF1A\u6253\u5B57\u76F4\u63A5\u66FF\u6362\u3002\u5149\u6807\u5728\u672B\u5C3E\uFF1A\u6253\u5B57\u63A5\u7740\u5199\uFF08\u2318A / Ctrl+A \u4ECD\u53EF\u5168\u9009\uFF09\u3002",
+  "settings.editCaret.select": "\u5168\u9009\u6587\u5B57",
+  "settings.editCaret.end": "\u5149\u6807\u653E\u5728\u672B\u5C3E",
+  "settings.dragToFloat.name": "\u628A\u8282\u70B9\u62D6\u5230\u7A7A\u767D\u5904\u53D8\u6210\u81EA\u7531\u4E3B\u9898",
+  "settings.dragToFloat.desc": "\u5173\uFF1A\u62D6\u5230\u7A7A\u767D\u5904\u677E\u624B\u7B49\u4E8E\u53D6\u6D88\u3002\u5F00\uFF08XMind \u7684\u4E60\u60EF\uFF09\uFF1A\u8282\u70B9\u8FDE\u540C\u5206\u652F\u5728\u90A3\u91CC\u53D8\u6210\u81EA\u7531\u4E3B\u9898\u3002",
+  "settings.leftDrag.name": "\u5DE6\u952E\u62D6\u52A8\u7A7A\u767D\u5904",
+  "settings.leftDrag.desc": "\u5E73\u79FB\uFF1A\u62D6\u52A8\u79FB\u52A8\u753B\u5E03\uFF0C\u6309\u4F4F Shift \u62D6\u52A8\u6846\u9009\u3002\u6846\u9009\uFF08XMind \u7684\u4E60\u60EF\uFF09\uFF1A\u62D6\u52A8\u753B\u6846\u9009\u4E2D\u8282\u70B9\uFF0C\u53F3\u952E\u6216\u4E2D\u952E\u62D6\u52A8\u79FB\u52A8\u753B\u5E03\u3002\u4E24\u79CD\u6A21\u5F0F\u4E0B\u90FD\u53EF\u4EE5\u6309\u4F4F\u53F3\u952E\u62D6\u52A8\u753B\u5E03\uFF0C\u6309\u5728\u8282\u70B9\u4E0A\u4E5F\u884C\uFF1B\u53F3\u952E\u70B9\u4E00\u4E0B\u4E0D\u62D6\uFF0C\u7167\u5E38\u5F39\u83DC\u5355\u3002",
+  "settings.leftDrag.pan": "\u5E73\u79FB",
+  "settings.leftDrag.select": "\u6846\u9009",
+  "settings.hover.name": "\u94FE\u63A5\u8282\u70B9\u7684\u60AC\u505C\u9884\u89C8",
+  "settings.hover.desc": "\u6309\u4F4F \u2318 / Ctrl \u628A\u9F20\u6807\u505C\u5728\u94FE\u63A5\u5230\u7B14\u8BB0\u7684\u8282\u70B9\u4E0A\uFF0C\u4F1A\u5F39\u51FA\u7B14\u8BB0\u9884\u89C8\uFF0C\u548C Obsidian \u5176\u4ED6\u5730\u65B9\u4E00\u81F4\u3002\u60F3\u4E0D\u6309\u952E\u5C31\u663E\u793A\uFF0C\u53BB\u6838\u5FC3\u63D2\u4EF6\u300C\u9875\u9762\u9884\u89C8\u300D\u7684\u8BBE\u7F6E\u91CC\u627E\u300C{source}\u300D\u90A3\u4E00\u9879\u3002",
+  "settings.followActive.name": "\u8DDF\u968F\u5F53\u524D\u7B14\u8BB0",
+  "settings.followActive.desc": "\u8111\u56FE\u5F00\u5728 Markdown \u7B14\u8BB0\u65C1\u8FB9\u65F6\uFF0C\u5728\u7F16\u8F91\u5668\u91CC\u5207\u6362\u5230\u522B\u7684\u7B14\u8BB0\uFF0C\u8111\u56FE\u4E5F\u8DDF\u7740\u663E\u793A\u90A3\u7BC7\u7B14\u8BB0\u3002\u56FA\u5B9A\uFF08\u9489\u4F4F\uFF09\u7684\u8111\u56FE\u6807\u7B7E\u9875\u4E0D\u8DDF\u968F\u3002",
+  "settings.spacing.name": "\u8282\u70B9\u95F4\u8DDD",
+  "settings.spacing.desc": "\u6309\u6BD4\u4F8B\u653E\u5927\u6216\u7F29\u5C0F\u6240\u6709\u4E3B\u9898\u91CC\u8282\u70B9\u4E4B\u95F4\u7684\u95F4\u8DDD\uFF0C100% \u662F\u4E3B\u9898\u539F\u672C\u7684\u95F4\u8DDD\u3002",
+  "settings.fontScale.name": "\u8282\u70B9\u5B57\u53F7",
+  "settings.fontScale.desc": "\u6309\u6BD4\u4F8B\u653E\u5927\u6216\u7F29\u5C0F\u6240\u6709\u4E3B\u9898\uFF08\u5305\u62EC\u81EA\u5B9A\u4E49\u4E3B\u9898\uFF09\u7684\u8282\u70B9\u6587\u5B57\uFF0C100% \u662F\u4E3B\u9898\u539F\u672C\u7684\u5B57\u53F7\u3002",
+  "settings.reset": "\u6062\u590D 100%",
+  "settings.resetNoteHeight": "\u6062\u590D 240",
+  "settings.notePreview.name": "\u7F16\u8F91\u5907\u6CE8\u65F6\u5206\u680F\u9884\u89C8",
+  "settings.notePreview.desc": "\u7F16\u8F91\u5907\u6CE8\u65F6\uFF0C\u5728\u8F93\u5165\u6846\u65C1\u8FB9\uFF08\u7A97\u53E3\u7A84\u65F6\u5728\u4E0B\u9762\uFF09\u5B9E\u65F6\u663E\u793A\u6E32\u67D3\u6548\u679C\uFF1A\u516C\u5F0F\u3001\u5217\u8868\u3001\u56FE\u7247\u3001\u53CC\u94FE\u548C\u9605\u8BFB\u89C6\u56FE\u91CC\u4E00\u6837\u3002\u4E0B\u6B21\u7F16\u8F91\u5907\u6CE8\u65F6\u751F\u6548\u3002",
+  "settings.formatBar.name": "\u9009\u4E2D\u6587\u5B57\u65F6\u663E\u793A\u683C\u5F0F\u680F",
+  "settings.formatBar.desc": "\u7F16\u8F91\u8282\u70B9\u65F6\u9009\u4E2D\u4E00\u6BB5\u6587\u5B57\uFF0C\u4E0A\u65B9\u6D6E\u51FA\u4E00\u6392\u6309\u94AE\uFF1A\u52A0\u7C97\u3001\u659C\u4F53\u3001\u5220\u9664\u7EBF\u3001\u4E0B\u5212\u7EBF\u3001\u6587\u5B57\u989C\u8272\u548C\u8367\u5149\u7B14\uFF08\u70B9\u5DE6\u8FB9\u76F4\u63A5\u7528\u4E0A\u6B21\u7684\u989C\u8272\uFF0C\u70B9 \u25BE \u6253\u5F00\u8272\u677F\uFF09\u3001\u6E05\u9664\u548C\u94FE\u63A5\u3002\u4E0D\u6253\u5F00\u4E5F\u80FD\u7528\u547D\u4EE4\uFF08\u53EF\u4EE5\u5728\u300C\u8BBE\u7F6E \u2192 \u5FEB\u6377\u952E\u300D\u91CC\u7ED1\u952E\uFF09\u3002\u547D\u4EE4\u300C\u5207\u6362\u683C\u5F0F\u680F\u300D\u53EF\u4EE5\u968F\u65F6\u5F00\u5173\u8FD9\u4E2A\u8BBE\u7F6E\u3002",
+  "settings.textColors.name": "\u5E38\u7528\u6587\u5B57\u989C\u8272",
+  "settings.textColors.desc": '\u6587\u5B57\u989C\u8272\u8272\u677F\u91CC\u300C\u5E38\u7528\u300D\u90A3\u4E00\u6392\uFF08\u683C\u5F0F\u680F\u3001\u6D6E\u52A8\u5DE5\u5177\u680F\u90FD\u662F\uFF09\uFF0C\u4E5F\u662F\u300C\u6587\u5B57\u989C\u8272 1\u20135\u300D\u547D\u4EE4\u7528\u7684\u989C\u8272\u3002\u5B58\u6210 <span style="color:\u2026">\uFF0CMarkdown \u91CC\u4E5F\u663E\u793A\u989C\u8272\u3002',
+  "settings.highlightColors.name": "\u5E38\u7528\u8367\u5149\u7B14\u989C\u8272",
+  "settings.highlightColors.desc": '\u8367\u5149\u7B14\u8272\u677F\u91CC\u300C\u5E38\u7528\u300D\u90A3\u4E00\u6392\uFF0C\u4E5F\u662F\u300C\u8367\u5149\u7B14\u989C\u8272 1\u20135\u300D\u547D\u4EE4\u7528\u7684\u5E95\u8272\u3002\u5E26\u4E00\u70B9\u900F\u660E\u5728\u6697\u8272\u4E3B\u9898\u4E0B\u6587\u5B57\u4E5F\u770B\u5F97\u6E05\u3002\u5B58\u6210 <mark style="background:\u2026">\uFF0C\u548C Highlightr \u63D2\u4EF6\u5199\u6CD5\u4E00\u6837\uFF1B\u{1F534} \u8FD9\u7C7B\u662F Obsidian \u81EA\u5E26\u7684\u5F69\u8272\u9AD8\u4EAE\uFF08==\u{1F534}\u6587\u5B57==\uFF0CObsidian 1.15 \u8D77\uFF09\uFF0C\u989C\u8272\u8DDF\u7740\u4E3B\u9898\u8D70\u3002',
+  "settings.copyPlain.name": "\u590D\u5236\u8282\u70B9\u65F6\u53BB\u6389\u8111\u56FE\u6807\u8BB0",
+  "settings.copyPlain.desc": "\u590D\u5236\u7684\u8282\u70B9\u5728\u526A\u8D34\u677F\u91CC\u662F\u5E72\u51C0\u7684 Markdown\uFF0C\u4E0D\u5E26\u5BBD\u5EA6\u3001\u6298\u53E0\u3001\u6807\u6CE8\u8FD9\u4E9B %%\u2026%% \u6807\u8BB0\uFF0C\u65B9\u4FBF\u8D34\u5230\u522B\u5904\u3002\u7C98\u56DE\u8111\u56FE\u65F6\u7167\u6837\u8FD8\u539F\u8FD9\u4E9B\u4FE1\u606F\u3002",
+  "settings.hideTagsInNotes.name": "\u5728\u7B14\u8BB0\u91CC\u9690\u85CF\u683C\u5F0F\u6807\u7B7E",
+  "settings.hideTagsInNotes.desc": 'Markdown \u7B14\u8BB0\u7684\u5B9E\u65F6\u9884\u89C8\u91CC\uFF0C\u628A\u8111\u56FE\u5199\u7684\u6587\u5B57\u989C\u8272\u3001\u8367\u5149\u7B14\u989C\u8272\u3001\u4E0B\u5212\u7EBF\u7684 HTML \u6807\u7B7E\uFF08<span style="color:\u2026">\u3001<mark style="background:\u2026">\u3001<mark>\u3001<u>\uFF09\u85CF\u8D77\u6765\uFF0C\u76F4\u63A5\u663E\u793A\u6210\u6548\u679C\uFF0C\u548C\u7F16\u8F91\u8282\u70B9\u65F6\u4E00\u6837\u3002\u5728\u65C1\u8FB9\u5220\u5B57\u3001\u6253\u5B57\u65F6\u6807\u7B7E\u4FDD\u6301\u6210\u5BF9\u3002\u6E90\u7801\u6A21\u5F0F\u3001\u4EE3\u7801\u5757\u3001\u516C\u5F0F\u3001frontmatter \u91CC\u4E0D\u52A8\u3002',
+  "settings.colorsInNotes.name": "\u5728\u7B14\u8BB0\u91CC\u663E\u793A\u8282\u70B9\u989C\u8272",
+  "settings.colorsInNotes.desc": "\u8111\u56FE\u7B14\u8BB0\u7528 Markdown \u6253\u5F00\u65F6\uFF08\u5B9E\u65F6\u9884\u89C8\u548C\u9605\u8BFB\u89C6\u56FE\uFF0C\u5BFC\u51FA PDF \u4E5F\u4E00\u6837\uFF09\uFF0C\u5E26\u989C\u8272\u7684\u6807\u9898\u3001\u5217\u8868\u9879\u7684\u6587\u5B57\u94FA\u4E00\u5C42\u540C\u8272\u7684\u6DE1\u5E95\u3002\u53EA\u662F\u663E\u793A\uFF0C\u6539\u989C\u8272\u8FD8\u662F\u5728\u8111\u56FE\u91CC\u6539\u3002",
+  "settings.formatBarInNotes.name": "\u5728\u7B14\u8BB0\u91CC\u9009\u4E2D\u6587\u5B57\u65F6\u663E\u793A\u683C\u5F0F\u680F",
+  "settings.formatBarInNotes.desc": "Markdown \u7B14\u8BB0\u7684\u5B9E\u65F6\u9884\u89C8\u91CC\uFF08\u6240\u6709\u7B14\u8BB0\uFF0C\u4E0D\u53EA\u662F\u8111\u56FE\u7B14\u8BB0\uFF09\u9009\u4E2D\u4E00\u6BB5\u6587\u5B57\uFF0C\u4E0A\u65B9\u6D6E\u51FA\u548C\u8111\u56FE\u91CC\u4E00\u6837\u7684\u683C\u5F0F\u680F\uFF1A\u52A0\u7C97\u3001\u659C\u4F53\u3001\u5220\u9664\u7EBF\u3001\u4E0B\u5212\u7EBF\u3001\u9AD8\u4EAE\u3001\u6587\u5B57\u989C\u8272\u3001\u8367\u5149\u7B14\u548C\u6E05\u9664\u3002\u5199\u8FDB\u6587\u4EF6\u7684\u683C\u5F0F\u548C\u8111\u56FE\u4E00\u6837\uFF0C\u7B14\u8BB0\u91CC\u6807\u7684\u91CD\u70B9\u8111\u56FE\u91CC\u7167\u6837\u663E\u793A\u3002\u53EA\u5728\u7535\u8111\u4E0A\uFF1B\u6E90\u7801\u6A21\u5F0F\u3001\u4EE3\u7801\u5757\u3001\u516C\u5F0F\u3001frontmatter \u91CC\u4E0D\u51FA\u73B0\u3002\u547D\u4EE4\u300C\u5207\u6362\u7B14\u8BB0\u91CC\u7684\u683C\u5F0F\u680F\u300D\u53EF\u4EE5\u968F\u65F6\u5F00\u5173\u3002",
+  "settings.markersInNotes.name": "\u7B14\u8BB0\u91CC\u7684\u8111\u56FE\u8282\u70B9\u6807\u8BB0",
+  "settings.markersInNotes.desc": "\u8111\u56FE\u7B14\u8BB0\u7684\u5B9E\u65F6\u9884\u89C8\u91CC\uFF0C\u884C\u5C3E\u8BB0\u989C\u8272\u3001\u6298\u53E0\u3001\u5173\u8054\u7EBF\u7B49\u7684 %%\u2026%% \u6807\u8BB0\u600E\u4E48\u663E\u793A\u3002\u5C0F\u5706\u70B9\uFF1A\u60AC\u505C\u770B\u539F\u6587\uFF0C\u70B9\u4E00\u4E0B\u9732\u51FA\u6765\u53EF\u4EE5\u6539\u3002\u5B8C\u5168\u9690\u85CF\uFF1A\u4EC0\u4E48\u90FD\u4E0D\u663E\u793A\uFF0C\u8981\u6539\u5C31\u5207\u5230\u6E90\u7801\u6A21\u5F0F\u6216\u5728\u8111\u56FE\u91CC\u6539\u3002\u85CF\u8D77\u6765\u65F6\uFF0C\u5728\u884C\u5C3E\u6253\u5B57\u3001\u56DE\u8F66\u3001\u5220\u5B57\u3001\u63A5\u884C\uFF0C\u6807\u8BB0\u90FD\u59CB\u7EC8\u7559\u5728\u884C\u5C3E\uFF0C\u4E0D\u4F1A\u4E22\u3002\u4E0D\u662F\u8111\u56FE\u6807\u8BB0\u7684\u666E\u901A\u6CE8\u91CA\u4E0D\u52A8\u3002",
+  "settings.markersInNotes.show": "\u539F\u6837\u663E\u793A",
+  "settings.markersInNotes.dot": "\u7F29\u6210\u5C0F\u5706\u70B9",
+  "settings.markersInNotes.hide": "\u5B8C\u5168\u9690\u85CF",
+  "settings.hideSyntax.name": "\u7F16\u8F91\u65F6\u4E0D\u9732\u51FA\u683C\u5F0F\u6807\u8BB0",
+  "settings.hideSyntax.desc": "\u7F16\u8F91\u8282\u70B9\u65F6\uFF0C\u5149\u6807\u6328\u7740\u52A0\u7C97\u3001\u8367\u5149\u7B14\u8FD9\u4E9B\u683C\u5F0F\u4E5F\u4E0D\u9732\u51FA ** == ~~ \u7B49\u6807\u8BB0\uFF0C\u4E00\u884C\u7684\u957F\u5EA6\u4E0D\u4F1A\u8DF3\u3002\u5173\u6389\u65F6\u5149\u6807\u505C\u5728\u683C\u5F0F\u4E0A\u4F1A\u9732\u51FA\u6807\u8BB0\uFF0C\u548C Obsidian \u7684\u5B9E\u65F6\u9884\u89C8\u4E00\u6837\u3002",
+  "settings.newNodeName.name": "\u65B0\u5EFA\u7684\u8282\u70B9\u81EA\u5E26\u540D\u5B57\u300C\u4E3B\u98981\u300D",
+  "settings.newNodeName.desc": "\u65B0\u5EFA\u8282\u70B9\u65F6\u5148\u586B\u4E0A\u300C\u4E3B\u98981\u300D\uFF08\u6309\u540C\u7EA7\u5DF2\u6709\u7684\u7F16\u53F7\u5F80\u4E0B\u6392\uFF09\uFF0C\u5E76\u4E14\u6574\u4E2A\u9009\u4E2D\uFF0C\u6253\u5B57\u5C31\u66FF\u6362\u3002\u4E0D\u5199\u5B57\u76F4\u63A5\u56DE\u8F66\u6216\u6309 Esc \u4E5F\u4F1A\u7559\u7740\uFF0C\u65B9\u4FBF\u4E00\u53E3\u6C14\u52A0\u597D\u51E0\u4E2A\u8282\u70B9\u518D\u6162\u6162\u586B\u3002\u5173\u6389\u65F6\u6CA1\u5199\u5B57\u7684\u65B0\u8282\u70B9\u4E0D\u4FDD\u7559\u3002",
+  "settings.autoNumber.name": "\u6253\u300C1.\u300D\u5F00\u59CB\u7F16\u53F7",
+  "settings.autoNumber.desc": "\u7F16\u8F91\u8282\u70B9\u65F6\u5728\u5F00\u5934\u6253\u300C1. \u300D\u6216\u300C1\u3001\u300D\uFF0C\u8FD9\u4E00\u7EC4\u540C\u7EA7\u5C31\u5E26\u4E0A\u7F16\u53F7\uFF081. 2. 3.\uFF09\uFF0C\u6253\u7684\u6570\u5B57\u81EA\u52A8\u53BB\u6389\uFF0C\u4E4B\u540E\u65B0\u52A0\u7684\u540C\u7EA7\u4E5F\u81EA\u52A8\u7F16\u53F7\u3002\u5173\u6389\u65F6\u6253\u7684\u6570\u5B57\u539F\u6837\u7559\u5728\u6587\u5B57\u91CC\uFF0C\u7167\u6837\u53EF\u4EE5\u53F3\u952E \u2192\u300C\u540C\u7EA7\u7F16\u53F7\u300D\u3002",
+  "settings.strikeDoneTasks.name": "\u5B8C\u6210\u7684\u4EFB\u52A1\u663E\u793A\u5220\u9664\u7EBF",
+  "settings.strikeDoneTasks.desc": "\u52FE\u4E0A\u4E86\u7684\u4EFB\u52A1\u8282\u70B9\uFF08[x]\uFF09\u6587\u5B57\u52A0\u5220\u9664\u7EBF\u3001\u989C\u8272\u53D8\u6DE1\uFF0C\u548C Markdown \u4EFB\u52A1\u5217\u8868\u4E00\u6837\u3002\u80CC\u8BF5\u6A21\u5F0F\u91CC\u52FE\u9009\u6846\u662F\u7B54\u6848\uFF0C\u4E0D\u52A0\u3002",
+  "settings.widthHandleOnHover.name": "\u9F20\u6807\u79FB\u5230\u8282\u70B9\u53F3\u8FB9\u7F18\u5C31\u80FD\u8C03\u5BBD\u5EA6",
+  "settings.widthHandleOnHover.desc": "\u9F20\u6807\u79FB\u5230\u4EFB\u610F\u8282\u70B9\u7684\u53F3\u8FB9\u7F18\u4F1A\u51FA\u73B0\u5BBD\u5EA6\u624B\u67C4\uFF0C\u4E0D\u7528\u5148\u9009\u4E2D\u8282\u70B9\u5C31\u80FD\u76F4\u63A5\u62D6\u52A8\u6539\u5BBD\uFF1B\u53CC\u51FB\u6062\u590D\u81EA\u52A8\u5BBD\u5EA6\uFF0C\u6587\u5B57\u6298\u4E86\u884C\u7684\u62C9\u6210\u4E00\u884C\u3002\u6253\u5F00\u540E\u9009\u4E2D\u7684\u8282\u70B9\u4E5F\u4E00\u6837\uFF0C\u7AD6\u6761\u5E73\u65F6\u4E0D\u663E\u793A\uFF0C\u6307\u5230\u53F3\u8FB9\u7F18\u624D\u51FA\u73B0\u3002\u5173\u6389\u65F6\u53EA\u6709\u9009\u4E2D\u7684\u8282\u70B9\u6709\u624B\u67C4\u3002",
+  "settings.centerOnSelect.name": "\u9009\u4E2D\u8282\u70B9\u65F6\u81EA\u52A8\u5C45\u4E2D",
+  "settings.centerOnSelect.desc": "\u70B9\u9009\u8282\u70B9\u3001\u7528\u65B9\u5411\u952E\u5207\u6362\u3001\u6309 Tab / Enter \u65B0\u5EFA\u8282\u70B9\u65F6\uFF0C\u628A\u9009\u4E2D\u7684\u8282\u70B9\u5E73\u6ED1\u79FB\u5230\u753B\u5E03\u4E2D\u95F4\u3002\u6309\u4F4F Shift/\u2318 \u591A\u9009\u3001\u6846\u9009\u3001\u62D6\u52A8\u8282\u70B9\u65F6\u4E0D\u79FB\u52A8\u3002\u5173\u6389\u65F6\u53EA\u5728\u8282\u70B9\u51FA\u4E86\u89C6\u91CE\u65F6\u624D\u632A\u56DE\u6765\u3002",
+  "settings.pasteLinkTitle.name": "\u7C98\u8D34\u7F51\u5740\u65F6\u6293\u53D6\u7F51\u9875\u6807\u9898",
+  "settings.pasteLinkTitle.desc": "\u7F16\u8F91\u8282\u70B9\u65F6\u6CA1\u9009\u4E2D\u6587\u5B57\u76F4\u63A5\u7C98\u8D34\u7F51\u5740\uFF0C\u4F1A\u53BB\u6293\u7F51\u9875\u7684\u6807\u9898\uFF0C\u7C98\u6210 [\u6807\u9898](\u7F51\u5740)\u3002\u5148\u9009\u4E2D\u6587\u5B57\u518D\u7C98\u8D34\u7F51\u5740\uFF0C\u603B\u662F\u628A\u9009\u4E2D\u7684\u6587\u5B57\u53D8\u6210\u94FE\u63A5\uFF0C\u4E0D\u53D7\u8FD9\u4E00\u9879\u5F71\u54CD\u3002",
+  "settings.cleanAttachments.name": "\u5220\u9664\u8282\u70B9\u65F6\u6E05\u7406\u4E0D\u518D\u4F7F\u7528\u7684\u56FE\u7247",
+  "settings.cleanAttachments.desc": "\u5728\u8111\u56FE\u91CC\u5220\u6389\u8282\u70B9\u6216\u8282\u70B9\u91CC\u7684\u56FE\u7247\u540E\uFF0C\u5982\u679C\u8FD9\u5F20\u56FE\u7247\u9644\u4EF6\u5728\u5E93\u91CC\u5DF2\u7ECF\u6CA1\u6709\u522B\u7684\u7B14\u8BB0\u6216\u767D\u677F\u7528\u5230\uFF0C\u5C31\u79FB\u5230\u56DE\u6536\u7AD9\uFF08\u6309 Obsidian\u300C\u5220\u9664\u6587\u4EF6\u300D\u7684\u8BBE\u7F6E\uFF09\u3002\u64A4\u9500\u80FD\u628A\u6587\u4EF6\u6062\u590D\u3002\u53EA\u5904\u7406\u56FE\u7247\u3002",
+  "notice.viewStateReset": "\u300C{file}\u300D\u6309\u4E0A\u6B21\u8BB0\u4E0B\u7684\u4F4D\u7F6E\u3001\u7F29\u653E\u3001\u9501\u5B9A\u548C\u5907\u6CE8\u72B6\u6001\u6253\u4E0D\u5F00\uFF0C\u5DF2\u91CD\u7F6E\u8FD9\u4E9B\u8BB0\u5F55\uFF0C\u7B14\u8BB0\u5185\u5BB9\u6CA1\u52A8\u3002",
+  "notice.attachmentsCleaned": "\u5DF2\u628A {n} \u5F20\u4E0D\u518D\u4F7F\u7528\u7684\u56FE\u7247\u79FB\u5230\u56DE\u6536\u7AD9\uFF0C\u64A4\u9500\u53EF\u6062\u590D",
+  "format.bold": "\u52A0\u7C97",
+  "format.italic": "\u659C\u4F53",
+  "format.strike": "\u5220\u9664\u7EBF",
+  "format.underline": "\u4E0B\u5212\u7EBF\uFF08{key}\uFF09",
+  "format.highlight": "\u9AD8\u4EAE\uFF08==\u6587\u5B57==\uFF09",
+  "format.textColor": "\u6587\u5B57\u989C\u8272 {color}",
+  "format.highlightColor": "\u8367\u5149\u7B14 {color}",
+  "format.link": "\u94FE\u63A5\u5230\u7B14\u8BB0 {key}",
+  "format.clear": "\u6E05\u9664\u6587\u5B57\u989C\u8272\u548C\u8367\u5149\u7B14",
+  "command.formatBold": "\u52A0\u7C97\u9009\u4E2D\u7684\u6587\u5B57",
+  "command.formatItalic": "\u9009\u4E2D\u7684\u6587\u5B57\u8BBE\u4E3A\u659C\u4F53",
+  "command.formatUnderline": "\u7ED9\u9009\u4E2D\u7684\u6587\u5B57\u52A0\u4E0B\u5212\u7EBF",
+  "command.formatHighlight": "\u9AD8\u4EAE\u9009\u4E2D\u7684\u6587\u5B57",
+  "command.formatTextColor": "\u6587\u5B57\u989C\u8272 {n}",
+  "command.formatHighlightColor": "\u8367\u5149\u7B14\u989C\u8272 {n}",
+  "command.formatClear": "\u6E05\u9664\u6587\u5B57\u989C\u8272\u548C\u8367\u5149\u7B14",
+  "command.toggleNodebar": "\u5207\u6362\u6D6E\u52A8\u5DE5\u5177\u680F\uFF08\u9009\u4E2D\u8282\u70B9\u65F6\uFF09",
+  "command.toggleFormatBar": "\u5207\u6362\u683C\u5F0F\u680F\uFF08\u7F16\u8F91\u8282\u70B9\u65F6\u9009\u4E2D\u6587\u5B57\uFF09",
+  "command.toggleNoteFormatBar": "\u5207\u6362\u7B14\u8BB0\u91CC\u7684\u683C\u5F0F\u680F",
+  "notice.toggledOn": "\u5DF2\u6253\u5F00\uFF1A{name}",
+  "notice.toggledOff": "\u5DF2\u5173\u95ED\uFF1A{name}",
+  "settings.notesExpanded.name": "\u5907\u6CE8\u5C55\u5F00\u663E\u793A",
+  "settings.quoteListNotes.name": "\u5217\u8868\u9879\u4E0B\u7684\u5907\u6CE8\u5199\u6210\u5F15\u7528\u5757\uFF08\u6BCF\u884C\u524D\u52A0 >\uFF09",
+  "settings.quoteListNotes.desc": "Obsidian \u628A\u7D27\u8DDF\u5728\u5217\u8868\u9879\u4E0B\u9762\u7684\u7F29\u8FDB\u884C\u5F53\u6210\u8FD9\u4E00\u9879\u6587\u5B57\u7684\u7EED\u884C\uFF0C\u9996\u884C\u7F29\u8FDB\u4E4B\u7C7B\u7684\u6837\u5F0F\u4F1A\u5BF9\u4E0D\u9F50\u3002\u6253\u5F00\u540E\uFF0C\u5217\u8868\u9879\u7684\u5907\u6CE8\u6BCF\u884C\u524D\u52A0 > \u5199\u8FDB\u6587\u4EF6\uFF0C\u6210\u4E3A\u8FD9\u4E00\u9879\u91CC\u4E00\u4E2A\u72EC\u7ACB\u7684\u5F15\u7528\u5757\uFF1B\u8111\u56FE\u8BFB\u7684\u65F6\u5019\u53BB\u6389\u4E00\u5C42 >\uFF0C\u5907\u6CE8\u91CC\u770B\u4E0D\u5230\u3002\u53EA\u6539\u5199\u4F60\u6539\u52A8\u8FC7\u7684\u5907\u6CE8\u3002\u6807\u9898\u4E0B\u7684\u5907\u6CE8\u3001\u8282\u70B9\u91CC\u7684\u8868\u683C\u4E0D\u53D7\u5F71\u54CD\u3002",
+  "settings.taskProgress.name": "\u4EFB\u52A1\u5B8C\u6210\u5EA6",
+  "settings.taskProgress.desc": "\u5728\u6E05\u5355\u7684\u4E0A\u4E00\u7EA7\u8282\u70B9\uFF08\u81EA\u5DF1\u4E0D\u662F\u4EFB\u52A1\u3001\u76F4\u63A5\u5B50\u8282\u70B9\u91CC\u6709\u4EFB\u52A1\uFF09\u540E\u9762\u663E\u793A\u4E0B\u9762\u7684\u4EFB\u52A1\u5B8C\u6210\u4E86\u591A\u5C11\u3002\u4E0B\u9762\u4E00\u8DEF\u8FDE\u7740\u7684\u4EFB\u52A1\u90FD\u7B97\uFF0C\u5B50\u4EFB\u52A1\u4E5F\u5404\u7B97\u4E00\u9879\uFF1B\u4E2D\u95F4\u9694\u7740\u666E\u901A\u8282\u70B9\u7684\uFF0C\u7B97\u5728\u90A3\u4E2A\u666E\u901A\u8282\u70B9\u4E0A\u3002\u80CC\u8BF5\u6A21\u5F0F\u4E0B\u4E0D\u663E\u793A\uFF08\u90A3\u65F6\u8FD9\u4E9B\u662F\u9009\u62E9\u9898\uFF0C\u663E\u793A\u6570\u91CF\u7B49\u4E8E\u6CC4\u9732\u7B54\u6848\uFF09\u3002\u53EA\u662F\u663E\u793A\uFF0C\u4E0D\u5199\u8FDB\u6587\u4EF6\u3002",
+  "settings.taskProgress.off": "\u5173",
+  "settings.taskProgress.percent": "\u767E\u5206\u6BD4\uFF0820%\uFF09",
+  "settings.taskProgress.count": "\u5B8C\u6210\u6570/\u603B\u6570\uFF081/5\uFF09",
+  "settings.taskProgress.both": "\u4E24\u8005\u90FD\u663E\u793A\uFF081/5 \xB7 20%\uFF09",
+  "canvas.taskProgress": "{total} \u9879\u4EFB\u52A1\u5B8C\u6210\u4E86 {done} \u9879",
+  "settings.taskProgressPos.name": "\u4EFB\u52A1\u5B8C\u6210\u5EA6\u7684\u4F4D\u7F6E",
+  "settings.taskProgressPos.desc": "\u653E\u5728\u6587\u5B57\u540E\u9762\uFF0C\u8111\u56FE\u66F4\u7D27\u51D1\uFF1B\u653E\u5728\u6587\u5B57\u4E0B\u9762\u5355\u72EC\u4E00\u884C\u66F4\u9192\u76EE\uFF0C\u4F46\u8FD9\u4E9B\u8282\u70B9\u4F1A\u9AD8\u4E00\u4E9B\u3002",
+  "settings.taskProgressPos.end": "\u6587\u5B57\u540E\u9762",
+  "settings.taskProgressPos.below": "\u6587\u5B57\u4E0B\u9762",
+  "settings.noteCardShow.name": "\u5C55\u5F00\u7684\u5907\u6CE8\u91CC\u663E\u793A",
+  "settings.noteCardShow.desc": "\u8282\u70B9\u4E0B\u9762\u7684\u5907\u6CE8\u6846\u91CC\u663E\u793A\u4EC0\u4E48\u3002\u9009\u53EA\u663E\u793A\u5217\u8868\u9879\u65F6\uFF0C\u6846\u91CC\u53EA\u7559\u5217\u8868\u9879\uFF08\u8FDE\u540C\u5B83\u4E0B\u9762\u7F29\u8FDB\u7684\u5B50\u9879\u3001\u7EED\u884C\uFF09\uFF0C\u6BB5\u843D\u6587\u5B57\u4E0D\u663E\u793A\uFF1A\u5F00\u7740\u300C\u53EA\u628A\u6807\u9898\u5F53\u8282\u70B9\u300D\u65F6\uFF0C\u6807\u9898\u4E0B\u7684\u5927\u6BB5\u89E3\u91CA\u90FD\u5728\u5907\u6CE8\u91CC\uFF0C\u7528\u5B83\u53EF\u4EE5\u5728\u8111\u56FE\u91CC\u53EA\u770B\u7ED3\u8BBA\u3002\u6311\u5B8C\u6CA1\u6709\u5185\u5BB9\u7684\u8282\u70B9\u53EA\u7559\u5907\u6CE8\u56FE\u6807\u3002\u53EA\u6539\u663E\u793A\uFF1A\u70B9\u5907\u6CE8\u56FE\u6807\u5F39\u51FA\u7684\u7A97\u53E3\u3001\u7F16\u8F91\u5907\u6CE8\u65F6\u548C\u6587\u4EF6\u91CC\u90FD\u662F\u5B8C\u6574\u5185\u5BB9\u3002",
+  "settings.noteCardShow.all": "\u5168\u90E8",
+  "settings.noteCardShow.list": "\u53EA\u663E\u793A\u5217\u8868\u9879",
+  "settings.noteCardShow.ordered": "\u53EA\u663E\u793A\u6709\u5E8F\u5217\u8868",
+  "settings.noteCardShow.unordered": "\u53EA\u663E\u793A\u65E0\u5E8F\u5217\u8868",
+  "settings.notesExpanded.desc": "\u8282\u70B9\u7684\u5907\u6CE8\u76F4\u63A5\u663E\u793A\u5728\u8282\u70B9\u4E0B\u65B9\u7684\u6846\u91CC\uFF0C\u5468\u56F4\u7684\u8282\u70B9\u81EA\u52A8\u8BA9\u5F00\uFF0C\u4E0D\u7528\u518D\u70B9\u5907\u6CE8\u56FE\u6807\u5F39\u7A97\u770B\u3002\u8FD9\u91CC\u662F\u9ED8\u8BA4\u503C\uFF1B\u5DE5\u5177\u680F\u7684\u5907\u6CE8\u6309\u94AE\u53EA\u5207\u6362\u5F53\u524D\u8FD9\u5F20\u56FE\uFF0C\u6309\u6587\u4EF6\u8BB0\u4F4F\u3002\u4E0D\u5F80\u7B14\u8BB0\u91CC\u5199\u4EFB\u4F55\u4E1C\u897F\u3002",
+  "settings.noteMaxHeight.name": "\u5C55\u5F00\u5907\u6CE8\u7684\u6700\u5927\u9AD8\u5EA6",
+  "settings.noteMaxHeight.desc": "\u8D85\u51FA\u7684\u90E8\u5206\u5728\u6846\u91CC\u6EDA\u52A8\u3002\u5355\u4F4D\u662F\u50CF\u7D20\uFF0C\u8DDF\u7740\u300C\u8282\u70B9\u5B57\u53F7\u300D\u4E00\u8D77\u7F29\u653E\u3002",
+  "settings.noteFontSize.name": "\u5907\u6CE8\u5B57\u53F7",
+  "settings.noteFontSize.desc": "\u5907\u6CE8\u7A97\u53E3\u548C\u5C55\u5F00\u7684\u5907\u6CE8\u5361\u7247\u91CC\u6587\u5B57\u7684\u5927\u5C0F\uFF08\u50CF\u7D20\uFF09\uFF0C\u9ED8\u8BA4 13\u3002",
+  "settings.resetNoteFontSize": "\u6062\u590D 13",
+  "settings.noteMaxWidth.name": "\u5C55\u5F00\u5907\u6CE8\u7684\u6700\u5927\u5BBD\u5EA6",
+  "settings.noteMaxWidth.desc": "\u6846\u8D8A\u5BBD\uFF0C\u5907\u6CE8\u91CC\u7684\u56FE\u7247\u663E\u793A\u5F97\u8D8A\u5927\u3002\u5355\u4F4D\u662F\u50CF\u7D20\uFF0C\u8DDF\u7740\u300C\u8282\u70B9\u5B57\u53F7\u300D\u4E00\u8D77\u7F29\u653E\u3002\u60F3\u5355\u72EC\u8C03\u67D0\u4E00\u6761\uFF0C\u62D6\u5B83\u53F3\u4E0B\u89D2\u3002",
+  "settings.resetNoteWidth": "\u6062\u590D 320",
+  "settings.imageThumbWidth.name": "\u56FE\u7247\u9ED8\u8BA4\u5927\u5C0F",
+  "settings.imageThumbWidth.desc": "\u6CA1\u8BBE\u8FC7\u5BBD\u5EA6\u7684\u56FE\u7247\u5728\u8282\u70B9\u91CC\u663E\u793A\u591A\u5BBD\uFF08\u9AD8\u5EA6\u6700\u591A\u662F\u5B83\u7684 3/4\uFF0C\u4E2D\u5FC3\u4E3B\u9898\u91CC\u662F\u5B83\u7684 4/3\uFF09\u3002\u5355\u4F4D\u662F\u50CF\u7D20\u3002\u60F3\u5355\u72EC\u8C03\u67D0\u4E00\u5F20\uFF0C\u62D6\u5B83\u53F3\u4E0B\u89D2\u3002",
+  "settings.imageMaxWidth.name": "\u56FE\u7247\u6700\u5927\u5BBD\u5EA6",
+  "settings.imageMaxWidth.desc": "\u62D6\u56FE\u7247\u53F3\u4E0B\u89D2\u6700\u591A\u80FD\u653E\u591A\u5BBD\u3002\u7B14\u8BB0\u91CC\u5199\u7684\u5BBD\u5EA6\u6BD4\u5B83\u5927\u7684\uFF0C\u6309\u5B83\u663E\u793A\uFF0C\u4E0D\u6539\u7B14\u8BB0\u3002\u5355\u4F4D\u662F\u50CF\u7D20\u3002",
+  "settings.resetImageThumb": "\u6062\u590D 240",
+  "settings.resetImageMax": "\u6062\u590D 800",
+  "settings.tableMaxWidth.name": "\u8282\u70B9\u91CC\u8868\u683C\u7684\u6700\u5927\u5BBD\u5EA6",
+  "settings.tableMaxWidth.desc": "\u66F4\u5BBD\u7684\u8868\u683C\u5728\u8282\u70B9\u91CC\u5DE6\u53F3\u6EDA\u52A8\u3002\u6CA1\u62D6\u8FC7\u5BBD\u5EA6\u7684\u5217\u6700\u5BBD 240\uFF0C\u8D85\u51FA\u7684\u6587\u5B57\u6362\u884C\u3002\u5355\u4F4D\u662F\u50CF\u7D20\uFF0C\u8DDF\u7740\u300C\u8282\u70B9\u5B57\u53F7\u300D\u4E00\u8D77\u7F29\u653E\u3002",
+  "settings.tableMaxHeight.name": "\u8282\u70B9\u91CC\u8868\u683C\u7684\u6700\u5927\u9AD8\u5EA6",
+  "settings.tableMaxHeight.desc": "\u66F4\u9AD8\u7684\u8868\u683C\u5728\u8282\u70B9\u91CC\u4E0A\u4E0B\u6EDA\u52A8\uFF0C\u8868\u5934\u7559\u5728\u9876\u4E0A\u3002\u9F20\u6807\u5728\u8FD9\u79CD\u8282\u70B9\u4E0A\u4EFB\u4F55\u4F4D\u7F6E\u6ED1\u52A8\u90FD\u53EA\u6EDA\u8868\u683C\uFF0C\u8282\u70B9\u4E0D\u52A8\u3002\u5355\u4F4D\u662F\u50CF\u7D20\uFF0C\u8DDF\u7740\u300C\u8282\u70B9\u5B57\u53F7\u300D\u4E00\u8D77\u7F29\u653E\u3002",
+  "settings.resetTableWidth": "\u6062\u590D 640",
+  "settings.resetTableHeight": "\u6062\u590D 480",
+  "settings.embedToolbar.name": "\u5DE5\u5177\u680F",
+  "settings.embedToolbar.desc": "\u5B8C\u6574\uFF1A\u548C\u6253\u5F00\u7684\u8111\u56FE\u4E00\u6837\u3002\u81EA\u5B9A\u4E49\uFF1A\u5728\u4E0B\u9762\u9009\u663E\u793A\u54EA\u4E9B\u6309\u94AE\uFF0C\u9ED8\u8BA4\u53EA\u7559\u300C\u6253\u5F00 / \u7F16\u8F91\u300D\u3002\u81EA\u52A8\u9690\u85CF\uFF1A\u9605\u8BFB\u6A21\u5F0F\u4E0B\u4E0D\u663E\u793A\uFF1B\u7F16\u8F91\u6A21\u5F0F\u548C\u767D\u677F\u5361\u7247\u91CC\uFF0C\u9F20\u6807\u79FB\u5230\u8111\u56FE\u4E0A\u3001\u6216\u8005\u7126\u70B9\u5728\u8111\u56FE\u91CC\u65F6\u624D\u663E\u793A\u3002",
+  "settings.embedToolbar.full": "\u5B8C\u6574",
+  "settings.embedToolbar.custom": "\u81EA\u5B9A\u4E49",
+  "settings.embedToolbar.autohide": "\u81EA\u52A8\u9690\u85CF",
+  "bar.embedPage": "\u5D4C\u5165\u7684\u8111\u56FE\u7684\u5DE5\u5177\u680F",
+  "bar.embedPageDesc": "\u7B14\u8BB0\u548C\u767D\u677F\u5361\u7247\u91CC\u5D4C\u5165\u7684\u8111\u56FE\uFF08```mindmap \u4EE3\u7801\u5757\u548C ![[\u7B14\u8BB0]] \u5D4C\u5165\uFF09\uFF1A\u5B8C\u6574\u3001\u81EA\u5B9A\u4E49\u6309\u94AE\uFF0C\u6216\u8005\u81EA\u52A8\u9690\u85CF\u3002",
+  "bar.embed": "\u6253\u5F00 / \u7F16\u8F91\u8FD9\u5F20\u8111\u56FE",
+  "bar.embedDesc": "\u5D4C\u5165\u7684\u7B14\u8BB0\u662F\u300C\u6253\u5F00\u8FD9\u5F20\u8111\u56FE\u300D\uFF1B\u4EE3\u7801\u5757\u662F\u300C\u7F16\u8F91 / \u5B8C\u6210\u300D",
+  "bar.expand": "\u5927\u7A97\u53E3\u7F16\u8F91",
+  "bar.expandDesc": "\u53EA\u6709\u4EE3\u7801\u5757\u5D4C\u5165\u7684\u56FE\u6709",
+  "settings.outlineWrap.name": "\u5927\u7EB2\u663E\u793A\u5B8C\u6574\u6807\u9898",
+  "settings.outlineWrap.desc": "\u8111\u56FE\u5927\u7EB2\u9762\u677F\u91CC\u592A\u957F\u7684\u6807\u9898\u6362\u884C\u663E\u793A\u5168\u6587\uFF0C\u4E0D\u518D\u7701\u7565\u6210\u4E00\u884C\u3002",
+  "settings.headingsOnly.name": "\u53EA\u628A\u6807\u9898\u5F53\u8282\u70B9",
+  "settings.headingsOnly.desc": "\u7B14\u8BB0\u7684\u8111\u56FE\u53EA\u628A\u6807\u9898\u5F53\u8282\u70B9\uFF0C\u6807\u9898\u4E0B\u9762\u7684\u5217\u8868\u548C\u6BB5\u843D\u7B97\u4F5C\u5B83\u7684\u5907\u6CE8\uFF0C\u539F\u6837\u4FDD\u7559\u3002\u4EE3\u7801\u5757\u91CC\u7684\u8111\u56FE\u4E0D\u53D7\u5F71\u54CD\u3002",
+  "settings.codeBlockHeight.name": "\u4EE3\u7801\u5757\u5D4C\u5165\u7684\u6700\u5927\u9AD8\u5EA6",
+  "settings.codeBlockHeight.desc": "```mindmap \u4EE3\u7801\u5757\u6309\u5185\u5BB9\u81EA\u9002\u5E94\u9AD8\u5EA6\uFF0C\u4F46\u4E0D\u8D85\u8FC7\u8FD9\u4E2A\u503C\uFF08\u50CF\u7D20\uFF09\u3002"
+};
+var current = en;
+function setLocale(lang2) {
+  current = lang2.toLowerCase().startsWith("zh") ? zh : en;
+}
+function t(key, vars) {
+  const text = current[key] ?? en[key];
+  if (!vars) return text;
+  return text.replace(/\{(\w+)\}/g, (m, name) => name in vars ? String(vars[name]) : m);
+}
+function paletteText() {
+  return { common: t("palette.common"), recent: t("palette.recent"), alpha: t("palette.alpha"), custom: t("palette.custom") };
+}
+
+// src/pdf-excerpt.ts
 function pdfPlusCopyLink(app) {
   const plugins = app.plugins?.plugins;
   const copyLink = plugins?.["pdf-plus"]?.lib?.copyLink;
@@ -4317,6 +4627,22 @@ var zh2 = {
   fmtTextColor: "\u6587\u5B57\u989C\u8272",
   fmtHighlightColor: "\u8367\u5149\u7B14",
   fmtClear: "\u6E05\u9664\u6587\u5B57\u989C\u8272\u548C\u8367\u5149\u7B14",
+  mbDone: "\u5B8C\u6210",
+  mbUndo: "\u64A4\u9500",
+  mbRedo: "\u91CD\u505A",
+  mbLink: "\u63D2\u5165\u53CC\u94FE",
+  mbCheckbox: "\u52FE\u9009\u6846",
+  mbNewline: "\u683C\u5185\u6362\u884C",
+  mbPrevCell: "\u4E0A\u4E00\u683C",
+  mbNextCell: "\u4E0B\u4E00\u683C",
+  palTextMore: "\u66F4\u591A\u6587\u5B57\u989C\u8272",
+  palBgMore: "\u66F4\u591A\u8367\u5149\u7B14\u989C\u8272",
+  palCommon: "\u5E38\u7528",
+  palRecent: "\u6700\u8FD1\u4F7F\u7528",
+  palAlpha: "\u900F\u660E\u5EA6",
+  palCustom: "\u81EA\u5B9A\u4E49\u2026",
+  palNoText: "\u53BB\u6389\u6587\u5B57\u989C\u8272",
+  palNoHighlight: "\u53BB\u6389\u8367\u5149\u7B14",
   deleteCols: "\u5220\u9664 {n} \u5217",
   deleteTable: "\u5220\u9664\u8868\u683C",
   copyTable: "\u590D\u5236\u6574\u5F20\u8868\u683C",
@@ -4336,6 +4662,9 @@ var zh2 = {
   alignLeft: "\u5DE6\u5BF9\u9F50",
   alignCenter: "\u5C45\u4E2D",
   alignRight: "\u53F3\u5BF9\u9F50",
+  vAlign_top: "\u9876\u7AEF\u5BF9\u9F50",
+  vAlign_middle: "\u5782\u76F4\u5C45\u4E2D",
+  vAlign_bottom: "\u5E95\u7AEF\u5BF9\u9F50",
   color: "\u5E95\u8272",
   noColor: "\u65E0\u5E95\u8272",
   autoWidth: "\u81EA\u52A8\u5217\u5BBD",
@@ -4351,6 +4680,13 @@ var zh2 = {
   style_minimal: "\u6781\u7B80\u7EBF",
   style_academic: "\u4E09\u7EBF\u8868",
   textColor: "\u6587\u5B57\u989C\u8272",
+  fontSize: "\u6587\u5B57\u5927\u5C0F",
+  tableFontSize: "\u6574\u8868\u6587\u5B57\u5927\u5C0F",
+  fontSize_xs: "\u5F88\u5C0F",
+  fontSize_s: "\u5C0F",
+  fontSize_m: "\u6B63\u5E38",
+  fontSize_l: "\u5927",
+  fontSize_xl: "\u5F88\u5927",
   calcTitle: "\u5408\u8BA1",
   calc_sum: "\u6C42\u548C",
   calc_avg: "\u5E73\u5747",
@@ -4363,6 +4699,8 @@ var zh2 = {
   statusOff: "\u53D6\u6D88\u72B6\u6001\u5217",
   statusColor: "\u300C{v}\u300D\u7684\u989C\u8272",
   defaultText: "\u9ED8\u8BA4\u6587\u5B57\u989C\u8272",
+  foldTable: "\u6298\u53E0\u8868\u683C\uFF08\u53EA\u663E\u793A\u8868\u5934\uFF09",
+  unfoldRows: "\u25B8 \u5C55\u5F00 {n} \u884C",
   headerColumn: "\u7B2C\u4E00\u5217\u4F5C\u4E3A\u6807\u9898\u5217",
   freezeHeaderCol: "\u51BB\u7ED3\u6807\u9898\u5217\uFF08\u5DE6\u53F3\u6EDA\u52A8\u65F6\u4E0D\u52A8\uFF09",
   headerRows: "\u8868\u5934\u884C\u6570",
@@ -4374,11 +4712,16 @@ var zh2 = {
   alignAllLeft: "\u6574\u8868\u5DE6\u5BF9\u9F50",
   alignAllCenter: "\u6574\u8868\u5C45\u4E2D",
   alignAllRight: "\u6574\u8868\u53F3\u5BF9\u9F50",
+  vAlignAll_top: "\u6574\u8868\u9876\u7AEF\u5BF9\u9F50",
+  vAlignAll_middle: "\u6574\u8868\u5782\u76F4\u5C45\u4E2D",
+  vAlignAll_bottom: "\u6574\u8868\u5E95\u7AEF\u5BF9\u9F50",
   autoWidthAll: "\u6240\u6709\u5217\u6062\u590D\u81EA\u52A8\u5BBD\u5EA6",
   clearAllBg: "\u6E05\u9664\u6240\u6709\u989C\u8272",
   unmergeCells: "\u53D6\u6D88\u5408\u5E76",
   addRow: "\u52A0\u4E00\u884C",
   addCol: "\u52A0\u4E00\u5217",
+  addColFirst: "\u5728\u6700\u524D\u9762\u52A0\u4E00\u5217",
+  addRowFirst: "\u5728\u8868\u5934\u4E0B\u9762\u52A0\u4E00\u884C",
   rowMenu: "\u884C\u64CD\u4F5C",
   colMenu: "\u5217\u64CD\u4F5C",
   resize: "\u62D6\u52A8\u6539\u5217\u5BBD\uFF0C\u53CC\u51FB\u81EA\u52A8",
@@ -4439,6 +4782,22 @@ var en2 = {
   fmtTextColor: "Text color",
   fmtHighlightColor: "Highlighter",
   fmtClear: "Clear text and highlighter colors",
+  mbDone: "Done",
+  mbUndo: "Undo",
+  mbRedo: "Redo",
+  mbLink: "Insert link",
+  mbCheckbox: "Checkbox",
+  mbNewline: "New line in cell",
+  mbPrevCell: "Previous cell",
+  mbNextCell: "Next cell",
+  palTextMore: "More text colors",
+  palBgMore: "More highlighter colors",
+  palCommon: "Frequent",
+  palRecent: "Recent",
+  palAlpha: "Opacity",
+  palCustom: "Custom\u2026",
+  palNoText: "No text color",
+  palNoHighlight: "No highlighter",
   deleteCols: "Delete {n} columns",
   deleteTable: "Delete table",
   copyTable: "Copy whole table",
@@ -4458,6 +4817,9 @@ var en2 = {
   alignLeft: "Align left",
   alignCenter: "Align center",
   alignRight: "Align right",
+  vAlign_top: "Align top",
+  vAlign_middle: "Center vertically",
+  vAlign_bottom: "Align bottom",
   color: "Background",
   noColor: "No background",
   autoWidth: "Auto width",
@@ -4473,6 +4835,13 @@ var en2 = {
   style_minimal: "Minimal",
   style_academic: "Three-line",
   textColor: "Text color",
+  fontSize: "Text size",
+  tableFontSize: "Table text size",
+  fontSize_xs: "Smallest",
+  fontSize_s: "Small",
+  fontSize_m: "Normal",
+  fontSize_l: "Large",
+  fontSize_xl: "Largest",
   calcTitle: "Total",
   calc_sum: "Sum",
   calc_avg: "Average",
@@ -4485,6 +4854,8 @@ var en2 = {
   statusOff: "Stop using as status column",
   statusColor: "Color of \u201C{v}\u201D",
   defaultText: "Default text color",
+  foldTable: "Fold table (header only)",
+  unfoldRows: "\u25B8 Show {n} rows",
   headerColumn: "First column as header",
   freezeHeaderCol: "Freeze header column (stays put when scrolling sideways)",
   headerRows: "Header rows",
@@ -4496,11 +4867,16 @@ var en2 = {
   alignAllLeft: "Align table left",
   alignAllCenter: "Center table",
   alignAllRight: "Align table right",
+  vAlignAll_top: "Align table top",
+  vAlignAll_middle: "Center table vertically",
+  vAlignAll_bottom: "Align table bottom",
   autoWidthAll: "Auto width for all columns",
   clearAllBg: "Clear all colors",
   unmergeCells: "Unmerge cells",
   addRow: "Add row",
   addCol: "Add column",
+  addColFirst: "Add column at the start",
+  addRowFirst: "Add row below the header",
   rowMenu: "Row actions",
   colMenu: "Column actions",
   resize: "Drag to resize, double-click for auto",
@@ -4837,6 +5213,34 @@ var NotePickerModal = class extends import_obsidian5.FuzzySuggestModal {
   }
 };
 
+// src/block-editor.ts
+var import_obsidian6 = require("obsidian");
+var BlockEditorModal = class extends import_obsidian6.Modal {
+  constructor(app, title, mount, onClosed) {
+    super(app);
+    this.title = title;
+    this.mount = mount;
+    this.onClosed = onClosed;
+    this.component = new import_obsidian6.Component();
+    this.cleanup = null;
+    this.scope = new import_obsidian6.Scope();
+  }
+  onOpen() {
+    this.modalEl.addClass("mm-block-editor");
+    this.titleEl.setText(this.title);
+    this.component.load();
+    const host = this.contentEl.createDiv({ cls: "mm-block-editor-host" });
+    this.cleanup = this.mount(host, this.component);
+  }
+  onClose() {
+    this.cleanup?.();
+    this.cleanup = null;
+    this.component.unload();
+    this.contentEl.empty();
+    this.onClosed();
+  }
+};
+
 // src/layout.ts
 var STRUCTURES = [
   { id: "logic-right", get label() {
@@ -4865,8 +5269,17 @@ var STRUCTURES = [
   } },
   { id: "timeline-v-alt", get label() {
     return t("structure.timelineVAlt");
+  } },
+  { id: "fishbone-right", get label() {
+    return t("structure.fishboneRight");
+  } },
+  { id: "fishbone-left", get label() {
+    return t("structure.fishboneLeft");
   } }
 ];
+function isFishbone(s) {
+  return s === "fishbone-right" || s === "fishbone-left";
+}
 function isTimeline(s) {
   return s.startsWith("timeline-");
 }
@@ -5082,6 +5495,8 @@ function layoutTree(root, measure, opts, measureSummary, skip, measureCallout, m
   let spine;
   if (isTimeline(opts.structure)) {
     spine = layoutTimeline(root, kids);
+  } else if (isFishbone(opts.structure)) {
+    spine = layoutFishbone(root, kids);
   } else if (opts.structure === "org-down") {
     layoutDown(root, kids);
   } else if (opts.structure === "tree-right") {
@@ -5209,6 +5624,107 @@ function layoutTree(root, measure, opts, measureSummary, skip, measureCallout, m
     const tail = Math.max(24, Math.round(gap * 0.75));
     const far = Math.max(prevEnd, ...olds.map((o) => horiz ? o.x + o.w : o.y + o.h));
     return { segs, end: horiz ? { x1: prevEnd, y1: 0, x2: far + tail, y2: 0 } : { x1: 0, y1: prevEnd, x2: 0, y2: far + tail } };
+  }
+  function layoutFishbone(parent, list) {
+    const segs = /* @__PURE__ */ new Map();
+    if (!list.length) return { segs, end: null, plain: true };
+    const d = opts.structure === "fishbone-right" ? -1 : 1;
+    const slope = 1 / Math.tan(Math.PI / 3);
+    const boneX = (y) => d * Math.abs(y) * slope;
+    const gapSpine = opts.gapSibling + 8;
+    const gapTip = Math.round(opts.gapLevel / 2);
+    const gapRib = Math.round(opts.gapLevel / 2);
+    const rp = placed.get(parent.id);
+    const olds = [{ x: rp.x, y: rp.y, w: rp.w, h: rp.h }];
+    const rootNote = noteOf(parent);
+    if (rootNote) olds.push({ x: rp.x, y: rp.y + rp.h + NOTE_GAP, w: rootNote.w, h: rootNote.h });
+    const headX = d < 0 ? rp.x : rp.x + rp.w;
+    let prevS = null;
+    let tailX = headX;
+    for (let i = 0; i < list.length; i++) {
+      const c = list[i];
+      const up = i % 2 === 0;
+      const sub = layoutTree(c, measure, { ...opts, structure: "tree-right", gapRoot: opts.gapLevel, gapMain: opts.gapSibling }, measureSummary, void 0, measureCallout, measureNote);
+      const own = (n) => n === c;
+      const m = sub.placed.get(c.id);
+      if (d < 0) {
+        sub.summaries = sub.summaries.map((x) => {
+          if (x.side !== "right" && x.side !== "tree" || x.topic && visibleChildren(x.topic).length) return x;
+          let left = Infinity;
+          for (const mem of x.members) {
+            const q = sub.placed.get(mem.id);
+            if (q) left = Math.min(left, q.x);
+          }
+          for (const bx of sub.boxes) if (bx.y < x.brace.y + x.brace.h && x.brace.y < bx.y + bx.h) left = Math.min(left, bx.x);
+          if (!Number.isFinite(left)) return x;
+          const brace = { ...x.brace, x: left - SUMMARY_GAP - BRACE_W };
+          const label = x.label && { ...x.label, x: brace.x - SUMMARY_LABEL_GAP - x.label.w };
+          const tp = x.topic && sub.placed.get(x.topic.id);
+          if (tp) {
+            const dx = brace.x - SUMMARY_LABEL_GAP - tp.w - tp.x;
+            sub.placed.set(tp.node.id, { ...tp, x: tp.x + dx, side: "left" });
+            sub.callouts = sub.callouts.map((q) => q.node === tp.node ? { ...q, x: q.x + dx } : q);
+            sub.notes = sub.notes.map((q) => q.node === tp.node ? { ...q, x: q.x + dx } : q);
+          }
+          return { ...x, side: "left", brace, label };
+        });
+      }
+      let mainPart = { x: m.x, y: m.y, w: m.w, h: m.h };
+      for (const x of [...sub.callouts, ...sub.notes]) if (own(x.node)) mainPart = union(mainPart, x);
+      let rest = null;
+      for (const p of sub.placed.values()) if (!own(p.node)) rest = union(rest, p);
+      for (const x of [...sub.callouts, ...sub.notes]) if (!own(x.node)) rest = union(rest, x);
+      for (const x of sub.boxes) rest = union(rest, x);
+      for (const x of sub.summaries) rest = union(union(rest, x.brace), x.label);
+      let restDx = 0;
+      let restDy = 0;
+      let tipY;
+      if (rest) {
+        const top = up ? -gapSpine - rest.h : gapSpine;
+        const near = up ? top : top + rest.h;
+        const edge = boneX(near) + (d < 0 ? -gapRib - rest.w : gapRib);
+        restDx = edge - rest.x;
+        restDy = top - rest.y;
+        tipY = up ? top - gapTip : top + rest.h + gapTip;
+      } else tipY = up ? -gapSpine - gapTip : gapSpine + gapTip;
+      const tipX = boneX(tipY);
+      const mainDx = tipX - (m.x + m.w / 2);
+      const mainDy = up ? tipY - (mainPart.y + mainPart.h) : tipY - mainPart.y;
+      const movedMain = { ...mainPart, x: mainPart.x + mainDx, y: mainPart.y + mainDy };
+      const movedRest = rest && { ...rest, x: rest.x + restDx, y: rest.y + restDy };
+      const boneBox = { x: Math.min(0, tipX), y: Math.min(0, tipY), w: Math.abs(tipX), h: Math.abs(tipY) };
+      const region = union(union(movedMain, movedRest), boneBox);
+      let sx = d < 0 ? headX - opts.gapRoot - (region.x + region.w) : headX + opts.gapRoot - region.x;
+      if (prevS !== null) sx = d < 0 ? Math.min(sx, prevS - opts.gapMain) : Math.max(sx, prevS + opts.gapMain);
+      const cross = opts.gapSibling;
+      for (const o of olds) {
+        if (!(region.y < o.y + o.h + cross && o.y < region.y + region.h + cross)) continue;
+        sx = d < 0 ? Math.min(sx, o.x - opts.gapMain - (region.x + region.w)) : Math.max(sx, o.x + o.w + opts.gapMain - region.x);
+      }
+      prevS = sx;
+      const at = (b, n) => n && own(n) ? { x: b.x + mainDx + sx, y: b.y + mainDy, w: b.w, h: b.h } : { x: b.x + restDx + sx, y: b.y + restDy, w: b.w, h: b.h };
+      const bone = { x1: sx, y1: 0, x2: sx + tipX, y2: tipY };
+      for (const p of sub.placed.values()) {
+        const side = own(p.node) ? up ? "up" : "down" : p.node.parent === c ? "rib" : p.side;
+        placed.set(p.node.id, { ...p, ...at(p, p.node), side, ...own(p.node) ? { bone } : {} });
+      }
+      for (const x of sub.callouts) addCallout(x.node, at(x, x.node), x.dir);
+      for (const x of sub.notes) addNote(x.node, at(x, x.node), x.far);
+      for (const x of sub.boxes) branchBoxes.push({ ...x, ...at(x) });
+      let extra = null;
+      for (const x of sub.boxes) extra = union(extra, at(x));
+      for (const x of sub.summaries) {
+        branchSummaries.push({ ...x, brace: { ...x.brace, ...at(x.brace) }, label: x.label && { ...x.label, ...at(x.label) } });
+        extra = union(union(extra, at(x.brace)), x.label ? at(x.label) : null);
+      }
+      if (extra) branchExtra.set(c.id, extra);
+      const moved = { ...region, x: region.x + sx };
+      olds.push(moved);
+      segs.set(c.id, bone);
+      tailX = d < 0 ? Math.min(tailX, moved.x) : Math.max(tailX, moved.x + moved.w);
+    }
+    const tail = Math.max(24, Math.round(opts.gapMain * 0.75));
+    return { segs, end: { x1: tailX + d * tail, y1: 0, x2: headX, y2: 0 }, plain: true };
   }
   function gapFor(parent) {
     return depthOf(parent) === 0 ? opts.gapMain : opts.gapSibling;
@@ -5581,11 +6097,21 @@ function edgeGeometry(parent, child) {
       return { parent, child, x1: parent.x + parent.w / 2, y1: parent.y, x2: child.x + child.w / 2, y2: child.y + child.h };
     case "tree-up":
       return { parent, child, x1: parent.x + Math.min(TREE_INDENT / 2, parent.w / 2), y1: parent.y, x2: child.x, y2: child.y + child.h / 2 };
+    case "rib":
+      return ribGeometry(parent, child, child.y + child.h / 2);
   }
+}
+function ribGeometry(parent, child, y) {
+  const b = parent.bone;
+  if (!b || b.y2 === b.y1) return { parent, child, x1: parent.x, y1: y, x2: child.x, y2: y };
+  const bx = b.x1 + (b.x2 - b.x1) * (y - b.y1) / (b.y2 - b.y1);
+  const x2 = bx >= child.x + child.w / 2 ? child.x + child.w : child.x;
+  return { parent, child, x1: bx, y1: y, x2, y2: y };
 }
 function edgePath(e, style, radius = 8) {
   if (e.child.side === "tree") return treePath(e, radius);
   if (e.child.side === "tree-up") return treeUpPath(e, radius);
+  if (e.child.side === "rib") return `M${r(e.x1)},${r(e.y1)} L${r(e.x2)},${r(e.y2)}`;
   if (style === "straight") return `M${r(e.x1)},${r(e.y1)} L${r(e.x2)},${r(e.y2)}`;
   if (e.child.side === "down" || e.child.side === "up") return style === "curve" ? curvePathVertical(e) : elbowPathVertical(e, radius);
   return style === "curve" ? curvePath(e) : elbowPath(e, radius);
@@ -5757,242 +6283,6 @@ var History = class {
   }
 };
 
-// src/note-filter.ts
-var ITEM_RE = /^([ \t]*)(?:([-*+])|(\d{1,9})[.)])(?:[ \t]+|$)/;
-var FENCE_RE3 = /^[ \t]*(`{3,}|~{3,})/;
-function width(ws) {
-  let w = 0;
-  for (const ch of ws) w += ch === "	" ? 4 - w % 4 : 1;
-  return w;
-}
-function leading(line) {
-  return /^[ \t]*/.exec(line)[0];
-}
-function dedent2(line, n) {
-  let w = 0;
-  let i = 0;
-  while (i < line.length && w < n && (line[i] === " " || line[i] === "	")) {
-    w += line[i] === "	" ? 4 - w % 4 : 1;
-    i++;
-  }
-  return line.slice(i);
-}
-function noteCardParts(note, mode) {
-  if (mode === "all") return note.trim() ? [note] : [];
-  const lines = note.split("\n");
-  const parts = [];
-  let cur = [];
-  let lastKept = -2;
-  let fence = null;
-  let i = 0;
-  const flush = () => {
-    while (cur.length && !cur[cur.length - 1].trim()) cur.pop();
-    if (cur.length) parts.push(cur.join("\n"));
-    cur = [];
-  };
-  while (i < lines.length) {
-    const line = lines[i];
-    const f = FENCE_RE3.exec(line);
-    if (fence) {
-      if (f && f[1][0] === fence[0] && f[1].length >= fence.length) fence = null;
-      i++;
-      continue;
-    }
-    if (f) {
-      fence = f[1];
-      i++;
-      continue;
-    }
-    const m = ITEM_RE.exec(line);
-    const ordered = !!m?.[3];
-    const hit = m && (mode === "list" || (mode === "ordered" ? ordered : !ordered));
-    if (!hit || /^[ \t]*([-*_])([ \t]*\1){2,}[ \t]*$/.test(line)) {
-      i++;
-      continue;
-    }
-    const base = width(m[1]);
-    const block = [dedent2(line, base)];
-    let j = i + 1;
-    let inner = null;
-    while (j < lines.length) {
-      const l = lines[j];
-      const ff = FENCE_RE3.exec(l);
-      if (inner) {
-        if (ff && ff[1][0] === inner[0] && ff[1].length >= inner.length) inner = null;
-        block.push(dedent2(l, base));
-        j++;
-        continue;
-      }
-      if (!l.trim()) {
-        let k = j + 1;
-        while (k < lines.length && !lines[k].trim()) k++;
-        if (k < lines.length && width(leading(lines[k])) > base) {
-          for (; j < k; j++) block.push("");
-          continue;
-        }
-        break;
-      }
-      if (width(leading(l)) <= base) break;
-      if (ff) inner = ff[1];
-      block.push(dedent2(l, base));
-      j++;
-    }
-    let gap = lastKept >= 0;
-    for (let k = Math.max(0, lastKept + 1); gap && k < i; k++) if (lines[k].trim()) gap = false;
-    if (!(lastKept >= 0 && gap)) flush();
-    else if (i - lastKept > 1) cur.push("");
-    cur.push(...block);
-    lastKept = j - 1;
-    i = j;
-  }
-  flush();
-  return parts;
-}
-
-// src/format-bar.ts
-function highlightFormat(kind, color) {
-  if (kind === "bg" && color === THEME_HIGHLIGHT) return { kind: "highlight" };
-  const hl = kind === "bg" ? highlightOf(color) : null;
-  return hl ? { kind: "highlight", color: hl } : { kind, color };
-}
-function colorFormat(kind, color) {
-  if (color === null) return { kind: kind === "text" ? "nocolor" : "nobg" };
-  return highlightFormat(kind === "text" ? "color" : "bg", color);
-}
-function colorTitle(color) {
-  return color === THEME_HIGHLIGHT ? t("palette.themeHighlight") : color;
-}
-function createFormatBar(doc, o) {
-  const bar = doc.createElement("div");
-  bar.className = "mm-format-bar";
-  bar.addEventListener("pointerdown", (ev) => {
-    ev.preventDefault();
-    ev.stopPropagation();
-  });
-  bar.addEventListener("mousedown", (ev) => ev.preventDefault());
-  const btn = (cls, title, fmt2, fill) => {
-    const b = doc.createElement("button");
-    b.className = `mm-format-btn ${cls}`;
-    b.type = "button";
-    b.setAttribute("aria-label", title);
-    o.tip(b, title);
-    fill?.(b);
-    b.addEventListener("click", (ev) => {
-      ev.stopPropagation();
-      o.onFormat(fmt2);
-    });
-    bar.append(b);
-    return b;
-  };
-  const sep = () => {
-    const s = doc.createElement("span");
-    s.className = "mm-format-sep";
-    bar.append(s);
-  };
-  btn("is-bold", t("format.bold"), { kind: "bold" }, (b) => b.textContent = "B");
-  btn("is-italic", t("format.italic"), { kind: "italic" }, (b) => b.textContent = "I");
-  btn("is-strike", t("format.strike"), { kind: "strike" }, (b) => b.textContent = "S");
-  btn("is-underline", t("format.underline", { key: o.underlineKey }), { kind: "underline" }, (b) => b.textContent = "U");
-  sep();
-  const local = {};
-  const mem = o.memory ?? {
-    last: (k) => local[k] ?? null,
-    recent: () => [],
-    remember: (k, c) => local[k] = c
-  };
-  const common = (kind) => kind === "text" ? o.textColors : o.highlightColors;
-  const current2 = (kind) => mem.last(kind) ?? common(kind)[0] ?? (kind === "bg" ? THEME_HIGHLIGHT : null);
-  let open = null;
-  const closePalette = () => {
-    open?.el.remove();
-    open = null;
-  };
-  const split = (kind) => {
-    const el = createColorSplit({
-      doc,
-      cls: kind === "text" ? "is-text-color" : "is-highlighter",
-      title: kind === "text" ? t("bar.textColor") : t("bar.highlight"),
-      caretTitle: kind === "text" ? t("palette.textMore") : t("palette.bgMore"),
-      face: (f) => {
-        if (kind === "text") f.textContent = "A";
-        else f.append(o.icon("highlighter"));
-      },
-      current: () => current2(kind),
-      paintBar: (b, c) => paintColor(b, c, kind),
-      tip: o.tip,
-      onApply: () => {
-        const c = current2(kind);
-        if (!c) return;
-        closePalette();
-        o.onFormat(colorFormat(kind, c));
-      },
-      onOpen: (anchor) => {
-        if (open?.kind === kind) {
-          closePalette();
-          return;
-        }
-        closePalette();
-        const pick = (c, apply = o.onFormat) => {
-          closePalette();
-          if (c !== null) mem.remember(kind, c);
-          refreshColorSplit(anchor);
-          apply(colorFormat(kind, c));
-        };
-        const pal = createPalette(doc, {
-          common: common(kind),
-          recent: mem.recent(kind),
-          alpha: true,
-          defaultAlpha: kind === "text" ? 100 : 60,
-          paint: (b, c) => paintColor(b, c, kind),
-          label: colorTitle,
-          noneLabel: kind === "text" ? t("palette.noText") : t("palette.noHighlight"),
-          extras: kind === "bg" && !common("bg").includes(THEME_HIGHLIGHT) ? [{ value: THEME_HIGHLIGHT, label: t("palette.themeHighlight"), paint: (b) => paintColor(b, THEME_HIGHLIGHT, "bg") }] : [],
-          onPick: (c) => pick(c),
-          onCustom: () => {
-            const apply = o.onCustom?.() ?? o.onFormat;
-            return (c) => pick(c, apply);
-          },
-          tip: o.tip
-        });
-        pal.classList.add("mm-format-palette");
-        bar.append(pal);
-        pal.style.left = `${Math.max(0, anchor.offsetLeft)}px`;
-        open = { kind, el: pal };
-      }
-    });
-    bar.append(el);
-  };
-  split("text");
-  split("bg");
-  sep();
-  if (o.onLink) {
-    const onLink = o.onLink;
-    const b = doc.createElement("button");
-    b.className = "mm-format-btn is-link";
-    b.type = "button";
-    const title = t("format.link", { key: o.linkKey ?? "" });
-    b.setAttribute("aria-label", title);
-    o.tip(b, title);
-    b.append(o.icon("link"));
-    b.addEventListener("click", (ev) => {
-      ev.stopPropagation();
-      onLink();
-    });
-    bar.append(b);
-  }
-  btn("is-clear", t("format.clear"), { kind: "clear" }, (b) => b.append(o.icon("eraser")));
-  return bar;
-}
-
-// src/inline-editor.ts
-var import_state2 = require("@codemirror/state");
-var import_view3 = require("@codemirror/view");
-var import_commands = require("@codemirror/commands");
-
-// src/cm-format.ts
-var import_state = require("@codemirror/state");
-var import_view = require("@codemirror/view");
-
 // src/tokens.ts
 var URL_STOP = String.raw`\s<>\]"'\x60。，、；：！？…「」『』【】〈〉《》（）“”‘’`;
 var BARE_URL = String.raw`(https?:\/\/[^${URL_STOP}]*[^${URL_STOP},.;:!?])`;
@@ -6160,7 +6450,851 @@ function breakInsideFormats(text, pos) {
   return inner.map((s) => text.slice(s.innerTo, s.to)).join("") + "\n" + outer.map((s) => text.slice(s.from, s.innerFrom)).join("");
 }
 
+// src/inline.ts
+var ANSWER_MARKER = "\u{1F648}";
+var MARKER_GROUPS = [
+  { get name() {
+    return t("marker.priority");
+  }, emojis: ["1\uFE0F\u20E3", "2\uFE0F\u20E3", "3\uFE0F\u20E3", "4\uFE0F\u20E3", "5\uFE0F\u20E3"], exclusive: true },
+  { get name() {
+    return t("marker.progress");
+  }, emojis: ["\u23F3", "\u2705", "\u274C"], exclusive: true },
+  { get name() {
+    return t("marker.flags");
+  }, emojis: ["\u{1F6A9}", "\u{1F7E7}", "\u{1F7E8}", "\u{1F7E9}", "\u{1F7E6}", "\u{1F7EA}"], exclusive: false },
+  { get name() {
+    return t("marker.symbols");
+  }, emojis: ["\u2B50", "\u2757", "\u2753", "\u{1F4A1}", "\u26A0\uFE0F", "\u{1F525}", "\u2764\uFE0F", "\u{1F4CC}"], exclusive: false },
+  { get name() {
+    return t("marker.recite");
+  }, emojis: [ANSWER_MARKER], exclusive: false }
+];
+var BUILTIN_GROUPS = MARKER_GROUPS.length;
+var ALL_MARKERS = MARKER_GROUPS.flatMap((g) => g.emojis);
+function parseCustomMarkers(input) {
+  const Segmenter = Intl.Segmenter;
+  const parts = Segmenter ? [...new Segmenter(void 0, { granularity: "grapheme" }).segment(input)].map((x) => x.segment) : input.split(/\s+/);
+  const out = [];
+  for (const segment of parts) {
+    if (/^[\s,，、]+$/.test(segment)) continue;
+    const emoji = /\p{Extended_Pictographic}|\u20e3/u.test(segment);
+    const symbol = /^[\p{S}\p{P}]+$/u.test(segment) && ![...segment].some((ch) => ch.charCodeAt(0) < 128);
+    if ((emoji || symbol) && !out.includes(segment)) out.push(segment);
+  }
+  return out;
+}
+function setCustomMarkers(emojis, exclusive) {
+  MARKER_GROUPS.splice(BUILTIN_GROUPS);
+  const builtin = new Set(MARKER_GROUPS.flatMap((g) => g.emojis));
+  const list = emojis.filter((e) => !builtin.has(e));
+  if (list.length) MARKER_GROUPS.push({ get name() {
+    return t("marker.custom");
+  }, emojis: list, exclusive });
+  ALL_MARKERS = MARKER_GROUPS.flatMap((g) => g.emojis);
+}
+function splitMarkers(text) {
+  const markers = [];
+  let rest = text;
+  for (; ; ) {
+    const hit = ALL_MARKERS.find((m) => rest.startsWith(m));
+    if (!hit) break;
+    markers.push(hit);
+    rest = rest.slice(hit.length).replace(/^\s+/, "");
+  }
+  return { markers, rest };
+}
+function toggleMarker(text, emoji) {
+  const { markers, rest } = splitMarkers(text);
+  const group = MARKER_GROUPS.find((g) => g.emojis.includes(emoji));
+  let next;
+  if (markers.includes(emoji)) next = markers.filter((m) => m !== emoji);
+  else if (group?.exclusive) next = [...markers.filter((m) => !group.emojis.includes(m)), emoji];
+  else next = [...markers, emoji];
+  next.sort((a, b) => ALL_MARKERS.indexOf(a) - ALL_MARKERS.indexOf(b));
+  return [...next, rest].filter(Boolean).join(" ");
+}
+function isAnswer(text) {
+  return splitMarkers(text).markers.includes(ANSWER_MARKER);
+}
+var TASK_RE = /^\[( |x|X)\]\s+/;
+function toggleTask(text, mode = "check") {
+  const { markers, rest } = splitMarkers(text);
+  const m = TASK_RE.exec(rest);
+  let body;
+  if (!m) body = `[ ] ${rest}`;
+  else if (mode === "add-remove") body = rest.slice(m[0].length);
+  else body = `${m[1] === " " ? "[x]" : "[ ]"} ${rest.slice(m[0].length)}`;
+  return [...markers, body].join(" ");
+}
+function taskState(text) {
+  const m = TASK_RE.exec(splitMarkers(text).rest);
+  return m ? m[1] === " " ? "todo" : "done" : null;
+}
+var WIKILINK_ONLY = /^\s*\[\[([^\]|]+)(?:\|([^\]]+))?\]\]\s*$/;
+var MARKUP_RE = /(<\/?(?:span|mark|u)\b[^>]*>|<br\s*\/?>|\*\*|\*|==(?:🔴|🟠|🟡|🟢|🔵|🟣)?|~~)/u;
+var WIKILINK_G = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
+var MDLINK_G = /\[((?:\\.|[^\]\\])+)\]\(([^)\s]+)\)/g;
+function noteHref(href) {
+  let h = href.replace(/^<|>$/g, "");
+  try {
+    h = decodeURI(h);
+  } catch {
+  }
+  return h.replace(/\.md$/i, "");
+}
+var isUrl = (href) => /^[a-z][\w+.-]*:/i.test(href);
+function wikilinkOf(text) {
+  const m = WIKILINK_ONLY.exec(text);
+  if (m) return { target: m[1].trim(), alias: m[2]?.trim() };
+  const t3 = text.replace(MDLINK_G, (all, _label, href) => isUrl(href) ? all : `[[${noteHref(href)}]]`);
+  const parts = t3.split(MARKUP_RE).filter((p, i) => i % 2 === 0 && p.trim());
+  if (!parts.length) return null;
+  let target = null;
+  for (const p of parts) {
+    if (p.replace(WIKILINK_G, "").trim()) return null;
+    for (const one of p.matchAll(WIKILINK_G)) {
+      const tg = one[1].trim();
+      if (target !== null && tg !== target) return null;
+      target = tg;
+    }
+  }
+  return target ? { target } : null;
+}
+function mdHref(target) {
+  return `${target.replace(/ /g, "%20").replace(/\(/g, "%28").replace(/\)/g, "%29")}.md`;
+}
+var escLabel = (s) => s.replace(/[[\]]/g, (c) => `\\${c}`);
+function linkPlain(text, target) {
+  return text.split(MARKUP_RE).map((p, i) => {
+    if (i % 2 === 1 || !p.trim() || /\[\[|\]\(/.test(p)) return p;
+    const lead = /^\s*/.exec(p)[0];
+    const tail = /\s*$/.exec(p)[0];
+    const body = p.trim();
+    return `${lead}${body === target ? `[[${target}]]` : `[[${target}|${body}]]`}${tail}`;
+  }).join("");
+}
+var HTML_TAG = /<(span|mark|u)\b[^>]*>|<\/(span|mark|u)>/gi;
+function linkWholeText(text, target) {
+  let out = "";
+  let last = 0;
+  let depth = 0;
+  let segStart = -1;
+  for (const m of text.matchAll(HTML_TAG)) {
+    const i = m.index ?? 0;
+    if (m[1]) {
+      if (depth === 0) {
+        out += linkPlain(text.slice(last, i), target);
+        segStart = i;
+      }
+      depth++;
+    } else if (depth > 0) {
+      depth--;
+      if (depth === 0) {
+        const end = i + m[0].length;
+        const seg = text.slice(segStart, end);
+        out += /\[\[|\]\(/.test(seg) ? seg : `[${escLabel(seg)}](${mdHref(target)})`;
+        last = end;
+      }
+    }
+  }
+  out += depth > 0 ? text.slice(segStart) : linkPlain(text.slice(last), target);
+  return out;
+}
+function linkRange(text, from, to, target) {
+  const html = formatSpans(text).filter((s) => s.html && s.innerFrom <= from && to <= s.innerTo);
+  const outer = [...html].sort((a, b) => a.from - b.from);
+  const opens = outer.map((s) => text.slice(s.from, s.innerFrom)).join("");
+  const closes = [...outer].reverse().map((s) => text.slice(s.innerTo, s.to)).join("");
+  const part = text.slice(from, to);
+  const linked = html.length ? `[${escLabel(opens + part + closes)}](${mdHref(target)})` : linkWholeText(part, target);
+  const joined = text.slice(0, from) + closes + linked + opens + text.slice(to);
+  return joined.replace(/<(span|mark|u)\b[^>]*><\/\1>/gi, "");
+}
+function unlinkText(text, target) {
+  return text.replace(WIKILINK_G, (all, tg, alias) => tg.trim() === target ? (alias ?? tg).trim() : all).replace(MDLINK_G, (all, label, href) => !isUrl(href) && noteHref(href) === target ? label.replace(/\\([[\]])/g, "$1") : all);
+}
+var BR_RE2 = /<br\s*\/?>/i;
+var TAG_RE2 = /<(span|mark|u)\b[^>]*>|<\/(span|mark|u)>/gi;
+var MD_DELIMS = ["**", "==", "~~"];
+function carryAcrossBreaks(segments) {
+  if (segments.length < 2) return segments;
+  const open = [];
+  const md = /* @__PURE__ */ new Set();
+  return segments.map((seg) => {
+    const prefix = open.map((o) => o.tag).join("") + MD_DELIMS.filter((d) => md.has(d)).join("");
+    for (const m of seg.matchAll(TAG_RE2)) {
+      if (m[1]) open.push({ name: m[1].toLowerCase(), tag: m[0] });
+      else {
+        const name = m[2].toLowerCase();
+        for (let i = open.length - 1; i >= 0; i--) {
+          if (open[i].name === name) {
+            open.splice(i, 1);
+            break;
+          }
+        }
+      }
+    }
+    for (const d of MD_DELIMS) {
+      if ((seg.split(d).length - 1) % 2) {
+        if (md.has(d)) md.delete(d);
+        else md.add(d);
+      }
+    }
+    const suffix = MD_DELIMS.filter((d) => md.has(d)).reverse().join("") + [...open].reverse().map((o) => `</${o.name}>`).join("");
+    return prefix + seg + suffix;
+  });
+}
+function renderInline(el, text, opts = {}) {
+  el.textContent = "";
+  const segments = carryAcrossBreaks(text.split(BR_RE2));
+  segments.forEach((seg, i) => {
+    if (i > 0) el.appendChild(createEl("br"));
+    renderSegment(el, seg, opts);
+  });
+}
+function renderSegment(el, text, opts, nested = false) {
+  let rest = text;
+  if (!nested && el.childElementCount === 0) {
+    const { markers, rest: afterMarkers } = splitMarkers(rest);
+    if (markers.length) {
+      const span = createSpan();
+      span.className = "mm-markers";
+      span.textContent = markers.join(" ");
+      el.appendChild(span);
+      rest = afterMarkers;
+    }
+  }
+  const task = nested ? null : /^\[( |x|X)\]\s+/.exec(rest);
+  if (task) {
+    const box = createSpan();
+    box.className = "mm-task" + (task[1] === " " ? "" : " is-done");
+    box.title = t("inline.toggleTask");
+    box.addEventListener("pointerdown", (ev) => ev.stopPropagation());
+    box.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      opts.onTaskToggle?.(ev);
+    });
+    el.appendChild(box);
+    rest = rest.slice(task[0].length);
+  }
+  let last = 0;
+  for (const m of rest.matchAll(TOKEN_RE)) {
+    const idx = m.index ?? 0;
+    if (idx > last) el.appendChild(plainNode(rest.slice(last, idx)));
+    last = idx + m[0].length;
+    if (m[1] !== void 0) {
+      el.appendChild(image(m[1], m[2], m[1], opts));
+    } else if (m[3] !== void 0) {
+      const [alt, param] = splitAltParam(m[3]);
+      el.appendChild(image(m[4], param, alt, opts));
+    } else if (m[5] !== void 0) {
+      el.appendChild(math(m[0].startsWith("$$") && m[0].endsWith("$$") ? `\\displaystyle ${m[5]}` : m[5], opts));
+    } else if (m[6] !== void 0) {
+      el.appendChild(link(m[7] ?? m[6], m[6], true, opts));
+    } else if (m[8] !== void 0) {
+      const internal = !/^[a-z][\w+.-]*:/i.test(m[9]);
+      const href = internal ? noteHref(m[9]) : m[9];
+      const a = link("", href, internal, opts);
+      renderSegment(a, m[8], opts, true);
+      el.appendChild(a);
+    } else if (m[10] !== void 0 || m[11] !== void 0) {
+      el.appendChild(nest("strong", m[10] ?? m[11], opts));
+    } else if (m[12] !== void 0) {
+      el.appendChild(wrap("code", m[12]));
+    } else if (m[13] !== void 0) {
+      el.appendChild(nest("del", m[13], opts));
+    } else if (m[14] !== void 0) {
+      const hc = highlightColor(m[14]);
+      const e = nest("mark", hc ? m[14].slice(hc.length) : m[14], opts);
+      if (hc) e.dataset.highlight = hc.color;
+      el.appendChild(e);
+    } else if (m[25] !== void 0) {
+      el.appendChild(nest("mark", m[25], opts));
+    } else if (m[26] !== void 0) {
+      el.appendChild(nest("u", m[26], opts));
+    } else if (m[15] !== void 0 || m[16] !== void 0) {
+      el.appendChild(nest("em", m[15] ?? m[16], opts));
+    } else if (m[17] !== void 0) {
+      el.appendChild(tag(m[17], opts));
+    } else if (m[18] !== void 0) {
+      el.appendChild(link(m[18], m[18], false, opts));
+    } else if (m[19] !== void 0) {
+      el.appendChild(frame(m[19], m[0], opts));
+    } else if (m[20] !== void 0) {
+      el.appendChild(document.createTextNode(m[20]));
+    } else if (m[21] !== void 0 || m[23] !== void 0) {
+      const e = createEl(m[21] !== void 0 ? "span" : "mark");
+      if (m[21] !== void 0) e.style.color = m[21];
+      else e.style.background = m[23];
+      e.classList.add(m[21] !== void 0 ? "mm-color" : "mm-bg");
+      renderSegment(e, m[22] ?? m[24], opts, true);
+      el.appendChild(e);
+    }
+  }
+  if (last < rest.length) el.appendChild(plainNode(rest.slice(last)));
+}
+function plainNode(s) {
+  return document.createTextNode(s.includes("&nbsp;") ? s.replace(/&nbsp;/g, "\xA0") : s);
+}
+function math(tex, opts) {
+  const rendered = opts.renderMath?.(tex);
+  if (rendered) {
+    rendered.classList.add("mm-math");
+    return rendered;
+  }
+  const code = wrap("code", `$${tex}$`);
+  code.className = "mm-math-fallback";
+  return code;
+}
+var IMAGE_MIN_WIDTH = 40;
+var IMAGE_MAX_WIDTH_DEFAULT = 800;
+var imageMaxWidth = IMAGE_MAX_WIDTH_DEFAULT;
+function setImageMaxWidth(w) {
+  imageMaxWidth = Math.max(IMAGE_MIN_WIDTH, w);
+}
+function getImageMaxWidth() {
+  return imageMaxWidth;
+}
+function splitAltParam(alt) {
+  const i = alt.lastIndexOf("|");
+  return i >= 0 ? [alt.slice(0, i), alt.slice(i + 1)] : [alt, void 0];
+}
+var IMG_WIKI_RE = /!\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/;
+var IMG_MD_RE = /!\[([^\]]*)\]\(([^)\s]+)\)/;
+function setImageWidth(text, width2) {
+  const w = width2 === null ? null : Math.max(1, Math.round(width2));
+  const wiki = IMG_WIKI_RE.exec(text);
+  const md = IMG_MD_RE.exec(text);
+  const first = wiki && md ? wiki.index <= md.index ? "wiki" : "md" : wiki ? "wiki" : md ? "md" : null;
+  if (first === "wiki" && wiki) {
+    const segs = (wiki[2] ?? "").split("|");
+    if (segs.length && /^\d+$/.test(segs[segs.length - 1].trim())) segs.pop();
+    const keep = segs.join("|") || void 0;
+    const parts = [wiki[1], ...keep ? [keep] : [], ...w !== null ? [String(w)] : []];
+    return text.slice(0, wiki.index) + `![[${parts.join("|")}]]` + text.slice(wiki.index + wiki[0].length);
+  }
+  if (first === "md" && md) {
+    const [alt, param] = splitAltParam(md[1]);
+    const keepAlt = param !== void 0 && !/^\d+$/.test(param.trim()) ? md[1] : alt;
+    const newAlt = w !== null ? `${keepAlt}|${w}` : keepAlt;
+    return text.slice(0, md.index) + `![${newAlt}](${md[2]})` + text.slice(md.index + md[0].length);
+  }
+  return text;
+}
+function setFrameSize(text, size) {
+  const m = FRAME_TAG_RE.exec(text);
+  if (!m) return text;
+  const w = size ? Math.max(FRAME_MIN, Math.min(FRAME_MAX, Math.round(size.w))) : FRAME_DEFAULT_W;
+  const h = size ? Math.max(FRAME_MIN, Math.min(FRAME_MAX, Math.round(size.h))) : FRAME_DEFAULT_H;
+  let attrs2 = m[1].replace(/\s*(?:width|height)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+)/gi, "");
+  attrs2 = `width="${w}" height="${h}"${attrs2.startsWith(" ") ? "" : " "}${attrs2}`.trimEnd();
+  return text.slice(0, m.index) + `<iframe ${attrs2}>${m[2] ?? ""}` + text.slice(m.index + m[0].length);
+}
+var FRAME_TAG_RE = /<iframe\s([^>]*?)\/?>(\s*<\/iframe>)?/i;
+var FRAME_MIN = 80;
+var FRAME_MAX = 1200;
+var FRAME_DEFAULT_W = 560;
+var FRAME_DEFAULT_H = 315;
+var ATTR_RE = /([A-Za-z][\w-]*)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g;
+function parseAttrs(raw) {
+  const out = /* @__PURE__ */ new Map();
+  for (let m = ATTR_RE.exec(raw); m; m = ATTR_RE.exec(raw)) {
+    out.set(m[1].toLowerCase(), m[2] ?? m[3] ?? m[4] ?? "");
+  }
+  ATTR_RE.lastIndex = 0;
+  return out;
+}
+function frameSize(v, fallback) {
+  const n = Number.parseInt(v ?? "", 10);
+  if (!Number.isFinite(n)) return fallback;
+  return Math.max(FRAME_MIN, Math.min(FRAME_MAX, n));
+}
+function noAutoplay(src) {
+  if (/[?&]autoplay=/i.test(src)) return src;
+  return src + (src.includes("?") ? "&" : "?") + "autoplay=0";
+}
+function frame(attrsRaw, original, opts) {
+  const attrs2 = parseAttrs(attrsRaw);
+  const src = attrs2.get("src") ?? "";
+  if (!/^https?:\/\//i.test(src)) return wrap("span", original);
+  const w = frameSize(attrs2.get("width"), FRAME_DEFAULT_W);
+  const h = frameSize(attrs2.get("height"), FRAME_DEFAULT_H);
+  const finalSrc = noAutoplay(src);
+  const kept = opts.reuseFrame?.(finalSrc);
+  const existing = kept?.tagName === "IFRAME" ? kept : null;
+  const f = existing ?? createEl("iframe");
+  f.className = "mm-frame";
+  f.setCssStyles({ width: "", height: "" });
+  f.width = String(w);
+  f.height = String(h);
+  const title = attrs2.get("title");
+  if (title) f.title = title;
+  if (attrs2.has("allowfullscreen")) f.allowFullscreen = true;
+  if (attrs2.has("allow")) f.allow = attrs2.get("allow");
+  if (!existing) f.src = finalSrc;
+  return shielded(f);
+}
+function shielded(player) {
+  const box = createSpan();
+  box.className = "mm-frame-box";
+  const shield = createSpan();
+  shield.className = "mm-frame-shield";
+  const activate = createEl("button");
+  activate.type = "button";
+  activate.className = "mm-frame-activate";
+  activate.textContent = t("inline.activate");
+  shield.append(activate);
+  box.append(player, shield);
+  return box;
+}
+var VIDEO_EXTS = /* @__PURE__ */ new Set(["mp4", "webm", "ogv", "mov", "mkv", "m4v"]);
+var AUDIO_EXTS = /* @__PURE__ */ new Set(["mp3", "wav", "m4a", "ogg", "3gp", "flac", "aac", "opus"]);
+function mediaKind(link2) {
+  const ext = /\.([a-z0-9]+)$/i.exec(link2.split(/[#?]/)[0])?.[1]?.toLowerCase() ?? "";
+  return VIDEO_EXTS.has(ext) ? "video" : AUDIO_EXTS.has(ext) ? "audio" : null;
+}
+function media(kind, link2, param, alt, opts) {
+  const src = opts.resolveImage ? opts.resolveImage(link2) : /^https?:\/\//.test(link2) ? link2 : null;
+  if (!src) return wrap("span", alt || link2);
+  const reused = opts.reuseFrame?.(src);
+  const existing = reused && reused.tagName.toLowerCase() === kind ? reused : null;
+  const m = existing ?? createEl(kind);
+  m.className = `mm-frame mm-media is-${kind}`;
+  m.setCssStyles({ width: "" });
+  const width2 = kind === "video" && param && /^\d+$/.test(param.trim()) ? Number(param) : null;
+  if (width2) {
+    m.style.width = `${Math.max(IMAGE_MIN_WIDTH, Math.min(imageMaxWidth, width2))}px`;
+    m.classList.add("has-size");
+  }
+  if (!existing) {
+    m.controls = true;
+    m.preload = "metadata";
+    if (kind === "video") m.playsInline = true;
+    m.addEventListener("loadedmetadata", () => opts.onImageLoad?.());
+    m.addEventListener("error", () => {
+      m.closest(".mm-frame-box")?.replaceWith(wrap("span", alt || link2));
+      opts.onImageLoad?.();
+    });
+    m.src = src;
+  }
+  return shielded(m);
+}
+function image(link2, param, alt, opts) {
+  if (isPdfCrop(link2)) return pdfCrop(link2, param, opts);
+  const kind = mediaKind(link2);
+  if (kind) return media(kind, link2, param, alt, opts);
+  const src = opts.resolveImage ? opts.resolveImage(link2) : /^https?:\/\//.test(link2) ? link2 : null;
+  if (!src) return wrap("span", alt || link2);
+  const img = createEl("img");
+  img.className = "mm-img";
+  img.src = src;
+  img.alt = alt;
+  img.draggable = false;
+  const width2 = param && /^\d+$/.test(param.trim()) ? Number(param) : null;
+  if (width2) {
+    img.style.width = `${Math.max(IMAGE_MIN_WIDTH, Math.min(imageMaxWidth, width2))}px`;
+    img.classList.add("has-size");
+  }
+  img.addEventListener("load", () => opts.onImageLoad?.());
+  img.addEventListener("error", () => {
+    img.replaceWith(wrap("span", alt || link2));
+    opts.onImageLoad?.();
+  });
+  return img;
+}
+function isPdfCrop(link2) {
+  return /\.pdf#/i.test(link2) && /[#&]rect=/i.test(link2);
+}
+function pdfCrop(target, param, opts) {
+  const parts = (param ?? "").split("|");
+  const last = parts[parts.length - 1].trim();
+  const width2 = /^\d+$/.test(last) ? Number(last) : null;
+  const label = parts.filter((p, i) => p.trim() && !(i === parts.length - 1 && width2 !== null)).join("|");
+  const box = createSpan();
+  box.className = "mm-pdf-crop";
+  const ok = opts.renderPdfCrop?.(target, box, (img) => {
+    img.classList.add("mm-img");
+    img.draggable = false;
+    if (width2) {
+      img.style.width = `${Math.max(IMAGE_MIN_WIDTH, Math.min(imageMaxWidth, width2))}px`;
+      img.classList.add("has-size");
+    }
+    opts.onImageLoad?.();
+  });
+  if (ok) {
+    const jump = createEl("button", { cls: "mm-pdf-jump" });
+    jump.type = "button";
+    jump.textContent = "\u2197";
+    jump.setAttribute("aria-label", t("canvas.jumpToPdf"));
+    jump.addEventListener("pointerdown", (ev) => ev.stopPropagation());
+    jump.addEventListener("dblclick", (ev) => ev.stopPropagation());
+    jump.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      opts.onLink?.(target, true, ev);
+    });
+    box.append(jump);
+    return box;
+  }
+  const file = target.split("#")[0].split("/").pop() ?? target;
+  const page = /[#&]page=(\d+)/.exec(target)?.[1];
+  return link(label || (page ? `${file}, p.${page}` : file), target.replace(/&rect=[^&]*/i, ""), true, opts);
+}
+function tag(name, opts) {
+  const a = createEl("a");
+  a.className = "tag mm-tag";
+  a.textContent = `#${name}`;
+  a.href = "#";
+  a.addEventListener("pointerdown", (ev) => ev.stopPropagation());
+  a.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    opts.onTag?.(`#${name}`, ev);
+  });
+  return a;
+}
+function nest(tag2, text, opts) {
+  const e = createEl(tag2);
+  renderSegment(e, text, opts, true);
+  return e;
+}
+function wrap(tag2, text) {
+  const e = createEl(tag2);
+  e.textContent = text;
+  return e;
+}
+function link(label, href, internal, opts) {
+  const a = createEl("a");
+  a.textContent = label;
+  a.className = internal ? "internal-link mm-link" : "external-link mm-link";
+  a.setAttribute("data-href", href);
+  a.href = internal ? "#" : href;
+  if (!internal) {
+    a.target = "_blank";
+    a.rel = "noopener";
+  }
+  a.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    opts.onLink?.(href, internal, ev);
+  });
+  if (internal && opts.onHover) a.addEventListener("mouseover", (ev) => opts.onHover?.(href, ev, a));
+  return a;
+}
+function toEditableText(text, keepEdgeSpaces = false) {
+  const lines = carryAcrossBreaks(text.split(/<br\s*\/?>/i));
+  return (keepEdgeSpaces ? lines.map(edgeNbspToSpaces) : lines).join("\n");
+}
+function edgeNbspToSpaces(line) {
+  return line.replace(/^(?:&nbsp;)+/, (m) => " ".repeat(m.length / 6)).replace(/(?:&nbsp;)+$/, (m) => " ".repeat(m.length / 6));
+}
+function edgeSpacesToNbsp(line) {
+  const l = line.replace(/^[^\S ]+|[^\S ]+$/g, "");
+  if (!l.trim()) return "";
+  return l.replace(/^ +/, (m) => "&nbsp;".repeat(m.length)).replace(/ +$/, (m) => "&nbsp;".repeat(m.length));
+}
+function fromEditableText(text, keepBlankLines2 = false, keepEdgeSpaces = false) {
+  const lines = text.replace(/\r/g, "").split("\n").map((l) => keepEdgeSpaces ? edgeSpacesToNbsp(l) : l.trim());
+  if (!keepBlankLines2) return lines.filter(Boolean).join("<br>");
+  while (lines.length && !lines[0]) lines.shift();
+  while (lines.length && !lines[lines.length - 1]) lines.pop();
+  return lines.join("<br>");
+}
+function plainText(text) {
+  return text.replace(/<br\s*\/?>/gi, " ").replace(/&nbsp;/gi, " ").replace(/<\/?(?:span|mark)\b[^>]*>/gi, "").replace(/!\[\[([^\]|]+)(?:\|[^\]]+)?\]\]/g, "$1").replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1").replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (_, a, b) => b ?? a).replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(
+    /\*\*(.+?)\*\*|__(.+?)__|`([^`]+)`|~~(.+?)~~|==(.+?)==/g,
+    (_, a, b, c, d, e) => a ?? b ?? c ?? d ?? (e !== void 0 ? e.slice(highlightColor(e)?.length ?? 0) : "")
+  ).replace(/\\([!-/:-@[-`{-~])/g, "$1");
+}
+
+// src/task-progress.ts
+function taskProgress(node) {
+  if (taskState(node.text)) return null;
+  let done = 0;
+  let total = 0;
+  const walk2 = (n) => {
+    const s = taskState(n.text);
+    if (!s) return;
+    total += 1;
+    if (s === "done") done += 1;
+    for (const c of n.children) walk2(c);
+  };
+  for (const c of node.children) walk2(c);
+  return total ? { done, total } : null;
+}
+function progressLabel(p, mode) {
+  const pct = `${Math.floor(p.done / p.total * 100)}%`;
+  const count = `${p.done}/${p.total}`;
+  if (mode === "percent") return pct;
+  if (mode === "count") return count;
+  return `${count} \xB7 ${pct}`;
+}
+
+// src/note-filter.ts
+var ITEM_RE = /^([ \t]*)(?:([-*+])|(\d{1,9})[.)])(?:[ \t]+|$)/;
+var FENCE_RE3 = /^[ \t]*(`{3,}|~{3,})/;
+function width(ws) {
+  let w = 0;
+  for (const ch of ws) w += ch === "	" ? 4 - w % 4 : 1;
+  return w;
+}
+function leading(line) {
+  return /^[ \t]*/.exec(line)[0];
+}
+function dedent2(line, n) {
+  let w = 0;
+  let i = 0;
+  while (i < line.length && w < n && (line[i] === " " || line[i] === "	")) {
+    w += line[i] === "	" ? 4 - w % 4 : 1;
+    i++;
+  }
+  return line.slice(i);
+}
+function noteCardParts(note, mode) {
+  if (mode === "all") return note.trim() ? [note] : [];
+  const lines = note.split("\n");
+  const parts = [];
+  let cur = [];
+  let lastKept = -2;
+  let fence = null;
+  let i = 0;
+  const flush = () => {
+    while (cur.length && !cur[cur.length - 1].trim()) cur.pop();
+    if (cur.length) parts.push(cur.join("\n"));
+    cur = [];
+  };
+  while (i < lines.length) {
+    const line = lines[i];
+    const f = FENCE_RE3.exec(line);
+    if (fence) {
+      if (f && f[1][0] === fence[0] && f[1].length >= fence.length) fence = null;
+      i++;
+      continue;
+    }
+    if (f) {
+      fence = f[1];
+      i++;
+      continue;
+    }
+    const m = ITEM_RE.exec(line);
+    const ordered = !!m?.[3];
+    const hit = m && (mode === "list" || (mode === "ordered" ? ordered : !ordered));
+    if (!hit || /^[ \t]*([-*_])([ \t]*\1){2,}[ \t]*$/.test(line)) {
+      i++;
+      continue;
+    }
+    const base = width(m[1]);
+    const block = [dedent2(line, base)];
+    let j = i + 1;
+    let inner = null;
+    while (j < lines.length) {
+      const l = lines[j];
+      const ff = FENCE_RE3.exec(l);
+      if (inner) {
+        if (ff && ff[1][0] === inner[0] && ff[1].length >= inner.length) inner = null;
+        block.push(dedent2(l, base));
+        j++;
+        continue;
+      }
+      if (!l.trim()) {
+        let k = j + 1;
+        while (k < lines.length && !lines[k].trim()) k++;
+        if (k < lines.length && width(leading(lines[k])) > base) {
+          for (; j < k; j++) block.push("");
+          continue;
+        }
+        break;
+      }
+      if (width(leading(l)) <= base) break;
+      if (ff) inner = ff[1];
+      block.push(dedent2(l, base));
+      j++;
+    }
+    let gap = lastKept >= 0;
+    for (let k = Math.max(0, lastKept + 1); gap && k < i; k++) if (lines[k].trim()) gap = false;
+    if (!(lastKept >= 0 && gap)) flush();
+    else if (i - lastKept > 1) cur.push("");
+    cur.push(...block);
+    lastKept = j - 1;
+    i = j;
+  }
+  flush();
+  return parts;
+}
+
+// src/format-bar.ts
+function colorTitle(color) {
+  return color === THEME_HIGHLIGHT ? t("palette.themeHighlight") : color;
+}
+function createFormatBar(doc, o) {
+  const bar = doc.createElement("div");
+  bar.className = "mm-format-bar";
+  bar.addEventListener("pointerdown", (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+  });
+  bar.addEventListener("mousedown", (ev) => ev.preventDefault());
+  const btn = (cls, title, fmt2, fill) => {
+    const b = doc.createElement("button");
+    b.className = `mm-format-btn ${cls}`;
+    b.type = "button";
+    b.setAttribute("aria-label", title);
+    o.tip(b, title);
+    fill?.(b);
+    b.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      o.onFormat(fmt2);
+    });
+    bar.append(b);
+    return b;
+  };
+  const sep = () => {
+    const s = doc.createElement("span");
+    s.className = "mm-format-sep";
+    bar.append(s);
+  };
+  btn("is-bold", t("format.bold"), { kind: "bold" }, (b) => b.textContent = "B");
+  btn("is-italic", t("format.italic"), { kind: "italic" }, (b) => b.textContent = "I");
+  btn("is-strike", t("format.strike"), { kind: "strike" }, (b) => b.textContent = "S");
+  btn("is-underline", t("format.underline", { key: o.underlineKey }), { kind: "underline" }, (b) => b.textContent = "U");
+  sep();
+  const local = {};
+  const mem = o.memory ?? {
+    last: (k) => local[k] ?? null,
+    recent: () => [],
+    remember: (k, c) => local[k] = c
+  };
+  const common = (kind) => kind === "text" ? o.textColors : o.highlightColors;
+  const current2 = (kind) => mem.last(kind) ?? common(kind)[0] ?? (kind === "bg" ? THEME_HIGHLIGHT : null);
+  let open = null;
+  const closePalette = () => {
+    open?.el.remove();
+    open = null;
+  };
+  const split = (kind) => {
+    const el = createColorSplit({
+      doc,
+      cls: kind === "text" ? "is-text-color" : "is-highlighter",
+      title: kind === "text" ? t("bar.textColor") : t("bar.highlight"),
+      caretTitle: kind === "text" ? t("palette.textMore") : t("palette.bgMore"),
+      face: (f) => {
+        if (kind === "text") f.textContent = "A";
+        else f.append(o.icon("highlighter"));
+      },
+      current: () => current2(kind),
+      paintBar: (b, c) => paintColor(b, c, kind),
+      tip: o.tip,
+      onApply: () => {
+        const c = current2(kind);
+        if (!c) return;
+        closePalette();
+        o.onFormat(colorFormat(kind, c));
+      },
+      onOpen: (anchor) => {
+        if (open?.kind === kind) {
+          closePalette();
+          return;
+        }
+        closePalette();
+        const pick = (c, apply = o.onFormat) => {
+          closePalette();
+          if (c !== null) mem.remember(kind, c);
+          refreshColorSplit(anchor);
+          apply(colorFormat(kind, c));
+        };
+        const pal = createPalette(doc, {
+          text: paletteText(),
+          common: common(kind),
+          recent: mem.recent(kind),
+          alpha: true,
+          defaultAlpha: kind === "text" ? 100 : 60,
+          paint: (b, c) => paintColor(b, c, kind),
+          label: colorTitle,
+          noneLabel: kind === "text" ? t("palette.noText") : t("palette.noHighlight"),
+          extras: kind === "bg" && !common("bg").includes(THEME_HIGHLIGHT) ? [{ value: THEME_HIGHLIGHT, label: t("palette.themeHighlight"), paint: (b) => paintColor(b, THEME_HIGHLIGHT, "bg") }] : [],
+          onPick: (c) => pick(c),
+          onCustom: () => {
+            const apply = o.onCustom?.() ?? o.onFormat;
+            return (c) => pick(c, apply);
+          },
+          tip: o.tip
+        });
+        pal.classList.add("mm-format-palette");
+        bar.append(pal);
+        pal.style.left = `${Math.max(0, anchor.offsetLeft)}px`;
+        open = { kind, el: pal };
+      }
+    });
+    bar.append(el);
+  };
+  split("text");
+  split("bg");
+  sep();
+  if (o.onLink) {
+    const onLink = o.onLink;
+    const b = doc.createElement("button");
+    b.className = "mm-format-btn is-link";
+    b.type = "button";
+    const title = t("format.link", { key: o.linkKey ?? "" });
+    b.setAttribute("aria-label", title);
+    o.tip(b, title);
+    b.append(o.icon("link"));
+    b.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      onLink();
+    });
+    bar.append(b);
+  }
+  btn("is-clear", t("format.clear"), { kind: "clear" }, (b) => b.append(o.icon("eraser")));
+  if (o.split?.items.length) {
+    const split2 = o.split;
+    sep();
+    const b = doc.createElement("button");
+    b.className = "mm-format-btn is-split";
+    b.type = "button";
+    b.setAttribute("aria-label", split2.title);
+    o.tip(b, split2.title);
+    b.append(o.icon("split"));
+    b.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      if (open?.kind === "split") return closePalette();
+      closePalette();
+      const menu = doc.createElement("div");
+      menu.className = "mm-palette mm-format-palette mm-split-menu";
+      menu.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+      menu.addEventListener("mousedown", (e) => e.preventDefault());
+      for (const it of split2.items) {
+        const item = doc.createElement("button");
+        item.type = "button";
+        item.className = "mm-split-item";
+        item.textContent = it.label;
+        item.addEventListener("click", (e) => {
+          e.stopPropagation();
+          closePalette();
+          it.run();
+        });
+        menu.append(item);
+      }
+      bar.append(menu);
+      menu.style.left = `${Math.max(0, b.offsetLeft)}px`;
+      open = { kind: "split", el: menu };
+    });
+    bar.append(b);
+  }
+  return bar;
+}
+
+// src/inline-editor.ts
+var import_state2 = require("@codemirror/state");
+var import_view3 = require("@codemirror/view");
+var import_commands = require("@codemirror/commands");
+
 // src/cm-format.ts
+var import_state = require("@codemirror/state");
+var import_view = require("@codemirror/view");
 var hideAll = import_state.Facet.define({ combine: (v) => v.some(Boolean) });
 function hiddenSpans(state) {
   const all = state.facet(hideAll);
@@ -6528,509 +7662,6 @@ var InlineEditor = class {
     this.host.classList.remove("mm-has-editor");
   }
 };
-
-// src/inline.ts
-var ANSWER_MARKER = "\u{1F648}";
-var MARKER_GROUPS = [
-  { get name() {
-    return t("marker.priority");
-  }, emojis: ["1\uFE0F\u20E3", "2\uFE0F\u20E3", "3\uFE0F\u20E3", "4\uFE0F\u20E3", "5\uFE0F\u20E3"], exclusive: true },
-  { get name() {
-    return t("marker.progress");
-  }, emojis: ["\u23F3", "\u2705", "\u274C"], exclusive: true },
-  { get name() {
-    return t("marker.flags");
-  }, emojis: ["\u{1F6A9}", "\u{1F7E7}", "\u{1F7E8}", "\u{1F7E9}", "\u{1F7E6}", "\u{1F7EA}"], exclusive: false },
-  { get name() {
-    return t("marker.symbols");
-  }, emojis: ["\u2B50", "\u2757", "\u2753", "\u{1F4A1}", "\u26A0\uFE0F", "\u{1F525}", "\u2764\uFE0F", "\u{1F4CC}"], exclusive: false },
-  { get name() {
-    return t("marker.recite");
-  }, emojis: [ANSWER_MARKER], exclusive: false }
-];
-var BUILTIN_GROUPS = MARKER_GROUPS.length;
-var ALL_MARKERS = MARKER_GROUPS.flatMap((g) => g.emojis);
-function parseCustomMarkers(input) {
-  const Segmenter = Intl.Segmenter;
-  const parts = Segmenter ? [...new Segmenter(void 0, { granularity: "grapheme" }).segment(input)].map((x) => x.segment) : input.split(/\s+/);
-  const out = [];
-  for (const segment of parts) {
-    if (/^[\s,，、]+$/.test(segment)) continue;
-    const emoji = /\p{Extended_Pictographic}|\u20e3/u.test(segment);
-    const symbol = /^[\p{S}\p{P}]+$/u.test(segment) && ![...segment].some((ch) => ch.charCodeAt(0) < 128);
-    if ((emoji || symbol) && !out.includes(segment)) out.push(segment);
-  }
-  return out;
-}
-function setCustomMarkers(emojis, exclusive) {
-  MARKER_GROUPS.splice(BUILTIN_GROUPS);
-  const builtin = new Set(MARKER_GROUPS.flatMap((g) => g.emojis));
-  const list = emojis.filter((e) => !builtin.has(e));
-  if (list.length) MARKER_GROUPS.push({ get name() {
-    return t("marker.custom");
-  }, emojis: list, exclusive });
-  ALL_MARKERS = MARKER_GROUPS.flatMap((g) => g.emojis);
-}
-function splitMarkers(text) {
-  const markers = [];
-  let rest = text;
-  for (; ; ) {
-    const hit = ALL_MARKERS.find((m) => rest.startsWith(m));
-    if (!hit) break;
-    markers.push(hit);
-    rest = rest.slice(hit.length).replace(/^\s+/, "");
-  }
-  return { markers, rest };
-}
-function toggleMarker(text, emoji) {
-  const { markers, rest } = splitMarkers(text);
-  const group = MARKER_GROUPS.find((g) => g.emojis.includes(emoji));
-  let next;
-  if (markers.includes(emoji)) next = markers.filter((m) => m !== emoji);
-  else if (group?.exclusive) next = [...markers.filter((m) => !group.emojis.includes(m)), emoji];
-  else next = [...markers, emoji];
-  next.sort((a, b) => ALL_MARKERS.indexOf(a) - ALL_MARKERS.indexOf(b));
-  return [...next, rest].filter(Boolean).join(" ");
-}
-function isAnswer(text) {
-  return splitMarkers(text).markers.includes(ANSWER_MARKER);
-}
-var TASK_RE = /^\[( |x|X)\]\s+/;
-function toggleTask(text, mode = "check") {
-  const { markers, rest } = splitMarkers(text);
-  const m = TASK_RE.exec(rest);
-  let body;
-  if (!m) body = `[ ] ${rest}`;
-  else if (mode === "add-remove") body = rest.slice(m[0].length);
-  else body = `${m[1] === " " ? "[x]" : "[ ]"} ${rest.slice(m[0].length)}`;
-  return [...markers, body].join(" ");
-}
-function taskState(text) {
-  const m = TASK_RE.exec(splitMarkers(text).rest);
-  return m ? m[1] === " " ? "todo" : "done" : null;
-}
-var WIKILINK_ONLY = /^\s*\[\[([^\]|]+)(?:\|([^\]]+))?\]\]\s*$/;
-var MARKUP_RE = /(<\/?(?:span|mark|u)\b[^>]*>|<br\s*\/?>|\*\*|\*|==(?:🔴|🟠|🟡|🟢|🔵|🟣)?|~~)/u;
-var WIKILINK_G = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
-var MDLINK_G = /\[((?:\\.|[^\]\\])+)\]\(([^)\s]+)\)/g;
-function noteHref(href) {
-  let h = href.replace(/^<|>$/g, "");
-  try {
-    h = decodeURI(h);
-  } catch {
-  }
-  return h.replace(/\.md$/i, "");
-}
-var isUrl = (href) => /^[a-z][\w+.-]*:/i.test(href);
-function wikilinkOf(text) {
-  const m = WIKILINK_ONLY.exec(text);
-  if (m) return { target: m[1].trim(), alias: m[2]?.trim() };
-  const t3 = text.replace(MDLINK_G, (all, _label, href) => isUrl(href) ? all : `[[${noteHref(href)}]]`);
-  const parts = t3.split(MARKUP_RE).filter((p, i) => i % 2 === 0 && p.trim());
-  if (!parts.length) return null;
-  let target = null;
-  for (const p of parts) {
-    if (p.replace(WIKILINK_G, "").trim()) return null;
-    for (const one of p.matchAll(WIKILINK_G)) {
-      const tg = one[1].trim();
-      if (target !== null && tg !== target) return null;
-      target = tg;
-    }
-  }
-  return target ? { target } : null;
-}
-function mdHref(target) {
-  return `${target.replace(/ /g, "%20").replace(/\(/g, "%28").replace(/\)/g, "%29")}.md`;
-}
-var escLabel = (s) => s.replace(/[[\]]/g, (c) => `\\${c}`);
-function linkPlain(text, target) {
-  return text.split(MARKUP_RE).map((p, i) => {
-    if (i % 2 === 1 || !p.trim() || /\[\[|\]\(/.test(p)) return p;
-    const lead = /^\s*/.exec(p)[0];
-    const tail = /\s*$/.exec(p)[0];
-    const body = p.trim();
-    return `${lead}${body === target ? `[[${target}]]` : `[[${target}|${body}]]`}${tail}`;
-  }).join("");
-}
-var HTML_TAG = /<(span|mark|u)\b[^>]*>|<\/(span|mark|u)>/gi;
-function linkWholeText(text, target) {
-  let out = "";
-  let last = 0;
-  let depth = 0;
-  let segStart = -1;
-  for (const m of text.matchAll(HTML_TAG)) {
-    const i = m.index ?? 0;
-    if (m[1]) {
-      if (depth === 0) {
-        out += linkPlain(text.slice(last, i), target);
-        segStart = i;
-      }
-      depth++;
-    } else if (depth > 0) {
-      depth--;
-      if (depth === 0) {
-        const end = i + m[0].length;
-        const seg = text.slice(segStart, end);
-        out += /\[\[|\]\(/.test(seg) ? seg : `[${escLabel(seg)}](${mdHref(target)})`;
-        last = end;
-      }
-    }
-  }
-  out += depth > 0 ? text.slice(segStart) : linkPlain(text.slice(last), target);
-  return out;
-}
-function linkRange(text, from, to, target) {
-  const html = formatSpans(text).filter((s) => s.html && s.innerFrom <= from && to <= s.innerTo);
-  const outer = [...html].sort((a, b) => a.from - b.from);
-  const opens = outer.map((s) => text.slice(s.from, s.innerFrom)).join("");
-  const closes = [...outer].reverse().map((s) => text.slice(s.innerTo, s.to)).join("");
-  const part = text.slice(from, to);
-  const linked = html.length ? `[${escLabel(opens + part + closes)}](${mdHref(target)})` : linkWholeText(part, target);
-  const joined = text.slice(0, from) + closes + linked + opens + text.slice(to);
-  return joined.replace(/<(span|mark|u)\b[^>]*><\/\1>/gi, "");
-}
-function unlinkText(text, target) {
-  return text.replace(WIKILINK_G, (all, tg, alias) => tg.trim() === target ? (alias ?? tg).trim() : all).replace(MDLINK_G, (all, label, href) => !isUrl(href) && noteHref(href) === target ? label.replace(/\\([[\]])/g, "$1") : all);
-}
-var BR_RE2 = /<br\s*\/?>/i;
-var TAG_RE2 = /<(span|mark|u)\b[^>]*>|<\/(span|mark|u)>/gi;
-var MD_DELIMS = ["**", "==", "~~"];
-function carryAcrossBreaks(segments) {
-  if (segments.length < 2) return segments;
-  const open = [];
-  const md = /* @__PURE__ */ new Set();
-  return segments.map((seg) => {
-    const prefix = open.map((o) => o.tag).join("") + MD_DELIMS.filter((d) => md.has(d)).join("");
-    for (const m of seg.matchAll(TAG_RE2)) {
-      if (m[1]) open.push({ name: m[1].toLowerCase(), tag: m[0] });
-      else {
-        const name = m[2].toLowerCase();
-        for (let i = open.length - 1; i >= 0; i--) {
-          if (open[i].name === name) {
-            open.splice(i, 1);
-            break;
-          }
-        }
-      }
-    }
-    for (const d of MD_DELIMS) {
-      if ((seg.split(d).length - 1) % 2) {
-        if (md.has(d)) md.delete(d);
-        else md.add(d);
-      }
-    }
-    const suffix = MD_DELIMS.filter((d) => md.has(d)).reverse().join("") + [...open].reverse().map((o) => `</${o.name}>`).join("");
-    return prefix + seg + suffix;
-  });
-}
-function renderInline(el, text, opts = {}) {
-  el.textContent = "";
-  const segments = carryAcrossBreaks(text.split(BR_RE2));
-  segments.forEach((seg, i) => {
-    if (i > 0) el.appendChild(createEl("br"));
-    renderSegment(el, seg, opts);
-  });
-}
-function renderSegment(el, text, opts, nested = false) {
-  let rest = text;
-  if (!nested && el.childElementCount === 0) {
-    const { markers, rest: afterMarkers } = splitMarkers(rest);
-    if (markers.length) {
-      const span = createSpan();
-      span.className = "mm-markers";
-      span.textContent = markers.join(" ");
-      el.appendChild(span);
-      rest = afterMarkers;
-    }
-  }
-  const task = nested ? null : /^\[( |x|X)\]\s+/.exec(rest);
-  if (task) {
-    const box = createSpan();
-    box.className = "mm-task" + (task[1] === " " ? "" : " is-done");
-    box.title = t("inline.toggleTask");
-    box.addEventListener("pointerdown", (ev) => ev.stopPropagation());
-    box.addEventListener("click", (ev) => {
-      ev.stopPropagation();
-      opts.onTaskToggle?.(ev);
-    });
-    el.appendChild(box);
-    rest = rest.slice(task[0].length);
-  }
-  let last = 0;
-  for (const m of rest.matchAll(TOKEN_RE)) {
-    const idx = m.index ?? 0;
-    if (idx > last) el.appendChild(document.createTextNode(rest.slice(last, idx)));
-    last = idx + m[0].length;
-    if (m[1] !== void 0) {
-      el.appendChild(image(m[1], m[2], m[1], opts));
-    } else if (m[3] !== void 0) {
-      const [alt, param] = splitAltParam(m[3]);
-      el.appendChild(image(m[4], param, alt, opts));
-    } else if (m[5] !== void 0) {
-      el.appendChild(math(m[0].startsWith("$$") && m[0].endsWith("$$") ? `\\displaystyle ${m[5]}` : m[5], opts));
-    } else if (m[6] !== void 0) {
-      el.appendChild(link(m[7] ?? m[6], m[6], true, opts));
-    } else if (m[8] !== void 0) {
-      const internal = !/^[a-z][\w+.-]*:/i.test(m[9]);
-      const href = internal ? noteHref(m[9]) : m[9];
-      const a = link("", href, internal, opts);
-      renderSegment(a, m[8], opts, true);
-      el.appendChild(a);
-    } else if (m[10] !== void 0 || m[11] !== void 0) {
-      el.appendChild(nest("strong", m[10] ?? m[11], opts));
-    } else if (m[12] !== void 0) {
-      el.appendChild(wrap("code", m[12]));
-    } else if (m[13] !== void 0) {
-      el.appendChild(nest("del", m[13], opts));
-    } else if (m[14] !== void 0) {
-      const hc = highlightColor(m[14]);
-      const e = nest("mark", hc ? m[14].slice(hc.length) : m[14], opts);
-      if (hc) e.dataset.highlight = hc.color;
-      el.appendChild(e);
-    } else if (m[25] !== void 0) {
-      el.appendChild(nest("mark", m[25], opts));
-    } else if (m[26] !== void 0) {
-      el.appendChild(nest("u", m[26], opts));
-    } else if (m[15] !== void 0 || m[16] !== void 0) {
-      el.appendChild(nest("em", m[15] ?? m[16], opts));
-    } else if (m[17] !== void 0) {
-      el.appendChild(tag(m[17], opts));
-    } else if (m[18] !== void 0) {
-      el.appendChild(link(m[18], m[18], false, opts));
-    } else if (m[19] !== void 0) {
-      el.appendChild(frame(m[19], m[0], opts));
-    } else if (m[20] !== void 0) {
-      el.appendChild(document.createTextNode(m[20]));
-    } else if (m[21] !== void 0 || m[23] !== void 0) {
-      const e = createEl(m[21] !== void 0 ? "span" : "mark");
-      if (m[21] !== void 0) e.style.color = m[21];
-      else e.style.background = m[23];
-      e.classList.add(m[21] !== void 0 ? "mm-color" : "mm-bg");
-      renderSegment(e, m[22] ?? m[24], opts, true);
-      el.appendChild(e);
-    }
-  }
-  if (last < rest.length) el.appendChild(document.createTextNode(rest.slice(last)));
-}
-function math(tex, opts) {
-  const rendered = opts.renderMath?.(tex);
-  if (rendered) {
-    rendered.classList.add("mm-math");
-    return rendered;
-  }
-  const code = wrap("code", `$${tex}$`);
-  code.className = "mm-math-fallback";
-  return code;
-}
-var IMAGE_MIN_WIDTH = 40;
-var IMAGE_MAX_WIDTH_DEFAULT = 800;
-var imageMaxWidth = IMAGE_MAX_WIDTH_DEFAULT;
-function setImageMaxWidth(w) {
-  imageMaxWidth = Math.max(IMAGE_MIN_WIDTH, w);
-}
-function getImageMaxWidth() {
-  return imageMaxWidth;
-}
-function splitAltParam(alt) {
-  const i = alt.lastIndexOf("|");
-  return i >= 0 ? [alt.slice(0, i), alt.slice(i + 1)] : [alt, void 0];
-}
-var IMG_WIKI_RE = /!\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/;
-var IMG_MD_RE = /!\[([^\]]*)\]\(([^)\s]+)\)/;
-function setImageWidth(text, width2) {
-  const w = width2 === null ? null : Math.max(1, Math.round(width2));
-  const wiki = IMG_WIKI_RE.exec(text);
-  const md = IMG_MD_RE.exec(text);
-  const first = wiki && md ? wiki.index <= md.index ? "wiki" : "md" : wiki ? "wiki" : md ? "md" : null;
-  if (first === "wiki" && wiki) {
-    const segs = (wiki[2] ?? "").split("|");
-    if (segs.length && /^\d+$/.test(segs[segs.length - 1].trim())) segs.pop();
-    const keep = segs.join("|") || void 0;
-    const parts = [wiki[1], ...keep ? [keep] : [], ...w !== null ? [String(w)] : []];
-    return text.slice(0, wiki.index) + `![[${parts.join("|")}]]` + text.slice(wiki.index + wiki[0].length);
-  }
-  if (first === "md" && md) {
-    const [alt, param] = splitAltParam(md[1]);
-    const keepAlt = param !== void 0 && !/^\d+$/.test(param.trim()) ? md[1] : alt;
-    const newAlt = w !== null ? `${keepAlt}|${w}` : keepAlt;
-    return text.slice(0, md.index) + `![${newAlt}](${md[2]})` + text.slice(md.index + md[0].length);
-  }
-  return text;
-}
-function setFrameSize(text, size) {
-  const m = FRAME_TAG_RE.exec(text);
-  if (!m) return text;
-  const w = size ? Math.max(FRAME_MIN, Math.min(FRAME_MAX, Math.round(size.w))) : FRAME_DEFAULT_W;
-  const h = size ? Math.max(FRAME_MIN, Math.min(FRAME_MAX, Math.round(size.h))) : FRAME_DEFAULT_H;
-  let attrs2 = m[1].replace(/\s*(?:width|height)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+)/gi, "");
-  attrs2 = `width="${w}" height="${h}"${attrs2.startsWith(" ") ? "" : " "}${attrs2}`.trimEnd();
-  return text.slice(0, m.index) + `<iframe ${attrs2}>${m[2] ?? ""}` + text.slice(m.index + m[0].length);
-}
-var FRAME_TAG_RE = /<iframe\s([^>]*?)\/?>(\s*<\/iframe>)?/i;
-var FRAME_MIN = 80;
-var FRAME_MAX = 1200;
-var FRAME_DEFAULT_W = 560;
-var FRAME_DEFAULT_H = 315;
-var ATTR_RE = /([A-Za-z][\w-]*)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g;
-function parseAttrs(raw) {
-  const out = /* @__PURE__ */ new Map();
-  for (let m = ATTR_RE.exec(raw); m; m = ATTR_RE.exec(raw)) {
-    out.set(m[1].toLowerCase(), m[2] ?? m[3] ?? m[4] ?? "");
-  }
-  ATTR_RE.lastIndex = 0;
-  return out;
-}
-function frameSize(v, fallback) {
-  const n = Number.parseInt(v ?? "", 10);
-  if (!Number.isFinite(n)) return fallback;
-  return Math.max(FRAME_MIN, Math.min(FRAME_MAX, n));
-}
-function noAutoplay(src) {
-  if (/[?&]autoplay=/i.test(src)) return src;
-  return src + (src.includes("?") ? "&" : "?") + "autoplay=0";
-}
-function frame(attrsRaw, original, opts) {
-  const attrs2 = parseAttrs(attrsRaw);
-  const src = attrs2.get("src") ?? "";
-  if (!/^https?:\/\//i.test(src)) return wrap("span", original);
-  const w = frameSize(attrs2.get("width"), FRAME_DEFAULT_W);
-  const h = frameSize(attrs2.get("height"), FRAME_DEFAULT_H);
-  const finalSrc = noAutoplay(src);
-  const existing = opts.reuseFrame?.(finalSrc);
-  const f = existing ?? createEl("iframe");
-  f.className = "mm-frame";
-  f.setCssStyles({ width: "", height: "" });
-  f.width = String(w);
-  f.height = String(h);
-  const title = attrs2.get("title");
-  if (title) f.title = title;
-  if (attrs2.has("allowfullscreen")) f.allowFullscreen = true;
-  if (attrs2.has("allow")) f.allow = attrs2.get("allow");
-  if (!existing) f.src = finalSrc;
-  const box = createSpan();
-  box.className = "mm-frame-box";
-  const shield = createSpan();
-  shield.className = "mm-frame-shield";
-  const activate = createEl("button");
-  activate.type = "button";
-  activate.className = "mm-frame-activate";
-  activate.textContent = t("inline.activate");
-  shield.append(activate);
-  box.append(f, shield);
-  return box;
-}
-function image(link2, param, alt, opts) {
-  if (isPdfCrop(link2)) return pdfCrop(link2, param, opts);
-  const src = opts.resolveImage ? opts.resolveImage(link2) : /^https?:\/\//.test(link2) ? link2 : null;
-  if (!src) return wrap("span", alt || link2);
-  const img = createEl("img");
-  img.className = "mm-img";
-  img.src = src;
-  img.alt = alt;
-  img.draggable = false;
-  const width2 = param && /^\d+$/.test(param.trim()) ? Number(param) : null;
-  if (width2) {
-    img.style.width = `${Math.max(IMAGE_MIN_WIDTH, Math.min(imageMaxWidth, width2))}px`;
-    img.classList.add("has-size");
-  }
-  img.addEventListener("load", () => opts.onImageLoad?.());
-  img.addEventListener("error", () => {
-    img.replaceWith(wrap("span", alt || link2));
-    opts.onImageLoad?.();
-  });
-  return img;
-}
-function isPdfCrop(link2) {
-  return /\.pdf#/i.test(link2) && /[#&]rect=/i.test(link2);
-}
-function pdfCrop(target, param, opts) {
-  const parts = (param ?? "").split("|");
-  const last = parts[parts.length - 1].trim();
-  const width2 = /^\d+$/.test(last) ? Number(last) : null;
-  const label = parts.filter((p, i) => p.trim() && !(i === parts.length - 1 && width2 !== null)).join("|");
-  const box = createSpan();
-  box.className = "mm-pdf-crop";
-  const ok = opts.renderPdfCrop?.(target, box, (img) => {
-    img.classList.add("mm-img");
-    img.draggable = false;
-    if (width2) {
-      img.style.width = `${Math.max(IMAGE_MIN_WIDTH, Math.min(imageMaxWidth, width2))}px`;
-      img.classList.add("has-size");
-    }
-    opts.onImageLoad?.();
-  });
-  if (ok) {
-    const jump = createEl("button", { cls: "mm-pdf-jump" });
-    jump.type = "button";
-    jump.textContent = "\u2197";
-    jump.setAttribute("aria-label", t("canvas.jumpToPdf"));
-    jump.addEventListener("pointerdown", (ev) => ev.stopPropagation());
-    jump.addEventListener("dblclick", (ev) => ev.stopPropagation());
-    jump.addEventListener("click", (ev) => {
-      ev.preventDefault();
-      ev.stopPropagation();
-      opts.onLink?.(target, true, ev);
-    });
-    box.append(jump);
-    return box;
-  }
-  const file = target.split("#")[0].split("/").pop() ?? target;
-  const page = /[#&]page=(\d+)/.exec(target)?.[1];
-  return link(label || (page ? `${file}, p.${page}` : file), target.replace(/&rect=[^&]*/i, ""), true, opts);
-}
-function tag(name, opts) {
-  const a = createEl("a");
-  a.className = "tag mm-tag";
-  a.textContent = `#${name}`;
-  a.href = "#";
-  a.addEventListener("pointerdown", (ev) => ev.stopPropagation());
-  a.addEventListener("click", (ev) => {
-    ev.preventDefault();
-    ev.stopPropagation();
-    opts.onTag?.(`#${name}`, ev);
-  });
-  return a;
-}
-function nest(tag2, text, opts) {
-  const e = createEl(tag2);
-  renderSegment(e, text, opts, true);
-  return e;
-}
-function wrap(tag2, text) {
-  const e = createEl(tag2);
-  e.textContent = text;
-  return e;
-}
-function link(label, href, internal, opts) {
-  const a = createEl("a");
-  a.textContent = label;
-  a.className = internal ? "internal-link mm-link" : "external-link mm-link";
-  a.setAttribute("data-href", href);
-  a.href = internal ? "#" : href;
-  if (!internal) {
-    a.target = "_blank";
-    a.rel = "noopener";
-  }
-  a.addEventListener("click", (ev) => {
-    ev.preventDefault();
-    ev.stopPropagation();
-    opts.onLink?.(href, internal, ev);
-  });
-  if (internal && opts.onHover) a.addEventListener("mouseover", (ev) => opts.onHover?.(href, ev, a));
-  return a;
-}
-function toEditableText(text) {
-  return carryAcrossBreaks(text.split(/<br\s*\/?>/i)).join("\n");
-}
-function fromEditableText(text) {
-  return text.replace(/\r/g, "").split("\n").map((l) => l.trim()).filter(Boolean).join("<br>");
-}
-function plainText(text) {
-  return text.replace(/<br\s*\/?>/gi, " ").replace(/<\/?(?:span|mark)\b[^>]*>/gi, "").replace(/!\[\[([^\]|]+)(?:\|[^\]]+)?\]\]/g, "$1").replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1").replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (_, a, b) => b ?? a).replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(
-    /\*\*(.+?)\*\*|__(.+?)__|`([^`]+)`|~~(.+?)~~|==(.+?)==/g,
-    (_, a, b, c, d, e) => a ?? b ?? c ?? d ?? (e !== void 0 ? e.slice(highlightColor(e)?.length ?? 0) : "")
-  ).replace(/\\([!-/:-@[-`{-~])/g, "$1");
-}
 
 // src/custom-theme.ts
 var CUSTOM_PREFIX = "custom-";
@@ -7483,6 +8114,506 @@ var ViewportStore = class {
 };
 var LEGACY_KEYS = ["viewports", "hiddenCallouts", "notesExpandedFiles", "lockedFiles"];
 
+// src/table/core/format.ts
+var HIGHLIGHT_COLORS2 = { red: "\u{1F534}", orange: "\u{1F7E0}", yellow: "\u{1F7E1}", green: "\u{1F7E2}", blue: "\u{1F535}", purple: "\u{1F7E3}" };
+var HIGHLIGHT_EMOJI2 = {
+  "\u{1F534}": "red",
+  "\u{1F7E5}": "red",
+  "\u{1F7E0}": "orange",
+  "\u{1F7E7}": "orange",
+  "\u{1F7E1}": "yellow",
+  "\u{1F7E8}": "yellow",
+  "\u{1F7E2}": "green",
+  "\u{1F7E9}": "green",
+  "\u{1F535}": "blue",
+  "\u{1F7E6}": "blue",
+  "\u{1F7E3}": "purple",
+  "\u{1F7EA}": "purple"
+};
+function highlightColor2(inner) {
+  const cp = inner.codePointAt(0);
+  if (cp === void 0) return null;
+  const ch = String.fromCodePoint(cp);
+  const color = HIGHLIGHT_EMOJI2[ch];
+  return color ? { color, length: ch.length } : null;
+}
+var EMOJI_ALT2 = Object.keys(HIGHLIGHT_EMOJI2).join("|");
+var HIGHLIGHT_OPEN_BEFORE2 = new RegExp(`==(?:${EMOJI_ALT2})?$`, "u");
+var WHOLE_HIGHLIGHT2 = new RegExp(`^==(${EMOJI_ALT2})?([\\s\\S]+)==$`, "u");
+var COLORED_HIGHLIGHT2 = new RegExp(`==(${EMOJI_ALT2})(.+?)==`, "gu");
+var COLOR2 = String.raw`#[0-9a-fA-F]{3,8}|[a-zA-Z]+|rgba?\([\d\s.,%]+\)`;
+var COLOR_OPEN_SRC2 = String.raw`<span style="color:\s*(${COLOR2})\s*;?\s*">`;
+var BG_OPEN_SRC2 = String.raw`<mark style="background(?:-color)?:\s*(${COLOR2})\s*;?\s*">`;
+var TAG_RE3 = {
+  color: new RegExp(`${COLOR_OPEN_SRC2}|</span>`, "g"),
+  bg: new RegExp(`${BG_OPEN_SRC2}|</mark>`, "g")
+};
+function highlightOf2(entry) {
+  return HIGHLIGHT_EMOJI2[entry] ?? null;
+}
+function openTag2(kind, color) {
+  return kind === "color" ? `<span style="color:${color}">` : `<mark style="background:${color}">`;
+}
+var closeTag2 = (kind) => kind === "color" ? "</span>" : "</mark>";
+function pairs2(text, kind) {
+  const out = [];
+  const stack = [];
+  for (const m of text.matchAll(TAG_RE3[kind])) {
+    const i = m.index ?? 0;
+    if (m[1] !== void 0) stack.push({ start: i, end: i + m[0].length, color: m[1] });
+    else {
+      const o = stack.pop();
+      if (o) out.push({ openStart: o.start, openEnd: o.end, closeStart: i, closeEnd: i + m[0].length, color: o.color });
+    }
+  }
+  return out;
+}
+function trimRange2(text, s, e) {
+  while (s < e && /\s/.test(text[s])) s++;
+  while (e > s && /\s/.test(text[e - 1])) e--;
+  return [s, e];
+}
+function wrapLines2(sel, open, close) {
+  return sel.split("\n").map((line) => {
+    const m = /^(\s*)(.*?)(\s*)$/.exec(line);
+    if (!m || !m[2]) return line;
+    return `${m[1]}${open}${m[2]}${close}${m[3]}`;
+  }).join("\n");
+}
+function toggleStrike2(text, s, e) {
+  if (text.slice(s - 2, s) === "~~" && text.slice(e, e + 2) === "~~") {
+    return { text: text.slice(0, s - 2) + text.slice(s, e) + text.slice(e + 2), start: s - 2, end: e - 2 };
+  }
+  const sel = text.slice(s, e);
+  if (sel.length > 4 && sel.startsWith("~~") && sel.endsWith("~~")) {
+    return { text: text.slice(0, s) + sel.slice(2, -2) + text.slice(e), start: s, end: e - 4 };
+  }
+  const wrapped = wrapLines2(sel, "~~", "~~");
+  return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + 2, end: s + wrapped.length - 2 };
+}
+function toggleUnderline2(text, s, e) {
+  if (text.slice(s - 3, s) === "<u>" && text.slice(e, e + 4) === "</u>") {
+    return { text: text.slice(0, s - 3) + text.slice(s, e) + text.slice(e + 4), start: s - 3, end: e - 3 };
+  }
+  const sel = text.slice(s, e);
+  if (sel.length > 7 && sel.startsWith("<u>") && sel.endsWith("</u>") && !sel.slice(3, -4).includes("<u>")) {
+    return { text: text.slice(0, s) + sel.slice(3, -4) + text.slice(e), start: s, end: e - 7 };
+  }
+  const wrapped = wrapLines2(sel, "<u>", "</u>");
+  return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + 3, end: s + wrapped.length - 4 };
+}
+function starsBefore2(text, s) {
+  let n = 0;
+  while (s - n - 1 >= 0 && text[s - n - 1] === "*") n++;
+  return n;
+}
+function starsAfter2(text, e) {
+  let n = 0;
+  while (e + n < text.length && text[e + n] === "*") n++;
+  return n;
+}
+function toggleHighlight2(text, s, e, color) {
+  const emoji = color ? HIGHLIGHT_COLORS2[color] : "";
+  const open = HIGHLIGHT_OPEN_BEFORE2.exec(text.slice(0, s));
+  if (open && text.slice(e, e + 2) === "==") {
+    const was = highlightColor2(open[0].slice(2))?.color;
+    const from = s - open[0].length;
+    if (was === color) return { text: text.slice(0, from) + text.slice(s, e) + text.slice(e + 2), start: from, end: from + (e - s) };
+    const opener = `==${emoji}`;
+    return { text: text.slice(0, from) + opener + text.slice(s), start: from + opener.length, end: from + opener.length + (e - s) };
+  }
+  const whole = WHOLE_HIGHLIGHT2.exec(text.slice(s, e));
+  if (whole) {
+    const was = whole[1] ? HIGHLIGHT_EMOJI2[whole[1]] : void 0;
+    const inner = whole[2];
+    const next = was === color ? inner : `==${emoji}${inner}==`;
+    const lead = was === color ? 0 : 2 + emoji.length;
+    return { text: text.slice(0, s) + next + text.slice(e), start: s + lead, end: s + lead + inner.length };
+  }
+  const sel = text.slice(s, e);
+  const wrapped = wrapLines2(sel, `==${emoji}`, "==");
+  return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + 2 + emoji.length, end: s + wrapped.length - 2 };
+}
+function removeHighlight2(text, s, e) {
+  const open = HIGHLIGHT_OPEN_BEFORE2.exec(text.slice(0, s));
+  if (open && text.slice(e, e + 2) === "==") {
+    const from = s - open[0].length;
+    return { text: text.slice(0, from) + text.slice(s, e) + text.slice(e + 2), start: from, end: from + (e - s) };
+  }
+  const whole = WHOLE_HIGHLIGHT2.exec(text.slice(s, e));
+  if (whole) {
+    const inner = whole[2];
+    return { text: text.slice(0, s) + inner + text.slice(e), start: s, end: s + inner.length };
+  }
+  return { text, start: s, end: e };
+}
+function clearHighlightColors2(text, start, end) {
+  let out = "";
+  let last = 0;
+  let [s, e] = [start, end];
+  for (const m of text.matchAll(COLORED_HIGHLIGHT2)) {
+    const from = m.index ?? 0;
+    const to = from + m[0].length;
+    if (to <= start || from >= end) continue;
+    const at = from + 2;
+    const len = m[1].length;
+    out += text.slice(last, at);
+    last = at + len;
+    if (at < start) s -= Math.min(len, start - at);
+    if (at < end) e -= Math.min(len, end - at);
+  }
+  return { text: out + text.slice(last), start: s, end: e };
+}
+function toggleMark2(text, s, e, kind) {
+  const m = kind === "bold" ? "**" : "*";
+  const len = m.length;
+  const has = (before, after) => {
+    const n = Math.min(before, after);
+    return kind === "bold" ? n >= 2 : n % 2 === 1;
+  };
+  if (has(starsBefore2(text, s), starsAfter2(text, e))) {
+    return { text: text.slice(0, s - len) + text.slice(s, e) + text.slice(e + len), start: s - len, end: e - len };
+  }
+  const sel0 = text.slice(s, e);
+  const lead = /^\*+/.exec(sel0)?.[0].length ?? 0;
+  const tail = /\*+$/.exec(sel0)?.[0].length ?? 0;
+  if (sel0.length > lead + tail && has(lead, tail)) {
+    return { text: text.slice(0, s) + sel0.slice(len, -len) + text.slice(e), start: s, end: e - len * 2 };
+  }
+  const sel = text.slice(s, e);
+  const wrapped = wrapLines2(sel, m, m);
+  return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + len, end: s + wrapped.length - len };
+}
+function dropEmpty2(text, kind) {
+  const re = new RegExp(`${kind === "color" ? COLOR_OPEN_SRC2 : BG_OPEN_SRC2}${closeTag2(kind).replace("/", "\\/")}`, "g");
+  return text.replace(re, "");
+}
+var ANY_TAG2 = `${COLOR_OPEN_SRC2}|${BG_OPEN_SRC2}|</span>|</mark>`;
+var LEADING_TAG2 = new RegExp(`^(?:${ANY_TAG2})`);
+var TRAILING_TAG2 = new RegExp(`(?:${ANY_TAG2})$`);
+function alignToTags2(text, s, e) {
+  for (let m; s < e && (m = LEADING_TAG2.exec(text.slice(s, e))); ) s += m[0].length;
+  for (let m; s < e && (m = TRAILING_TAG2.exec(text.slice(s, e))); ) e -= m[0].length;
+  if (s === e) return [s, e];
+  for (let changed = true; changed; ) {
+    changed = false;
+    for (const p of [...pairs2(text, "color"), ...pairs2(text, "bg")]) {
+      const openIn = p.openStart >= s && p.openStart < e;
+      const closeIn = p.closeEnd > s && p.closeEnd <= e;
+      if (openIn !== closeIn) {
+        s = Math.min(s, p.openStart);
+        e = Math.max(e, p.closeEnd);
+        changed = true;
+      }
+    }
+  }
+  return [s, e];
+}
+function applyColor2(text, s, e, kind, color) {
+  const exact = pairs2(text, kind).find((p) => p.openStart === s && p.closeEnd === e);
+  if (exact) {
+    s = exact.openEnd;
+    e = exact.closeStart;
+  }
+  const enclosing = pairs2(text, kind).filter((p) => p.openEnd <= s && p.closeStart >= e).sort((a, b) => b.openEnd - a.openEnd)[0];
+  if (enclosing) {
+    const other = kind === "color" ? "bg" : "color";
+    for (let changed = true; changed; ) {
+      changed = false;
+      for (const p of pairs2(text, other)) {
+        if (p.openEnd === s && p.closeStart === e && p.openStart >= enclosing.openEnd && p.closeEnd <= enclosing.closeStart) {
+          s = p.openStart;
+          e = p.closeEnd;
+          changed = true;
+        }
+      }
+    }
+  }
+  let before;
+  let after;
+  let sel = text.slice(s, e);
+  let toggledOff = false;
+  if (enclosing) {
+    const open = text.slice(enclosing.openStart, enclosing.openEnd);
+    const close = closeTag2(kind);
+    before = text.slice(0, enclosing.openStart) + open + text.slice(enclosing.openEnd, s) + close;
+    after = open + text.slice(e, enclosing.closeStart) + close + text.slice(enclosing.closeEnd);
+    toggledOff = color !== null && enclosing.color.toLowerCase() === color.toLowerCase();
+  } else {
+    before = text.slice(0, s);
+    after = text.slice(e);
+  }
+  sel = sel.replace(TAG_RE3[kind], "");
+  const wrapped = color !== null && !toggledOff ? wrapLines2(sel, openTag2(kind, color), closeTag2(kind)) : sel;
+  const cleanBefore = dropEmpty2(before, kind);
+  const cleanAfter = dropEmpty2(after, kind);
+  const lead = wrapped === sel ? 0 : openTag2(kind, color ?? "").length;
+  const tail = wrapped === sel ? 0 : closeTag2(kind).length;
+  return {
+    text: cleanBefore + wrapped + cleanAfter,
+    start: cleanBefore.length + lead,
+    end: cleanBefore.length + wrapped.length - tail
+  };
+}
+function applyInlineFormat2(text, start, end, fmt2) {
+  let [s, e] = start === end ? [0, text.length] : [Math.min(start, end), Math.max(start, end)];
+  [s, e] = trimRange2(text, s, e);
+  [s, e] = alignToTags2(text, s, e);
+  if (s === e) return { text, start, end };
+  switch (fmt2.kind) {
+    case "bold":
+    case "italic":
+      return toggleMark2(text, s, e, fmt2.kind);
+    case "strike":
+      return toggleStrike2(text, s, e);
+    case "underline":
+      return toggleUnderline2(text, s, e);
+    case "highlight":
+      return toggleHighlight2(text, s, e, fmt2.color);
+    case "color":
+      return applyColor2(text, s, e, fmt2.kind, fmt2.color);
+    case "bg": {
+      const h = removeHighlight2(text, s, e);
+      return applyColor2(h.text, h.start, h.end, "bg", fmt2.color);
+    }
+    case "nocolor":
+      return applyColor2(text, s, e, "color", null);
+    case "nobg": {
+      const b = applyColor2(text, s, e, "bg", null);
+      const c = clearHighlightColors2(b.text, b.start, b.end);
+      return removeHighlight2(c.text, c.start, c.end);
+    }
+    case "clear": {
+      const a = applyColor2(text, s, e, "color", null);
+      const b = applyColor2(a.text, a.start, a.end, "bg", null);
+      return clearHighlightColors2(b.text, b.start, b.end);
+    }
+  }
+}
+
+// src/table/core/color-palette.ts
+var THEME_HIGHLIGHT2 = "==";
+function highlightFormat2(kind, color) {
+  if (kind === "bg" && color === THEME_HIGHLIGHT2) return { kind: "highlight" };
+  const hl = kind === "bg" ? highlightOf2(color) : null;
+  return hl ? { kind: "highlight", color: hl } : { kind, color };
+}
+function colorFormat2(kind, color) {
+  if (color === null) return { kind: kind === "text" ? "nocolor" : "nobg" };
+  return highlightFormat2(kind === "text" ? "color" : "bg", color);
+}
+function paintColor2(el, color, kind) {
+  el.classList.remove("mm-hl-chip");
+  delete el.dataset.highlight;
+  el.style.removeProperty("background");
+  if (!color) return;
+  const hl = color === THEME_HIGHLIGHT2 ? "" : highlightOf2(color);
+  if (hl !== null) {
+    el.classList.add("mm-hl-chip");
+    if (hl) el.dataset.highlight = hl;
+    return;
+  }
+  el.style.background = kind === "node" && /^[a-z]+$/i.test(color) ? `var(--mm-c-${color}, ${color})` : color;
+}
+var GRID2 = [
+  ["#fde2e2", "#f9b4b4", "#f07070", "#e03e3e", "#b42b2b", "#7a1d1d"],
+  ["#ffe8cc", "#ffc78a", "#ff9f43", "#f08c00", "#c06a00", "#7f4700"],
+  ["#fff3bf", "#ffe066", "#ffd43b", "#fab005", "#c99400", "#806000"],
+  ["#d3f9d8", "#8ce99a", "#51cf66", "#27ae60", "#1e7d45", "#12502c"],
+  ["#c3fae8", "#63e6be", "#20c997", "#0ca678", "#087f5b", "#054c37"],
+  ["#d0ebff", "#74c0fc", "#339af0", "#2f80ed", "#1864ab", "#0b3d6e"],
+  ["#e5dbff", "#b197fc", "#845ef7", "#7048e8", "#5235b5", "#33206f"],
+  ["#ffdeeb", "#faa2c1", "#f06595", "#d6336c", "#a61e4d", "#6b1132"],
+  ["#f1f3f5", "#ced4da", "#adb5bd", "#868e96", "#495057", "#212529"],
+  ["#ffffff", "#e9ecef", "#9aa0a6", "#5f6368", "#3c4043", "#000000"]
+];
+function withAlpha2(hex, alpha) {
+  let h = hex.replace(/^#/, "").toLowerCase();
+  if (h.length === 3) h = h.replace(/./g, (c) => c + c);
+  if (h.length === 8) h = h.slice(0, 6);
+  if (!/^[0-9a-f]{6}$/.test(h)) return hex;
+  const a = Math.max(0, Math.min(100, Math.round(alpha)));
+  return a >= 100 ? `#${h}` : `#${h}${Math.round(a * 255 / 100).toString(16).padStart(2, "0")}`;
+}
+function createPalette2(doc, o) {
+  const root = doc.createElement("div");
+  root.className = "mm-palette";
+  root.addEventListener("pointerdown", (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+  });
+  root.addEventListener("mousedown", (ev) => ev.preventDefault());
+  let alpha = o.defaultAlpha;
+  const preview2 = doc.createElement("span");
+  preview2.className = "mm-palette-preview";
+  const hexOut = doc.createElement("span");
+  hexOut.className = "mm-palette-hex";
+  const show = (c) => {
+    preview2.style.background = c ?? "transparent";
+    hexOut.textContent = c ?? "";
+  };
+  const swatch = (parent, title, paint2, pick, hover) => {
+    const b = doc.createElement("button");
+    b.type = "button";
+    b.className = "mm-palette-swatch";
+    b.setAttribute("aria-label", title);
+    o.tip?.(b, title);
+    paint2(b);
+    b.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      pick();
+    });
+    if (hover) b.addEventListener("pointerenter", () => show(hover()));
+    parent.append(b);
+    return b;
+  };
+  const section = (title) => {
+    const h = doc.createElement("div");
+    h.className = "mm-palette-title";
+    h.textContent = title;
+    root.append(h);
+    const row = doc.createElement("div");
+    row.className = "mm-palette-row";
+    root.append(row);
+    return row;
+  };
+  const common = section(o.text.common);
+  swatch(common, o.noneLabel, (b) => b.classList.add("is-none"), () => o.onPick(null));
+  for (const x of o.extras ?? []) swatch(common, x.label, x.paint, () => o.onPick(x.value));
+  for (const c of o.common) swatch(common, o.label(c), (b) => o.paint(b, c), () => o.onPick(c), () => c);
+  const grid = doc.createElement("div");
+  grid.className = "mm-palette-grid";
+  root.append(grid);
+  for (let r3 = 0; r3 < GRID2[0].length; r3++)
+    for (const col of GRID2) {
+      const c = col[r3];
+      swatch(
+        grid,
+        c,
+        (b) => b.style.background = c,
+        () => o.onPick(o.alpha ? withAlpha2(c, alpha) : c),
+        () => o.alpha ? withAlpha2(c, alpha) : c
+      );
+    }
+  if (o.recent.length) {
+    const recent = section(o.text.recent);
+    for (const c of o.recent) swatch(recent, o.label(c), (b) => o.paint(b, c), () => o.onPick(c), () => c);
+  }
+  if (o.alpha) {
+    const line = doc.createElement("div");
+    line.className = "mm-palette-alpha";
+    const name = doc.createElement("span");
+    name.textContent = o.text.alpha;
+    const track = doc.createElement("div");
+    track.className = "mm-palette-track";
+    const fill = doc.createElement("div");
+    fill.className = "mm-palette-fill";
+    const thumb = doc.createElement("div");
+    thumb.className = "mm-palette-thumb";
+    track.append(fill, thumb);
+    const val = doc.createElement("span");
+    val.className = "mm-palette-alpha-val";
+    const set = (a) => {
+      alpha = Math.max(0, Math.min(100, Math.round(a)));
+      fill.style.width = `${alpha}%`;
+      thumb.style.left = `${alpha}%`;
+      val.textContent = `${alpha}%`;
+    };
+    set(alpha);
+    const at = (ev) => {
+      const r3 = track.getBoundingClientRect();
+      set((ev.clientX - r3.left) / Math.max(1, r3.width) * 100);
+    };
+    track.addEventListener("pointerdown", (ev) => {
+      at(ev);
+      try {
+        track.setPointerCapture(ev.pointerId);
+      } catch {
+      }
+      const move = (e) => at(e);
+      const up = () => {
+        track.removeEventListener("pointermove", move);
+        track.removeEventListener("pointerup", up);
+        track.removeEventListener("pointercancel", up);
+      };
+      track.addEventListener("pointermove", move);
+      track.addEventListener("pointerup", up);
+      track.addEventListener("pointercancel", up);
+    });
+    line.append(name, track, val);
+    root.append(line);
+  }
+  const foot = doc.createElement("div");
+  foot.className = "mm-palette-foot";
+  const left = doc.createElement("span");
+  left.className = "mm-palette-current";
+  left.append(preview2, hexOut);
+  const custom = doc.createElement("button");
+  custom.type = "button";
+  custom.className = "mm-palette-custom";
+  custom.textContent = o.text.custom;
+  custom.addEventListener("click", (ev) => {
+    ev.stopPropagation();
+    const apply = o.onCustom?.() ?? ((c) => o.onPick(c));
+    const input = doc.createElement("input");
+    input.type = "color";
+    input.className = "mm-palette-native";
+    doc.body.append(input);
+    const done = () => {
+      input.remove();
+    };
+    input.addEventListener("change", () => {
+      apply(o.alpha ? withAlpha2(input.value, alpha) : input.value);
+      done();
+    });
+    input.addEventListener("blur", () => (doc.defaultView ?? window).setTimeout(done, 1e3));
+    input.click();
+  });
+  foot.append(left, custom);
+  root.append(foot);
+  show(null);
+  return root;
+}
+function createColorSplit2(o) {
+  const doc = o.doc;
+  const wrap2 = doc.createElement("span");
+  wrap2.className = `mm-color-split ${o.cls}`;
+  const main = doc.createElement("button");
+  main.type = "button";
+  main.className = "mm-color-split-main";
+  main.setAttribute("aria-label", o.title);
+  o.tip(main, o.title);
+  const face = doc.createElement("span");
+  face.className = "mm-color-split-face";
+  o.face(face);
+  const bar = doc.createElement("span");
+  bar.className = "mm-color-split-bar";
+  main.append(face, bar);
+  const caret = doc.createElement("button");
+  caret.type = "button";
+  caret.className = "mm-color-split-caret";
+  caret.setAttribute("aria-label", o.caretTitle);
+  o.tip(caret, o.caretTitle);
+  caret.textContent = "\u25BE";
+  const refresh = () => o.paintBar(bar, o.current());
+  refresh();
+  main.addEventListener("click", (ev) => {
+    ev.stopPropagation();
+    o.onApply();
+    refresh();
+  });
+  caret.addEventListener("click", (ev) => {
+    ev.stopPropagation();
+    o.onOpen(wrap2);
+  });
+  wrap2.refreshColor = refresh;
+  wrap2.append(main, caret);
+  return wrap2;
+}
+function refreshColorSplit2(el) {
+  el?.refreshColor?.();
+}
+
 // src/table/core/fill.ts
 var LISTS = [
   ["\u5468\u4E00", "\u5468\u4E8C", "\u5468\u4E09", "\u5468\u56DB", "\u5468\u4E94", "\u5468\u516D", "\u5468\u65E5"],
@@ -7598,6 +8729,7 @@ function cloneMeta(m) {
   if (m.w) out.w = m.w.slice();
   if (m.bg) out.bg = { ...m.bg };
   if (m.fg) out.fg = { ...m.fg };
+  if (m.fz) out.fz = { ...m.fz };
   if (m.calc) out.calc = m.calc.slice();
   if (m.opts) out.opts = m.opts.map((o) => o ? { ...o } : null);
   if (m.merge) out.merge = m.merge.slice();
@@ -7619,7 +8751,7 @@ function withHead(n, h) {
 }
 var colCount = (t3) => t3.align.length;
 function remapCells(meta, map) {
-  for (const key of ["bg", "fg"]) {
+  for (const key of ["bg", "fg", "fz"]) {
     const src = meta[key];
     if (!src) continue;
     const next = {};
@@ -7656,7 +8788,7 @@ function remapMerges(meta, fr, fc, grow) {
   }
   meta.merge = out;
 }
-var COL_KEYS = ["w", "calc", "opts"];
+var COL_KEYS = ["w", "calc", "opts", "va"];
 function spliceCols(meta, n, op) {
   for (const key of COL_KEYS) {
     const src = meta[key];
@@ -7758,6 +8890,24 @@ function setAlign(t3, c, a) {
   n.align[c] = a;
   return n;
 }
+function vAlignOf(t3, c) {
+  return t3.meta.va?.[c] ?? null;
+}
+function setVAlign(t3, c, v) {
+  if (c < 0 || c >= colCount(t3) || vAlignOf(t3, c) === v) return t3;
+  const n = cloneTable(t3);
+  const va = (n.meta.va ?? []).slice(0, colCount(t3));
+  while (va.length < colCount(t3)) va.push(null);
+  va[c] = v;
+  if (va.some(Boolean)) n.meta.va = va;
+  else delete n.meta.va;
+  return n;
+}
+function vAlignAll(t3, v) {
+  let n = t3;
+  for (let c = 0; c < colCount(t3); c++) n = setVAlign(n, c, v);
+  return n;
+}
 function setWidth(t3, c, w) {
   if (c < 0 || c >= colCount(t3)) return t3;
   const n = cloneTable(t3);
@@ -7790,8 +8940,37 @@ function setFg(t3, cells, color) {
   n.meta.fg = fg;
   return n;
 }
+function setFontSize(t3, cells, size) {
+  const n = cloneTable(t3);
+  const fz = { ...n.meta.fz ?? {} };
+  for (const p of cells) {
+    const k = cellRef(p.r, p.c);
+    if (size && size !== 1) fz[k] = size;
+    else delete fz[k];
+  }
+  if (Object.keys(fz).length) n.meta.fz = fz;
+  else delete n.meta.fz;
+  return n;
+}
+function fontSizeOf(t3, r3, c) {
+  return t3.meta.fz?.[cellRef(r3, c)] ?? null;
+}
+function setTableFontSize(t3, size) {
+  if ((t3.meta.fs ?? null) === (size === 1 ? null : size)) return t3;
+  const n = cloneTable(t3);
+  if (size && size !== 1) n.meta.fs = size;
+  else delete n.meta.fs;
+  return n;
+}
 function fgOf(t3, r3, c) {
   return t3.meta.fg?.[cellRef(r3, c)] ?? null;
+}
+function setWide(t3, wide) {
+  if (!!t3.meta.wide === wide) return t3;
+  const n = cloneTable(t3);
+  if (wide) n.meta.wide = 1;
+  else delete n.meta.wide;
+  return n;
 }
 function setWidths(t3, ws) {
   const n = cloneTable(t3);
@@ -7922,6 +9101,14 @@ function setTableLook(t3, look) {
   }
   return n;
 }
+function setFolded(t3, on) {
+  if (on === (t3.meta.fold === 1)) return t3;
+  if (on && rowCount(t3) <= headRows(t3)) return t3;
+  const n = cloneTable(t3);
+  if (on) n.meta.fold = 1;
+  else delete n.meta.fold;
+  return n;
+}
 function alignAll(t3, a) {
   const n = cloneTable(t3);
   n.align = n.align.map(() => a);
@@ -7939,6 +9126,7 @@ function autoWidthAll(t3) {
   if (!t3.meta.w?.some((x) => x != null)) return t3;
   const n = cloneTable(t3);
   delete n.meta.w;
+  delete n.meta.wide;
   return n;
 }
 function mergedText(t3, m) {
@@ -8004,7 +9192,7 @@ function duplicateRow(t3, r3) {
   if (r3 < 1 || r3 >= rowCount(t3)) return t3;
   const n = insertRow(t3, r3 + 1);
   n.cells[r3 + 1] = t3.cells[r3].slice();
-  for (const key of ["bg", "fg"]) {
+  for (const key of ["bg", "fg", "fz"]) {
     const m = { ...n.meta[key] ?? {} };
     for (let c = 0; c < colCount(t3); c++) {
       const v = t3.meta[key]?.[cellRef(r3, c)];
@@ -8019,9 +9207,10 @@ function duplicateCol(t3, c) {
   let n = insertCol(t3, c + 1);
   for (let r3 = 0; r3 < rowCount(t3); r3++) n.cells[r3][c + 1] = t3.cells[r3][c];
   n.align[c + 1] = t3.align[c];
+  n = setVAlign(n, c + 1, vAlignOf(t3, c));
   const w = widthOf(t3, c);
   if (w) n = setWidth(n, c + 1, w);
-  for (const key of ["bg", "fg"]) {
+  for (const key of ["bg", "fg", "fz"]) {
     const m = { ...n.meta[key] ?? {} };
     for (let r3 = 0; r3 < rowCount(t3); r3++) {
       const v = t3.meta[key]?.[cellRef(r3, c)];
@@ -8176,6 +9365,7 @@ function subTable(t3, rect) {
   meta.calc = hasTotal(t3) && r22 === rowCount(t3) - 1 ? cols(t3.meta.calc) : void 0;
   meta.bg = shift(t3.meta.bg);
   meta.fg = shift(t3.meta.fg);
+  meta.fz = shift(t3.meta.fz);
   if (c1 > 0) {
     delete meta.headerCol;
     delete meta.freeze;
@@ -8185,6 +9375,7 @@ function subTable(t3, rect) {
   if (!meta.merge.length) delete meta.merge;
   if (meta.bg && !Object.keys(meta.bg).length) delete meta.bg;
   if (meta.fg && !Object.keys(meta.fg).length) delete meta.fg;
+  if (meta.fz && !Object.keys(meta.fz).length) delete meta.fz;
   for (const k of Object.keys(meta)) if (meta[k] === void 0) delete meta[k];
   const cells = t3.cells.slice(r1, r22 + 1).map((row) => row.slice(c1, c2 + 1));
   for (const m of merges(t3)) {
@@ -8274,266 +9465,6 @@ function toHTML(grid, headerRow) {
 var SOURCE_ATTR = "data-ggt-src";
 function sourceAttr(lines) {
   return ` ${SOURCE_ATTR}="${encodeURIComponent(lines.join("\n"))}"`;
-}
-
-// src/table/core/format.ts
-var HIGHLIGHT_COLORS2 = { red: "\u{1F534}", orange: "\u{1F7E0}", yellow: "\u{1F7E1}", green: "\u{1F7E2}", blue: "\u{1F535}", purple: "\u{1F7E3}" };
-var HIGHLIGHT_EMOJI2 = {
-  "\u{1F534}": "red",
-  "\u{1F7E5}": "red",
-  "\u{1F7E0}": "orange",
-  "\u{1F7E7}": "orange",
-  "\u{1F7E1}": "yellow",
-  "\u{1F7E8}": "yellow",
-  "\u{1F7E2}": "green",
-  "\u{1F7E9}": "green",
-  "\u{1F535}": "blue",
-  "\u{1F7E6}": "blue",
-  "\u{1F7E3}": "purple",
-  "\u{1F7EA}": "purple"
-};
-function highlightColor2(inner) {
-  const cp = inner.codePointAt(0);
-  if (cp === void 0) return null;
-  const ch = String.fromCodePoint(cp);
-  const color = HIGHLIGHT_EMOJI2[ch];
-  return color ? { color, length: ch.length } : null;
-}
-var EMOJI_ALT2 = Object.keys(HIGHLIGHT_EMOJI2).join("|");
-var HIGHLIGHT_OPEN_BEFORE2 = new RegExp(`==(?:${EMOJI_ALT2})?$`, "u");
-var WHOLE_HIGHLIGHT2 = new RegExp(`^==(${EMOJI_ALT2})?([\\s\\S]+)==$`, "u");
-var COLORED_HIGHLIGHT2 = new RegExp(`==(${EMOJI_ALT2})(.+?)==`, "gu");
-var COLOR2 = String.raw`#[0-9a-fA-F]{3,8}|[a-zA-Z]+|rgba?\([\d\s.,%]+\)`;
-var COLOR_OPEN_SRC2 = String.raw`<span style="color:\s*(${COLOR2})\s*;?\s*">`;
-var BG_OPEN_SRC2 = String.raw`<mark style="background(?:-color)?:\s*(${COLOR2})\s*;?\s*">`;
-var TAG_RE3 = {
-  color: new RegExp(`${COLOR_OPEN_SRC2}|</span>`, "g"),
-  bg: new RegExp(`${BG_OPEN_SRC2}|</mark>`, "g")
-};
-function highlightOf2(entry) {
-  return HIGHLIGHT_EMOJI2[entry] ?? null;
-}
-function openTag2(kind, color) {
-  return kind === "color" ? `<span style="color:${color}">` : `<mark style="background:${color}">`;
-}
-var closeTag2 = (kind) => kind === "color" ? "</span>" : "</mark>";
-function pairs2(text, kind) {
-  const out = [];
-  const stack = [];
-  for (const m of text.matchAll(TAG_RE3[kind])) {
-    const i = m.index ?? 0;
-    if (m[1] !== void 0) stack.push({ start: i, end: i + m[0].length, color: m[1] });
-    else {
-      const o = stack.pop();
-      if (o) out.push({ openStart: o.start, openEnd: o.end, closeStart: i, closeEnd: i + m[0].length, color: o.color });
-    }
-  }
-  return out;
-}
-function trimRange2(text, s, e) {
-  while (s < e && /\s/.test(text[s])) s++;
-  while (e > s && /\s/.test(text[e - 1])) e--;
-  return [s, e];
-}
-function wrapLines2(sel, open, close) {
-  return sel.split("\n").map((line) => {
-    const m = /^(\s*)(.*?)(\s*)$/.exec(line);
-    if (!m || !m[2]) return line;
-    return `${m[1]}${open}${m[2]}${close}${m[3]}`;
-  }).join("\n");
-}
-function toggleStrike2(text, s, e) {
-  if (text.slice(s - 2, s) === "~~" && text.slice(e, e + 2) === "~~") {
-    return { text: text.slice(0, s - 2) + text.slice(s, e) + text.slice(e + 2), start: s - 2, end: e - 2 };
-  }
-  const sel = text.slice(s, e);
-  if (sel.length > 4 && sel.startsWith("~~") && sel.endsWith("~~")) {
-    return { text: text.slice(0, s) + sel.slice(2, -2) + text.slice(e), start: s, end: e - 4 };
-  }
-  const wrapped = wrapLines2(sel, "~~", "~~");
-  return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + 2, end: s + wrapped.length - 2 };
-}
-function toggleUnderline2(text, s, e) {
-  if (text.slice(s - 3, s) === "<u>" && text.slice(e, e + 4) === "</u>") {
-    return { text: text.slice(0, s - 3) + text.slice(s, e) + text.slice(e + 4), start: s - 3, end: e - 3 };
-  }
-  const sel = text.slice(s, e);
-  if (sel.length > 7 && sel.startsWith("<u>") && sel.endsWith("</u>") && !sel.slice(3, -4).includes("<u>")) {
-    return { text: text.slice(0, s) + sel.slice(3, -4) + text.slice(e), start: s, end: e - 7 };
-  }
-  const wrapped = wrapLines2(sel, "<u>", "</u>");
-  return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + 3, end: s + wrapped.length - 4 };
-}
-function starsBefore2(text, s) {
-  let n = 0;
-  while (s - n - 1 >= 0 && text[s - n - 1] === "*") n++;
-  return n;
-}
-function starsAfter2(text, e) {
-  let n = 0;
-  while (e + n < text.length && text[e + n] === "*") n++;
-  return n;
-}
-function toggleHighlight2(text, s, e, color) {
-  const emoji = color ? HIGHLIGHT_COLORS2[color] : "";
-  const open = HIGHLIGHT_OPEN_BEFORE2.exec(text.slice(0, s));
-  if (open && text.slice(e, e + 2) === "==") {
-    const was = highlightColor2(open[0].slice(2))?.color;
-    const from = s - open[0].length;
-    if (was === color) return { text: text.slice(0, from) + text.slice(s, e) + text.slice(e + 2), start: from, end: from + (e - s) };
-    const opener = `==${emoji}`;
-    return { text: text.slice(0, from) + opener + text.slice(s), start: from + opener.length, end: from + opener.length + (e - s) };
-  }
-  const whole = WHOLE_HIGHLIGHT2.exec(text.slice(s, e));
-  if (whole) {
-    const was = whole[1] ? HIGHLIGHT_EMOJI2[whole[1]] : void 0;
-    const inner = whole[2];
-    const next = was === color ? inner : `==${emoji}${inner}==`;
-    const lead = was === color ? 0 : 2 + emoji.length;
-    return { text: text.slice(0, s) + next + text.slice(e), start: s + lead, end: s + lead + inner.length };
-  }
-  const sel = text.slice(s, e);
-  const wrapped = wrapLines2(sel, `==${emoji}`, "==");
-  return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + 2 + emoji.length, end: s + wrapped.length - 2 };
-}
-function clearHighlightColors2(text, start, end) {
-  let out = "";
-  let last = 0;
-  let [s, e] = [start, end];
-  for (const m of text.matchAll(COLORED_HIGHLIGHT2)) {
-    const from = m.index ?? 0;
-    const to = from + m[0].length;
-    if (to <= start || from >= end) continue;
-    const at = from + 2;
-    const len = m[1].length;
-    out += text.slice(last, at);
-    last = at + len;
-    if (at < start) s -= Math.min(len, start - at);
-    if (at < end) e -= Math.min(len, end - at);
-  }
-  return { text: out + text.slice(last), start: s, end: e };
-}
-function toggleMark2(text, s, e, kind) {
-  const m = kind === "bold" ? "**" : "*";
-  const len = m.length;
-  const has = (before, after) => {
-    const n = Math.min(before, after);
-    return kind === "bold" ? n >= 2 : n % 2 === 1;
-  };
-  if (has(starsBefore2(text, s), starsAfter2(text, e))) {
-    return { text: text.slice(0, s - len) + text.slice(s, e) + text.slice(e + len), start: s - len, end: e - len };
-  }
-  const sel0 = text.slice(s, e);
-  const lead = /^\*+/.exec(sel0)?.[0].length ?? 0;
-  const tail = /\*+$/.exec(sel0)?.[0].length ?? 0;
-  if (sel0.length > lead + tail && has(lead, tail)) {
-    return { text: text.slice(0, s) + sel0.slice(len, -len) + text.slice(e), start: s, end: e - len * 2 };
-  }
-  const sel = text.slice(s, e);
-  const wrapped = wrapLines2(sel, m, m);
-  return { text: text.slice(0, s) + wrapped + text.slice(e), start: s + len, end: s + wrapped.length - len };
-}
-function dropEmpty2(text, kind) {
-  const re = new RegExp(`${kind === "color" ? COLOR_OPEN_SRC2 : BG_OPEN_SRC2}${closeTag2(kind).replace("/", "\\/")}`, "g");
-  return text.replace(re, "");
-}
-var ANY_TAG2 = `${COLOR_OPEN_SRC2}|${BG_OPEN_SRC2}|</span>|</mark>`;
-var LEADING_TAG2 = new RegExp(`^(?:${ANY_TAG2})`);
-var TRAILING_TAG2 = new RegExp(`(?:${ANY_TAG2})$`);
-function alignToTags2(text, s, e) {
-  for (let m; s < e && (m = LEADING_TAG2.exec(text.slice(s, e))); ) s += m[0].length;
-  for (let m; s < e && (m = TRAILING_TAG2.exec(text.slice(s, e))); ) e -= m[0].length;
-  if (s === e) return [s, e];
-  for (let changed = true; changed; ) {
-    changed = false;
-    for (const p of [...pairs2(text, "color"), ...pairs2(text, "bg")]) {
-      const openIn = p.openStart >= s && p.openStart < e;
-      const closeIn = p.closeEnd > s && p.closeEnd <= e;
-      if (openIn !== closeIn) {
-        s = Math.min(s, p.openStart);
-        e = Math.max(e, p.closeEnd);
-        changed = true;
-      }
-    }
-  }
-  return [s, e];
-}
-function applyColor2(text, s, e, kind, color) {
-  const exact = pairs2(text, kind).find((p) => p.openStart === s && p.closeEnd === e);
-  if (exact) {
-    s = exact.openEnd;
-    e = exact.closeStart;
-  }
-  const enclosing = pairs2(text, kind).filter((p) => p.openEnd <= s && p.closeStart >= e).sort((a, b) => b.openEnd - a.openEnd)[0];
-  if (enclosing) {
-    const other = kind === "color" ? "bg" : "color";
-    for (let changed = true; changed; ) {
-      changed = false;
-      for (const p of pairs2(text, other)) {
-        if (p.openEnd === s && p.closeStart === e && p.openStart >= enclosing.openEnd && p.closeEnd <= enclosing.closeStart) {
-          s = p.openStart;
-          e = p.closeEnd;
-          changed = true;
-        }
-      }
-    }
-  }
-  let before;
-  let after;
-  let sel = text.slice(s, e);
-  let toggledOff = false;
-  if (enclosing) {
-    const open = text.slice(enclosing.openStart, enclosing.openEnd);
-    const close = closeTag2(kind);
-    before = text.slice(0, enclosing.openStart) + open + text.slice(enclosing.openEnd, s) + close;
-    after = open + text.slice(e, enclosing.closeStart) + close + text.slice(enclosing.closeEnd);
-    toggledOff = color !== null && enclosing.color.toLowerCase() === color.toLowerCase();
-  } else {
-    before = text.slice(0, s);
-    after = text.slice(e);
-  }
-  sel = sel.replace(TAG_RE3[kind], "");
-  const wrapped = color !== null && !toggledOff ? wrapLines2(sel, openTag2(kind, color), closeTag2(kind)) : sel;
-  const cleanBefore = dropEmpty2(before, kind);
-  const cleanAfter = dropEmpty2(after, kind);
-  const lead = wrapped === sel ? 0 : openTag2(kind, color ?? "").length;
-  const tail = wrapped === sel ? 0 : closeTag2(kind).length;
-  return {
-    text: cleanBefore + wrapped + cleanAfter,
-    start: cleanBefore.length + lead,
-    end: cleanBefore.length + wrapped.length - tail
-  };
-}
-function applyInlineFormat2(text, start, end, fmt2) {
-  let [s, e] = start === end ? [0, text.length] : [Math.min(start, end), Math.max(start, end)];
-  [s, e] = trimRange2(text, s, e);
-  [s, e] = alignToTags2(text, s, e);
-  if (s === e) return { text, start, end };
-  switch (fmt2.kind) {
-    case "bold":
-    case "italic":
-      return toggleMark2(text, s, e, fmt2.kind);
-    case "strike":
-      return toggleStrike2(text, s, e);
-    case "underline":
-      return toggleUnderline2(text, s, e);
-    case "highlight":
-      return toggleHighlight2(text, s, e, fmt2.color);
-    case "color":
-    case "bg":
-      return applyColor2(text, s, e, fmt2.kind, fmt2.color);
-    case "nocolor":
-      return applyColor2(text, s, e, "color", null);
-    case "nobg": {
-      const b = applyColor2(text, s, e, "bg", null);
-      return clearHighlightColors2(b.text, b.start, b.end);
-    }
-    case "clear": {
-      const a = applyColor2(text, s, e, "color", null);
-      const b = applyColor2(a.text, a.start, a.end, "bg", null);
-      return clearHighlightColors2(b.text, b.start, b.end);
-    }
-  }
 }
 
 // src/table/editor/cell-input.ts
@@ -8922,6 +9853,14 @@ var TextareaInput = class {
     });
     on("blur", () => h.blur());
   }
+  undo() {
+    this.el.focus();
+    this.el.ownerDocument.execCommand("undo");
+  }
+  redo() {
+    this.el.focus();
+    this.el.ownerDocument.execCommand("redo");
+  }
   destroy() {
     for (const fn of this.cleanups.splice(0)) fn();
     this.el.remove();
@@ -9038,7 +9977,17 @@ var CodeMirrorInput = class {
     return visibleSelection2(this.view);
   }
   focus() {
+    this.syncRoot();
     this.view.contentDOM.focus({ preventScroll: true });
+  }
+  /**
+   * 编辑器跟着它现在所在的 document 走：白板卡片编辑时 Obsidian 先在主窗口建好表格、再挪进卡片的 iframe，
+   * 编辑器还当自己在主窗口，点格子里的字时 CodeMirror 把 iframe 当成别处的焦点让它失焦，这一格就保存退出了，
+   * 光标挪不到想要的位置（B站反馈：白板里改格子只能全删重打）
+   */
+  syncRoot() {
+    const v = this._view;
+    if (v && v.dom.isConnected && v.root !== v.dom.ownerDocument) v.setRoot(v.dom.ownerDocument);
   }
   hasFocus() {
     return !!this._view?.hasFocus;
@@ -9053,6 +10002,12 @@ var CodeMirrorInput = class {
   bind(h) {
     this.handlers = h;
   }
+  undo() {
+    (0, import_commands2.undo)(this.view);
+  }
+  redo() {
+    (0, import_commands2.redo)(this.view);
+  }
   destroy() {
     this.handlers = null;
     this._view?.destroy();
@@ -9064,6 +10019,18 @@ var CodeMirrorInput = class {
 function sameTable(a, b) {
   return JSON.stringify([a.cells, a.align, a.meta]) === JSON.stringify([b.cells, b.align, b.meta]);
 }
+var V_ICONS = { top: "align-vertical-justify-start", middle: "align-vertical-justify-center", bottom: "align-vertical-justify-end" };
+function keepBlankLines(md) {
+  if (!/\n[ \t]*\n/.test(md)) return md;
+  const lines = md.split("\n");
+  let fence = false;
+  return lines.map((l, i) => {
+    if (/^\s*(```|~~~)/.test(l)) fence = !fence;
+    const inner = i > 0 && i < lines.length - 1;
+    return !fence && inner && !l.trim() ? "&nbsp;" : l;
+  }).join("\n");
+}
+var MIN_FIT_COL = 56;
 var PLAIN_RE = /^[\p{L}\p{N}\p{Zs},.;:!?'"()%+\-/@，。、；：！？“”‘’（）《》【】…—·]*$/u;
 function isPlainText(md) {
   if (!PLAIN_RE.test(md)) return false;
@@ -9083,6 +10050,8 @@ var TableEditor = class {
     this.anchor = null;
     /** 选区是点行 / 列手柄选的整行 / 整列：不因为碰到合并格往外扩 */
     this.lineSel = false;
+    /** 折着的表在这张编辑器里临时展开了（阅读视图点「展开」、搜索跳到藏着的行），不改文件 */
+    this.localUnfold = false;
     this.editing = false;
     /** 编辑时宿主送来的新表：等这一格改完再换上 */
     this.pending = null;
@@ -9103,6 +10072,8 @@ var TableEditor = class {
     this.destroyed = false;
     /** 横向滚动条占的高度（覆盖式滚动条是 0） */
     this.scrollbarH = 0;
+    /** 列宽按比例缩放时缩了多少（1 = 没缩）；拖列宽时按它换算回文件里的宽度 */
+    this.fitScale = 1;
     /** 上一次长按开菜单的时间（安卓随后还会来一次右键事件，忽略掉） */
     this.longPressAt = -Infinity;
     this.cleanups = [];
@@ -9112,11 +10083,19 @@ var TableEditor = class {
     /** 表头吸顶用滚动驱动动画（否则每次滚动后用 JS 挪，旧环境、被缩放的脑图画布里走这条） */
     this.scrollDriven = false;
     this.stickKey = "";
+    /**
+     * 表头往下挪 y 像素（0 是不挪）。挪每个格子，不挪整个 thead：iOS（WebKit）给 thead 加 transform 时
+     * 文字跟着挪、格子底色留在原地，表头变透明压在正文上（#15）
+     */
+    this.headShift = 0;
     /** 十字高亮：悬停模式下鼠标所在的格子，否则（或鼠标不在表格上）选中的格子 */
     this.crossAt = null;
     // ---------- 格式栏 ----------
     this.formatBar = null;
     this.formatBarKey = "";
+    // ---------- 手机上的编辑工具条 ----------
+    this.mobileBar = null;
+    this.mobileBarCleanup = null;
     this.table = table;
     const doc = parent.ownerDocument;
     this.root = doc.createElement("div");
@@ -9152,6 +10131,13 @@ var TableEditor = class {
     this.colHandle = this.handle("ggt-col-handle", t2("colMenu"), "grip-horizontal");
     this.addButton("ggt-add-col", t2("addCol"), () => this.apply(insertCol(this.table, colCount(this.table)), { r: this.sel?.r ?? 0, c: colCount(this.table) }));
     this.addButton("ggt-add-row", t2("addRow"), () => this.apply(insertRow(this.table, rowCount(this.table)), { r: rowCount(this.table), c: this.sel?.c ?? 0 }));
+    this.addButton("ggt-add-col-first", t2("addColFirst"), () => this.apply(insertCol(this.table, 0), { r: this.sel?.r ?? 0, c: 0 }));
+    this.addButton("ggt-add-row-first", t2("addRowFirst"), () => {
+      const at = headRows(this.table);
+      this.apply(insertRow(this.table, at), { r: at, c: this.sel?.c ?? 0 });
+    });
+    this.root.addEventListener("pointerenter", () => this.root.classList.add("is-hot"));
+    this.root.addEventListener("pointerleave", () => this.root.classList.remove("is-hot"));
     this.root.classList.toggle("is-readonly", !!host.readonly);
     parent.appendChild(this.root);
     this.bind();
@@ -9176,7 +10162,32 @@ var TableEditor = class {
     return this.table;
   }
   select(r3, c) {
+    this.revealRow(r3);
     this.setSel({ r: r3, c }, true);
+  }
+  /** 折着的表：在这一张编辑器里先展开（不改文件），要去的那一行藏着的时候用（搜索跳过来、宿主要选某一格） */
+  revealRow(r3) {
+    if (!this.folded() || r3 < headRows(this.table)) return;
+    this.localUnfold = true;
+    this.render();
+  }
+  /** 折叠着：注释里有 fold、没在这张编辑器里临时展开、表头下面真有行 */
+  folded() {
+    const tb = this.table;
+    return tb.meta.fold === 1 && !this.localUnfold && rowCount(tb) > headRows(tb);
+  }
+  /** 画出来的行数：折着时只有表头 */
+  shownRows() {
+    return this.folded() ? headRows(this.table) : rowCount(this.table);
+  }
+  /** 点「展开 N 行」：能改文件就去掉注释里的 fold；只读（阅读视图）只在这里展开，不改文件 */
+  unfold() {
+    if (this.host.readonly) {
+      this.localUnfold = true;
+      this.render();
+      return;
+    }
+    this.applyKeepRange(setFolded(this.table, false));
   }
   /**
    * 正在编辑的这一格按输入框里现在的文字算出来的表，不结束编辑；没在编辑或没改返回 null。
@@ -9288,8 +10299,42 @@ var TableEditor = class {
     }
     return false;
   }
+  /**
+   * 搜索跳到表格里（在文件中查找、全局搜索点进来）：第 r 行第 c 列格子里第 k 处 text 标出来、滚进视野（#15）。
+   * 和 Obsidian 标当前这一处一样，在那几个字外面画一圈强调色的框（盖在格子底色、==高亮== 上面，不会被它们盖住）；
+   * 不改格子的内容。找不到这段字（格式把字拆开了）就给整格画框
+   */
+  showMatch(r3, c, text, k) {
+    this.revealRow(r3);
+    const el = this.grid[r3]?.[c];
+    if (!el) return;
+    clearSearchMark();
+    el.scrollIntoView({ block: "center", inline: "nearest" });
+    const content = el.querySelector(".ggt-content");
+    const range = content && text ? findTextRange(content, text, k) : null;
+    this.root.ownerDocument.addEventListener("pointerdown", clearSearchMark, { once: true, capture: true });
+    const rects = range ? Array.from(range.getClientRects()).filter((b) => b.width > 0 && b.height > 0) : [];
+    if (rects.length) {
+      const k2 = this.scale();
+      const box = el.getBoundingClientRect();
+      const layer = el.createDiv({ cls: "ggt-search-mark" });
+      for (const b of rects) {
+        layer.createDiv().setCssProps({
+          left: `${(b.left - box.left) / k2 - el.clientLeft}px`,
+          top: `${(b.top - box.top) / k2 - el.clientTop}px`,
+          width: `${b.width / k2}px`,
+          height: `${b.height / k2}px`
+        });
+      }
+      searchMarkLayer = layer;
+      return;
+    }
+    el.classList.add("is-search-hit");
+    searchMarkCell = el;
+  }
   destroy() {
     this.hideFormatBar();
+    this.hideMobileBar();
     if (lastActive === this) lastActive = null;
     this.destroyed = true;
     this.closePopover();
@@ -9314,6 +10359,7 @@ var TableEditor = class {
       }
       this.stickHeader();
       this.placeHandles();
+      if (this.resizeBar.classList.contains("is-touch")) this.placeTouchResize();
       if (this.root.classList.contains("is-freeze") && this.crossBands.some((b) => b.classList.contains("is-shown"))) this.markCross();
     };
     const onScroll = () => win.requestAnimationFrame(update);
@@ -9352,8 +10398,20 @@ var TableEditor = class {
       findOuter();
       update();
     });
+    let parentW = -1;
+    const onParent = () => {
+      const p = this.root.parentElement;
+      const w = p ? p.clientWidth : 0;
+      if (w === parentW) return;
+      parentW = w;
+      if (!this.resize) this.fitCols();
+      onScroll();
+    };
     const ro = new win.ResizeObserver(onScroll);
     ro.observe(this.scroller);
+    const pro = new win.ResizeObserver(() => win.requestAnimationFrame(onParent));
+    if (this.root.parentElement) pro.observe(this.root.parentElement);
+    this.cleanups.push(() => pro.disconnect());
     this.cleanups.push(() => ro.disconnect());
   }
   /**
@@ -9385,17 +10443,25 @@ var TableEditor = class {
       this.root.classList.remove("is-sd");
       const pad = parseFloat((outer.ownerDocument.defaultView ?? window).getComputedStyle(outer).paddingTop) || 0;
       this.root.style.setProperty("--ggt-sticky-top", `${-pad}px`);
-      head.removeAttribute("style");
+      this.moveHead(head, 0);
       return;
     }
     if (outer && this.scrollDriven && Math.abs(this.scale() - 1) < 0.01) {
       this.stickRange(outer, head);
-      head.removeAttribute("style");
+      this.moveHead(head, 0);
       return;
     }
     this.root.classList.remove("is-sd");
-    if (stuck) head.setAttribute("style", `transform: translateY(${Math.round(offset / this.scale())}px)`);
-    else head.removeAttribute("style");
+    this.moveHead(head, stuck ? Math.round(offset / this.scale()) : 0);
+  }
+  moveHead(head, y) {
+    if (y === this.headShift && !head.hasAttribute("style")) return;
+    this.headShift = y;
+    head.removeAttribute("style");
+    for (const cell of Array.from(head.querySelectorAll(".ggt-cell"))) {
+      if (y) cell.setCssProps({ transform: `translateY(${y}px)` });
+      else cell.style.removeProperty("transform");
+    }
   }
   /**
    * 能不能用原生吸顶：表格不用横向滚动，而且表格到外面滚动区之间没有别的会滚动、会裁切的容器
@@ -9441,29 +10507,43 @@ var TableEditor = class {
     d.preset = this.table.meta.style ?? d.defPreset ?? "default";
     d.density = this.table.meta.density ?? d.defDensity ?? "comfortable";
     this.root.classList.toggle("is-full", d.defFull === "1" && !this.table.meta.w?.some((x) => x != null));
+    this.root.classList.toggle("is-strict", d.defStrict === "1");
+    if (this.table.meta.fs) this.root.setCssProps({ "--ggt-fs": String(this.table.meta.fs) });
+    else this.root.style.removeProperty("--ggt-fs");
   }
   // ---------- 渲染 ----------
   render() {
     const doc = this.root.ownerDocument;
     const hadFocus = this.input.hasFocus();
     const tb = this.table;
-    const rows = rowCount(tb);
+    const all = rowCount(tb);
+    const folded = this.folded();
+    const rows = this.shownRows();
     const cols = colCount(tb);
     if (this.sel) this.sel = this.canon({ r: Math.min(this.sel.r, rows - 1), c: Math.min(this.sel.c, cols - 1) });
     if (this.anchor) this.anchor = { r: Math.min(this.anchor.r, rows - 1), c: Math.min(this.anchor.c, cols - 1) };
+    this.root.classList.toggle("is-folded", folded);
     const ms = merges(tb);
     this.applyLook();
     this.tableEl.replaceChildren();
-    this.grid = Array.from({ length: rows }, () => new Array(cols));
+    this.grid = Array.from({ length: all }, () => new Array(cols));
     this.marked = [];
     this.crossed = [];
     const colgroup = this.tableEl.appendChild(doc.createElement("colgroup"));
+    const ws = Array.from({ length: cols }, (_, c) => widthOf(tb, c) ?? 0);
+    const set = ws.filter((w) => w > 0);
+    const avg = set.length ? set.reduce((a, b) => a + b, 0) / set.length : 0;
+    const total = ws.reduce((a, w) => a + (w || avg), 0);
+    if (set.length) this.tableEl.setCssProps({ "--ggt-total": `${Math.ceil(total)}px` });
+    else this.tableEl.style.removeProperty("--ggt-total");
     for (let c = 0; c < cols; c++) {
       const col = colgroup.appendChild(doc.createElement("col"));
-      const w = widthOf(tb, c);
+      const w = ws[c];
       if (w) col.style.width = `${w}px`;
+      if (set.length) col.setCssProps({ "--ggt-pct": `${((w || avg) / total * 100).toFixed(3)}%` });
     }
     const thead = this.tableEl.appendChild(doc.createElement("thead"));
+    this.headShift = 0;
     const tbody = this.tableEl.appendChild(doc.createElement("tbody"));
     const head = headRows(tb);
     const freeze = !!tb.meta.headerCol && tb.meta.freeze === 1;
@@ -9477,7 +10557,7 @@ var TableEditor = class {
         cell.className = "ggt-cell";
         if (m) {
           cell.colSpan = m.c2 - m.c1 + 1;
-          cell.rowSpan = m.r2 - m.r1 + 1;
+          cell.rowSpan = Math.min(m.r2, rows - 1) - m.r1 + 1;
           cell.classList.add("is-merged");
           for (let i = m.r1; i <= m.r2; i++) for (let j = m.c1; j <= m.c2; j++) this.grid[i][j] = cell;
         } else this.grid[r3][c] = cell;
@@ -9485,23 +10565,47 @@ var TableEditor = class {
         cell.dataset.c = String(c);
         const a = tb.align[c];
         if (a) cell.dataset.align = a;
+        const va = vAlignOf(tb, c);
+        if (va) cell.dataset.valign = va;
         const bg = bgOf(tb, r3, c);
         if (bg) cell.dataset.bg = bg;
         const fg = fgOf(tb, r3, c);
         if (fg) cell.dataset.fg = fg;
+        const fz = fontSizeOf(tb, r3, c);
+        if (fz) cell.setCssProps({ "--ggt-fz": String(fz) });
         if (tb.meta.headerCol && c === 0 && r3 >= head) cell.classList.add("is-head-col");
         if (freeze && c === 0 && (!m || m.c2 === 0)) cell.classList.add("is-frozen");
         if (!m && !widthOf(tb, c)) cell.classList.add("is-auto-width");
         const content = cell.appendChild(doc.createElement("div"));
         content.className = "ggt-content";
-        if (r3 === rows - 1 && r3 >= head && hasTotal(tb)) cell.classList.add("is-total-row");
+        if (r3 === all - 1 && r3 >= head && hasTotal(tb)) cell.classList.add("is-total-row");
         this.fillCell(content, r3, c, m ? mergedText(tb, m) : tb.cells[r3][c]);
       }
     }
+    if (folded) {
+      const bar = tbody.createEl("tr").createEl("td");
+      bar.className = "ggt-fold-bar";
+      bar.colSpan = cols;
+      const btn = bar.createEl("button");
+      btn.type = "button";
+      btn.className = "ggt-fold-btn";
+      btn.textContent = t2("unfoldRows").replace("{n}", String(all - head));
+      btn.addEventListener("pointerdown", (ev) => {
+        ev.stopPropagation();
+        ev.preventDefault();
+      });
+      btn.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.unfold();
+      });
+    }
+    this.fitCols();
     this.markSel();
     if (hadFocus && this.sel) this.input.focus();
     this.stickHeader();
     if (!this.resize) this.resizeBar.classList.remove("is-shown", "is-active");
+    this.placeTouchResize();
   }
   /** 状态列的数据格画成彩色标签，别的照常 */
   fillCell(el, r3, c, md) {
@@ -9538,11 +10642,11 @@ var TableEditor = class {
       if (!rest) return;
       const span = el.appendChild(el.ownerDocument.createElement("span"));
       span.className = "ggt-check-text";
-      if (this.host.renderMarkdown) this.host.renderMarkdown(span, rest);
+      if (this.host.renderMarkdown) this.host.renderMarkdown(span, keepBlankLines(rest));
       else span.textContent = rest;
       return;
     }
-    if (this.host.renderMarkdown && !isPlainText(md)) this.host.renderMarkdown(el, md);
+    if (this.host.renderMarkdown && !isPlainText(md)) this.host.renderMarkdown(el, keepBlankLines(md));
     else {
       el.textContent = md;
       if (this.host.renderMarkdown) el.dir = "auto";
@@ -9618,7 +10722,7 @@ var TableEditor = class {
   }
   /** 填充柄放在选区右下角；没选中、在编辑、只读时不显示 */
   placeFill() {
-    const box = !this.editing && !this.host.readonly ? this.selBox() : null;
+    const box = !this.editing && !this.host.readonly && !this.folded() ? this.selBox() : null;
     this.fillHandle.classList.toggle("is-shown", !!box);
     if (box) this.fillHandle.setAttribute("style", `left:${box.x + box.w - 4}px;top:${box.y + box.h - 4}px`);
   }
@@ -9721,6 +10825,7 @@ var TableEditor = class {
     this.markCross();
     if (cell) this.placeFill();
     this.placeHandles();
+    this.placeTouchResize();
   }
   // ---------- 选中、编辑 ----------
   /** extend：保留选区的另一头（Shift、拖选），否则只选这一格 */
@@ -9752,6 +10857,7 @@ var TableEditor = class {
     this.editing = true;
     cell.classList.add("is-editing");
     this.fillHandle.classList.remove("is-shown");
+    this.showMobileBar();
     if (keep) {
       this.input.reset(shownText(this.table, this.sel.r, this.sel.c));
       const end = this.input.value.length;
@@ -9786,6 +10892,7 @@ var TableEditor = class {
   commit() {
     this.closeSuggest();
     this.hideFormatBar();
+    this.hideMobileBar();
     if (!this.editing || !this.sel) return;
     const p = this.sel;
     this.editing = false;
@@ -9810,6 +10917,7 @@ var TableEditor = class {
   cancel() {
     this.closeSuggest();
     this.hideFormatBar();
+    this.hideMobileBar();
     if (!this.editing || !this.sel) return;
     this.editing = false;
     this.cellEl(this.sel)?.classList.remove("is-editing");
@@ -9844,7 +10952,7 @@ var TableEditor = class {
   /** 方向键、Tab、Enter 走格；extend 是 Shift+方向键扩大选区。从合并的格子出发时从它的边上走出去 */
   move(dr, dc, wrap2 = false, extend = false) {
     if (!this.sel) return;
-    const rows = rowCount(this.table);
+    const rows = this.shownRows();
     const cols = colCount(this.table);
     const m = mergeAt(this.table, this.sel.r, this.sel.c);
     let { r: r3, c } = this.sel;
@@ -9873,7 +10981,7 @@ var TableEditor = class {
       return;
     }
     if (r3 >= rows) {
-      if (wrap2) {
+      if (wrap2 && !this.folded()) {
         this.apply(insertRow(this.table, rows), { r: rows, c: 0 });
         return;
       }
@@ -9941,6 +11049,7 @@ var TableEditor = class {
         this.touched = true;
         return this.touchStart(ev, p);
       }
+      this.host.dismissMenus?.();
       ev.preventDefault();
       if (ev.button !== 0) return;
       if (ev.shiftKey && this.sel) {
@@ -10021,13 +11130,20 @@ var TableEditor = class {
       const inRange = this.isMulti() && r3 && p.r >= r3.r1 && p.r <= r3.r2 && p.c >= r3.c1 && p.c <= r3.c2;
       if (!inRange) this.setSel(p, true);
       else this.input.focus();
-      this.openMenu(this.cellMenu(inRange && this.sel ? this.sel : p), ev.clientX, ev.clientY);
+      const items = this.cellMenu(inRange && this.sel ? this.sel : p);
+      this.openMenu(items, ev.clientX, ev.clientY);
+      const pop = this.popover;
+      this.host.eventMenuItems?.(ev, (extra) => {
+        if (!extra.length || this.popover !== pop) return;
+        this.openMenu([...items, { separator: true }, ...extra], ev.clientX, ev.clientY);
+      });
     });
     this.on(this.resizeBar, "pointerdown", (ev) => this.startResize(ev, this.resizeBar));
     this.on(this.fillHandle, "pointerdown", (ev) => this.fillDrag(ev));
     this.on(this.root, "ggt-restyle", () => {
       this.refreshInput();
       this.applyLook();
+      this.fitCols();
       this.markCross();
     });
     this.on(this.tableEl, "pointermove", (ev) => {
@@ -10073,7 +11189,7 @@ var TableEditor = class {
       }
     });
     this.on(this.root, "pointerleave", () => {
-      if (!this.resize) this.resizeBar.classList.remove("is-shown");
+      if (!this.resize && !this.resizeBar.classList.contains("is-touch")) this.resizeBar.classList.remove("is-shown");
       if (this.popover) return;
       this.hover = null;
       this.placeHandles();
@@ -10085,6 +11201,7 @@ var TableEditor = class {
     this.on(doc, "pointerdown", (ev) => {
       const target = ev.target;
       if (this.formatBar?.contains(target)) return;
+      if (this.mobileBar?.contains(target)) return;
       if (this.suggest?.el.contains(target)) return;
       if (this.popover && !this.popover.contains(target)) this.closePopover();
       if (this.sel && !this.root.contains(target) && !(this.popover && this.popover.contains(target))) {
@@ -10119,7 +11236,7 @@ var TableEditor = class {
       } else if (ev.key === "Escape") {
         ev.preventDefault();
         ev.stopPropagation();
-        this.cancel();
+        this.commit();
       }
       ev.stopPropagation();
       return;
@@ -10166,7 +11283,8 @@ var TableEditor = class {
           this.apply(toggleCheck(this.table, this.sel.r, this.sel.c), this.sel);
           return;
         }
-        break;
+        stop();
+        return this.startEdit(true);
       case "Enter":
       case "F2":
         stop();
@@ -10235,6 +11353,17 @@ var TableEditor = class {
       return true;
     }
     if (!mark && !link2) return false;
+    return this.formatMark(mark);
+  }
+  /** 按 Obsidian 命令做格式（用户把加粗、斜体这些命令改成了别的快捷键时，keys.ts 按命令调这里） */
+  formatCommand(kind) {
+    if (!this.sel || this.host.readonly) return false;
+    const marks = { bold: "**", italic: "*", strike: "~~", highlight: "==" };
+    return this.formatMark(kind === "link" ? null : marks[kind]);
+  }
+  /** mark 是 null 时插链接 */
+  formatMark(mark) {
+    if (!this.sel) return false;
     if (this.editing) {
       const kinds = { "**": { kind: "bold" }, "*": { kind: "italic" }, "~~": { kind: "strike" }, "==": { kind: "highlight" } };
       if (mark && this.input instanceof CodeMirrorInput && this.input.selectionStart !== this.input.selectionEnd) this.applyFormat(kinds[mark]);
@@ -10343,26 +11472,205 @@ var TableEditor = class {
     btn("is-italic", t2("fmtItalic"), { kind: "italic" }, (b) => b.textContent = "I");
     btn("is-strike", t2("fmtStrike"), { kind: "strike" }, (b) => b.textContent = "S");
     btn("is-underline", t2("fmtUnderline"), { kind: "underline" }, (b) => b.textContent = "U");
-    btn("is-highlight", t2("fmtHighlight"), { kind: "highlight" }, iconBtn("highlighter", "H"));
-    if (colors.text.length) sep();
-    for (const c of colors.text)
-      btn("is-color", `${t2("fmtTextColor")} ${c}`, { kind: "color", color: c }, (b) => {
-        b.textContent = "A";
-        b.style.color = c;
+    sep();
+    const local = {};
+    const mem = this.host.colorMemory?.() ?? {
+      last: (k) => local[k] ?? null,
+      recent: () => [],
+      remember: (k, c) => local[k] = c
+    };
+    const common = (kind) => kind === "text" ? colors.text : colors.highlight;
+    const current2 = (kind) => mem.last(kind) ?? common(kind)[0] ?? (kind === "bg" ? THEME_HIGHLIGHT2 : null);
+    const tip = (el, text) => el.title = text;
+    let open = null;
+    const closePalette = () => {
+      open?.el.remove();
+      open = null;
+    };
+    const split = (kind) => {
+      const el = createColorSplit2({
+        doc,
+        cls: kind === "text" ? "is-text-color" : "is-highlighter",
+        title: kind === "text" ? t2("fmtTextColor") : t2("fmtHighlightColor"),
+        caretTitle: kind === "text" ? t2("palTextMore") : t2("palBgMore"),
+        face: (f) => {
+          if (kind === "text") f.textContent = "A";
+          else iconBtn("highlighter", "H")(f);
+        },
+        current: () => current2(kind),
+        paintBar: (b, c) => paintColor2(b, c, kind),
+        tip,
+        onApply: () => {
+          const c = current2(kind);
+          if (!c) return;
+          closePalette();
+          this.applyFormat(colorFormat2(kind, c));
+        },
+        onOpen: (anchor) => {
+          if (open?.kind === kind) return closePalette();
+          closePalette();
+          const pick = (c, apply = (f) => this.applyFormat(f)) => {
+            closePalette();
+            if (c !== null) mem.remember(kind, c);
+            refreshColorSplit2(anchor);
+            apply(colorFormat2(kind, c));
+          };
+          const pal = createPalette2(doc, {
+            text: { common: t2("palCommon"), recent: t2("palRecent"), alpha: t2("palAlpha"), custom: t2("palCustom") },
+            common: common(kind),
+            recent: mem.recent(kind),
+            alpha: true,
+            defaultAlpha: kind === "text" ? 100 : 60,
+            paint: (b, c) => paintColor2(b, c, kind),
+            label: (c) => c === THEME_HIGHLIGHT2 ? t2("fmtHighlight") : c,
+            noneLabel: kind === "text" ? t2("palNoText") : t2("palNoHighlight"),
+            extras: kind === "bg" && !common("bg").includes(THEME_HIGHLIGHT2) ? [{ value: THEME_HIGHLIGHT2, label: t2("fmtHighlight"), paint: (b) => paintColor2(b, THEME_HIGHLIGHT2, "bg") }] : [],
+            onPick: (c) => pick(c),
+            onCustom: () => {
+              const apply = this.customColorTarget();
+              return (c) => pick(c, apply);
+            },
+            tip
+          });
+          pal.classList.add("ggt-format-palette");
+          bar.append(pal);
+          pal.style.left = `${Math.max(0, anchor.offsetLeft)}px`;
+          open = { kind, el: pal };
+        }
       });
-    if (colors.highlight.length) sep();
-    for (const c of colors.highlight) {
-      const hl = highlightOf2(c);
-      btn("is-bg", `${t2("fmtHighlightColor")} ${c}`, hl ? { kind: "highlight", color: hl } : { kind: "bg", color: c }, (b) => {
-        b.textContent = "A";
-        if (hl) b.dataset.highlight = hl;
-        else b.style.background = c;
-      });
-    }
+      bar.append(el);
+    };
+    split("text");
+    split("bg");
     sep();
     btn("is-clear", t2("fmtClear"), { kind: "clear" }, iconBtn("eraser", "\u232B"));
     doc.body.append(bar);
     return bar;
+  }
+  /**
+   * 色板里点「自定义…」：系统取色器会拿走焦点，格子可能已经保存退出编辑了。先记下是哪一格、选的哪几个字，
+   * 选好颜色后还在编辑这一格就照常上格式，否则直接改这一格的源码
+   */
+  customColorTarget() {
+    const pos = this.sel ? { ...this.sel } : null;
+    const { from, to } = this.input.visibleSelection();
+    return (fmt2) => {
+      if (!pos || from === to) return;
+      if (this.editing && this.sel && this.sel.r === pos.r && this.sel.c === pos.c) {
+        this.input.focus();
+        this.input.setSelectionRange(from, to);
+        this.applyFormat(fmt2);
+        return;
+      }
+      const cur = this.table.cells[pos.r]?.[pos.c];
+      if (cur === void 0) return;
+      const r3 = applyInlineFormat2(cur, from, to, fmt2);
+      if (r3.text !== cur) this.apply(setCell(this.table, pos.r, pos.c, r3.text), pos);
+    };
+  }
+  /**
+   * 手机、平板上编辑格子时，键盘上方的一排按钮：完成、撤销重做、加粗斜体删除线高亮、双链、勾选框、格内换行、上一格 / 下一格。
+   * Obsidian 自己的手机工具条在焦点离开笔记编辑器时会收起来（它的按钮也只管笔记正文），所以表格自己出一条
+   */
+  showMobileBar() {
+    const doc = this.root.ownerDocument;
+    if (this.mobileBar || this.host.readonly || !doc.body.classList.contains("is-mobile")) return;
+    const win = doc.defaultView ?? window;
+    const bar = doc.createElement("div");
+    bar.className = "ggt-mobile-bar";
+    bar.addEventListener("pointerdown", (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+    });
+    bar.addEventListener("mousedown", (ev) => ev.preventDefault());
+    const btn = (icon2, fallback, title, run) => {
+      const b = doc.createElement("button");
+      b.type = "button";
+      b.className = "ggt-mobile-btn";
+      b.setAttribute("aria-label", title);
+      if (this.host.setIcon) this.host.setIcon(b, icon2);
+      else b.textContent = fallback;
+      b.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        run();
+      });
+      bar.append(b);
+    };
+    const sep = () => {
+      const s = doc.createElement("span");
+      s.className = "ggt-mobile-sep";
+      bar.append(s);
+    };
+    btn("check", "\u2713", t2("mbDone"), () => this.commit());
+    btn("undo-2", "\u21B6", t2("mbUndo"), () => this.input.undo());
+    btn("redo-2", "\u21B7", t2("mbRedo"), () => this.input.redo());
+    sep();
+    btn("bold", "B", t2("fmtBold"), () => this.formatOrInsert({ kind: "bold" }, "**", "**"));
+    btn("italic", "I", t2("fmtItalic"), () => this.formatOrInsert({ kind: "italic" }, "*", "*"));
+    btn("strikethrough", "S", t2("fmtStrike"), () => this.formatOrInsert({ kind: "strike" }, "~~", "~~"));
+    btn("highlighter", "H", t2("fmtHighlight"), () => this.formatOrInsert({ kind: "highlight" }, "==", "=="));
+    sep();
+    btn("link-2", "[[", t2("mbLink"), () => this.insertAround("[[", "]]"));
+    btn("square-check", "\u2611", t2("mbCheckbox"), () => this.toggleEditCheckbox());
+    btn("corner-down-left", "\u21B5", t2("mbNewline"), () => this.insertAround("\n", ""));
+    sep();
+    btn("arrow-left", "\u2190", t2("mbPrevCell"), () => this.editNext(-1));
+    btn("arrow-right", "\u2192", t2("mbNextCell"), () => this.editNext(1));
+    doc.body.append(bar);
+    const vv = win.visualViewport;
+    const place = () => {
+      const bottom = vv ? Math.max(0, win.innerHeight - (vv.offsetTop + vv.height)) : 0;
+      bar.style.setProperty("--ggt-kb", `${Math.round(bottom)}px`);
+    };
+    place();
+    vv?.addEventListener("resize", place);
+    vv?.addEventListener("scroll", place);
+    this.mobileBarCleanup = () => {
+      vv?.removeEventListener("resize", place);
+      vv?.removeEventListener("scroll", place);
+    };
+    this.mobileBar = bar;
+  }
+  hideMobileBar() {
+    this.mobileBarCleanup?.();
+    this.mobileBarCleanup = null;
+    this.mobileBar?.remove();
+    this.mobileBar = null;
+  }
+  /** 选了字就给选中的字上格式；没选就插一对标记、光标放中间，接着打的字就是这个格式 */
+  formatOrInsert(fmt2, open, close) {
+    const { from, to } = this.input.visibleSelection();
+    if (from !== to) this.applyFormat(fmt2);
+    else this.insertAround(open, close);
+  }
+  /** 在光标（选区）两边插入 open、close，光标留在中间；插 [[ ]] 时接着弹出笔记补全 */
+  insertAround(open, close) {
+    if (!this.editing) return;
+    const el = this.input;
+    const a = el.selectionStart;
+    const b = el.selectionEnd;
+    const v = el.value;
+    el.value = v.slice(0, a) + open + v.slice(a, b) + close + v.slice(b);
+    el.setSelectionRange(a + open.length, b + open.length);
+    this.autosize();
+    this.updateSuggest();
+  }
+  /** 格子开头加上 / 去掉勾选框 */
+  toggleEditCheckbox() {
+    if (!this.editing) return;
+    const el = this.input;
+    const v = el.value;
+    const next = CHECK_RE.test(v) ? v.replace(CHECK_RE, "").trimStart() : `[ ] ${v}`;
+    el.value = next;
+    el.setSelectionRange(next.length, next.length);
+    this.autosize();
+  }
+  /** 保存这一格，接着编辑上一格 / 下一格（行尾接下一行开头，和 Tab 一样） */
+  editNext(dir) {
+    if (!this.editing) return;
+    this.commit();
+    this.move(0, dir, true);
+    this.startEdit(true);
   }
   /** ⌘K：选中的文字变成 [文字]()，光标放进括号里填网址 */
   insertLink() {
@@ -10656,7 +11964,7 @@ var TableEditor = class {
         if (m && (m.r1 !== r3 || m.c1 !== c) && m.r1 >= rect.r1 && m.c1 >= rect.c1) continue;
         const el = this.cellEl({ r: r3, c });
         const cs = el ? win.getComputedStyle(el) : null;
-        const styles = ["border:1px solid #d9d9d9", "padding:6px 10px", "vertical-align:top"];
+        const styles = ["border:1px solid #d9d9d9", "padding:6px 10px", `vertical-align:${vAlignOf(tb, c) ?? "top"}`];
         const a = tb.align[c];
         if (a) styles.push(`text-align:${a}`);
         if (cs) {
@@ -10665,6 +11973,8 @@ var TableEditor = class {
           if (!plain && fgOf(tb, r3, c)) styles.push(`color:${onWhite(cs.color) ?? cs.color}`);
           if (Number(cs.fontWeight) >= 600) styles.push("font-weight:600");
         }
+        const size = (tb.meta.fs ?? 1) * (fontSizeOf(tb, r3, c) ?? 1);
+        if (!plain && size !== 1) styles.push(`font-size:${Math.round(size * 100)}%`);
         let span = "";
         if (m && m.r1 === r3 && m.c1 === c) {
           const cs2 = Math.min(m.c2, rect.c2) - c + 1;
@@ -10813,6 +12123,7 @@ var TableEditor = class {
   /** 指针离哪条列边线（每列的右边）不到 4 像素，就把调列宽的线放到那里；不在附近就藏起来 */
   placeResizeBar(x, y) {
     const bar = this.resizeBar;
+    bar.classList.remove("is-touch");
     const t3 = this.tableEl.getBoundingClientRect();
     let hit = -1;
     let at = 0;
@@ -10845,16 +12156,43 @@ var TableEditor = class {
     bar.setAttribute("style", `left:${(at - base.left) / k - 4}px;top:${(t3.top - base.top) / k}px;height:${t3.height / k}px`);
     bar.classList.add("is-shown");
   }
+  /**
+   * 触屏上没有「鼠标移到列边线」：点选一格后，在这一列的右边线上放一个能拖的把手（同一根调列宽的线，带个圆点），
+   * 拖动改列宽、双击恢复自动列宽。只在最近一次是用手指点的、选着一格时出现（轻点进了编辑也在，拖之前先保存这一格）
+   */
+  placeTouchResize() {
+    const bar = this.resizeBar;
+    if (this.resize) return;
+    const cell = this.touched && this.sel && !this.isMulti() && !this.host.readonly ? this.cellEl(this.sel) : null;
+    if (!cell || !cell.isConnected) {
+      if (bar.classList.contains("is-touch")) bar.classList.remove("is-shown", "is-touch");
+      return;
+    }
+    const c = Number(cell.dataset.c) + (cell.colSpan || 1) - 1;
+    const col = this.tableEl.querySelectorAll("col")[c];
+    if (!col) return;
+    const t3 = this.tableEl.getBoundingClientRect();
+    const base = this.root.getBoundingClientRect();
+    const k = this.scale();
+    const at = col.getBoundingClientRect().right;
+    bar.dataset.c = String(c);
+    bar.setAttribute("style", `left:${(at - base.left) / k - 4}px;top:${(t3.top - base.top) / k}px;height:${t3.height / k}px`);
+    const cb = cell.getBoundingClientRect();
+    bar.style.setProperty("--ggt-grip-y", `${(cb.top + cb.height / 2 - t3.top) / k}px`);
+    bar.classList.add("is-shown", "is-touch");
+  }
   startResize(ev, handle) {
     if (this.host.readonly) return;
     ev.preventDefault();
     ev.stopPropagation();
+    if (this.editing) this.commit();
     const c = Number(handle.dataset.c);
     const col = this.tableEl.querySelectorAll("col")[c];
     if (!col || Number.isNaN(c)) return;
     const k = this.scale();
-    this.resize = { c, startX: ev.clientX, startW: col.getBoundingClientRect().width / k, col };
+    this.resize = { c, startX: ev.clientX, startW: col.getBoundingClientRect().width / k, col, fitW: this.root.classList.contains("is-fit") ? parseFloat(this.tableEl.style.width) || 0 : 0, scale: this.fitScale };
     const startLeft = parseFloat(handle.style.left) || 0;
+    const grip = handle.style.getPropertyValue("--ggt-grip-y");
     handle.classList.add("is-active");
     this.root.classList.add("is-resizing");
     try {
@@ -10866,9 +12204,11 @@ var TableEditor = class {
       if (!r3) return;
       const w = Math.max(40, Math.round(r3.startW + (e.clientX - r3.startX) / k));
       r3.col.style.width = `${w}px`;
+      if (r3.fitW) this.tableEl.style.width = `${r3.fitW - r3.startW + w}px`;
       const tr = this.tableEl.getBoundingClientRect();
       const base = this.root.getBoundingClientRect();
       handle.setAttribute("style", `left:${startLeft + (w - r3.startW)}px;top:${(tr.top - base.top) / k}px;height:${tr.height / k}px`);
+      if (grip) handle.style.setProperty("--ggt-grip-y", grip);
       this.placeHandles();
     };
     const up = () => {
@@ -10881,7 +12221,18 @@ var TableEditor = class {
       this.resize = null;
       if (!r3) return;
       const w = parseFloat(r3.col.style.width);
-      if (Math.abs(w - r3.startW) >= 1) this.apply(setWidth(this.table, r3.c, w));
+      if (Math.abs(w - r3.startW) < 1) {
+        this.fitCols();
+        return;
+      }
+      const fit = this.root.dataset.defFit === "1";
+      const avail = this.availWidth();
+      const wide = fit && avail > 0 && this.tableEl.offsetWidth > avail + 1;
+      if (wide) this.apply(setWide(r3.scale !== 1 ? setWidths(this.table, this.colWidths()) : setWidth(this.table, r3.c, w), true));
+      else {
+        const n = setWidth(this.table, r3.c, Math.round(w / r3.scale));
+        this.apply(fit ? setWide(n, false) : n);
+      }
     };
     handle.addEventListener("pointermove", move);
     handle.addEventListener("pointerup", up);
@@ -10968,7 +12319,7 @@ var TableEditor = class {
       if (!dragging) {
         if (this.editing) this.commit();
         this.anchor = row ? { r: p.r, c: 0 } : { r: 0, c: p.c };
-        this.sel = row ? { r: p.r, c: colCount(this.table) - 1 } : { r: rowCount(this.table) - 1, c: p.c };
+        this.sel = row ? { r: p.r, c: colCount(this.table) - 1 } : { r: this.shownRows() - 1, c: p.c };
         this.lineSel = true;
         this.markSel();
         this.input.focus();
@@ -11052,7 +12403,7 @@ var TableEditor = class {
       const el = this.cellEl(q);
       return !!el && el.getBoundingClientRect().left <= vis.left + 1;
     };
-    const rowP = (h && atRowStart(h) ? h : null) ?? lineRow ?? touchSel;
+    const rowP = this.folded() ? null : (h && atRowStart(h) ? h : null) ?? lineRow ?? touchSel;
     const colP = (h && h.r < head ? h : null) ?? lineCol ?? touchSel;
     this.rowHandle.classList.toggle("is-shown", !!rowP);
     this.colHandle.classList.toggle("is-shown", !!colP);
@@ -11113,6 +12464,7 @@ var TableEditor = class {
     const align = (a, title, icon2) => ({
       title,
       icon: icon2,
+      inline: true,
       checked: tb.align.every((x) => (x ?? "left") === a),
       run: () => keep(alignAll(this.table, a))
     });
@@ -11124,25 +12476,49 @@ var TableEditor = class {
       { title: t2("rowSpacing") },
       dens(null),
       ...TABLE_DENSITIES.map((x) => dens(x)),
+      ...this.sizeItems(t2("tableFontSize"), tb.meta.fs ?? 1, (v) => keep(setTableFontSize(this.table, v))),
       { separator: true },
+      { title: t2("align") },
       align("left", t2("alignAllLeft"), "align-left"),
       align("center", t2("alignAllCenter"), "align-center"),
       align("right", t2("alignAllRight"), "align-right"),
+      ...["top", "middle", "bottom"].map((v) => {
+        const val = v === "top" ? null : v;
+        return {
+          title: t2(`vAlignAll_${v}`),
+          icon: V_ICONS[v],
+          inline: true,
+          checked: Array.from({ length: colCount(tb) }, (_, c) => vAlignOf(tb, c)).every((x) => x === val),
+          run: () => keep(vAlignAll(this.table, val))
+        };
+      }),
       { separator: true },
-      { title: t2("headerRows") },
+      // 表头行数排成一排（1 2 3），菜单矮一些，矮窗口里不用滚
       ...Array.from({ length: MAX_HEAD_ROWS }, (_, i) => ({
+        chipText: String(i + 1),
+        rowLabel: i === 0 ? t2("headerRows") : void 0,
         title: t2("headerRowsN").replace("{n}", String(i + 1)),
         checked: headRows(tb) === i + 1,
         disabled: headRows(tb) !== i + 1 && !canSetHead(tb, i + 1),
         run: () => keep(setTableLook(this.table, { head: i + 1 }))
       })),
       { separator: true },
+      {
+        title: t2("foldTable"),
+        icon: "chevrons-down-up",
+        checked: tb.meta.fold === 1,
+        disabled: tb.meta.fold !== 1 && rowCount(tb) <= headRows(tb),
+        run: () => {
+          this.localUnfold = false;
+          keep(setFolded(this.table, this.table.meta.fold !== 1));
+        }
+      },
       { title: t2("headerColumn"), icon: "panel-left", checked: !!tb.meta.headerCol, run: () => keep(setTableLook(this.table, { headerCol: !this.table.meta.headerCol })) },
       // 冻结是标题列的选项：标题列开着才出现
       ...tb.meta.headerCol ? [{ title: t2("freezeHeaderCol"), icon: "pin", checked: tb.meta.freeze === 1, run: () => keep(setTableLook(this.table, { freeze: this.table.meta.freeze !== 1 })) }] : [],
       { separator: true },
       { title: t2("distributeCols"), icon: "columns-3", run: () => keep(setWidths(this.table, this.colWidths().map((_, _i, all) => all.reduce((a, b) => a + b, 0) / all.length))) },
-      { title: t2("fitWidth"), icon: "move-horizontal", run: () => keep(setWidths(this.table, this.fitWidths())) },
+      { title: t2("fitWidth"), icon: "move-horizontal", run: () => keep(setWide(setWidths(this.table, this.fitWidths()), false)) },
       { title: t2("autoWidthAll"), icon: "move-horizontal", disabled: !tb.meta.w?.some((x) => x != null), run: () => keep(autoWidthAll(this.table)) },
       { title: t2("clearAllBg"), icon: "paintbrush", disabled: !Object.keys(tb.meta.bg ?? {}).length && !Object.keys(tb.meta.fg ?? {}).length, run: () => keep(clearAllBg(this.table)) },
       { separator: true },
@@ -11178,6 +12554,43 @@ var TableEditor = class {
   colWidths() {
     const k = this.scale();
     return Array.from(this.tableEl.querySelectorAll("col")).map((c) => c.getBoundingClientRect().width / k);
+  }
+  /**
+   * 设置「列宽按比例缩放」（#10）：设过列宽的表格比正文宽时，各列按现在的比例缩到正好放下，不出横向滚动条。
+   * 只改显示（col 的 style），文件里还是原来的像素列宽。每列最窄 MIN_FIT_COL，列太多缩不下的照样横向滚动
+   */
+  fitCols() {
+    const tb = this.table;
+    const t3 = this.tableEl;
+    const cols = Array.from(t3.querySelectorAll("colgroup > col"));
+    if (this.fitScale !== 1 || this.root.classList.contains("is-fit")) {
+      cols.forEach((col, c) => {
+        const w = widthOf(tb, c);
+        col.style.width = w ? `${w}px` : "";
+      });
+      t3.style.removeProperty("width");
+      this.root.classList.remove("is-fit");
+      this.fitScale = 1;
+    }
+    if (this.root.dataset.defFit !== "1" || tb.meta.wide || !tb.meta.w?.some((x) => x != null) || this.resize) return;
+    const avail = this.availWidth();
+    const natural = t3.offsetWidth;
+    if (avail <= 0 || !natural || natural <= avail + 1) return;
+    const k = this.scale();
+    const ws = cols.map((c) => c.getBoundingClientRect().width / k);
+    const sum = ws.reduce((a, b) => a + b, 0);
+    if (!sum) return;
+    const f = avail / sum;
+    const px = ws.map((w) => Math.max(MIN_FIT_COL, Math.floor(w * f)));
+    cols.forEach((col, c) => col.style.width = `${px[c]}px`);
+    t3.style.width = `${px.reduce((a, b) => a + b, 0)}px`;
+    this.root.classList.add("is-fit");
+    this.fitScale = f;
+  }
+  /** 正文给表格的宽度（量外层，表格自己比它宽时就要横向滚动） */
+  availWidth() {
+    const host = this.root.parentElement;
+    return host ? host.clientWidth - 2 : 0;
   }
   /** 撑满页面：按现在各列的比例放大 / 缩小到正文的可用宽度 */
   fitWidths() {
@@ -11246,6 +12659,10 @@ var TableEditor = class {
       { separator: true },
       ...this.statusColorItems(p),
       ...this.colorItems(cells),
+      ...(() => {
+        const sizes = new Set(cells.map((q) => fontSizeOf(tb, q.r, q.c) ?? 1));
+        return this.sizeItems(t2("fontSize"), sizes.size === 1 ? [...sizes][0] : void 0, (v) => this.applyKeepRange(setFontSize(this.table, cells, v)));
+      })(),
       { separator: true },
       { title: CHECK_RE.test(tb.cells[p.r][p.c]) ? t2("removeCheckbox") : t2("addCheckbox"), icon: "square-check", disabled: multi, run: () => this.apply(setCell(tb, p.r, p.c, CHECK_RE.test(tb.cells[p.r][p.c]) ? tb.cells[p.r][p.c].replace(CHECK_RE, "").trimStart() : `[ ] ${tb.cells[p.r][p.c]}`.trimEnd()), p) },
       { title: t2("clearCell"), icon: "eraser", disabled: !cells.some((c) => tb.cells[c.r][c.c]), run: () => this.apply(clearCells(tb, cells), this.sel ?? p) },
@@ -11336,6 +12753,7 @@ var TableEditor = class {
     const item = (a, title, icon2) => ({
       title,
       icon: icon2,
+      inline: true,
       checked: one === a,
       run: () => {
         const k = keep();
@@ -11348,7 +12766,36 @@ var TableEditor = class {
         }
       }
     });
-    return [item("left", t2("alignLeft"), "align-left"), item("center", t2("alignCenter"), "align-center"), item("right", t2("alignRight"), "align-right")];
+    const vCur = new Set(cols.map((x) => vAlignOf(this.table, x)));
+    const vOne = vCur.size === 1 ? [...vCur][0] : void 0;
+    const vItem = (v) => {
+      const val = v === "top" ? null : v;
+      return {
+        title: t2(`vAlign_${v}`),
+        icon: V_ICONS[v],
+        inline: true,
+        checked: vOne === val,
+        run: () => {
+          const k = keep();
+          let next = this.table;
+          for (const x of cols) next = setVAlign(next, x, val);
+          this.apply(next, k.sel ?? void 0);
+          if (k.anchor) {
+            this.anchor = k.anchor;
+            this.markSel();
+          }
+        }
+      };
+    };
+    return [
+      { title: t2("align") },
+      item("left", t2("alignLeft"), "align-left"),
+      item("center", t2("alignCenter"), "align-center"),
+      item("right", t2("alignRight"), "align-right"),
+      vItem("top"),
+      vItem("middle"),
+      vItem("bottom")
+    ];
   }
   /** 底色：一排色块，标题是「底色」 */
   colorItems(cells) {
@@ -11365,6 +12812,11 @@ var TableEditor = class {
       ...CELL_COLORS.map((color) => ({ swatch: color, textSwatch: true, title: t2(color), checked: oneFg === color, run: () => this.applyKeepRange(setFg(this.table, cells, color)) }))
     ];
   }
+  /** 文字大小：一排大小不同的「A」。current 是现在的倍数（几格不一样时是 undefined，哪个都不勾） */
+  sizeItems(title, current2, set) {
+    const names = ["fontSize_xs", "fontSize_s", "fontSize_m", "fontSize_l", "fontSize_xl"];
+    return FONT_SIZES.map((v, i) => ({ sizeChip: v, rowLabel: i === 0 ? title : void 0, title: t2(names[i]), checked: current2 === v, run: () => set(v === 1 ? null : v) }));
+  }
   /** 自己画的弹出菜单：样式统一，色块能排成一行，手机上也好点 */
   openMenu(items, x, y) {
     this.closePopover();
@@ -11379,8 +12831,32 @@ var TableEditor = class {
         if (pop.lastElementChild && !pop.lastElementChild.classList.contains("ggt-menu-sep")) pop.appendChild(doc.createElement("div")).className = "ggt-menu-sep";
         continue;
       }
+      if (item.sizeChip || item.chipText) {
+        if (!swatches || !swatches.classList.contains("ggt-menu-sizes")) {
+          swatches = pop.appendChild(doc.createElement("div"));
+          swatches.className = "ggt-menu-sizes";
+          if (item.rowLabel) {
+            const label = swatches.appendChild(doc.createElement("span"));
+            label.className = "ggt-menu-sizes-label";
+            label.textContent = item.rowLabel;
+          }
+        }
+        const b2 = swatches.appendChild(doc.createElement("button"));
+        b2.type = "button";
+        b2.className = "ggt-size-chip" + (item.checked ? " is-checked" : "");
+        b2.textContent = item.chipText ?? "A";
+        if (item.sizeChip) b2.setCssProps({ "--ggt-chip": String(item.sizeChip) });
+        b2.disabled = !!item.disabled;
+        b2.setAttribute("aria-label", item.title ?? "");
+        b2.title = item.title ?? "";
+        b2.addEventListener("click", () => {
+          this.closePopover();
+          item.run?.();
+        });
+        continue;
+      }
       if (item.swatch) {
-        if (!swatches) {
+        if (!swatches || !swatches.classList.contains("ggt-menu-swatches")) {
           swatches = pop.appendChild(doc.createElement("div"));
           swatches.className = "ggt-menu-swatches";
         }
@@ -11399,6 +12875,29 @@ var TableEditor = class {
         });
         continue;
       }
+      if (item.inline && item.run) {
+        if (!swatches || !swatches.classList.contains("ggt-menu-icons")) {
+          swatches = pop.appendChild(doc.createElement("div"));
+          swatches.className = "ggt-menu-icons";
+        }
+        if (item.inline && swatches.childElementCount && swatches.lastElementChild.dataset.group !== (item.icon?.startsWith("align-vertical") ? "v" : "h")) swatches.appendChild(doc.createElement("span")).className = "ggt-menu-icons-sep";
+        const b2 = swatches.appendChild(doc.createElement("button"));
+        b2.type = "button";
+        b2.className = "ggt-menu-item is-icon" + (item.checked ? " is-checked" : "");
+        b2.dataset.group = item.icon?.startsWith("align-vertical") ? "v" : "h";
+        b2.disabled = !!item.disabled;
+        b2.setAttribute("role", "menuitem");
+        b2.setAttribute("aria-label", item.title ?? "");
+        b2.title = item.title ?? "";
+        if (item.icon && this.host.setIcon) this.host.setIcon(b2, item.icon);
+        else b2.textContent = (item.title ?? "").slice(0, 2);
+        b2.addEventListener("click", () => {
+          this.closePopover();
+          item.run?.();
+        });
+        continue;
+      }
+      if (swatches?.classList.contains("ggt-menu-icons")) swatches = null;
       if (!item.run) {
         swatches = null;
         const label = pop.appendChild(doc.createElement("div"));
@@ -11414,6 +12913,7 @@ var TableEditor = class {
       const ic = b.appendChild(doc.createElement("span"));
       ic.className = "ggt-menu-icon";
       if (item.icon && this.host.setIcon) this.host.setIcon(ic, item.icon);
+      else if (item.iconNode) ic.appendChild(item.iconNode.cloneNode(true));
       b.appendChild(doc.createElement("span")).textContent = item.title ?? "";
       if (item.checked) {
         const ck = b.appendChild(doc.createElement("span"));
@@ -11446,6 +12946,44 @@ var TableEditor = class {
     this.popover = null;
   }
 };
+var searchMarkLayer = null;
+var searchMarkCell = null;
+function clearSearchMark() {
+  window.CSS?.highlights?.delete("ggt-search");
+  searchMarkLayer?.remove();
+  searchMarkLayer = null;
+  searchMarkCell?.classList.remove("is-search-hit");
+  searchMarkCell = null;
+}
+function findTextRange(root, text, k) {
+  const doc = root.ownerDocument;
+  const walker = doc.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  let all = "";
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    nodes.push(n);
+    all += n.data;
+  }
+  const hits = [];
+  for (let i = all.indexOf(text); i >= 0; i = all.indexOf(text, i + text.length)) hits.push(i);
+  if (!hits.length) return null;
+  const start = hits[Math.min(k, hits.length - 1)];
+  const at = (pos) => {
+    let acc = 0;
+    for (const n of nodes) {
+      if (pos <= acc + n.data.length) return [n, pos - acc];
+      acc += n.data.length;
+    }
+    const last = nodes[nodes.length - 1];
+    return [last, last.data.length];
+  };
+  const range = doc.createRange();
+  const [sn, so] = at(start);
+  const [en3, eo] = at(start + text.length);
+  range.setStart(sn, so);
+  range.setEnd(en3, eo);
+  return range;
+}
 function htmlCellText(el) {
   const parts = [];
   const walk2 = (n) => {
@@ -11555,6 +13093,9 @@ var NOTE_CARD_MIN = { w: 80, h: 40 };
 function refreshAllBars() {
   for (const c of liveCanvases) c.refreshBars();
 }
+function refreshAllNodebars() {
+  for (const c of liveCanvases) c.refreshNodebar();
+}
 function syncNotesExpandedAll() {
   for (const c of liveCanvases) c.syncNotesExpanded();
 }
@@ -11573,6 +13114,7 @@ var ICONS = {
   mindmap: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M15 12h6M9 12H3M14.5 9.5l4-4M14.5 14.5l4 4M9.5 9.5l-4-4M9.5 14.5l-4 4"/></svg>',
   note: '<svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>',
   pencil: '<svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+  expand: '<svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>',
   search: '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>',
   highlighter: '<svg viewBox="0 0 24 24"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg>',
   eraser: '<svg viewBox="0 0 24 24"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>',
@@ -11584,6 +13126,8 @@ var ICONS = {
   down: '<svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>',
   close: '<svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>',
   copy: '<svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>',
+  quick: '<svg viewBox="0 0 24 24"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>',
+  split: '<svg viewBox="0 0 24 24"><path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3"/><path d="m15 9 6-6"/></svg>',
   link: '<svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>',
   outline: '<svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
   child: '<svg viewBox="0 0 24 24"><path d="M4 6h6M4 12h4M12 12h8M16 8v8"/></svg>',
@@ -11604,6 +13148,8 @@ var ICONS = {
   // 浮动工具栏的可选按钮：关联线（带箭头的虚线弧）、表格、折叠
   rel: '<svg viewBox="0 0 24 24"><path d="M4 18C4 9 11 5 19 6" stroke-dasharray="3 3"/><path d="m15 3 4 3-3 4"/></svg>',
   table: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16"/></svg>',
+  // Lucide image-plus（ISC）
+  media: '<svg viewBox="0 0 24 24"><path d="M16 5h6M19 2v6"/><path d="M21 11.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7.5"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/><circle cx="9" cy="9" r="2"/></svg>',
   fold: '<svg viewBox="0 0 24 24"><path d="m7 20 5-5 5 5M7 4l5 5 5-5"/></svg>',
   box: '<svg viewBox="0 0 24 24"><path d="M5 3a2 2 0 0 0-2 2M19 3a2 2 0 0 1 2 2M21 19a2 2 0 0 1-2 2M5 21a2 2 0 0 1-2-2M9 3h1M9 21h1M14 3h1M14 21h1M3 9v1M21 9v1M3 14v1M21 14v1"/></svg>'
 };
@@ -11820,6 +13366,7 @@ var MindMapCanvas = class _MindMapCanvas {
     this.widthHandleNode = null;
     /** 鼠标正指着的节点（悬停调宽度用） */
     this.hoverNode = null;
+    /** 拖宽度手柄：group 是一起改宽度的节点（框选了好几个、拖的是其中一个时是选中的全部，否则只有它） */
     this.widthResize = null;
     this.imgResize = null;
     this.clipboardText = "";
@@ -11838,11 +13385,30 @@ var MindMapCanvas = class _MindMapCanvas {
     this.formatBar = null;
     /** 正在编辑的节点文字的编辑框（CodeMirror），和 editing 同生同灭 */
     this.nodeEditor = null;
+    /** 正在编辑的标注的编辑框：文字颜色、高亮、加粗这些格式也能用在标注上（群里反馈） */
+    this.calloutEditor = null;
     this.pendingReveal = null;
+    this.pendingSteady = false;
     this.locked = false;
     this.lockButton = null;
     this.splitSyncButton = null;
+    /** 用户手动拖过、缩放过、点过居中：嵌入的图不再自动适应（见 autoRefit） */
+    this.userView = false;
+    /** 编辑写回后恢复的视口：图在改，别跟着框的高度一直重新适应，画面会跳 */
+    this.viewFrozen = false;
+    this.refitSize = "";
     this.reflowTimer = null;
+    /** 图片陆续加载完时合并成一次重排 */
+    /**
+     * 保护：重启 Obsidian 时脑图可能在插件样式或字体还没就绪时就排了版，量出来的节点偏小，节点叠在一起，
+     * 之后又没有东西触发重排。在容易出这种事的时候（第一次打开、从看不见变成看得见、字体加载完）
+     * 过一会儿核对节点现在的实际尺寸和排版用的尺寸，不一致就重排。只读尺寸；一轮最多重排 3 次
+     */
+    this.sizeCheckCleanup = null;
+    this.sizeCheckTimers = [];
+    this.sizeCheckedOnce = false;
+    this.wasVisible = false;
+    this.sizeFixes = 0;
     // ---------- 关联线 ----------
     /**
      * 每条关联线的元素（看得见的线、加宽的透明点击区、箭头、线上的文字），按「起点节点 id:序号」复用。
@@ -11865,9 +13431,19 @@ var MindMapCanvas = class _MindMapCanvas {
     this.settleTimer = null;
     // ---------- 工具栏 ----------
     this.outsideCleanups = /* @__PURE__ */ new Set();
+    /** Shift 连选的起点：上次不按 Shift 点的节点（按编号记，重新解析后还认得） */
+    this.rangeAnchor = null;
     /** 交给行内编辑框：粘贴网页地址时抓标题 */
     this.linkTitle = (url) => this.opts.host?.linkTitle?.(url) ?? null;
     this.hideSyntax = () => !!this.opts.hideSyntax?.();
+    /** 嵌入的脑图：点过之后滚轮才归它（见 embedWheelLock） */
+    this.wheelActive = false;
+    this.wheelHint = null;
+    this.wheelHintTimer = null;
+    this.quickPanel = null;
+    this.quickPanelCleanup = null;
+    /** 点链接时记下节点：接下来一会儿里画布变窄（分屏打开了笔记），把它带回视野 */
+    this.linkNode = null;
     this.panAnim = null;
     this.tapCenter = null;
     this.textColorMenu = null;
@@ -11930,6 +13506,8 @@ var MindMapCanvas = class _MindMapCanvas {
     );
     if (typeof ResizeObserver !== "undefined") {
       this.ro = new ResizeObserver(() => {
+        const kept = this.linkNode && performance.now() < this.linkNode.until ? this.nodeById.get(this.linkNode.id) : null;
+        if (kept) this.el.win.requestAnimationFrame(() => this.revealLinkNode(kept));
         if (this.viewAnchor) {
           this.applyViewAnchor();
           this.applyTransform();
@@ -11938,12 +13516,24 @@ var MindMapCanvas = class _MindMapCanvas {
           this.render();
           return;
         }
-        if (!this.hasView && this.initialFit()) this.hasView = true;
+        if (!this.hasView && this.initialFit()) {
+          this.hasView = true;
+          this.refitSize = `${this.el.clientWidth}x${this.el.clientHeight}`;
+        } else this.autoRefitIfNeeded();
+        const visible = this.el.clientWidth > 0 && this.el.clientHeight > 0;
+        if (visible && !this.wasVisible) this.scheduleSizeCheck();
+        this.wasVisible = visible;
         this.updateBottomInset();
         this.positionNodebar();
       });
       this.ro.observe(this.el);
       this.noteRo = new ResizeObserver(() => this.scheduleReflow());
+    }
+    const fonts = this.el.ownerDocument.fonts;
+    if (fonts) {
+      const onFonts = () => this.scheduleSizeCheck();
+      fonts.addEventListener("loadingdone", onFonts);
+      this.sizeCheckCleanup = () => fonts.removeEventListener("loadingdone", onFonts);
     }
   }
   // ---------- 公共 API ----------
@@ -11962,6 +13552,10 @@ var MindMapCanvas = class _MindMapCanvas {
     if (this.primary && !this.selected.has(this.primary)) this.primary = null;
     this.render();
     if (this.search) this.runSearch(this.search.input.value, false);
+    if (!this.sizeCheckedOnce) {
+      this.sizeCheckedOnce = true;
+      this.scheduleSizeCheck();
+    }
   }
   getDoc() {
     return this.doc;
@@ -12062,6 +13656,28 @@ var MindMapCanvas = class _MindMapCanvas {
   getBounds() {
     return this.layout?.bounds ?? null;
   }
+  /**
+   * 导出图片 / PDF 时节点里的表格完整展开（小红书反馈：大表格导出只有节点里看得到的那一块，还带着滚动条和淡出）：
+   * 去掉表格的最大宽高、不滚动不淡出，重新量一遍排版，导出完再还原。画布上平时的样子不变
+   */
+  async withFullTables(fn) {
+    const scrolls = [...this.nodesEl.querySelectorAll(".mm-node-table .ggt-scroll")];
+    const clipped = scrolls.some((s) => s.scrollWidth > s.clientWidth + 1 || s.scrollHeight > s.clientHeight + 1);
+    if (!clipped || !this.doc) return fn();
+    for (const s of scrolls) {
+      s.scrollLeft = 0;
+      s.scrollTop = 0;
+    }
+    await new Promise((r3) => this.el.win.requestAnimationFrame(() => r3()));
+    this.el.classList.add("is-export-full");
+    this.reflow();
+    try {
+      return await fn();
+    } finally {
+      this.el.classList.remove("is-export-full");
+      if (this.doc) this.reflow();
+    }
+  }
   /** 导出用：节点层与连线层 */
   get layers() {
     return { nodes: this.nodesEl, edges: this.svg };
@@ -12083,22 +13699,105 @@ var MindMapCanvas = class _MindMapCanvas {
    * 选中路径对应的节点并移到画布中间（从 Markdown 切回来时用）。节点藏在折叠里就退到
    * 最近的可见祖先，不去改折叠状态（那会改文件）。还没渲染就等首次渲染再做
    */
-  revealPath(path) {
+  revealPath(path, steady = false) {
     if (!this.doc) {
       this.pendingReveal = path;
+      this.pendingSteady = steady;
       return;
     }
     let node = findByPath(this.doc.root, path);
     if (!node) return;
     for (let a = node.parent; a; a = a.parent) if (a.folded) node = a;
-    if (!this.layout?.placed.get(node.id)) {
+    const p = this.layout?.placed.get(node.id);
+    if (!p) {
       this.pendingReveal = path;
+      this.pendingSteady = steady;
       return;
     }
     this.select(node);
+    if (steady && this.hasView) {
+      if (!this.rectInView(p)) this.showBranch(node);
+      return;
+    }
     if (this.k < 0.8) this.k = 1;
-    this.centerOn(node);
+    this.showBranch(node);
     this.hasView = true;
+  }
+  /** node 和它展开着的子孙（含概要主题）在画布上占的范围 */
+  branchBox(node) {
+    const placed = this.layout?.placed;
+    const p0 = placed?.get(node.id);
+    if (!placed || !p0) return null;
+    let x1 = p0.x;
+    let y1 = p0.y;
+    let x2 = p0.x + p0.w;
+    let y2 = p0.y + p0.h;
+    const visit = (n) => {
+      for (const c of [...visibleChildren(n), ...visibleTopics(n)]) {
+        const p = placed.get(c.id);
+        if (p) {
+          x1 = Math.min(x1, p.x);
+          y1 = Math.min(y1, p.y);
+          x2 = Math.max(x2, p.x + p.w);
+          y2 = Math.max(y2, p.y + p.h);
+        }
+        visit(c);
+      }
+    };
+    visit(node);
+    return { x: x1, y: y1, w: x2 - x1, h: y2 - y1 };
+  }
+  /**
+   * 跳到某个节点（点链接、PDF 跳回来、从 Markdown 切过来）时摆画面：节点连同它展开的分支一起看。
+   * 分支放得下就整个居中；放不下就把节点贴在分支生长方向的反面（往右长贴左边、往左长贴右边、往下长贴上边），
+   * 另一个方向不偏的就让节点居中。以前一律把节点放正中，往右长的图左半边全是空的、右边的内容反而出了画面（群里反馈）
+   */
+  showBranch(node) {
+    const p = this.layout?.placed.get(node.id);
+    const box = this.branchBox(node);
+    if (!p || !box) return;
+    const k = this.k;
+    const m = 56;
+    const cw = this.el.clientWidth;
+    const ch = this.el.clientHeight;
+    const axis = (bLo, bLen, nLo, nLen, view) => {
+      if (bLen * k <= view - 2 * m) return view / 2 - (bLo + bLen / 2) * k;
+      const after = bLo + bLen > nLo + nLen + 1 && bLo >= nLo - 1;
+      const before = bLo < nLo - 1 && bLo + bLen <= nLo + nLen + 1;
+      if (after) return m - nLo * k;
+      if (before) return view - m - (nLo + nLen) * k;
+      return view / 2 - (nLo + nLen / 2) * k;
+    };
+    this.stopPanAnim();
+    this.tx = axis(box.x, box.w, p.x, p.w, cw);
+    this.ty = axis(box.y, box.h, p.y, p.h, ch);
+    this.applyTransform();
+  }
+  /** 画布坐标里的这块矩形是否整个在可视区里（留一点边） */
+  rectInView(r3) {
+    const m = 8;
+    const x = r3.x * this.k + this.tx;
+    const y = r3.y * this.k + this.ty;
+    return x >= m && y >= m && x + r3.w * this.k <= this.el.clientWidth - m && y + r3.h * this.k <= this.el.clientHeight - m;
+  }
+  /** 选中的节点，没选中就是离可视区中心最近的节点（切回 Markdown 时定位用） */
+  getFocusPath() {
+    if (this.primary) return pathOf(this.primary);
+    if (!this.layout) return null;
+    const cx = (this.el.clientWidth / 2 - this.tx) / this.k;
+    const cy = (this.el.clientHeight / 2 - this.ty) / this.k;
+    let best = null;
+    let bd = Infinity;
+    for (const p of this.layout.placed.values()) {
+      const dx = Math.max(p.x - cx, 0, cx - p.x - p.w);
+      const dy = Math.max(p.y - cy, 0, cy - p.y - p.h);
+      const d = dx * dx + dy * dy;
+      if (d < bd) {
+        bd = d;
+        best = p.node;
+      }
+    }
+    return best ? pathOf(best) : null;
   }
   /**
    * 点了指向这张图里某个节点的链接（[[笔记#^abc]]、[[笔记#标题]]）：折叠着的上级展开，
@@ -12171,6 +13870,11 @@ var MindMapCanvas = class _MindMapCanvas {
     this.render();
   }
   /** 设置里改了工具栏的按钮：主工具栏重建，浮动工具栏下次显示时按新的清单建 */
+  refreshNodebar() {
+    this.nodebar?.remove();
+    this.nodebar = null;
+    this.positionNodebar();
+  }
   refreshBars() {
     this.toolbar?.remove();
     this.positionMenu?.remove();
@@ -12189,8 +13893,10 @@ var MindMapCanvas = class _MindMapCanvas {
     return cw && ch ? { tx: this.tx, ty: this.ty, k: this.k, cw, ch } : { tx: this.tx, ty: this.ty, k: this.k };
   }
   /** 恢复视口；之后首次渲染不再自动适应画布 */
-  setViewState(state) {
+  setViewState(state, auto = false) {
     if (![state.tx, state.ty, state.k].every((v) => typeof v === "number" && Number.isFinite(v)) || state.k <= 0) return;
+    if (auto) this.viewFrozen = true;
+    else this.userView = true;
     this.tx = state.tx;
     this.ty = state.ty;
     this.k = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, state.k));
@@ -12298,7 +14004,7 @@ var MindMapCanvas = class _MindMapCanvas {
   syncPending() {
     let changed = false;
     if (this.editing && this.nodeEditor) {
-      const text = fromEditableText(this.nodeEditor.savedText);
+      const text = this.fromEdit(this.nodeEditor.savedText);
       if (text && text !== this.editing.text) {
         this.editing.text = text;
         changed = true;
@@ -12328,6 +14034,8 @@ var MindMapCanvas = class _MindMapCanvas {
   }
   destroy() {
     liveCanvases.delete(this);
+    this.sizeCheckCleanup?.();
+    for (const t3 of this.sizeCheckTimers) window.clearTimeout(t3);
     this.nodeEditor?.destroy();
     this.ro?.disconnect();
     this.noteRo?.disconnect();
@@ -12419,6 +14127,32 @@ var MindMapCanvas = class _MindMapCanvas {
     this.ty = this.el.clientHeight / 2;
     this.applyTransform();
   }
+  hasUserView() {
+    return this.userView;
+  }
+  userZoomBy(factor, sx, sy) {
+    this.userView = true;
+    this.zoomBy(factor, sx, sy);
+  }
+  /** 点「适应画布」：嵌入的图回到自动适应 */
+  userFit() {
+    this.userView = false;
+    this.viewFrozen = false;
+    this.fit();
+    this.refitSize = `${this.el.clientWidth}x${this.el.clientHeight}`;
+  }
+  userCenter() {
+    this.userView = true;
+    this.center();
+  }
+  /** 框的大小变了：嵌入的图还是自动适应的状态就重新适应 */
+  autoRefitIfNeeded() {
+    if (!this.opts.autoRefit || !this.hasView || this.userView || this.viewFrozen || !this.layout) return;
+    const size = `${this.el.clientWidth}x${this.el.clientHeight}`;
+    if (size === this.refitSize || !this.el.clientWidth || !this.el.clientHeight) return;
+    this.refitSize = size;
+    this.fit();
+  }
   zoomBy(factor, sx, sy) {
     const cx = sx ?? this.el.clientWidth / 2;
     const cy = sy ?? this.el.clientHeight / 2;
@@ -12458,7 +14192,7 @@ var MindMapCanvas = class _MindMapCanvas {
     if (this.pendingReveal !== null && this.layout) {
       const path = this.pendingReveal;
       this.pendingReveal = null;
-      this.revealPath(path);
+      this.revealPath(path, this.pendingSteady);
     }
     this.updateBottomInset();
     this.positionNodebar();
@@ -12499,7 +14233,11 @@ var MindMapCanvas = class _MindMapCanvas {
       const nt = node.table ? noteTable(node.note) : null;
       const tableSig = nt ? `T${this.opts.editable && !this.recite ? "e" : ""}` : "";
       const num2 = numberLabel(node);
-      const contentSig = [node.text, num2 ?? "", this.noteShown(node) ? "n" : "", tableSig, node.folded ? "f" : "", node.children.length, this.opts.theme, node.callout && this.calloutsHidden ? "c" : "", node.hidden ? "h" : ""].join("");
+      const progMode = this.recite ? "off" : this.opts.taskProgress?.() ?? "off";
+      const prog = progMode === "off" ? null : taskProgress(node);
+      const progText = prog ? progressLabel(prog, progMode) : "";
+      const progBelow = !!prog && this.opts.taskProgressPos?.() === "below";
+      const contentSig = [node.text, num2 ?? "", progText + (progBelow ? "" : ""), this.noteShown(node) ? "n" : "", tableSig, node.folded ? "f" : "", node.children.length, this.opts.theme, node.callout && this.calloutsHidden ? "c" : "", node.hidden ? "h" : ""].join("");
       const sig = [
         contentSig,
         node.color ?? "",
@@ -12563,7 +14301,10 @@ var MindMapCanvas = class _MindMapCanvas {
         const label = createDiv();
         label.className = "mm-label";
         renderInline(label, node.text || (node.depth === 0 ? t("canvas.centralTopic") : ""), {
-          onLink: (href, internal, ev) => this.opts.host?.openLink?.(href, internal, ev),
+          onLink: (href, internal, ev) => {
+            this.keepLinkNode(node);
+            this.opts.host?.openLink?.(href, internal, ev);
+          },
           onHover: (href, ev, a) => this.opts.host?.hoverLink?.(ev, href, a),
           renderMath: this.opts.host?.renderMath,
           resolveImage: this.opts.host?.resolveImage,
@@ -12582,7 +14323,7 @@ var MindMapCanvas = class _MindMapCanvas {
             return f && f.src === src ? f : null;
           }
         });
-        const frame2 = label.querySelector("iframe");
+        const frame2 = label.querySelector(".mm-frame");
         if (frame2) this.frames.set(node.id, frame2);
         else this.frames.delete(node.id);
         const shield = label.querySelector(".mm-frame-shield");
@@ -12608,6 +14349,7 @@ var MindMapCanvas = class _MindMapCanvas {
       if (nt) el.classList.add("has-table");
       if (nt && !node.text.trim()) el.classList.add("no-title");
       if (num2) el.classList.add("has-num");
+      if (progBelow) el.classList.add("has-progress-below");
       if (el.querySelector(".mm-label img, .mm-label .mm-pdf-crop")) el.classList.add("has-image");
       if (this.frames.has(node.id)) {
         el.classList.add("has-frame");
@@ -12619,6 +14361,15 @@ var MindMapCanvas = class _MindMapCanvas {
         el.dataset.link = link2.target;
       } else if (el.dataset.link) {
         delete el.dataset.link;
+      }
+      if (!keepChildren && prog) {
+        const chip = createSpan({ cls: "mm-progress" + (prog.done === prog.total ? " is-done" : "") });
+        const bar = chip.createSpan({ cls: "mm-progress-bar" });
+        bar.createSpan({ cls: "mm-progress-fill" }).style.width = `${prog.done / prog.total * 100}%`;
+        chip.createSpan({ cls: "mm-progress-text", text: progText });
+        chip.setAttr("aria-label", t("canvas.taskProgress", { done: prog.done, total: prog.total }));
+        if (progBelow) el.append(createSpan({ cls: "mm-progress-break" }));
+        el.append(chip);
       }
       if (!keepChildren && this.noteShown(node)) {
         const n = icon("note");
@@ -12677,7 +14428,25 @@ var MindMapCanvas = class _MindMapCanvas {
     this.renderCrumbs();
     this.opts.host?.afterRender?.();
   }
-  /** 图片陆续加载完时合并成一次重排 */
+  scheduleSizeCheck() {
+    for (const t3 of this.sizeCheckTimers) window.clearTimeout(t3);
+    this.sizeFixes = 0;
+    this.sizeCheckTimers = [50, 300, 1e3, 2500].map((ms) => window.setTimeout(() => this.checkSizes(), ms));
+  }
+  checkSizes() {
+    if (!this.doc || !this.els.size || this.editing || this.sizeFixes >= 3) return;
+    if (!this.el.isConnected || this.el.clientWidth === 0) return;
+    for (const [id, el] of this.els) {
+      if (el.offsetParent === null) continue;
+      const used = this.sizes.get(id);
+      if (!used) continue;
+      if (Math.abs(el.offsetWidth - used.w) > 1 || Math.abs(el.offsetHeight - used.h) > 1) {
+        this.sizeFixes++;
+        this.reflow();
+        return;
+      }
+    }
+  }
   scheduleReflow() {
     if (this.reflowTimer !== null) return;
     this.reflowTimer = window.setTimeout(() => {
@@ -12787,10 +14556,14 @@ var MindMapCanvas = class _MindMapCanvas {
       const parent = this.layout.placed.get(parentNode.id);
       if (!parent) continue;
       const seg = this.layout.spine?.segs.get(child.node.id);
-      const g = edgeGeometry(parent, child);
-      if (child.side === "right" || child.side === "left") {
+      let g = edgeGeometry(parent, child);
+      if (child.side === "rib") {
+        if (anchorBottom(child)) g = ribGeometry(parent, child, child.y + child.h);
+      } else if (child.side === "right" || child.side === "left") {
         if (anchorBottom(parent)) g.y1 = parent.y + parent.h;
         if (anchorBottom(child)) g.y2 = child.y + child.h;
+      } else if ((child.side === "tree" || child.side === "tree-up") && anchorBottom(child)) {
+        g.y2 = child.y + child.h;
       }
       const style = this.opts.edge?.shape ?? (parentNode === base ? theme.rootEdge : theme.edge);
       let path = this.edgePaths[edgeIndex];
@@ -12801,7 +14574,8 @@ var MindMapCanvas = class _MindMapCanvas {
         this.edgePaths.push(path);
       }
       edgeIndex += 1;
-      const tail = anchorBottom(child) ? ` L${round2(child.side === "left" ? child.x : child.x + child.w)},${round2(g.y2)}` : "";
+      const vertical = child.side === "down" || child.side === "up";
+      const tail = !anchorBottom(child) ? "" : vertical ? ` M${round2(child.x)},${round2(child.y + child.h)} L${round2(child.x + child.w)},${round2(child.y + child.h)}` : child.side === "rib" ? ` L${round2(g.x2 === child.x ? child.x + child.w : child.x)},${round2(g.y2)}` : ` L${round2(child.side === "left" ? child.x : child.x + child.w)},${round2(g.y2)}`;
       const d = seg ? `M${round2(seg.x1)},${round2(seg.y1)} L${round2(seg.x2)},${round2(seg.y2)}` : edgePath(g, style, this.opts.edge?.sharp ?? theme.sharp ? 0 : 8) + tail;
       if (path.getAttribute("d") !== d) path.setAttribute("d", d);
       const depth = String(Math.min(child.node.depth - base.depth, 3));
@@ -12823,11 +14597,12 @@ var MindMapCanvas = class _MindMapCanvas {
       edgeIndex += 1;
       const horiz = end.y1 === end.y2;
       const a = 5;
-      const head = horiz ? ` M${round2(end.x2 - a * 1.4)},${round2(end.y2 - a)} L${round2(end.x2)},${round2(end.y2)} L${round2(end.x2 - a * 1.4)},${round2(end.y2 + a)}` : ` M${round2(end.x2 - a)},${round2(end.y2 - a * 1.4)} L${round2(end.x2)},${round2(end.y2)} L${round2(end.x2 + a)},${round2(end.y2 - a * 1.4)}`;
+      const dir = horiz && end.x2 < end.x1 ? -1 : 1;
+      const head = horiz ? ` M${round2(end.x2 - dir * a * 1.4)},${round2(end.y2 - a)} L${round2(end.x2)},${round2(end.y2)} L${round2(end.x2 - dir * a * 1.4)},${round2(end.y2 + a)}` : ` M${round2(end.x2 - a)},${round2(end.y2 - a * 1.4)} L${round2(end.x2)},${round2(end.y2)} L${round2(end.x2 + a)},${round2(end.y2 - a * 1.4)}`;
       const d = `M${round2(end.x1)},${round2(end.y1)} L${round2(end.x2)},${round2(end.y2)}` + head;
       if (path.getAttribute("d") !== d) path.setAttribute("d", d);
       if (path.dataset.depth !== "1") path.dataset.depth = "1";
-      const last = [...this.layout.spine.segs.keys()].pop();
+      const last = this.layout.spine?.plain ? void 0 : [...this.layout.spine.segs.keys()].pop();
       const branch = last ? this.els.get(last)?.dataset.branch : void 0;
       const stroke = branch !== void 0 ? `var(--mm-branch-${branch})` : "";
       if (path.style.stroke !== stroke) path.style.stroke = stroke;
@@ -13998,8 +15773,9 @@ var MindMapCanvas = class _MindMapCanvas {
     this.ensureVisible(node);
     delete box.dataset.raw;
     box.classList.add("is-editing");
-    this.editInPlace(el, {
+    this.calloutEditor = this.editInPlace(el, {
       text: before,
+      format: true,
       // 改已有的：光标放末尾，接着写
       selectAll: false,
       multiline: true,
@@ -14010,6 +15786,8 @@ var MindMapCanvas = class _MindMapCanvas {
         const text = commit ? calloutFromMarker(calloutToMarker(raw)) : before;
         box.classList.remove("is-editing");
         this.editingCallout = null;
+        this.calloutEditor = null;
+        this.updateFormatBar();
         node.callout = text || void 0;
         if (!node.callout) node.calloutColor = void 0;
         if (this.calloutsHidden && node.callout) this.peekCallout = node;
@@ -14363,11 +16141,20 @@ var MindMapCanvas = class _MindMapCanvas {
           finish(false);
           return true;
         }
+        const mod = ev.metaKey || ev.ctrlKey;
+        if (opts.format && mod && !ev.shiftKey && !ev.altKey && ["b", "i", "u"].includes(ev.key.toLowerCase())) {
+          ev.preventDefault();
+          const k = ev.key.toLowerCase();
+          this.formatText({ kind: k === "b" ? "bold" : k === "i" ? "italic" : "underline" });
+          return true;
+        }
         return false;
       },
       onChange: opts.onChange,
+      onSelect: opts.format ? () => this.updateFormatBar() : void 0,
       onBlur: () => finish(true)
     });
+    return editor;
   }
   /**
    * 平移/缩放期间把画布提成独立合成层，拖起来才跟手。
@@ -14381,6 +16168,30 @@ var MindMapCanvas = class _MindMapCanvas {
       this.settleTimer = null;
       this.viewport.setCssStyles({ willChange: "" });
     }, 200);
+  }
+  /**
+   * 手动平移（拖空白、滚轮）。嵌入的脑图框不大，平移没边界时滚几下整张图就跑出框外、只剩空白（#41）：
+   * 嵌入的图至少留一半在框里（图比框小时留图的一半），已经在界外时只拦再往外走的那一步
+   */
+  panTo(tx, ty) {
+    this.userView = true;
+    if (this.opts.embedded && this.layout) {
+      const b = this.layout.bounds;
+      const axis = (prev, next, lo, size, view) => {
+        const span = size * this.k;
+        const m = Math.min(span, view) / 2;
+        const min = m - (lo * this.k + span);
+        const max = view - m - lo * this.k;
+        if (next < min) return Math.max(next, Math.min(prev, min));
+        if (next > max) return Math.min(next, Math.max(prev, max));
+        return next;
+      };
+      tx = axis(this.tx, tx, b.x, b.w, this.el.clientWidth);
+      ty = axis(this.ty, ty, b.y, b.h, this.el.clientHeight);
+    }
+    this.tx = tx;
+    this.ty = ty;
+    this.applyTransform();
   }
   applyTransform() {
     this.viewport.style.transform = `translate(${this.tx}px, ${this.ty}px) scale(${this.k})`;
@@ -14408,9 +16219,9 @@ var MindMapCanvas = class _MindMapCanvas {
    * 点到 el 外面就关闭。不能用 once：点面板内部时监听器也会被消耗掉，
    * 之后就再也关不掉了（标记面板最初的 bug）。
    */
-  dismissOnOutside(el, close) {
+  dismissOnOutside(el, close, except) {
     const onDown = (ev) => {
-      if (el.contains(ev.target)) return;
+      if (el.contains(ev.target) || except?.contains(ev.target)) return;
       cleanup();
       close();
     };
@@ -14533,6 +16344,10 @@ var MindMapCanvas = class _MindMapCanvas {
         () => this.setEditable(!this.opts.editable)
       );
       this.editToggle.classList.toggle("is-active", this.opts.editable);
+      if (this.opts.onBigEdit) {
+        const big2 = this.opts.onBigEdit;
+        btn("expand", t("canvas.bigEdit"), () => big2());
+      }
     }
     if (this.opts.editable || this.opts.embedded) {
       const sb = btn("structure", "", () => this.toggleStructureMenu(sb));
@@ -14548,18 +16363,18 @@ var MindMapCanvas = class _MindMapCanvas {
       eb.classList.toggle("is-hidden", !this.opts.editable);
       this.edgeButton = eb;
     }
-    btn("minus", t("canvas.zoomOut", { key: sc("Mod", "-") }), () => this.zoomBy(1 / 1.2));
+    btn("minus", t("canvas.zoomOut", { key: sc("Mod", "-") }), () => this.userZoomBy(1 / 1.2));
     this.zoomLabel = createEl("button");
     this.zoomLabel.type = "button";
     this.zoomLabel.className = "mm-tool mm-zoom-label";
     this.zoomLabel.dataset.tool = "zoom";
     this.tip(this.zoomLabel, t("canvas.zoomLevel"), "toolbar");
     this.zoomLabel.addEventListener("pointerdown", (ev) => ev.stopPropagation());
-    this.zoomLabel.addEventListener("click", () => this.zoomBy(1 / this.k));
+    this.zoomLabel.addEventListener("click", () => this.userZoomBy(1 / this.k));
     pool.set("zoom", this.zoomLabel);
-    btn("plus", t("canvas.zoomIn", { key: sc("Mod", "+") }), () => this.zoomBy(1.2));
-    btn("fit", t("canvas.fit", { key: sc("Mod", "0") }), () => this.fit());
-    btn("center", t("canvas.center"), () => this.center());
+    btn("plus", t("canvas.zoomIn", { key: sc("Mod", "+") }), () => this.userZoomBy(1.2));
+    btn("fit", t("canvas.fit", { key: sc("Mod", "0") }), () => this.userFit());
+    btn("center", t("canvas.center"), () => this.userCenter());
     if (this.opts.onUndo) {
       btn("undo", t("canvas.undo", { key: sc("Mod", "Z") }), () => this.opts.onUndo?.());
       btn("redo", t("canvas.redo", { key: sc("Mod", "Shift", "Z") }), () => this.opts.onRedo?.());
@@ -14571,6 +16386,9 @@ var MindMapCanvas = class _MindMapCanvas {
     this.reciteButton = btn("recite", t("canvas.recite"), () => this.setRecite(!this.recite));
     this.reciteButton.classList.toggle("is-active", this.recite);
     const layers = btn("layers", t("canvas.foldLevels"), () => this.toggleFoldMenu(layers));
+    if (this.opts.quickSettings) {
+      const quick = btn("quick", t("canvas.quickSettings"), () => this.toggleQuickSettings(quick));
+    }
     const layout = this.opts.toolbarLayout?.() ?? mergeLayout(void 0, TOOLBAR_DEFAULT);
     const listed = layout.some((x) => x.id === "embed");
     const embed = listed ? void 0 : pool.get("embed");
@@ -14587,6 +16405,12 @@ var MindMapCanvas = class _MindMapCanvas {
       }
     }
     if (embed && !embed.isConnected) bar.prepend(embed);
+    const big = layout.some((x) => x.id === "expand") ? void 0 : pool.get("expand");
+    if (big) {
+      const edit = pool.get("embed");
+      if (edit?.parentElement === bar) edit.after(big);
+      else bar.prepend(big);
+    }
     const tidy2 = () => {
       const kids = [...bar.children];
       const show = visibleSeps(kids.map((k) => k.classList.contains("mm-tool-sep") ? "sep" : k.classList.contains("is-hidden") ? "gone" : "tool"));
@@ -14765,19 +16589,24 @@ var MindMapCanvas = class _MindMapCanvas {
     if (!anchor) {
       menu.style.left = `${clampX(point?.x ?? 0)}px`;
       menu.style.top = `${clampY(point?.y ?? 0)}px`;
-    } else {
-      const r3 = anchor.getBoundingClientRect();
-      const pos = anchor.closest(".mm-toolbar") ? this.toolbarPos : "bottom";
-      if (pos === "left" || pos === "right") {
-        menu.style.left = `${clampX(pos === "left" ? r3.right - host.left + 8 : r3.left - host.left - menu.offsetWidth - 8)}px`;
-        menu.style.top = `${clampY(r3.top - host.top + r3.height / 2 - menu.offsetHeight / 2)}px`;
-      } else {
-        menu.style.left = `${clampX(r3.left - host.left + r3.width / 2 - menu.offsetWidth / 2)}px`;
-        menu.style.top = `${clampY(pos === "top" ? r3.bottom - host.top + 6 : r3.top - host.top - menu.offsetHeight - 6)}px`;
-      }
-    }
+    } else this.placeAtAnchor(menu, anchor);
     cleanup = this.dismissOnOutside(menu, closeAll);
     return menu;
+  }
+  /** 弹出的菜单、面板摆在按钮旁边：工具栏里的按钮按工具栏位置决定弹出方向，其他地方（节点工具栏）一律向上弹 */
+  placeAtAnchor(menu, anchor) {
+    const host = this.el.getBoundingClientRect();
+    const clampX = (x) => Math.max(4, Math.min(x, host.width - menu.offsetWidth - 4));
+    const clampY = (y) => Math.max(4, Math.min(y, host.height - menu.offsetHeight - 4));
+    const r3 = anchor.getBoundingClientRect();
+    const pos = anchor.closest(".mm-toolbar") ? this.toolbarPos : "bottom";
+    if (pos === "left" || pos === "right") {
+      menu.style.left = `${clampX(pos === "left" ? r3.right - host.left + 8 : r3.left - host.left - menu.offsetWidth - 8)}px`;
+      menu.style.top = `${clampY(r3.top - host.top + r3.height / 2 - menu.offsetHeight / 2)}px`;
+    } else {
+      menu.style.left = `${clampX(r3.left - host.left + r3.width / 2 - menu.offsetWidth / 2)}px`;
+      menu.style.top = `${clampY(pos === "top" ? r3.bottom - host.top + 6 : r3.top - host.top - menu.offsetHeight - 6)}px`;
+    }
   }
   // ---------- 节点浮动工具栏 ----------
   buildNodebar() {
@@ -14860,6 +16689,9 @@ var MindMapCanvas = class _MindMapCanvas {
     tool("rel", "rel", t("menu.addRel"), () => {
       if (this.primary) this.startRel(this.primary);
     });
+    tool("media", "media", t("menu.insertMedia"), () => {
+      if (this.primary) this.pickMedia(this.primary);
+    });
     tool("table", "table", t("menu.insertTable"), () => {
       if (this.primary) this.tableMenuEntry(this.primary).run?.();
     });
@@ -14898,19 +16730,23 @@ var MindMapCanvas = class _MindMapCanvas {
     return bar;
   }
   /**
-   * 手机版 Obsidian 底部有一条悬浮导航栏（.mobile-navbar），会盖住画布底部。
+   * 手机版 Obsidian 底部有一条悬浮导航栏（.mobile-navbar），电脑上右下角有状态栏，会盖住画布底部。
    * 量出它压住画布的高度，写进 --mm-bottom-inset，底部工具栏和搜索框据此抬高。
    */
   updateBottomInset() {
     const doc = this.el.ownerDocument;
-    const bars = [...doc.querySelectorAll(".mobile-navbar, .mobile-toolbar")].filter((b) => b.offsetParent !== null);
+    const desktop = !doc.body.classList.contains("is-mobile");
+    const bars = [...doc.querySelectorAll(desktop ? ".status-bar" : ".mobile-navbar, .mobile-toolbar")].filter((b) => {
+      const r4 = b.getBoundingClientRect();
+      return r4.width > 0 && r4.height > 0 && getComputedStyle(b).visibility !== "hidden";
+    });
     const r3 = this.el.getBoundingClientRect();
     let inset = 0;
     for (const b of bars) {
       const br = b.getBoundingClientRect();
       if (br.top < r3.bottom && br.bottom > r3.top && br.left < r3.right && br.right > r3.left) inset = Math.max(inset, r3.bottom - br.top);
     }
-    const v = inset > 0 ? `${Math.round(inset + 8)}px` : "";
+    const v = inset > 0 ? `${Math.round(inset + 8)}px` : desktop ? "12px" : "";
     if (this.el.style.getPropertyValue("--mm-bottom-inset") !== v) {
       if (v) this.el.style.setProperty("--mm-bottom-inset", v);
       else this.el.style.removeProperty("--mm-bottom-inset");
@@ -15009,6 +16845,7 @@ var MindMapCanvas = class _MindMapCanvas {
       this.downOnImage = this.imageAt(target, ev.clientX, ev.clientY);
       const nodeEl = target.closest(".gg-mm-node");
       this.cancelTapCenter();
+      if (ev.isPrimary && ev.pointerType !== "mouse" && this.pointers.size) this.dropTouch();
       this.pointers.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
       if (this.pointers.size === 2) {
         const [a, b] = [...this.pointers.values()];
@@ -15034,10 +16871,16 @@ var MindMapCanvas = class _MindMapCanvas {
         if (this.editing) this.commitEdit();
         this.closePopover();
         this.el.focus({ preventScroll: true });
-        if (ev.shiftKey) this.select(node, "add");
-        else if (ev.metaKey || ev.ctrlKey) this.select(node, "toggle");
-        else if (!this.selected.has(node)) this.select(node, "replace");
-        else {
+        if (ev.shiftKey) {
+          if (!this.selectRange(node)) this.select(node, "add");
+        } else if (ev.metaKey || ev.ctrlKey) {
+          this.select(node, "toggle");
+          this.rangeAnchor = node.id;
+        } else if (!this.selected.has(node)) {
+          this.select(node, "replace");
+          this.rangeAnchor = node.id;
+        } else {
+          this.rangeAnchor = node.id;
           this.setPrimary(node);
           this.opts.onSelectionChange?.(this.primary, [...this.selected]);
         }
@@ -15084,7 +16927,7 @@ var MindMapCanvas = class _MindMapCanvas {
         const dist = Math.hypot(a.x - b.x, a.y - b.y);
         const rect = el.getBoundingClientRect();
         const next = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, this.pinch.k * dist / this.pinch.dist));
-        this.zoomBy(next / this.k, (a.x + b.x) / 2 - rect.left, (a.y + b.y) / 2 - rect.top);
+        this.userZoomBy(next / this.k, (a.x + b.x) / 2 - rect.left, (a.y + b.y) / 2 - rect.top);
         return;
       }
       if (this.marquee) {
@@ -15116,9 +16959,7 @@ var MindMapCanvas = class _MindMapCanvas {
       const dy = ev.clientY - this.pan.y;
       if (!this.pan.moved && Math.hypot(dx, dy) < 3) return;
       this.pan.moved = true;
-      this.tx = this.pan.tx + dx;
-      this.ty = this.pan.ty + dy;
-      this.applyTransform();
+      this.panTo(this.pan.tx + dx, this.pan.ty + dy);
     });
     const endPointer = (ev) => {
       this.pointers.delete(ev.pointerId);
@@ -15173,6 +17014,10 @@ var MindMapCanvas = class _MindMapCanvas {
           if (this.opts.embedded) ev.stopPropagation();
           return;
         }
+        if (this.opts.embedded && !this.wheelActive && !(ev.ctrlKey || ev.metaKey) && this.opts.embedWheelLock?.()) {
+          this.showWheelHint();
+          return;
+        }
         const now = performance.now();
         const zoom = ev.ctrlKey || ev.metaKey;
         const latched = this.wheelLatch && now - this.wheelLatch.at < 220 ? this.wheelLatch : null;
@@ -15196,17 +17041,14 @@ var MindMapCanvas = class _MindMapCanvas {
           const raw = ev.deltaY * scale;
           const notch = ev.deltaMode !== 0 || Math.abs(raw) >= 50;
           const d = notch ? Math.max(-100, Math.min(100, Math.sign(raw) * Math.max(Math.abs(raw), 100))) * 0.18 : raw;
-          this.zoomBy(Math.exp(-d * 0.01), ev.clientX - rect.left, ev.clientY - rect.top);
+          this.userZoomBy(Math.exp(-d * 0.01), ev.clientX - rect.left, ev.clientY - rect.top);
         } else if (!ev.shiftKey && this.opts.wheelZoom?.()) {
           const d = Math.max(-100, Math.min(100, ev.deltaY * scale));
-          this.zoomBy(Math.exp(-d * 18e-4), ev.clientX - rect.left, ev.clientY - rect.top);
+          this.userZoomBy(Math.exp(-d * 18e-4), ev.clientX - rect.left, ev.clientY - rect.top);
         } else if (ev.shiftKey && !ev.deltaX) {
-          this.tx -= ev.deltaY * scale;
-          this.applyTransform();
+          this.panTo(this.tx - ev.deltaY * scale, this.ty);
         } else {
-          this.tx -= ev.deltaX * scale;
-          this.ty -= ev.deltaY * scale;
-          this.applyTransform();
+          this.panTo(this.tx - ev.deltaX * scale, this.ty - ev.deltaY * scale);
         }
       },
       { passive: false }
@@ -15224,7 +17066,12 @@ var MindMapCanvas = class _MindMapCanvas {
         "pointerdown",
         (ev) => {
           const target = ev.target;
-          if (el.contains(target) || target.closest?.(".mm-menu, .mm-popover, .menu, .modal-container, .suggestion-container, .popover")) return;
+          if (el.contains(target)) {
+            this.wheelActive = true;
+            return;
+          }
+          if (target.closest?.(".mm-menu, .mm-popover, .menu, .modal-container, .suggestion-container, .popover")) return;
+          this.wheelActive = false;
           if (!this.selected.size) return;
           window.setTimeout(() => {
             if (!el.isConnected || this.editing || !this.selected.size) return;
@@ -15284,6 +17131,7 @@ var MindMapCanvas = class _MindMapCanvas {
         return;
       }
       if (performance.now() < this.suppressMenuUntil) return;
+      if (this.touchPress || this.drag && !ev.button && this.pointers.size) this.dropTouch();
       const pressed = this.pendingMenuNode;
       this.pendingMenuNode = null;
       this.contextMenuAt(ev, pressed ?? void 0);
@@ -15508,12 +17356,12 @@ var MindMapCanvas = class _MindMapCanvas {
     }
     if (mod && (ev.key === "=" || ev.key === "+")) {
       ev.preventDefault();
-      this.zoomBy(1.2);
+      this.userZoomBy(1.2);
       return;
     }
     if (mod && ev.key === "-") {
       ev.preventDefault();
-      this.zoomBy(1 / 1.2);
+      this.userZoomBy(1 / 1.2);
       return;
     }
     if (mod && ev.shiftKey && (ev.key === "0" || ev.code === "Digit0")) {
@@ -15539,7 +17387,7 @@ var MindMapCanvas = class _MindMapCanvas {
     }
     if (mod && ev.key === "0") {
       ev.preventDefault();
-      this.fit();
+      this.userFit();
       return;
     }
     if (ev.key === "Escape") {
@@ -15650,6 +17498,25 @@ var MindMapCanvas = class _MindMapCanvas {
     }
     this.syncSelectionClasses();
   }
+  /**
+   * Shift 连选（B 站晓兔的建议，和文件管理器一样：Shift 连选、⌘ / Ctrl 加选）：起点和 node 是同级时，
+   * 选中两者之间的整段兄弟节点，起点不动，再按 Shift 点别处就换一段；起点没了或不是同级返回 false，照旧加选
+   */
+  selectRange(node) {
+    const kept = this.rangeAnchor !== null ? this.nodeById.get(this.rangeAnchor) : void 0;
+    const anchor = kept && this.selected.has(kept) ? kept : this.primary;
+    if (!anchor || anchor === node || !node.parent || anchor.parent !== node.parent) return false;
+    const sibs = visibleChildren(node.parent);
+    const i = sibs.indexOf(anchor);
+    const j = sibs.indexOf(node);
+    if (i < 0 || j < 0) return false;
+    this.rangeAnchor = anchor.id;
+    this.selected.clear();
+    for (const n of sibs.slice(Math.min(i, j), Math.max(i, j) + 1)) this.selected.add(n);
+    this.primary = node;
+    this.syncSelectionClasses();
+    return true;
+  }
   setPrimary(node) {
     this.primary = node;
     this.positionNodebar();
@@ -15695,6 +17562,7 @@ var MindMapCanvas = class _MindMapCanvas {
       }
     };
     if (isTimeline(structure) && this.navigateTimeline(node, p, key, forward)) return;
+    if (isFishbone(structure) && this.navigateFishbone(node, p, key, forward)) return;
     if (structure === "org-down") {
       if (key === "ArrowDown") {
         forward(visibleChildren(node));
@@ -15707,7 +17575,7 @@ var MindMapCanvas = class _MindMapCanvas {
       this.selectNearest(p, key === "ArrowLeft" ? "left" : "right");
       return;
     }
-    if (structure === "tree-right" || isTimelineH(structure)) {
+    if (structure === "tree-right" || isTimelineH(structure) || isFishbone(structure)) {
       if (key === "ArrowRight") {
         const kids = visibleChildren(node);
         if (kids.length) this.select(kids[0]);
@@ -15759,6 +17627,38 @@ var MindMapCanvas = class _MindMapCanvas {
     if (toward) {
       const kids = visibleChildren(node);
       if (horiz && kids.length) this.select(p.side === "up" ? kids[kids.length - 1] : kids[0]);
+      else forward(kids);
+    }
+    return true;
+  }
+  /**
+   * 鱼骨图：鱼头和主主题沿主骨走（← → 往鱼尾 / 鱼头），从主主题朝分支那边（主骨上方的往下、下方的往上）进到分支里；
+   * 分支里面交给 navigate 按树形图走。返回是否处理了
+   */
+  navigateFishbone(node, p, key, forward) {
+    const base = this.focusRoot ?? this.doc?.root;
+    if (!base || !this.layout) return false;
+    const mains = visibleChildren(base).filter((c) => !this.isFloating(c) && this.layout.placed.has(c.id));
+    const towardTail = this.opts.structure === "fishbone-right" ? "ArrowLeft" : "ArrowRight";
+    const towardHead = towardTail === "ArrowLeft" ? "ArrowRight" : "ArrowLeft";
+    const along = key === towardTail ? 1 : key === towardHead ? -1 : 0;
+    if (node === base) {
+      if (along > 0 && mains.length) this.select(mains[0]);
+      return true;
+    }
+    const i = mains.indexOf(node);
+    if (i < 0) return false;
+    if (along) {
+      const next = i + along < 0 ? base : mains[i + along];
+      if (next) this.select(next);
+      return true;
+    }
+    const kids = visibleChildren(node);
+    if (key === "ArrowDown" && p.side === "up") {
+      if (kids.length) this.select(kids[0]);
+      else forward(kids);
+    } else if (key === "ArrowUp" && p.side === "down") {
+      if (kids.length) this.select(kids[kids.length - 1]);
       else forward(kids);
     }
     return true;
@@ -15916,6 +17816,11 @@ var MindMapCanvas = class _MindMapCanvas {
       this.els.get(target.parent.id)?.classList.add("is-drop-target");
       return;
     }
+    if (target.at) {
+      ind.classList.add("is-vertical");
+      ind.setCssStyles({ display: "block", left: `${target.at.x - 2}px`, top: `${target.at.y - 20}px` });
+      return;
+    }
     const kids = visibleChildren(target.parent).filter((c) => !this.drag.subtree.has(c)).map((c) => this.layout.placed.get(c.id)).filter((k) => k && (!target.side || k.side === target.side)).sort((a, b) => target.side ? a.y - b.y : 0);
     if (!kids.length) return;
     const gap = target.parent.depth === 0 ? DEFAULT_LAYOUT.gapMain : DEFAULT_LAYOUT.gapSibling;
@@ -15961,6 +17866,11 @@ var MindMapCanvas = class _MindMapCanvas {
       if (wx >= p.x && wx <= p.x + p.w && wy >= p.y && wy <= p.y + p.h && (!hit || p.w * p.h < hit.w * hit.h)) hit = p;
     }
     if (hit) return { parent: hit.node, index: hit.node.children.length, kind: "node" };
+    const fishBase = this.focusRoot ?? this.doc?.root;
+    if (isFishbone(this.opts.structure) && fishBase) {
+      const t3 = this.fishboneDropTarget(fishBase, wx, wy, exclude);
+      if (t3) return t3;
+    }
     const behind = this.behindTarget(placed, wx, wy);
     if (behind) return behind;
     const base = this.focusRoot ?? this.doc?.root;
@@ -15977,7 +17887,7 @@ var MindMapCanvas = class _MindMapCanvas {
     }
     let best = null;
     for (const p of placed) {
-      if (this.opts.structure === "mindmap" && p.node === base) continue;
+      if ((this.opts.structure === "mindmap" || isFishbone(this.opts.structure)) && p.node === base) continue;
       const kids = kidsOf(p);
       if (!kids.length) continue;
       const across = kids[0].side === "down" || kids[0].side === "up";
@@ -16044,6 +17954,25 @@ var MindMapCanvas = class _MindMapCanvas {
       if (!best || d < best.d) best = { p, d };
     }
     return best ? { parent: best.p.node, index: best.p.node.children.length, kind: "node" } : null;
+  }
+  /**
+   * 鱼骨图：拖到主骨附近（鱼头的鱼尾那边）就插到主主题之间，位置按各斜骨在主骨上的起点算 ——
+   * 第一个离鱼头最近，落点和鱼头之间有几根斜骨就排在第几个后面
+   */
+  fishboneDropTarget(base, wx, wy, exclude) {
+    const rp = this.layout?.placed.get(base.id);
+    if (!rp || Math.abs(wy - (rp.y + rp.h / 2)) > 12) return null;
+    const right = this.opts.structure === "fishbone-right";
+    const headX = right ? rp.x : rp.x + rp.w;
+    if (right ? wx >= headX : wx <= headX) return null;
+    const mains = visibleChildren(base).filter((c) => !exclude.has(c) && !this.isFloating(c)).map((c) => this.layout.placed.get(c.id)).filter((k) => !!k?.bone);
+    const xs = mains.map((m) => m.bone.x1);
+    const before = xs.filter((x) => right ? x > wx : x < wx).length;
+    const children = base.children;
+    const index = before < mains.length ? children.indexOf(mains[before].node) : mains.length ? children.indexOf(mains[mains.length - 1].node) + 1 : children.length;
+    const near = before > 0 ? xs[before - 1] : headX;
+    const far = before < xs.length ? xs[before] : near + (right ? -1 : 1) * DEFAULT_LAYOUT.gapMain;
+    return { parent: base, index, kind: "gap", at: { x: (near + far) / 2, y: rp.y + rp.h / 2 } };
   }
   /**
    * 思维导图结构里中心主题两侧的落点：按鼠标在中心主题哪边决定 side，只在那一侧的主主题之间找位置。
@@ -16592,7 +18521,7 @@ var MindMapCanvas = class _MindMapCanvas {
     this.positionNodebar();
     el.classList.add("is-editing");
     this.nodeEditor = new InlineEditor(label, {
-      text: toEditableText(node.text),
+      text: this.toEdit(node.text),
       // 默认全选，打字直接替换；设置里可以改成光标放在末尾接着写
       selectAll: named || !this.opts.caretAtEnd?.(),
       multiline: true,
@@ -16648,11 +18577,11 @@ var MindMapCanvas = class _MindMapCanvas {
     const isNew = this.editingIsNew;
     this.editing = null;
     this.editingIsNew = false;
-    const raw = fromEditableText(this.nodeEditor?.savedText ?? "");
+    const raw = this.fromEdit(this.nodeEditor?.savedText ?? "");
     this.nodeEditor?.destroy();
     this.nodeEditor = null;
     this.updateFormatBar();
-    const text = cancel || raw === fromEditableText(toEditableText(node.text)) ? node.text : raw;
+    const text = cancel || raw === this.fromEdit(this.toEdit(node.text)) ? node.text : raw;
     if (text === "" && isNew && !node.note) {
       const parent = node.parent;
       removeNode(node);
@@ -16906,6 +18835,91 @@ var MindMapCanvas = class _MindMapCanvas {
       () => this.closeFoldMenu()
     );
   }
+  /** 嵌入的脑图还没点过时滚滚轮：在图上浮一行提示，一会儿自己淡掉 */
+  showWheelHint() {
+    if (!this.wheelHint) {
+      const hint = createDiv();
+      hint.className = "mm-wheel-hint";
+      hint.textContent = t("canvas.wheelHint", { key: sc("Mod") });
+      this.el.append(hint);
+      this.wheelHint = hint;
+    }
+    this.wheelHint.classList.add("is-shown");
+    if (this.wheelHintTimer !== null) window.clearTimeout(this.wheelHintTimer);
+    this.wheelHintTimer = window.setTimeout(() => {
+      this.wheelHintTimer = null;
+      this.wheelHint?.classList.remove("is-shown");
+    }, 1400);
+  }
+  /** 工具栏「快捷设置」：编辑、拆分这些常调的细节设置，改了马上生效（和设置页是同一份设置） */
+  toggleQuickSettings(anchor) {
+    if (this.quickPanel) {
+      this.closeQuickSettings();
+      return;
+    }
+    const panel = createDiv();
+    panel.className = "mm-menu mm-quick-settings";
+    panel.addEventListener("pointerdown", (ev) => ev.stopPropagation());
+    const head = createDiv();
+    head.className = "mm-quick-title";
+    head.textContent = t("canvas.quickSettingsTitle");
+    panel.append(head);
+    const fill = () => {
+      panel.querySelectorAll(".mm-quick-row").forEach((r3) => r3.remove());
+      for (const q of this.opts.quickSettings?.() ?? []) {
+        const row = createDiv();
+        row.className = "mm-quick-row";
+        const label = createSpan();
+        label.className = "mm-quick-label";
+        label.textContent = q.label;
+        row.append(label);
+        if (typeof q.value === "boolean") {
+          const on = q.value;
+          const sw = createEl("button");
+          sw.type = "button";
+          sw.className = "mm-quick-toggle" + (on ? " is-on" : "");
+          sw.setAttribute("role", "switch");
+          sw.setAttribute("aria-checked", String(on));
+          sw.setAttribute("aria-label", q.label);
+          sw.addEventListener("click", (ev) => {
+            ev.stopPropagation();
+            q.set(!on);
+            fill();
+          });
+          row.append(sw);
+        } else {
+          const seg = createDiv();
+          seg.className = "mm-quick-seg";
+          for (const o of q.options ?? []) {
+            const b = createEl("button");
+            b.type = "button";
+            b.className = "mm-quick-opt" + (o.value === q.value ? " is-active" : "");
+            b.textContent = o.label;
+            b.addEventListener("click", (ev) => {
+              ev.stopPropagation();
+              if (o.value !== q.value) q.set(o.value);
+              fill();
+            });
+            seg.append(b);
+          }
+          row.append(seg);
+        }
+        panel.append(row);
+      }
+    };
+    fill();
+    this.el.append(panel);
+    this.placeAtAnchor(panel, anchor);
+    const cleanup = this.dismissOnOutside(panel, () => this.closeQuickSettings(), anchor);
+    this.quickPanel = panel;
+    this.quickPanelCleanup = cleanup;
+  }
+  closeQuickSettings() {
+    this.quickPanelCleanup?.();
+    this.quickPanelCleanup = null;
+    this.quickPanel?.remove();
+    this.quickPanel = null;
+  }
   closeFoldMenu() {
     this.foldMenu?.remove();
     this.foldMenu = null;
@@ -17044,6 +19058,21 @@ var MindMapCanvas = class _MindMapCanvas {
     this.tx += dx;
     this.ty += dy;
     this.applyTransform();
+    this.positionNodebar();
+  }
+  keepLinkNode(node) {
+    this.linkNode = { id: node.id, until: performance.now() + 1500 };
+  }
+  /** 节点不完整在画面里就挪到中间（分屏后左边只剩一半宽，挪最小距离会贴在边上）；完整看得见就不动 */
+  revealLinkNode(node) {
+    const p = this.layout?.placed.get(node.id);
+    if (!p) return;
+    const x1 = this.tx + p.x * this.k;
+    const x2 = this.tx + (p.x + p.w) * this.k;
+    const y1 = this.ty + p.y * this.k;
+    const y2 = this.ty + (p.y + p.h) * this.k;
+    if (x1 >= 0 && y1 >= 0 && x2 <= this.el.clientWidth && y2 <= this.el.clientHeight) return;
+    this.centerOn(node, true);
     this.positionNodebar();
   }
   /** smooth：约 0.2 秒平滑移过去（中途用户自己平移、缩放了就停下，不和他抢） */
@@ -17292,6 +19321,7 @@ var MindMapCanvas = class _MindMapCanvas {
       }
     };
     const pal = createPalette(this.el.ownerDocument, {
+      text: paletteText(),
       common,
       recent: mem.recent(kind),
       alpha: kind !== "node",
@@ -17341,7 +19371,7 @@ var MindMapCanvas = class _MindMapCanvas {
       this.linking = false;
     }
     if (!name || !this.doc) return;
-    const next = fromEditableText(linkRange(text, from, to, name));
+    const next = this.fromEdit(linkRange(text, from, to, name));
     if (next === node.text) return;
     node.text = next;
     this.select(node);
@@ -17361,6 +19391,15 @@ var MindMapCanvas = class _MindMapCanvas {
     this.select(node);
     this.render();
     this.notify();
+  }
+  /** 收掉这一次触摸留下的状态：按住计时、拖动中的节点（不落下）、平移、缩放、记着的按点和指针捕获 */
+  dropTouch() {
+    this.cancelTouchPress();
+    if (this.drag) this.endDrag(false);
+    this.pan = null;
+    this.pinch = null;
+    for (const id of this.pointers.keys()) if (this.el.hasPointerCapture(id)) this.el.releasePointerCapture(id);
+    this.pointers.clear();
   }
   cancelTouchPress() {
     if (!this.touchPress) return;
@@ -17438,7 +19477,9 @@ var MindMapCanvas = class _MindMapCanvas {
             { title: `${t("menu.insertParent")}  ${sc("Mod", "Enter")}`, icon: "corner-left-up", disabled: !node.parent || topic, run: () => this.insertParentForSelected() },
             // 节点里的表格：没有就插入一张，备注里有表就放进节点（第一层菜单放不下了，归到「插入」里）
             ...this.nodeTable(node) ? [] : [this.tableMenuEntry(node)],
-            { title: t("menu.tableChild"), icon: "table", run: () => this.insertTableChild(node) }
+            { title: t("menu.tableChild"), icon: "table", run: () => this.insertTableChild(node) },
+            // 图片、视频（#40）：手机上没法粘贴、拖文件进节点，从这里选
+            ...this.opts.host?.saveBinary ? [{ title: t("menu.insertMedia"), icon: "image-plus", run: () => this.pickMedia(node) }] : []
           ]
         },
         sep
@@ -17482,7 +19523,18 @@ var MindMapCanvas = class _MindMapCanvas {
       );
       if (this.noteShown(node)) entries.push({ title: t("menu.deleteNote"), icon: "trash-2", run: () => this.deleteNote(node) });
       entries.push(
-        { title: node.callout ? t("menu.editCallout") : t("menu.addCallout"), icon: "message-square", run: () => this.editCallout(node) },
+        // 带标注的节点：编辑、颜色、删除收进「标注」二级菜单（颜色原来只在气泡上右键才有，不好找，蝈蝈）；
+        // 第一层项数不变，菜单才放得进窗口
+        node.callout !== void 0 ? {
+          title: t("menu.calloutGroup"),
+          icon: "message-square",
+          submenu: [
+            { title: t("menu.editCallout"), icon: "pencil", run: () => this.editCallout(node) },
+            { title: t("menu.removeCallout"), icon: "x", run: () => this.removeCallout(node) },
+            { separator: true },
+            ...this.calloutColorEntries(node)
+          ]
+        } : { title: t("menu.addCallout"), icon: "message-square", run: () => this.editCallout(node) },
         { title: t("menu.addRel"), icon: "spline", run: () => this.startRel(node) },
         { title: t("menu.markers"), icon: "star", run: () => this.toggleMarkerPicker(true) },
         { title: t("menu.task"), icon: "check-square", checked: /^\[( |x|X)\]\s/.test(splitMarkers(node.text).rest), run: () => this.toggleTaskOnSelected() }
@@ -17491,7 +19543,10 @@ var MindMapCanvas = class _MindMapCanvas {
         const on = !!node.parent.numbered;
         entries.push({ title: t("menu.numbering"), icon: "list-ordered", checked: on, disabled: !this.canNumber(node.parent), run: () => this.toggleNumbering(!on) });
       }
-      if (node.width) entries.push({ title: t("menu.resetWidth"), icon: "move-horizontal", run: () => this.resetWidth(node) });
+      {
+        const many = this.selected.size > 1 && this.selected.has(node) ? [...this.selected].filter((n) => n.width) : node.width ? [node] : [];
+        if (many.length) entries.push({ title: t("menu.resetWidth"), icon: "move-horizontal", run: () => this.resetWidths(many) });
+      }
       const box = this.boxOf(node);
       if (box) entries.push({ title: t("menu.boxGroup"), icon: "square-dashed", submenu: this.boxMenuEntries(box) });
       else entries.push({ title: t("menu.addBox"), icon: "square-dashed", disabled: !node.parent || this.isFloating(node) || topic, run: () => this.addBoxToSelected() });
@@ -17518,7 +19573,11 @@ var MindMapCanvas = class _MindMapCanvas {
         { title: t("menu.toHeading"), icon: "heading", disabled: !parent || topic || node.kind === "heading" || !canHeading, run: () => this.convertLevel(node, "heading") },
         { title: t("menu.toList"), icon: "list", disabled: !parent || topic || node.kind === "list" || !!this.doc?.style.headingsOnly, run: () => this.convertLevel(node, "list") }
       );
-      more.push({ title: t("menu.splitByPunctuation"), icon: "split", disabled: !this.splittable(node).length, run: () => this.splitIntoChildren(node) });
+      more.push({
+        title: t("menu.splitInto"),
+        icon: "split",
+        submenu: this.splitRules().map((r3) => ({ title: r3.label, disabled: !this.splittable(node, r3.rule).length, run: () => this.splitIntoChildren(node, r3.rule) }))
+      });
       if (node.parent && !topic) {
         more.push(
           node.hidden ? { title: t("menu.unhideNode"), icon: "eye", run: () => this.unhideSelected() } : { title: t("menu.hideNode"), icon: "eye-off", run: () => this.hideSelected() }
@@ -17564,7 +19623,7 @@ var MindMapCanvas = class _MindMapCanvas {
     entries.push(
       { title: t("canvas.expandAll"), icon: "chevrons-down-up", run: () => this.setFoldLevel(null) },
       { title: t("canvas.mainTopicsOnly"), icon: "chevrons-up-down", run: () => this.setFoldLevel(1) },
-      { title: t("menu.fit"), icon: "maximize", run: () => this.fit() }
+      { title: t("menu.fit"), icon: "maximize", run: () => this.userFit() }
     );
     if (this.focusRoot) entries.push({ separator: true }, { title: t("menu.exitFocus"), icon: "minimize", run: () => this.exitFocus() });
     const side = this.opts.onSideBySide;
@@ -17598,19 +19657,19 @@ var MindMapCanvas = class _MindMapCanvas {
    */
   formatText(fmt2) {
     if (!this.opts.editable) return;
-    if (this.editing) {
+    if (this.editing || this.calloutEditor) {
       this.formatEditing(fmt2);
       return;
     }
     if (!this.selected.size) return;
     let changed = false;
     for (const n of this.selected) {
-      const editable = toEditableText(n.text);
+      const editable = this.toEdit(n.text);
       const { rest } = splitMarkers(n.text);
       const task = /^\[( |x|X)\]\s+/.exec(rest)?.[0].length ?? 0;
-      const start = editable.length - toEditableText(rest).length + task;
+      const start = editable.length - this.toEdit(rest).length + task;
       if (start >= editable.length) continue;
-      const next = fromEditableText(applyInlineFormat(editable, start, editable.length, fmt2).text);
+      const next = this.fromEdit(applyInlineFormat(editable, start, editable.length, fmt2).text);
       if (next !== n.text) {
         n.text = next;
         changed = true;
@@ -17626,7 +19685,7 @@ var MindMapCanvas = class _MindMapCanvas {
     if (color) this.formatText(highlightFormat(kind, color));
   }
   formatEditing(fmt2) {
-    const ed = this.nodeEditor;
+    const ed = this.nodeEditor ?? this.calloutEditor;
     if (!ed) return;
     const raw = ed.selection;
     const { from, to } = ed.visibleSelection;
@@ -17636,7 +19695,7 @@ var MindMapCanvas = class _MindMapCanvas {
   }
   /** 编辑中选中一段文字时浮在它上面的格式栏（设置里打开才有） */
   updateFormatBar() {
-    const ed = this.nodeEditor;
+    const ed = this.nodeEditor ?? this.calloutEditor;
     const rect = ed && this.opts.formatBar?.() ? ed.selectionRect() : null;
     if (!ed || !rect) {
       this.formatBar?.remove();
@@ -17667,21 +19726,32 @@ var MindMapCanvas = class _MindMapCanvas {
       // 系统取色器会让编辑框失焦（编辑先提交）：记下节点和选区，选好颜色后在提交后的文字上同一段上色
       onCustom: () => {
         const node = this.editing;
-        const sel = this.nodeEditor?.visibleSelection ?? null;
+        const callout = this.calloutEditor ? this.editingCallout : null;
+        const sel = (this.nodeEditor ?? this.calloutEditor)?.visibleSelection ?? null;
         return (fmt2) => {
-          if (this.editing && this.editing === node) {
+          if (this.editing && this.editing === node || callout && this.editingCallout === callout && this.calloutEditor) {
             this.formatText(fmt2);
             return;
           }
+          if (callout) {
+            if (!sel || callout.callout === void 0) return;
+            const next2 = calloutFromMarker(calloutToMarker(applyInlineFormat(callout.callout, sel.from, sel.to, fmt2).text));
+            if (next2 === callout.callout) return;
+            callout.callout = next2;
+            this.render();
+            this.notify();
+            return;
+          }
           if (!node || !sel) return;
-          const next = fromEditableText(applyInlineFormat(toEditableText(node.text), sel.from, sel.to, fmt2).text);
+          const next = this.fromEdit(applyInlineFormat(this.toEdit(node.text), sel.from, sel.to, fmt2).text);
           if (next === node.text) return;
           node.text = next;
           this.render();
           this.notify();
         };
       },
-      ...this.opts.host?.pickNote ? { onLink: () => void this.linkEditSelection(), linkKey: sc("Mod", "K") } : {}
+      ...this.opts.host?.pickNote ? { onLink: () => void this.linkEditSelection(), linkKey: sc("Mod", "K") } : {},
+      split: { title: t("bar.split"), items: this.splitRules().map((r3) => ({ label: r3.label, run: () => this.splitSelection(r3.rule) })) }
     });
     this.el.append(bar);
     return bar;
@@ -17851,7 +19921,7 @@ var MindMapCanvas = class _MindMapCanvas {
     try {
       const ext = (f.type.split("/")[1] || "png").replace("jpeg", "jpg");
       const stamp = (/* @__PURE__ */ new Date()).toISOString().replace(/[-:T]/g, "").slice(0, 14);
-      const name = f.name && f.name !== "image.png" ? f.name : `Pasted image ${stamp}.${ext}`;
+      const name = f.name && !/^image\.\w+$/i.test(f.name) ? f.name : `Pasted image ${stamp}.${/\.(\w+)$/.exec(f.name)?.[1] ?? ext}`;
       return await save(name, await f.arrayBuffer());
     } catch (e) {
       this.opts.host?.notice?.(t("notice.saveImageFailed", { error: e.message }));
@@ -17870,6 +19940,50 @@ var MindMapCanvas = class _MindMapCanvas {
     this.opts.host?.notice?.(t("notice.imageAddedToNote"));
     if (this.editing !== node) this.render();
     this.notify();
+  }
+  /**
+   * 「插入图片或视频」（#40）：手机上没法往节点里粘贴、拖文件，用系统的选文件框。
+   * 选好的存成附件（照 Obsidian 的附件位置设置），嵌入接在节点文字后面，图片、视频直接显示在节点上。
+   * 中心主题是文件名的时候不能往文字里加（会把文件改名），改成插成子节点
+   */
+  pickMedia(node) {
+    if (!this.opts.editable) return;
+    if (!this.opts.host?.saveBinary) {
+      this.opts.host?.notice?.(t("notice.saveImageUnsupported"));
+      return;
+    }
+    const doc = this.el.ownerDocument;
+    const input = doc.body.createEl("input", { type: "file" });
+    input.multiple = true;
+    input.accept = "image/*,video/*,audio/*";
+    input.setCssStyles({ display: "none" });
+    const done = () => input.remove();
+    input.addEventListener("change", () => {
+      const files = [...input.files ?? []];
+      done();
+      if (files.length) void this.addMediaToNode(node, files);
+    });
+    input.addEventListener("cancel", done);
+    input.click();
+  }
+  async addMediaToNode(node, files) {
+    if (!this.doc) return;
+    if (!node.parent && !this.doc.rootFromHeading) {
+      await this.insertImageFiles(files, node);
+      return;
+    }
+    const links = [];
+    for (const f of files) {
+      const link2 = await this.saveImageFile(f);
+      if (link2) links.push(`![[${link2}]]`);
+    }
+    if (!links.length) return;
+    const live = this.nodeById.get(node.id) ?? node;
+    live.text = [live.text.trimEnd(), ...links].filter(Boolean).join(" ");
+    this.render();
+    this.notify();
+    const active = this.el.ownerDocument.activeElement;
+    if (!active || active === this.el.ownerDocument.body || this.el.contains(active)) this.el.focus({ preventScroll: true });
   }
   /** 把图片文件存成附件并作为子节点插入 */
   async insertImageFiles(files, target) {
@@ -17954,7 +20068,7 @@ var MindMapCanvas = class _MindMapCanvas {
     if (this.widthResize) return;
     const target = this.widthHandleTarget();
     const el = target ? this.els.get(target.id) : void 0;
-    const usable = target && el && !el.querySelector("img.mm-img, iframe.mm-frame") ? target : null;
+    const usable = target && el && !el.querySelector("img.mm-img, iframe.mm-frame, video.mm-media") ? target : null;
     const hover = !!usable && !!this.opts.widthHandleOnHover?.();
     const kept = this.widthHandle;
     if (usable && kept && kept.parentElement === el && this.widthHandleNode === usable) {
@@ -17975,7 +20089,8 @@ var MindMapCanvas = class _MindMapCanvas {
       if (ev.button !== 0) return;
       ev.stopPropagation();
       ev.preventDefault();
-      this.widthResize = { node, el, startWorldX: this.toWorld(ev.clientX, ev.clientY).x, startW: el.offsetWidth, dir };
+      const group = (this.selected.size > 1 && this.selected.has(node) ? [...this.selected] : [node]).map((n) => ({ node: n, el: this.els.get(n.id) })).filter((g) => g.el && !g.el.querySelector("img.mm-img, iframe.mm-frame, video.mm-media")).map((g) => ({ ...g, w: g.el.offsetWidth }));
+      this.widthResize = { node, el, startWorldX: this.toWorld(ev.clientX, ev.clientY).x, startW: el.offsetWidth, dir, group };
       try {
         handle.setPointerCapture(ev.pointerId);
       } catch {
@@ -17986,9 +20101,12 @@ var MindMapCanvas = class _MindMapCanvas {
       if (!r3) return;
       const dx = this.toWorld(clientX, clientY).x - r3.startWorldX;
       const w = Math.max(NODE_MIN_WIDTH, Math.min(NODE_MAX_WIDTH, r3.startW + r3.dir * dx));
-      r3.el.classList.add("has-width");
-      r3.el.style.width = `${Math.round(w)}px`;
-      this.reflow(r3.node);
+      for (const g of r3.group) {
+        g.el.classList.add("has-width");
+        g.el.style.width = `${Math.round(w)}px`;
+      }
+      if (r3.group.length > 1) this.reflow();
+      else this.reflow(r3.node);
       this.positionNodebar();
     };
     handle.addEventListener("pointermove", (ev) => {
@@ -18005,8 +20123,8 @@ var MindMapCanvas = class _MindMapCanvas {
       this.stopAutoScroll();
       this.widthResize = null;
       const w = Math.round(r3.el.offsetWidth);
-      if (w === r3.startW) return;
-      r3.node.width = w;
+      if (r3.group.every((g) => g.w === w && (g.node.width ?? g.w) === w)) return;
+      for (const g of r3.group) g.node.width = w;
       this.render();
       this.notify();
     };
@@ -18026,7 +20144,7 @@ var MindMapCanvas = class _MindMapCanvas {
     if (!this.opts.editable || this.editing || this.drag) return null;
     const hovered = this.hoverNode;
     if (hovered && this.opts.widthHandleOnHover?.() && this.els.has(hovered.id)) return hovered;
-    return this.primary && this.selected.size === 1 ? this.primary : null;
+    return this.primary && this.selected.has(this.primary) ? this.primary : null;
   }
   /** 鼠标指着的节点变了：悬停调宽度打开时把手柄挪过去 */
   setHoverNode(node) {
@@ -18054,24 +20172,99 @@ var MindMapCanvas = class _MindMapCanvas {
     this.render();
     this.notify();
   }
+  /** 编辑框里的文字 → 存进节点的（按设置决定要不要留中间的空行） */
+  fromEdit(text) {
+    return fromEditableText(text, this.opts.keepBlankLines?.() ?? false, this.opts.keepEdgeSpaces?.() ?? false);
+  }
+  toEdit(text) {
+    return toEditableText(text, this.opts.keepEdgeSpaces?.() ?? false);
+  }
+  /** 拆分方式：内置的几种，加上设置里自定义的 */
+  splitRules() {
+    return [
+      { label: t("split.comma"), rule: { kind: "comma" } },
+      { label: t("split.period"), rule: { kind: "period" } },
+      { label: t("split.semicolon"), rule: { kind: "semicolon" } },
+      { label: t("split.number"), rule: { kind: "number" } },
+      ...(this.opts.split?.().custom ?? []).map((c) => ({ label: c.name, rule: { kind: "chars", chars: c.chars } }))
+    ];
+  }
+  splitPrefs() {
+    const s = this.opts.split?.();
+    return { keepOriginal: s?.keepOriginal ?? true, keepDelims: s?.keepDelims ?? false };
+  }
   /** 右键的是选中的节点之一时就是选中的这几个，否则只有它；只留下文字能拆出两段以上的 */
-  splittable(node) {
+  splittable(node, rule = { kind: "comma" }) {
     const nodes = this.selected.has(node) ? [...this.selected] : [node];
+    const { keepDelims } = this.splitPrefs();
     return nodes.flatMap((n) => {
-      const parts = splitByPunctuation(splitMarkers(n.text).rest.replace(/^\[( |x|X)\]\s+/, ""));
-      return parts ? [{ node: n, parts }] : [];
+      const { rest } = splitMarkers(n.text);
+      const body = rest.replace(/^\[( |x|X)\]\s+/, "");
+      const prefix = n.text.endsWith(body) ? n.text.slice(0, n.text.length - body.length) : "";
+      const r3 = splitText(body, rule, keepDelims);
+      return r3 ? [{ node: n, prefix, lead: r3.lead, parts: r3.parts }] : [];
     });
   }
-  /** 按标点把节点文字拆成几段，每段一个子节点，接在已有的子节点后面；节点自己的文字不动 */
-  splitIntoChildren(node) {
+  /**
+   * 按 rule 把节点文字拆成几段。保留原文字（默认）：每段一个子节点，接在已有的子节点后面，节点自己的文字不动。
+   * 不保留：拆出来的几段代替这个节点、放在原来那一层（第一段就是这个节点，子节点、备注、颜色都留着），
+   * 序号前面有文字（「水果：1. 苹果 2. 梨」）时节点留下那段文字、各项成为子节点；中心主题、概要没有同级，照旧加成子节点
+   */
+  splitIntoChildren(node, rule = { kind: "comma" }) {
     if (!this.opts.editable || !this.doc) return;
-    const list = this.splittable(node);
+    const list = this.splittable(node, rule);
     if (!list.length) return;
-    for (const { node: n, parts } of list) {
+    const { keepOriginal } = this.splitPrefs();
+    for (const { node: n, prefix, lead, parts } of list) {
       n.folded = false;
-      for (const p of parts) addChild(n, this.doc.style, p);
+      if (keepOriginal || !n.parent || isSummaryTopic(n)) {
+        for (const p of parts) addChild(n, this.doc.style, p);
+      } else if (lead) {
+        n.text = prefix + lead;
+        for (const p of parts) addChild(n, this.doc.style, p);
+      } else {
+        n.text = prefix + parts[0];
+        let prev = n;
+        for (const p of parts.slice(1)) prev = addSibling(prev, p) ?? prev;
+      }
     }
     this.render();
+    this.notify();
+  }
+  /**
+   * 编辑节点时只拆选中的文字：拆出来的几段接成这个节点的子节点。不保留原文字时把选中的那段从节点里去掉
+   * （选中的就是全部文字时，和整个节点拆分一样：由拆出来的几段代替这个节点）
+   */
+  splitSelection(rule) {
+    const ed = this.nodeEditor;
+    const node = this.editing;
+    if (!ed || !node || !this.doc || !this.opts.editable) return;
+    const { from, to } = ed.visibleSelection;
+    if (from === to) return;
+    const { keepOriginal, keepDelims } = this.splitPrefs();
+    const text = ed.savedText;
+    const res = splitText(text.slice(from, to), rule, keepDelims);
+    if (!res) {
+      this.opts.host?.notice?.(t("split.none"));
+      return;
+    }
+    const remaining = keepOriginal ? text : text.slice(0, from) + res.lead + text.slice(to);
+    this.commitEdit(true, false);
+    const parts = res.parts.map((p) => this.fromEdit(p));
+    const whole = !keepOriginal && !splitMarkers(this.fromEdit(remaining)).rest.trim();
+    if (whole && node.parent && !isSummaryTopic(node)) {
+      const head = this.fromEdit(remaining).trim();
+      node.text = head ? `${head} ${parts[0]}` : parts[0];
+      let prev = node;
+      for (const p of parts.slice(1)) prev = addSibling(prev, p) ?? prev;
+    } else {
+      node.text = this.fromEdit(remaining).replace(/\s+$/, "");
+      node.folded = false;
+      for (const p of parts) addChild(node, this.doc.style, p);
+    }
+    this.select(node);
+    this.render();
+    this.el.focus({ preventScroll: true });
     this.notify();
   }
   /** 删掉备注：右键的是选中的节点之一时，选中的几个一起删 */
@@ -18090,6 +20283,13 @@ var MindMapCanvas = class _MindMapCanvas {
     this.render();
     this.notify();
   }
+  /** 几个节点一起恢复自动宽度（一步撤销） */
+  resetWidths(nodes) {
+    if (!this.opts.editable || !nodes.some((n) => n.width)) return;
+    for (const n of nodes) n.width = void 0;
+    this.render();
+    this.notify();
+  }
   updateImageHandle() {
     this.updateWidthHandle();
     if (this.imgResize) return;
@@ -18098,15 +20298,16 @@ var MindMapCanvas = class _MindMapCanvas {
     if (!this.opts.editable || !this.primary || this.editing) return;
     const el = this.els.get(this.primary.id);
     const iframe = el?.querySelector("iframe.mm-frame");
-    const img = iframe ? null : el?.querySelector("img.mm-img");
-    const box = iframe ?? img;
+    const video = iframe ? null : el?.querySelector("video.mm-media");
+    const img = iframe || video ? null : el?.querySelector("img.mm-img");
+    const box = iframe ?? video ?? img;
     if (!el || !box || img && !img.complete) return;
     const frame2 = !!iframe;
     const handle = createDiv();
     handle.className = "mm-img-handle";
     this.tip(
       handle,
-      frame2 ? t("canvas.resizeFrame") : t("canvas.resizeImage"),
+      frame2 ? t("canvas.resizeFrame") : video ? t("canvas.resizeVideo") : t("canvas.resizeImage"),
       "fixed",
       "right"
     );
@@ -18269,6 +20470,8 @@ var MindMapCanvas = class _MindMapCanvas {
       richEdit: () => true,
       // 编辑格子时的格式栏：跟着脑图的「选中文字时显示格式栏」开关和常用颜色
       formatColors: () => this.opts.formatBar?.() ? { text: this.opts.textColors?.() ?? [], highlight: this.opts.highlightColors?.() ?? [] } : null,
+      // 节点表格的格式栏和脑图自己的格式栏记同一份「上次用的颜色、最近使用」
+      colorMemory: () => this.colorMemory(),
       // Esc、从第一行往上、最后一行往下：回到画布，节点还选着，方向键接着在节点之间走
       onLeave: () => {
         this.el.focus({ preventScroll: true });
@@ -18899,6 +21102,13 @@ var MindMapCanvas = class _MindMapCanvas {
         editBtn.textContent = t("menu.edit");
         editBtn.addEventListener("click", () => this.toggleNotePopover(node, true));
         pop.append(editBtn);
+        body.addEventListener("dblclick", (ev) => {
+          if (ev.target.closest("a, img")) return;
+          ev.preventDefault();
+          ev.stopPropagation();
+          if (this.recite) return;
+          this.toggleNotePopover(node, true);
+        });
       }
       this.el.append(pop);
       this.applyPopoverSize(pop);
@@ -18991,10 +21201,10 @@ var MindMapCanvas = class _MindMapCanvas {
 };
 
 // src/settings.ts
-var import_obsidian7 = require("obsidian");
+var import_obsidian8 = require("obsidian");
 
 // src/custom-theme-modal.ts
-var import_obsidian6 = require("obsidian");
+var import_obsidian7 = require("obsidian");
 var SAMPLE = `# \u8BFB\u4E66\u7B14\u8BB0
 
 ## \u7B2C\u4E00\u7AE0
@@ -19061,7 +21271,7 @@ function themeFromBase(base, name, id) {
   if (th.branchColors && !tiers[1].fill) tiers[1].fill = "#e9e9ef";
   return { id, name, base, edge: th.edge, sharp: false, dashed: false, branchColors: th.branchColors, spacing: "normal", tiers };
 }
-var CustomThemeModal = class extends import_obsidian6.Modal {
+var CustomThemeModal = class extends import_obsidian7.Modal {
   constructor(app, plugin, theme, onSave) {
     super(app);
     this.plugin = plugin;
@@ -19130,12 +21340,12 @@ var CustomThemeModal = class extends import_obsidian6.Modal {
     const scroll = el.scrollTop;
     el.empty();
     const d = this.draft;
-    new import_obsidian6.Setting(el).setName(t("customTheme.name")).addText(
+    new import_obsidian7.Setting(el).setName(t("customTheme.name")).addText(
       (x) => x.setValue(d.name).onChange((v) => {
         d.name = v;
       })
     );
-    new import_obsidian6.Setting(el).setName(t("customTheme.base")).setDesc(t("customTheme.baseDesc")).addDropdown(
+    new import_obsidian7.Setting(el).setName(t("customTheme.base")).setDesc(t("customTheme.baseDesc")).addDropdown(
       (x) => x.addOptions(Object.fromEntries(THEME_LIST.map((th) => [th.name, themeShortLabel(th.name)]))).setValue(d.base).onChange((v) => {
         const fresh = themeFromBase(v, d.name, d.id);
         this.draft = fresh;
@@ -19143,31 +21353,31 @@ var CustomThemeModal = class extends import_obsidian6.Modal {
       })
     );
     el.createDiv({ cls: "mm-theme-section", text: t("customTheme.overall") });
-    new import_obsidian6.Setting(el).setName(t("customTheme.edge")).addDropdown(
+    new import_obsidian7.Setting(el).setName(t("customTheme.edge")).addDropdown(
       (x) => x.addOptions({ curve: t("edge.curve"), elbow: t("edge.elbow"), straight: t("edge.straight") }).setValue(d.edge).onChange((v) => {
         d.edge = v;
         this.changed();
       })
     );
-    new import_obsidian6.Setting(el).setName(t("edge.rounded")).addToggle(
+    new import_obsidian7.Setting(el).setName(t("edge.rounded")).addToggle(
       (x) => x.setValue(!d.sharp).onChange((v) => {
         d.sharp = !v;
         this.changed();
       })
     );
-    new import_obsidian6.Setting(el).setName(t("edge.dashed")).addToggle(
+    new import_obsidian7.Setting(el).setName(t("edge.dashed")).addToggle(
       (x) => x.setValue(d.dashed).onChange((v) => {
         d.dashed = v;
         this.changed();
       })
     );
-    new import_obsidian6.Setting(el).setName(t("customTheme.branchColors")).addToggle(
+    new import_obsidian7.Setting(el).setName(t("customTheme.branchColors")).addToggle(
       (x) => x.setValue(d.branchColors).onChange((v) => {
         d.branchColors = v;
         this.changed();
       })
     );
-    new import_obsidian6.Setting(el).setName(t("customTheme.spacing")).addDropdown(
+    new import_obsidian7.Setting(el).setName(t("customTheme.spacing")).addDropdown(
       (x) => x.addOptions({ compact: t("customTheme.spacing.compact"), normal: t("customTheme.spacing.normal"), loose: t("customTheme.spacing.loose") }).setValue(d.spacing).onChange((v) => {
         d.spacing = v;
         this.changed();
@@ -19230,63 +21440,63 @@ var CustomThemeModal = class extends import_obsidian6.Modal {
         this.changed();
       })
     );
-    slider(new import_obsidian6.Setting(el).setName(t("customTheme.fontSize")), 10, 40, 1, () => tier.fontSize, (v) => tier.fontSize = v);
-    new import_obsidian6.Setting(el).setName(t("customTheme.bold")).addToggle(
+    slider(new import_obsidian7.Setting(el).setName(t("customTheme.fontSize")), 10, 40, 1, () => tier.fontSize, (v) => tier.fontSize = v);
+    new import_obsidian7.Setting(el).setName(t("customTheme.bold")).addToggle(
       (x) => x.setValue(tier.bold).onChange((v) => {
         tier.bold = v;
         this.changed();
       })
     );
-    new import_obsidian6.Setting(el).setName(t("customTheme.italic")).addToggle(
+    new import_obsidian7.Setting(el).setName(t("customTheme.italic")).addToggle(
       (x) => x.setValue(tier.italic).onChange((v) => {
         tier.italic = v;
         this.changed();
       })
     );
-    color(new import_obsidian6.Setting(el).setName(t("customTheme.textColor")), () => tier.color, (v) => tier.color = v);
+    color(new import_obsidian7.Setting(el).setName(t("customTheme.textColor")), () => tier.color, (v) => tier.color = v);
     const shape = tier.underline ? "underline" : tier.fill ? "fill" : "none";
-    new import_obsidian6.Setting(el).setName(t("customTheme.shape")).addDropdown(
+    new import_obsidian7.Setting(el).setName(t("customTheme.shape")).addDropdown(
       (x) => x.addOptions({ fill: t("customTheme.shape.fill"), none: t("customTheme.shape.none"), underline: t("customTheme.shape.underline") }).setValue(shape).onChange((v) => {
         tier.underline = v === "underline";
         tier.fill = v === "fill" ? tier.fill ?? "#f1f1f4" : null;
         this.changed(true);
       })
     );
-    if (shape === "fill") color(new import_obsidian6.Setting(el).setName(t("customTheme.fill")), () => tier.fill ?? "#f1f1f4", (v) => tier.fill = v);
+    if (shape === "fill") color(new import_obsidian7.Setting(el).setName(t("customTheme.fill")), () => tier.fill ?? "#f1f1f4", (v) => tier.fill = v);
     if (shape !== "underline") {
-      slider(new import_obsidian6.Setting(el).setName(t("customTheme.radius")), 0, 30, 1, () => tier.radius, (v) => tier.radius = v);
-      new import_obsidian6.Setting(el).setName(t("customTheme.border")).addDropdown(
+      slider(new import_obsidian7.Setting(el).setName(t("customTheme.radius")), 0, 30, 1, () => tier.radius, (v) => tier.radius = v);
+      new import_obsidian7.Setting(el).setName(t("customTheme.border")).addDropdown(
         (x) => x.addOptions({ none: t("customTheme.border.none"), solid: t("customTheme.border.solid"), dashed: t("customTheme.border.dashed") }).setValue(tier.borderStyle).onChange((v) => {
           tier.borderStyle = v;
           this.changed(true);
         })
       );
       if (tier.borderStyle !== "none") {
-        slider(new import_obsidian6.Setting(el).setName(t("customTheme.borderWidth")), 0.5, 4, 0.5, () => tier.borderWidth, (v) => tier.borderWidth = v);
-        color(new import_obsidian6.Setting(el).setName(t("customTheme.borderColor")), () => tier.borderColor, (v) => tier.borderColor = v);
+        slider(new import_obsidian7.Setting(el).setName(t("customTheme.borderWidth")), 0.5, 4, 0.5, () => tier.borderWidth, (v) => tier.borderWidth = v);
+        color(new import_obsidian7.Setting(el).setName(t("customTheme.borderColor")), () => tier.borderColor, (v) => tier.borderColor = v);
       }
     }
-    new import_obsidian6.Setting(el).setName(t("customTheme.width")).setDesc(t("customTheme.widthDesc")).addDropdown(
+    new import_obsidian7.Setting(el).setName(t("customTheme.width")).setDesc(t("customTheme.widthDesc")).addDropdown(
       (x) => x.addOptions({ auto: t("customTheme.width.auto"), custom: t("customTheme.width.custom") }).setValue(tier.maxWidth ? "custom" : "auto").onChange((v) => {
         tier.maxWidth = v === "custom" ? tier.maxWidth ?? (this.tier === 0 ? 440 : 300) : null;
         this.changed(true);
       })
     );
-    if (tier.maxWidth) slider(new import_obsidian6.Setting(el).setName(t("customTheme.widthPx")), 60, 1200, 10, () => tier.maxWidth ?? 300, (v) => tier.maxWidth = v);
-    new import_obsidian6.Setting(el).setName(t("customTheme.align")).setDesc(t("customTheme.alignDesc")).addToggle(
+    if (tier.maxWidth) slider(new import_obsidian7.Setting(el).setName(t("customTheme.widthPx")), 60, 1200, 10, () => tier.maxWidth ?? 300, (v) => tier.maxWidth = v);
+    new import_obsidian7.Setting(el).setName(t("customTheme.align")).setDesc(t("customTheme.alignDesc")).addToggle(
       (x) => x.setValue(tier.align).onChange((v) => {
         tier.align = v;
         this.changed();
       })
     );
     if (this.tier > 0) {
-      color(new import_obsidian6.Setting(el).setName(t("customTheme.lineColor")), () => tier.lineColor, (v) => tier.lineColor = v);
-      slider(new import_obsidian6.Setting(el).setName(t("customTheme.lineWidth")), 0.5, 6, 0.5, () => tier.lineWidth, (v) => tier.lineWidth = v);
+      color(new import_obsidian7.Setting(el).setName(t("customTheme.lineColor")), () => tier.lineColor, (v) => tier.lineColor = v);
+      slider(new import_obsidian7.Setting(el).setName(t("customTheme.lineWidth")), 0.5, 6, 0.5, () => tier.lineWidth, (v) => tier.lineWidth = v);
     }
     el.scrollTop = scroll;
   }
 };
-var ConfirmModal = class extends import_obsidian6.Modal {
+var ConfirmModal = class extends import_obsidian7.Modal {
   constructor(app, message, onYes) {
     super(app);
     this.message = message;
@@ -19348,10 +21558,20 @@ var DEFAULT_SETTINGS = {
   wheelAction: "pan",
   leftDrag: "pan",
   editCaret: "select",
+  splitKeepOriginal: true,
+  keepBlankLines: false,
+  keepEdgeSpaces: false,
+  splitKeepDelims: false,
+  customSplits: "",
   linkOpen: "current",
+  linkFocusNote: false,
+  linkReuseOpen: false,
+  newNoteFolder: "default",
+  newNoteFolderPath: "",
   dragToFloat: false,
   openView: "fit",
   syncSplit: false,
+  splitMapSide: "right",
   followExpand: false,
   foldFollow: false,
   customMarkers: "",
@@ -19359,6 +21579,7 @@ var DEFAULT_SETTINGS = {
   rememberView: true,
   newFileTemplate: "",
   embedToolbar: "full",
+  embedWheel: "click",
   embedToolbarLayout: [],
   fileNameAsRoot: false,
   headingsOnly: false,
@@ -19368,6 +21589,8 @@ var DEFAULT_SETTINGS = {
   fontScale: 100,
   notesExpanded: false,
   noteCardShow: "all",
+  taskProgress: "off",
+  taskProgressPos: "end",
   notePreview: false,
   formatBar: false,
   copyPlain: false,
@@ -19388,6 +21611,7 @@ var DEFAULT_SETTINGS = {
   highlightColors: DEFAULT_HIGHLIGHT_COLORS,
   noteMaxHeight: 240,
   noteMaxWidth: 320,
+  noteFontSize: 13,
   imageMaxWidth: 800,
   imageThumbWidth: 240,
   tableMaxWidth: 640,
@@ -19399,10 +21623,10 @@ function indentString(s) {
   return s === "tab" ? "	" : " ".repeat(Number(s));
 }
 function declarative() {
-  return "getControlValue" in import_obsidian7.PluginSettingTab.prototype;
+  return "getControlValue" in import_obsidian8.PluginSettingTab.prototype;
 }
 var NUMBER_DROPDOWNS = /* @__PURE__ */ new Set(["maxHeadingLevel"]);
-var MindMapSettingTab = class extends import_obsidian7.PluginSettingTab {
+var MindMapSettingTab = class extends import_obsidian8.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
     this.plugin = plugin;
@@ -19446,6 +21670,8 @@ var MindMapSettingTab = class extends import_obsidian7.PluginSettingTab {
       case "notesExpanded":
         return syncNotesExpandedAll();
       case "noteCardShow":
+      case "taskProgress":
+      case "taskProgressPos":
         return redrawAllCanvases();
       case "toolbarPosition":
         return p.applyToolbarPosition();
@@ -19513,14 +21739,51 @@ var MindMapSettingTab = class extends import_obsidian7.PluginSettingTab {
           this.scaleSetting("spacingScale", t("settings.spacing.name"), t("settings.spacing.desc"), 50, 200),
           this.scaleSetting("fontScale", t("settings.fontScale.name"), t("settings.fontScale.desc"), 70, 150),
           this.sizeSetting("imageThumbWidth", t("settings.imageThumbWidth.name"), t("settings.imageThumbWidth.desc"), 120, 800, t("settings.resetImageThumb")),
-          this.sizeSetting("imageMaxWidth", t("settings.imageMaxWidth.name"), t("settings.imageMaxWidth.desc"), 400, 2e3, t("settings.resetImageMax"))
+          this.sizeSetting("imageMaxWidth", t("settings.imageMaxWidth.name"), t("settings.imageMaxWidth.desc"), 400, 2e3, t("settings.resetImageMax")),
+          dropdown(
+            "taskProgress",
+            t("settings.taskProgress.name"),
+            t("settings.taskProgress.desc"),
+            { off: t("settings.taskProgress.off"), percent: t("settings.taskProgress.percent"), count: t("settings.taskProgress.count"), both: t("settings.taskProgress.both") },
+            ["task", "todo", "checkbox", "progress", "\u4EFB\u52A1", "\u6E05\u5355", "\u5F85\u529E", "\u8FDB\u5EA6", "\u5B8C\u6210"]
+          ),
+          dropdown(
+            "taskProgressPos",
+            t("settings.taskProgressPos.name"),
+            t("settings.taskProgressPos.desc"),
+            { end: t("settings.taskProgressPos.end"), below: t("settings.taskProgressPos.below") },
+            ["task", "progress", "\u4EFB\u52A1", "\u8FDB\u5EA6", "\u4F4D\u7F6E", "\u4E0B\u65B9"]
+          )
         ],
         () => STRUCTURES.find((x) => x.id === settings.defaultStructure)?.label ?? ""
       ),
       page(t("settings.group.edit"), t("settings.page.edit"), [
         dropdown("editCaret", t("settings.editCaret.name"), t("settings.editCaret.desc"), { select: t("settings.editCaret.select"), end: t("settings.editCaret.end") }, ["cursor", "\u5149\u6807"]),
+        toggle("keepBlankLines", t("settings.keepBlankLines.name"), t("settings.keepBlankLines.desc"), ["blank line", "\u7A7A\u884C", "\u6362\u884C", "\u591A\u884C"]),
+        toggle("keepEdgeSpaces", t("settings.keepEdgeSpaces.name"), t("settings.keepEdgeSpaces.desc"), ["space", "\u7A7A\u683C", "nbsp", "\u7F29\u8FDB", "\u5F00\u5934", "\u7ED3\u5C3E"]),
+        toggle("splitKeepOriginal", t("settings.splitKeepOriginal.name"), t("settings.splitKeepOriginal.desc"), ["split", "\u62C6\u5206", "\u62C6\u6210\u5B50\u8282\u70B9"]),
+        toggle("splitKeepDelims", t("settings.splitKeepDelims.name"), t("settings.splitKeepDelims.desc"), ["split", "\u62C6\u5206", "\u6807\u70B9", "\u5E8F\u53F7"]),
+        {
+          name: t("settings.customSplits.name"),
+          desc: t("settings.customSplits.desc"),
+          aliases: ["split", "\u62C6\u5206", "\u81EA\u5B9A\u4E49"],
+          render: (setting) => {
+            setting.addTextArea((ta) => {
+              ta.setPlaceholder(t("settings.customSplits.placeholder")).setValue(this.plugin.settings.customSplits).onChange(async (v) => {
+                this.plugin.settings.customSplits = v;
+                await this.plugin.saveSettings();
+              });
+              ta.inputEl.rows = 4;
+            });
+          }
+        },
         dropdown("linkOpen", t("settings.linkOpen.name"), t("settings.linkOpen.desc"), { current: t("settings.linkOpen.current"), tab: t("settings.linkOpen.tab"), split: t("settings.linkOpen.split") }, ["link", "\u94FE\u63A5", "\u5206\u5C4F", "split", "\u6253\u5F00"]),
+        toggle("linkFocusNote", t("settings.linkFocusNote.name"), t("settings.linkFocusNote.desc"), ["focus", "\u7126\u70B9", "\u5206\u5C4F", "split"]),
+        toggle("linkReuseOpen", t("settings.linkReuseOpen.name"), t("settings.linkReuseOpen.desc"), ["link", "\u94FE\u63A5", "\u5206\u5C4F", "split", "\u8DF3\u8F6C", "\u5DF2\u7ECF\u6253\u5F00"]),
+        dropdown("newNoteFolder", t("settings.newNoteFolder.name"), t("settings.newNoteFolder.desc"), { default: t("settings.newNoteFolder.default"), map: t("settings.newNoteFolder.map"), mapSub: t("settings.newNoteFolder.mapSub"), custom: t("settings.newNoteFolder.custom") }, ["folder", "\u6587\u4EF6\u5939", "\u65B0\u5EFA", "\u4F4D\u7F6E", "\u5B58\u653E"]),
+        text("newNoteFolderPath", t("settings.newNoteFolderPath.name"), t("settings.newNoteFolderPath.desc"), t("settings.newNoteFolderPath.placeholder"), ["folder", "\u6587\u4EF6\u5939", "\u8DEF\u5F84"]),
         dropdown("wheelAction", t("settings.wheel.name"), t("settings.wheel.desc"), { pan: t("settings.wheel.pan"), zoom: t("settings.wheel.zoom") }, ["scroll", "\u6EDA\u52A8", "\u7F29\u653E"]),
+        dropdown("embedWheel", t("settings.embedWheel.name"), t("settings.embedWheel.desc"), { click: t("settings.embedWheel.click"), always: t("settings.embedWheel.always") }, ["embed", "\u5D4C\u5165", "\u6EDA\u8F6E", "scroll", "\u9501\u5B9A"]),
         dropdown("leftDrag", t("settings.leftDrag.name"), t("settings.leftDrag.desc"), { pan: t("settings.leftDrag.pan"), select: t("settings.leftDrag.select") }, ["marquee", "\u6846\u9009", "\u5E73\u79FB"]),
         toggle("dragToFloat", t("settings.dragToFloat.name"), t("settings.dragToFloat.desc")),
         toggle("centerOnSelect", t("settings.centerOnSelect.name"), t("settings.centerOnSelect.desc"), ["center", "\u5C45\u4E2D", "\u8DDF\u968F"]),
@@ -19564,6 +21827,7 @@ var MindMapSettingTab = class extends import_obsidian7.PluginSettingTab {
           ["list", "\u5217\u8868", "\u6709\u5E8F", "\u65E0\u5E8F", "\u7ED3\u8BBA", "\u5907\u6CE8\u5361\u7247"]
         ),
         toggle("quoteListNotes", t("settings.quoteListNotes.name"), t("settings.quoteListNotes.desc"), ["blockquote", "\u5F15\u7528", ">", "\u9996\u884C\u7F29\u8FDB"]),
+        this.sliderWithReset("noteFontSize", t("settings.noteFontSize.name"), t("settings.noteFontSize.desc"), 11, 22, 1, DEFAULT_SETTINGS.noteFontSize, t("settings.resetNoteFontSize"), () => this.plugin.applyDisplayScale()),
         this.sizeSetting("noteMaxHeight", t("settings.noteMaxHeight.name"), t("settings.noteMaxHeight.desc"), 120, 800, t("settings.resetNoteHeight")),
         this.sizeSetting("noteMaxWidth", t("settings.noteMaxWidth.name"), t("settings.noteMaxWidth.desc"), 160, 960, t("settings.resetNoteWidth")),
         this.sizeSetting("tableMaxWidth", t("settings.tableMaxWidth.name"), t("settings.tableMaxWidth.desc"), 320, 1600, t("settings.resetTableWidth")),
@@ -19577,6 +21841,7 @@ var MindMapSettingTab = class extends import_obsidian7.PluginSettingTab {
         ]),
         group(t("settings.group.sync"), [
           toggle("syncSplit", t("settings.syncSplit.name"), t("settings.syncSplit.desc"), ["split", "\u5206\u5C4F", "\u8054\u52A8"]),
+          dropdown("splitMapSide", t("settings.splitMapSide.name"), t("settings.splitMapSide.desc"), { right: t("settings.splitMapSide.right"), left: t("settings.splitMapSide.left") }, ["split", "\u5206\u5C4F", "\u5BF9\u7167", "\u5DE6\u8FB9", "\u53F3\u8FB9", "left", "right"]),
           toggle("followExpand", t("settings.followExpand.name"), t("settings.followExpand.desc")),
           toggle("foldFollow", t("settings.foldFollow.name"), t("settings.foldFollow.desc"), ["fold", "\u6298\u53E0"]),
           toggle("followActiveNote", t("settings.followActive.name"), t("settings.followActive.desc"), ["sidebar", "\u4FA7\u8FB9\u680F"]),
@@ -19585,7 +21850,7 @@ var MindMapSettingTab = class extends import_obsidian7.PluginSettingTab {
         group(t("settings.group.noteDisplay"), [
           toggle("hideTagsInNotes", t("settings.hideTagsInNotes.name"), t("settings.hideTagsInNotes.desc"), ["html", "span", "mark", "\u6807\u7B7E", "\u4E0B\u5212\u7EBF", "underline", "\u989C\u8272"]),
           toggle("colorsInNotes", t("settings.colorsInNotes.name"), t("settings.colorsInNotes.desc"), ["color", "\u989C\u8272", "\u80CC\u666F", "\u5E95\u8272", "\u8282\u70B9\u989C\u8272"]),
-          ...import_obsidian7.Platform.isMobile ? [] : [toggle("formatBarInNotes", t("settings.formatBarInNotes.name"), t("settings.formatBarInNotes.desc"), ["format", "toolbar", "\u683C\u5F0F\u680F", "\u5DE5\u5177\u680F", "\u989C\u8272", "\u8367\u5149\u7B14", "\u52A0\u7C97"])],
+          ...import_obsidian8.Platform.isMobile ? [] : [toggle("formatBarInNotes", t("settings.formatBarInNotes.name"), t("settings.formatBarInNotes.desc"), ["format", "toolbar", "\u683C\u5F0F\u680F", "\u5DE5\u5177\u680F", "\u989C\u8272", "\u8367\u5149\u7B14", "\u52A0\u7C97"])],
           dropdown(
             "markersInNotes",
             t("settings.markersInNotes.name"),
@@ -19671,7 +21936,7 @@ var MindMapSettingTab = class extends import_obsidian7.PluginSettingTab {
               paintColor(sw, c, kind);
               chip.createSpan({ cls: "mm-color-chip-name", text: label(c) });
               const x = chip.createSpan({ cls: "mm-color-chip-x" });
-              (0, import_obsidian7.setIcon)(x, "x");
+              (0, import_obsidian8.setIcon)(x, "x");
               x.addEventListener("click", (ev) => {
                 ev.stopPropagation();
                 const next = read();
@@ -19700,7 +21965,7 @@ var MindMapSettingTab = class extends import_obsidian7.PluginSettingTab {
               });
             });
             const add = row.createEl("button", { cls: "mm-color-list-add" });
-            (0, import_obsidian7.setIcon)(add, "plus");
+            (0, import_obsidian8.setIcon)(add, "plus");
             add.setAttr("aria-label", t("settings.colorAdd"));
             add.addEventListener(
               "click",
@@ -19720,6 +21985,7 @@ var MindMapSettingTab = class extends import_obsidian7.PluginSettingTab {
           const doc = anchor.ownerDocument;
           doc.querySelectorAll(".mm-settings-palette").forEach((e) => e.remove());
           const pal = createPalette(doc, {
+            text: paletteText(),
             common: kind === "node" ? [...COLOR_NAMES] : kind === "bg" ? ["\u{1F534}", "\u{1F7E0}", "\u{1F7E1}", "\u{1F7E2}", "\u{1F535}", "\u{1F7E3}"] : [],
             recent: plugin.colorMemory.recent(kind),
             alpha: kind !== "node",
@@ -19759,7 +22025,7 @@ var MindMapSettingTab = class extends import_obsidian7.PluginSettingTab {
    */
   barLayoutPage(key) {
     const plugin = this.plugin;
-    const defaults = key === "nodebarLayout" ? NODEBAR_DEFAULT : key === "toolbarLayout" ? TOOLBAR_DEFAULT : EMBED_TOOLBAR_DEFAULT;
+    const defaults = key === "nodebarLayout" ? nodebarDefault(import_obsidian8.Platform.isMobile) : key === "toolbarLayout" ? TOOLBAR_DEFAULT : EMBED_TOOLBAR_DEFAULT;
     const embed = key === "embedToolbarLayout";
     const items = () => mergeLayout(plugin.settings[key], defaults);
     const save = async (next) => {
@@ -19773,7 +22039,7 @@ var MindMapSettingTab = class extends import_obsidian7.PluginSettingTab {
     const at = (id) => items().findIndex((x) => x.id === id);
     const rows = list.map((item, i) => ({
       name: isSep(item.id) ? t("bar.sep") : t(`bar.${item.id}`),
-      desc: isSep(item.id) ? t("bar.sepDesc") : item.id === "embed" ? t("bar.embedDesc") : "",
+      desc: isSep(item.id) ? t("bar.sepDesc") : item.id === "embed" ? t("bar.embedDesc") : item.id === "expand" ? t("bar.expandDesc") : "",
       aliases: ["toolbar", "button", "\u5DE5\u5177\u680F", "\u6309\u94AE"],
       render: (setting) => {
         const name = ICON[item.id] ?? item.id;
@@ -19788,7 +22054,7 @@ var MindMapSettingTab = class extends import_obsidian7.PluginSettingTab {
         setting.settingEl.dataset.mmBar = key;
         setting.settingEl.dataset.mmId = item.id;
         const grip = setting.settingEl.createDiv({ cls: "mm-setting-bar-grip" });
-        (0, import_obsidian7.setIcon)(grip, "grip-vertical");
+        (0, import_obsidian8.setIcon)(grip, "grip-vertical");
         setting.settingEl.prepend(grip);
         window.requestAnimationFrame(() => {
           const sib = setting.settingEl.parentElement?.querySelectorAll(`:scope > .mm-setting-bar-row[data-mm-bar="${key}"]`).length ?? 0;
@@ -19909,7 +22175,7 @@ var MindMapSettingTab = class extends import_obsidian7.PluginSettingTab {
           if (isEmojiValue(v)) preview2.setText(displayEmoji(v));
           else {
             const id = iconIdOf(v);
-            if (id) (0, import_obsidian7.setIcon)(preview2, id);
+            if (id) (0, import_obsidian8.setIcon)(preview2, id);
           }
           label.setText(v);
         };
@@ -19997,12 +22263,12 @@ function renderFallback(el, items, tab) {
     const item = raw;
     if ("type" in item && (item.type === "group" || item.type === "list" || item.type === "page")) {
       const heading = item.type === "page" ? item.name : item.heading;
-      if (heading) new import_obsidian7.Setting(el).setName(heading).setHeading();
+      if (heading) new import_obsidian8.Setting(el).setName(heading).setHeading();
       renderFallback(el, item.items ?? [], tab);
       continue;
     }
     const def = item;
-    const setting = new import_obsidian7.Setting(el).setName(def.name);
+    const setting = new import_obsidian8.Setting(el).setName(def.name);
     if (def.desc) setting.setDesc(def.desc);
     if (def.render) {
       def.render(setting, void 0);
@@ -20036,7 +22302,7 @@ function renderFallback(el, items, tab) {
     }
   }
 }
-var NoteSuggest = class extends import_obsidian7.AbstractInputSuggest {
+var NoteSuggest = class extends import_obsidian8.AbstractInputSuggest {
   constructor(app, input) {
     super(app, input);
     this.input = input;
@@ -20123,7 +22389,7 @@ function dragRow(ev, row, key, total, done) {
 }
 
 // src/view.ts
-var import_obsidian8 = require("obsidian");
+var import_obsidian9 = require("obsidian");
 
 // src/export.ts
 var INLINE_PROPS = [
@@ -20159,6 +22425,14 @@ var INLINE_PROPS = [
   "word-break",
   "max-width",
   "vertical-align",
+  // 节点里的表格：导出时去掉了类名，不写的话表格按浏览器默认格子间隔 2px 排，比画面上高一截，最后一行伸出节点
+  "border-collapse",
+  "border-spacing",
+  "border-top",
+  "border-left",
+  "border-right",
+  "table-layout",
+  "background-image",
   // 展开的备注：超出最大高度的部分照画面裁掉，底部渐隐
   "overflow",
   "max-height",
@@ -20291,6 +22565,27 @@ async function buildSvg(canvas, opts = {}) {
       cloneImgs[i].style.height = `${img.clientHeight}px`;
     })
   );
+  const origVideos = nodes.querySelectorAll("video");
+  const cloneVideos = clone.querySelectorAll("video");
+  origVideos.forEach((v, i) => {
+    const still = createEl("img");
+    still.setCssStyles({ width: `${v.clientWidth}px`, height: `${v.clientHeight}px`, display: "block", background: "#000", borderRadius: "6px", objectFit: "contain" });
+    try {
+      const c = createEl("canvas");
+      c.width = v.videoWidth || v.clientWidth;
+      c.height = v.videoHeight || v.clientHeight;
+      c.getContext("2d")?.drawImage(v, 0, 0, c.width, c.height);
+      still.src = c.toDataURL("image/png");
+    } catch {
+      still.removeAttribute("src");
+    }
+    cloneVideos[i].replaceWith(still);
+  });
+  clone.querySelectorAll("audio").forEach((a) => {
+    const name = decodeURIComponent((a.getAttribute("src") ?? "").split(/[?#]/)[0].split("/").pop() ?? "");
+    a.replaceWith(createSpan({ text: `\u266A ${name}` }));
+  });
+  clone.querySelectorAll(".mm-frame-shield").forEach((x) => x.remove());
   const origLabels = nodes.querySelectorAll(".mm-label");
   const cloneLabels = clone.querySelectorAll(".mm-label");
   origLabels.forEach((label, i) => {
@@ -20298,9 +22593,9 @@ async function buildSvg(canvas, opts = {}) {
     const scale = canvas.el.getBoundingClientRect().width / Math.max(1, canvas.el.clientWidth);
     const h = label.getBoundingClientRect().height / (scale || 1);
     const zoom = canvas.k || 1;
-    if (h / zoom <= lh * 1.5) cloneLabels[i].setCssStyles({ whiteSpace: "nowrap" });
+    if (h / zoom <= lh * 1.5) cloneLabels[i].setCssStyles({ whiteSpace: "pre" });
   });
-  clone.querySelectorAll(".mm-toggle:not(.is-folded), .mm-img-handle, .mm-width-handle, .mm-range-handle, .mm-summary-handle, .mm-callout-icon, .mm-callout.is-peek, .mm-note-card-fold, .mm-note-card-resize, .mm-quiz-tag, .mm-pdf-jump").forEach((t3) => t3.remove());
+  clone.querySelectorAll(".mm-toggle:not(.is-folded), .mm-img-handle, .mm-width-handle, .mm-range-handle, .mm-summary-handle, .mm-callout-icon, .mm-callout.is-peek, .mm-note-card-fold, .mm-note-card-resize, .mm-quiz-tag, .mm-pdf-jump, .ggt-corner, .ggt-add, .ggt-handle, .ggt-resize, .ggt-fill, .ggt-fill-preview, .ggt-range-box, .ggt-cross-band, .ggt-input, .ggt-suggest").forEach((t3) => t3.remove());
   clone.querySelectorAll(".is-selected, .is-drop-target, .mm-rel-label.is-active").forEach((n) => {
     n.setCssStyles({ boxShadow: "none" });
   });
@@ -20338,6 +22633,33 @@ async function svgToPng(exp, scale = 2) {
   return new Promise((resolve2, reject) => {
     c.toBlob((b) => b ? resolve2(b) : reject(new Error(t("export.pngEncodeFailed"))), "image/png");
   });
+}
+async function svgToPdf(exp) {
+  const req = window.require;
+  if (!req) throw new Error(t("export.pdfDesktopOnly"));
+  const electron = req("electron");
+  const remote = electron.remote ?? req("@electron/remote");
+  const fs = req("fs");
+  const os = req("os");
+  const path = req("path");
+  const MAX = 200 * 96;
+  const k = Math.min(1, MAX / Math.max(exp.width, exp.height));
+  const w = Math.max(1, Math.floor(exp.width * k));
+  const h = Math.max(1, Math.floor(exp.height * k));
+  const svg = exp.svg.replace(/^<svg ([^>]*?)width="[^"]*" height="[^"]*"/, `<svg $1width="${w}" height="${h}"`);
+  const html = `<!doctype html><html><head><meta charset="utf-8"><style>@page{size:${w}px ${h}px;margin:0}html,body{margin:0;padding:0}svg{display:block}</style></head><body>${svg}</body></html>`;
+  const dir = await fs.promises.mkdtemp(path.join(os.tmpdir(), "gogoga-mindmap-"));
+  const file = path.join(dir, "map.html");
+  await fs.promises.writeFile(file, html);
+  const win = new remote.BrowserWindow({ show: false, webPreferences: { javascript: false } });
+  try {
+    await win.loadFile(file);
+    const data = await win.webContents.printToPDF({ printBackground: true, preferCSSPageSize: true, margins: { top: 0, bottom: 0, left: 0, right: 0 } });
+    return data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength);
+  } finally {
+    win.destroy();
+    void fs.promises.rm(dir, { recursive: true, force: true });
+  }
 }
 
 // src/outline.ts
@@ -20581,7 +22903,7 @@ function foldedSignature(doc) {
   });
   return out.join("\n");
 }
-var MindMapView = class extends import_obsidian8.TextFileView {
+var MindMapView = class extends import_obsidian9.TextFileView {
   constructor(leaf, plugin) {
     super(leaf);
     this.plugin = plugin;
@@ -20596,6 +22918,7 @@ var MindMapView = class extends import_obsidian8.TextFileView {
     // ---------- PDF 自动摘录（见 pdf-excerpt.ts） ----------
     this.excerptAction = null;
     this.sideAction = null;
+    this.swapAction = null;
     /** 链接带过来的 #^块id / #标题（Obsidian 打开 [[笔记#…]] 时传进来）：内容还没读进来就先记着 */
     this.pendingSubpath = null;
     this.pendingLine = null;
@@ -20612,7 +22935,7 @@ var MindMapView = class extends import_obsidian8.TextFileView {
     this.lastFolds = null;
     this.isPlaintext = false;
     this.guardLoads();
-    this.scope = new import_obsidian8.Scope(this.app.scope);
+    this.scope = new import_obsidian9.Scope(this.app.scope);
     this.scope.register(["Mod"], "f", () => {
       this.canvas?.openSearch();
       return false;
@@ -20684,6 +23007,7 @@ var MindMapView = class extends import_obsidian8.TextFileView {
   updateSplitSync(available) {
     this.canvas?.setSplitSyncAvailable(available);
     this.sideAction?.toggle(!available);
+    this.swapAction?.toggle(available);
   }
   followLine(text, line) {
     if (!this.canvas) return;
@@ -20805,6 +23129,9 @@ var MindMapView = class extends import_obsidian8.TextFileView {
       if (this.file) void this.plugin.openSideBySide(this.file, this.leaf);
     });
     this.sideAction.addClass("mm-side-action");
+    this.swapAction = this.addAction("arrow-left-right", t("command.swapSides"), () => void this.plugin.swapSides(this.leaf));
+    this.swapAction.addClass("mm-swap-action");
+    this.swapAction.hide();
     this.outlineHost = this.contentEl.createDiv({ cls: "mm-outline-host" });
     const host = this.contentEl.createDiv({ cls: "mm-canvas-host" });
     this.canvas = new MindMapCanvas(host, {
@@ -20847,6 +23174,10 @@ var MindMapView = class extends import_obsidian8.TextFileView {
       wheelZoom: () => this.plugin.settings.wheelAction === "zoom",
       notePreview: () => this.plugin.settings.notePreview,
       formatBar: () => this.plugin.settings.formatBar,
+      split: () => this.plugin.splitPrefs(),
+      keepBlankLines: () => this.plugin.settings.keepBlankLines,
+      keepEdgeSpaces: () => this.plugin.settings.keepEdgeSpaces,
+      quickSettings: () => this.plugin.quickSettings(),
       centerOnSelect: () => this.plugin.settings.centerOnSelect,
       hideSyntax: () => this.plugin.settings.hideSyntax,
       widthHandleOnHover: () => this.plugin.settings.widthHandleOnHover,
@@ -20854,7 +23185,7 @@ var MindMapView = class extends import_obsidian8.TextFileView {
       autoNumber: () => this.plugin.settings.numberByTyping,
       copyPlain: () => this.plugin.settings.copyPlain,
       showNodebar: () => this.plugin.settings.showNodebar,
-      nodebarLayout: () => mergeLayout(this.plugin.settings.nodebarLayout, NODEBAR_DEFAULT),
+      nodebarLayout: () => mergeLayout(this.plugin.settings.nodebarLayout, nodebarDefault(import_obsidian9.Platform.isMobile)),
       toolbarLayout: () => mergeLayout(this.plugin.settings.toolbarLayout, TOOLBAR_DEFAULT),
       nodeColors: () => parseNodeColors(this.plugin.settings.nodeColors),
       textColors: () => parseColorList(this.plugin.settings.textColors),
@@ -20869,6 +23200,8 @@ var MindMapView = class extends import_obsidian8.TextFileView {
       },
       notesExpanded: () => this.plugin.isNotesExpanded(this.file?.path ?? ""),
       noteCardFilter: () => this.plugin.settings.noteCardShow,
+      taskProgress: () => this.plugin.settings.taskProgress,
+      taskProgressPos: () => this.plugin.settings.taskProgressPos,
       onNotesExpandedChange: (expanded) => {
         if (this.file) this.plugin.setNotesExpanded(this.file.path, expanded);
       },
@@ -20906,9 +23239,13 @@ var MindMapView = class extends import_obsidian8.TextFileView {
     const path = pathAtLine(this.data, line, this.plugin.rootRule());
     return path !== null && !!this.canvas?.revealPathFlash(path);
   }
-  /** 选中路径对应的节点并移到中间（从 Markdown 切回来时） */
-  revealPath(path) {
-    this.canvas?.revealPath(path);
+  /** 选中路径对应的节点并移到中间（从 Markdown 切回来时）；steady：节点在眼前就不动视口 */
+  revealPath(path, steady = false) {
+    this.canvas?.revealPath(path, steady);
+  }
+  /** 选中的节点，没选中就是画面中间的那个 */
+  getFocusPath() {
+    return this.canvas?.getFocusPath() ?? null;
   }
   /** 平移、缩放、选中变了就记下来（攒 300ms），下次打开这个文件时恢复 */
   rememberViewportSoon() {
@@ -20927,7 +23264,7 @@ var MindMapView = class extends import_obsidian8.TextFileView {
    * 标签页是 B、脑图里是 A，一存盘 B 就被 A 覆盖（#30）。读完发现文件已经换了：先禁止写盘，再按现在的文件重读一遍
    */
   guardLoads() {
-    const base = import_obsidian8.TextFileView.prototype.loadFileInternal;
+    const base = import_obsidian9.TextFileView.prototype.loadFileInternal;
     if (typeof base !== "function") return;
     this.loadFileInternal = async (file, clear) => {
       await base.call(this, file, clear);
@@ -20964,6 +23301,7 @@ var MindMapView = class extends import_obsidian8.TextFileView {
     );
     menu.addItem((item) => item.setTitle(t("command.exportPng")).setIcon("image").setSection("pane").onClick(() => void this.exportPng()));
     menu.addItem((item) => item.setTitle(t("command.exportSvg")).setIcon("image").setSection("pane").onClick(() => void this.exportSvg()));
+    if (import_obsidian9.Platform.isDesktopApp) menu.addItem((item) => item.setTitle(t("command.exportPdf")).setIcon("file-text").setSection("pane").onClick(() => void this.exportPdf()));
     menu.addItem((item) => item.setTitle(t("command.copyPng")).setIcon("copy").setSection("pane").onClick(() => void this.copyPng()));
   }
   // ---------- 导出 ----------
@@ -20975,35 +23313,53 @@ var MindMapView = class extends import_obsidian8.TextFileView {
     if (!this.canvas) return;
     try {
       this.canvas.select(null);
-      const blob = await svgToPng(await buildSvg(this.canvas), 2);
+      const canvas = this.canvas;
+      const blob = await canvas.withFullTables(async () => svgToPng(await buildSvg(canvas), 2));
       const path = await this.attachmentPath("png");
       await this.app.vault.createBinary(path, await blob.arrayBuffer());
-      new import_obsidian8.Notice(t("notice.exported", { path }));
+      new import_obsidian9.Notice(t("notice.exported", { path }));
     } catch (e) {
-      new import_obsidian8.Notice(t("notice.exportFailed", { error: e.message }));
+      new import_obsidian9.Notice(t("notice.exportFailed", { error: e.message }));
     }
   }
   async exportSvg() {
     if (!this.canvas) return;
     try {
       this.canvas.select(null);
-      const { svg } = await buildSvg(this.canvas);
+      const canvas = this.canvas;
+      const { svg } = await canvas.withFullTables(() => buildSvg(canvas));
       const path = await this.attachmentPath("svg");
       await this.app.vault.create(path, svg);
-      new import_obsidian8.Notice(t("notice.exported", { path }));
+      new import_obsidian9.Notice(t("notice.exported", { path }));
     } catch (e) {
-      new import_obsidian8.Notice(t("notice.exportFailed", { error: e.message }));
+      new import_obsidian9.Notice(t("notice.exportFailed", { error: e.message }));
+    }
+  }
+  /** 导出为 PDF（桌面端）：整张图一页，页面按图的大小，矢量 */
+  async exportPdf() {
+    if (!this.canvas) return;
+    try {
+      this.canvas.select(null);
+      const canvas = this.canvas;
+      const exp = await canvas.withFullTables(() => buildSvg(canvas));
+      const data = await svgToPdf(exp);
+      const path = await this.attachmentPath("pdf");
+      await this.app.vault.createBinary(path, data);
+      new import_obsidian9.Notice(t("notice.exported", { path }));
+    } catch (e) {
+      new import_obsidian9.Notice(t("notice.exportFailed", { error: e.message }));
     }
   }
   async copyPng() {
     if (!this.canvas) return;
     try {
       this.canvas.select(null);
-      const blob = await svgToPng(await buildSvg(this.canvas), 2);
+      const canvas = this.canvas;
+      const blob = await canvas.withFullTables(async () => svgToPng(await buildSvg(canvas), 2));
       await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
-      new import_obsidian8.Notice(t("notice.copiedAsImage"));
+      new import_obsidian9.Notice(t("notice.copiedAsImage"));
     } catch (e) {
-      new import_obsidian8.Notice(t("notice.copyFailedWithError", { error: e.message }));
+      new import_obsidian9.Notice(t("notice.copyFailedWithError", { error: e.message }));
     }
   }
   /** 有没有还没写盘的改动 */
@@ -21084,7 +23440,7 @@ var MindMapView = class extends import_obsidian8.TextFileView {
       this.canvas?.resetView();
       saved = this.restoreFileState(file);
       this.canvas?.setDoc(this.doc);
-      new import_obsidian8.Notice(t("notice.viewStateReset", { file: file.basename }));
+      new import_obsidian9.Notice(t("notice.viewStateReset", { file: file.basename }));
     }
     const sub = this.pendingSubpath;
     this.pendingSubpath = null;
@@ -21106,7 +23462,7 @@ var MindMapView = class extends import_obsidian8.TextFileView {
     if (base === null) return ours;
     const merged = mergeExternal(base, ours, disk);
     if (merged !== null) return merged;
-    new import_obsidian8.Notice(t("notice.externalConflict", { file: this.file?.basename ?? "" }));
+    new import_obsidian9.Notice(t("notice.externalConflict", { file: this.file?.basename ?? "" }));
     return ours;
   }
   /**
@@ -21180,14 +23536,14 @@ var MindMapView = class extends import_obsidian8.TextFileView {
   renameFromRoot(doc, file) {
     const name = doc.root.text.trim();
     const revert = (msg) => {
-      if (msg) new import_obsidian8.Notice(msg);
+      if (msg) new import_obsidian9.Notice(msg);
       doc.root.text = file.basename;
       this.contentEl.win.setTimeout(() => this.canvas?.render(), 0);
     };
     if (!name || name === file.basename) return revert();
     if (/[\\/:*?"<>|#^[\]]/.test(name)) return revert(t("notice.rootBadName"));
     const dir = file.parent && file.parent.path !== "/" ? `${file.parent.path}/` : "";
-    const path = (0, import_obsidian8.normalizePath)(`${dir}${name}.${file.extension}`);
+    const path = (0, import_obsidian9.normalizePath)(`${dir}${name}.${file.extension}`);
     const taken = this.app.vault.getAbstractFileByPath(path);
     if (taken && taken !== file) return revert(t("notice.rootNameTaken", { name }));
     doc.root.text = name;
@@ -21268,7 +23624,7 @@ var MindMapView = class extends import_obsidian8.TextFileView {
 // src/note-tags.ts
 var import_state6 = require("@codemirror/state");
 var import_view6 = require("@codemirror/view");
-var import_obsidian9 = require("obsidian");
+var import_obsidian10 = require("obsidian");
 
 // src/fence.ts
 function fencedLines(line, count) {
@@ -21298,7 +23654,7 @@ function fencedLines(line, count) {
 var HIDE3 = import_view6.Decoration.replace({});
 var U = import_view6.Decoration.mark({ class: "mm-note-u" });
 var MARK2 = import_view6.Decoration.mark({ class: "mm-note-mark" });
-var livePreview3 = (state) => state.field(import_obsidian9.editorLivePreviewField, false) ?? false;
+var livePreview3 = (state) => state.field(import_obsidian10.editorLivePreviewField, false) ?? false;
 function fenced(state, upToLine) {
   const doc = state.doc;
   return fencedLines((i) => doc.line(i + 1).text, Math.min(upToLine, doc.lines));
@@ -21324,8 +23680,8 @@ var TagsWidget = class extends import_view6.WidgetType {
     const el = createSpan({ cls: "mm-note-tags" });
     renderInline(el, this.src, {
       renderMath: (tex) => {
-        const m = (0, import_obsidian9.renderMath)(tex, false);
-        void (0, import_obsidian9.finishRenderMath)();
+        const m = (0, import_obsidian10.renderMath)(tex, false);
+        void (0, import_obsidian10.finishRenderMath)();
         return m;
       }
     });
@@ -21723,7 +24079,7 @@ function noteMarkersExtension(mode, active) {
 
 // src/note-format-bar.ts
 var import_view8 = require("@codemirror/view");
-var import_obsidian10 = require("obsidian");
+var import_obsidian11 = require("obsidian");
 
 // src/note-format-core.ts
 var import_state9 = require("@codemirror/state");
@@ -21827,7 +24183,7 @@ function noteFormatBarExtension(o) {
         view.requestMeasure({
           read: () => {
             const state = view.state;
-            if (!view.hasFocus || !state.field(import_obsidian10.editorLivePreviewField, false) || !canShowFormatBar(state)) return null;
+            if (!view.hasFocus || !state.field(import_obsidian11.editorLivePreviewField, false) || !canShowFormatBar(state)) return null;
             const sel = state.selection.main;
             const a = view.coordsAtPos(sel.from, 1);
             const b = view.coordsAtPos(sel.to, -1);
@@ -22027,7 +24383,7 @@ function paintNoteColors(el, ctx, isMindMap, fallbackText) {
 }
 
 // src/xmind-view.ts
-var import_obsidian11 = require("obsidian");
+var import_obsidian12 = require("obsidian");
 
 // src/xmind.ts
 var noLoss = () => ({ detached: 0, relationships: 0, summaries: 0, comments: 0, images: 0 });
@@ -22407,7 +24763,7 @@ function xmindSheetToMarkdown(sheet, style = {}, imageLink) {
 
 // src/xmind-view.ts
 var VIEW_TYPE_XMIND = "mindmap-xmind";
-var XmindView = class extends import_obsidian11.FileView {
+var XmindView = class extends import_obsidian12.FileView {
   constructor(leaf, plugin) {
     super(leaf);
     this.plugin = plugin;
@@ -22455,7 +24811,7 @@ var XmindView = class extends import_obsidian11.FileView {
       this.sheets = await parseXmind(await this.app.vault.readBinary(file));
     } catch (e) {
       this.sheets = [];
-      new import_obsidian11.Notice(t("xmind.readFailed", { name: file.name, error: e.message }));
+      new import_obsidian12.Notice(t("xmind.readFailed", { name: file.name, error: e.message }));
     }
     this.current = 0;
     this.renderSheet();
@@ -22525,13 +24881,13 @@ icon: ${icon2}
     const created = await this.app.vault.create(path, md);
     await this.leaf.setViewState({ type: VIEW_TYPE_MINDMAP, state: { file: created.path }, active: true });
     const lost = describeLost(sheet.lost);
-    new import_obsidian11.Notice(t("xmind.converted", { path: created.path }) + (lost ? `
+    new import_obsidian12.Notice(t("xmind.converted", { path: created.path }) + (lost ? `
 ${lost}` : ""), lost ? 8e3 : void 0);
   }
 };
 
 // src/embed.ts
-var import_obsidian12 = require("obsidian");
+var import_obsidian13 = require("obsidian");
 function registerMindMapEmbeds(plugin) {
   const registry2 = plugin.app.embedRegistry;
   if (!registry2?.registerExtension) return;
@@ -22553,7 +24909,7 @@ function registerMindMapEmbeds(plugin) {
     });
   }
 }
-var MindMapEmbed = class extends import_obsidian12.Component {
+var MindMapEmbed = class extends import_obsidian13.Component {
   constructor(plugin, ctx, file, subpath = "") {
     super();
     this.plugin = plugin;
@@ -22566,6 +24922,10 @@ var MindMapEmbed = class extends import_obsidian12.Component {
     /** 嵌入的 .xmind 里的图片做成的 blob: 地址，重读或卸载时释放 */
     this.releaseImages = null;
     this.bounds = null;
+    this.applyingZoom = false;
+    /** 现在显示的缩放（适应、换缩放之后的） */
+    this.shownK = 0;
+    this.zoomSaveTimer = null;
   }
   /** 放在白板卡片里：卡片多大就铺多大，而不是按图的大小算高度 */
   inCanvas() {
@@ -22606,6 +24966,7 @@ var MindMapEmbed = class extends import_obsidian12.Component {
         edge: edgeFromFrontmatter(fm),
         editable: false,
         embedded: true,
+        embedWheelLock: () => settings.embedWheel !== "always",
         toolbarPosition: settings.toolbarPosition,
         wheelZoom: () => settings.wheelAction === "zoom",
         notePreview: () => settings.notePreview,
@@ -22617,7 +24978,7 @@ var MindMapEmbed = class extends import_obsidian12.Component {
         autoNumber: () => settings.numberByTyping,
         copyPlain: () => settings.copyPlain,
         showNodebar: () => settings.showNodebar,
-        nodebarLayout: () => mergeLayout(settings.nodebarLayout, NODEBAR_DEFAULT),
+        nodebarLayout: () => mergeLayout(settings.nodebarLayout, nodebarDefault(import_obsidian13.Platform.isMobile)),
         toolbarLayout: () => embedToolbarLayout(settings),
         nodeColors: () => parseNodeColors(settings.nodeColors),
         textColors: () => parseColorList(settings.textColors),
@@ -22628,7 +24989,16 @@ var MindMapEmbed = class extends import_obsidian12.Component {
         dragToFloat: () => settings.dragToFloat,
         notesExpanded: () => settings.notesExpanded,
         noteCardFilter: () => settings.noteCardShow,
+        taskProgress: () => settings.taskProgress,
+        taskProgressPos: () => settings.taskProgressPos,
         notePopoverSize: this.plugin.notePopoverSize,
+        // 用户自己缩放了（不是适应画布那一下）：记住这次的缩放，下次打开这张嵌入的图还用它（链接里写了 |80% 的以链接为准）
+        onViewChange: (state) => {
+          if (this.applyingZoom || this.zoomFromLink() !== null) return;
+          if (Math.abs(state.k - this.shownK) < 1e-3) return;
+          this.shownK = state.k;
+          this.rememberZoom(state.k);
+        },
         host: this.plugin.canvasHost(() => this.ctx.sourcePath, this),
         onOpenFile: () => void this.plugin.app.workspace.openLinkText(this.file.path, this.ctx.sourcePath),
         onLayout: (bounds) => {
@@ -22672,7 +25042,49 @@ var MindMapEmbed = class extends import_obsidian12.Component {
       this.lastHeight = h;
       wrap2.setCssStyles({ height: `${h}px` });
     }
-    this.canvas?.fit();
+    this.fitAndZoom();
+  }
+  /** 适应画布，再换成链接里指定的（![[脑图|80%]]）或上次记住的缩放，以图的中心为准 */
+  fitAndZoom() {
+    const canvas = this.canvas;
+    if (!canvas) return;
+    this.applyingZoom = true;
+    try {
+      canvas.fit();
+      const k = this.zoomFromLink() ?? this.plugin.settings.embedZoom?.[this.zoomKey()];
+      if (k) canvas.zoomBy(k / canvas.getViewState().k);
+    } finally {
+      this.applyingZoom = false;
+      this.shownK = canvas.getViewState().k;
+    }
+  }
+  /** 链接里竖线后面写的缩放：![[脑图|80%]] → 0.8；没写或写的不是百分比为 null */
+  zoomFromLink() {
+    const el = this.ctx.containerEl;
+    const alt = el.getAttribute("alt") ?? el.closest(".internal-embed")?.getAttribute("alt") ?? "";
+    const m = /^\s*(\d{1,3}(?:\.\d+)?)\s*%\s*$/.exec(alt);
+    if (!m) return null;
+    return Math.max(0.1, Math.min(4, Number(m[1]) / 100));
+  }
+  zoomKey() {
+    return `${this.ctx.sourcePath}|${this.file.path}#${this.subpath}`;
+  }
+  rememberZoom(k) {
+    const s = this.plugin.settings;
+    const key = this.zoomKey();
+    const prev = s.embedZoom?.[key];
+    if (prev !== void 0 && Math.abs(prev - k) < 1e-3) return;
+    if (this.zoomSaveTimer !== null) window.clearTimeout(this.zoomSaveTimer);
+    this.zoomSaveTimer = window.setTimeout(() => {
+      this.zoomSaveTimer = null;
+      const map = { ...s.embedZoom ?? {} };
+      delete map[key];
+      map[key] = Math.round(k * 1e3) / 1e3;
+      const keys = Object.keys(map);
+      for (const old of keys.slice(0, Math.max(0, keys.length - 300))) delete map[old];
+      s.embedZoom = map;
+      this.plugin.saveSettingsSoon();
+    }, 400);
   }
   /** 工具栏在上下边时，预览框要多出它占的高度，图才不会被挡住 */
   toolbarRoom() {
@@ -22860,6 +25272,46 @@ function previewElAtLine(view, line) {
   const li = [...sec.el.querySelectorAll("li[data-line]")].find((l) => sec.start.line + Number(l.dataset.line) === line);
   return { el: li ?? sec.el, ready };
 }
+function previewCenterLine(view) {
+  const secs = previewSections(view);
+  const scroller = secs.length ? scrollParentWithin(secs[0].el, view.containerEl) : null;
+  if (!scroller) return Math.max(0, Math.round(view.previewMode.getScroll()));
+  const b = scroller.getBoundingClientRect();
+  const cy = b.top + b.height / 2;
+  let best = null;
+  for (const sec of secs) {
+    if (sec.shown === false || !sec.el.isConnected) continue;
+    const r3 = sec.el.getBoundingClientRect();
+    if (r3.height === 0 || r3.bottom < b.top || r3.top > b.bottom) continue;
+    const cands = [{ line: sec.start.line, r: r3 }];
+    for (const li of sec.el.querySelectorAll("li[data-line]")) cands.push({ line: sec.start.line + Number(li.dataset.line), r: li.getBoundingClientRect() });
+    for (const c of cands) {
+      const top = c.r.top;
+      const d = cy < top ? top - cy : Math.max(0, cy - Math.min(c.r.bottom, top + 30));
+      if (!best || d < best.d || d === best.d && c.line > best.line) best = { line: c.line, d };
+    }
+  }
+  return best ? best.line : Math.max(0, Math.round(view.previewMode.getScroll()));
+}
+function sourceFocusLine(view) {
+  const cm = view.editor.cm;
+  const cur = view.editor.getCursor().line;
+  if (editorLineVisible(cm, cur)) return cur;
+  const sd = cm.scrollDOM.getBoundingClientRect();
+  const block = cm.lineBlockAtHeight(sd.top + sd.height / 2 - cm.documentTop);
+  return cm.state.doc.lineAt(block.from).number - 1;
+}
+function editorLineVisible(cm, line) {
+  if (line + 1 > cm.state.doc.lines) return false;
+  const block = cm.lineBlockAt(cm.state.doc.line(line + 1).from);
+  const sd = cm.scrollDOM.getBoundingClientRect();
+  const top = cm.documentTop + block.top;
+  return top + block.height > sd.top && top < sd.bottom;
+}
+function clampCursor(editor, c) {
+  const line = Math.min(c.line, editor.lineCount() - 1);
+  return { line, ch: Math.min(c.ch, editor.getLine(line).length) };
+}
 function unfoldPreviewLine(view, line) {
   const secs = previewSections(view);
   const i = secs.findIndex((s) => s.start.line <= line && line <= s.end.line);
@@ -22878,14 +25330,14 @@ function previewLineAt(view, target) {
   const li = target.closest("li[data-line]");
   return li && sec.el.contains(li) ? sec.start.line + Number(li.dataset.line) : sec.start.line;
 }
-var MindMapPlugin = class extends import_obsidian13.Plugin {
+var MindMapPlugin = class extends import_obsidian14.Plugin {
   constructor() {
     super(...arguments);
     this.settings = { ...DEFAULT_SETTINGS };
     /** PDF 自动摘录：同一时间只有一张脑图接 PDF++ 复制的内容 */
     this.pdfExcerpt = new PdfExcerpt(this.app);
     /** 删除节点时清理不再使用的图片（设置项 cleanAttachments） */
-    this.janitor = new AttachmentJanitor(this.app, (n) => new import_obsidian13.Notice(t("notice.attachmentsCleaned", { n: String(n) })));
+    this.janitor = new AttachmentJanitor(this.app, (n) => new import_obsidian14.Notice(t("notice.attachmentsCleaned", { n: String(n) })));
     /** 用户明确要求以 Markdown 打开的文件，跳过一次视图重定向 */
     this.markdownOverride = /* @__PURE__ */ new Set();
     /** 脑图笔记临时以 Markdown 打开时，标签页右上角那个「以思维导图打开」按钮 */
@@ -22916,6 +25368,16 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     /** 打开着的主题编辑器：插件卸载 / 重载时一并关掉，免得旧代码继续往样式表里写 */
     this.openThemeEditors = /* @__PURE__ */ new Set();
     /**
+     * 从 PDF 里点被引用的标注跳回笔记（PDF++）：它只在 markdown 类型的标签页里找这篇笔记，找不到就新开一个标签页。
+     * 这篇笔记已经以脑图开着时，就在那张脑图里跳到对应的行（选中节点），新开的空标签页关掉，不再多出一张脑图。
+     * 只管「从 PDF 视图发起、带行号、要打开到一个空的新标签页」这一种，别的打开方式（⌘ 点链接想再开一个）照旧。
+     * PDF 在主区域、侧边栏、单独的窗口里都算；脑图开在哪个窗口都能找到
+     */
+    /** 用户最后在用的（不算空标签页）是不是 PDF：判断「是不是从 PDF 跳回来的」 */
+    this.lastLeafWasPdf = false;
+    /** 同一个标签页在 Markdown 和脑图之间来回切：每篇笔记记住 Markdown 那边的模式、滚动位置和光标（只在这次运行里） */
+    this.mdSpot = /* @__PURE__ */ new Map();
+    /**
      * 分屏联动（设置里打开）：同一文件的脑图和 Markdown 同时显示时，Markdown 里的光标换了行，
      * 脑图选中对应节点。光标移动没有公开事件，用 document 的 selectionchange（CodeMirror 会同步 DOM 选区），
      * 只认有焦点的编辑器 —— 脑图那边带过来的光标不会再弹回去
@@ -22944,8 +25406,8 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
   }
   async onload() {
     const atStartup = !this.app.workspace.layoutReady;
-    setLocale((0, import_obsidian13.getLanguage)());
-    setLanguage((0, import_obsidian13.getLanguage)());
+    setLocale((0, import_obsidian14.getLanguage)());
+    setLanguage((0, import_obsidian14.getLanguage)());
     registerMindMapIcon();
     await this.loadSettings();
     this.register(() => this.pdfExcerpt.stop());
@@ -22979,8 +25441,8 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
       for (const el of this.customCssEls) el.remove();
       this.customCssEls = [];
     });
-    void (0, import_obsidian13.loadMathJax)().then(() => this.mathReady = true).catch(() => void 0);
-    void (0, import_obsidian13.loadPrism)().catch(() => void 0);
+    void (0, import_obsidian14.loadMathJax)().then(() => this.mathReady = true).catch(() => void 0);
+    void (0, import_obsidian14.loadPrism)().catch(() => void 0);
     this.registerHoverLinkSource(HOVER_SOURCE, { display: t("hover.display"), defaultMod: true });
     try {
       this.registerView(VIEW_TYPE_MINDMAP, (leaf) => new MindMapView(leaf, this));
@@ -22995,13 +25457,19 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     } catch (e) {
       console.warn("gogoga Mind Map: .xmind is opened by another plugin", e);
       if (!this.settings.xmindTakenNoticed) {
-        new import_obsidian13.Notice(t("notice.xmindTaken"), 1e4);
+        new import_obsidian14.Notice(t("notice.xmindTaken"), 1e4);
         this.settings.xmindTakenNoticed = true;
         void this.saveSettings();
       }
     }
     this.addSettingTab(new MindMapSettingTab(this.app, this));
     this.patchSetViewState();
+    this.registerEvent(
+      this.app.workspace.on("active-leaf-change", (leaf) => {
+        const type = leaf?.view?.getViewType();
+        if (type && type !== "empty") this.lastLeafWasPdf = type === "pdf";
+      })
+    );
     this.registerCodeBlock();
     registerMindMapEmbeds(this);
     this.registerMarkdownPostProcessor((el, ctx) => {
@@ -23012,7 +25480,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
         () => {
           let found = "";
           this.app.workspace.iterateAllLeaves((leaf) => {
-            if (!found && leaf.view instanceof import_obsidian13.MarkdownView && leaf.view.file?.path === ctx.sourcePath) found = leaf.view.data;
+            if (!found && leaf.view instanceof import_obsidian14.MarkdownView && leaf.view.file?.path === ctx.sourcePath) found = leaf.view.data;
           });
           return found;
         }
@@ -23021,7 +25489,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     this.registerCommands();
     this.registerEvent(
       this.app.workspace.on("file-menu", (menu, file, _source, leaf) => {
-        if (file instanceof import_obsidian13.TFolder) this.addFolderMenuItems(menu, file);
+        if (file instanceof import_obsidian14.TFolder) this.addFolderMenuItems(menu, file);
         else this.addFileMenuItems(menu, file, leaf);
       })
     );
@@ -23151,6 +25619,9 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     if (thumb === DEFAULT_SETTINGS.imageThumbWidth) doc.body.style.removeProperty("--mm-img-thumb-w");
     else doc.body.style.setProperty("--mm-img-thumb-w", `${thumb}px`);
     doc.body.classList.toggle("mm-strike-done", this.settings.strikeDoneTasks);
+    const fsz = this.settings.noteFontSize;
+    if (fsz === DEFAULT_SETTINGS.noteFontSize) doc.body.style.removeProperty("--mm-note-size");
+    else doc.body.style.setProperty("--mm-note-size", `${fsz}px`);
     const h = this.settings.noteMaxHeight;
     if (h === DEFAULT_SETTINGS.noteMaxHeight) doc.body.style.removeProperty("--mm-note-max-h");
     else doc.body.style.setProperty("--mm-note-max-h", `${h}px`);
@@ -23182,27 +25653,27 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     if (this.settings.colorsInNotes) {
       this.noteTagExt.push(
         noteColorsExtension((view) => {
-          if (!view.state.field(import_obsidian13.editorLivePreviewField, false)) return false;
-          const path = view.state.field(import_obsidian13.editorInfoField, false)?.file?.path;
+          if (!view.state.field(import_obsidian14.editorLivePreviewField, false)) return false;
+          const path = view.state.field(import_obsidian14.editorInfoField, false)?.file?.path;
           return !!path && this.isMindMapFile(path) || textIsMindMap(view.state.sliceDoc(0, 2e3));
         })
       );
     }
     if (refresh) this.rerenderReadingViews();
-    if (this.settings.formatBarInNotes && !import_obsidian13.Platform.isMobile) {
+    if (this.settings.formatBarInNotes && !import_obsidian14.Platform.isMobile) {
       this.noteTagExt.push(
         noteFormatBarExtension({
           bar: () => ({
             textColors: parseColorList(this.settings.textColors),
             highlightColors: parseColorList(this.settings.highlightColors, true),
             memory: this.colorMemory,
-            underlineKey: import_obsidian13.Platform.isMacOS ? "\u2318U" : "Ctrl+U",
+            underlineKey: import_obsidian14.Platform.isMacOS ? "\u2318U" : "Ctrl+U",
             icon: (name) => {
               const span = createSpan({ cls: "mm-icon" });
-              (0, import_obsidian13.setIcon)(span, name);
+              (0, import_obsidian14.setIcon)(span, name);
               return span;
             },
-            tip: (el, text) => (0, import_obsidian13.setTooltip)(el, text, { placement: "top" })
+            tip: (el, text) => (0, import_obsidian14.setTooltip)(el, text, { placement: "top" })
           })
         })
       );
@@ -23210,8 +25681,8 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     if (this.settings.markersInNotes !== "show") {
       this.noteTagExt.push(
         noteMarkersExtension(this.settings.markersInNotes, (s) => {
-          if (!s.field(import_obsidian13.editorLivePreviewField, false)) return false;
-          const path = s.field(import_obsidian13.editorInfoField, false)?.file?.path;
+          if (!s.field(import_obsidian14.editorLivePreviewField, false)) return false;
+          const path = s.field(import_obsidian14.editorInfoField, false)?.file?.path;
           return !!path && this.isMindMapFile(path) || textIsMindMap(s.sliceDoc(0, 2e3));
         })
       );
@@ -23221,12 +25692,101 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
   /** 设置改了以后，打开着的阅读视图重新渲染（节点颜色是渲染时加上去的） */
   rerenderReadingViews() {
     this.app.workspace.iterateAllLeaves((l) => {
-      if (l.view instanceof import_obsidian13.MarkdownView && l.view.getMode() === "preview") l.view.previewMode.rerender(true);
+      if (l.view instanceof import_obsidian14.MarkdownView && l.view.getMode() === "preview") l.view.previewMode.rerender(true);
     });
   }
   toggleShowHidden() {
     this.showHidden = !this.showHidden;
     this.reloadMaps();
+  }
+  /** 工具栏「快捷设置」面板里的几项：编辑、拆分这些常调的细节设置；和设置页是同一份 */
+  quickSettings() {
+    const s = this.settings;
+    const save = () => void this.saveSettings();
+    const touch = import_obsidian14.Platform.isMobile || window.matchMedia("(pointer: coarse)").matches;
+    return [
+      {
+        label: t("settings.showNodebar.name"),
+        value: s.showNodebar,
+        set: (v) => {
+          s.showNodebar = !!v;
+          save();
+          refreshAllNodebars();
+        }
+      },
+      ...touch ? [
+        {
+          label: t("settings.touchToggles.name"),
+          value: s.touchToggles,
+          options: [
+            // 面板窄（手机上），用短一点的说法
+            { value: "always", label: t("quick.touchToggles.always") },
+            { value: "selected", label: t("quick.touchToggles.selected") }
+          ],
+          set: (v) => {
+            s.touchToggles = v === "selected" ? "selected" : "always";
+            save();
+            this.applyEmbedToolbar();
+          }
+        }
+      ] : [],
+      {
+        label: t("settings.editCaret.name"),
+        value: s.editCaret,
+        options: [
+          { value: "select", label: t("settings.editCaret.select") },
+          { value: "end", label: t("settings.editCaret.end") }
+        ],
+        set: (v) => {
+          s.editCaret = v === "end" ? "end" : "select";
+          save();
+        }
+      },
+      {
+        label: t("settings.formatBar.name"),
+        value: s.formatBar,
+        set: (v) => {
+          s.formatBar = !!v;
+          save();
+        }
+      },
+      {
+        label: t("settings.widthHandleOnHover.name"),
+        value: s.widthHandleOnHover,
+        set: (v) => {
+          s.widthHandleOnHover = !!v;
+          save();
+        }
+      },
+      {
+        label: t("settings.keepBlankLines.name"),
+        value: s.keepBlankLines,
+        set: (v) => {
+          s.keepBlankLines = !!v;
+          save();
+        }
+      },
+      {
+        label: t("settings.splitKeepOriginal.name"),
+        value: s.splitKeepOriginal,
+        set: (v) => {
+          s.splitKeepOriginal = !!v;
+          save();
+        }
+      },
+      {
+        label: t("settings.splitKeepDelims.name"),
+        value: s.splitKeepDelims,
+        set: (v) => {
+          s.splitKeepDelims = !!v;
+          save();
+        }
+      }
+    ];
+  }
+  /** 拆成子节点的偏好（设置里的保留原文字、保留拆分符号、自定义拆分方式） */
+  splitPrefs() {
+    return { keepOriginal: this.settings.splitKeepOriginal, keepDelims: this.settings.splitKeepDelims, custom: parseCustomSplits(this.settings.customSplits) };
   }
   async saveSettings() {
     await this.saveData(this.settings);
@@ -23318,8 +25878,8 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
       let count = 0;
       for (const src of sources) {
         const srcFile = this.app.vault.getAbstractFileByPath(src);
-        const cache = srcFile instanceof import_obsidian13.TFile ? this.app.metadataCache.getFileCache(srcFile) : null;
-        if (!(srcFile instanceof import_obsidian13.TFile) || !cache) continue;
+        const cache = srcFile instanceof import_obsidian14.TFile ? this.app.metadataCache.getFileCache(srcFile) : null;
+        if (!(srcFile instanceof import_obsidian14.TFile) || !cache) continue;
         const swaps = [];
         for (const l of [...cache.links ?? [], ...cache.embeds ?? []]) {
           const hash = l.link.indexOf("#");
@@ -23346,7 +25906,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
           return text;
         });
       }
-      if (count) new import_obsidian13.Notice(t("notice.headingLinksUpdated", { n: count }));
+      if (count) new import_obsidian14.Notice(t("notice.headingLinksUpdated", { n: count }));
     })();
   }
   /** 中心主题规则这类影响解析的设置变了：已打开的脑图重新解析 */
@@ -23379,12 +25939,12 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
   async addListIcons() {
     const icon2 = this.settings.listIcon;
     if (!icon2) {
-      new import_obsidian13.Notice(t("notice.setIconFirst"));
+      new import_obsidian14.Notice(t("notice.setIconFirst"));
       return;
     }
     const targets = this.app.vault.getMarkdownFiles().filter((f) => this.isMindMapFile(f.path) && !this.app.metadataCache.getCache(f.path)?.frontmatter?.[ICON_KEY]);
     if (!targets.length) {
-      new import_obsidian13.Notice(t("notice.allHaveIcons"));
+      new import_obsidian14.Notice(t("notice.allHaveIcons"));
       return;
     }
     let done = 0;
@@ -23398,7 +25958,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
         console.error(t("log.iconWriteFailed", { path: file.path }), e);
       }
     }
-    new import_obsidian13.Notice(t("notice.iconsAdded", { count: done }));
+    new import_obsidian14.Notice(t("notice.iconsAdded", { count: done }));
   }
   /** 把设置里的工具栏位置应用到所有打开的脑图视图（except 可跳过刚发起改动的那个） */
   applyToolbarPosition(except) {
@@ -23415,13 +25975,16 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
   }
   patchSetViewState() {
     const shouldRedirect = (file) => !this.markdownOverride.has(file) && this.isMindMapFile(file);
-    const proto = import_obsidian13.WorkspaceLeaf.prototype;
+    const proto = import_obsidian14.WorkspaceLeaf.prototype;
+    const plugin = this;
     const original = Object.getOwnPropertyDescriptor(proto, "setViewState").value;
     proto.setViewState = function(state, eState) {
       const file = state?.state?.file;
       const current2 = this.view;
       const alreadyMarkdown = this.view?.getViewType() === "markdown" && current2?.file?.path === file;
       if (state?.type === "markdown" && typeof file === "string" && !alreadyMarkdown && shouldRedirect(file)) {
+        const reused = plugin.reuseOpenMindMap(this, file, eState);
+        if (reused) return reused;
         state = { ...state, type: VIEW_TYPE_MINDMAP };
       }
       return original.call(this, state, eState);
@@ -23429,6 +25992,20 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     this.register(() => {
       proto.setViewState = original;
     });
+  }
+  reuseOpenMindMap(leaf, path, eState) {
+    const st = eState;
+    if (typeof st?.line !== "number" || leaf.view?.getViewType() !== "empty") return null;
+    if (!this.lastLeafWasPdf) return null;
+    const existing = this.app.workspace.getLeavesOfType(VIEW_TYPE_MINDMAP).find((l) => l !== leaf && l.view.file?.path === path);
+    if (!existing) return null;
+    existing.view.setEphemeralState(eState);
+    void this.app.workspace.revealLeaf(existing);
+    window.setTimeout(() => {
+      if (leaf.view?.getViewType() === "empty") leaf.detach();
+      void this.app.workspace.revealLeaf(existing);
+    }, 300);
+    return Promise.resolve();
   }
   convertOpenLeaves() {
     for (const leaf of this.app.workspace.getLeavesOfType("markdown")) {
@@ -23441,25 +26018,38 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     const from = leaf.view;
     let path = null;
     if (from instanceof MindMapView && from.file === file) {
-      path = from.getSelectedPath();
+      path = from.getFocusPath();
       from.rememberViewportNow();
       await from.save();
     }
+    const spot = this.mdSpot.get(file.path);
     this.markdownOverride.add(file.path);
     try {
-      await leaf.setViewState({ type: "markdown", state: { file: file.path, mode: "source" }, active: true });
+      await leaf.setViewState({ type: "markdown", state: { file: file.path, mode: spot?.mode ?? "source" }, active: true }, spot ? { scroll: spot.scroll } : void 0);
     } finally {
       this.markdownOverride.delete(file.path);
     }
-    if (path === null) return;
     const view = leaf.view;
-    if (!(view instanceof import_obsidian13.MarkdownView) || view.file !== file) return;
-    const line = lineOfPath(view.editor.getValue(), path, this.rootRule());
-    if (line === null) return;
+    if (!(view instanceof import_obsidian14.MarkdownView) || view.file !== file) return;
     const editor = view.editor;
-    editor.setCursor({ line, ch: editor.getLine(line).length });
-    scrollEditorLineToCenter(editor.cm, line);
+    const line = path === null ? null : lineOfPath(editor.getValue(), path, this.rootRule());
+    const rule = this.rootRule();
+    const keepCursor = !!spot?.cursor && line !== null && spot.cursor.line < editor.lineCount() && pathAtLine(editor.getValue(), spot.cursor.line, rule) === path;
+    if (view.getMode() === "preview") {
+      if (line !== null) this.revealPreviewLine(view, line, { flash: false, onlyIfHidden: !!spot });
+      return;
+    }
+    const cm = editor.cm;
+    if (spot?.cursor && (keepCursor || line === null)) editor.setCursor(clampCursor(editor, spot.cursor));
+    else if (line !== null) editor.setCursor({ line, ch: editor.getLine(line).length });
     editor.focus();
+    if (line === null) return;
+    const target = keepCursor && spot?.cursor ? spot.cursor.line : line;
+    const win = view.containerEl.win;
+    win.setTimeout(() => {
+      if (spot && Math.abs(view.currentMode.getScroll() - spot.scroll) > 0.05) view.currentMode.applyScroll(spot.scroll);
+      if (!spot || !editorLineVisible(cm, target)) scrollEditorLineToCenter(cm, target);
+    }, 30);
   }
   /**
    * remember 为真时往 frontmatter 写 mindmap: true（和列表图标），以后都用脑图打开；
@@ -23470,7 +26060,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     const live = /* @__PURE__ */ new Set();
     for (const leaf of this.app.workspace.getLeavesOfType("markdown")) {
       const view = leaf.view;
-      if (!(view instanceof import_obsidian13.MarkdownView) || !view.file || !this.isMindMapFile(view.file.path)) continue;
+      if (!(view instanceof import_obsidian14.MarkdownView) || !view.file || !this.isMindMapFile(view.file.path)) continue;
       live.add(view);
       if (this.mapButtons.has(view)) continue;
       const el = view.addAction(MINDMAP_ICON, t("menu.openAsMindMap"), () => {
@@ -23494,7 +26084,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     const onSelectionChange = (ev) => {
       if (!this.settings.syncSplit) return;
       const doc = ev.target;
-      const view = this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).find((v) => v instanceof import_obsidian13.MarkdownView && v.containerEl.doc === doc && v.editor.hasFocus());
+      const view = this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).find((v) => v instanceof import_obsidian14.MarkdownView && v.containerEl.doc === doc && v.editor.hasFocus());
       const file = view?.file;
       if (!view || !file || !view.editor.hasFocus()) return;
       const maps = this.visibleMapsOf(file.path);
@@ -23515,7 +26105,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
       if (!this.settings.syncSplit) return;
       const target = ev.target;
       if (!target?.closest?.(".markdown-reading-view")) return;
-      const view = this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).find((v) => v instanceof import_obsidian13.MarkdownView && v.getMode() === "preview" && v.containerEl.contains(target));
+      const view = this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).find((v) => v instanceof import_obsidian14.MarkdownView && v.getMode() === "preview" && v.containerEl.contains(target));
       const file = view?.file;
       if (!view || !file) return;
       const line = previewLineAt(view, target);
@@ -23547,7 +26137,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
   registerFollowActive() {
     const followOnce = async () => {
       if (!this.settings.followActiveNote) return false;
-      const view = this.app.workspace.getActiveViewOfType(import_obsidian13.MarkdownView);
+      const view = this.app.workspace.getActiveViewOfType(import_obsidian14.MarkdownView);
       const file = view?.file;
       if (!view || !file || file.extension !== "md") return false;
       const maps = this.app.workspace.getLeavesOfType(VIEW_TYPE_MINDMAP).filter((l) => l !== view.leaf && l.view instanceof MindMapView && l.view.containerEl.isShown());
@@ -23595,7 +26185,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     this.registerEvent(this.app.workspace.on("layout-change", soon));
     this.registerEvent(
       this.app.vault.on("modify", (f) => {
-        if (f instanceof import_obsidian13.TFile && this.app.workspace.getLeavesOfType("markdown").some((l) => l.view.file?.path === f.path)) soon();
+        if (f instanceof import_obsidian14.TFile && this.app.workspace.getLeavesOfType("markdown").some((l) => l.view.file?.path === f.path)) soon();
       })
     );
     this.register(() => {
@@ -23610,7 +26200,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     if (!this.settings.foldFollow) return;
     for (const leaf of this.app.workspace.getLeavesOfType("markdown")) {
       const view = leaf.view;
-      if (!(view instanceof import_obsidian13.MarkdownView) || !view.file) continue;
+      if (!(view instanceof import_obsidian14.MarkdownView) || !view.file) continue;
       if (!this.isMindMapFile(view.file.path) && !this.visibleMapsOf(view.file.path).length) continue;
       const mode = view.currentMode;
       if (typeof mode?.getFoldInfo !== "function" || typeof mode.applyFoldInfo !== "function") continue;
@@ -23662,7 +26252,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
   /** 每个脑图看一下同一篇的 Markdown 有没有显示着，有才在工具栏显示分屏联动按钮 */
   updateSplitSyncButtons() {
     const shownMd = new Set(
-      this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).filter((v) => v instanceof import_obsidian13.MarkdownView && !!v.file && v.containerEl.isShown()).map((v) => v.file.path)
+      this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).filter((v) => v instanceof import_obsidian14.MarkdownView && !!v.file && v.containerEl.isShown()).map((v) => v.file.path)
     );
     for (const l of this.app.workspace.getLeavesOfType(VIEW_TYPE_MINDMAP)) {
       const v = l.view;
@@ -23678,13 +26268,13 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     const path = from.getSelectedPath();
     if (path === null) return;
     const file = from.file;
-    const stale = this.app.workspace.getLeavesOfType("markdown").some((l) => l.view instanceof import_obsidian13.MarkdownView && l.view.file === file && l.view.containerEl.isShown() && l.view.editor.getValue() !== from.getViewData());
+    const stale = this.app.workspace.getLeavesOfType("markdown").some((l) => l.view instanceof import_obsidian14.MarkdownView && l.view.file === file && l.view.containerEl.isShown() && l.view.editor.getValue() !== from.getViewData());
     if (stale && from.hasUnsavedChanges()) {
       void (async () => {
         await from.save();
         const win = from.containerEl.win;
         const started = win.performance.now();
-        const ready = () => this.app.workspace.getLeavesOfType("markdown").every((l) => !(l.view instanceof import_obsidian13.MarkdownView) || l.view.file !== file || l.view.editor.getValue() === from.getViewData());
+        const ready = () => this.app.workspace.getLeavesOfType("markdown").every((l) => !(l.view instanceof import_obsidian14.MarkdownView) || l.view.file !== file || l.view.editor.getValue() === from.getViewData());
         while (!ready() && win.performance.now() - started < 1e3) await new Promise((r3) => win.setTimeout(r3, 30));
         if (from.file === file && from.getSelectedPath() === path) this.revealSelectedInMarkdown(from, path);
       })();
@@ -23696,7 +26286,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     if (!from.file) return;
     for (const leaf of this.app.workspace.getLeavesOfType("markdown")) {
       const view = leaf.view;
-      if (!(view instanceof import_obsidian13.MarkdownView) || view.file?.path !== from.file.path || !view.containerEl.isShown()) continue;
+      if (!(view instanceof import_obsidian14.MarkdownView) || view.file?.path !== from.file.path || !view.containerEl.isShown()) continue;
       if (view.getMode() === "preview") {
         const line2 = lineOfPath(view.editor.getValue(), path, this.rootRule());
         if (line2 === null) continue;
@@ -23718,10 +26308,29 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
    * 阅读模式：滚到那一行并闪一下。阅读视图是按段懒渲染的，先用 applyScroll 让那一段画出来，
    * 等它渲染好再找到元素居中（列表项找到那一项，其余是整段）
    */
-  revealPreviewLine(view, line) {
+  revealPreviewLine(view, line, opts = {}) {
+    const win = view.containerEl.win;
+    if (opts.onlyIfHidden) {
+      const t0 = win.performance.now();
+      const wait = () => {
+        const hit = previewElAtLine(view, line);
+        if (!hit?.ready && win.performance.now() - t0 < 300) {
+          win.setTimeout(wait, 16);
+          return;
+        }
+        const scroller = hit?.ready ? scrollParentWithin(hit.el, view.containerEl) : null;
+        if (hit?.ready && scroller) {
+          const s = scroller.getBoundingClientRect();
+          const r3 = hit.el.getBoundingClientRect();
+          if (r3.bottom > s.top && r3.top < s.bottom) return;
+        }
+        this.revealPreviewLine(view, line, { flash: opts.flash });
+      };
+      win.setTimeout(wait, 16);
+      return;
+    }
     unfoldPreviewLine(view, line);
     view.previewMode.applyScroll(line);
-    const win = view.containerEl.win;
     const started = win.performance.now();
     const tick = () => {
       const hit = previewElAtLine(view, line);
@@ -23746,7 +26355,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
         win.setTimeout(recheck, 16);
       };
       win.setTimeout(recheck, 16);
-      if (!el.animate) return;
+      if (opts.flash === false || !el.animate) return;
       const color = win.getComputedStyle(el).getPropertyValue("--text-highlight-bg").trim() || "rgba(255, 208, 0, 0.4)";
       el.animate([{ backgroundColor: color }, { backgroundColor: color, offset: 0.5 }, { backgroundColor: "transparent" }], { duration: 1500, easing: "ease-out" });
     };
@@ -23795,28 +26404,103 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     this.register(() => timers.forEach((id) => window.clearTimeout(id)));
   }
   /**
-   * 左右分屏对照：左边 Markdown，右边脑图，都不写 frontmatter。
-   * leaf 正显示着这篇的脑图（脑图笔记默认就是）：先把它换成 Markdown，再在右侧开脑图；
-   * 没给 leaf、或 leaf 显示的不是这篇：在当前标签页打开 Markdown
+   * 分屏对照：当前显示的这一边不动，另一种（脑图 ↔ Markdown）开在对面，都不写 frontmatter。
+   * 已经分好屏（左右、上下）的：开在旁边那个分屏里（另一边已经开着就切过去），不再多分一屏（群里反馈）；
+   * 还没分屏的：新分一屏，脑图在哪边按设置「分屏对照时脑图在」。
+   * 没给 leaf、或 leaf 显示的不是这篇：先在当前标签页打开 Markdown
    */
   async openSideBySide(file, leaf) {
     const target = leaf ?? this.app.workspace.getLeaf(false);
-    const view = target.view;
-    if (!(view instanceof import_obsidian13.MarkdownView && view.file === file)) await this.openAsMarkdown(file, target);
-    this.app.workspace.setActiveLeaf(target, { focus: true });
-    await this.openPreview(file);
-  }
-  /** 在右侧分屏用脑图看当前笔记，不写 frontmatter；已经开着就直接显示那个 */
-  async openPreview(file) {
-    const existing = this.app.workspace.getLeavesOfType(VIEW_TYPE_MINDMAP).find((l) => l.view.file?.path === file.path);
-    if (existing) {
-      await this.app.workspace.revealLeaf(existing);
+    const shows = (l, type) => l.view.getViewType() === type && l.view.file?.path === file.path;
+    if (!shows(target, VIEW_TYPE_MINDMAP) && !shows(target, "markdown")) await this.openAsMarkdown(file, target);
+    const want = shows(target, VIEW_TYPE_MINDMAP) ? "markdown" : VIEW_TYPE_MINDMAP;
+    const restore = () => this.app.workspace.setActiveLeaf(target, { focus: true });
+    const other = [];
+    this.app.workspace.iterateAllLeaves((l) => {
+      if (l.parent !== target.parent && shows(l, want)) other.push(l);
+    });
+    if (other.length) {
+      await this.app.workspace.revealLeaf(other.find((l) => l.view.containerEl.isShown()) ?? other[0]);
+      restore();
       return;
     }
-    const source = this.app.workspace.getMostRecentLeaf();
-    const leaf = this.app.workspace.getLeaf("split", "vertical");
-    await leaf.setViewState({ type: VIEW_TYPE_MINDMAP, state: { file: file.path }, active: false });
-    if (source) this.app.workspace.setActiveLeaf(source, { focus: true });
+    const pane = this.neighborPane(target);
+    let side;
+    if (pane) side = this.app.workspace.createLeafInParent(pane, pane.children.length);
+    else {
+      const mapLeft = this.settings.splitMapSide === "left";
+      side = this.app.workspace.createLeafBySplit(target, "vertical", want === VIEW_TYPE_MINDMAP ? mapLeft : !mapLeft);
+    }
+    if (want === VIEW_TYPE_MINDMAP) await side.setViewState({ type: VIEW_TYPE_MINDMAP, state: { file: file.path }, active: false });
+    else await this.openAsMarkdown(file, side);
+    await this.app.workspace.revealLeaf(side);
+    restore();
+  }
+  /**
+   * 旁边那个分屏（一组标签页）：和 leaf 所在的这组挨着的那组，先找后面（右、下）的，没有再找前面的。
+   * 只在主区域、单独窗口里找，侧边栏不算；没分屏就是 null
+   */
+  neighborPane(leaf) {
+    const tabs = leaf.parent;
+    const root = leaf.getRoot();
+    const ws = this.app.workspace;
+    if (root === ws.leftSplit || root === ws.rightSplit) return null;
+    const leafOf = (n, last) => {
+      if (n instanceof import_obsidian14.WorkspaceTabs) return n;
+      const kids = n.children ?? [];
+      for (const k of last ? [...kids].reverse() : kids) {
+        const hit = leafOf(k, last);
+        if (hit) return hit;
+      }
+      return null;
+    };
+    let cur = tabs;
+    while (cur.parent) {
+      const kids = cur.parent.children ?? [];
+      const i = kids.indexOf(cur);
+      const next = kids[i + 1] ? leafOf(kids[i + 1], false) : null;
+      const prev = !next && i > 0 ? leafOf(kids[i - 1], true) : null;
+      if (next || prev) return next ?? prev;
+      cur = cur.parent;
+    }
+    return null;
+  }
+  /** 分屏对照的另一边：和 leaf 不在同一组、正显示着同一篇的另一种视图 */
+  sidePartner(leaf) {
+    const file = leaf.view.file;
+    const type = leaf.view.getViewType();
+    if (!file || type !== "markdown" && type !== VIEW_TYPE_MINDMAP) return null;
+    const want = type === "markdown" ? VIEW_TYPE_MINDMAP : "markdown";
+    let hit = null;
+    this.app.workspace.iterateAllLeaves((l) => {
+      if (!hit && l.parent !== leaf.parent && l.view.getViewType() === want && l.view.file?.path === file.path && l.view.containerEl.isShown()) hit = l;
+    });
+    return hit;
+  }
+  /** 分屏对照时左右（上下）互换：两边的脑图和 Markdown 对调，焦点跟着原来那种视图走（群里反馈） */
+  async swapSides(leaf) {
+    const partner = this.sidePartner(leaf);
+    const file = leaf.view.file;
+    if (!partner || !file) return false;
+    const mapLeaf = leaf.view instanceof MindMapView ? leaf : partner;
+    const mdLeaf = mapLeaf === leaf ? partner : leaf;
+    const focusMap = mapLeaf === leaf;
+    if (mapLeaf.view instanceof MindMapView) {
+      mapLeaf.view.rememberViewportNow();
+      await mapLeaf.view.save();
+    }
+    if (mdLeaf.view instanceof import_obsidian14.MarkdownView) await mdLeaf.view.save();
+    const mdState = mdLeaf.getViewState();
+    await mdLeaf.setViewState({ type: VIEW_TYPE_MINDMAP, state: { file: file.path }, active: false });
+    this.markdownOverride.add(file.path);
+    try {
+      await mapLeaf.setViewState({ ...mdState, active: false });
+    } finally {
+      this.markdownOverride.delete(file.path);
+    }
+    this.app.workspace.setActiveLeaf(focusMap ? mdLeaf : mapLeaf, { focus: true });
+    this.updateSplitSyncButtons();
+    return true;
   }
   async openAsMindMap(file, leaf, remember = this.settings.rememberView) {
     const icon2 = this.settings.listIcon;
@@ -23829,12 +26513,15 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     }
     const from = leaf.view;
     let path = null;
-    if (from instanceof import_obsidian13.MarkdownView && from.file === file) {
-      path = pathAtLine(from.editor.getValue(), from.editor.getCursor().line, this.rootRule());
+    if (from instanceof import_obsidian14.MarkdownView && from.file === file) {
+      const mode = from.getMode();
+      this.mdSpot.set(file.path, { mode, scroll: from.currentMode.getScroll(), cursor: mode === "source" ? from.editor.getCursor() : this.mdSpot.get(file.path)?.cursor ?? null });
+      const line = mode === "preview" ? previewCenterLine(from) : sourceFocusLine(from);
+      path = line === null ? null : pathAtLine(from.editor.getValue(), line, this.rootRule());
       if (path === "") path = null;
     }
     await leaf.setViewState({ type: VIEW_TYPE_MINDMAP, state: { file: file.path }, active: true });
-    if (path !== null && leaf.view instanceof MindMapView) leaf.view.revealPath(path);
+    if (path !== null && leaf.view instanceof MindMapView) leaf.view.revealPath(path, true);
   }
   // ---------- 命令 ----------
   registerCommands() {
@@ -23842,7 +26529,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
       id: "toggle-view",
       name: t("command.toggleView"),
       checkCallback: (checking) => {
-        const view = this.app.workspace.getActiveViewOfType(import_obsidian13.FileView);
+        const view = this.app.workspace.getActiveViewOfType(import_obsidian14.FileView);
         const leaf = view?.leaf;
         const file = view?.file;
         if (!leaf || !file || !view) return false;
@@ -23869,10 +26556,20 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
       }
     });
     this.addCommand({
+      id: "swap-sides",
+      name: t("command.swapSides"),
+      checkCallback: (checking) => {
+        const leaf = this.app.workspace.getActiveViewOfType(import_obsidian14.MarkdownView)?.leaf ?? this.app.workspace.getActiveViewOfType(MindMapView)?.leaf;
+        if (!leaf || !this.sidePartner(leaf)) return false;
+        if (!checking) void this.swapSides(leaf);
+        return true;
+      }
+    });
+    this.addCommand({
       id: "open-preview",
       name: t("command.openPreview"),
       checkCallback: (checking) => {
-        const view = this.app.workspace.getActiveViewOfType(import_obsidian13.MarkdownView) ?? this.app.workspace.getActiveViewOfType(MindMapView);
+        const view = this.app.workspace.getActiveViewOfType(import_obsidian14.MarkdownView) ?? this.app.workspace.getActiveViewOfType(MindMapView);
         const file = view?.file;
         if (!view || !file || file.extension !== "md") return false;
         if (!checking) void this.openSideBySide(file, view.leaf);
@@ -23942,7 +26639,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
         await this.saveSettings();
         if (key === "formatBarInNotes") this.applyNoteTags();
         else refreshAllBars();
-        new import_obsidian13.Notice(t(this.settings[key] ? "notice.toggledOn" : "notice.toggledOff", { name: t(label) }));
+        new import_obsidian14.Notice(t(this.settings[key] ? "notice.toggledOn" : "notice.toggledOff", { name: t(label) }));
       }
     });
     toggleSetting("toggle-nodebar", "showNodebar", "command.toggleNodebar", "settings.showNodebar.name");
@@ -23951,6 +26648,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     exportCommand("expand-all", t("command.expandAll"), async (v) => v.setFoldLevel(null));
     exportCommand("collapse-all", t("command.collapseAll"), async (v) => v.setFoldLevel(1));
     exportCommand("export-png", t("command.exportPng"), (v) => v.exportPng());
+    if (import_obsidian14.Platform.isDesktopApp) exportCommand("export-pdf", t("command.exportPdf"), (v) => v.exportPdf());
     exportCommand("export-svg", t("command.exportSvg"), (v) => v.exportSvg());
     exportCommand("copy-png", t("command.copyPng"), (v) => v.copyPng());
   }
@@ -23966,7 +26664,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
    * leaf 是标签页 ⋯ 菜单传进来的；文件列表右键没有 leaf，就看当前活动标签页是不是这个文件。
    */
   addFileMenuItems(menu, file, leaf) {
-    if (!(file instanceof import_obsidian13.TFile) || file.extension !== "md") return;
+    if (!(file instanceof import_obsidian14.TFile) || file.extension !== "md") return;
     const active = this.app.workspace.getMostRecentLeaf();
     const shown = leaf ?? (active?.view?.file === file ? active : null);
     const shownType = shown?.view.getViewType();
@@ -23993,7 +26691,7 @@ var MindMapPlugin = class extends import_obsidian13.Plugin {
     const file = await this.app.vault.create(joinPath(folder.path, name), content);
     const leaf = this.app.workspace.getLeaf(false);
     await leaf.setViewState({ type: VIEW_TYPE_MINDMAP, state: { file: file.path }, active: true });
-    new import_obsidian13.Notice(t("notice.created", { path: file.path }));
+    new import_obsidian14.Notice(t("notice.created", { path: file.path }));
   }
   /** 内置的起始内容：跟随界面语言；只影响新建的文件 */
   defaultContent(title) {
@@ -24014,11 +26712,11 @@ ${topics}`;
     const path = this.settings.newFileTemplate.trim();
     if (!path) return null;
     const file = this.app.vault.getAbstractFileByPath(path) ?? this.app.metadataCache.getFirstLinkpathDest(path.replace(/\.md$/, ""), "");
-    if (!(file instanceof import_obsidian13.TFile)) {
-      new import_obsidian13.Notice(t("notice.templateMissing", { path }));
+    if (!(file instanceof import_obsidian14.TFile)) {
+      new import_obsidian14.Notice(t("notice.templateMissing", { path }));
       return null;
     }
-    const text = fillTemplate(await this.app.vault.cachedRead(file), title, (p) => (0, import_obsidian13.moment)().format(p));
+    const text = fillTemplate(await this.app.vault.cachedRead(file), title, (p) => (0, import_obsidian14.moment)().format(p));
     const values = [[FRONTMATTER_KEY, "true"]];
     if (this.settings.listIcon) values.push([ICON_KEY, this.settings.listIcon]);
     return withFrontmatter(text, values, [ICON_KEY]);
@@ -24026,10 +26724,10 @@ ${topics}`;
   registerCodeBlock() {
     const processor = (source, el, ctx) => {
       const wrap2 = el.createDiv({ cls: "mm-codeblock" });
-      const child = new import_obsidian13.MarkdownRenderChild(wrap2);
+      const child = new import_obsidian14.MarkdownRenderChild(wrap2);
       const info = ctx.getSectionInfo(el);
       const key = `${ctx.sourcePath}:${info?.lineStart ?? "?"}`;
-      const state = this.blockStates.get(key) ?? { view: null, selected: null, editable: false, focused: false, history: new History() };
+      const state = this.blockStates.get(key) ?? { view: null, viewAuto: true, keepView: false, selected: null, editable: false, focused: false, history: new History() };
       this.blockStates.set(key, state);
       const style = { maxHeadingLevel: this.settings.maxHeadingLevel, indent: indentString(this.settings.indent) };
       const doc = parseMarkdown(source, { fallbackTitle: "", style });
@@ -24047,12 +26745,14 @@ ${topics}`;
         current2 = next;
         state.selected = canvas.getSelectedPath();
         state.view = canvas.getViewState();
+        state.viewAuto = !canvas.hasUserView();
+        state.keepView = true;
         state.focused = wrap2.contains(wrap2.ownerDocument.activeElement);
         writing = writing.then(async () => {
           try {
             await this.replaceCodeBlock(ctx, el, prev, next);
           } catch (e) {
-            new import_obsidian13.Notice(t("notice.writeBackFailed", { error: e.message }));
+            new import_obsidian14.Notice(t("notice.writeBackFailed", { error: e.message }));
           }
         });
       };
@@ -24062,33 +26762,18 @@ ${topics}`;
         edge: edgeFromFrontmatter((k) => frontmatterValue(doc.frontmatter, k)),
         editable: state.editable,
         embedded: true,
-        toolbarPosition: this.settings.toolbarPosition,
-        wheelZoom: () => this.settings.wheelAction === "zoom",
-        notePreview: () => this.settings.notePreview,
-        formatBar: () => this.settings.formatBar,
-        centerOnSelect: () => this.settings.centerOnSelect,
-        hideSyntax: () => this.settings.hideSyntax,
-        widthHandleOnHover: () => this.settings.widthHandleOnHover,
-        newNodeName: () => this.settings.newNodeName,
-        autoNumber: () => this.settings.numberByTyping,
-        copyPlain: () => this.settings.copyPlain,
-        showNodebar: () => this.settings.showNodebar,
-        nodebarLayout: () => mergeLayout(this.settings.nodebarLayout, NODEBAR_DEFAULT),
+        autoRefit: true,
+        embedWheelLock: () => this.settings.embedWheel !== "always",
+        ...this.blockCanvasOptions(),
         toolbarLayout: () => embedToolbarLayout(this.settings),
-        nodeColors: () => parseNodeColors(this.settings.nodeColors),
-        textColors: () => parseColorList(this.settings.textColors),
-        highlightColors: () => parseColorList(this.settings.highlightColors, true),
-        colorMemory: this.colorMemory,
-        marqueeDrag: () => this.settings.leftDrag === "select",
-        caretAtEnd: () => this.settings.editCaret === "end",
-        dragToFloat: () => this.settings.dragToFloat,
-        notesExpanded: () => this.settings.notesExpanded,
-        noteCardFilter: () => this.settings.noteCardShow,
-        notePopoverSize: this.notePopoverSize,
         host: this.canvasHost(() => ctx.sourcePath, child),
+        onBigEdit: () => {
+          state.focused = false;
+          this.openBlockEditor(ctx, el, state, current2);
+        },
         onChange: (d) => {
           if (promoteRoot(d) === "full") {
-            new import_obsidian13.Notice(t("notice.rootNoRoom"));
+            new import_obsidian14.Notice(t("notice.rootNoRoom"));
             d.root.text = "";
             wrap2.win.setTimeout(() => canvas.render(), 0);
           }
@@ -24128,6 +26813,7 @@ ${topics}`;
         },
         onViewChange: (v) => {
           state.view = v;
+          state.viewAuto = !canvas.hasUserView();
         },
         onEditableChange: (e) => {
           state.editable = e;
@@ -24135,7 +26821,8 @@ ${topics}`;
         }
       });
       wrap2.classList.toggle("is-editable", state.editable);
-      if (state.view) canvas.setViewState(state.view);
+      if (state.view && (!state.viewAuto || state.keepView)) canvas.setViewState(state.view, state.viewAuto);
+      state.keepView = false;
       canvas.setDoc(doc);
       if (state.selected) canvas.selectPath(state.selected);
       if (state.focused) {
@@ -24150,6 +26837,7 @@ ${topics}`;
       child.register(() => {
         state.selected = canvas.getSelectedPath();
         state.view = canvas.getViewState();
+        state.viewAuto = !canvas.hasUserView();
         if (wrap2.contains(wrap2.ownerDocument.activeElement)) state.focused = true;
         canvas.destroy();
       });
@@ -24164,10 +26852,146 @@ ${topics}`;
       }
   }
   /** 把新的块内容写回宿主笔记：文件在编辑器里打开就走编辑器，否则直接改文件 */
+  /** 代码块嵌入和大窗口编辑共用的画布设置 */
+  blockCanvasOptions() {
+    return {
+      toolbarPosition: this.settings.toolbarPosition,
+      wheelZoom: () => this.settings.wheelAction === "zoom",
+      notePreview: () => this.settings.notePreview,
+      formatBar: () => this.settings.formatBar,
+      split: () => this.splitPrefs(),
+      keepBlankLines: () => this.settings.keepBlankLines,
+      keepEdgeSpaces: () => this.settings.keepEdgeSpaces,
+      centerOnSelect: () => this.settings.centerOnSelect,
+      hideSyntax: () => this.settings.hideSyntax,
+      widthHandleOnHover: () => this.settings.widthHandleOnHover,
+      newNodeName: () => this.settings.newNodeName,
+      autoNumber: () => this.settings.numberByTyping,
+      copyPlain: () => this.settings.copyPlain,
+      showNodebar: () => this.settings.showNodebar,
+      nodebarLayout: () => mergeLayout(this.settings.nodebarLayout, nodebarDefault(import_obsidian14.Platform.isMobile)),
+      nodeColors: () => parseNodeColors(this.settings.nodeColors),
+      textColors: () => parseColorList(this.settings.textColors),
+      highlightColors: () => parseColorList(this.settings.highlightColors, true),
+      colorMemory: this.colorMemory,
+      marqueeDrag: () => this.settings.leftDrag === "select",
+      caretAtEnd: () => this.settings.editCaret === "end",
+      dragToFloat: () => this.settings.dragToFloat,
+      notesExpanded: () => this.settings.notesExpanded,
+      noteCardFilter: () => this.settings.noteCardShow,
+      taskProgress: () => this.settings.taskProgress,
+      taskProgressPos: () => this.settings.taskProgressPos,
+      notePopoverSize: this.notePopoverSize
+    };
+  }
+  /**
+   * 代码块的「大窗口编辑」（#41）：铺满窗口的编辑框里放一张完整的脑图，改动照样实时写回代码块，
+   * 撤销记录和嵌入的图共用；关掉框就回到笔记，嵌入的图已经是改好的样子
+   */
+  openBlockEditor(ctx, el, state, source) {
+    const target = this.blockTarget(ctx, el);
+    const style = { maxHeadingLevel: this.settings.maxHeadingLevel, indent: indentString(this.settings.indent) };
+    let current2 = source.replace(/\n$/, "");
+    let writing = Promise.resolve();
+    const name = this.app.vault.getAbstractFileByPath(ctx.sourcePath)?.name.replace(/\.md$/, "") ?? "";
+    const modal = new BlockEditorModal(
+      this.app,
+      t("blockEditor.title", { name }),
+      (host, component) => {
+        const doc = parseMarkdown(current2, { fallbackTitle: "", style });
+        const structure = frontmatterValue(doc.frontmatter, "mindmap-structure");
+        const theme = frontmatterValue(doc.frontmatter, "mindmap-theme");
+        const keepFormat = (next) => blankBeforeNodeTables(preserveFormat(current2, next.replace(/\n$/, ""), (text) => serializeMarkdown(parseMarkdown(text, { fallbackTitle: "", style })).replace(/\n$/, "")));
+        const writeBack = (next, pushHistory = true) => {
+          next = next.replace(/\n$/, "");
+          if (next === current2) return;
+          if (pushHistory) state.history.push(current2);
+          const prev = current2;
+          current2 = next;
+          writing = writing.then(async () => {
+            try {
+              await this.replaceBlockAt(target, prev, next);
+              if (target.hint) target.hint = { lineStart: target.hint.lineStart, lineEnd: target.hint.lineStart + 1 + (next === "" ? 0 : next.split("\n").length) };
+            } catch (e) {
+              new import_obsidian14.Notice(t("notice.writeBackFailed", { error: e.message }));
+            }
+          });
+        };
+        const canvas = new MindMapCanvas(host, {
+          ...this.blockCanvasOptions(),
+          structure: isStructure(structure) ? structure : this.settings.defaultStructure,
+          theme: isThemeId(theme) ? theme : this.settings.defaultTheme,
+          edge: edgeFromFrontmatter((k) => frontmatterValue(doc.frontmatter, k)),
+          editable: true,
+          toolbarLayout: () => mergeLayout(this.settings.toolbarLayout, TOOLBAR_DEFAULT),
+          host: this.canvasHost(() => ctx.sourcePath, component),
+          onChange: (d) => {
+            if (promoteRoot(d) === "full") {
+              new import_obsidian14.Notice(t("notice.rootNoRoom"));
+              d.root.text = "";
+              host.win.setTimeout(() => canvas.render(), 0);
+            }
+            writeBack(keepFormat(serializeMarkdown(d)));
+          },
+          onUndo: () => {
+            const prev = state.history.undo(current2);
+            if (prev !== null) {
+              writeBack(prev, false);
+              canvas.setDoc(parseMarkdown(prev, { fallbackTitle: "", style }));
+            }
+          },
+          onRedo: () => {
+            const next = state.history.redo(current2);
+            if (next !== null) {
+              writeBack(next, false);
+              canvas.setDoc(parseMarkdown(next, { fallbackTitle: "", style }));
+            }
+          },
+          onStructureChange: (s) => {
+            const d = canvas.getDoc();
+            if (!d) return;
+            d.frontmatter = setFrontmatterValue(d.frontmatter, "mindmap-structure", s === this.settings.defaultStructure ? null : s);
+            writeBack(keepFormat(serializeMarkdown(d)));
+          },
+          onEdgeChange: (e) => {
+            const d = canvas.getDoc();
+            if (!d) return;
+            d.frontmatter = setFrontmatterValue(d.frontmatter, "mindmap-edge", e.shape ?? null);
+            d.frontmatter = setFrontmatterValue(d.frontmatter, "mindmap-edge-dash", e.dashed === void 0 ? null : String(e.dashed));
+            d.frontmatter = setFrontmatterValue(d.frontmatter, "mindmap-edge-corner", e.sharp === void 0 ? null : e.sharp ? "sharp" : "round");
+            writeBack(keepFormat(serializeMarkdown(d)));
+          }
+        });
+        canvas.setDoc(doc);
+        if (state.selected) canvas.selectPath(state.selected);
+        host.win.requestAnimationFrame(() => canvas.focus());
+        return () => {
+          state.selected = canvas.getSelectedPath();
+          canvas.destroy();
+        };
+      },
+      () => {
+      }
+    );
+    modal.open();
+  }
   async replaceCodeBlock(ctx, el, expectedInner, nextInner) {
+    await this.replaceBlockAt(this.blockTarget(ctx, el), expectedInner, nextInner);
+  }
+  /** 代码块在哪：宿主笔记、渲染时的行号、所在的编辑器视图或白板卡片。大窗口编辑时块的元素会被重画掉，要先记下来 */
+  blockTarget(ctx, el) {
     const info = ctx.getSectionInfo(el);
-    const hint = info ? { lineStart: info.lineStart, lineEnd: info.lineEnd } : null;
-    const card = this.canvasTextCard(el);
+    const views = this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).filter((v) => v.file?.path === ctx.sourcePath);
+    return {
+      sourcePath: ctx.sourcePath,
+      hint: info ? { lineStart: info.lineStart, lineEnd: info.lineEnd } : null,
+      // 白板的文本卡片没有宿主笔记（sourcePath 是空的），块在卡片自己的文字里
+      card: this.canvasTextCard(el),
+      view: views.find((v) => v.containerEl.contains(el)) ?? views[0] ?? null
+    };
+  }
+  async replaceBlockAt(target, expectedInner, nextInner) {
+    const { hint, card } = target;
     if (card) {
       const range = locateBlock(card.node.text, hint, expectedInner);
       if (!range) throw new Error(t("error.blockNotFound"));
@@ -24175,10 +26999,10 @@ ${topics}`;
       card.canvas.requestSave();
       return;
     }
-    const file = this.app.vault.getAbstractFileByPath(ctx.sourcePath);
-    if (!(file instanceof import_obsidian13.TFile)) throw new Error(t("error.fileNotFound", { path: ctx.sourcePath }));
+    const file = this.app.vault.getAbstractFileByPath(target.sourcePath);
+    if (!(file instanceof import_obsidian14.TFile)) throw new Error(t("error.fileNotFound", { path: target.sourcePath }));
     const views = this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).filter((v) => v.file?.path === file.path);
-    const editorView = views.find((v) => v.containerEl.contains(el)) ?? views[0];
+    const editorView = target.view && views.includes(target.view) ? target.view : views[0];
     if (editorView && editorView.getMode() === "source") {
       const editor = editorView.editor;
       const range = locateBlock(editor.getValue(), hint, expectedInner);
@@ -24278,7 +27102,7 @@ ${topics}`;
   /** 抓网页标题；10 秒没回来、出错、不是网页都当没有 */
   async fetchPageTitle(url) {
     const fetch2 = (async () => {
-      const res = await (0, import_obsidian13.requestUrl)({ url, method: "GET", throw: false });
+      const res = await (0, import_obsidian14.requestUrl)({ url, method: "GET", throw: false });
       if (res.status >= 400) return null;
       const type = res.headers["content-type"] ?? res.headers["Content-Type"];
       if (type && !/html/i.test(type)) return null;
@@ -24302,7 +27126,7 @@ ${topics}`;
   canvasHost(sourcePath, component, hoverParent) {
     return {
       claimKeys: (el, onKey) => {
-        const scope = new import_obsidian13.Scope(this.app.scope);
+        const scope = new import_obsidian14.Scope(this.app.scope);
         scope.register([], "F2", (ev) => {
           onKey(ev);
           return false;
@@ -24336,21 +27160,21 @@ ${topics}`;
         };
       },
       notePreviewScope: () => {
-        const scope = new import_obsidian13.Component();
+        const scope = new import_obsidian14.Component();
         scope.load();
         let child = null;
         return {
           render: (el, markdown) => {
             if (child) scope.removeChild(child);
-            child = scope.addChild(new import_obsidian13.Component());
+            child = scope.addChild(new import_obsidian14.Component());
             el.empty();
-            void import_obsidian13.MarkdownRenderer.render(this.app, markdown, el, sourcePath(), child);
+            void import_obsidian14.MarkdownRenderer.render(this.app, markdown, el, sourcePath(), child);
           },
           dispose: () => scope.unload()
         };
       },
       renderNote: (el, markdown) => {
-        void import_obsidian13.MarkdownRenderer.render(this.app, markdown, el, sourcePath(), component).then(() => {
+        void import_obsidian14.MarkdownRenderer.render(this.app, markdown, el, sourcePath(), component).then(() => {
           const prism = window.Prism;
           if (el.querySelector("pre code[class*=language-]")) prism?.highlightAllUnder?.(el);
         });
@@ -24358,13 +27182,13 @@ ${topics}`;
       renderMath: (tex) => {
         if (!this.mathReady) return null;
         try {
-          return (0, import_obsidian13.renderMath)(tex, false);
+          return (0, import_obsidian14.renderMath)(tex, false);
         } catch {
           return null;
         }
       },
       afterRender: () => {
-        if (this.mathReady) void (0, import_obsidian13.finishRenderMath)();
+        if (this.mathReady) void (0, import_obsidian14.finishRenderMath)();
       },
       renderPdfCrop: (link2, el, onImage) => {
         const plugins = this.app.plugins;
@@ -24383,7 +27207,7 @@ ${topics}`;
           else img.addEventListener("load", () => settle(img), { once: true });
         });
         observer.observe(el, { childList: true, subtree: true });
-        void import_obsidian13.MarkdownRenderer.render(this.app, `![[${link2}]]`, el, sourcePath(), component);
+        void import_obsidian14.MarkdownRenderer.render(this.app, `![[${link2}]]`, el, sourcePath(), component);
         return true;
       },
       resolveImage: (link2) => {
@@ -24392,10 +27216,10 @@ ${topics}`;
         return file ? this.app.vault.getResourcePath(file) : null;
       },
       showMenu: (entries, ev, onClose) => {
-        const menu = new import_obsidian13.Menu();
+        const menu = new import_obsidian14.Menu();
         if (onClose) menu.onHide(onClose);
         let canSub = false;
-        new import_obsidian13.Menu().addItem((item) => {
+        new import_obsidian14.Menu().addItem((item) => {
           canSub = typeof item.setSubmenu === "function";
         });
         const fill = (m, list) => {
@@ -24429,11 +27253,12 @@ ${topics}`;
         const d = this.app.dragManager?.draggable;
         if (!d) return null;
         const files = d.type === "file" && d.file ? [d.file] : d.type === "files" && d.files ? d.files : [];
-        return files.filter((f) => f instanceof import_obsidian13.TFile).map((f) => ({
+        return files.filter((f) => f instanceof import_obsidian14.TFile).map((f) => ({
           name: f.name,
           basename: f.basename,
           linktext: this.app.metadataCache.fileToLinktext(f, sourcePath()),
-          isImage: IMAGE_EXTS.has(f.extension.toLowerCase())
+          // 图片、视频、音频拖进来是嵌入（显示在节点上），别的文件是链接
+          isImage: IMAGE_EXTS.has(f.extension.toLowerCase()) || !!mediaKind(f.name)
         }));
       },
       saveBinary: async (name, data) => {
@@ -24444,26 +27269,31 @@ ${topics}`;
       fileBasename: () => {
         const p = sourcePath();
         const f = this.app.vault.getAbstractFileByPath(p);
-        return f instanceof import_obsidian13.TFile ? f.basename : p.replace(/\.md$/, "").split("/").pop() ?? p;
+        return f instanceof import_obsidian14.TFile ? f.basename : p.replace(/\.md$/, "").split("/").pop() ?? p;
       },
-      notice: (m) => new import_obsidian13.Notice(m),
+      notice: (m) => new import_obsidian14.Notice(m),
       linkTitle: (url) => this.settings.pasteLinkTitle ? this.fetchPageTitle(url) : null,
       // 工具栏按钮只有图标：提示别让人等（Obsidian 默认要停一会儿才出）
-      setTooltip: (el, text, placement) => (0, import_obsidian13.setTooltip)(el, text, { placement, delay: 150 }),
-      setIcon: (el, name) => (0, import_obsidian13.setIcon)(el, name),
+      setTooltip: (el, text, placement) => (0, import_obsidian14.setTooltip)(el, text, { placement, delay: 150 }),
+      setIcon: (el, name) => (0, import_obsidian14.setIcon)(el, name),
       listTags: () => Object.keys(this.app.metadataCache.getTags?.() ?? {}).map((x) => x.replace(/^#/, "")),
       openLink: (href, internal, ev) => {
         if (!internal) {
           window.open(href, "_blank");
           return;
         }
-        const mod = import_obsidian13.Keymap.isModEvent(ev);
-        if (!mod && this.revealInOpenPdf(href, sourcePath())) return;
-        if (mod === "split" || !mod && this.settings.linkOpen === "split") void this.openInLinkSplit(href, sourcePath());
-        else void this.app.workspace.openLinkText(href, sourcePath(), mod || (this.settings.linkOpen === "tab" ? "tab" : false));
+        const mod = import_obsidian14.Keymap.isModEvent(ev);
+        const sp = sourcePath();
+        if (!mod && this.revealInOpenPdf(href, sp)) return;
+        if (!mod && this.settings.linkReuseOpen && this.revealInOpenLeaf(href, sp)) return;
+        void (async () => {
+          await this.ensureLinkTarget(href, sp);
+          if (mod === "split" || !mod && this.settings.linkOpen === "split") await this.openInLinkSplit(href, sp);
+          else await this.app.workspace.openLinkText(href, sp, mod || (this.settings.linkOpen === "tab" ? "tab" : false));
+        })();
       },
       linkContextMenu: (ev, linktext, extra) => {
-        const menu = new import_obsidian13.Menu();
+        const menu = new import_obsidian14.Menu();
         for (const x of extra)
           menu.addItem((item) => {
             item.setSection(x.warning ? "danger" : "action").setTitle(x.title).setIcon(x.icon).onClick(() => x.run());
@@ -24495,24 +27325,93 @@ ${topics}`;
       })
     };
   }
-  /** 从节点新建笔记：放在新文件默认位置，已存在就直接复用，并在右侧分栏打开 */
+  /** 从脑图新建的笔记放在哪个文件夹（设置「从脑图新建的笔记放在」）；要建的文件夹建不了就退回 Obsidian 的新文件位置 */
+  async newNoteFolder(sourcePath) {
+    const fallback = this.app.fileManager.getNewFileParent(sourcePath);
+    const mode = this.settings.newNoteFolder;
+    if (mode === "default") return fallback;
+    const map = this.app.vault.getAbstractFileByPath(sourcePath);
+    const parent = map instanceof import_obsidian14.TFile ? map.parent : null;
+    let path = "";
+    if (mode === "map") path = parent?.path ?? "/";
+    else if (mode === "mapSub") path = map instanceof import_obsidian14.TFile ? joinPath(parent?.path ?? "", map.basename) : "";
+    else path = (0, import_obsidian14.normalizePath)(this.settings.newNoteFolderPath.trim() || "/");
+    if (!path) return fallback;
+    if (path === "/") return this.app.vault.getRoot();
+    const hit = this.app.vault.getAbstractFileByPath(path);
+    if (hit instanceof import_obsidian14.TFolder) return hit;
+    if (hit) return fallback;
+    try {
+      return await this.app.vault.createFolder(path);
+    } catch {
+      return fallback;
+    }
+  }
+  /**
+   * 点到还不存在的笔记链接：设置选了别的位置时，先在那里建好空笔记，Obsidian 再按名字找到它打开。
+   * 跟随 Obsidian 时不管（交给 Obsidian 照常新建）；链接写了文件夹路径、或者链的不是 Markdown 时也不管
+   */
+  async ensureLinkTarget(href, sourcePath) {
+    if (this.settings.newNoteFolder === "default") return;
+    const { path } = (0, import_obsidian14.parseLinktext)(href);
+    if (!path || path.includes("/") || this.app.metadataCache.getFirstLinkpathDest(path, sourcePath)) return;
+    const ext = /\.([^./]+)$/.exec(path)?.[1];
+    if (ext && ext.toLowerCase() !== "md") return;
+    const name = path.replace(/\.md$/i, "");
+    const folder = await this.newNoteFolder(sourcePath);
+    const file = joinPath(folder.path, `${name}.md`);
+    if (this.app.vault.getAbstractFileByPath(file)) return;
+    try {
+      await this.app.vault.create(file, "");
+    } catch (e) {
+      new import_obsidian14.Notice(t("notice.createNoteFailed", { error: e.message }));
+    }
+  }
+  /**
+   * 设置「链接的笔记已经开着时直接跳到那里」：链到的笔记在别的标签页、分屏里开着（脑图优先），就在那里跳到链到的位置，不再开一个。
+   * 同一组标签页里的（切过去就看不到脑图了）焦点跟过去；别的分屏里的，焦点按「分屏打开链接后把焦点放到笔记」走
+   */
+  revealInOpenLeaf(href, sourcePath) {
+    const { path, subpath } = (0, import_obsidian14.parseLinktext)(href);
+    if (!path) return false;
+    const file = this.app.metadataCache.getFirstLinkpathDest(path, sourcePath);
+    if (!file) return false;
+    const origin = this.app.workspace.getActiveViewOfType(import_obsidian14.ItemView)?.leaf;
+    const open = [];
+    this.app.workspace.iterateAllLeaves((l) => {
+      if (l !== origin && l.view.file?.path === file.path) open.push(l);
+    });
+    const leaf = open.find((l) => l.view.getViewType() === VIEW_TYPE_MINDMAP) ?? open[0];
+    if (!leaf) return false;
+    void this.app.workspace.revealLeaf(leaf);
+    if (subpath) leaf.view.setEphemeralState({ subpath });
+    if (origin && leaf.parent !== origin.parent) this.focusAfterLinkSplit(origin, leaf);
+    else this.app.workspace.setActiveLeaf(leaf, { focus: true });
+    return true;
+  }
+  /** 在右侧分屏打开链接以后，焦点放哪：设置打开时给笔记，否则回到脑图（方便接着加节点） */
+  focusAfterLinkSplit(origin, leaf) {
+    if (this.settings.linkFocusNote) this.app.workspace.setActiveLeaf(leaf, { focus: true });
+    else if (origin) this.app.workspace.setActiveLeaf(origin, { focus: true });
+  }
+  /** 从节点新建笔记：按设置放在对应的文件夹，已存在就直接复用，并在右侧分栏打开 */
   async createLinkedNote(name, sourcePath) {
-    const folder = this.app.fileManager.getNewFileParent(sourcePath);
+    const folder = await this.newNoteFolder(sourcePath);
     const path = joinPath(folder.path, `${name}.md`);
     let file = this.app.vault.getAbstractFileByPath(path);
-    if (!(file instanceof import_obsidian13.TFile)) {
+    if (!(file instanceof import_obsidian14.TFile)) {
       try {
         file = await this.app.vault.create(path, "");
       } catch (e) {
-        new import_obsidian13.Notice(t("notice.createNoteFailed", { error: e.message }));
+        new import_obsidian14.Notice(t("notice.createNoteFailed", { error: e.message }));
         return null;
       }
     }
-    if (!(file instanceof import_obsidian13.TFile)) return null;
-    const origin = this.app.workspace.getActiveViewOfType(import_obsidian13.ItemView)?.leaf;
+    if (!(file instanceof import_obsidian14.TFile)) return null;
+    const origin = this.app.workspace.getActiveViewOfType(import_obsidian14.ItemView)?.leaf;
     const leaf = this.linkSplit(origin);
     await leaf.openFile(file, { active: false });
-    if (origin) this.app.workspace.setActiveLeaf(origin, { focus: true });
+    this.focusAfterLinkSplit(origin, leaf);
     return file;
   }
   linkSplit(origin) {
@@ -24526,8 +27425,8 @@ ${topics}`;
   }
   /** 在右侧分屏里打开链接，焦点留在脑图上 */
   async openInLinkSplit(href, sourcePath) {
-    const origin = this.app.workspace.getActiveViewOfType(import_obsidian13.ItemView)?.leaf;
-    const { path, subpath } = (0, import_obsidian13.parseLinktext)(href);
+    const origin = this.app.workspace.getActiveViewOfType(import_obsidian14.ItemView)?.leaf;
+    const { path, subpath } = (0, import_obsidian14.parseLinktext)(href);
     const file = this.app.metadataCache.getFirstLinkpathDest(path, sourcePath);
     if (!file) {
       await this.app.workspace.openLinkText(href, sourcePath, "split");
@@ -24535,7 +27434,7 @@ ${topics}`;
     }
     const leaf = this.linkSplit(origin);
     await leaf.openFile(file, { active: false, eState: subpath ? { subpath } : void 0 });
-    if (origin) this.app.workspace.setActiveLeaf(origin, { focus: true });
+    this.focusAfterLinkSplit(origin, leaf);
   }
 };
 function joinPath(folder, name) {

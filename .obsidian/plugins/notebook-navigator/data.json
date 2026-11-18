@@ -101,6 +101,7 @@
     "calendarPlacement": "synced",
     "calendarLeftPlacement": "synced",
     "calendarWeeksToShow": "synced",
+    "defaultListMode": "synced",
     "compactItemHeight": "synced",
     "compactItemHeightScaleText": "synced",
     "featureImageSize": "synced",
@@ -173,6 +174,7 @@
   "externalIconProviders": {},
   "showReleaseNotes": true,
   "checkForUpdatesOnStart": true,
+  "showMarkdownPointBannerAtTop": true,
   "pinNavigationBanner": true,
   "showNoteCount": true,
   "separateNoteCounts": true,
@@ -261,6 +263,7 @@
   "frontmatterColorField": "color",
   "frontmatterBackgroundField": "background",
   "frontmatterNameField": "",
+  "frontmatterNameFormat": "{{name}}",
   "frontmatterCreatedField": "",
   "frontmatterModifiedField": "",
   "frontmatterDateFormat": "",
@@ -577,6 +580,7 @@
     "语言学习/德语/公共知识语法/2动词/❌": "created-desc"
   },
   "folderTreeSortOverrides": {},
+  "folderChildOrder": {},
   "folderAppearances": {
     "语言学习/德语": {
       "groupBy": "custom"
@@ -599,12 +603,14 @@
   "tagBackgroundColors": {},
   "tagSortOverrides": {},
   "tagTreeSortOverrides": {},
+  "tagChildOrder": {},
   "tagAppearances": {},
   "propertyIcons": {},
   "propertyColors": {},
   "propertyBackgroundColors": {},
   "propertySortOverrides": {},
   "propertyTreeSortOverrides": {},
+  "propertyChildOrder": {},
   "propertyAppearances": {},
   "virtualFolderColors": {},
   "virtualFolderBackgroundColors": {},
@@ -633,8 +639,7 @@
     "#404040",
     "#404040"
   ],
-  "lastShownVersion": "3.4.3",
-  "rootFolderOrder": [],
+  "lastShownVersion": "3.5.1",
   "rootTagOrder": [],
   "rootPropertyOrder": []
 }

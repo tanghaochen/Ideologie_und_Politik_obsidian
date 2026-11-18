@@ -468,7 +468,7 @@ Vorausgesetzt, dass dieses <s><span style="color:#dc2626">Sicherheitargument</sp
 **① 💬 本句原意**
 
 > 💬 本句原意：我以前在一个电动车很普及的地方住过，那里的空气很干净。
-
+Zuvor ich in dem dort gewohnen habe, die ort auf die Staße füllt und die luft soubar ist.
 **② 📝 原文批注**
 
 还原德语（推测）：Ich habe vorher <s><span style="color:#dc2626">in ein Ort gewohnt</span></s><sup>1</sup>, wo <span style="background:#fff3b0">Elektroauto sehr verbreitet ist</span><sup>2</sup>, <span style="background:#fff3b0">die Luft ist sehr frisch</span><sup>3</sup>.

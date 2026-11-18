@@ -1,3 +1,6 @@
+---
+banner: "[[简单逻辑学-全书逻辑图谱.png]]"
+---
 # Goethe B2 阅读六模块训练 · DW Top-Thema《Erinnern an den Holocaust》
 
 ---

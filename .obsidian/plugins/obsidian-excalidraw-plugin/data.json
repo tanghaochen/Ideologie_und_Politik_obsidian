@@ -1,200 +1,1334 @@
 {
-  "showTabTitlebarButtons": true,
-  "copyLinkToElemenetAnchorTo100": false,
-  "copyFrameLinkByName": false,
-  "disableDoubleClickTextEditing": false,
-  "phoneFooterSafeAreaPadding": false,
-  "tabletFooterSafeAreaPadding": false,
-  "folder": "Excalidraw",
-  "libraryFolderPath": "Excalidraw/Libraries",
-  "libraryFileName": "local-library",
-  "libraryStorageMode": "vault",
-  "libraryMigrationStatus": "not-required",
-  "libraryMigrationSnoozeUntil": 0,
-  "cropFolder": "",
-  "annotateFolder": "",
-  "embedUseExcalidrawFolder": false,
-  "templateFilePath": "Excalidraw/Template.excalidraw",
-  "scriptFolderPath": "Excalidraw/Scripts",
+  "addDummyTextElement": false,
+  "aiDefaultImageGenerationModel": "gpt-image-2",
+  "aiDefaultMaxOutgoingTokens": 0,
+  "aiDefaultMaxResponseTokens": 0,
+  "aiDefaultMultimodalModel": "gpt-5-mini",
+  "aiDefaultTextModel": "gpt-5-mini",
+  "aiEnabled": true,
+  "aiImageModelConfigs": {
+    "dall-e-2": {
+      "model": "dall-e-2",
+      "providerId": "OpenAI",
+      "supportedSizes": [
+        "256x256",
+        "512x512",
+        "1024x1024"
+      ],
+      "supportsMaskImageEdits": true,
+      "supportsPromptImageTransforms": true
+    },
+    "dall-e-3": {
+      "model": "dall-e-3",
+      "providerId": "OpenAI",
+      "supportedSizes": [
+        "1024x1024",
+        "1792x1024",
+        "1024x1792"
+      ],
+      "supportsMaskImageEdits": false,
+      "supportsPromptImageTransforms": false
+    },
+    "gemini-2.5-flash-image": {
+      "model": "gemini-2.5-flash-image",
+      "providerId": "Google Gemini",
+      "supportedSizes": [
+        "1024x1024",
+        "848x1264",
+        "1264x848",
+        "896x1200",
+        "1200x896",
+        "928x1152",
+        "1152x928",
+        "768x1376",
+        "1376x768",
+        "1584x672"
+      ],
+      "supportsMaskImageEdits": false,
+      "supportsPromptImageTransforms": true
+    },
+    "gemini-3-pro-image-preview": {
+      "model": "gemini-3-pro-image-preview",
+      "providerId": "Google Gemini",
+      "supportedSizes": [
+        "1024x1024",
+        "2048x2048",
+        "4096x4096",
+        "848x1264",
+        "1696x2528",
+        "3392x5056",
+        "1264x848",
+        "2528x1696",
+        "5056x3392",
+        "896x1200",
+        "1792x2400",
+        "3584x4800",
+        "1200x896",
+        "2400x1792",
+        "4800x3584",
+        "928x1152",
+        "1856x2304",
+        "3712x4608",
+        "1152x928",
+        "2304x1856",
+        "4608x3712",
+        "768x1376",
+        "1536x2752",
+        "3072x5504",
+        "1376x768",
+        "2752x1536",
+        "5504x3072",
+        "1584x672",
+        "3168x1344",
+        "6336x2688"
+      ],
+      "supportsMaskImageEdits": false,
+      "supportsPromptImageTransforms": true
+    },
+    "gemini-3.1-flash-image-preview": {
+      "model": "gemini-3.1-flash-image-preview",
+      "providerId": "Google Gemini",
+      "supportedSizes": [
+        "512x512",
+        "1024x1024",
+        "2048x2048",
+        "4096x4096",
+        "424x632",
+        "848x1264",
+        "1696x2528",
+        "3392x5056",
+        "632x424",
+        "1264x848",
+        "2528x1696",
+        "5056x3392",
+        "448x600",
+        "896x1200",
+        "1792x2400",
+        "3584x4800",
+        "600x448",
+        "1200x896",
+        "2400x1792",
+        "4800x3584",
+        "464x576",
+        "928x1152",
+        "1856x2304",
+        "3712x4608",
+        "576x464",
+        "1152x928",
+        "2304x1856",
+        "4608x3712",
+        "384x688",
+        "768x1376",
+        "1536x2752",
+        "3072x5504",
+        "688x384",
+        "1376x768",
+        "2752x1536",
+        "5504x3072",
+        "792x168",
+        "1584x672",
+        "3168x1344",
+        "6336x2688",
+        "256x1024",
+        "512x2048",
+        "1024x4096",
+        "2048x8192",
+        "192x1536",
+        "384x3072",
+        "768x6144",
+        "1536x12288",
+        "1024x256",
+        "2048x512",
+        "4096x1024",
+        "8192x2048",
+        "1536x192",
+        "3072x384",
+        "6144x768",
+        "12288x1536"
+      ],
+      "supportsMaskImageEdits": false,
+      "supportsPromptImageTransforms": true
+    },
+    "gpt-image-1": {
+      "model": "gpt-image-1",
+      "providerId": "OpenAI",
+      "supportedSizes": [
+        "1024x1024",
+        "1536x1024",
+        "1024x1536"
+      ],
+      "supportsMaskImageEdits": true,
+      "supportsPromptImageTransforms": true
+    },
+    "gpt-image-1-mini": {
+      "model": "gpt-image-1-mini",
+      "providerId": "OpenAI",
+      "supportedSizes": [
+        "1024x1024",
+        "1536x1024",
+        "1024x1536"
+      ],
+      "supportsMaskImageEdits": true,
+      "supportsPromptImageTransforms": true
+    },
+    "gpt-image-1.5": {
+      "model": "gpt-image-1.5",
+      "providerId": "OpenAI",
+      "supportedSizes": [
+        "1024x1024",
+        "1536x1024",
+        "1024x1536"
+      ],
+      "supportsMaskImageEdits": true,
+      "supportsPromptImageTransforms": true
+    },
+    "gpt-image-2": {
+      "model": "gpt-image-2",
+      "providerId": "OpenAI",
+      "supportedSizes": [
+        "1024x1024",
+        "1536x1024",
+        "1024x1536",
+        "2048x2048"
+      ],
+      "supportsMaskImageEdits": true,
+      "supportsPromptImageTransforms": true
+    },
+    "grok-imagine-image-pro": {
+      "model": "grok-imagine-image-pro",
+      "providerId": "xAI",
+      "supportedSizes": [
+        "1024x1024"
+      ],
+      "supportsMaskImageEdits": false,
+      "supportsPromptImageTransforms": true
+    },
+    "grok-imagine-image-quality": {
+      "model": "grok-imagine-image-quality",
+      "providerId": "xAI",
+      "supportedSizes": [
+        "1024x1024"
+      ],
+      "supportsMaskImageEdits": false,
+      "supportsPromptImageTransforms": true
+    }
+  },
+  "aiProviderProfiles": {
+    "Anthropic": {
+      "apiKey": "",
+      "baseURL": "https://api.anthropic.com/v1",
+      "provider": "anthropic"
+    },
+    "Google Gemini": {
+      "apiKey": "",
+      "baseURL": "https://generativelanguage.googleapis.com/v1beta",
+      "provider": "google"
+    },
+    "OpenAI": {
+      "apiKey": "",
+      "baseURL": "https://api.openai.com/v1",
+      "provider": "openai"
+    },
+    "OpenAI-compatible": {
+      "apiKey": "",
+      "baseURL": "https://api.openai.com/v1",
+      "provider": "openai-compatible"
+    },
+    "xAI": {
+      "apiKey": "",
+      "baseURL": "https://api.x.ai/v1",
+      "provider": "xai"
+    }
+  },
+  "aiTextModelConfigs": {
+    "claude-sonnet-4-5": {
+      "endpoint": "",
+      "model": "claude-sonnet-4-5",
+      "multimodalSupport": true,
+      "providerId": "Anthropic"
+    },
+    "gemini-2.5-pro": {
+      "endpoint": "",
+      "model": "gemini-2.5-pro",
+      "multimodalSupport": true,
+      "providerId": "Google Gemini"
+    },
+    "gpt-5-mini": {
+      "endpoint": "",
+      "model": "gpt-5-mini",
+      "multimodalSupport": true,
+      "providerId": "OpenAI"
+    },
+    "grok-4-fast": {
+      "endpoint": "",
+      "model": "grok-4-fast",
+      "multimodalSupport": true,
+      "providerId": "xAI"
+    }
+  },
+  "aiVerboseLogging": false,
+  "allowCtrlClick": true,
+  "allowImageCache": true,
+  "allowImageCacheInScene": true,
   "allowJavaScriptFiles": false,
-  "storeScriptFilesAsJavaScript": false,
+  "allowPinchZoom": false,
+  "allowWheelZoom": false,
+  "annotateFolder": "",
+  "annotatePrefix": "annotated_",
+  "annotatePreserveSize": false,
+  "annotateSuffix": "",
+  "areaZoomLimit": 1,
+  "autoExportLightAndDark": false,
+  "autoexportExcalidraw": false,
+  "autoexportPNG": false,
+  "autoexportSVG": false,
+  "autosaveIntervalDesktop": 60000,
+  "autosaveIntervalMobile": 30000,
+  "autostartScriptFailures": {},
+  "autostartScripts": {},
+  "canvasImmersiveEmbed": true,
+  "compareManifestToPluginVersion": true,
+  "compatibilityMode": false,
+  "compress": true,
+  "copyFrameLinkByName": false,
+  "copyLinkToElemenetAnchorTo100": false,
+  "cropFolder": "",
+  "cropPrefix": "cropped_",
+  "cropSuffix": "",
+  "customPens": [
+    {
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "freedrawOnly": false,
+      "penOptions": {
+        "constantPressure": false,
+        "hasOutline": false,
+        "highlighter": false,
+        "options": {
+          "easing": "easeOutSine",
+          "end": {
+            "cap": true,
+            "easing": "linear",
+            "taper": 0
+          },
+          "smoothing": 0.5,
+          "start": {
+            "cap": true,
+            "easing": "linear",
+            "taper": 0
+          },
+          "streamline": 0.5,
+          "thinning": 0.6
+        },
+        "outlineWidth": 1
+      },
+      "roughness": 0,
+      "strokeColor": "#000000",
+      "strokeWidth": 0,
+      "type": "default"
+    },
+    {
+      "backgroundColor": "#FFC47C",
+      "fillStyle": "solid",
+      "freedrawOnly": true,
+      "penOptions": {
+        "constantPressure": true,
+        "hasOutline": true,
+        "highlighter": true,
+        "options": {
+          "easing": "linear",
+          "end": {
+            "cap": true,
+            "easing": "linear",
+            "taper": 0
+          },
+          "smoothing": 0.5,
+          "start": {
+            "cap": true,
+            "easing": "linear",
+            "taper": 0
+          },
+          "streamline": 0.5,
+          "thinning": 1
+        },
+        "outlineWidth": 4
+      },
+      "roughness": null,
+      "strokeColor": "#FFC47C",
+      "strokeWidth": 2,
+      "type": "highlighter"
+    },
+    {
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "freedrawOnly": false,
+      "penOptions": {
+        "constantPressure": true,
+        "hasOutline": false,
+        "highlighter": false,
+        "options": {
+          "easing": "linear",
+          "end": {
+            "cap": false,
+            "easing": "linear",
+            "taper": 5
+          },
+          "smoothing": 0.4,
+          "start": {
+            "cap": false,
+            "easing": "linear",
+            "taper": 5
+          },
+          "streamline": 0.4,
+          "thinning": -0.5
+        },
+        "outlineWidth": 1
+      },
+      "roughness": 0,
+      "strokeColor": "#3E6F8D",
+      "strokeWidth": 0.5,
+      "type": "finetip"
+    },
+    {
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "freedrawOnly": false,
+      "penOptions": {
+        "constantPressure": false,
+        "hasOutline": false,
+        "highlighter": false,
+        "options": {
+          "easing": "easeInOutSine",
+          "end": {
+            "cap": true,
+            "easing": "linear",
+            "taper": 1
+          },
+          "smoothing": 0.2,
+          "start": {
+            "cap": true,
+            "easing": "linear",
+            "taper": 150
+          },
+          "streamline": 0.2,
+          "thinning": 0.6
+        },
+        "outlineWidth": 1
+      },
+      "roughness": 0,
+      "strokeColor": "#000000",
+      "strokeWidth": 2,
+      "type": "fountain"
+    },
+    {
+      "backgroundColor": "#FF7C7C",
+      "fillStyle": "dashed",
+      "freedrawOnly": true,
+      "penOptions": {
+        "constantPressure": true,
+        "hasOutline": true,
+        "highlighter": false,
+        "options": {
+          "easing": "linear",
+          "end": {
+            "cap": true,
+            "easing": "linear",
+            "taper": 0
+          },
+          "smoothing": 0.5,
+          "start": {
+            "cap": true,
+            "easing": "linear",
+            "taper": 0
+          },
+          "streamline": 0.5,
+          "thinning": 1
+        },
+        "outlineWidth": 4
+      },
+      "roughness": 3,
+      "strokeColor": "#B83E3E",
+      "strokeWidth": 2,
+      "type": "marker"
+    },
+    {
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "freedrawOnly": true,
+      "penOptions": {
+        "constantPressure": true,
+        "hasOutline": false,
+        "highlighter": true,
+        "options": {
+          "easing": "linear",
+          "end": {
+            "cap": true,
+            "easing": "linear",
+            "taper": true
+          },
+          "smoothing": 0.5,
+          "start": {
+            "cap": true,
+            "easing": "linear",
+            "taper": 0
+          },
+          "streamline": 0.5,
+          "thinning": 1
+        },
+        "outlineWidth": 1
+      },
+      "roughness": null,
+      "strokeColor": "#CECDCC",
+      "strokeWidth": 0,
+      "type": "thick-thin"
+    },
+    {
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "freedrawOnly": true,
+      "penOptions": {
+        "constantPressure": true,
+        "hasOutline": false,
+        "highlighter": true,
+        "options": {
+          "easing": "linear",
+          "end": {
+            "cap": true,
+            "easing": "linear",
+            "taper": true
+          },
+          "smoothing": 0.5,
+          "start": {
+            "cap": true,
+            "easing": "linear",
+            "taper": true
+          },
+          "streamline": 0.5,
+          "thinning": 1
+        },
+        "outlineWidth": 1
+      },
+      "roughness": null,
+      "strokeColor": "#CECDCC",
+      "strokeWidth": 0,
+      "type": "thin-thick-thin"
+    },
+    {
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "freedrawOnly": false,
+      "penOptions": {
+        "constantPressure": false,
+        "hasOutline": false,
+        "highlighter": false,
+        "options": {
+          "easing": "easeOutSine",
+          "end": {
+            "cap": true,
+            "easing": "linear",
+            "taper": 0
+          },
+          "smoothing": 0.5,
+          "start": {
+            "cap": true,
+            "easing": "linear",
+            "taper": 0
+          },
+          "streamline": 0.5,
+          "thinning": 0.6
+        },
+        "outlineWidth": 1
+      },
+      "roughness": 0,
+      "strokeColor": "#000000",
+      "strokeWidth": 0,
+      "type": "default"
+    },
+    {
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "freedrawOnly": false,
+      "penOptions": {
+        "constantPressure": false,
+        "hasOutline": false,
+        "highlighter": false,
+        "options": {
+          "easing": "easeOutSine",
+          "end": {
+            "cap": true,
+            "easing": "linear",
+            "taper": 0
+          },
+          "smoothing": 0.5,
+          "start": {
+            "cap": true,
+            "easing": "linear",
+            "taper": 0
+          },
+          "streamline": 0.5,
+          "thinning": 0.6
+        },
+        "outlineWidth": 1
+      },
+      "roughness": 0,
+      "strokeColor": "#000000",
+      "strokeWidth": 0,
+      "type": "default"
+    },
+    {
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "freedrawOnly": false,
+      "penOptions": {
+        "constantPressure": false,
+        "hasOutline": false,
+        "highlighter": false,
+        "options": {
+          "easing": "easeOutSine",
+          "end": {
+            "cap": true,
+            "easing": "linear",
+            "taper": 0
+          },
+          "smoothing": 0.5,
+          "start": {
+            "cap": true,
+            "easing": "linear",
+            "taper": 0
+          },
+          "streamline": 0.5,
+          "thinning": 0.6
+        },
+        "outlineWidth": 1
+      },
+      "roughness": 0,
+      "strokeColor": "#000000",
+      "strokeWidth": 0,
+      "type": "default"
+    }
+  ],
+  "decompressForMDView": false,
+  "defaultMode": "normal",
+  "defaultPenMode": "never",
+  "desktopUIMode": "full",
+  "disableContextMenu": false,
+  "disableDoubleClickTextEditing": false,
+  "displayExportedImageIfAvailable": false,
+  "displaySVGInPreview": false,
+  "done": "☑",
+  "doubleClickLinkOpenViewMode": true,
+  "drawingEmbedPrefixWithFilename": true,
+  "drawingFilenameDateTime": "YYYY-MM-DD HH.mm.ss",
+  "drawingFilenamePrefix": "Drawing ",
+  "drawingFilnameEmbedPostfix": " ",
+  "drawingOpenCount": 0,
+  "dynamicStyling": "colorful",
+  "embedMarkdownCommentLinks": true,
+  "embedPlaceholderImage": true,
+  "embedType": "excalidraw",
+  "embedUseExcalidrawFolder": false,
+  "embedWikiLink": true,
+  "embeddableMarkdownDefaults": {
+    "backgroundColor": "#fff",
+    "backgroundMatchCanvas": false,
+    "backgroundMatchElement": true,
+    "backgroundOpacity": 60,
+    "borderColor": "#fff",
+    "borderMatchElement": true,
+    "borderOpacity": 0,
+    "filenameVisible": false,
+    "lockedReadingMode": false,
+    "useObsidianDefaults": false
+  },
+  "enableCommandLinks": false,
+  "enableOnloadScripts": false,
+  "excalidrawMasteryPromoCollapsed": false,
+  "experimantalFourthFont": "Virgil",
+  "experimentalEnableFourthFont": false,
+  "experimentalFileTag": "✏️",
+  "experimentalFileType": false,
+  "experimentalLivePreview": true,
+  "exportEmbedScene": false,
+  "exportPaddingSVG": 10,
+  "exportWithBackground": true,
+  "exportWithTheme": true,
+  "fadeOutExcalidrawMarkup": false,
+  "fieldSuggester": true,
+  "focusOnFileTab": true,
+  "folder": "Excalidraw",
   "fontAssetsPath": "Excalidraw/CJK Fonts",
+  "forceWrap": false,
+  "gridSettings": {
+    "COLOR": "#000000",
+    "DYNAMIC_COLOR": true,
+    "GRID_DIRECTION": {
+      "horizontal": true,
+      "vertical": true
+    },
+    "OPACITY": 50
+  },
+  "height": "",
+  "hoverPreviewWithoutCTRL": false,
+  "iframeMatchExcalidrawTheme": true,
+  "imageCacheRetentionDays": 30,
+  "imageElementNotice": true,
+  "isLeftHanded": false,
+  "keepInSync": false,
+  "laserSettings": {
+    "COLOR": "#ff0000",
+    "DECAY_LENGTH": 50,
+    "DECAY_TIME": 1000
+  },
+  "latexBoilerplate": "\\color{green}e=mc^2",
+  "latexPreambleLocation": "preamble.sty",
+  "library": "deprecated",
+  "library2": {
+    "libraryItems": [],
+    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/2.27.3",
+    "type": "excalidrawlib",
+    "version": 2
+  },
+  "libraryFileName": "local-library",
+  "libraryFolderPath": "Excalidraw/Libraries",
+  "libraryMigrationSnoozeUntil": 0,
+  "libraryMigrationStatus": "not-required",
+  "libraryStorageMode": "vault",
+  "linkOpacity": 1,
+  "linkPrefix": "",
   "loadChineseFonts": false,
   "loadJapaneseFonts": false,
   "loadKoreanFonts": false,
-  "compress": true,
-  "decompressForMDView": false,
-  "onceOffCompressFlagReset": true,
-  "autosaveIntervalDesktop": 60000,
-  "autosaveIntervalMobile": 30000,
-  "drawingFilenamePrefix": "Drawing ",
-  "drawingEmbedPrefixWithFilename": true,
-  "drawingFilnameEmbedPostfix": " ",
-  "drawingFilenameDateTime": "YYYY-MM-DD HH.mm.ss",
-  "useExcalidrawExtension": true,
-  "cropSuffix": "",
-  "cropPrefix": "cropped_",
-  "annotateSuffix": "",
-  "annotatePrefix": "annotated_",
-  "annotatePreserveSize": false,
-  "displaySVGInPreview": false,
-  "previewImageType": "SVG",
-  "renderingConcurrency": 3,
-  "imageCacheRetentionDays": 30,
-  "allowImageCache": true,
-  "allowImageCacheInScene": true,
-  "displayExportedImageIfAvailable": false,
-  "previewMatchObsidianTheme": false,
-  "width": "400",
-  "height": "",
-  "overrideObsidianFontSize": false,
-  "dynamicStyling": "colorful",
-  "isLeftHanded": false,
-  "desktopUIMode": "full",
-  "tabletUIMode": "full",
-  "phoneUIMode": "full",
-  "iframeMatchExcalidrawTheme": true,
+  "loadPropertySuggestions": false,
+  "longPressDesktop": 500,
+  "longPressMobile": 500,
+  "markdownImageDeletionPreference": "ask",
+  "markdownImageSettings": {
+    "defaults": {
+      "border": {
+        "color": "Black",
+        "enabled": false
+      },
+      "css": "",
+      "fontColor": "Black",
+      "fontFamily": "Cascadia",
+      "paddingBottom": 10,
+      "transclusion": {
+        "border": {
+          "color": "Black",
+          "enabled": false
+        },
+        "css": "",
+        "enabled": false,
+        "fontColor": "Black",
+        "fontFamily": "Cascadia"
+      },
+      "width": 500
+    }
+  },
+  "markdownNodeOneClickEditing": false,
   "matchTheme": false,
   "matchThemeAlways": false,
   "matchThemeTrigger": false,
-  "defaultMode": "normal",
-  "defaultPenMode": "never",
-  "penModeDoubleTapEraser": true,
-  "penModeSingleFingerPanning": true,
-  "penModeCrosshairVisible": true,
-  "renderImageInMarkdownReadingMode": false,
-  "renderImageInHoverPreviewForMDNotes": false,
-  "renderImageInMarkdownToPDF": false,
-  "allowPinchZoom": false,
-  "allowWheelZoom": false,
-  "zoomToFitOnOpen": false,
-  "zoomToFitOnResize": false,
-  "zoomToFitMaxLevel": 2,
-  "zoomStep": 0.05,
-  "zoomMin": 0.13,
-  "zoomMax": 30,
-  "linkPrefix": "",
-  "urlPrefix": "",
-  "parseTODO": false,
-  "todo": "☐",
-  "done": "☑",
-  "hoverPreviewWithoutCTRL": false,
-  "linkOpacity": 1,
-  "openInAdjacentPane": true,
-  "showSecondOrderLinks": true,
-  "focusOnFileTab": true,
-  "openInMainWorkspace": true,
-  "showLinkBrackets": false,
-  "syncElementLinkWithText": false,
-  "allowCtrlClick": true,
-  "forceWrap": false,
-  "pageTransclusionCharLimit": 200,
-  "wordWrappingDefault": 0,
-  "removeTransclusionQuoteSigns": true,
-  "oEmbedAllowed": false,
-  "pngExportScale": 1,
-  "exportWithTheme": true,
-  "exportWithBackground": true,
-  "exportPaddingSVG": 10,
-  "exportEmbedScene": false,
-  "keepInSync": false,
-  "autoexportSVG": false,
-  "autoexportPNG": false,
-  "autoExportLightAndDark": false,
-  "autoexportExcalidraw": false,
-  "embedType": "excalidraw",
-  "embedMarkdownCommentLinks": true,
-  "embedWikiLink": true,
-  "embedPlaceholderImage": true,
-  "syncExcalidraw": false,
-  "experimentalFileType": false,
-  "experimentalFileTag": "✏️",
-  "experimentalLivePreview": true,
-  "fadeOutExcalidrawMarkup": false,
-  "loadPropertySuggestions": false,
-  "experimentalEnableFourthFont": false,
-  "experimantalFourthFont": "Virgil",
-  "addDummyTextElement": false,
-  "zoteroCompatibility": false,
-  "fieldSuggester": true,
-  "enableOnloadScripts": false,
-  "enableCommandLinks": false,
-  "compatibilityMode": false,
-  "drawingOpenCount": 0,
-  "library": "deprecated",
-  "library2": {
-    "type": "excalidrawlib",
-    "version": 2,
-    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/2.27.3",
-    "libraryItems": []
-  },
-  "imageElementNotice": true,
-  "mdSVGwidth": 500,
-  "mdSVGmaxHeight": 800,
-  "mdFont": "Cascadia",
-  "mdFontColor": "Black",
   "mdBorderColor": "Black",
   "mdCSS": "",
-  "markdownImageSettings": {
-    "defaults": {
-      "width": 500,
-      "paddingBottom": 10,
-      "fontFamily": "Cascadia",
-      "fontColor": "Black",
-      "border": {
-        "enabled": false,
-        "color": "Black"
+  "mdFont": "Cascadia",
+  "mdFontColor": "Black",
+  "mdSVGmaxHeight": 800,
+  "mdSVGwidth": 500,
+  "modifierKeyConfig": {
+    "Mac": {
+      "InternalDragAction": {
+        "defaultAction": "link",
+        "rules": [
+          {
+            "alt_opt": false,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "link",
+            "shift": false
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": false,
+            "meta_ctrl": true,
+            "result": "embeddable",
+            "shift": false
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "image",
+            "shift": true
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": false,
+            "meta_ctrl": true,
+            "result": "image-fullsize",
+            "shift": true
+          }
+        ]
       },
-      "css": "",
-      "transclusion": {
-        "enabled": false,
-        "fontFamily": "Cascadia",
-        "fontColor": "Black",
-        "border": {
-          "enabled": false,
-          "color": "Black"
-        },
-        "css": ""
+      "LinkClickAction": {
+        "defaultAction": "new-tab",
+        "rules": [
+          {
+            "alt_opt": false,
+            "ctrl_cmd": true,
+            "meta_ctrl": false,
+            "result": "active-pane",
+            "shift": true
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": true,
+            "meta_ctrl": false,
+            "result": "new-tab",
+            "shift": false
+          },
+          {
+            "alt_opt": true,
+            "ctrl_cmd": true,
+            "meta_ctrl": false,
+            "result": "new-pane",
+            "shift": false
+          },
+          {
+            "alt_opt": true,
+            "ctrl_cmd": true,
+            "meta_ctrl": false,
+            "result": "popout-window",
+            "shift": true
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": true,
+            "meta_ctrl": true,
+            "result": "md-properties",
+            "shift": false
+          }
+        ]
+      },
+      "LocalFileDragAction": {
+        "defaultAction": "image-import",
+        "rules": [
+          {
+            "alt_opt": false,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "image-import",
+            "shift": false
+          },
+          {
+            "alt_opt": true,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "link",
+            "shift": true
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "image-url",
+            "shift": true
+          },
+          {
+            "alt_opt": true,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "embeddable",
+            "shift": false
+          }
+        ]
+      },
+      "WebBrowserDragAction": {
+        "defaultAction": "image-url",
+        "rules": [
+          {
+            "alt_opt": false,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "image-url",
+            "shift": false
+          },
+          {
+            "alt_opt": true,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "link",
+            "shift": true
+          },
+          {
+            "alt_opt": true,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "embeddable",
+            "shift": false
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "image-import",
+            "shift": true
+          }
+        ]
+      }
+    },
+    "Win": {
+      "InternalDragAction": {
+        "defaultAction": "link",
+        "rules": [
+          {
+            "alt_opt": false,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "link",
+            "shift": false
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": true,
+            "meta_ctrl": false,
+            "result": "embeddable",
+            "shift": true
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "image",
+            "shift": true
+          },
+          {
+            "alt_opt": true,
+            "ctrl_cmd": true,
+            "meta_ctrl": false,
+            "result": "image-fullsize",
+            "shift": false
+          }
+        ]
+      },
+      "LinkClickAction": {
+        "defaultAction": "new-tab",
+        "rules": [
+          {
+            "alt_opt": false,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "active-pane",
+            "shift": false
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": true,
+            "meta_ctrl": false,
+            "result": "new-tab",
+            "shift": false
+          },
+          {
+            "alt_opt": true,
+            "ctrl_cmd": true,
+            "meta_ctrl": false,
+            "result": "new-pane",
+            "shift": false
+          },
+          {
+            "alt_opt": true,
+            "ctrl_cmd": true,
+            "meta_ctrl": false,
+            "result": "popout-window",
+            "shift": true
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": true,
+            "meta_ctrl": true,
+            "result": "md-properties",
+            "shift": false
+          }
+        ]
+      },
+      "LocalFileDragAction": {
+        "defaultAction": "image-import",
+        "rules": [
+          {
+            "alt_opt": false,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "image-import",
+            "shift": false
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": true,
+            "meta_ctrl": false,
+            "result": "link",
+            "shift": false
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "image-url",
+            "shift": true
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": true,
+            "meta_ctrl": false,
+            "result": "embeddable",
+            "shift": true
+          }
+        ]
+      },
+      "WebBrowserDragAction": {
+        "defaultAction": "image-url",
+        "rules": [
+          {
+            "alt_opt": false,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "image-url",
+            "shift": false
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": true,
+            "meta_ctrl": false,
+            "result": "link",
+            "shift": false
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": true,
+            "meta_ctrl": false,
+            "result": "embeddable",
+            "shift": true
+          },
+          {
+            "alt_opt": false,
+            "ctrl_cmd": false,
+            "meta_ctrl": false,
+            "result": "image-import",
+            "shift": true
+          }
+        ]
       }
     }
   },
-  "markdownImageDeletionPreference": "ask",
+  "modifierKeyOverrides": [
+    {
+      "key": "Enter",
+      "modifiers": [
+        "Mod"
+      ]
+    },
+    {
+      "key": "k",
+      "modifiers": [
+        "Mod"
+      ]
+    },
+    {
+      "key": "G",
+      "modifiers": [
+        "Mod"
+      ]
+    }
+  ],
+  "numberOfCustomPens": 0,
+  "oEmbedAllowed": false,
+  "onceOffCompressFlagReset": true,
+  "openInAdjacentPane": true,
+  "openInMainWorkspace": true,
+  "overrideObsidianFontSize": false,
+  "pageTransclusionCharLimit": 200,
+  "panWithRightMouseButton": true,
+  "parseTODO": false,
+  "pasteCodeBlockAs": "ask",
+  "pdfBorderBox": true,
+  "pdfDirection": "right",
+  "pdfFrame": false,
+  "pdfGapSize": 20,
+  "pdfGroupPages": false,
+  "pdfImportScale": 0.3,
+  "pdfLockAfterImport": true,
+  "pdfNumColumns": 1,
+  "pdfNumRows": 1,
+  "pdfScale": 4,
+  "pdfSettings": {
+    "alignment": "center",
+    "customPaperColor": "#ffffff",
+    "fitToPage": 1,
+    "margin": "normal",
+    "pageOrientation": "portrait",
+    "pageSize": "A4",
+    "paperColor": "white"
+  },
+  "penModeCrosshairVisible": true,
+  "penModeDoubleTapEraser": true,
+  "penModeSingleFingerPanning": true,
+  "phoneFooterSafeAreaPadding": false,
+  "phoneUIMode": "full",
+  "pinnedScripts": [],
+  "pngExportScale": 1,
+  "previewImageType": "SVG",
+  "previewMatchObsidianTheme": false,
+  "previousRelease": "2.29.2",
+  "rank": "Bronze",
+  "removeTransclusionQuoteSigns": true,
+  "renderImageInHoverPreviewForMDNotes": false,
+  "renderImageInMarkdownReadingMode": false,
+  "renderImageInMarkdownToPDF": false,
+  "renderingConcurrency": 3,
   "scriptEngineSettings": {
-    "Downloaded/Mindmap Builder": {
-      "Layout Config": {
-        "value": {
-          "GAP_X": 120,
-          "GAP_Y": 25,
-          "GAP_MULTIPLIER": 0.6,
-          "ROOT_RADIUS_FACTOR": 0.8,
-          "MIN_RADIUS": 350,
-          "RADIAL_ASPECT_RATIO": 0.7,
-          "RADIAL_POLE_GAP_BONUS": 2,
-          "RADIAL_START_ANGLE": 280,
-          "RADIAL_MAX_SWEEP": 340,
-          "DIRECTIONAL_ARC_SPAN_RADIANS": 0.2,
-          "GAP_MULTIPLIER_DIRECTIONAL": 1.5,
-          "RADIUS_PADDING_PER_NODE": 7,
-          "VERTICAL_SUBTREE_WIDTH_BLEND_SINGLE": 0.35,
-          "VERTICAL_SUBTREE_WIDTH_BLEND_DUAL": 0.6,
-          "VERTICAL_SUBTREE_SMOOTH_THRESHOLD_MULTIPLIER": 6,
-          "VERTICAL_SUBTREE_SMOOTH_MIN_SCALE": 240,
-          "HORIZONTAL_L1_SOFTCAP_THRESHOLD": 560,
-          "HORIZONTAL_L1_COMPRESSION_MIN_SCALE": 240,
-          "VERTICAL_COMPACT_PARENT_CHILD_GAP_RATIO": 0.55,
-          "DIRECTIONAL_CROSS_AXIS_RATIO": 0.1,
-          "INDICATOR_OFFSET": 10,
-          "INDICATOR_OPACITY": 40,
-          "CONTAINER_PADDING": 0,
-          "MAX_SEGMENT_LENGTH": 80,
-          "MANUAL_GAP_MULTIPLIER": 1.3,
-          "MANUAL_JITTER_RANGE": 300
-        },
-        "hidden": true
+    "Downloaded/ExcaliAI": {
+      "config": {
+        "tasks": [
+          {
+            "execution": {
+              "imageInput": "optional",
+              "maskMode": "disabled",
+              "mode": "text-result",
+              "requiresApi": "",
+              "resultType": "mermaid",
+              "userPrompt": "optional"
+            },
+            "help": "Turn the selected image and optional prompt into a Mermaid mind map. If conversion fails, open More Tools > Mermaid to Excalidraw and edit the generated script.",
+            "id": "challenge-my-thinking",
+            "name": "Challenge my thinking",
+            "outputInstruction": "Return a single message containing only the mermaid diagram in a codeblock.",
+            "systemPrompt": "Your task is to interpret a screenshot of a whiteboard, translating its ideas into a Mermaid graph. The whiteboard will encompass thoughts on a subject. Within the mind map, distinguish ideas that challenge, dispute, or contradict the whiteboard content. Additionally, include concepts that expand, complement, or advance the user's thinking. Utilize the Mermaid graph diagram type and present the resulting Mermaid diagram within a code block. Ensure the Mermaid script excludes the use of parentheses ()."
+          },
+          {
+            "execution": {
+              "imageInput": "optional",
+              "maskMode": "disabled",
+              "mode": "text-result",
+              "requiresApi": "",
+              "resultType": "svg",
+              "userPrompt": "optional"
+            },
+            "help": "Convert selected sketches into Excalidraw strokes. Works best with a small number of simple shapes. Experimental.",
+            "id": "convert-sketch-to-shapes",
+            "name": "Convert sketch to shapes",
+            "outputInstruction": "Return a single message containing only the SVG code in an html codeblock.",
+            "systemPrompt": "Given an image featuring various geometric shapes drawn by the user, your objective is to analyze the input and generate SVG code that accurately represents these shapes. Your output will be the SVG code enclosed in an HTML code block."
+          },
+          {
+            "execution": {
+              "imageInput": "disabled",
+              "maskMode": "disabled",
+              "mode": "text-result",
+              "requiresApi": "",
+              "resultType": "svg",
+              "userPrompt": "optional"
+            },
+            "help": "Turn a text prompt into a simple icon and insert it into Excalidraw as strokes. Text prompt only. Experimental.",
+            "id": "create-a-simple-excalidraw-icon",
+            "name": "Create a simple Excalidraw icon",
+            "outputInstruction": "Return a single message containing only the SVG code in an html codeblock.",
+            "systemPrompt": "Given a description of an SVG image from the user, your objective is to generate the corresponding SVG code. Avoid incorporating textual elements within the generated SVG. Your output should be the resulting SVG code enclosed in an HTML code block."
+          },
+          {
+            "execution": {
+              "imageInput": "disabled",
+              "maskMode": "disabled",
+              "mode": "image-prompt",
+              "requiresApi": "",
+              "resultType": "image",
+              "userPrompt": "optional"
+            },
+            "help": "Send only the text prompt to the configured image model. Be specific. To keep the prompt unchanged, start with: 'DO NOT add any detail, just use it AS-IS:'",
+            "id": "create-a-stick-figure",
+            "name": "Create a stick figure",
+            "outputInstruction": "Return a single message with the generated image prompt in a codeblock",
+            "systemPrompt": "You will receive a prompt from the user. Your task involves drawing a simple stick figure or a scene involving a few stick figures based on the user's prompt. Create the stick figure based on the following style description. DO NOT add any detail, just use it AS-IS: Create a simple stick figure character with a large round head and a face in the style of sketchy caricatures. The stick figure should have a rudimentary body composed of straight lines representing the arms and legs. Hands and toes should be represented with round shapes, do not add details such as fingers or toes. Use fine lines, smooth curves, rounded shapes. The stick figure should retain a playful and childlike simplicity, reminiscent of a doodle someone might draw on the corner of a notebook page. Create a black and white drawing, a hand-drawn figure on white background."
+          },
+          {
+            "execution": {
+              "imageInput": "required",
+              "maskMode": "optional",
+              "mode": "image-edit",
+              "requiresApi": "",
+              "resultType": "image",
+              "userPrompt": "required"
+            },
+            "help": "Image elements are used as the source image. In mask mode, shapes on top become the mask. Turn mask edit off to flatten non-image elements into the source image and apply a prompt-based transform.",
+            "id": "edit-an-image",
+            "name": "Edit an image",
+            "outputInstruction": "",
+            "systemPrompt": null
+          },
+          {
+            "execution": {
+              "imageInput": "optional",
+              "maskMode": "disabled",
+              "mode": "image-prompt",
+              "requiresApi": "",
+              "resultType": "image",
+              "userPrompt": "optional"
+            },
+            "help": "Generate an image from the selected image and your prompt. Add context in the prompt to guide how the image should be interpreted.",
+            "id": "generate-an-image-from-image-and-prompt",
+            "name": "Generate an image from image and prompt",
+            "outputInstruction": "Return a single message with the generated image prompt in a codeblock",
+            "systemPrompt": "Your task involves receiving an image and a textual prompt from the user. Your goal is to craft a detailed, accurate, and descriptive narrative of the image, tailored for effective image generation. Utilize the user-provided text prompt to inform and guide your depiction of the image. Ensure the resulting image remains text-free."
+          },
+          {
+            "execution": {
+              "imageInput": "disabled",
+              "maskMode": "disabled",
+              "mode": "image-direct",
+              "requiresApi": "",
+              "resultType": "image",
+              "userPrompt": "optional"
+            },
+            "help": "Send only the text prompt to the configured image model. Be specific. To keep the prompt unchanged, start with: 'DO NOT add any detail, just use it AS-IS:'",
+            "id": "generate-an-image-from-prompt",
+            "name": "Generate an image from prompt",
+            "outputInstruction": "Return a single message with the generated image prompt in a codeblock",
+            "systemPrompt": null
+          },
+          {
+            "execution": {
+              "imageInput": "disabled",
+              "maskMode": "disabled",
+              "mode": "image-prompt",
+              "requiresApi": "",
+              "resultType": "image",
+              "userPrompt": "optional"
+            },
+            "help": "Turn a quote into an illustrated scene. Include the author's name if you want the result to reference them.",
+            "id": "generate-an-image-to-illustrate-a-quote",
+            "name": "Generate an image to illustrate a quote",
+            "outputInstruction": "Return a single message with the generated image prompt in a codeblock",
+            "systemPrompt": "Your task involves transforming a user-provided quote into a detailed and imaginative illustration. Craft a visual representation that captures the essence of the quote and resonates well with a broad audience. If the Author's name is provided, aim to establish a connection between the illustration and the Author. This can be achieved by referencing a well-known story from the Author, situating the image in the Author's era or setting, or employing other creative methods of association. Additionally, provide preferences for styling, such as the chosen medium and artistic direction, to guide the image creation process. Ensure the resulting image remains text-free. Your task output should comprise a descriptive and detailed narrative aimed at facilitating the creation of a captivating illustration from the quote."
+          },
+          {
+            "execution": {
+              "imageInput": "optional",
+              "maskMode": "disabled",
+              "mode": "image-prompt",
+              "requiresApi": "",
+              "resultType": "image-silent",
+              "userPrompt": "optional"
+            },
+            "help": "Generate a 2x2 sheet of four icon variations from the selected sketch. Add a prompt if you want to steer the result.",
+            "id": "generate-4-icon-variants-based-on-input-image",
+            "name": "Generate 4 icon-variants based on input image",
+            "outputInstruction": "Return a single message with the generated image prompt in a codeblock",
+            "systemPrompt": "Given a simple sketch and an optional text prompt from the user, your task is to generate a descriptive narrative tailored for effective image generation, capturing the style of the sketch. Utilize the text prompt to guide the description. Your objective is to instruct DALL-E to create a collage of four minimalist black and white hand-drawn pencil sketches in a 2x2 matrix format. Each sketch should convert the user's sketch into simple artistic SVG icons with transparent backgrounds. Ensure the resulting images remain text-free, maintaining a minimalist, easy-to-understand style, and omit framing borders. Only include a pencil in the drawing if it is explicitly mentioned in the user prompt or included in the sketch."
+          },
+          {
+            "execution": {
+              "imageInput": "optional",
+              "maskMode": "disabled",
+              "mode": "image-prompt",
+              "requiresApi": "",
+              "resultType": "image",
+              "userPrompt": "optional"
+            },
+            "help": "Generate an image from the selected image and prompt to spark new ideas.",
+            "id": "visual-brainstorm",
+            "name": "Visual brainstorm",
+            "outputInstruction": "Return a single message with the generated image prompt in a codeblock",
+            "systemPrompt": "Your objective is to interpret a screenshot of a whiteboard, creating an image aimed at sparking further thoughts on the subject. The whiteboard will present diverse ideas about a specific topic. Your generated image should achieve one of two purposes: highlighting concepts that challenge, dispute, or contradict the whiteboard content, or introducing ideas that expand, complement, or enrich the user's thinking. You have the option to include multiple tiles in the resulting image, resembling a sequence akin to a comic strip. Ensure that the image remains devoid of text."
+          },
+          {
+            "execution": {
+              "imageInput": "optional",
+              "maskMode": "disabled",
+              "mode": "text-result",
+              "requiresApi": "",
+              "resultType": "html",
+              "userPrompt": "optional"
+            },
+            "help": "Interpret the selected wireframe and generate a web app as a single HTML file. You can copy the result from the embeddable menu.",
+            "id": "wireframe-to-code",
+            "name": "Wireframe to code",
+            "outputInstruction": "Turn this into a single html file using tailwind. Return a single message containing only the html file in a codeblock.",
+            "systemPrompt": "You are an expert tailwind developer. A user will provide you with a low-fidelity wireframe of an application and you will return a single html file that uses tailwind to create the website. Use creative license to make the application more fleshed out. Write the necessary javascript code. If you need to insert an image, use placehold.co to create a placeholder image."
+          },
+          {
+            "execution": {
+              "imageInput": "optional",
+              "maskMode": "disabled",
+              "mode": "text-result",
+              "requiresApi": "mindmap-builder",
+              "resultType": "mindmap",
+              "userPrompt": "optional"
+            },
+            "help": "Create a hierarchical mind map from the selected image, if any, and your prompt, then import it into MindMap Builder. Requires MindMap Builder to be available.",
+            "id": "create-mindmap",
+            "name": "Create Mindmap",
+            "outputInstruction": "Return only the mind map as plain text. Use one # heading for the central node, then nested - bullets for branches. Do not use bold, italics, code fences, tables, or explanatory text.",
+            "systemPrompt": "You will receive a text prompt and may also receive an image. Create a mind map as a hierarchical plain-text outline based on the image content, if provided, and the text prompt. Return only the mind map. Use exactly one markdown H1 heading for the central node, then - bullets for branches and indented - bullets for sub-branches. Do not use bold, italics, code fences, numbering, commentary, or any markdown formatting other than the heading and bullet list."
+          }
+        ]
       },
+      "schemaVersion": 1,
+      "state": {
+        "imageModel": "",
+        "imageSize": "1024x1024",
+        "maskEdit": true,
+        "maxTokens": "",
+        "selectedTaskId": "wireframe-to-code",
+        "textModel": "",
+        "userPrompt": ""
+      }
+    },
+    "Downloaded/Mindmap Builder": {
       "Active Preset": {
-        "value": "Mindmap builder自定义预设",
-        "hidden": false
+        "hidden": false,
+        "value": "Mindmap builder自定义预设"
+      },
+      "Arrow Stroke Style": {
+        "hidden": false,
+        "value": false
+      },
+      "Arrow Type": {
+        "hidden": false,
+        "value": "curved"
+      },
+      "Base Stroke Width": {
+        "hidden": false,
+        "value": 2.3
+      },
+      "Box Children": {
+        "hidden": false,
+        "value": true
+      },
+      "Branch Scale Style": {
+        "hidden": false,
+        "value": "Hierarchical"
+      },
+      "Center text in nodes?": {
+        "hidden": false,
+        "value": true
+      },
+      "Custom Palette": {
+        "hidden": true,
+        "value": {
+          "colors": [],
+          "enabled": false,
+          "random": false
+        }
+      },
+      "Fill Sweep": {
+        "hidden": false,
+        "value": false
+      },
+      "Font Sizes": {
+        "value": "Use scene fontsize",
+        "valueset": [
+          "Use scene fontsize",
+          "Fibonacci Scale",
+          "Normal Scale"
+        ]
       },
       "Growth Mode": {
         "value": "Right-facing",
@@ -208,67 +1342,8 @@
           "Up-Down"
         ]
       },
-      "Arrow Type": {
-        "value": "curved",
-        "hidden": false
-      },
-      "Font Sizes": {
-        "value": "Use scene fontsize",
-        "valueset": [
-          "Use scene fontsize",
-          "Fibonacci Scale",
-          "Normal Scale"
-        ]
-      },
-      "Multicolor Mode": {
-        "value": false,
-        "hidden": false
-      },
-      "Box Children": {
-        "value": true,
-        "hidden": false
-      },
-      "Rounded Corners": {
-        "value": false,
-        "hidden": false
-      },
-      "Max Text Width": {
-        "value": 230,
-        "hidden": false
-      },
-      "Arrow Stroke Style": {
-        "value": false,
-        "hidden": false
-      },
-      "Center text in nodes?": {
-        "value": true,
-        "hidden": false
-      },
-      "Fill Sweep": {
-        "value": false,
-        "hidden": false
-      },
-      "Branch Scale Style": {
-        "value": "Hierarchical",
-        "hidden": false
-      },
-      "Base Stroke Width": {
-        "value": 2.3,
-        "hidden": false
-      },
-      "Custom Palette": {
-        "value": {
-          "enabled": false,
-          "random": false,
-          "colors": []
-        },
-        "hidden": true
-      },
-      "Is Undocked": {
-        "value": false,
-        "hidden": false
-      },
       "Hotkeys": {
+        "hidden": true,
         "value": [
           {
             "action": "Add",
@@ -548,1265 +1623,191 @@
             ],
             "scope": 2
           }
-        ],
-        "hidden": true
-      },
-      "Preferred Zoom Level": {
-        "value": "High",
-        "hidden": false
-      },
-      "Map Presets": {
-        "value": {
-          "Default": {
-            "growthMode": "Right-facing",
-            "arrowType": "curved",
-            "fontsizeScale": "Use scene fontsize",
-            "multicolor": false,
-            "boxChildren": true,
-            "roundedCorners": false,
-            "maxWrapWidth": 230,
-            "isSolidArrow": false,
-            "centerText": true,
-            "fillSweep": false,
-            "branchScale": "Hierarchical",
-            "baseStrokeWidth": 2.3,
-            "customPalette": {
-              "enabled": false,
-              "random": false,
-              "colors": []
-            },
-            "layoutSettings": {
-              "GAP_X": 120,
-              "GAP_Y": 25,
-              "GAP_MULTIPLIER": 0.6,
-              "ROOT_RADIUS_FACTOR": 0.8,
-              "MIN_RADIUS": 350,
-              "RADIAL_ASPECT_RATIO": 0.7,
-              "RADIAL_POLE_GAP_BONUS": 2,
-              "RADIAL_START_ANGLE": 280,
-              "RADIAL_MAX_SWEEP": 340,
-              "DIRECTIONAL_ARC_SPAN_RADIANS": 0.2,
-              "GAP_MULTIPLIER_DIRECTIONAL": 1.5,
-              "RADIUS_PADDING_PER_NODE": 7,
-              "VERTICAL_SUBTREE_WIDTH_BLEND_SINGLE": 0.35,
-              "VERTICAL_SUBTREE_WIDTH_BLEND_DUAL": 0.6,
-              "VERTICAL_SUBTREE_SMOOTH_THRESHOLD_MULTIPLIER": 6,
-              "VERTICAL_SUBTREE_SMOOTH_MIN_SCALE": 240,
-              "HORIZONTAL_L1_SOFTCAP_THRESHOLD": 560,
-              "HORIZONTAL_L1_COMPRESSION_MIN_SCALE": 240,
-              "VERTICAL_COMPACT_PARENT_CHILD_GAP_RATIO": 0.55,
-              "DIRECTIONAL_CROSS_AXIS_RATIO": 0.1,
-              "INDICATOR_OFFSET": 10,
-              "INDICATOR_OPACITY": 40,
-              "CONTAINER_PADDING": 0,
-              "MAX_SEGMENT_LENGTH": 80,
-              "MANUAL_GAP_MULTIPLIER": 1.3,
-              "MANUAL_JITTER_RANGE": 300
-            }
-          },
-          "Mindmap builder自定义预设": {
-            "growthMode": "Right-facing",
-            "arrowType": "curved",
-            "fontsizeScale": "Use scene fontsize",
-            "multicolor": false,
-            "boxChildren": true,
-            "roundedCorners": false,
-            "maxWrapWidth": 230,
-            "isSolidArrow": false,
-            "centerText": true,
-            "fillSweep": false,
-            "branchScale": "Hierarchical",
-            "baseStrokeWidth": 2.3,
-            "customPalette": {
-              "enabled": false,
-              "random": false,
-              "colors": []
-            },
-            "layoutSettings": {
-              "GAP_X": 120,
-              "GAP_Y": 25,
-              "GAP_MULTIPLIER": 0.6,
-              "ROOT_RADIUS_FACTOR": 0.8,
-              "MIN_RADIUS": 350,
-              "RADIAL_ASPECT_RATIO": 0.7,
-              "RADIAL_POLE_GAP_BONUS": 2,
-              "RADIAL_START_ANGLE": 280,
-              "RADIAL_MAX_SWEEP": 340,
-              "DIRECTIONAL_ARC_SPAN_RADIANS": 0.2,
-              "GAP_MULTIPLIER_DIRECTIONAL": 1.5,
-              "RADIUS_PADDING_PER_NODE": 7,
-              "VERTICAL_SUBTREE_WIDTH_BLEND_SINGLE": 0.35,
-              "VERTICAL_SUBTREE_WIDTH_BLEND_DUAL": 0.6,
-              "VERTICAL_SUBTREE_SMOOTH_THRESHOLD_MULTIPLIER": 6,
-              "VERTICAL_SUBTREE_SMOOTH_MIN_SCALE": 240,
-              "HORIZONTAL_L1_SOFTCAP_THRESHOLD": 560,
-              "HORIZONTAL_L1_COMPRESSION_MIN_SCALE": 240,
-              "VERTICAL_COMPACT_PARENT_CHILD_GAP_RATIO": 0.55,
-              "DIRECTIONAL_CROSS_AXIS_RATIO": 0.1,
-              "INDICATOR_OFFSET": 10,
-              "INDICATOR_OPACITY": 40,
-              "CONTAINER_PADDING": 0,
-              "MAX_SEGMENT_LENGTH": 80,
-              "MANUAL_GAP_MULTIPLIER": 1.3,
-              "MANUAL_JITTER_RANGE": 300
-            }
-          }
-        },
-        "hidden": true
-      }
-    },
-    "Downloaded/ExcaliAI": {
-      "schemaVersion": 1,
-      "config": {
-        "tasks": [
-          {
-            "id": "challenge-my-thinking",
-            "name": "Challenge my thinking",
-            "help": "Turn the selected image and optional prompt into a Mermaid mind map. If conversion fails, open More Tools > Mermaid to Excalidraw and edit the generated script.",
-            "systemPrompt": "Your task is to interpret a screenshot of a whiteboard, translating its ideas into a Mermaid graph. The whiteboard will encompass thoughts on a subject. Within the mind map, distinguish ideas that challenge, dispute, or contradict the whiteboard content. Additionally, include concepts that expand, complement, or advance the user's thinking. Utilize the Mermaid graph diagram type and present the resulting Mermaid diagram within a code block. Ensure the Mermaid script excludes the use of parentheses ().",
-            "outputInstruction": "Return a single message containing only the mermaid diagram in a codeblock.",
-            "execution": {
-              "mode": "text-result",
-              "resultType": "mermaid",
-              "userPrompt": "optional",
-              "imageInput": "optional",
-              "maskMode": "disabled",
-              "requiresApi": ""
-            }
-          },
-          {
-            "id": "convert-sketch-to-shapes",
-            "name": "Convert sketch to shapes",
-            "help": "Convert selected sketches into Excalidraw strokes. Works best with a small number of simple shapes. Experimental.",
-            "systemPrompt": "Given an image featuring various geometric shapes drawn by the user, your objective is to analyze the input and generate SVG code that accurately represents these shapes. Your output will be the SVG code enclosed in an HTML code block.",
-            "outputInstruction": "Return a single message containing only the SVG code in an html codeblock.",
-            "execution": {
-              "mode": "text-result",
-              "resultType": "svg",
-              "userPrompt": "optional",
-              "imageInput": "optional",
-              "maskMode": "disabled",
-              "requiresApi": ""
-            }
-          },
-          {
-            "id": "create-a-simple-excalidraw-icon",
-            "name": "Create a simple Excalidraw icon",
-            "help": "Turn a text prompt into a simple icon and insert it into Excalidraw as strokes. Text prompt only. Experimental.",
-            "systemPrompt": "Given a description of an SVG image from the user, your objective is to generate the corresponding SVG code. Avoid incorporating textual elements within the generated SVG. Your output should be the resulting SVG code enclosed in an HTML code block.",
-            "outputInstruction": "Return a single message containing only the SVG code in an html codeblock.",
-            "execution": {
-              "mode": "text-result",
-              "resultType": "svg",
-              "userPrompt": "optional",
-              "imageInput": "disabled",
-              "maskMode": "disabled",
-              "requiresApi": ""
-            }
-          },
-          {
-            "id": "create-a-stick-figure",
-            "name": "Create a stick figure",
-            "help": "Send only the text prompt to the configured image model. Be specific. To keep the prompt unchanged, start with: 'DO NOT add any detail, just use it AS-IS:'",
-            "systemPrompt": "You will receive a prompt from the user. Your task involves drawing a simple stick figure or a scene involving a few stick figures based on the user's prompt. Create the stick figure based on the following style description. DO NOT add any detail, just use it AS-IS: Create a simple stick figure character with a large round head and a face in the style of sketchy caricatures. The stick figure should have a rudimentary body composed of straight lines representing the arms and legs. Hands and toes should be represented with round shapes, do not add details such as fingers or toes. Use fine lines, smooth curves, rounded shapes. The stick figure should retain a playful and childlike simplicity, reminiscent of a doodle someone might draw on the corner of a notebook page. Create a black and white drawing, a hand-drawn figure on white background.",
-            "outputInstruction": "Return a single message with the generated image prompt in a codeblock",
-            "execution": {
-              "mode": "image-prompt",
-              "resultType": "image",
-              "userPrompt": "optional",
-              "imageInput": "disabled",
-              "maskMode": "disabled",
-              "requiresApi": ""
-            }
-          },
-          {
-            "id": "edit-an-image",
-            "name": "Edit an image",
-            "help": "Image elements are used as the source image. In mask mode, shapes on top become the mask. Turn mask edit off to flatten non-image elements into the source image and apply a prompt-based transform.",
-            "systemPrompt": null,
-            "outputInstruction": "",
-            "execution": {
-              "mode": "image-edit",
-              "resultType": "image",
-              "userPrompt": "required",
-              "imageInput": "required",
-              "maskMode": "optional",
-              "requiresApi": ""
-            }
-          },
-          {
-            "id": "generate-an-image-from-image-and-prompt",
-            "name": "Generate an image from image and prompt",
-            "help": "Generate an image from the selected image and your prompt. Add context in the prompt to guide how the image should be interpreted.",
-            "systemPrompt": "Your task involves receiving an image and a textual prompt from the user. Your goal is to craft a detailed, accurate, and descriptive narrative of the image, tailored for effective image generation. Utilize the user-provided text prompt to inform and guide your depiction of the image. Ensure the resulting image remains text-free.",
-            "outputInstruction": "Return a single message with the generated image prompt in a codeblock",
-            "execution": {
-              "mode": "image-prompt",
-              "resultType": "image",
-              "userPrompt": "optional",
-              "imageInput": "optional",
-              "maskMode": "disabled",
-              "requiresApi": ""
-            }
-          },
-          {
-            "id": "generate-an-image-from-prompt",
-            "name": "Generate an image from prompt",
-            "help": "Send only the text prompt to the configured image model. Be specific. To keep the prompt unchanged, start with: 'DO NOT add any detail, just use it AS-IS:'",
-            "systemPrompt": null,
-            "outputInstruction": "Return a single message with the generated image prompt in a codeblock",
-            "execution": {
-              "mode": "image-direct",
-              "resultType": "image",
-              "userPrompt": "optional",
-              "imageInput": "disabled",
-              "maskMode": "disabled",
-              "requiresApi": ""
-            }
-          },
-          {
-            "id": "generate-an-image-to-illustrate-a-quote",
-            "name": "Generate an image to illustrate a quote",
-            "help": "Turn a quote into an illustrated scene. Include the author's name if you want the result to reference them.",
-            "systemPrompt": "Your task involves transforming a user-provided quote into a detailed and imaginative illustration. Craft a visual representation that captures the essence of the quote and resonates well with a broad audience. If the Author's name is provided, aim to establish a connection between the illustration and the Author. This can be achieved by referencing a well-known story from the Author, situating the image in the Author's era or setting, or employing other creative methods of association. Additionally, provide preferences for styling, such as the chosen medium and artistic direction, to guide the image creation process. Ensure the resulting image remains text-free. Your task output should comprise a descriptive and detailed narrative aimed at facilitating the creation of a captivating illustration from the quote.",
-            "outputInstruction": "Return a single message with the generated image prompt in a codeblock",
-            "execution": {
-              "mode": "image-prompt",
-              "resultType": "image",
-              "userPrompt": "optional",
-              "imageInput": "disabled",
-              "maskMode": "disabled",
-              "requiresApi": ""
-            }
-          },
-          {
-            "id": "generate-4-icon-variants-based-on-input-image",
-            "name": "Generate 4 icon-variants based on input image",
-            "help": "Generate a 2x2 sheet of four icon variations from the selected sketch. Add a prompt if you want to steer the result.",
-            "systemPrompt": "Given a simple sketch and an optional text prompt from the user, your task is to generate a descriptive narrative tailored for effective image generation, capturing the style of the sketch. Utilize the text prompt to guide the description. Your objective is to instruct DALL-E to create a collage of four minimalist black and white hand-drawn pencil sketches in a 2x2 matrix format. Each sketch should convert the user's sketch into simple artistic SVG icons with transparent backgrounds. Ensure the resulting images remain text-free, maintaining a minimalist, easy-to-understand style, and omit framing borders. Only include a pencil in the drawing if it is explicitly mentioned in the user prompt or included in the sketch.",
-            "outputInstruction": "Return a single message with the generated image prompt in a codeblock",
-            "execution": {
-              "mode": "image-prompt",
-              "resultType": "image-silent",
-              "userPrompt": "optional",
-              "imageInput": "optional",
-              "maskMode": "disabled",
-              "requiresApi": ""
-            }
-          },
-          {
-            "id": "visual-brainstorm",
-            "name": "Visual brainstorm",
-            "help": "Generate an image from the selected image and prompt to spark new ideas.",
-            "systemPrompt": "Your objective is to interpret a screenshot of a whiteboard, creating an image aimed at sparking further thoughts on the subject. The whiteboard will present diverse ideas about a specific topic. Your generated image should achieve one of two purposes: highlighting concepts that challenge, dispute, or contradict the whiteboard content, or introducing ideas that expand, complement, or enrich the user's thinking. You have the option to include multiple tiles in the resulting image, resembling a sequence akin to a comic strip. Ensure that the image remains devoid of text.",
-            "outputInstruction": "Return a single message with the generated image prompt in a codeblock",
-            "execution": {
-              "mode": "image-prompt",
-              "resultType": "image",
-              "userPrompt": "optional",
-              "imageInput": "optional",
-              "maskMode": "disabled",
-              "requiresApi": ""
-            }
-          },
-          {
-            "id": "wireframe-to-code",
-            "name": "Wireframe to code",
-            "help": "Interpret the selected wireframe and generate a web app as a single HTML file. You can copy the result from the embeddable menu.",
-            "systemPrompt": "You are an expert tailwind developer. A user will provide you with a low-fidelity wireframe of an application and you will return a single html file that uses tailwind to create the website. Use creative license to make the application more fleshed out. Write the necessary javascript code. If you need to insert an image, use placehold.co to create a placeholder image.",
-            "outputInstruction": "Turn this into a single html file using tailwind. Return a single message containing only the html file in a codeblock.",
-            "execution": {
-              "mode": "text-result",
-              "resultType": "html",
-              "userPrompt": "optional",
-              "imageInput": "optional",
-              "maskMode": "disabled",
-              "requiresApi": ""
-            }
-          },
-          {
-            "id": "create-mindmap",
-            "name": "Create Mindmap",
-            "help": "Create a hierarchical mind map from the selected image, if any, and your prompt, then import it into MindMap Builder. Requires MindMap Builder to be available.",
-            "systemPrompt": "You will receive a text prompt and may also receive an image. Create a mind map as a hierarchical plain-text outline based on the image content, if provided, and the text prompt. Return only the mind map. Use exactly one markdown H1 heading for the central node, then - bullets for branches and indented - bullets for sub-branches. Do not use bold, italics, code fences, numbering, commentary, or any markdown formatting other than the heading and bullet list.",
-            "outputInstruction": "Return only the mind map as plain text. Use one # heading for the central node, then nested - bullets for branches. Do not use bold, italics, code fences, tables, or explanatory text.",
-            "execution": {
-              "mode": "text-result",
-              "resultType": "mindmap",
-              "userPrompt": "optional",
-              "imageInput": "optional",
-              "maskMode": "disabled",
-              "requiresApi": "mindmap-builder"
-            }
-          }
         ]
       },
-      "state": {
-        "selectedTaskId": "wireframe-to-code",
-        "userPrompt": "",
-        "maskEdit": true,
-        "textModel": "",
-        "imageModel": "",
-        "maxTokens": "",
-        "imageSize": "1024x1024"
+      "Is Undocked": {
+        "hidden": false,
+        "value": false
+      },
+      "Layout Config": {
+        "hidden": true,
+        "value": {
+          "CONTAINER_PADDING": 0,
+          "DIRECTIONAL_ARC_SPAN_RADIANS": 0.2,
+          "DIRECTIONAL_CROSS_AXIS_RATIO": 0.1,
+          "GAP_MULTIPLIER": 0.6,
+          "GAP_MULTIPLIER_DIRECTIONAL": 1.5,
+          "GAP_X": 120,
+          "GAP_Y": 25,
+          "HORIZONTAL_L1_COMPRESSION_MIN_SCALE": 240,
+          "HORIZONTAL_L1_SOFTCAP_THRESHOLD": 560,
+          "INDICATOR_OFFSET": 10,
+          "INDICATOR_OPACITY": 40,
+          "MANUAL_GAP_MULTIPLIER": 1.3,
+          "MANUAL_JITTER_RANGE": 300,
+          "MAX_SEGMENT_LENGTH": 80,
+          "MIN_RADIUS": 350,
+          "RADIAL_ASPECT_RATIO": 0.7,
+          "RADIAL_MAX_SWEEP": 340,
+          "RADIAL_POLE_GAP_BONUS": 2,
+          "RADIAL_START_ANGLE": 280,
+          "RADIUS_PADDING_PER_NODE": 7,
+          "ROOT_RADIUS_FACTOR": 0.8,
+          "VERTICAL_COMPACT_PARENT_CHILD_GAP_RATIO": 0.55,
+          "VERTICAL_SUBTREE_SMOOTH_MIN_SCALE": 240,
+          "VERTICAL_SUBTREE_SMOOTH_THRESHOLD_MULTIPLIER": 6,
+          "VERTICAL_SUBTREE_WIDTH_BLEND_DUAL": 0.6,
+          "VERTICAL_SUBTREE_WIDTH_BLEND_SINGLE": 0.35
+        }
+      },
+      "Map Presets": {
+        "hidden": true,
+        "value": {
+          "Default": {
+            "arrowType": "curved",
+            "baseStrokeWidth": 2.3,
+            "boxChildren": true,
+            "branchScale": "Hierarchical",
+            "centerText": true,
+            "customPalette": {
+              "colors": [],
+              "enabled": false,
+              "random": false
+            },
+            "fillSweep": false,
+            "fontsizeScale": "Use scene fontsize",
+            "growthMode": "Right-facing",
+            "isSolidArrow": false,
+            "layoutSettings": {
+              "CONTAINER_PADDING": 0,
+              "DIRECTIONAL_ARC_SPAN_RADIANS": 0.2,
+              "DIRECTIONAL_CROSS_AXIS_RATIO": 0.1,
+              "GAP_MULTIPLIER": 0.6,
+              "GAP_MULTIPLIER_DIRECTIONAL": 1.5,
+              "GAP_X": 120,
+              "GAP_Y": 25,
+              "HORIZONTAL_L1_COMPRESSION_MIN_SCALE": 240,
+              "HORIZONTAL_L1_SOFTCAP_THRESHOLD": 560,
+              "INDICATOR_OFFSET": 10,
+              "INDICATOR_OPACITY": 40,
+              "MANUAL_GAP_MULTIPLIER": 1.3,
+              "MANUAL_JITTER_RANGE": 300,
+              "MAX_SEGMENT_LENGTH": 80,
+              "MIN_RADIUS": 350,
+              "RADIAL_ASPECT_RATIO": 0.7,
+              "RADIAL_MAX_SWEEP": 340,
+              "RADIAL_POLE_GAP_BONUS": 2,
+              "RADIAL_START_ANGLE": 280,
+              "RADIUS_PADDING_PER_NODE": 7,
+              "ROOT_RADIUS_FACTOR": 0.8,
+              "VERTICAL_COMPACT_PARENT_CHILD_GAP_RATIO": 0.55,
+              "VERTICAL_SUBTREE_SMOOTH_MIN_SCALE": 240,
+              "VERTICAL_SUBTREE_SMOOTH_THRESHOLD_MULTIPLIER": 6,
+              "VERTICAL_SUBTREE_WIDTH_BLEND_DUAL": 0.6,
+              "VERTICAL_SUBTREE_WIDTH_BLEND_SINGLE": 0.35
+            },
+            "maxWrapWidth": 230,
+            "multicolor": false,
+            "roundedCorners": false
+          },
+          "Mindmap builder自定义预设": {
+            "arrowType": "curved",
+            "baseStrokeWidth": 2.3,
+            "boxChildren": true,
+            "branchScale": "Hierarchical",
+            "centerText": true,
+            "customPalette": {
+              "colors": [],
+              "enabled": false,
+              "random": false
+            },
+            "fillSweep": false,
+            "fontsizeScale": "Use scene fontsize",
+            "growthMode": "Right-facing",
+            "isSolidArrow": false,
+            "layoutSettings": {
+              "CONTAINER_PADDING": 0,
+              "DIRECTIONAL_ARC_SPAN_RADIANS": 0.2,
+              "DIRECTIONAL_CROSS_AXIS_RATIO": 0.1,
+              "GAP_MULTIPLIER": 0.6,
+              "GAP_MULTIPLIER_DIRECTIONAL": 1.5,
+              "GAP_X": 120,
+              "GAP_Y": 25,
+              "HORIZONTAL_L1_COMPRESSION_MIN_SCALE": 240,
+              "HORIZONTAL_L1_SOFTCAP_THRESHOLD": 560,
+              "INDICATOR_OFFSET": 10,
+              "INDICATOR_OPACITY": 40,
+              "MANUAL_GAP_MULTIPLIER": 1.3,
+              "MANUAL_JITTER_RANGE": 300,
+              "MAX_SEGMENT_LENGTH": 80,
+              "MIN_RADIUS": 350,
+              "RADIAL_ASPECT_RATIO": 0.7,
+              "RADIAL_MAX_SWEEP": 340,
+              "RADIAL_POLE_GAP_BONUS": 2,
+              "RADIAL_START_ANGLE": 280,
+              "RADIUS_PADDING_PER_NODE": 7,
+              "ROOT_RADIUS_FACTOR": 0.8,
+              "VERTICAL_COMPACT_PARENT_CHILD_GAP_RATIO": 0.55,
+              "VERTICAL_SUBTREE_SMOOTH_MIN_SCALE": 240,
+              "VERTICAL_SUBTREE_SMOOTH_THRESHOLD_MULTIPLIER": 6,
+              "VERTICAL_SUBTREE_WIDTH_BLEND_DUAL": 0.6,
+              "VERTICAL_SUBTREE_WIDTH_BLEND_SINGLE": 0.35
+            },
+            "maxWrapWidth": 230,
+            "multicolor": false,
+            "roundedCorners": false
+          }
+        }
+      },
+      "Max Text Width": {
+        "hidden": false,
+        "value": 230
+      },
+      "Multicolor Mode": {
+        "hidden": false,
+        "value": false
+      },
+      "Preferred Zoom Level": {
+        "hidden": false,
+        "value": "High"
+      },
+      "Rounded Corners": {
+        "hidden": false,
+        "value": false
       }
     }
   },
-  "autostartScripts": {},
-  "autostartScriptFailures": {},
-  "previousRelease": "2.29.0",
-  "showReleaseNotes": true,
-  "useDeclarativeSettings": true,
-  "excalidrawMasteryPromoCollapsed": false,
-  "compareManifestToPluginVersion": true,
+  "scriptFolderPath": "Excalidraw/Scripts",
+  "showLinkBrackets": false,
   "showNewVersionNotification": true,
-  "latexBoilerplate": "\\color{green}e=mc^2",
-  "latexPreambleLocation": "preamble.sty",
-  "taskboneEnabled": true,
-  "taskboneAPIkey": "ex-obf:v1:AKMmqSyvMrU4uwCpJ4sBkhyEa6kT7lm6SJUCjwOFTYYiuWfoavRWvH//P17QEYpOtWPwH90OqQ==",
-  "pinnedScripts": [],
+  "showReleaseNotes": true,
+  "showSecondOrderLinks": true,
+  "showSplashscreen": true,
+  "showTabTitlebarButtons": true,
   "sidepanelTabs": [
     "{\"script\":\"Downloaded/Mindmap Builder\",\"title\":\"MindMap Builder\"}"
   ],
-  "customPens": [
-    {
-      "type": "default",
-      "freedrawOnly": false,
-      "strokeColor": "#000000",
-      "backgroundColor": "transparent",
-      "fillStyle": "hachure",
-      "strokeWidth": 0,
-      "roughness": 0,
-      "penOptions": {
-        "highlighter": false,
-        "constantPressure": false,
-        "hasOutline": false,
-        "outlineWidth": 1,
-        "options": {
-          "thinning": 0.6,
-          "smoothing": 0.5,
-          "streamline": 0.5,
-          "easing": "easeOutSine",
-          "start": {
-            "cap": true,
-            "taper": 0,
-            "easing": "linear"
-          },
-          "end": {
-            "cap": true,
-            "taper": 0,
-            "easing": "linear"
-          }
-        }
-      }
-    },
-    {
-      "type": "highlighter",
-      "freedrawOnly": true,
-      "strokeColor": "#FFC47C",
-      "backgroundColor": "#FFC47C",
-      "fillStyle": "solid",
-      "strokeWidth": 2,
-      "roughness": null,
-      "penOptions": {
-        "highlighter": true,
-        "constantPressure": true,
-        "hasOutline": true,
-        "outlineWidth": 4,
-        "options": {
-          "thinning": 1,
-          "smoothing": 0.5,
-          "streamline": 0.5,
-          "easing": "linear",
-          "start": {
-            "taper": 0,
-            "cap": true,
-            "easing": "linear"
-          },
-          "end": {
-            "taper": 0,
-            "cap": true,
-            "easing": "linear"
-          }
-        }
-      }
-    },
-    {
-      "type": "finetip",
-      "freedrawOnly": false,
-      "strokeColor": "#3E6F8D",
-      "backgroundColor": "transparent",
-      "fillStyle": "hachure",
-      "strokeWidth": 0.5,
-      "roughness": 0,
-      "penOptions": {
-        "highlighter": false,
-        "hasOutline": false,
-        "outlineWidth": 1,
-        "constantPressure": true,
-        "options": {
-          "smoothing": 0.4,
-          "thinning": -0.5,
-          "streamline": 0.4,
-          "easing": "linear",
-          "start": {
-            "taper": 5,
-            "cap": false,
-            "easing": "linear"
-          },
-          "end": {
-            "taper": 5,
-            "cap": false,
-            "easing": "linear"
-          }
-        }
-      }
-    },
-    {
-      "type": "fountain",
-      "freedrawOnly": false,
-      "strokeColor": "#000000",
-      "backgroundColor": "transparent",
-      "fillStyle": "hachure",
-      "strokeWidth": 2,
-      "roughness": 0,
-      "penOptions": {
-        "highlighter": false,
-        "constantPressure": false,
-        "hasOutline": false,
-        "outlineWidth": 1,
-        "options": {
-          "smoothing": 0.2,
-          "thinning": 0.6,
-          "streamline": 0.2,
-          "easing": "easeInOutSine",
-          "start": {
-            "taper": 150,
-            "cap": true,
-            "easing": "linear"
-          },
-          "end": {
-            "taper": 1,
-            "cap": true,
-            "easing": "linear"
-          }
-        }
-      }
-    },
-    {
-      "type": "marker",
-      "freedrawOnly": true,
-      "strokeColor": "#B83E3E",
-      "backgroundColor": "#FF7C7C",
-      "fillStyle": "dashed",
-      "strokeWidth": 2,
-      "roughness": 3,
-      "penOptions": {
-        "highlighter": false,
-        "constantPressure": true,
-        "hasOutline": true,
-        "outlineWidth": 4,
-        "options": {
-          "thinning": 1,
-          "smoothing": 0.5,
-          "streamline": 0.5,
-          "easing": "linear",
-          "start": {
-            "taper": 0,
-            "cap": true,
-            "easing": "linear"
-          },
-          "end": {
-            "taper": 0,
-            "cap": true,
-            "easing": "linear"
-          }
-        }
-      }
-    },
-    {
-      "type": "thick-thin",
-      "freedrawOnly": true,
-      "strokeColor": "#CECDCC",
-      "backgroundColor": "transparent",
-      "fillStyle": "hachure",
-      "strokeWidth": 0,
-      "roughness": null,
-      "penOptions": {
-        "highlighter": true,
-        "constantPressure": true,
-        "hasOutline": false,
-        "outlineWidth": 1,
-        "options": {
-          "thinning": 1,
-          "smoothing": 0.5,
-          "streamline": 0.5,
-          "easing": "linear",
-          "start": {
-            "taper": 0,
-            "cap": true,
-            "easing": "linear"
-          },
-          "end": {
-            "cap": true,
-            "taper": true,
-            "easing": "linear"
-          }
-        }
-      }
-    },
-    {
-      "type": "thin-thick-thin",
-      "freedrawOnly": true,
-      "strokeColor": "#CECDCC",
-      "backgroundColor": "transparent",
-      "fillStyle": "hachure",
-      "strokeWidth": 0,
-      "roughness": null,
-      "penOptions": {
-        "highlighter": true,
-        "constantPressure": true,
-        "hasOutline": false,
-        "outlineWidth": 1,
-        "options": {
-          "thinning": 1,
-          "smoothing": 0.5,
-          "streamline": 0.5,
-          "easing": "linear",
-          "start": {
-            "cap": true,
-            "taper": true,
-            "easing": "linear"
-          },
-          "end": {
-            "cap": true,
-            "taper": true,
-            "easing": "linear"
-          }
-        }
-      }
-    },
-    {
-      "type": "default",
-      "freedrawOnly": false,
-      "strokeColor": "#000000",
-      "backgroundColor": "transparent",
-      "fillStyle": "hachure",
-      "strokeWidth": 0,
-      "roughness": 0,
-      "penOptions": {
-        "highlighter": false,
-        "constantPressure": false,
-        "hasOutline": false,
-        "outlineWidth": 1,
-        "options": {
-          "thinning": 0.6,
-          "smoothing": 0.5,
-          "streamline": 0.5,
-          "easing": "easeOutSine",
-          "start": {
-            "cap": true,
-            "taper": 0,
-            "easing": "linear"
-          },
-          "end": {
-            "cap": true,
-            "taper": 0,
-            "easing": "linear"
-          }
-        }
-      }
-    },
-    {
-      "type": "default",
-      "freedrawOnly": false,
-      "strokeColor": "#000000",
-      "backgroundColor": "transparent",
-      "fillStyle": "hachure",
-      "strokeWidth": 0,
-      "roughness": 0,
-      "penOptions": {
-        "highlighter": false,
-        "constantPressure": false,
-        "hasOutline": false,
-        "outlineWidth": 1,
-        "options": {
-          "thinning": 0.6,
-          "smoothing": 0.5,
-          "streamline": 0.5,
-          "easing": "easeOutSine",
-          "start": {
-            "cap": true,
-            "taper": 0,
-            "easing": "linear"
-          },
-          "end": {
-            "cap": true,
-            "taper": 0,
-            "easing": "linear"
-          }
-        }
-      }
-    },
-    {
-      "type": "default",
-      "freedrawOnly": false,
-      "strokeColor": "#000000",
-      "backgroundColor": "transparent",
-      "fillStyle": "hachure",
-      "strokeWidth": 0,
-      "roughness": 0,
-      "penOptions": {
-        "highlighter": false,
-        "constantPressure": false,
-        "hasOutline": false,
-        "outlineWidth": 1,
-        "options": {
-          "thinning": 0.6,
-          "smoothing": 0.5,
-          "streamline": 0.5,
-          "easing": "easeOutSine",
-          "start": {
-            "cap": true,
-            "taper": 0,
-            "easing": "linear"
-          },
-          "end": {
-            "cap": true,
-            "taper": 0,
-            "easing": "linear"
-          }
-        }
-      }
-    }
-  ],
-  "numberOfCustomPens": 0,
-  "pdfScale": 4,
-  "pdfBorderBox": true,
-  "pdfFrame": false,
-  "pdfGapSize": 20,
-  "pdfGroupPages": false,
-  "pdfLockAfterImport": true,
-  "pdfNumColumns": 1,
-  "pdfNumRows": 1,
-  "pdfDirection": "right",
-  "pdfImportScale": 0.3,
-  "gridSettings": {
-    "DYNAMIC_COLOR": true,
-    "COLOR": "#000000",
-    "OPACITY": 50,
-    "GRID_DIRECTION": {
-      "horizontal": true,
-      "vertical": true
-    }
-  },
-  "laserSettings": {
-    "DECAY_LENGTH": 50,
-    "DECAY_TIME": 1000,
-    "COLOR": "#ff0000"
-  },
-  "embeddableMarkdownDefaults": {
-    "useObsidianDefaults": false,
-    "backgroundMatchCanvas": false,
-    "backgroundMatchElement": true,
-    "backgroundColor": "#fff",
-    "backgroundOpacity": 60,
-    "borderMatchElement": true,
-    "borderColor": "#fff",
-    "borderOpacity": 0,
-    "filenameVisible": false,
-    "lockedReadingMode": false
-  },
-  "markdownNodeOneClickEditing": false,
-  "canvasImmersiveEmbed": true,
-  "startupScriptPath": "",
-  "aiEnabled": true,
-  "aiVerboseLogging": false,
-  "aiProviderProfiles": {
-    "OpenAI": {
-      "provider": "openai",
-      "apiKey": "",
-      "baseURL": "https://api.openai.com/v1"
-    },
-    "Anthropic": {
-      "provider": "anthropic",
-      "apiKey": "",
-      "baseURL": "https://api.anthropic.com/v1"
-    },
-    "Google Gemini": {
-      "provider": "google",
-      "apiKey": "",
-      "baseURL": "https://generativelanguage.googleapis.com/v1beta"
-    },
-    "xAI": {
-      "provider": "xai",
-      "apiKey": "",
-      "baseURL": "https://api.x.ai/v1"
-    },
-    "OpenAI-compatible": {
-      "provider": "openai-compatible",
-      "apiKey": "",
-      "baseURL": "https://api.openai.com/v1"
-    }
-  },
-  "aiTextModelConfigs": {
-    "gpt-5-mini": {
-      "providerId": "OpenAI",
-      "model": "gpt-5-mini",
-      "endpoint": "",
-      "multimodalSupport": true
-    },
-    "claude-sonnet-4-5": {
-      "providerId": "Anthropic",
-      "model": "claude-sonnet-4-5",
-      "endpoint": "",
-      "multimodalSupport": true
-    },
-    "gemini-2.5-pro": {
-      "providerId": "Google Gemini",
-      "model": "gemini-2.5-pro",
-      "endpoint": "",
-      "multimodalSupport": true
-    },
-    "grok-4-fast": {
-      "providerId": "xAI",
-      "model": "grok-4-fast",
-      "endpoint": "",
-      "multimodalSupport": true
-    }
-  },
-  "aiImageModelConfigs": {
-    "dall-e-2": {
-      "providerId": "OpenAI",
-      "model": "dall-e-2",
-      "supportedSizes": [
-        "256x256",
-        "512x512",
-        "1024x1024"
-      ],
-      "supportsPromptImageTransforms": true,
-      "supportsMaskImageEdits": true
-    },
-    "dall-e-3": {
-      "providerId": "OpenAI",
-      "model": "dall-e-3",
-      "supportedSizes": [
-        "1024x1024",
-        "1792x1024",
-        "1024x1792"
-      ],
-      "supportsPromptImageTransforms": false,
-      "supportsMaskImageEdits": false
-    },
-    "gpt-image-1": {
-      "providerId": "OpenAI",
-      "model": "gpt-image-1",
-      "supportedSizes": [
-        "1024x1024",
-        "1536x1024",
-        "1024x1536"
-      ],
-      "supportsPromptImageTransforms": true,
-      "supportsMaskImageEdits": true
-    },
-    "gpt-image-1-mini": {
-      "providerId": "OpenAI",
-      "model": "gpt-image-1-mini",
-      "supportedSizes": [
-        "1024x1024",
-        "1536x1024",
-        "1024x1536"
-      ],
-      "supportsPromptImageTransforms": true,
-      "supportsMaskImageEdits": true
-    },
-    "gpt-image-1.5": {
-      "providerId": "OpenAI",
-      "model": "gpt-image-1.5",
-      "supportedSizes": [
-        "1024x1024",
-        "1536x1024",
-        "1024x1536"
-      ],
-      "supportsPromptImageTransforms": true,
-      "supportsMaskImageEdits": true
-    },
-    "gpt-image-2": {
-      "providerId": "OpenAI",
-      "model": "gpt-image-2",
-      "supportedSizes": [
-        "1024x1024",
-        "1536x1024",
-        "1024x1536",
-        "2048x2048"
-      ],
-      "supportsPromptImageTransforms": true,
-      "supportsMaskImageEdits": true
-    },
-    "gemini-2.5-flash-image": {
-      "providerId": "Google Gemini",
-      "model": "gemini-2.5-flash-image",
-      "supportedSizes": [
-        "1024x1024",
-        "848x1264",
-        "1264x848",
-        "896x1200",
-        "1200x896",
-        "928x1152",
-        "1152x928",
-        "768x1376",
-        "1376x768",
-        "1584x672"
-      ],
-      "supportsPromptImageTransforms": true,
-      "supportsMaskImageEdits": false
-    },
-    "gemini-3.1-flash-image-preview": {
-      "providerId": "Google Gemini",
-      "model": "gemini-3.1-flash-image-preview",
-      "supportedSizes": [
-        "512x512",
-        "1024x1024",
-        "2048x2048",
-        "4096x4096",
-        "424x632",
-        "848x1264",
-        "1696x2528",
-        "3392x5056",
-        "632x424",
-        "1264x848",
-        "2528x1696",
-        "5056x3392",
-        "448x600",
-        "896x1200",
-        "1792x2400",
-        "3584x4800",
-        "600x448",
-        "1200x896",
-        "2400x1792",
-        "4800x3584",
-        "464x576",
-        "928x1152",
-        "1856x2304",
-        "3712x4608",
-        "576x464",
-        "1152x928",
-        "2304x1856",
-        "4608x3712",
-        "384x688",
-        "768x1376",
-        "1536x2752",
-        "3072x5504",
-        "688x384",
-        "1376x768",
-        "2752x1536",
-        "5504x3072",
-        "792x168",
-        "1584x672",
-        "3168x1344",
-        "6336x2688",
-        "256x1024",
-        "512x2048",
-        "1024x4096",
-        "2048x8192",
-        "192x1536",
-        "384x3072",
-        "768x6144",
-        "1536x12288",
-        "1024x256",
-        "2048x512",
-        "4096x1024",
-        "8192x2048",
-        "1536x192",
-        "3072x384",
-        "6144x768",
-        "12288x1536"
-      ],
-      "supportsPromptImageTransforms": true,
-      "supportsMaskImageEdits": false
-    },
-    "gemini-3-pro-image-preview": {
-      "providerId": "Google Gemini",
-      "model": "gemini-3-pro-image-preview",
-      "supportedSizes": [
-        "1024x1024",
-        "2048x2048",
-        "4096x4096",
-        "848x1264",
-        "1696x2528",
-        "3392x5056",
-        "1264x848",
-        "2528x1696",
-        "5056x3392",
-        "896x1200",
-        "1792x2400",
-        "3584x4800",
-        "1200x896",
-        "2400x1792",
-        "4800x3584",
-        "928x1152",
-        "1856x2304",
-        "3712x4608",
-        "1152x928",
-        "2304x1856",
-        "4608x3712",
-        "768x1376",
-        "1536x2752",
-        "3072x5504",
-        "1376x768",
-        "2752x1536",
-        "5504x3072",
-        "1584x672",
-        "3168x1344",
-        "6336x2688"
-      ],
-      "supportsPromptImageTransforms": true,
-      "supportsMaskImageEdits": false
-    },
-    "grok-imagine-image-quality": {
-      "providerId": "xAI",
-      "model": "grok-imagine-image-quality",
-      "supportedSizes": [
-        "1024x1024"
-      ],
-      "supportsPromptImageTransforms": true,
-      "supportsMaskImageEdits": false
-    },
-    "grok-imagine-image-pro": {
-      "providerId": "xAI",
-      "model": "grok-imagine-image-pro",
-      "supportedSizes": [
-        "1024x1024"
-      ],
-      "supportsPromptImageTransforms": true,
-      "supportsMaskImageEdits": false
-    }
-  },
-  "aiDefaultTextModel": "gpt-5-mini",
-  "aiDefaultMultimodalModel": "gpt-5-mini",
-  "aiDefaultImageGenerationModel": "gpt-image-2",
-  "aiDefaultMaxOutgoingTokens": 0,
-  "aiDefaultMaxResponseTokens": 0,
-  "modifierKeyConfig": {
-    "Mac": {
-      "LocalFileDragAction": {
-        "defaultAction": "image-import",
-        "rules": [
-          {
-            "shift": false,
-            "ctrl_cmd": false,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "image-import"
-          },
-          {
-            "shift": true,
-            "ctrl_cmd": false,
-            "alt_opt": true,
-            "meta_ctrl": false,
-            "result": "link"
-          },
-          {
-            "shift": true,
-            "ctrl_cmd": false,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "image-url"
-          },
-          {
-            "shift": false,
-            "ctrl_cmd": false,
-            "alt_opt": true,
-            "meta_ctrl": false,
-            "result": "embeddable"
-          }
-        ]
-      },
-      "WebBrowserDragAction": {
-        "defaultAction": "image-url",
-        "rules": [
-          {
-            "shift": false,
-            "ctrl_cmd": false,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "image-url"
-          },
-          {
-            "shift": true,
-            "ctrl_cmd": false,
-            "alt_opt": true,
-            "meta_ctrl": false,
-            "result": "link"
-          },
-          {
-            "shift": false,
-            "ctrl_cmd": false,
-            "alt_opt": true,
-            "meta_ctrl": false,
-            "result": "embeddable"
-          },
-          {
-            "shift": true,
-            "ctrl_cmd": false,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "image-import"
-          }
-        ]
-      },
-      "InternalDragAction": {
-        "defaultAction": "link",
-        "rules": [
-          {
-            "shift": false,
-            "ctrl_cmd": false,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "link"
-          },
-          {
-            "shift": false,
-            "ctrl_cmd": false,
-            "alt_opt": false,
-            "meta_ctrl": true,
-            "result": "embeddable"
-          },
-          {
-            "shift": true,
-            "ctrl_cmd": false,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "image"
-          },
-          {
-            "shift": true,
-            "ctrl_cmd": false,
-            "alt_opt": false,
-            "meta_ctrl": true,
-            "result": "image-fullsize"
-          }
-        ]
-      },
-      "LinkClickAction": {
-        "defaultAction": "new-tab",
-        "rules": [
-          {
-            "shift": true,
-            "ctrl_cmd": true,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "active-pane"
-          },
-          {
-            "shift": false,
-            "ctrl_cmd": true,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "new-tab"
-          },
-          {
-            "shift": false,
-            "ctrl_cmd": true,
-            "alt_opt": true,
-            "meta_ctrl": false,
-            "result": "new-pane"
-          },
-          {
-            "shift": true,
-            "ctrl_cmd": true,
-            "alt_opt": true,
-            "meta_ctrl": false,
-            "result": "popout-window"
-          },
-          {
-            "shift": false,
-            "ctrl_cmd": true,
-            "alt_opt": false,
-            "meta_ctrl": true,
-            "result": "md-properties"
-          }
-        ]
-      }
-    },
-    "Win": {
-      "LocalFileDragAction": {
-        "defaultAction": "image-import",
-        "rules": [
-          {
-            "shift": false,
-            "ctrl_cmd": false,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "image-import"
-          },
-          {
-            "shift": false,
-            "ctrl_cmd": true,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "link"
-          },
-          {
-            "shift": true,
-            "ctrl_cmd": false,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "image-url"
-          },
-          {
-            "shift": true,
-            "ctrl_cmd": true,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "embeddable"
-          }
-        ]
-      },
-      "WebBrowserDragAction": {
-        "defaultAction": "image-url",
-        "rules": [
-          {
-            "shift": false,
-            "ctrl_cmd": false,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "image-url"
-          },
-          {
-            "shift": false,
-            "ctrl_cmd": true,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "link"
-          },
-          {
-            "shift": true,
-            "ctrl_cmd": true,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "embeddable"
-          },
-          {
-            "shift": true,
-            "ctrl_cmd": false,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "image-import"
-          }
-        ]
-      },
-      "InternalDragAction": {
-        "defaultAction": "link",
-        "rules": [
-          {
-            "shift": false,
-            "ctrl_cmd": false,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "link"
-          },
-          {
-            "shift": true,
-            "ctrl_cmd": true,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "embeddable"
-          },
-          {
-            "shift": true,
-            "ctrl_cmd": false,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "image"
-          },
-          {
-            "shift": false,
-            "ctrl_cmd": true,
-            "alt_opt": true,
-            "meta_ctrl": false,
-            "result": "image-fullsize"
-          }
-        ]
-      },
-      "LinkClickAction": {
-        "defaultAction": "new-tab",
-        "rules": [
-          {
-            "shift": false,
-            "ctrl_cmd": false,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "active-pane"
-          },
-          {
-            "shift": false,
-            "ctrl_cmd": true,
-            "alt_opt": false,
-            "meta_ctrl": false,
-            "result": "new-tab"
-          },
-          {
-            "shift": false,
-            "ctrl_cmd": true,
-            "alt_opt": true,
-            "meta_ctrl": false,
-            "result": "new-pane"
-          },
-          {
-            "shift": true,
-            "ctrl_cmd": true,
-            "alt_opt": true,
-            "meta_ctrl": false,
-            "result": "popout-window"
-          },
-          {
-            "shift": false,
-            "ctrl_cmd": true,
-            "alt_opt": false,
-            "meta_ctrl": true,
-            "result": "md-properties"
-          }
-        ]
-      }
-    }
-  },
   "slidingPanesSupport": false,
-  "areaZoomLimit": 1,
-  "longPressDesktop": 500,
-  "longPressMobile": 500,
-  "doubleClickLinkOpenViewMode": true,
-  "rank": "Bronze",
-  "modifierKeyOverrides": [
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "Enter"
-    },
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "k"
-    },
-    {
-      "modifiers": [
-        "Mod"
-      ],
-      "key": "G"
-    }
-  ],
-  "showSplashscreen": true,
-  "pdfSettings": {
-    "pageSize": "A4",
-    "pageOrientation": "portrait",
-    "fitToPage": 1,
-    "paperColor": "white",
-    "customPaperColor": "#ffffff",
-    "alignment": "center",
-    "margin": "normal"
-  },
-  "disableContextMenu": false,
-  "panWithRightMouseButton": true
+  "startupScriptPath": "",
+  "storeScriptFilesAsJavaScript": false,
+  "syncElementLinkWithText": false,
+  "syncExcalidraw": false,
+  "tabletFooterSafeAreaPadding": false,
+  "tabletUIMode": "full",
+  "taskboneAPIkey": "ex-obf:v1:AKMmqSyvMrU4uwCpJ4sBkhyEa6kT7lm6SJUCjwOFTYYiuWfoavRWvH//P17QEYpOtWPwH90OqQ==",
+  "taskboneEnabled": true,
+  "templateFilePath": "Excalidraw/Template.excalidraw",
+  "todo": "☐",
+  "urlPrefix": "",
+  "useDeclarativeSettings": true,
+  "useExcalidrawExtension": true,
+  "width": "400",
+  "wordWrappingDefault": 0,
+  "zoomMax": 30,
+  "zoomMin": 0.13,
+  "zoomStep": 0.05,
+  "zoomToFitMaxLevel": 2,
+  "zoomToFitOnOpen": false,
+  "zoomToFitOnResize": false,
+  "zoteroCompatibility": false
 }
