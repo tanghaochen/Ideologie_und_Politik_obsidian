@@ -653,7 +653,7 @@
 “以你对 X 学院的了解,彼得或许 确实不是一名合格的人选。但是,这不是必然的。一颗闪亮的新星是可能 出自于类似 X 学院之类的学校的。你所犯谬误的根源如下:知道一个来 源一般是坏的,于是认定出于这个来源的所有都一定是坏的。这并不必 然成立。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=123&annotation=8BMUACKN)) |
 
 ## “16 止于分析” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=124&annotation=W9QPDA6W)) | ^ezlo1g
-
+[[从“分析”到“综合”#^cxq9s0|# 从“分]]
 “是分解只能针对合成的产物,而 且仅仅分解是不够的,我们还要能把它们重新组合成整体。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=124&annotation=BDL8A3PR)) |
 “爱德华喜欢拆卸汽车。他可以把任何款式的汽车拆开,但是不能把它们重新 组装起来上路行驶。通过这点,我们可以自信地得出结论:实际上爱德华对汽车 的了解并没有那么多。他可以分析,但不能组合。” ([pdf](zotero://open-pdf/library/items/REWEJ3E5?page=124&annotation=UBZSQMJU)) |
 
