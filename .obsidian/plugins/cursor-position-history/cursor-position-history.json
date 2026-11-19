@@ -4461,7 +4461,7 @@
   },
   "Diary/2026/20261120.md": {
     "scrollState": {
-      "top": 0,
+      "top": 362.3999938964844,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 960,
@@ -4471,11 +4471,11 @@
     "cursor": {
       "from": {
         "ch": 0,
-        "line": 0
+        "line": 27
       },
       "to": {
-        "ch": 63,
-        "line": 45
+        "ch": 0,
+        "line": 36
       }
     }
   },
@@ -4516,6 +4516,146 @@
       "to": {
         "ch": 0,
         "line": 548
+      }
+    }
+  },
+  "OBSetting/templater/周记-一览视图.md": {
+    "scrollState": {
+      "top": 1425.5999755859375,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 960,
+      "height": 1522,
+      "width": 972
+    },
+    "cursor": {
+      "from": {
+        "ch": 9,
+        "line": 172
+      },
+      "to": {
+        "ch": 0,
+        "line": 185
+      }
+    }
+  },
+  "Diary/2026/W38.md": {
+    "scrollState": {
+      "top": 240,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 960,
+      "height": 1522,
+      "width": 972
+    },
+    "cursor": {
+      "from": {
+        "ch": 13,
+        "line": 134
+      },
+      "to": {
+        "ch": 13,
+        "line": 134
+      }
+    }
+  },
+  "Diary/2026/202609.md": {
+    "scrollState": {
+      "top": 4765.2001953125,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 960,
+      "height": 1522,
+      "width": 972
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 29
+      },
+      "to": {
+        "ch": 0,
+        "line": 29
+      }
+    }
+  },
+  "Diary/2026/W40.md": {
+    "scrollState": {
+      "top": 1572,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 960,
+      "height": 1522,
+      "width": 972
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 148
+      },
+      "to": {
+        "ch": 0,
+        "line": 148
+      }
+    }
+  },
+  "Diary/_Templates/周报模板.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 960,
+      "height": 1522,
+      "width": 972
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 0
+      },
+      "to": {
+        "ch": 0,
+        "line": 48
+      }
+    }
+  },
+  "Diary/_Templates/月报模板.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 960,
+      "height": 1522,
+      "width": 972
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 49
+      },
+      "to": {
+        "ch": 0,
+        "line": 0
+      }
+    }
+  },
+  "file:E:/AI workpace/Obsidian日记周期报告提示词_v3_模板驱动.md": {
+    "scrollState": {
+      "top": 692.4000244140625,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 960,
+      "height": 1522,
+      "width": 972
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 759
+      },
+      "to": {
+        "ch": 0,
+        "line": 0
       }
     }
   }

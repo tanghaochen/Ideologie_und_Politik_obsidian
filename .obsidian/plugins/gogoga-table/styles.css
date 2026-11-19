@@ -42,11 +42,17 @@
 .ggt[style*="--ggt-fs"] .ggt-table .ggt-cell,
 .ggt .ggt-table .ggt-cell[style*="--ggt-fz"] { font-size: calc(var(--table-text-size, 1em) * var(--ggt-fs, 1) * var(--ggt-fz, 1)); }
 .ggt-table col { min-width: 40px; }
-/* 设置「表格默认撑满页面宽度」：没设过列宽的表铺满，各列按内容比例分；内容更宽时照样横向滚动 */
-.ggt.is-full { width: auto; }
-.ggt.is-full .ggt-table { width: 100%; }
+/* 设置「表格默认撑满页面宽度」：没设过列宽的表铺满，各列按内容比例分；内容更宽时照样横向滚动。
+   表格右边和正文右边对齐（差 4px，和表格菜单里的「撑满页面宽度」一样）：.ggt 左边往外挪了 14px、右边留了 26px 放加号，所以外层比父元素宽 36px。
+   表格宽度要 !important：Minimal 给编辑区 / 阅读视图里所有 table 写了 width: var(--table-width)（默认 auto），6 个类的选择器会盖掉这里（#19） */
+.ggt.is-full { width: calc(100% + 36px); max-width: none; }
+.ggt.is-full .ggt-table { width: 100% !important; min-width: 0 !important; max-width: none !important; }
 /* 设置「列宽按比例缩放」：设过列宽、比正文宽的表，各列按比例缩到正好放下（列宽由编辑器按比例算好写在 col 上） */
 .ggt.is-fit .ggt-table { table-layout: fixed; }
+/* 拖过宽度的列按拖到的宽度画（最窄 40px，拖动时限制）；没拖过的列最少 80px（见 .ggt-cell），新表格不会挤成一团 */
+.ggt .ggt-cell.is-set-width { min-width: 0; }
+/* 编辑时量光标在第几行用的影子（照着输入框排一份文字，量完就删） */
+.ggt-caret-mirror { position: absolute !important; visibility: hidden; left: -9999px; top: 0; white-space: pre-wrap !important; height: auto !important; }
 .ggt.is-fit .ggt-cell { min-width: 0; }
 .ggt .ggt-cell {
   position: relative;
@@ -169,7 +175,8 @@
   gap: 2px;
   padding: 4px 6px;
   overflow-x: auto;
-  background: var(--menu-background, var(--background-primary));
+  /* 玻璃类主题（OnePage 等）的菜单底色是半透明的：垫一层普通背景、模糊跟 Obsidian 自己的菜单一样，背后的字不透出来；不透明的主题看起来不变 */
+  background: linear-gradient(var(--menu-background, var(--background-primary, #fff)), var(--menu-background, var(--background-primary, #fff))), var(--background-primary, #fff);
   backdrop-filter: var(--menu-backdrop-filter, none);
   border-top: 1px solid var(--background-modifier-border);
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
@@ -225,7 +232,7 @@
   box-shadow: none;
 }
 .ggt-add svg { width: 14px; height: 14px; }
-.ggt:hover button.ggt-add { opacity: 1; }
+.ggt:hover button.ggt-add, .ggt.is-hot button.ggt-add { opacity: 1; }
 .ggt button.ggt-add:hover { background: rgba(var(--mono-rgb-100), 0.06); color: var(--text-normal); }
 .ggt-add-col { top: 10px; bottom: calc(26px + var(--ggt-sb, 0px)); right: 4px; width: 18px; height: auto; }
 .ggt-add-row { left: 14px; right: 26px; bottom: 4px; height: 18px; width: auto; }
@@ -271,7 +278,8 @@
   border: 1px solid var(--background-modifier-border);
   border-radius: var(--radius-m, 8px);
   /* 浮出来的菜单用 Obsidian 菜单的底色（主题的半透明 / 毛玻璃也跟着），主题没给就用页面底色 */
-  background: var(--menu-background, var(--background-primary));
+  /* 玻璃类主题（OnePage 等）的菜单底色是半透明的：垫一层普通背景、模糊跟 Obsidian 自己的菜单一样，背后的字不透出来；不透明的主题看起来不变 */
+  background: linear-gradient(var(--menu-background, var(--background-primary, #fff)), var(--menu-background, var(--background-primary, #fff))), var(--background-primary, #fff);
   backdrop-filter: var(--menu-backdrop-filter, none);
   box-shadow: var(--shadow-l, 0 8px 24px rgba(0, 0, 0, 0.16));
   font-size: var(--font-ui-small, 13px);
@@ -395,6 +403,10 @@
 /* 实时预览里包表格的那层默认带 contain: paint，会把伸到表格外面的行手柄、加号裁掉一半 */
 /* Obsidian 的规则是 .markdown-source-view.mod-cm6 .cm-content > [contenteditable="false"] { contain: paint !important }，要比它更具体才盖得住 */
 .markdown-source-view.mod-cm6 .cm-content > .ggt-lp[contenteditable="false"] { contain: none !important; }
+/* 这一层也不能自己横向滚：表格在 .ggt-scroll 里滚，表格本身又比这层宽一点（左右要放行手柄、加号）。
+   主题、CSS 片段或旧版 Obsidian 给编辑器里不可编辑的块加了 overflow-x: auto 时，这层会多出一条拖不动的空滚动条（GitHub PR #18 的报告）。
+   和阅读视图里 .el-table 的处理一样，固定成 visible */
+.markdown-source-view.mod-cm6 .cm-content > .ggt-lp[contenteditable="false"] { overflow: visible !important; }
 /* 表格上下的外边距要包在这层里：不然边距透到外面，编辑器量块高度时量不到，
    每张表格让后面所有行的位置少算 18px，几张表之后点段落会落到下一行（点标题上面的段落选中了标题） */
 .markdown-source-view.mod-cm6 .cm-content > .ggt-lp { display: flow-root; }
@@ -425,6 +437,9 @@
   .ggt-handle, .ggt-add, .ggt-corner, .ggt-resize, .ggt-fill, .ggt-fill-preview, .ggt-range-box, .ggt-cross-band, .ggt-input { display: none !important; }
   .ggt .ggt-scroll { -webkit-mask-image: none !important; mask-image: none !important; }
   .ggt .ggt-cell.is-selected { box-shadow: none !important; }
+  /* 计算列的 ƒx 标记是编辑时用的，导出不要 */
+  .ggt-fx-badge { display: none !important; }
+  .ggt .ggt-cell.has-fx .ggt-content { padding-right: var(--ggt-pad-x); }
   .ggt-scroll { overflow: visible !important; }
   /* 纸宽有限：表格最宽到页面宽，不让右边被裁掉（设了列宽的表格导出时按比例换成百分比，见 reading.ts） */
   .ggt .ggt-table { max-width: 100% !important; }
@@ -437,7 +452,7 @@
 .ggt-check:checked + .ggt-check-text { color: var(--text-faint); text-decoration: line-through; }
 
 /* 编辑格子时的 [[ 链接、# 标签补全 */
-.ggt-suggest { position: fixed; z-index: var(--layer-menu, 65); min-width: 200px; max-width: 360px; max-height: 280px; overflow-y: auto; padding: 4px; border: 1px solid var(--background-modifier-border); border-radius: var(--radius-m, 8px); background: var(--menu-background, var(--background-primary)); backdrop-filter: var(--menu-backdrop-filter, none); box-shadow: var(--shadow-l, 0 8px 24px rgba(0, 0, 0, 0.16)); font-size: var(--font-ui-small, 13px); }
+.ggt-suggest { position: fixed; z-index: var(--layer-menu, 65); min-width: 200px; max-width: 360px; max-height: 280px; overflow-y: auto; padding: 4px; border: 1px solid var(--background-modifier-border); border-radius: var(--radius-m, 8px); background: linear-gradient(var(--menu-background, var(--background-primary, #fff)), var(--menu-background, var(--background-primary, #fff))), var(--background-primary, #fff); backdrop-filter: var(--menu-backdrop-filter, none); box-shadow: var(--shadow-l, 0 8px 24px rgba(0, 0, 0, 0.16)); font-size: var(--font-ui-small, 13px); }
 .ggt-suggest-item { padding: 5px 8px; border-radius: 5px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ggt-suggest-item.is-active { background: var(--background-modifier-hover); }
 
@@ -486,6 +501,40 @@
 .ggt-pill[data-c="blue"] { background: rgba(var(--color-blue-rgb), 0.16); color: var(--color-blue); }
 .ggt-pill[data-c="purple"] { background: rgba(var(--color-purple-rgb), 0.16); color: var(--color-purple); }
 .ggt-pill[data-c="gray"] { background: rgba(var(--mono-rgb-100), 0.08); color: var(--text-muted); }
+
+/* 多选标签：一格里几个标签，放不下折行 */
+.ggt-pills { display: inline-flex; flex-wrap: wrap; gap: 4px; vertical-align: top; }
+
+/* 数字列：等宽数字，上下行的位数对得齐 */
+.ggt .ggt-cell[data-ty="num"] { font-variant-numeric: tabular-nums; }
+.ggt .ggt-cell[data-ty="date"] .ggt-content { white-space: nowrap; }
+
+/* 进度条：细条 + 原文，满了变绿 */
+.ggt-bar { display: flex; align-items: center; gap: 8px; width: 100%; min-width: 112px; }
+.ggt-bar-track { position: relative; flex: 1 1 auto; height: 6px; border-radius: 3px; overflow: hidden; background: rgba(var(--mono-rgb-100), 0.1); }
+.ggt-bar-fill { position: absolute; left: 0; top: 0; bottom: 0; width: var(--ggt-p, 0%); border-radius: 3px; background: var(--interactive-accent); transition: width 0.2s ease; }
+.ggt-bar[data-done] .ggt-bar-fill { background: var(--color-green); }
+.ggt-bar-text { flex: none; font-size: 0.92em; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+/* 日期列里读不出日子的格子：淡淡的波浪线，悬停有说明（只是显示） */
+.ggt-cell .is-not-date { text-decoration: underline wavy color-mix(in srgb, var(--text-warning) 55%, transparent); text-decoration-skip-ink: none; text-underline-offset: 3px; }
+
+/* 日期列的日历：和补全列表一样的浮层 */
+.ggt-cal { position: fixed; z-index: var(--layer-menu, 65); width: 248px; padding: 8px; border: 1px solid var(--background-modifier-border); border-radius: var(--radius-m, 8px); background: linear-gradient(var(--menu-background, var(--background-primary, #fff)), var(--menu-background, var(--background-primary, #fff))), var(--background-primary, #fff); backdrop-filter: var(--menu-backdrop-filter, none); box-shadow: var(--shadow-l, 0 8px 24px rgba(0, 0, 0, 0.16)); font-size: var(--font-ui-small, 13px); user-select: none; }
+.ggt-cal button { margin: 0; padding: 0; border: none; box-shadow: none; background: none; color: inherit; font: inherit; height: auto; cursor: pointer; }
+.ggt-cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.ggt-cal-title { font-weight: 600; }
+.ggt-cal .ggt-cal-nav { width: 26px; height: 26px; border-radius: 5px; font-size: 16px; line-height: 1; color: var(--text-muted); }
+.ggt-cal .ggt-cal-nav:hover { background: var(--background-modifier-hover); color: var(--text-normal); }
+.ggt-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.ggt-cal-wd { text-align: center; font-size: 11px; color: var(--text-faint); padding: 2px 0 4px; }
+.ggt-cal .ggt-cal-day { height: 30px; border-radius: 6px; text-align: center; font-variant-numeric: tabular-nums; }
+.ggt-cal .ggt-cal-day:hover { background: var(--background-modifier-hover); }
+.ggt-cal .ggt-cal-day.is-other { color: var(--text-faint); }
+.ggt-cal .ggt-cal-day.is-today { color: var(--interactive-accent); font-weight: 700; }
+.ggt-cal .ggt-cal-day.is-picked { background: var(--interactive-accent); color: var(--text-on-accent); font-weight: 600; }
+.ggt-cal-foot { display: flex; justify-content: space-between; margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--background-modifier-border); }
+.ggt-cal .ggt-cal-btn { padding: 3px 8px; border-radius: 5px; color: var(--text-muted); }
+.ggt-cal .ggt-cal-btn:hover { background: var(--background-modifier-hover); color: var(--text-normal); }
 
 /* 格子里的列表：缩进收窄到一个字左右，去掉上下间距（Obsidian 正文的列表缩进放在格子里太宽） */
 .ggt .ggt-cell .ggt-content ul, .ggt .ggt-cell .ggt-content ol { margin: 0; padding-inline-start: 1.3em; }
@@ -551,7 +600,8 @@
   gap: 2px;
   padding: 3px 4px;
   border-radius: 8px;
-  background: var(--menu-background, var(--background-primary, #fff));
+  /* 玻璃类主题（OnePage 等）的菜单底色是半透明的：垫一层普通背景、模糊跟 Obsidian 自己的菜单一样，背后的字不透出来；不透明的主题看起来不变 */
+  background: linear-gradient(var(--menu-background, var(--background-primary, #fff)), var(--menu-background, var(--background-primary, #fff))), var(--background-primary, #fff);
   backdrop-filter: var(--menu-backdrop-filter, none);
   border: 1px solid var(--background-modifier-border, #e3e3e3);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
@@ -615,8 +665,9 @@
 .ggt .ggt-input-cm .ggt-ed-mark[data-highlight="purple"] { background: var(--highlight-background-purple, rgba(var(--color-purple-rgb, 120, 82, 238), 0.3)); }
 
 /* 阅读视图：Obsidian 给表格套的 .el-table 会横向滚动、裁掉超出的部分，骑在表格左边线上的行手柄、左上角按钮会被切掉半边。
-   接管了的表格横向滚动由 .ggt-scroll 自己负责，这一层不用滚动（这样长表格在阅读视图里也能用原生吸顶）。Obsidian 在它上面写了内联的 overflow-x: auto，要 !important 才盖得住 */
-.markdown-rendered .el-table:has(> .ggt-reading) { overflow: visible !important; }
+   接管了的表格横向滚动由 .ggt-scroll 自己负责，这一层不用滚动（这样长表格在阅读视图里也能用原生吸顶）。Obsidian 在它上面写了内联的 overflow-x: auto，要 !important 才盖得住。
+   ggt-el-table 是接管表格时加在这一层上的类（reading.ts） */
+.markdown-rendered .el-table.ggt-el-table { overflow: visible !important; }
 
 /* 双击格子里的图片看大图 */
 .ggt-lightbox {
@@ -672,7 +723,8 @@
   width: 262px;
   padding: 10px 12px;
   border-radius: 10px;
-  background: var(--menu-background, var(--background-primary, #fff));
+  /* 玻璃类主题（OnePage 等）的菜单底色是半透明的：垫一层普通背景、模糊跟 Obsidian 自己的菜单一样，背后的字不透出来；不透明的主题看起来不变 */
+  background: linear-gradient(var(--menu-background, var(--background-primary, #fff)), var(--menu-background, var(--background-primary, #fff))), var(--background-primary, #fff);
   backdrop-filter: var(--menu-backdrop-filter, none);
   border: 1px solid var(--background-modifier-border, #e3e3e3);
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.16);
@@ -757,6 +809,11 @@
 .ggt.ggt.is-strict .ggt-table thead .ggt-cell.is-sel-head:not([data-bg]) { background-image: linear-gradient(var(--ggt-sel-soft), var(--ggt-sel-soft)) !important; }
 .ggt.ggt.is-strict.has-range .ggt-table thead .ggt-cell.is-sel-head:not([data-bg]) { background-image: none !important; }
 
+/* 导出 PDF、Export Image：设了列宽的表格按比例缩到页面宽（reading.ts 的 applyFit 写变量、加类）。
+   !important 是要盖过编辑器写在 col 上的像素宽度（内联样式），和原来直接写内联样式的效果一样 */
+.ggt-table.ggt-fitted { table-layout: fixed !important; width: min(100%, var(--ggt-fit-w)) !important; }
+.ggt-table.ggt-fitted > colgroup > col { width: var(--ggt-fit-col) !important; }
+
 /* Export Image 插件导出图片：它复制编辑器里画好的表格去截图，复制件没有脚本，拖过列宽的表格按记下的比例缩到图片宽（#7） */
 .export-image-root .ggt-table[style*="--ggt-total"] {
   width: min(100%, var(--ggt-total)) !important;
@@ -771,3 +828,39 @@
 .ggt-search-mark { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
 .ggt-search-mark > div { position: absolute; border-radius: 2px; box-shadow: 0 0 0 3px var(--text-accent); }
 .ggt .ggt-cell.is-search-hit { box-shadow: inset 0 0 0 2px var(--text-accent); }
+
+/* 计算列：列名那一行表头右边的 ƒx 标记（点一下改公式；公式出错时变红），算出来的格子样子照常 */
+.ggt .ggt-cell.has-fx .ggt-content { padding-right: calc(var(--ggt-pad-x) + 18px); }
+.ggt-fx-badge { position: absolute; top: var(--ggt-pad-y); right: 4px; display: flex; align-items: center; height: 1.5em; padding: 0 3px; border-radius: 4px; color: var(--text-faint); font-style: italic; font-weight: 600; line-height: 1; cursor: pointer; user-select: none; }
+.ggt-fx-badge > span { font-size: 0.75em; }
+.ggt-fx-badge:hover { background: var(--background-modifier-hover); color: var(--text-muted); }
+.ggt-fx-badge.is-error { color: var(--text-error); }
+/* 计算列的格子平时和普通格子一样；能编辑的表格里，鼠标移上去右上角浮出小 ƒx，提示这格是算出来的、不能手动改 */
+.ggt:not(.is-readonly) .ggt-cell.is-fx:hover::after { content: "ƒx"; position: absolute; top: 3px; right: 5px; color: var(--text-faint); font-size: 10px; font-style: italic; font-weight: 600; line-height: 1; pointer-events: none; }
+/* 公式编辑框：挂在表头下面，和菜单同一套底色 */
+.ggt-menu.ggt-fx { display: flex; flex-direction: column; gap: 8px; width: 360px; max-width: calc(100vw - 16px); box-sizing: border-box; padding: 10px; font-size: var(--font-ui-small, 13px); }
+.ggt-fx-title { color: var(--text-muted); font-weight: var(--font-semibold, 600); }
+.ggt-fx .ggt-fx-input { width: 100%; box-sizing: border-box; font-family: var(--font-monospace); font-size: var(--font-ui-small, 13px); }
+.ggt-fx-suggest { display: none; max-height: 160px; overflow-y: auto; padding: 4px; border: 1px solid var(--background-modifier-border); border-radius: 6px; }
+.ggt-fx-suggest.is-shown { display: block; }
+.ggt-fx-chips, .ggt-fx-places { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.ggt-fx-label { margin-right: 2px; color: var(--text-muted); }
+.ggt-fx button.ggt-fx-chip, .ggt-fx button.ggt-fx-place { height: 24px; padding: 0 8px; border: 1px solid var(--background-modifier-border); border-radius: 5px; background: var(--background-primary); box-shadow: none; color: var(--text-normal); font-size: 12px; cursor: pointer; }
+.ggt-fx button.ggt-fx-chip:hover, .ggt-fx button.ggt-fx-place:hover { background: var(--background-modifier-hover); }
+.ggt-fx button.ggt-fx-place.is-checked { border-color: var(--interactive-accent); color: var(--text-accent); }
+.ggt-fx-hint { color: var(--text-faint); font-size: 12px; }
+.ggt-fx-preview { padding: 6px 8px; border-radius: 6px; background: var(--background-secondary); color: var(--text-muted); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.ggt-fx-preview.is-error { color: var(--text-error); }
+.ggt-fx-actions { display: flex; justify-content: flex-end; gap: 8px; }
+
+/* 合计行各列统计方式不一样时，数字前面的小标签（求和、最大、计数……）：只是显示，格子里还是纯数字 */
+.ggt-calc-tag { margin-right: 6px; color: var(--text-faint); font-size: 0.78em; font-weight: normal; }
+
+/* 又长又宽的表格：表格自己的横向滚动条在可视区下面时，可视区底边浮出的那条（和表格一起左右滚）。滚动条一直画出来（macOS 默认的浮动滚动条不滚就看不见） */
+.ggt-hbar { position: fixed; z-index: var(--layer-status-bar, 15); display: none; height: 12px; overflow-x: scroll; overflow-y: hidden; background: color-mix(in srgb, var(--background-primary, #fff) 85%, transparent); }
+.ggt-hbar.is-shown { display: block; }
+.ggt-hbar-inner { height: 1px; }
+.ggt-hbar::-webkit-scrollbar { height: 12px; background: transparent; }
+.ggt-hbar::-webkit-scrollbar-thumb { border: 3px solid transparent; border-radius: 6px; background-clip: padding-box; background-color: var(--scrollbar-thumb-bg, rgba(0, 0, 0, 0.2)); }
+.ggt-hbar::-webkit-scrollbar-thumb:hover { background-color: var(--scrollbar-active-thumb-bg, rgba(0, 0, 0, 0.35)); }
+@media print { .ggt-hbar { display: none !important; } }

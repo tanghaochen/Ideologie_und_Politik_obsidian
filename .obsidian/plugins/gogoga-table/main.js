@@ -23,7 +23,7 @@ __export(main_exports, {
   default: () => TablePlugin
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian6 = require("obsidian");
+var import_obsidian7 = require("obsidian");
 
 // src/editor/i18n.ts
 var zh = {
@@ -65,6 +65,7 @@ var zh = {
   insertColLeft: "\u5728\u5DE6\u4FA7\u63D2\u5165\u5217",
   insertColRight: "\u5728\u53F3\u4FA7\u63D2\u5165\u5217",
   deleteRow: "\u5220\u9664\u884C",
+  deleteHeadRow: "\u5220\u9664\u8868\u5934\u884C\uFF08\u4E0B\u4E00\u884C\u53D8\u6210\u8868\u5934\uFF09",
   deleteCol: "\u5220\u9664\u5217",
   deleteRows: "\u5220\u9664 {n} \u884C",
   fmtBold: "\u52A0\u7C97",
@@ -143,8 +144,63 @@ var zh = {
   calc_min: "\u6700\u5C0F",
   calc_none: "\u4E0D\u5408\u8BA1",
   totalLabel: "\u5408\u8BA1",
-  statusOn: "\u8BBE\u4E3A\u72B6\u6001\u5217",
-  statusOff: "\u53D6\u6D88\u72B6\u6001\u5217",
+  totalLabelMixed: "\u7EDF\u8BA1",
+  fxOn: "\u8BBE\u4E3A\u8BA1\u7B97\u5217\u2026",
+  fxEdit: "\u7F16\u8F91\u516C\u5F0F\u2026",
+  fxOff: "\u53D6\u6D88\u8BA1\u7B97\u5217",
+  fxThisCol: "\u8FD9\u4E00\u5217",
+  fxInsert: "\u70B9\u4E00\u4E0B\u63D2\u5165\uFF1A",
+  fxNoNames: "\u522B\u7684\u5217\u90FD\u6CA1\u6709\u80FD\u5F15\u7528\u7684\u5217\u540D\uFF08\u4E0D\u80FD\u662F\u7A7A\u7684\u3001\u4E0D\u80FD\u91CD\u540D\uFF09",
+  fxHint: "\u5217\u540D\u7528\u82B1\u62EC\u53F7\u62EC\u8D77\u6765\uFF1B\u53EF\u4EE5\u7528 + \u2212 \xD7 \xF7 ( )  SUM AVG MIN MAX ROUND",
+  fxPlaces: "\u5C0F\u6570\u4F4D",
+  fxAuto: "\u81EA\u52A8",
+  fxStart: "\u5199\u4E00\u4E2A\u516C\u5F0F\uFF0C\u6BD4\u5982 {\u5355\u4EF7} * {\u6570\u91CF}",
+  fxPreview: "\u7B2C 1 \u884C\uFF1A{expr} = {v}",
+  fxPreviewEmpty: "\u7B2C 1 \u884C\uFF1A\u7ED3\u679C\u4E3A\u7A7A\uFF08{why}\uFF09",
+  fxNoRows: "\u8FD8\u6CA1\u6709\u6570\u636E\u884C",
+  fxBlank: "\u7A7A",
+  fxOk: "\u786E\u5B9A",
+  fxCancel: "\u53D6\u6D88",
+  fxLocked: "\u8FD9\u4E00\u5217\u7531\u516C\u5F0F\u7B97\u51FA\uFF0C\u5728\u5217\u83DC\u5355\u91CC\u6539\u516C\u5F0F",
+  fxBadgeTitle: "\u8BA1\u7B97\u5217\uFF1A{f}",
+  fxErr_empty: "\u8FD8\u6CA1\u5199\u516C\u5F0F",
+  fxErr_syntax: "\u516C\u5F0F\u5199\u5F97\u4E0D\u5BF9",
+  fxErr_paren: "\u62EC\u53F7\u6CA1\u914D\u5BF9",
+  fxErr_brace: "\u82B1\u62EC\u53F7\u6CA1\u914D\u5BF9\uFF1A\u5217\u540D\u8981\u5199\u6210 {\u5217\u540D}",
+  fxErr_func: "\u6CA1\u6709\u300C{name}\u300D\u8FD9\u4E2A\u51FD\u6570",
+  fxErr_args: "{name} \u7684\u53C2\u6570\u4E2A\u6570\u4E0D\u5BF9",
+  fxErr_unknownCol: "\u627E\u4E0D\u5230\u5217\u300C{name}\u300D",
+  fxErr_ambiguous: "\u6709\u597D\u51E0\u5217\u90FD\u53EB\u300C{name}\u300D\uFF0C\u5148\u6539\u4E2A\u540D",
+  fxErr_self: "\u516C\u5F0F\u4E0D\u80FD\u5F15\u7528\u8FD9\u4E00\u5217\u81EA\u5DF1",
+  fxErr_cycle: "\u51E0\u4E2A\u8BA1\u7B97\u5217\u4E92\u76F8\u5F15\u7528\uFF0C\u7ED5\u6210\u4E86\u4E00\u5708",
+  fxEmpty_input: "\u300C{name}\u300D\u662F\u7A7A\u7684\u6216\u4E0D\u662F\u6570\u5B57",
+  fxEmpty_div0: "\u9664\u4EE5 0",
+  colType: "\u5217\u7C7B\u578B\uFF1A{v}",
+  colTypeTitle: "\u5217\u7C7B\u578B",
+  colTypeFx: "\u8BA1\u7B97\u7ED3\u679C\u7684\u683C\u5F0F",
+  kind_text: "\u666E\u901A\u6587\u5B57",
+  kind_status: "\u72B6\u6001\uFF08\u5355\u9009\uFF09",
+  kind_multi: "\u591A\u9009\u6807\u7B7E",
+  kind_date: "\u65E5\u671F",
+  kind_num: "\u6570\u5B57",
+  kind_bar: "\u8FDB\u5EA6\u6761",
+  dateStyle: "\u5199\u6CD5",
+  dateLink: "\u65E5\u8BB0\u94FE\u63A5 [[2026-11-17]]",
+  numFormat: "\u6570\u5B57\u683C\u5F0F",
+  numGroup: "\u5343\u5206\u4F4D 1,234",
+  numPercent: "\u767E\u5206\u6BD4 12%",
+  numCurrency: "\u8D27\u5E01",
+  numNone: "\u65E0",
+  numDecimals: "\u5C0F\u6570",
+  numAuto: "\u81EA\u52A8",
+  calPrev: "\u4E0A\u4E2A\u6708",
+  calNext: "\u4E0B\u4E2A\u6708",
+  calMonth: "{y}\u5E74{m}\u6708",
+  calWeekStart: "1",
+  calWeekdays: "\u65E5,\u4E00,\u4E8C,\u4E09,\u56DB,\u4E94,\u516D",
+  calToday: "\u4ECA\u5929",
+  calClear: "\u6E05\u7A7A",
+  notDate: "\u4E0D\u662F\u65E5\u671F\uFF1A\u65E5\u5386\u548C\u6309\u65E5\u671F\u6392\u5E8F\u4E0D\u8BA4\u5B83",
   statusColor: "\u300C{v}\u300D\u7684\u989C\u8272",
   defaultText: "\u9ED8\u8BA4\u6587\u5B57\u989C\u8272",
   foldTable: "\u6298\u53E0\u8868\u683C\uFF08\u53EA\u663E\u793A\u8868\u5934\uFF09",
@@ -220,6 +276,7 @@ var en = {
   insertColLeft: "Insert column left",
   insertColRight: "Insert column right",
   deleteRow: "Delete row",
+  deleteHeadRow: "Delete header row (the next row becomes the header)",
   deleteCol: "Delete column",
   deleteRows: "Delete {n} rows",
   fmtBold: "Bold",
@@ -298,8 +355,63 @@ var en = {
   calc_min: "Min",
   calc_none: "No total",
   totalLabel: "Total",
-  statusOn: "Use as status column",
-  statusOff: "Stop using as status column",
+  totalLabelMixed: "Summary",
+  fxOn: "Make calculated column\u2026",
+  fxEdit: "Edit formula\u2026",
+  fxOff: "Stop calculating this column",
+  fxThisCol: "This column",
+  fxInsert: "Click to insert:",
+  fxNoNames: "No other column has a usable name (not empty, not duplicated)",
+  fxHint: "Put column names in braces; you can use + \u2212 \xD7 \xF7 ( )  SUM AVG MIN MAX ROUND",
+  fxPlaces: "Decimals",
+  fxAuto: "Auto",
+  fxStart: "Write a formula, e.g. {Price} * {Qty}",
+  fxPreview: "Row 1: {expr} = {v}",
+  fxPreviewEmpty: "Row 1: empty ({why})",
+  fxNoRows: "No data rows yet",
+  fxBlank: "empty",
+  fxOk: "OK",
+  fxCancel: "Cancel",
+  fxLocked: "This column is calculated by a formula. Change the formula from the column menu.",
+  fxBadgeTitle: "Calculated: {f}",
+  fxErr_empty: "The formula is empty",
+  fxErr_syntax: "The formula isn't valid",
+  fxErr_paren: "Parentheses don't match",
+  fxErr_brace: "Braces don't match: write column names as {Name}",
+  fxErr_func: "There's no function \u201C{name}\u201D",
+  fxErr_args: "Wrong number of arguments for {name}",
+  fxErr_unknownCol: "No column named \u201C{name}\u201D",
+  fxErr_ambiguous: "Several columns are named \u201C{name}\u201D; rename one first",
+  fxErr_self: "A formula can't use its own column",
+  fxErr_cycle: "Calculated columns refer to each other in a loop",
+  fxEmpty_input: "\u201C{name}\u201D is empty or not a number",
+  fxEmpty_div0: "Division by zero",
+  colType: "Column type: {v}",
+  colTypeTitle: "Column type",
+  colTypeFx: "Result format",
+  kind_text: "Text",
+  kind_status: "Status (single select)",
+  kind_multi: "Multi-select tags",
+  kind_date: "Date",
+  kind_num: "Number",
+  kind_bar: "Progress bar",
+  dateStyle: "Written as",
+  dateLink: "Daily note link [[2026-11-17]]",
+  numFormat: "Number format",
+  numGroup: "Thousands separator 1,234",
+  numPercent: "Percent 12%",
+  numCurrency: "Currency",
+  numNone: "None",
+  numDecimals: "Decimals",
+  numAuto: "Auto",
+  calPrev: "Previous month",
+  calNext: "Next month",
+  calMonth: "{M} {y}",
+  calWeekStart: "0",
+  calWeekdays: "S,M,T,W,T,F,S",
+  calToday: "Today",
+  calClear: "Clear",
+  notDate: "Not a date: the calendar and date sorting skip it",
   statusColor: "Color of \u201C{v}\u201D",
   defaultText: "Default text color",
   foldTable: "Fold table (header only)",
@@ -853,6 +965,7 @@ function refreshColorSplit(el) {
 var CELL_COLORS = ["gray", "red", "orange", "yellow", "green", "blue", "purple"];
 var CALCS = ["sum", "avg", "count", "max", "min"];
 var VALIGNS = ["middle", "bottom"];
+var CURRENCIES = ["\xA5", "$", "\u20AC", "\xA3"];
 var TABLE_STYLES = ["default", "zebra", "minimal", "academic"];
 var TABLE_DENSITIES = ["comfortable", "compact"];
 var FONT_SIZES = [0.75, 0.85, 1, 1.15, 1.3];
@@ -927,6 +1040,22 @@ function parseMetaLine(line) {
     return null;
   }
 }
+function cleanColType(x) {
+  if (!x || typeof x !== "object" || Array.isArray(x)) return null;
+  const o = x;
+  if (o.t === "date") return o.f === "slash" || o.f === "link" ? { t: "date", f: o.f } : { t: "date" };
+  if (o.t === "bar") return { t: "bar" };
+  if (o.t === "multi") return { t: "multi" };
+  if (o.t === "num") {
+    const n = { t: "num" };
+    if (o.g === 1) n.g = 1;
+    if (CURRENCIES.includes(o.u)) n.u = o.u;
+    if (o.p === 1) n.p = 1;
+    if (typeof o.d === "number" && Number.isInteger(o.d) && o.d >= 0 && o.d <= 4) n.d = o.d;
+    return n;
+  }
+  return null;
+}
 function sanitizeMeta(raw) {
   const meta = { ...raw };
   if (raw.w !== void 0) {
@@ -942,10 +1071,25 @@ function sanitizeMeta(raw) {
     if (calc.some(Boolean)) meta.calc = calc;
     else delete meta.calc;
   }
+  if (raw.fx !== void 0) {
+    const fx = Array.isArray(raw.fx) ? raw.fx.map((x) => typeof x === "string" && x.trim() ? x : null) : [];
+    if (fx.some(Boolean)) meta.fx = fx;
+    else delete meta.fx;
+  }
+  if (raw.fxd !== void 0) {
+    const fxd = Array.isArray(raw.fxd) ? raw.fxd.map((x) => typeof x === "number" && Number.isInteger(x) && x >= 0 && x <= 3 ? x : null) : [];
+    if (fxd.some((x) => x !== null)) meta.fxd = fxd;
+    else delete meta.fxd;
+  }
   if (raw.va !== void 0) {
     const va = Array.isArray(raw.va) ? raw.va.map((x) => VALIGNS.includes(x) ? x : null) : [];
     if (va.some(Boolean)) meta.va = va;
     else delete meta.va;
+  }
+  if (raw.ty !== void 0) {
+    const ty = Array.isArray(raw.ty) ? raw.ty.map(cleanColType) : [];
+    if (ty.some(Boolean)) meta.ty = ty;
+    else delete meta.ty;
   }
   if (raw.opts !== void 0) {
     const opts = Array.isArray(raw.opts) ? raw.opts.map((o) => {
@@ -1058,7 +1202,7 @@ function metaToWrite(meta, cols) {
   if (out.fg && !Object.keys(out.fg).length) delete out.fg;
   if (out.fz && !Object.keys(out.fz).length) delete out.fz;
   if (out.fs === 1) delete out.fs;
-  for (const key of ["calc", "opts", "va"]) {
+  for (const key of ["calc", "opts", "va", "ty"]) {
     const a = out[key];
     if (!a) continue;
     const b = a.slice(0, cols);
@@ -1078,7 +1222,7 @@ function serializeTable(t2) {
   const cols = t2.align.length;
   const src = t2.cells.map((row) => row.map(cellToSource));
   const widths2 = Array.from({ length: cols }, (_, c) => t2.style.padded ? Math.max(3, ...src.map((r) => displayWidth(r[c]))) : 0);
-  const pad = (s, c) => {
+  const pad2 = (s, c) => {
     if (!t2.style.padded) return s;
     const extra = widths2[c] - displayWidth(s);
     if (extra <= 0) return s;
@@ -1092,9 +1236,9 @@ function serializeTable(t2) {
     return t2.style.outerPipes ? `|${inner}|` : inner.trim() === "" ? inner : inner.replace(/^ /, "").replace(/ $/, "");
   };
   const out = [];
-  out.push(line(src[0].map(pad)));
+  out.push(line(src[0].map(pad2)));
   out.push(line(t2.align.map((a, c) => delimCell(a, widths2[c]))));
-  for (const row of src.slice(1)) out.push(line(row.map(pad)));
+  for (const row of src.slice(1)) out.push(line(row.map(pad2)));
   const meta = metaToWrite(t2.meta, cols);
   if (meta) out.push(metaLine(meta));
   return out;
@@ -1147,16 +1291,16 @@ function parseDate(s) {
   const m = DATE_RE.exec(s.trim());
   if (!m) return null;
   const y = Number(m[1]);
-  const mo = Number(m[3]);
+  const mo2 = Number(m[3]);
   const d = Number(m[4]);
-  const t2 = Date.UTC(y, mo - 1, d);
+  const t2 = Date.UTC(y, mo2 - 1, d);
   const back = new Date(t2);
-  if (back.getUTCMonth() !== mo - 1 || back.getUTCDate() !== d) return null;
+  if (back.getUTCMonth() !== mo2 - 1 || back.getUTCDate() !== d) return null;
   return { t: t2, sep: m[2], pad: m[3].length === 2 };
 }
-function fmtDate(t2, sep, pad) {
+function fmtDate(t2, sep, pad2) {
   const d = new Date(t2);
-  const p = (n) => pad ? String(n).padStart(2, "0") : String(n);
+  const p = (n) => pad2 ? String(n).padStart(2, "0") : String(n);
   return `${d.getUTCFullYear()}${sep}${p(d.getUTCMonth() + 1)}${sep}${p(d.getUTCDate())}`;
 }
 function fillSeries(source, count, backward = false, copy = false) {
@@ -1221,6 +1365,345 @@ function fillSeries(source, count, backward = false, copy = false) {
   return out;
 }
 
+// src/core/coltype.ts
+var WRAP_RE = /^(\*\*|__|\*|_|==|~~|`)(.*)\1$/;
+var NUM_RE2 = /^([+-])?([¥$€£])?([+-])?(\d[\d,]*(?:\.\d+)?|\.\d+)(%)?$/;
+function readNumber(text) {
+  let s = text.trim();
+  let wrap = "";
+  const w = WRAP_RE.exec(s);
+  if (w) {
+    wrap = w[1];
+    s = w[2];
+  }
+  s = s.replace(/[\s，]/g, "");
+  const m = NUM_RE2.exec(s);
+  if (!m || m[1] && m[3]) return null;
+  const digits = m[4].replace(/,/g, "");
+  if (!/^\d*\.?\d+$/.test(digits)) return null;
+  const neg = (m[1] ?? m[3]) === "-";
+  const i = digits.indexOf(".");
+  return { shown: (neg ? -1 : 1) * Number(digits), places: i < 0 ? 0 : digits.length - i - 1, pct: !!m[5], wrap };
+}
+function group(int) {
+  return int.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+function formatNumber(v, f, places) {
+  if (!Number.isFinite(v)) return "";
+  const shown = f.p ? v * 100 : v;
+  return writeShown(shown, f, places);
+}
+function writeShown(shown, f, places) {
+  let body;
+  if (places === null) {
+    const r = Math.round(Math.abs(shown) * 100) / 100;
+    body = Number.isInteger(r) ? String(r) : r.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
+  } else body = Math.abs(shown).toFixed(places);
+  if (/e/i.test(body)) return String(shown);
+  const neg = shown < 0 && !/^0(\.0+)?$/.test(body);
+  const [int, dec] = body.split(".");
+  const num = (f.g ? group(int) : int) + (dec !== void 0 ? "." + dec : "");
+  return (neg ? "-" : "") + (f.u ?? "") + num + (f.p ? "%" : "");
+}
+function reformatNumber(text, f) {
+  const n = readNumber(text);
+  if (!n) return text;
+  let shown = n.shown;
+  let places = n.places;
+  if (!f.p && n.pct) {
+    shown = n.shown / 100;
+    places += 2;
+    const s = shown.toFixed(places).replace(/0+$/, "");
+    places = s.includes(".") ? s.length - s.indexOf(".") - 1 : 0;
+  }
+  const d = f.d === void 0 ? places : Math.max(f.d, places);
+  return n.wrap + writeShown(shown, f, d) + n.wrap;
+}
+function validYmd(y, m, d) {
+  if (m < 1 || m > 12 || d < 1 || y < 1e3 || y > 9999) return false;
+  const back = new Date(Date.UTC(y, m - 1, d));
+  return back.getUTCMonth() === m - 1 && back.getUTCDate() === d;
+}
+var DATE_RE2 = /(\d{4})[-/.年](\d{1,2})[-/.月](\d{1,2})日?/;
+var ONLY_DATE_RE = /^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})$/;
+var LINK_RE = /^\[\[([^\]|#^]+)(?:[|#^][^\]]*)?\]\]$/;
+function readDate(text, parseNote) {
+  const s = text.trim();
+  const link = LINK_RE.exec(s);
+  if (link && parseNote) {
+    const name = link[1].split("/").pop() ?? link[1];
+    const p = parseNote(name);
+    if (p) return p;
+  }
+  const m = DATE_RE2.exec(s);
+  if (!m) return null;
+  const v = { y: +m[1], m: +m[2], d: +m[3] };
+  return validYmd(v.y, v.m, v.d) ? v : null;
+}
+var pad = (n) => String(n).padStart(2, "0");
+var isoDate = (v) => `${v.y}-${pad(v.m)}-${pad(v.d)}`;
+function writeDate(v, f, noteName) {
+  if (f === "slash") return `${v.y}/${pad(v.m)}/${pad(v.d)}`;
+  if (f === "link") return `[[${noteName ? noteName(v) : isoDate(v)}]]`;
+  return isoDate(v);
+}
+function reformatDate(text, f) {
+  if (f === "link") return text;
+  const m = ONLY_DATE_RE.exec(text.trim());
+  if (!m || !validYmd(+m[1], +m[2], +m[3])) return text;
+  return writeDate({ y: +m[1], m: +m[2], d: +m[3] }, f);
+}
+var RELATIVE_DAYS = { \u524D\u5929: -2, \u6628\u5929: -1, \u4ECA\u5929: 0, \u660E\u5929: 1, \u540E\u5929: 2, yesterday: -1, today: 0, tomorrow: 1 };
+function parseLooseDate(text, today) {
+  const s = text.trim().toLowerCase();
+  if (s in RELATIVE_DAYS) {
+    const d = new Date(Date.UTC(today.y, today.m - 1, today.d + RELATIVE_DAYS[s]));
+    return { y: d.getUTCFullYear(), m: d.getUTCMonth() + 1, d: d.getUTCDate() };
+  }
+  let m = /^(\d{4})\s*(?:[-/.]\s*(\d{1,2})\s*[-/.]|年\s*(\d{1,2})\s*月)\s*(\d{1,2})\s*(?:日|号)?$/.exec(s);
+  let v = m ? { y: +m[1], m: +(m[2] ?? m[3]), d: +m[4] } : null;
+  if (!v && (m = /^(\d{4})(\d{2})(\d{2})$/.exec(s))) v = { y: +m[1], m: +m[2], d: +m[3] };
+  if (!v && (m = /^(\d{1,2})\s*(?:[-/.]|月)\s*(\d{1,2})\s*(?:日|号)?$/.exec(s))) v = { y: today.y, m: +m[1], d: +m[2] };
+  return v && validYmd(v.y, v.m, v.d) ? v : null;
+}
+function readProgress(text) {
+  const s = text.trim().replace(/\s/g, "");
+  const frac = /^(\d+(?:\.\d+)?)\/(\d+(?:\.\d+)?)$/.exec(s);
+  if (frac) return +frac[2] > 0 ? +frac[1] / +frac[2] : null;
+  const n = readNumber(s);
+  if (!n || n.wrap) return null;
+  if (n.pct) return n.shown / 100;
+  if (n.places > 0 && Math.abs(n.shown) <= 1) return n.shown;
+  return n.shown / 100;
+}
+var TAG_SEP = /[,，、]/;
+function splitTags(text) {
+  const out = [];
+  for (const x of text.split(TAG_SEP)) {
+    const v = x.trim();
+    if (v && !out.includes(v)) out.push(v);
+  }
+  return out;
+}
+function joinTags(tags) {
+  return tags.join(", ");
+}
+
+// src/core/formula.ts
+var FX_FUNCS = ["SUM", "AVG", "MIN", "MAX", "ROUND"];
+var WIDE = { "\uFF08": "(", "\uFF09": ")", "\uFF0C": ",", "\xD7": "*", "\xF7": "/", "\uFF0B": "+", "\uFF0D": "-", "\u2212": "-", "\uFF0A": "*", "\uFF0F": "/", "\uFF5B": "{", "\uFF5D": "}" };
+function tokenize(src) {
+  const s = src.replace(/[（），×÷＋－−＊／｛｝]/g, (ch) => WIDE[ch]);
+  const out = [];
+  let i = 0;
+  while (i < s.length) {
+    const ch = s[i];
+    if (/\s/.test(ch)) {
+      i++;
+      continue;
+    }
+    if (ch === "{") {
+      const j = s.indexOf("}", i + 1);
+      if (j < 0) throw new FxFail({ code: "brace" });
+      const name = s.slice(i + 1, j).trim();
+      if (!name || name.includes("{")) throw new FxFail({ code: "brace" });
+      out.push({ t: "ref", name });
+      i = j + 1;
+      continue;
+    }
+    if (ch === "}") throw new FxFail({ code: "brace" });
+    const num = /^(\d+(\.\d+)?|\.\d+)/.exec(s.slice(i));
+    if (num) {
+      out.push({ t: "num", v: Number(num[1]) });
+      i += num[1].length;
+      continue;
+    }
+    const id = /^[A-Za-z]+/.exec(s.slice(i));
+    if (id) {
+      out.push({ t: "id", name: id[0] });
+      i += id[0].length;
+      continue;
+    }
+    if ("+-*/(),".includes(ch)) {
+      out.push({ t: "op", v: ch });
+      i++;
+      continue;
+    }
+    throw new FxFail({ code: "syntax" });
+  }
+  return out;
+}
+function parseFormula(src) {
+  if (!src.trim()) throw new FxFail({ code: "empty" });
+  const toks = tokenize(src);
+  let i = 0;
+  const peek = () => toks[i];
+  const isOp = (v) => peek()?.t === "op" && peek().v === v;
+  const expr = () => {
+    let a = term();
+    while (isOp("+") || isOp("-")) {
+      const op = toks[i++].v;
+      a = { k: "bin", op, a, b: term() };
+    }
+    return a;
+  };
+  const term = () => {
+    let a = unary();
+    while (isOp("*") || isOp("/")) {
+      const op = toks[i++].v;
+      a = { k: "bin", op, a, b: unary() };
+    }
+    return a;
+  };
+  const unary = () => {
+    if (isOp("-")) {
+      i++;
+      return { k: "neg", a: unary() };
+    }
+    if (isOp("+")) {
+      i++;
+      return unary();
+    }
+    return primary();
+  };
+  const primary = () => {
+    const tk = toks[i];
+    if (!tk) throw new FxFail({ code: "syntax" });
+    if (tk.t === "num") {
+      i++;
+      return { k: "num", v: tk.v };
+    }
+    if (tk.t === "ref") {
+      i++;
+      return { k: "ref", name: tk.name };
+    }
+    if (tk.t === "id") {
+      const name = tk.name.toUpperCase();
+      if (!FX_FUNCS.includes(name)) throw new FxFail({ code: "func", name: tk.name });
+      i++;
+      if (!isOp("(")) throw new FxFail({ code: "syntax" });
+      i++;
+      const args = [];
+      if (!isOp(")")) {
+        args.push(expr());
+        while (isOp(",")) {
+          i++;
+          args.push(expr());
+        }
+      }
+      if (!isOp(")")) throw new FxFail({ code: "paren" });
+      i++;
+      const ok = name === "ROUND" ? args.length === 1 || args.length === 2 : args.length >= 1;
+      if (!ok) throw new FxFail({ code: "args", name });
+      return { k: "fn", name, args };
+    }
+    if (tk.v === "(") {
+      i++;
+      const e = expr();
+      if (!isOp(")")) throw new FxFail({ code: "paren" });
+      i++;
+      return e;
+    }
+    if (tk.v === ")") throw new FxFail({ code: "paren" });
+    throw new FxFail({ code: "syntax" });
+  };
+  const node = expr();
+  if (i < toks.length) throw new FxFail(isOp(")") ? { code: "paren" } : { code: "syntax" });
+  return node;
+}
+var FxFail = class extends Error {
+  constructor(info) {
+    super("code" in info ? `formula: ${info.code}` : `formula: ${info.reason}`);
+    this.info = info;
+  }
+};
+function fxErrorOf(e) {
+  return e instanceof FxFail && "code" in e.info ? e.info : null;
+}
+function formulaRefs(node) {
+  const out = [];
+  const walk = (n) => {
+    if (n.k === "ref") {
+      if (!out.includes(n.name)) out.push(n.name);
+    } else if (n.k === "neg") walk(n.a);
+    else if (n.k === "bin") {
+      walk(n.a);
+      walk(n.b);
+    } else if (n.k === "fn") n.args.forEach(walk);
+  };
+  walk(node);
+  return out;
+}
+function evalFormula(node, get) {
+  const ev = (n) => {
+    switch (n.k) {
+      case "num":
+        return n.v;
+      case "ref": {
+        const v = get(n.name);
+        if (v === null) throw new FxFail({ reason: "input", name: n.name });
+        return v;
+      }
+      case "neg":
+        return -ev(n.a);
+      case "bin": {
+        const a = ev(n.a);
+        const b = ev(n.b);
+        if (n.op === "+") return a + b;
+        if (n.op === "-") return a - b;
+        if (n.op === "*") return a * b;
+        if (b === 0) throw new FxFail({ reason: "div0" });
+        return a / b;
+      }
+      case "fn": {
+        if (n.name === "ROUND") {
+          const v = ev(n.args[0]);
+          const p = n.args[1] ? Math.max(0, Math.min(10, Math.round(ev(n.args[1])))) : 0;
+          const f = 10 ** p;
+          return Math.round((v + Math.sign(v) * Number.EPSILON) * f) / f;
+        }
+        const vals = [];
+        let first = null;
+        for (const a of n.args) {
+          try {
+            vals.push(ev(a));
+          } catch (e) {
+            if (!(e instanceof FxFail)) throw e;
+            first ?? (first = e);
+          }
+        }
+        if (!vals.length) throw first ?? new FxFail({ reason: "input" });
+        if (n.name === "SUM") return vals.reduce((x, y) => x + y, 0);
+        if (n.name === "AVG") return vals.reduce((x, y) => x + y, 0) / vals.length;
+        return n.name === "MAX" ? Math.max(...vals) : Math.min(...vals);
+      }
+    }
+  };
+  return ev(node);
+}
+function fxEmptyOf(e) {
+  return e instanceof FxFail && "reason" in e.info ? e.info : null;
+}
+function formatFx(v, places) {
+  if (!Number.isFinite(v)) return "";
+  let s;
+  if (places === null) {
+    const r = Math.round(v * 100) / 100;
+    s = Number.isInteger(r) ? String(r) : r.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
+  } else s = v.toFixed(places);
+  return /^-0(\.0+)?$/.test(s) ? s.slice(1) : s;
+}
+function nameOk(name) {
+  return !!name && !/[{}]/.test(name);
+}
+function renameInFormula(src, from, to) {
+  const esc2 = from.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return src.replace(new RegExp(`[{\uFF5B]\\s*${esc2}\\s*[}\uFF5D]`, "g"), () => `{${to}}`);
+}
+function prettyOps(src) {
+  return src.replace(/\*/g, "\xD7").replace(/\//g, "\xF7");
+}
+
 // src/core/ops.ts
 function cloneTable(t2) {
   return {
@@ -1237,7 +1720,10 @@ function cloneMeta(m) {
   if (m.fg) out.fg = { ...m.fg };
   if (m.fz) out.fz = { ...m.fz };
   if (m.calc) out.calc = m.calc.slice();
+  if (m.fx) out.fx = m.fx.slice();
+  if (m.fxd) out.fxd = m.fxd.slice();
   if (m.opts) out.opts = m.opts.map((o) => o ? { ...o } : null);
+  if (m.ty) out.ty = m.ty.map((x) => x ? { ...x } : null);
   if (m.merge) out.merge = m.merge.slice();
   return out;
 }
@@ -1294,7 +1780,7 @@ function remapMerges(meta, fr, fc, grow) {
   }
   meta.merge = out;
 }
-var COL_KEYS = ["w", "calc", "opts", "va"];
+var COL_KEYS = ["w", "calc", "opts", "va", "fx", "fxd", "ty"];
 function spliceCols(meta, n, op) {
   for (const key of COL_KEYS) {
     const src = meta[key];
@@ -1329,13 +1815,30 @@ function insertRow(t2, at) {
 }
 function deleteRow(t2, r) {
   const h = headRows(t2);
-  if (r < 1 || r >= rowCount(t2) || r >= h && rowCount(t2) - h <= 1) return t2;
+  if (r === 0 && h === 1) return deleteFirstHeadRow(t2);
+  if (r < 0 || r >= rowCount(t2) || r >= h && rowCount(t2) - h <= 1) return t2;
   const n = cloneTable(t2);
   if (r < h) withHead(n, h - 1);
   if (hasTotal(t2) && r === rowCount(t2) - 1) delete n.meta.calc;
   n.cells.splice(r, 1);
   remapCells(n.meta, (rr, c) => rr === r ? null : [rr > r ? rr - 1 : rr, c]);
   remapMerges(n.meta, (rr) => rr === r ? null : rr > r ? rr - 1 : rr, (c) => c, false);
+  return n;
+}
+function deleteFirstHeadRow(t2) {
+  const body = rowCount(t2) - 1 - (hasTotal(t2) ? 1 : 0);
+  if (body < 2) return t2;
+  const n = cloneTable(t2);
+  n.cells.splice(0, 1);
+  remapCells(n.meta, (rr, c) => rr === 0 ? null : [rr - 1, c]);
+  remapMerges(n.meta, (rr) => rr === 0 ? null : rr - 1, (c) => c, false);
+  if (n.meta.merge) {
+    n.meta.merge = n.meta.merge.filter((m) => {
+      const q = parseRange(m);
+      return !q || !(q.r1 < 1 && q.r2 >= 1);
+    });
+    if (!n.meta.merge.length) delete n.meta.merge;
+  }
   return n;
 }
 function insertCol(t2, at) {
@@ -1553,7 +2056,7 @@ function pasteGrid(t2, r, c, grid) {
   while (rowCount(n) - total() < r + grid.length) n = insertRow(n, rowCount(n));
   while (colCount(n) < c + width2) n = insertCol(n, colCount(n));
   grid.forEach((row, i) => row.forEach((v, j) => n.cells[r + i][c + j] = v));
-  return n;
+  return followRenames(t2, n);
 }
 function fillRange(t2, src, dir, count, copy = false) {
   let n = cloneTable(t2);
@@ -1650,12 +2153,12 @@ function shownText(t2, r, c) {
 }
 function editCell(t2, r, c, text) {
   const m = mergeAt(t2, r, c);
-  if (!m) return setCell(t2, r, c, text);
+  if (!m) return followRenames(t2, setCell(t2, r, c, text));
   if (text === mergedText(t2, m)) return t2;
   const n = cloneTable(t2);
   for (let i = m.r1; i <= m.r2; i++) for (let j = m.c1; j <= m.c2; j++) n.cells[i][j] = "";
   n.cells[m.r1][m.c1] = text;
-  return n;
+  return followRenames(t2, n);
 }
 var NUM_LIKE = /^[-+]?[¥$€£]?\s*[\d,]*\.?\d+\s*%?$/;
 var DATE_LIKE = /^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})/;
@@ -1674,12 +2177,26 @@ function compareCells(a, b) {
 function canSortRows(t2) {
   return !merges(t2).some((m) => m.r2 > m.r1 && m.r2 >= headRows(t2));
 }
-function sortRows(t2, c, desc, lastFixed = false) {
+function dateSortKey(text, parseNote) {
+  if (!text.trim()) return { g: 2, d: 0 };
+  const v = readDate(text, parseNote);
+  return v ? { g: 0, d: Date.UTC(v.y, v.m - 1, v.d) } : { g: 1, d: 0 };
+}
+function sortRows(t2, c, desc, lastFixed = false, parseNote) {
   if (!canSortRows(t2)) return t2;
   const last = rowCount(t2) - (lastFixed ? 1 : 0);
   const h = headRows(t2);
   const idx = Array.from({ length: Math.max(0, last - h) }, (_, i) => i + h);
+  const isDate = colTypeOf(t2, c)?.t === "date" && !formulaOf(t2, c);
+  const keys = isDate ? new Map(idx.map((r) => [r, dateSortKey(t2.cells[r][c], parseNote)])) : null;
   const sorted = [...idx].sort((x, y) => {
+    if (keys) {
+      const a = keys.get(x);
+      const b = keys.get(y);
+      if (a.g !== b.g) return a.g - b.g || x - y;
+      const d2 = a.g === 0 ? a.d - b.d : a.g === 1 ? compareCells(t2.cells[x][c], t2.cells[y][c]) : 0;
+      return (desc ? -d2 : d2) || x - y;
+    }
     const d = compareCells(t2.cells[x][c], t2.cells[y][c]);
     const empty = !t2.cells[x][c].trim() || !t2.cells[y][c].trim();
     return (desc && !empty ? -d : d) || x - y;
@@ -1716,6 +2233,14 @@ function duplicateCol(t2, c) {
   n = setVAlign(n, c + 1, vAlignOf(t2, c));
   const w = widthOf(t2, c);
   if (w) n = setWidth(n, c + 1, w);
+  if (colTypeOf(t2, c)) n = setColType(n, c + 1, colTypeOf(t2, c));
+  if (t2.meta.opts?.[c]) {
+    n = cloneTable(n);
+    const opts = Array.from({ length: colCount(n) }, (_, i) => n.meta.opts?.[i] ?? null);
+    opts[c + 1] = { ...t2.meta.opts[c] };
+    n.meta.opts = opts;
+  }
+  if (formulaOf(t2, c)) n = setFormula(n, c + 1, formulaOf(t2, c), fxPlacesOf(t2, c));
   for (const key of ["bg", "fg", "fz"]) {
     const m = { ...n.meta[key] ?? {} };
     for (let r = 0; r < rowCount(t2); r++) {
@@ -1774,16 +2299,24 @@ function calcColumn(t2, c, how) {
   }
   return fmt(how === "max" ? Math.max(...vals) : Math.min(...vals), places, pct);
 }
-function setCalc(t2, c, how, label = "\u5408\u8BA1") {
+var AUTO_LABELS = /* @__PURE__ */ new Set(["\u5408\u8BA1", "\u7EDF\u8BA1", "Total", "Summary"]);
+function totalsAllSum(t2) {
+  return (t2.meta.calc ?? []).every((x) => !x || x === "sum");
+}
+function setCalc(t2, c, how, labels = { sum: "\u5408\u8BA1", mixed: "\u7EDF\u8BA1" }) {
+  const names = typeof labels === "string" ? { sum: labels, mixed: labels } : labels;
   let n = cloneTable(t2);
-  if (how && !hasTotal(t2)) {
-    n.cells.push(Array.from({ length: colCount(t2) }, () => ""));
-    if (c !== 0) n.cells[rowCount(n) - 1][0] = label;
-  }
+  const added = !!how && !hasTotal(t2);
+  if (added) n.cells.push(Array.from({ length: colCount(t2) }, () => ""));
   const calc = Array.from({ length: colCount(n) }, (_, i) => n.meta.calc?.[i] ?? null);
   calc[c] = how;
   n.meta.calc = calc;
   if (!calc.some(Boolean)) delete n.meta.calc;
+  if (hasTotal(n) && !calc[0]) {
+    const last = rowCount(n) - 1;
+    const cur = n.cells[last][0].trim();
+    if (added && !cur || AUTO_LABELS.has(cur)) n.cells[last][0] = totalsAllSum(n) ? names.sum : names.mixed;
+  }
   n = computeTotals(n);
   return n;
 }
@@ -1793,7 +2326,9 @@ function computeTotals(t2) {
   let n = null;
   t2.meta.calc?.forEach((how, c) => {
     if (!how || c >= colCount(t2)) return;
-    const v = calcColumn(t2, c, how);
+    const raw = calcColumn(t2, c, how);
+    const nf = how === "count" ? null : numFmtOf(t2, c);
+    const v = nf && raw ? reformatNumber(raw, nf) : raw;
     if (t2.cells[last][c] !== v) {
       n ?? (n = cloneTable(t2));
       n.cells[last][c] = v;
@@ -1805,9 +2340,10 @@ var OPT_COLORS = ["blue", "green", "orange", "purple", "red", "yellow", "gray"];
 function optionValues(t2, c) {
   const end = rowCount(t2) - (hasTotal(t2) ? 1 : 0);
   const out = [];
+  const multi = t2.meta.ty?.[c]?.t === "multi";
   for (let r = headRows(t2); r < end; r++) {
-    const v = (t2.cells[r]?.[c] ?? "").trim();
-    if (v && !out.includes(v)) out.push(v);
+    const raw = t2.cells[r]?.[c] ?? "";
+    for (const v of multi ? splitTags(raw) : [raw.trim()]) if (v && !out.includes(v)) out.push(v);
   }
   return out;
 }
@@ -1843,7 +2379,274 @@ function setOptionColor(t2, c, value, color) {
   return n;
 }
 function normalize(t2) {
-  return computeTotals(syncOptions(t2));
+  return computeTotals(computeFormulas(syncOptions(applyColTypes(t2))));
+}
+function colTypeOf(t2, c) {
+  return t2.meta.ty?.[c] ?? null;
+}
+var COL_KINDS = ["text", "status", "multi", "date", "num", "bar"];
+function colKindOf(t2, c) {
+  const ty = colTypeOf(t2, c);
+  if (ty) return ty.t;
+  return t2.meta.opts?.[c] ? "status" : "text";
+}
+function setColType(t2, c, ty) {
+  if (c < 0 || c >= colCount(t2)) return t2;
+  const n = cloneTable(t2);
+  const a = Array.from({ length: colCount(n) }, (_, i) => n.meta.ty?.[i] ?? null);
+  a[c] = ty ? { ...ty } : null;
+  if (a.some(Boolean)) n.meta.ty = a;
+  else delete n.meta.ty;
+  return applyColTypes(n);
+}
+function setColKind(t2, c, kind) {
+  if (c < 0 || c >= colCount(t2) || colKindOf(t2, c) === kind) return t2;
+  if (formulaOf(t2, c) && kind !== "text" && kind !== "num") return t2;
+  const cur = colTypeOf(t2, c);
+  const ty = kind === "text" || kind === "status" ? null : cur?.t === kind ? cur : { t: kind };
+  let n = setColType(t2, c, ty);
+  const wantOpts = kind === "status" || kind === "multi";
+  if (wantOpts !== !!n.meta.opts?.[c]) n = setOptionsCol(n, c, wantOpts);
+  return normalize(n);
+}
+function dataCells(t2, c) {
+  const out = [];
+  const end = rowCount(t2) - (hasTotal(t2) ? 1 : 0);
+  for (let r = headRows(t2); r < end; r++) {
+    const m = mergeAt(t2, r, c);
+    if (m && (m.r1 !== r || m.c1 !== c)) continue;
+    out.push(r);
+  }
+  return out;
+}
+function applyColTypes(t2) {
+  if (!t2.meta.ty?.some(Boolean)) return t2;
+  let n = null;
+  t2.meta.ty.forEach((ty, c) => {
+    if (!ty || c >= colCount(t2) || formulaOf(t2, c)) return;
+    const fix = ty.t === "num" ? (s) => reformatNumber(s, ty) : ty.t === "date" ? (s) => reformatDate(s, ty.f) : ty.t === "multi" ? (s) => joinTags(splitTags(s)) : null;
+    if (!fix) return;
+    for (const r of dataCells(t2, c)) {
+      const v = (n ?? t2).cells[r][c];
+      const next = fix(v);
+      if (next !== v) {
+        n ?? (n = cloneTable(t2));
+        n.cells[r][c] = next;
+      }
+    }
+  });
+  return n ?? t2;
+}
+function numFmtOf(t2, c) {
+  const ty = colTypeOf(t2, c);
+  return ty?.t === "num" ? ty : null;
+}
+function formulaOf(t2, c) {
+  return t2.meta.fx?.[c] ?? null;
+}
+function fxPlacesOf(t2, c) {
+  return t2.meta.fxd?.[c] ?? null;
+}
+function isFxCell(t2, r, c) {
+  if (!formulaOf(t2, c) || r < headRows(t2) || r >= rowCount(t2)) return false;
+  return !(hasTotal(t2) && r === rowCount(t2) - 1);
+}
+function columnNames(t2) {
+  const r = headRows(t2) - 1;
+  return Array.from({ length: colCount(t2) }, (_, c) => {
+    const m = mergeAt(t2, r, c);
+    const src = m ? t2.cells[m.r1][m.c1] : t2.cells[r]?.[c] ?? "";
+    return cellFromSource(src).replace(/\\\|/g, "|").replace(/\s+/g, " ").trim();
+  });
+}
+function nameIndex(t2) {
+  const idx = /* @__PURE__ */ new Map();
+  columnNames(t2).forEach((name, c) => {
+    if (!nameOk(name)) return;
+    idx.set(name, idx.has(name) ? -1 : c);
+  });
+  return idx;
+}
+function analyze(t2) {
+  const out = /* @__PURE__ */ new Map();
+  const fx = t2.meta.fx;
+  if (!fx) return out;
+  const idx = nameIndex(t2);
+  const names = columnNames(t2);
+  for (let c = 0; c < colCount(t2); c++) {
+    const src = fx[c];
+    if (!src) continue;
+    let node;
+    try {
+      node = parseFormula(src);
+    } catch (e) {
+      out.set(c, { deps: [], error: fxErrorOf(e) ?? { code: "syntax" } });
+      continue;
+    }
+    const deps = [];
+    let error;
+    for (const name of formulaRefs(node)) {
+      const at = idx.get(name);
+      if (at === void 0) error ?? (error = { code: "unknownCol", name });
+      else if (at === -1) error ?? (error = { code: "ambiguous", name });
+      else if (at === c || name === names[c]) error ?? (error = { code: "self", name });
+      else deps.push(at);
+    }
+    out.set(c, error ? { deps: [], error } : { node, deps });
+  }
+  const state = /* @__PURE__ */ new Map();
+  const stack = [];
+  const visit = (c) => {
+    const info = out.get(c);
+    if (!info || info.error) return;
+    if (state.get(c) === 2) return;
+    if (state.get(c) === 1) {
+      for (const x of stack.slice(stack.indexOf(c))) out.set(x, { deps: [], error: { code: "cycle" } });
+      return;
+    }
+    state.set(c, 1);
+    stack.push(c);
+    for (const d of info.deps) visit(d);
+    stack.pop();
+    state.set(c, 2);
+  };
+  for (const c of out.keys()) visit(c);
+  return out;
+}
+function cellNumber(s) {
+  const p = parseNum(s);
+  if (!p) return null;
+  return p.pct ? p.v / 100 : p.v;
+}
+function fxRows(t2) {
+  return [headRows(t2), rowCount(t2) - (hasTotal(t2) ? 1 : 0)];
+}
+function fxOrder(info) {
+  const order = [];
+  const seen = /* @__PURE__ */ new Set();
+  const visit = (c) => {
+    if (seen.has(c)) return;
+    seen.add(c);
+    const i = info.get(c);
+    if (i && !i.error) i.deps.forEach(visit);
+    if (i) order.push(c);
+  };
+  for (const c of info.keys()) visit(c);
+  return order;
+}
+function evalRow(t2, cells, info, r, idx = nameIndex(t2)) {
+  try {
+    return evalFormula(info.node, (name) => {
+      const c = idx.get(name);
+      const m = mergeAt(t2, r, c);
+      return cellNumber(m ? cells[m.r1][m.c1] : cells[r]?.[c] ?? "");
+    });
+  } catch (e) {
+    const why = fxEmptyOf(e);
+    if (why) return why;
+    throw e;
+  }
+}
+function computeFormulas(t2) {
+  if (!t2.meta.fx?.some(Boolean)) return t2;
+  const info = analyze(t2);
+  const [r1, r2] = fxRows(t2);
+  const idx = nameIndex(t2);
+  let n = null;
+  for (const c of fxOrder(info)) {
+    const i = info.get(c);
+    for (let r = r1; r < r2; r++) {
+      const m = mergeAt(t2, r, c);
+      if (m && (m.r1 !== r || m.c1 !== c)) continue;
+      const cells = (n ?? t2).cells;
+      const v = i.error ? "" : evalRow(t2, cells, i, r, idx);
+      const nf = numFmtOf(t2, c);
+      const text = typeof v !== "number" ? "" : nf ? formatNumber(v, nf, fxPlacesOf(t2, c) ?? nf.d ?? null) : formatFx(v, fxPlacesOf(t2, c));
+      if (cells[r][c] !== text) {
+        n ?? (n = cloneTable(t2));
+        n.cells[r][c] = text;
+      }
+    }
+  }
+  return n ?? t2;
+}
+function formulaError(t2, c) {
+  if (!formulaOf(t2, c)) return null;
+  return analyze(t2).get(c)?.error ?? null;
+}
+function fxCellNote(t2, r, c) {
+  if (!isFxCell(t2, r, c)) return null;
+  const i = analyze(t2).get(c);
+  if (!i) return null;
+  if (i.error) return i.error;
+  const v = evalRow(t2, t2.cells, i, r);
+  return typeof v === "number" ? null : v;
+}
+function checkFormula(t2, c, src, places = null) {
+  const n = cloneTable(t2);
+  const fx = Array.from({ length: colCount(t2) }, (_, i2) => n.meta.fx?.[i2] ?? null);
+  fx[c] = src.trim() || " ";
+  n.meta.fx = fx;
+  const i = analyze(n).get(c);
+  if (i.error) return { error: i.error };
+  const [r1, r2] = fxRows(n);
+  const idx = nameIndex(n);
+  const refs = formulaRefs(i.node).map((name) => {
+    const at = idx.get(name);
+    return { name, value: r1 < r2 ? cellNumber(n.cells[r1][at] ?? "") : null };
+  });
+  if (r1 >= r2) return { refs, result: null };
+  const v = evalRow(n, n.cells, i, r1);
+  return typeof v === "number" ? { refs, result: formatFx(v, places) } : { refs, result: null, empty: v };
+}
+function setFormula(t2, c, src, places = null) {
+  if (c < 0 || c >= colCount(t2)) return t2;
+  const n = cloneTable(t2);
+  const len = colCount(t2);
+  const fx = Array.from({ length: len }, (_, i) => n.meta.fx?.[i] ?? null);
+  const fxd = Array.from({ length: len }, (_, i) => n.meta.fxd?.[i] ?? null);
+  fx[c] = src?.trim() ? src.trim() : null;
+  fxd[c] = fx[c] && places !== null ? places : null;
+  if (fx.some(Boolean)) n.meta.fx = fx;
+  else delete n.meta.fx;
+  if (fxd.some((x) => x !== null)) n.meta.fxd = fxd;
+  else delete n.meta.fxd;
+  let m = n;
+  if (fx[c] && colTypeOf(n, c) && colTypeOf(n, c).t !== "num") m = setColType(n, c, null);
+  if (fx[c] && m.meta.opts?.[c]) m = setOptionsCol(m, c, false);
+  return computeTotals(computeFormulas(m));
+}
+function followRenames(prev, next) {
+  if (next === prev || !next.meta.fx?.some(Boolean)) return next;
+  const a = columnNames(prev);
+  const b = columnNames(next);
+  const ia = nameIndex(prev);
+  const ib = nameIndex(next);
+  let out = next;
+  for (let c = 0; c < Math.min(a.length, b.length); c++) {
+    if (a[c] === b[c] || ia.get(a[c]) !== c || ib.get(b[c]) !== c) continue;
+    const fx = out.meta.fx.map((f) => f ? renameInFormula(f, a[c], b[c]) : f);
+    if (fx.every((f, i) => f === out.meta.fx[i])) continue;
+    if (out === next) out = cloneTable(next);
+    out.meta.fx = fx;
+  }
+  return out;
+}
+function keepWorkingFormulas(t2) {
+  if (!t2.meta.fx?.some(Boolean)) {
+    delete t2.meta.fx;
+    delete t2.meta.fxd;
+    return t2;
+  }
+  const info = analyze(t2);
+  for (const [c, i] of info) {
+    if (!i.error) continue;
+    t2.meta.fx[c] = null;
+    if (t2.meta.fxd) t2.meta.fxd[c] = null;
+  }
+  if (!t2.meta.fx.some(Boolean)) delete t2.meta.fx;
+  if (!t2.meta.fxd?.some((x) => x !== null)) delete t2.meta.fxd;
+  return t2;
 }
 function subTable(t2, rect) {
   const r1 = Math.max(0, rect.r1);
@@ -1868,7 +2671,10 @@ function subTable(t2, rect) {
   else delete meta.head;
   meta.w = cols(t2.meta.w);
   meta.opts = cols(t2.meta.opts);
+  meta.ty = cols(t2.meta.ty);
   meta.calc = hasTotal(t2) && r2 === rowCount(t2) - 1 ? cols(t2.meta.calc) : void 0;
+  meta.fx = cols(t2.meta.fx);
+  meta.fxd = cols(t2.meta.fxd);
   meta.bg = shift(t2.meta.bg);
   meta.fg = shift(t2.meta.fg);
   meta.fz = shift(t2.meta.fz);
@@ -1889,12 +2695,13 @@ function subTable(t2, rect) {
     const nc = Math.max(m.c1, c1);
     if ((nr !== m.r1 || nc !== m.c1) && nr <= Math.min(m.r2, r2) && nc <= Math.min(m.c2, c2)) cells[nr - r1][nc - c1] = t2.cells[m.r1][m.c1];
   }
-  return {
+  const sub = {
     cells,
     align: t2.align.slice(c1, c2 + 1),
     meta,
     style: { ...t2.style }
   };
+  return keepWorkingFormulas(sub);
 }
 
 // src/core/clipboard.ts
@@ -2333,6 +3140,28 @@ var TextareaInput = class {
   visibleSelection() {
     return { from: this.el.selectionStart, to: this.el.selectionEnd };
   }
+  atEdge(dir) {
+    const ta = this.el;
+    const pos = ta.selectionStart;
+    if (pos !== ta.selectionEnd) return false;
+    if (dir === "left") return pos === 0;
+    if (dir === "right") return pos === ta.value.length;
+    const doc = ta.ownerDocument;
+    const cs = (doc.defaultView ?? window).getComputedStyle(ta);
+    const m = doc.body.appendChild(doc.createElement("div"));
+    for (const p of ["box-sizing", "width", "padding-top", "padding-right", "padding-bottom", "padding-left", "border-top-width", "border-right-width", "border-bottom-width", "border-left-width", "border-style", "font-family", "font-size", "font-weight", "font-style", "letter-spacing", "line-height", "text-transform", "word-spacing", "tab-size", "text-indent", "word-break", "overflow-wrap"])
+      m.style.setProperty(p, cs.getPropertyValue(p));
+    m.className = "ggt-caret-mirror";
+    m.append(ta.value.slice(0, pos));
+    const mark = m.appendChild(doc.createElement("span"));
+    mark.textContent = "\u200B";
+    m.append(ta.value.slice(pos) || "\u200B");
+    const lh = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.5 || 20;
+    const top = mark.offsetTop - parseFloat(cs.paddingTop) - parseFloat(cs.borderTopWidth);
+    const height = m.scrollHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    m.remove();
+    return dir === "up" ? top < lh / 2 : top + lh * 1.5 > height;
+  }
   focus() {
     this.el.focus({ preventScroll: true });
   }
@@ -2492,6 +3321,18 @@ var CodeMirrorInput = class {
   visibleSelection() {
     return visibleSelection(this.view);
   }
+  atEdge(dir) {
+    const v = this._view;
+    if (!v) return true;
+    const r = v.state.selection.main;
+    if (!r.empty) return false;
+    if (dir === "left" || dir === "right") return v.moveByChar(r, dir === "right").head === r.head;
+    const next = v.moveVertically(r, dir === "down");
+    if (next.head === r.head) return true;
+    const a = v.coordsAtPos(r.head);
+    const b = v.coordsAtPos(next.head);
+    return !!a && !!b && Math.abs(a.top - b.top) < 2;
+  }
   focus() {
     this.syncRoot();
     this.view.contentDOM.focus({ preventScroll: true });
@@ -2532,6 +3373,13 @@ var CodeMirrorInput = class {
 };
 
 // src/editor/editor.ts
+var KIND_ICONS = { text: "type", status: "tag", multi: "tags", date: "calendar", num: "hash", bar: "percent" };
+var ARROW_EDGE = {
+  ArrowUp: { edge: "up", dr: -1, dc: 0 },
+  ArrowDown: { edge: "down", dr: 1, dc: 0 },
+  ArrowLeft: { edge: "left", dr: 0, dc: -1 },
+  ArrowRight: { edge: "right", dr: 0, dc: 1 }
+};
 function sameTable(a, b) {
   return JSON.stringify([a.cells, a.align, a.meta]) === JSON.stringify([b.cells, b.align, b.meta]);
 }
@@ -2606,12 +3454,23 @@ var TableEditor = class {
     this.marked = [];
     this.crossed = [];
     this.popover = null;
+    /** 上次提示「计算列不能改」的时间（一直打字时别一直弹） */
+    this.fxNoticeAt = 0;
     /** 编辑时的补全列表（[[ 链接、# 标签） */
     this.suggest = null;
+    /** 日期列编辑时的日历：view 是正在看的月份，picked 是格子里现在的日期 */
+    this.cal = null;
+    /** 这次编辑里打过字（日期列「自动识别日期写法」只换打过字的格子） */
+    this.typed = false;
+    /** 上次弹菜单的位置（列类型的二级菜单在同一处打开） */
+    this.menuAt = { x: 0, y: 0 };
     this.resize = null;
     this.destroyed = false;
     /** 横向滚动条占的高度（覆盖式滚动条是 0） */
     this.scrollbarH = 0;
+    /** 浮在可视区底边的横向滚动条（表格又宽又长、自己的滚动条在屏幕下面时才出来） */
+    this.hbar = null;
+    this.hbarSync = false;
     /** 列宽按比例缩放时缩了多少（1 = 没缩）；拖列宽时按它换算回文件里的宽度 */
     this.fitScale = 1;
     /** 上一次长按开菜单的时间（安卓随后还会来一次右键事件，忽略掉） */
@@ -2676,8 +3535,16 @@ var TableEditor = class {
       const at = headRows(this.table);
       this.apply(insertRow(this.table, at), { r: at, c: this.sel?.c ?? 0 });
     });
-    this.root.addEventListener("pointerenter", () => this.root.classList.add("is-hot"));
-    this.root.addEventListener("pointerleave", () => this.root.classList.remove("is-hot"));
+    let leaveTimer = 0;
+    this.root.addEventListener("pointerenter", () => {
+      window.clearTimeout(leaveTimer);
+      this.root.classList.add("is-hot");
+    });
+    this.root.addEventListener("pointerleave", () => {
+      window.clearTimeout(leaveTimer);
+      leaveTimer = window.setTimeout(() => this.root.classList.remove("is-hot"), 400);
+    });
+    this.cleanups.push(() => window.clearTimeout(leaveTimer));
     this.root.classList.toggle("is-readonly", !!host.readonly);
     parent.appendChild(this.root);
     this.bind();
@@ -2780,6 +3647,12 @@ var TableEditor = class {
         this.apply(duplicateCol(tb, p.c), { r: p.r, c: p.c + 1 });
         return true;
       case "delete-row": {
+        if (rows === 1 && r.r1 === 0) {
+          const n2 = deleteRow(tb, 0);
+          if (n2 === tb) return false;
+          this.apply(n2, { r: 0, c: p.c });
+          return true;
+        }
         if (r.r1 === 0 || rowCount(tb) - rows < 2) return false;
         if (deleteRow(tb, r.r2) === tb) return false;
         let n = tb;
@@ -2797,7 +3670,7 @@ var TableEditor = class {
       case "sort-asc":
       case "sort-desc":
         if (!canSortRows(tb)) return false;
-        this.apply(sortRows(tb, p.c, id === "sort-desc", this.hasTotalRow()), p);
+        this.apply(sortRows(tb, p.c, id === "sort-desc", this.hasTotalRow(), this.dateParser()), p);
         return true;
       case "merge-cells":
         if (!this.isMulti()) return false;
@@ -2877,6 +3750,8 @@ var TableEditor = class {
     this.hideMobileBar();
     if (lastActive === this) lastActive = null;
     this.destroyed = true;
+    this.hbar?.remove();
+    this.hbar = null;
     this.closePopover();
     this.closeSuggest();
     for (const f of this.cleanups) f();
@@ -2898,6 +3773,7 @@ var TableEditor = class {
         this.root.style.setProperty("--ggt-sb", `${bar}px`);
       }
       this.stickHeader();
+      this.placeHBar();
       this.placeHandles();
       if (this.resizeBar.classList.contains("is-touch")) this.placeTouchResize();
       if (this.root.classList.contains("is-freeze") && this.crossBands.some((b) => b.classList.contains("is-shown"))) this.markCross();
@@ -2955,6 +3831,57 @@ var TableEditor = class {
     this.cleanups.push(() => ro.disconnect());
   }
   /**
+   * 又长又宽的表格：横向滚动条在表格最底下，得先翻到底才拖得到（B 站 bili_70604431418）。
+   * 表格比页面宽、底边在可视区下面、上面还有一截露在可视区里时，在可视区底边浮出一条横向滚动条，和表格一起左右滚；
+   * 表格的底边滚进来了就收起，用表格自己那条。被缩放的脑图画布里、触屏上不出（触屏直接左右划）
+   */
+  placeHBar() {
+    const sc = this.scroller;
+    const outer = this.outer;
+    const win = this.root.ownerDocument.defaultView ?? window;
+    const hide = () => this.hbar?.classList.remove("is-shown");
+    if (!outer || !this.root.isConnected || sc.scrollWidth <= sc.clientWidth + 1 || Math.abs(this.scale() - 1) > 0.01 || win.matchMedia?.("(pointer: coarse)").matches) return hide();
+    const o = outer.getBoundingClientRect();
+    const r = sc.getBoundingClientRect();
+    const bottom = Math.min(o.bottom, win.innerHeight);
+    if (r.width === 0 || r.bottom <= bottom || r.top > bottom - 60) return hide();
+    const left = Math.max(r.left, o.left);
+    const right = Math.min(r.right, o.right);
+    if (right - left < 40) return hide();
+    let bar = this.hbar;
+    if (!bar) {
+      const doc = this.root.ownerDocument;
+      bar = doc.body.appendChild(doc.createElement("div"));
+      bar.className = "ggt-hbar";
+      bar.appendChild(doc.createElement("div")).className = "ggt-hbar-inner";
+      bar.addEventListener(
+        "scroll",
+        () => {
+          if (this.hbarSync) {
+            this.hbarSync = false;
+            return;
+          }
+          const b = bar;
+          sc.scrollLeft = b.scrollLeft / Math.max(1, b.scrollWidth - b.clientWidth) * (sc.scrollWidth - sc.clientWidth);
+        },
+        { passive: true }
+      );
+      this.hbar = bar;
+    }
+    const inner = bar.firstElementChild;
+    const w = right - left;
+    inner.style.width = `${Math.round(sc.scrollWidth / sc.clientWidth * w)}px`;
+    bar.classList.add("is-shown");
+    bar.style.left = `${Math.round(left)}px`;
+    bar.style.width = `${Math.round(w)}px`;
+    bar.style.top = `${Math.round(bottom - bar.offsetHeight)}px`;
+    const target = sc.scrollLeft / Math.max(1, sc.scrollWidth - sc.clientWidth) * Math.max(0, bar.scrollWidth - bar.clientWidth);
+    if (Math.abs(bar.scrollLeft - target) > 1) {
+      this.hbarSync = true;
+      bar.scrollLeft = target;
+    }
+  }
+  /**
    * 编辑器被整体缩放了多少（脑图画布用 transform: scale 缩放，getBoundingClientRect 量到的是屏幕像素）。
    * 屏幕上量出来的距离要除以它，才是写进 style 的 CSS 像素
    */
@@ -2981,8 +3908,8 @@ var TableEditor = class {
     this.root.classList.toggle("is-native-stick", native);
     if (native && outer) {
       this.root.classList.remove("is-sd");
-      const pad = parseFloat((outer.ownerDocument.defaultView ?? window).getComputedStyle(outer).paddingTop) || 0;
-      this.root.style.setProperty("--ggt-sticky-top", `${-pad}px`);
+      const pad2 = parseFloat((outer.ownerDocument.defaultView ?? window).getComputedStyle(outer).paddingTop) || 0;
+      this.root.style.setProperty("--ggt-sticky-top", `${-pad2}px`);
       this.moveHead(head, 0);
       return;
     }
@@ -3116,10 +4043,15 @@ var TableEditor = class {
         if (tb.meta.headerCol && c === 0 && r >= head) cell.classList.add("is-head-col");
         if (freeze && c === 0 && (!m || m.c2 === 0)) cell.classList.add("is-frozen");
         if (!m && !widthOf(tb, c)) cell.classList.add("is-auto-width");
+        else if (!m) cell.classList.add("is-set-width");
         const content = cell.appendChild(doc.createElement("div"));
         content.className = "ggt-content";
         if (r === all - 1 && r >= head && hasTotal(tb)) cell.classList.add("is-total-row");
+        const ty = colTypeOf(tb, c);
+        if (ty && r >= head) cell.dataset.ty = ty.t;
         this.fillCell(content, r, c, m ? mergedText(tb, m) : tb.cells[r][c]);
+        if (formulaOf(tb, c)) this.markFx(cell, r, c);
+        if (cell.classList.contains("is-total-row")) this.markCalc(cell, content, c);
       }
     }
     if (folded) {
@@ -3150,7 +4082,38 @@ var TableEditor = class {
   /** 状态列的数据格画成彩色标签，别的照常 */
   fillCell(el, r, c, md) {
     const opts = this.table.meta.opts?.[c];
+    const ty = colTypeOf(this.table, c);
     const isData = r >= headRows(this.table) && !(hasTotal(this.table) && r === rowCount(this.table) - 1);
+    if (opts && ty?.t === "multi" && isData && md.trim()) {
+      el.replaceChildren();
+      el.classList.remove("is-empty");
+      const wrap = el.appendChild(el.ownerDocument.createElement("span"));
+      wrap.className = "ggt-pills";
+      for (const v of splitTags(md)) {
+        const pill = wrap.appendChild(el.ownerDocument.createElement("span"));
+        pill.className = "ggt-pill";
+        pill.dataset.c = opts[v] ?? "gray";
+        pill.textContent = v;
+      }
+      return;
+    }
+    const prog = ty?.t === "bar" && isData ? readProgress(md) : null;
+    if (prog !== null) {
+      el.replaceChildren();
+      el.classList.remove("is-empty");
+      const bar = el.appendChild(el.ownerDocument.createElement("span"));
+      bar.className = "ggt-bar";
+      if (prog >= 1) bar.dataset.done = "1";
+      const track = bar.appendChild(el.ownerDocument.createElement("span"));
+      track.className = "ggt-bar-track";
+      const fill = track.appendChild(el.ownerDocument.createElement("span"));
+      fill.className = "ggt-bar-fill";
+      fill.setCssProps({ "--ggt-p": `${Math.round(Math.max(0, Math.min(1, prog)) * 1e3) / 10}%` });
+      const label = bar.appendChild(el.ownerDocument.createElement("span"));
+      label.className = "ggt-bar-text";
+      label.textContent = md.trim();
+      return;
+    }
     if (opts && isData && md.trim()) {
       el.replaceChildren();
       el.classList.remove("is-empty");
@@ -3161,6 +4124,11 @@ var TableEditor = class {
       return;
     }
     this.fill(el, md);
+    const daily = ty?.t === "date" && isData && md.trim() ? this.dailyNote() : null;
+    const notDate = ty?.t === "date" && isData && !!md.trim() && !readDate(md, daily ? (n) => daily.parse(n) : void 0);
+    el.classList.toggle("is-not-date", notDate);
+    if (notDate) el.title = t("notDate");
+    else if (el.title === t("notDate")) el.removeAttribute("title");
   }
   fill(el, md) {
     el.replaceChildren();
@@ -3390,11 +4358,20 @@ var TableEditor = class {
     if (!this.sel || this.host.readonly) return;
     const cell = this.cellEl(this.sel);
     if (!cell) return;
+    if (isFxCell(this.table, this.sel.r, this.sel.c)) {
+      this.input.reset("");
+      if (Date.now() - this.fxNoticeAt > 1500) {
+        this.fxNoticeAt = Date.now();
+        this.host.notice?.(t("fxLocked"));
+      }
+      return;
+    }
     if (this.anchor) {
       this.anchor = null;
       this.markSel();
     }
     this.editing = true;
+    this.typed = false;
     cell.classList.add("is-editing");
     this.fillHandle.classList.remove("is-shown");
     this.showMobileBar();
@@ -3437,22 +4414,36 @@ var TableEditor = class {
     const p = this.sel;
     this.editing = false;
     this.cellEl(p)?.classList.remove("is-editing");
-    const text = this.input.value.replace(/\r\n?/g, "\n");
+    const text = this.smartDate(p, this.input.value.replace(/\r\n?/g, "\n").replace(/^\s+|\s+$/g, ""));
     this.input.reset("");
-    const edited = editCell(this.table, p.r, p.c, text.replace(/^\s+|\s+$/g, ""));
+    const edited = editCell(this.table, p.r, p.c, text);
     const next = edited === this.table ? edited : normalize(edited);
     const pending = this.pending;
     this.pending = null;
     if (next !== this.table) {
       const prev = this.table;
       this.table = next;
-      if (hasTotal(next) || next.meta.opts?.some(Boolean)) this.render();
+      if (hasTotal(next) || next.meta.opts?.some(Boolean) || next.meta.fx?.some(Boolean)) this.render();
       else this.restoreContent(p);
       this.host.onChange(next, prev);
     } else if (pending) {
       this.table = pending;
       this.render();
     } else this.restoreContent(p);
+  }
+  /**
+   * 日期列里改过的一格：整格是 1/5、2026年1月5日、20260105、今天 这类写法时，换成这一列的写法（日记链接列写成 [[日记]]）。
+   * 这次没打过字的不动：以前存的「今天」进编辑再按 Enter，不会被换成那一天
+   */
+  smartDate(p, text) {
+    const ty = colTypeOf(this.table, p.c);
+    if (ty?.t !== "date" || this.host.smartDate?.() === false || !text || !this.typed) return text;
+    if (p.r < headRows(this.table) || hasTotal(this.table) && p.r === rowCount(this.table) - 1 || formulaOf(this.table, p.c)) return text;
+    const now = /* @__PURE__ */ new Date();
+    const v = parseLooseDate(text, { y: now.getFullYear(), m: now.getMonth() + 1, d: now.getDate() });
+    if (!v) return text;
+    const daily = ty.f === "link" ? this.dailyNote() : null;
+    return writeDate(v, ty.f, daily ? (x) => daily.name(x) : void 0);
   }
   cancel() {
     this.closeSuggest();
@@ -3547,6 +4538,7 @@ var TableEditor = class {
       input: () => {
         if (!this.editing) this.startEdit(false);
         else this.autosize();
+        this.typed = true;
         this.updateSuggest();
         this.updateFormatBar();
       },
@@ -3590,6 +4582,7 @@ var TableEditor = class {
         return this.touchStart(ev, p);
       }
       this.host.dismissMenus?.();
+      if (ev.button === 1) return;
       ev.preventDefault();
       if (ev.button !== 0) return;
       if (ev.shiftKey && this.sel) {
@@ -3742,7 +4735,7 @@ var TableEditor = class {
       const target = ev.target;
       if (this.formatBar?.contains(target)) return;
       if (this.mobileBar?.contains(target)) return;
-      if (this.suggest?.el.contains(target)) return;
+      if (this.suggest?.el.contains(target) || this.cal?.el.contains(target)) return;
       if (this.popover && !this.popover.contains(target)) this.closePopover();
       if (this.sel && !this.root.contains(target) && !(this.popover && this.popover.contains(target))) {
         if (this.editing) this.commit();
@@ -3752,7 +4745,7 @@ var TableEditor = class {
     }, { capture: true });
   }
   onKey(ev) {
-    if (ev.isComposing || ev.keyCode === 229) return;
+    if (ev.isComposing || ev.key === "Process") return;
     const mod = ev.metaKey || ev.ctrlKey;
     if (this.editing) {
       if (this.suggest && this.onSuggestKey(ev)) {
@@ -3765,7 +4758,12 @@ var TableEditor = class {
         ev.stopPropagation();
         return;
       }
-      if (ev.key === "Enter" && !ev.shiftKey && !ev.altKey && !mod) {
+      const arrow = ARROW_EDGE[ev.key];
+      if (arrow && !ev.shiftKey && !ev.altKey && !mod && this.input.atEdge(arrow.edge)) {
+        ev.preventDefault();
+        this.commit();
+        this.move(arrow.dr, arrow.dc);
+      } else if (ev.key === "Enter" && !ev.shiftKey && !ev.altKey && !mod) {
         ev.preventDefault();
         this.commit();
         this.move(1, 0);
@@ -4254,7 +5252,30 @@ var TableEditor = class {
       query = tag[1];
       start = before.length - tag[1].length;
     }
-    const opts = this.sel && this.sel.r >= headRows(this.table) ? this.table.meta.opts?.[this.sel.c] : null;
+    const dataRow = !!this.sel && this.sel.r >= headRows(this.table) && !(hasTotal(this.table) && this.sel.r === rowCount(this.table) - 1);
+    if (!kind && dataRow && this.sel && colTypeOf(this.table, this.sel.c)?.t === "date") {
+      this.closeSuggestList();
+      this.showCalendar();
+      return;
+    }
+    this.closeCalendar();
+    const opts = dataRow && this.sel ? this.table.meta.opts?.[this.sel.c] : null;
+    let multi;
+    if (!kind && opts && this.sel && colTypeOf(this.table, this.sel.c)?.t === "multi") {
+      const caret = el.selectionStart;
+      const v = el.value;
+      const segStart = Math.max(v.lastIndexOf(",", caret - 1), v.lastIndexOf("\uFF0C", caret - 1), v.lastIndexOf("\u3001", caret - 1)) + 1;
+      const restSep = v.slice(caret).search(/[,，、]/);
+      const segEnd = restSep < 0 ? v.length : caret + restSep;
+      multi = { before: splitTags(v.slice(0, segStart)), after: splitTags(v.slice(segEnd)) };
+      const q = v.slice(segStart, segEnd).trim();
+      const chosen = /* @__PURE__ */ new Set([...multi.before, ...multi.after]);
+      const left = Object.keys(opts).filter((x) => !chosen.has(x));
+      const items2 = !q || opts[q] ? left.filter((x) => x !== q) : left.filter((x) => x.toLowerCase().includes(q.toLowerCase()));
+      if (!items2.length) return this.closeSuggest();
+      this.openSuggestList("option", segStart, items2, multi);
+      return;
+    }
     if (!kind && opts) {
       kind = "option";
       query = el.value.trim();
@@ -4265,13 +5286,18 @@ var TableEditor = class {
       !query || opts[query] ? Object.keys(opts) : Object.keys(opts).filter((x) => x.toLowerCase().includes(query.toLowerCase()))
     ) : [];
     if (!kind || !items.length) return this.closeSuggest();
+    this.openSuggestList(kind, start, items);
+  }
+  /** 补全列表：multi（多选列）时默认不选中任何一项，Enter 照常完成编辑，按 ↓ 才挑 */
+  openSuggestList(kind, start, items, multi) {
     const doc = this.root.ownerDocument;
     const box = this.suggest?.el ?? doc.body.appendChild(doc.createElement("div"));
     box.className = "ggt-suggest";
     box.replaceChildren();
+    const first = multi ? -1 : 0;
     items.forEach((it, i) => {
       const row = box.appendChild(doc.createElement("div"));
-      row.className = "ggt-suggest-item" + (i === 0 ? " is-active" : "");
+      row.className = "ggt-suggest-item" + (i === first ? " is-active" : "");
       row.textContent = kind === "tag" ? `#${it}` : it;
       row.addEventListener("pointerdown", (e) => {
         e.preventDefault();
@@ -4282,18 +5308,22 @@ var TableEditor = class {
     const cell = this.sel && this.cellEl(this.sel);
     const r = (cell ?? this.input.el).getBoundingClientRect();
     box.setAttribute("style", `left:${Math.round(r.left)}px;top:${Math.round(r.bottom + 4)}px`);
-    this.suggest = { kind, start, items, index: 0, el: box };
+    this.suggest = { kind, start, items, index: first, el: box, multi };
   }
   /** 补全列表开着时的按键：上下选、Enter / Tab 确认、Esc 关掉。处理了返回 true */
   onSuggestKey(ev) {
     const sg = this.suggest;
     if (!sg) return false;
     if (ev.key === "ArrowDown" || ev.key === "ArrowUp") {
-      sg.index = (sg.index + (ev.key === "ArrowDown" ? 1 : -1) + sg.items.length) % sg.items.length;
+      sg.index = sg.index < 0 && ev.key === "ArrowUp" ? sg.items.length - 1 : (sg.index + (ev.key === "ArrowDown" ? 1 : -1) + sg.items.length) % sg.items.length;
       Array.from(sg.el.children).forEach((c, i) => c.classList.toggle("is-active", i === sg.index));
       return true;
     }
     if (ev.key === "Enter" || ev.key === "Tab") {
+      if (sg.index < 0) {
+        this.closeSuggest();
+        return false;
+      }
       this.acceptSuggest();
       return true;
     }
@@ -4312,6 +5342,15 @@ var TableEditor = class {
     const pick = sg.items[sg.index];
     let insert = pick;
     let rest = v.slice(caret);
+    if (sg.kind === "option" && sg.multi) {
+      const tags = [...sg.multi.before, pick, ...sg.multi.after];
+      el.value = tags.join(", ") + ", ";
+      el.setSelectionRange(el.value.length, el.value.length);
+      this.closeSuggest();
+      this.autosize();
+      this.updateSuggest();
+      return;
+    }
     if (sg.kind === "option") {
       el.value = pick;
       el.setSelectionRange(pick.length, pick.length);
@@ -4330,8 +5369,120 @@ var TableEditor = class {
     this.autosize();
   }
   closeSuggest() {
+    this.closeSuggestList();
+    this.closeCalendar();
+  }
+  closeSuggestList() {
     this.suggest?.el.remove();
     this.suggest = null;
+  }
+  // ---------- 日期列的日历 ----------
+  dailyNote() {
+    return this.host.dailyNote?.() ?? null;
+  }
+  /** 排序日期列时读日记链接用 */
+  dateParser() {
+    const daily = this.dailyNote();
+    return daily ? (n) => daily.parse(n) : void 0;
+  }
+  /** 编辑日期列的格子时在格子下面弹日历：格子里的日期选中、看它那个月；输入了新日期就跟着跳过去 */
+  showCalendar() {
+    if (!this.sel) return;
+    const daily = this.dailyNote();
+    const picked = readDate(this.input.value, daily ? (n) => daily.parse(n) : void 0);
+    const key = picked ? isoDate(picked) : "";
+    const now = /* @__PURE__ */ new Date();
+    if (!this.cal) {
+      const doc = this.root.ownerDocument;
+      const el = doc.body.appendChild(doc.createElement("div"));
+      el.className = "ggt-cal";
+      el.addEventListener("pointerdown", (e) => e.preventDefault());
+      el.addEventListener("mousedown", (e) => e.preventDefault());
+      this.cal = { el, y: picked?.y ?? now.getFullYear(), m: picked?.m ?? now.getMonth() + 1, key };
+    } else if (key !== this.cal.key) {
+      this.cal.key = key;
+      if (picked) {
+        this.cal.y = picked.y;
+        this.cal.m = picked.m;
+      }
+    }
+    this.renderCalendar(picked);
+  }
+  renderCalendar(picked) {
+    const cal = this.cal;
+    if (!cal) return;
+    const doc = this.root.ownerDocument;
+    const el = cal.el;
+    el.replaceChildren();
+    const btn = (parent, cls, text, run, label) => {
+      const b = parent.appendChild(doc.createElement("button"));
+      b.type = "button";
+      b.className = cls;
+      b.textContent = text;
+      if (label) b.setAttribute("aria-label", label);
+      b.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        run();
+      });
+      return b;
+    };
+    const shift = (k) => {
+      const d = new Date(cal.y, cal.m - 1 + k, 1);
+      cal.y = d.getFullYear();
+      cal.m = d.getMonth() + 1;
+      this.renderCalendar(picked);
+    };
+    const head = el.appendChild(doc.createElement("div"));
+    head.className = "ggt-cal-head";
+    btn(head, "ggt-cal-nav", "\u2039", () => shift(-1), t("calPrev"));
+    const title = head.appendChild(doc.createElement("span"));
+    title.className = "ggt-cal-title";
+    title.textContent = t("calMonth").replace("{y}", String(cal.y)).replace("{m}", String(cal.m)).replace("{M}", new Date(cal.y, cal.m - 1, 1).toLocaleString("en", { month: "long" }));
+    btn(head, "ggt-cal-nav", "\u203A", () => shift(1), t("calNext"));
+    const grid = el.appendChild(doc.createElement("div"));
+    grid.className = "ggt-cal-grid";
+    const weekStart = Number(t("calWeekStart"));
+    const names = t("calWeekdays").split(",");
+    for (let i = 0; i < 7; i++) grid.appendChild(doc.createElement("span")).textContent = names[(i + weekStart) % 7];
+    for (const s of Array.from(grid.children)) s.className = "ggt-cal-wd";
+    const first = new Date(cal.y, cal.m - 1, 1);
+    const lead = (first.getDay() - weekStart + 7) % 7;
+    const now = /* @__PURE__ */ new Date();
+    const today = { y: now.getFullYear(), m: now.getMonth() + 1, d: now.getDate() };
+    for (let i = 0; i < 42; i++) {
+      const d = new Date(cal.y, cal.m - 1, 1 - lead + i);
+      const v = { y: d.getFullYear(), m: d.getMonth() + 1, d: d.getDate() };
+      const b = btn(grid, "ggt-cal-day", String(v.d), () => this.pickDate(v), isoDate(v));
+      if (v.m !== cal.m) b.classList.add("is-other");
+      if (isoDate(v) === isoDate(today)) b.classList.add("is-today");
+      if (picked && isoDate(v) === isoDate(picked)) b.classList.add("is-picked");
+    }
+    const foot = el.appendChild(doc.createElement("div"));
+    foot.className = "ggt-cal-foot";
+    btn(foot, "ggt-cal-btn", t("calToday"), () => this.pickDate(today));
+    btn(foot, "ggt-cal-btn", t("calClear"), () => this.pickDate(null));
+    const cell = this.sel && this.cellEl(this.sel);
+    const r = (cell ?? this.input.el).getBoundingClientRect();
+    const vw = doc.documentElement.clientWidth;
+    const vh = doc.documentElement.clientHeight;
+    const box = el.getBoundingClientRect();
+    const left = Math.max(8, Math.min(r.left, vw - box.width - 8));
+    const top = r.bottom + 4 + box.height > vh - 8 && r.top - 4 - box.height > 8 ? r.top - 4 - box.height : r.bottom + 4;
+    el.setAttribute("style", `left:${Math.round(left)}px;top:${Math.round(top)}px`);
+  }
+  /** 日历里点了一天（null 是清空）：按列的写法写进格子并完成编辑 */
+  pickDate(v) {
+    if (!this.editing || !this.sel) return;
+    const ty = colTypeOf(this.table, this.sel.c);
+    const daily = ty?.t === "date" && ty.f === "link" ? this.dailyNote() : null;
+    this.input.reset(v ? writeDate(v, ty?.t === "date" ? ty.f : void 0, daily ? (x) => daily.name(x) : void 0) : "");
+    this.commit();
+    this.input.focus();
+  }
+  closeCalendar() {
+    this.cal?.el.remove();
+    this.cal = null;
   }
   // ---------- 下拉填充 ----------
   /** 按住填充柄往下 / 上 / 左 / 右拖：虚线框出要填的地方，松开按规律填上，拖出表格就加行加列 */
@@ -5153,7 +6304,7 @@ var TableEditor = class {
       ...this.colorItems(Array.from({ length: colCount(tb) }, (_, c) => ({ r: p.r, c }))),
       { separator: true },
       // 选中了好几行时和插入一样按选区来
-      this.isMulti() ? this.deleteItems(p)[0] : { title: t("deleteRow"), icon: "trash-2", danger: true, disabled: deleteRow(tb, p.r) === tb, run: () => this.apply(deleteRow(tb, p.r), { r: Math.min(p.r, rowCount(tb) - 2), c: p.c }) }
+      this.isMulti() ? this.deleteItems(p)[0] : { title: p.r === 0 ? t("deleteHeadRow") : t("deleteRow"), icon: "trash-2", danger: true, disabled: deleteRow(tb, p.r) === tb, run: () => this.apply(deleteRow(tb, p.r), { r: Math.min(p.r, rowCount(tb) - 2), c: p.c }) }
     ];
   }
   colMenu(p) {
@@ -5163,10 +6314,14 @@ var TableEditor = class {
       { title: t("duplicateCol"), icon: "copy-plus", run: () => this.apply(duplicateCol(tb, p.c), { r: p.r, c: p.c + 1 }) },
       { separator: true },
       ...this.calcItems(p.c),
-      { title: tb.meta.opts?.[p.c] ? t("statusOff") : t("statusOn"), icon: "tags", run: () => this.apply(setOptionsCol(tb, p.c, !tb.meta.opts?.[p.c]), p) },
+      { title: t("colType").replace("{v}", t(`kind_${colKindOf(tb, p.c)}`)), icon: KIND_ICONS[colKindOf(tb, p.c)], run: () => this.openTypeMenu(p) },
+      ...formulaOf(tb, p.c) ? [
+        { title: t("fxEdit"), icon: "calculator", run: () => this.openFormula(p.c) },
+        { title: t("fxOff"), icon: "calculator", run: () => this.apply(setFormula(tb, p.c, null), p) }
+      ] : [{ title: t("fxOn"), icon: "calculator", run: () => this.openFormula(p.c) }],
       { separator: true },
-      { title: t("sortAsc"), icon: "arrow-down-a-z", disabled: !canSortRows(tb), run: () => this.apply(sortRows(tb, p.c, false, this.hasTotalRow()), p) },
-      { title: t("sortDesc"), icon: "arrow-up-z-a", disabled: !canSortRows(tb), run: () => this.apply(sortRows(tb, p.c, true, this.hasTotalRow()), p) },
+      { title: t("sortAsc"), icon: "arrow-down-a-z", disabled: !canSortRows(tb), run: () => this.apply(sortRows(tb, p.c, false, this.hasTotalRow(), this.dateParser()), p) },
+      { title: t("sortDesc"), icon: "arrow-up-z-a", disabled: !canSortRows(tb), run: () => this.apply(sortRows(tb, p.c, true, this.hasTotalRow(), this.dateParser()), p) },
       { separator: true },
       { title: t("moveColLeft"), icon: "arrow-left", disabled: p.c === 0, run: () => this.apply(moveCol(tb, p.c, p.c - 1), { r: p.r, c: p.c - 1 }) },
       { title: t("moveColRight"), icon: "arrow-right", disabled: p.c >= colCount(tb) - 1, run: () => this.apply(moveCol(tb, p.c, p.c + 1), { r: p.r, c: p.c + 1 }) },
@@ -5209,7 +6364,10 @@ var TableEditor = class {
       ...this.deleteItems(p)
     ];
   }
-  /** 删除行 / 列：选区跨了几行（几列）就一次删几行（#4）；表头行不能删，至少留下表头和一行、一列 */
+  /**
+   * 删除行 / 列：选区跨了几行（几列）就一次删几行（#4）；至少留下表头和一行、一列。
+   * 只选着表头那一行时也能删，下一行变成表头（#17）；选了好几行时表头还是删不了
+   */
   deleteItems(p) {
     const tb = this.table;
     const r = this.isMulti() && this.rangeRect() || { r1: p.r, c1: p.c, r2: p.r, c2: p.c };
@@ -5217,10 +6375,10 @@ var TableEditor = class {
     const cols = r.c2 - r.c1 + 1;
     return [
       {
-        title: rows > 1 ? t("deleteRows").replace("{n}", String(rows)) : t("deleteRow"),
+        title: rows > 1 ? t("deleteRows").replace("{n}", String(rows)) : r.r1 === 0 ? t("deleteHeadRow") : t("deleteRow"),
         icon: "trash-2",
         danger: true,
-        disabled: r.r1 === 0 || rowCount(tb) - rows < 2 || deleteRow(tb, r.r2) === tb,
+        disabled: rows === 1 ? deleteRow(tb, r.r1) === tb : r.r1 === 0 || rowCount(tb) - rows < 2 || deleteRow(tb, r.r2) === tb,
         run: () => this.runCommand("delete-row")
       },
       {
@@ -5258,16 +6416,61 @@ var TableEditor = class {
       { title: n(k > 1 ? "insertColsRight" : "insertColRight"), icon: "arrow-right-to-line", run: () => this.apply(insertCols(tb, rr + 1, k), { r: p.r, c: rr + 1 }) }
     ];
   }
+  /** 列类型的二级菜单：普通、状态、多选、日期、数字、进度条，下面是这种类型的选项（日期写法、数字格式） */
+  openTypeMenu(p) {
+    const { x, y } = this.menuAt;
+    const again = (next) => {
+      this.apply(next, p);
+      this.openTypeMenu(p);
+    };
+    this.openMenu(this.typeItems(p, again), x, y);
+  }
+  typeItems(p, again) {
+    const tb = this.table;
+    const c = p.c;
+    const kind = colKindOf(tb, c);
+    const fx = !!formulaOf(tb, c);
+    const kinds = fx ? ["text", "num"] : COL_KINDS;
+    const items = [{ title: fx ? t("colTypeFx") : t("colTypeTitle") }];
+    for (const k of kinds) items.push({ title: t(`kind_${k}`), icon: KIND_ICONS[k], checked: kind === k, run: () => k === "text" || k === "status" || k === "multi" ? this.apply(setColKind(tb, c, k), p) : again(setColKind(tb, c, k)) });
+    const ty = colTypeOf(tb, c);
+    if (ty?.t === "date") {
+      const set = (f) => again(setColType(tb, c, f ? { t: "date", f } : { t: "date" }));
+      items.push({ separator: true }, { title: t("dateStyle") });
+      items.push({ title: "2026-11-17", checked: !ty.f, run: () => set(void 0) });
+      items.push({ title: "2026/11/17", checked: ty.f === "slash", run: () => set("slash") });
+      items.push({ title: t("dateLink"), checked: ty.f === "link", run: () => set("link") });
+    }
+    if (ty?.t === "num") {
+      const set = (patch) => {
+        const n = { ...ty, ...patch };
+        for (const k of Object.keys(n)) if (n[k] === void 0) delete n[k];
+        again(setColType(tb, c, n));
+      };
+      items.push({ separator: true }, { title: t("numFormat") });
+      items.push({ title: t("numGroup"), checked: !!ty.g, run: () => set({ g: ty.g ? void 0 : 1 }) });
+      items.push({ title: t("numPercent"), checked: !!ty.p, run: () => set({ p: ty.p ? void 0 : 1, u: void 0 }) });
+      items.push({ rowLabel: t("numCurrency"), chipText: t("numNone"), title: t("numNone"), checked: !ty.u, run: () => set({ u: void 0 }) });
+      for (const u of CURRENCIES) items.push({ chipText: u, title: u, checked: ty.u === u, run: () => set(ty.u ? { u } : { u, p: void 0, g: 1, d: ty.d ?? 2 }) });
+      if (!fx) {
+        items.push({ separator: true });
+        items.push({ rowLabel: t("numDecimals"), chipText: t("numAuto"), title: t("numAuto"), checked: ty.d === void 0, run: () => set({ d: void 0 }) });
+        for (const d of [0, 1, 2, 3]) items.push({ chipText: String(d), title: String(d), checked: ty.d === d, run: () => set({ d }) });
+      }
+    }
+    return items;
+  }
   /** 状态列的格子：改这个状态的颜色（整列同一个状态一起变） */
   statusColorItems(p) {
-    const v = this.table.cells[p.r][p.c].trim();
+    const raw = this.table.cells[p.r][p.c];
     const opts = this.table.meta.opts?.[p.c];
-    if (!opts || !v || p.r < headRows(this.table)) return [];
-    return [
+    if (!opts || !raw.trim() || p.r < headRows(this.table)) return [];
+    const values = colTypeOf(this.table, p.c)?.t === "multi" ? splitTags(raw).slice(0, 3) : [raw.trim()];
+    return values.flatMap((v) => [
       { title: t("statusColor").replace("{v}", v) },
       ...CELL_COLORS.map((color) => ({ swatch: color, title: t(color), checked: opts[v] === color, run: () => this.applyKeepRange(setOptionColor(this.table, p.c, v, color)) })),
       { separator: true }
-    ];
+    ]);
   }
   /** 合计：这一列怎么算（求和、平均……），勾着的是现在的 */
   calcItems(c) {
@@ -5276,7 +6479,7 @@ var TableEditor = class {
       title: how ? t(`calc_${how}`) : t("calc_none"),
       checked: cur === how,
       disabled: !how && !cur,
-      run: () => this.apply(setCalc(this.table, c, how, t("totalLabel")), this.sel ?? void 0)
+      run: () => this.apply(setCalc(this.table, c, how, { sum: t("totalLabel"), mixed: t("totalLabelMixed") }), this.sel ?? void 0)
     });
     return [{ title: t("calcTitle") }, ...CALCS.map((x) => item(x)), item(null), { separator: true }];
   }
@@ -5360,6 +6563,7 @@ var TableEditor = class {
   /** 自己画的弹出菜单：样式统一，色块能排成一行，手机上也好点 */
   openMenu(items, x, y) {
     this.closePopover();
+    this.menuAt = { x, y };
     const doc = this.root.ownerDocument;
     const pop = doc.body.appendChild(doc.createElement("div"));
     pop.className = "ggt-menu";
@@ -5484,6 +6688,219 @@ var TableEditor = class {
   closePopover() {
     this.popover?.remove();
     this.popover = null;
+  }
+  /**
+   * 合计行的格子：鼠标停上去说是怎么算的；各列不全是求和时（混着平均、最大、计数），数字前面加个小标签（B 站 lucent2019）。
+   * 标签只是显示，格子里还是纯数字
+   */
+  markCalc(cell, content, c) {
+    const how = this.table.meta.calc?.[c];
+    if (!how) return;
+    cell.title = t(`calc_${how}`);
+    if (totalsAllSum(this.table)) return;
+    const tag = this.root.ownerDocument.createElement("span");
+    tag.className = "ggt-calc-tag";
+    tag.textContent = t(`calc_${how}`);
+    content.prepend(tag);
+  }
+  // ---------- 计算列 ----------
+  /** 公式出错 / 某一格算不出来的原因 */
+  fxText(e) {
+    const key = "code" in e ? `fxErr_${e.code}` : `fxEmpty_${e.reason}`;
+    return t(key).replace("{name}", e.name ?? "");
+  }
+  /** 计算列：表头（最后一行）挂 ƒx 标记，数据格加上样式，空着的格子鼠标停上去说原因 */
+  markFx(cell, r, c) {
+    const tb = this.table;
+    if (r === headRows(tb) - 1) {
+      const err = formulaError(tb, c);
+      const badge = cell.appendChild(this.root.ownerDocument.createElement("span"));
+      badge.className = "ggt-fx-badge" + (err ? " is-error" : "");
+      badge.appendChild(this.root.ownerDocument.createElement("span")).textContent = "\u0192x";
+      badge.title = err ? this.fxText(err) : t("fxBadgeTitle").replace("{f}", formulaOf(tb, c) ?? "");
+      cell.classList.add("has-fx");
+      if (!this.host.readonly) {
+        badge.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          this.openFormula(c);
+        });
+      }
+      return;
+    }
+    if (!isFxCell(tb, r, c)) return;
+    cell.classList.add("is-fx");
+    if (!tb.cells[r][c]) {
+      const note = fxCellNote(tb, r, c);
+      if (note) cell.title = this.fxText(note);
+    }
+  }
+  /** 计算列的公式编辑框：挂在这一列的表头下面。输入 { 补全列名、点列名插入、边输入边用第一行数据预览 */
+  openFormula(c) {
+    if (this.host.readonly) return;
+    if (this.editing) this.commit();
+    this.closePopover();
+    const tb = this.table;
+    const doc = this.root.ownerDocument;
+    const names = columnNames(tb);
+    const usable = names.filter((n, i) => i !== c && nameOk(n) && names.indexOf(n) === names.lastIndexOf(n));
+    let places = fxPlacesOf(tb, c);
+    const el = (parent, tag, cls, text) => {
+      const e = parent.appendChild(doc.createElement(tag));
+      e.className = cls;
+      if (text !== void 0) e.textContent = text;
+      return e;
+    };
+    const pop = doc.body.appendChild(doc.createElement("div"));
+    pop.className = "ggt-menu ggt-fx";
+    el(pop, "div", "ggt-fx-title", `${names[c] || t("fxThisCol")} =`);
+    const input = el(pop, "input", "ggt-fx-input");
+    input.type = "text";
+    input.spellcheck = false;
+    input.value = formulaOf(tb, c) ?? "";
+    input.placeholder = usable.length >= 2 ? `{${usable[0]}} * {${usable[1]}}` : usable.length ? `{${usable[0]}} * 2` : "1 + 2";
+    const list = el(pop, "div", "ggt-fx-suggest");
+    const chips = el(pop, "div", "ggt-fx-chips");
+    el(chips, "span", "ggt-fx-label", usable.length ? t("fxInsert") : t("fxNoNames"));
+    for (const name of usable) {
+      const b = el(chips, "button", "ggt-fx-chip", name);
+      b.type = "button";
+      b.addEventListener("click", () => insert(`{${name}}`));
+    }
+    el(pop, "div", "ggt-fx-hint", t("fxHint"));
+    const placeRow = el(pop, "div", "ggt-fx-places");
+    el(placeRow, "span", "ggt-fx-label", t("fxPlaces"));
+    const placeBtns = [];
+    for (const v of [null, 0, 1, 2, 3]) {
+      const b = el(placeRow, "button", "ggt-fx-place", v === null ? t("fxAuto") : String(v));
+      b.type = "button";
+      b.dataset.v = String(v);
+      b.addEventListener("click", () => {
+        places = v;
+        update();
+        input.focus();
+      });
+      placeBtns.push(b);
+    }
+    const preview = el(pop, "div", "ggt-fx-preview");
+    const actions = el(pop, "div", "ggt-fx-actions");
+    const cancel = el(actions, "button", "ggt-fx-cancel", t("fxCancel"));
+    cancel.type = "button";
+    const ok = el(actions, "button", "ggt-fx-ok mod-cta", t("fxOk"));
+    ok.type = "button";
+    let picks = [];
+    let active = 0;
+    const brace = () => {
+      const pos = input.selectionStart ?? input.value.length;
+      const before = input.value.slice(0, pos).replace(/｛/g, "{").replace(/｝/g, "}");
+      const i = before.lastIndexOf("{");
+      if (i < 0 || before.lastIndexOf("}") > i) return null;
+      return { start: i, end: pos, q: before.slice(i + 1).trim().toLowerCase() };
+    };
+    const showList = () => {
+      const b = brace();
+      picks = b ? usable.filter((n) => n.toLowerCase().includes(b.q)) : [];
+      active = Math.min(active, Math.max(0, picks.length - 1));
+      list.replaceChildren();
+      list.classList.toggle("is-shown", picks.length > 0);
+      picks.forEach((name, i) => {
+        const it = el(list, "div", "ggt-suggest-item" + (i === active ? " is-active" : ""), name);
+        it.addEventListener("pointerdown", (ev) => {
+          ev.preventDefault();
+          pick(name);
+        });
+      });
+    };
+    const pick = (name) => {
+      const b = brace();
+      if (!b) return;
+      let rest = input.value.slice(b.end);
+      if (/^\s*[}｝]/.test(rest)) rest = rest.replace(/^\s*[}｝]/, "");
+      input.value = input.value.slice(0, b.start) + `{${name}}` + rest;
+      const at = b.start + name.length + 2;
+      input.setSelectionRange(at, at);
+      update();
+    };
+    const insert = (text) => {
+      const a = input.selectionStart ?? input.value.length;
+      const b = input.selectionEnd ?? a;
+      input.value = input.value.slice(0, a) + text + input.value.slice(b);
+      input.focus();
+      input.setSelectionRange(a + text.length, a + text.length);
+      update();
+    };
+    const update = () => {
+      placeBtns.forEach((b) => b.classList.toggle("is-checked", b.dataset.v === String(places)));
+      const src = input.value;
+      const res = checkFormula(this.table, c, src, places);
+      preview.classList.remove("is-error");
+      if ("error" in res) {
+        ok.disabled = true;
+        preview.textContent = src.trim() ? this.fxText(res.error) : t("fxStart");
+        preview.classList.toggle("is-error", !!src.trim());
+      } else {
+        ok.disabled = false;
+        const vals = new Map(res.refs.map((x) => [x.name, x.value]));
+        const expr = prettyOps(src.trim()).replace(/[{｛]([^}｝]*)[}｝]/g, (_, n) => {
+          const v = vals.get(n.trim());
+          return v === null || v === void 0 ? t("fxBlank") : formatFx(v, null);
+        });
+        if (headRows(this.table) >= rowCount(this.table) - (hasTotal(this.table) ? 1 : 0)) preview.textContent = t("fxNoRows");
+        else if (res.result !== null) preview.textContent = t("fxPreview").replace("{expr}", expr).replace("{v}", res.result);
+        else preview.textContent = t("fxPreviewEmpty").replace("{why}", res.empty ? this.fxText(res.empty) : "");
+      }
+      showList();
+    };
+    const close = () => {
+      this.closePopover();
+      this.input.focus();
+    };
+    const confirm = () => {
+      if (ok.disabled) return;
+      const src = input.value.trim();
+      this.closePopover();
+      this.apply(setFormula(this.table, c, src, places), this.sel ?? { r: headRows(this.table) - 1, c });
+      this.input.focus();
+    };
+    cancel.addEventListener("click", close);
+    ok.addEventListener("click", confirm);
+    input.addEventListener("input", update);
+    input.addEventListener("click", showList);
+    input.addEventListener("keyup", (ev) => {
+      if (ev.key === "ArrowLeft" || ev.key === "ArrowRight" || ev.key === "Home" || ev.key === "End") showList();
+    });
+    pop.addEventListener("keydown", (ev) => {
+      if (ev.isComposing) return;
+      const listOpen = picks.length > 0 && ev.target === input;
+      if (listOpen && (ev.key === "ArrowDown" || ev.key === "ArrowUp")) {
+        ev.preventDefault();
+        active = (active + (ev.key === "ArrowDown" ? 1 : -1) + picks.length) % picks.length;
+        showList();
+      } else if (listOpen && (ev.key === "Enter" || ev.key === "Tab")) {
+        ev.preventDefault();
+        pick(picks[active]);
+      } else if (ev.key === "Escape") {
+        ev.preventDefault();
+        if (listOpen) {
+          picks = [];
+          list.classList.remove("is-shown");
+        } else close();
+      } else if (ev.key === "Enter" && ev.target === input) {
+        ev.preventDefault();
+        confirm();
+      } else return;
+      ev.stopPropagation();
+    });
+    const anchor = this.cellEl({ r: headRows(tb) - 1, c }) ?? this.root;
+    const ar = anchor.getBoundingClientRect();
+    const vw = doc.documentElement.clientWidth;
+    const vh = doc.documentElement.clientHeight;
+    const pr = pop.getBoundingClientRect();
+    pop.style.left = `${Math.max(8, Math.min(ar.left, vw - pr.width - 8))}px`;
+    pop.style.top = `${ar.bottom + 4 + pr.height > vh - 8 ? Math.max(8, ar.top - 4 - pr.height) : ar.bottom + 4}px`;
+    this.popover = pop;
+    update();
+    input.focus();
+    input.setSelectionRange(input.value.length, input.value.length);
   }
 };
 var searchMarkLayer = null;
@@ -5860,7 +7277,7 @@ ${after}` : nextBlank ? "" : "\n";
 }
 
 // src/obsidian/host.ts
-var import_obsidian3 = require("obsidian");
+var import_obsidian4 = require("obsidian");
 
 // src/obsidian/keys.ts
 var import_obsidian2 = require("obsidian");
@@ -5926,6 +7343,25 @@ function guardEditorHotkeys(app, editor) {
   };
 }
 
+// src/obsidian/daily.ts
+var import_obsidian3 = require("obsidian");
+var mo = import_obsidian3.moment;
+function noteFormat(app) {
+  const internal = app.internalPlugins;
+  const daily = internal?.getPluginById?.("daily-notes");
+  const fmt2 = daily?.enabled !== false && daily?.instance?.options?.format || "YYYY-MM-DD";
+  return fmt2.split("/").pop() || "YYYY-MM-DD";
+}
+function dailyNote(app) {
+  return {
+    name: (v) => mo({ year: v.y, month: v.m - 1, date: v.d }).format(noteFormat(app)),
+    parse: (name) => {
+      const m = mo(name, noteFormat(app), true);
+      return m.isValid() ? { y: m.year(), m: m.month() + 1, d: m.date() } : null;
+    }
+  };
+}
+
 // src/obsidian/host.ts
 var FORMAT_TEXT_COLORS = ["#e03e3e", "#2f80ed", "#27ae60"];
 var FORMAT_HIGHLIGHT_COLORS = ["#ffd43b99", "#69db7c99", "#ff8fab99"];
@@ -5936,6 +7372,7 @@ var DEFAULT_SETTINGS = {
   crosshair: "off",
   formatBar: false,
   richEdit: false,
+  smartDate: true,
   readingReadonly: true,
   fullWidth: false,
   fitCols: true,
@@ -5964,24 +7401,37 @@ function foreignMenuItems(menu) {
   }
   return out;
 }
-async function copyImage(img) {
+async function copyImage(app, img, file) {
   try {
     const doc = img.ownerDocument;
     const win = doc.defaultView ?? window;
-    const blob = await (await fetch(img.currentSrc || img.src)).blob();
-    let png = blob;
-    if (blob.type !== "image/png") {
-      const bmp = await win.createImageBitmap(blob);
+    const src = img.currentSrc || img.src;
+    const toPng = (source, w, h) => {
       const canvas = doc.createElement("canvas");
-      canvas.width = bmp.width;
-      canvas.height = bmp.height;
-      canvas.getContext("2d")?.drawImage(bmp, 0, 0);
-      png = await new Promise((ok, fail) => canvas.toBlob((b) => b ? ok(b) : fail(new Error("toBlob")), "image/png"));
+      canvas.width = w;
+      canvas.height = h;
+      canvas.getContext("2d")?.drawImage(source, 0, 0);
+      return new Promise((ok, fail) => canvas.toBlob((b) => b ? ok(b) : fail(new Error("toBlob")), "image/png"));
+    };
+    let blob = null;
+    if (file) blob = new Blob([await app.vault.readBinary(file)], { type: file.extension.toLowerCase() === "png" ? "image/png" : "" });
+    else if (/^https?:/i.test(src)) {
+      const res = await (0, import_obsidian4.requestUrl)({ url: src });
+      blob = new Blob([res.arrayBuffer], { type: res.headers["content-type"] ?? "" });
+    }
+    let png;
+    if (blob?.type === "image/png") png = blob;
+    else if (blob) {
+      const bmp = await win.createImageBitmap(blob);
+      png = await toPng(bmp, bmp.width, bmp.height);
+    } else {
+      await img.decode();
+      png = await toPng(img, img.naturalWidth, img.naturalHeight);
     }
     await win.navigator.clipboard.write([new win.ClipboardItem({ "image/png": png })]);
     return true;
   } catch (e) {
-    new import_obsidian3.Notice(e.message);
+    new import_obsidian4.Notice(e.message);
     return false;
   }
 }
@@ -6016,13 +7466,13 @@ function makeFactory(app, settings, persist = () => {
       const hoverParent = { hoverPopover: null };
       return {
         renderMarkdown: (el, md) => {
-          void import_obsidian3.MarkdownRenderer.render(app, md, el, sourcePath, owner);
+          void import_obsidian4.MarkdownRenderer.render(app, md, el, sourcePath, owner);
         },
-        setIcon: (el, name) => (0, import_obsidian3.setIcon)(el, name),
-        notice: (message) => new import_obsidian3.Notice(message),
+        setIcon: (el, name) => (0, import_obsidian4.setIcon)(el, name),
+        notice: (message) => new import_obsidian4.Notice(message),
         // 格子里的双链：照 Obsidian 的习惯，⌘/Ctrl 点在新标签打开，⌘⌥ 点在右侧分屏
         openLink: (href, ev) => {
-          void app.workspace.openLinkText(href, sourcePath, import_obsidian3.Keymap.isModEvent(ev));
+          void app.workspace.openLinkText(href, sourcePath, import_obsidian4.Keymap.isModEvent(ev));
         },
         // 悬停预览：和笔记里的链接一样（实时预览里要按住 ⌘/Ctrl，按「页面预览」设置）
         hoverLink: (event, linktext, targetEl) => {
@@ -6039,18 +7489,18 @@ function makeFactory(app, settings, persist = () => {
         // 用 Menu.forEvent：这次右键只有一个菜单，别的插件（比如 adjustable-media）往同一个右键事件里加的项也进这个菜单。
         // 自己 new Menu() 的话，别的插件会另弹一个菜单把这个顶掉，开着「原生菜单」时就什么都看不到（#9）。它会在下一刻自己弹出来
         linkMenu: (ev, href) => {
-          const menu = import_obsidian3.Menu.forEvent(ev);
+          const menu = import_obsidian4.Menu.forEvent(ev);
           keepMenu(menu);
           linkContextMenu(app, menu, href, sourcePath);
         },
         // 右键格子里的图片：复制图片 + 原生的文件菜单 + 删除图片（删文件前用 Obsidian 自己的确认框，删了再把格子里的嵌入去掉）
         imageMenu: (ev, img, link, remove) => {
-          const menu = import_obsidian3.Menu.forEvent(ev);
+          const menu = import_obsidian4.Menu.forEvent(ev);
           keepMenu(menu);
-          menu.addItem(
-            (item) => item.setSection("action").setTitle(t("copyImage")).setIcon("copy").onClick(() => void copyImage(img).then((ok) => ok && new import_obsidian3.Notice(t("copiedImage"))))
-          );
           const file = link ? app.metadataCache.getFirstLinkpathDest(link, sourcePath) : null;
+          menu.addItem(
+            (item) => item.setSection("action").setTitle(t("copyImage")).setIcon("copy").onClick(() => void copyImage(app, img, file).then((ok) => ok && new import_obsidian4.Notice(t("copiedImage"))))
+          );
           if (link && file) linkContextMenu(app, menu, link, sourcePath);
           if (file && remove)
             menu.addItem(
@@ -6063,7 +7513,7 @@ function makeFactory(app, settings, persist = () => {
         // 右键普通格子：表格弹的是自己画的菜单。别的插件用 Menu.forEvent 往这次右键里加项，Obsidian 会另弹一个只有那几项的菜单
         // （开着「原生菜单」时还盖在表格菜单上面，#9）。这里先认领这次右键的菜单，不让它弹，把里面的项交给表格菜单
         eventMenuItems: (ev, take) => {
-          const menu = import_obsidian3.Menu.forEvent(ev);
+          const menu = import_obsidian4.Menu.forEvent(ev);
           menu.showAtMouseEvent = () => {
             take(foreignMenuItems(menu));
             return menu;
@@ -6078,13 +7528,15 @@ function makeFactory(app, settings, persist = () => {
             const saved = await app.vault.createBinary(path, await file.arrayBuffer());
             return `![[${app.metadataCache.fileToLinktext(saved, sourcePath)}]]`;
           } catch (e) {
-            new import_obsidian3.Notice(e.message);
+            new import_obsidian4.Notice(e.message);
             return null;
           }
         },
         richEdit: () => settings().richEdit,
+        smartDate: () => settings().smartDate,
         formatColors: () => settings().formatBar ? { text: FORMAT_TEXT_COLORS, highlight: FORMAT_HIGHLIGHT_COLORS } : null,
         colorMemory: () => colorMemory,
+        dailyNote: () => dailyNote(app),
         // [[ 补全：笔记按名字找（名字开头的排前面），插的是 Obsidian 生成的最短链接
         suggestLinks: (query) => {
           const q = query.toLowerCase();
@@ -6115,8 +7567,8 @@ function makeFactory(app, settings, persist = () => {
       root.dataset.defFull = settings().fullWidth ? "1" : "";
       root.dataset.defFit = settings().fitCols ? "1" : "";
       root.dataset.defStrict = settings().strictStyle ? "1" : "";
-      const pad = settings().cellPadX;
-      if (pad !== 10 && [4, 6, 8].includes(pad)) root.style.setProperty("--ggt-pad-user", `${pad}px`);
+      const pad2 = settings().cellPadX;
+      if (pad2 !== 10 && [4, 6, 8].includes(pad2)) root.style.setProperty("--ggt-pad-user", `${pad2}px`);
       else root.style.removeProperty("--ggt-pad-user");
       root.dispatchEvent(new Event("ggt-restyle"));
     }
@@ -6127,7 +7579,7 @@ function makeFactory(app, settings, persist = () => {
 var import_state3 = require("@codemirror/state");
 var import_view3 = require("@codemirror/view");
 var import_commands2 = require("@codemirror/commands");
-var import_obsidian4 = require("obsidian");
+var import_obsidian5 = require("obsidian");
 
 // src/core/diff.ts
 var isHigh = (s, i) => {
@@ -6267,10 +7719,10 @@ var TableWidget = class extends import_view3.WidgetType {
     for (const type of ["pointerdown", "pointerup", "mousedown", "mouseup", "click", "dblclick", "contextmenu", "keydown", "keyup", "keypress", "beforeinput", "input", "compositionstart", "compositionupdate", "compositionend", "focusin", "focusout", "paste", "copy", "cut", "dragstart", "drop"]) {
       wrap.addEventListener(type, (ev) => ev.stopPropagation());
     }
-    const owner = new import_obsidian4.Component();
+    const owner = new import_obsidian5.Component();
     owner.load();
     wrap.ggtOwner = owner;
-    const editor = new TableEditor(wrap, this.table, this.factory.host(view.state.field(import_obsidian4.editorInfoField, false)?.file?.path ?? "", owner, {
+    const editor = new TableEditor(wrap, this.table, this.factory.host(view.state.field(import_obsidian5.editorInfoField, false)?.file?.path ?? "", owner, {
       onChange: (next) => writeBack(view, wrap, next),
       undo: () => (0, import_commands2.undo)(view),
       redo: () => (0, import_commands2.redo)(view),
@@ -6429,7 +7881,7 @@ function depthOf(indent) {
   return Math.round(w / 4);
 }
 function build2(state, factory) {
-  if (!factory.enabled() || !state.field(import_obsidian4.editorLivePreviewField, false)) return import_view3.Decoration.none;
+  if (!factory.enabled() || !state.field(import_obsidian5.editorLivePreviewField, false)) return import_view3.Decoration.none;
   const doc = state.doc;
   const lines = docLines(doc);
   const builder = new import_state3.RangeSetBuilder();
@@ -6451,7 +7903,7 @@ function livePreviewTables(factory) {
   const field = import_state3.StateField.define({
     create: (state) => build2(state, factory),
     update(deco, tr) {
-      const lpChanged = tr.startState.field(import_obsidian4.editorLivePreviewField, false) !== tr.state.field(import_obsidian4.editorLivePreviewField, false);
+      const lpChanged = tr.startState.field(import_obsidian5.editorLivePreviewField, false) !== tr.state.field(import_obsidian5.editorLivePreviewField, false);
       if (tr.docChanged || lpChanged) return build2(tr.state, factory);
       return deco;
     },
@@ -6609,8 +8061,8 @@ function parseAt(doc, from, to) {
 }
 
 // src/obsidian/reading.ts
-var import_obsidian5 = require("obsidian");
-var TableChild = class extends import_obsidian5.MarkdownRenderChild {
+var import_obsidian6 = require("obsidian");
+var TableChild = class extends import_obsidian6.MarkdownRenderChild {
   constructor() {
     super(...arguments);
     this.editor = null;
@@ -6618,14 +8070,24 @@ var TableChild = class extends import_obsidian5.MarkdownRenderChild {
     this.original = null;
     /** 列表项那一段被拆成了「前半段、表格、后半段」：卸载时这几块一起换回原来的一段 */
     this.extra = [];
+    /** 包着表格的 .el-table：接管期间加 ggt-el-table（样式里放开它的横向滚动，见 styles.css），卸载时去掉 */
+    this.wrap = null;
   }
   onunload() {
     this.editor?.destroy();
-    if (!this.original) return;
-    for (const e of this.extra) e.remove();
-    this.containerEl.replaceWith(this.original);
+    if (this.original) {
+      for (const e of this.extra) e.remove();
+      this.containerEl.replaceWith(this.original);
+    }
+    if (this.wrap && !this.wrap.querySelector(":scope > .ggt-reading")) this.wrap.removeClass("ggt-el-table");
   }
 };
+function markWrap(child, holder) {
+  const wrap = holder.parentElement;
+  if (!wrap?.hasClass("el-table")) return;
+  wrap.addClass("ggt-el-table");
+  child.wrap = wrap;
+}
 function spliceLines(p, first, count, holder) {
   const nodes = Array.from(p.childNodes);
   const rows = [[]];
@@ -6677,11 +8139,11 @@ async function sectionText(app, ctx, text) {
   if (text) return text;
   let found = "";
   app.workspace.iterateAllLeaves((leaf) => {
-    if (!found && leaf.view instanceof import_obsidian5.MarkdownView && leaf.view.file?.path === ctx.sourcePath) found = leaf.view.data;
+    if (!found && leaf.view instanceof import_obsidian6.MarkdownView && leaf.view.file?.path === ctx.sourcePath) found = leaf.view.data;
   });
   if (found) return found;
   const file = app.vault.getAbstractFileByPath(ctx.sourcePath);
-  return file instanceof import_obsidian5.TFile ? app.vault.cachedRead(file) : "";
+  return file instanceof import_obsidian6.TFile ? app.vault.cachedRead(file) : "";
 }
 function domSize(tableEl) {
   const rows = Array.from(tableEl.rows);
@@ -6689,7 +8151,7 @@ function domSize(tableEl) {
 }
 async function exportProcessor(app, factory, el, ctx, strict = false) {
   const file = app.vault.getAbstractFileByPath(ctx.sourcePath);
-  if (!(file instanceof import_obsidian5.TFile)) return;
+  if (!(file instanceof import_obsidian6.TFile)) return;
   const tables = Array.from(el.querySelectorAll("table")).filter(
     (t2) => !t2.closest(".ggt, blockquote, .callout, .internal-embed, .markdown-embed")
   );
@@ -6724,12 +8186,13 @@ async function exportProcessor(app, factory, el, ctx, strict = false) {
     tableEl.replaceWith(holder);
     const child = new TableChild(holder);
     child.original = tableEl;
+    markWrap(child, holder);
     ctx.addChild(child);
     const host = factory.host(ctx.sourcePath, child, { onChange: () => {
     }, readonly: true });
     if (host.renderMarkdown) {
       host.renderMarkdown = (cell, md) => {
-        const p = import_obsidian5.MarkdownRenderer.render(app, md, cell, ctx.sourcePath, child);
+        const p = import_obsidian6.MarkdownRenderer.render(app, md, cell, ctx.sourcePath, child);
         local.push(p);
         promises?.push(p);
       };
@@ -6759,8 +8222,12 @@ function fitWidths(root) {
   });
   const total = widths2.reduce((a, b) => a + b, 0);
   if (!total || widths2.some((w) => !w)) return;
-  cols.forEach((col, c) => col.setCssStyles({ width: `${(widths2[c] / total * 100).toFixed(3)}%` }));
-  tableEl.setCssStyles({ tableLayout: "fixed", width: `min(100%, ${Math.ceil(total)}px)` });
+  applyFit(tableEl, cols, widths2, total);
+}
+function applyFit(tableEl, cols, widths2, total) {
+  cols.forEach((col, c) => col.setCssProps({ "--ggt-fit-col": `${(widths2[c] / total * 100).toFixed(3)}%` }));
+  tableEl.setCssProps({ "--ggt-fit-w": `${Math.ceil(total)}px` });
+  tableEl.addClass("ggt-fitted");
 }
 var squash2 = (s) => s.replace(/\s+/g, "");
 function headerLooksSame(tableEl, table) {
@@ -6798,8 +8265,7 @@ function fitStoredWidths(root, stored) {
   const avg = set.reduce((a, b) => a + b, 0) / set.length;
   const widths2 = cols.map((_, c) => stored[c] || avg);
   const total = widths2.reduce((a, b) => a + b, 0);
-  cols.forEach((col, c) => col.setCssStyles({ width: `${(widths2[c] / total * 100).toFixed(3)}%` }));
-  tableEl.setCssStyles({ tableLayout: "fixed", width: `min(100%, ${Math.ceil(total)}px)` });
+  applyFit(tableEl, cols, widths2, total);
 }
 function readingProcessor(app, factory) {
   return async (el, ctx) => {
@@ -6850,6 +8316,7 @@ function readingProcessor(app, factory) {
       if (!original) continue;
       const child = new TableChild(holder);
       child.original = original;
+      markWrap(child, holder);
       child.extra = holder.ggtSplit ?? [];
       ctx.addChild(child);
       const editor = new TableEditor(holder, table, factory.host(ctx.sourcePath, child, {
@@ -6857,7 +8324,7 @@ function readingProcessor(app, factory) {
         readonly: factory.readingReadonly(),
         onChange: (next, prev) => {
           const file = app.vault.getAbstractFileByPath(ctx.sourcePath);
-          if (!(file instanceof import_obsidian5.TFile)) return;
+          if (!(file instanceof import_obsidian6.TFile)) return;
           const near = ctx.getSectionInfo(el)?.lineStart ?? block.start;
           let written = false;
           void app.vault.process(file, (data) => {
@@ -6880,7 +8347,7 @@ function readingProcessor(app, factory) {
         // 往里缩 / 移出列表：按现在显示的这张在文件里找到，算出新文件
         indentTable: (dir) => {
           const file = app.vault.getAbstractFileByPath(ctx.sourcePath);
-          if (!(file instanceof import_obsidian5.TFile)) return;
+          if (!(file instanceof import_obsidian6.TFile)) return;
           const near = ctx.getSectionInfo(el)?.lineStart ?? block.start;
           const base = editor.getTable();
           void app.vault.process(file, (data) => {
@@ -6894,7 +8361,7 @@ function readingProcessor(app, factory) {
         // 删除整张表：按现在显示的这张在文件里找到，连同注释删掉；前后都是空行时多删一个
         onDeleteTable: () => {
           const file = app.vault.getAbstractFileByPath(ctx.sourcePath);
-          if (!(file instanceof import_obsidian5.TFile)) return;
+          if (!(file instanceof import_obsidian6.TFile)) return;
           const near = ctx.getSectionInfo(el)?.lineStart ?? block.start;
           const base = editor.getTable();
           void app.vault.process(file, (data) => {
@@ -6916,7 +8383,7 @@ function readingProcessor(app, factory) {
 }
 
 // src/main.ts
-var TablePlugin = class extends import_obsidian6.Plugin {
+var TablePlugin = class extends import_obsidian7.Plugin {
   constructor() {
     super(...arguments);
     this.settings = { ...DEFAULT_SETTINGS };
@@ -6927,7 +8394,7 @@ var TablePlugin = class extends import_obsidian6.Plugin {
     this.persistTimer = null;
   }
   async onload() {
-    setLanguage(typeof import_obsidian6.getLanguage === "function" ? (0, import_obsidian6.getLanguage)() : window.localStorage.getItem("language"));
+    setLanguage((0, import_obsidian7.getLanguage)());
     this.settings = { ...DEFAULT_SETTINGS, ...await this.loadData() };
     const factory = makeFactory(this.app, () => this.settings, () => {
       if (this.persistTimer !== null) window.clearTimeout(this.persistTimer);
@@ -6996,100 +8463,123 @@ var TablePlugin = class extends import_obsidian6.Plugin {
     if (this.settings.enabled && this.livePreview) this.extensions.push(this.livePreview);
     this.app.workspace.updateOptions();
     this.app.workspace.iterateAllLeaves((leaf) => {
-      if (!(leaf.view instanceof import_obsidian6.MarkdownView)) return;
+      if (!(leaf.view instanceof import_obsidian7.MarkdownView)) return;
       leaf.view.containerEl.querySelectorAll(".ggt").forEach((root) => this.factory?.style(root));
       if (leaf.view.getMode() === "preview") leaf.view.previewMode.rerender(true);
     });
   }
 };
-var TableSettingTab = class extends import_obsidian6.PluginSettingTab {
+function settingSpecs() {
+  const zh2 = (0, import_obsidian7.getLanguage)().startsWith("zh");
+  return [
+    {
+      key: "enabled",
+      name: zh2 ? "\u63A5\u7BA1 Markdown \u8868\u683C" : "Enhance Markdown tables",
+      desc: zh2 ? "\u5173\u6389\u540E\u5B8C\u5168\u6062\u590D Obsidian \u539F\u751F\u8868\u683C\uFF1B\u6587\u4EF6\u91CC\u7684\u6CE8\u91CA\u7559\u7740\uFF0C\u4E0D\u5F71\u54CD\u663E\u793A\u3002" : "Turn off to go back to Obsidian's own tables. Comments already in your notes stay and do no harm.",
+      type: "toggle"
+    },
+    {
+      key: "preset",
+      name: zh2 ? "\u6837\u5F0F" : "Style",
+      type: "dropdown",
+      options: zh2 ? { default: "\u9ED8\u8BA4", zebra: "\u6591\u9A6C\u7EB9", minimal: "\u6781\u7B80\u7EBF", academic: "\u4E09\u7EBF\u8868" } : { default: "Default", zebra: "Zebra", minimal: "Minimal", academic: "Three-line" }
+    },
+    {
+      key: "cellPadX",
+      name: zh2 ? "\u683C\u5B50\u5DE6\u53F3\u5185\u8FB9\u8DDD" : "Cell side padding",
+      desc: zh2 ? "\u683C\u5B50\u91CC\u6587\u5B57\u79BB\u5DE6\u53F3\u8FB9\u6846\u591A\u8FDC\u3002\u5ACC\u683C\u5B50\u4E24\u8FB9\u7A7A\u5F97\u591A\u53EF\u4EE5\u8C03\u5C0F\uFF1B\u884C\u8DDD\u9009\u300C\u7D27\u51D1\u300D\u7684\u8868\u683C\u6700\u591A 8\u3002" : "How far text sits from a cell's left and right borders. Lower it if cells feel too roomy; Compact tables use at most 8.",
+      type: "dropdown",
+      options: zh2 ? { "4": "4\uFF08\u5F88\u7A84\uFF09", "6": "6", "8": "8", "10": "10\uFF08\u9ED8\u8BA4\uFF09" } : { "4": "4 (tight)", "6": "6", "8": "8", "10": "10 (default)" }
+    },
+    {
+      key: "density",
+      name: zh2 ? "\u884C\u8DDD" : "Row spacing",
+      type: "dropdown",
+      options: zh2 ? { comfortable: "\u8212\u9002", compact: "\u7D27\u51D1" } : { comfortable: "Comfortable", compact: "Compact" }
+    },
+    {
+      key: "fullWidth",
+      name: zh2 ? "\u8868\u683C\u9ED8\u8BA4\u6491\u6EE1\u9875\u9762\u5BBD\u5EA6" : "Tables fill the page width",
+      desc: zh2 ? "\u6CA1\u62D6\u8FC7\u5217\u5BBD\u7684\u8868\u683C\u94FA\u6EE1\u6B63\u6587\u5BBD\u5EA6\uFF0C\u5404\u5217\u6309\u5185\u5BB9\u591A\u5C11\u5206\uFF1B\u62D6\u8FC7\u5217\u5BBD\u7684\u8868\u683C\u8FD8\u6309\u8BBE\u7684\u5BBD\u5EA6\u3002\u53EA\u6539\u663E\u793A\uFF0C\u4E0D\u5F80\u7B14\u8BB0\u91CC\u5199\u4E1C\u897F\u3002\u5355\u5F20\u8868\u4E5F\u53EF\u4EE5\u7528\u8868\u683C\u5DE6\u4E0A\u89D2\u83DC\u5355\u91CC\u7684\u300C\u6491\u6EE1\u9875\u9762\u5BBD\u5EA6\u300D\u3002" : "Tables whose column widths you haven't set stretch to the page width, with columns sized by their content; tables with set widths keep them. Display only \u2014 nothing is written to your notes. For a single table you can also use Fit to page width in its table menu.",
+      type: "toggle"
+    },
+    {
+      key: "strictStyle",
+      name: zh2 ? "\u8868\u683C\u6837\u5F0F\u4F18\u5148\u4E8E\u4E3B\u9898" : "Table style over theme",
+      desc: zh2 ? "\u6709\u7684\u4E3B\u9898\uFF08OnePage\u3001Minimal\u3001Blue Topaz\u3001Border\u3001phycat \u7B49\uFF09\u4F1A\u7528 !important \u6539\u8868\u683C\u7684\u8FB9\u6846\u3001\u8868\u5934\u5E95\u8272\u548C\u6587\u5B57\u989C\u8272\uFF0C\u628A\u8868\u683C\u63D2\u4EF6\u7684\u6837\u5F0F\u76D6\u6389\u3002\u6253\u5F00\u540E\u8868\u683C\u6309\u63D2\u4EF6\u81EA\u5DF1\u7684\u6837\u5F0F\u753B\uFF08\u8FB9\u6846\u3001\u8868\u5934\u3001\u6781\u7B80\u7EBF\u548C\u4E09\u7EBF\u8868\u8FD9\u4E9B\u6837\u5F0F\uFF09\uFF0C\u5173\u6389\u5C31\u8BA9\u4E3B\u9898\u7684\u8868\u683C\u6837\u5F0F\u751F\u6548\u3002" : "Some themes (OnePage, Minimal, Blue Topaz, Border, phycat and others) restyle table borders, header backgrounds and text colors with !important, overriding this plugin. On: tables keep this plugin's look (borders, header, the Minimal and Three-line styles). Off: the theme's table style wins.",
+      type: "toggle"
+    },
+    {
+      key: "fitCols",
+      name: zh2 ? "\u5217\u5BBD\u6309\u6BD4\u4F8B\u7F29\u653E" : "Scale column widths to fit",
+      desc: zh2 ? "\u62D6\u8FC7\u5217\u5BBD\u7684\u8868\u683C\u6BD4\u6B63\u6587\u5BBD\u65F6\uFF08\u6BD4\u5982\u6253\u5F00\u4E86\u4FA7\u680F\uFF09\uFF0C\u5404\u5217\u6309\u6BD4\u4F8B\u7F29\u5C0F\u5230\u6B63\u597D\u653E\u4E0B\uFF0C\u4E0D\u51FA\u6A2A\u5411\u6EDA\u52A8\u6761\uFF1B\u6B63\u6587\u53D8\u5BBD\u540E\u6062\u590D\u539F\u6765\u7684\u5BBD\u5EA6\u3002\u53EA\u6539\u663E\u793A\uFF0C\u7B14\u8BB0\u91CC\u8FD8\u662F\u539F\u6765\u7684\u5217\u5BBD\u3002\u5217\u592A\u591A\u3001\u7F29\u5230\u5F88\u7A84\u65F6\u7167\u6837\u6A2A\u5411\u6EDA\u52A8\u3002" : "When a table with set column widths is wider than the page (say, with a sidebar open), its columns shrink proportionally to fit instead of scrolling sideways, and grow back when there's room. Display only \u2014 your notes keep the original widths. Tables with too many columns still scroll.",
+      type: "toggle"
+    },
+    {
+      key: "readingReadonly",
+      name: zh2 ? "\u9605\u8BFB\u89C6\u56FE\u91CC\u8868\u683C\u53EA\u8BFB" : "Read-only tables in Reading view",
+      desc: zh2 ? "\u548C Obsidian \u7684\u9605\u8BFB\u89C6\u56FE\u4E00\u81F4\uFF1A\u8868\u683C\u53EA\u770B\u4E0D\u6539\uFF0C\u70B9\u683C\u5B50\u4E0D\u4F1A\u8FDB\u5165\u7F16\u8F91\uFF0C\u6CA1\u6709\u624B\u67C4\u548C\u52A0\u53F7\uFF0C\u94FE\u63A5\u7167\u5E38\u80FD\u70B9\u3002\u5173\u6389\u540E\u5728\u9605\u8BFB\u89C6\u56FE\u91CC\u4E5F\u80FD\u76F4\u63A5\u6539\u8868\u683C\u3002" : "Like the rest of Reading view: tables are view-only, clicking a cell doesn't start editing, and there are no handles or add buttons; links still work. Turn off to edit tables directly in Reading view.",
+      type: "toggle"
+    },
+    {
+      key: "crosshair",
+      name: zh2 ? "\u5341\u5B57\u9AD8\u4EAE" : "Crosshair highlight",
+      desc: zh2 ? "\u9009\u4E2D\u683C\u5B50\u65F6\uFF0C\u628A\u5B83\u6240\u5728\u7684\u6574\u884C\u548C\u6574\u5217\u94FA\u4E00\u5C42\u6DE1\u8272\uFF0C\u770B\u5927\u8868\u683C\u4E0D\u5BB9\u6613\u4E32\u884C\u3002\u300C\u60AC\u505C\u65F6\u300D\u8DDF\u7740\u9F20\u6807\u8D70\uFF0C\u9F20\u6807\u79BB\u5F00\u8868\u683C\u540E\u56DE\u5230\u9009\u4E2D\u7684\u683C\u5B50\u3002" : "Tint the whole row and column of the selected cell so large tables are easier to follow. On hover follows the mouse, falling back to the selected cell when the mouse leaves the table.",
+      type: "dropdown",
+      options: zh2 ? { off: "\u5173", select: "\u9009\u4E2D\u683C\u5B50\u65F6", hover: "\u9009\u4E2D\u548C\u60AC\u505C\u65F6" } : { off: "Off", select: "On the selected cell", hover: "On selected and hovered cells" }
+    },
+    {
+      key: "richEdit",
+      name: zh2 ? "\u7F16\u8F91\u683C\u5B50\u65F6\u76F4\u63A5\u663E\u793A\u683C\u5F0F" : "Show formatting while editing a cell",
+      desc: zh2 ? "\u7F16\u8F91\u683C\u5B50\u65F6\uFF0C\u52A0\u7C97\u3001\u659C\u4F53\u3001\u6587\u5B57\u989C\u8272\u3001\u8367\u5149\u7B14\u3001\u4E0B\u5212\u7EBF\u76F4\u63A5\u663E\u793A\u6548\u679C\uFF0C<span style=\u2026> \u8FD9\u7C7B\u6807\u7B7E\u85CF\u8D77\u6765\uFF0C\u5220\u5B57\u65F6\u6807\u7B7E\u4FDD\u6301\u6210\u5BF9\uFF0C\u548C gogoga Mind Map \u7684\u8282\u70B9\u7F16\u8F91\u4E00\u6837\u3002\u5173\u6389\u65F6\u663E\u793A\u539F\u59CB\u7684 Markdown \u548C HTML\u3002" : "While editing a cell, bold, italic, text colors, highlighter colors and underline show as formatted, with tags like <span style=\u2026> hidden and kept paired when you delete text, as in gogoga Mind Map's node editor. When off, the raw Markdown and HTML are shown.",
+      type: "toggle"
+    },
+    {
+      key: "formatBar",
+      name: zh2 ? "\u7F16\u8F91\u683C\u5B50\u65F6\u9009\u4E2D\u6587\u5B57\u663E\u793A\u683C\u5F0F\u680F" : "Format bar when selecting text in a cell",
+      desc: zh2 ? "\u7F16\u8F91\u683C\u5B50\u65F6\u9009\u4E2D\u4E00\u6BB5\u6587\u5B57\uFF0C\u4E0A\u65B9\u6D6E\u51FA\u4E00\u6392\u6309\u94AE\uFF1A\u52A0\u7C97\u3001\u659C\u4F53\u3001\u5220\u9664\u7EBF\u3001\u4E0B\u5212\u7EBF\u3001\u9AD8\u4EAE\u3001\u6587\u5B57\u989C\u8272\u3001\u8367\u5149\u7B14\u548C\u6E05\u9664\uFF0C\u548C gogoga Mind Map \u7684\u683C\u5F0F\u680F\u4E00\u6837\u3002\u4E0D\u6253\u5F00\u4E5F\u80FD\u7528\u5FEB\u6377\u952E\uFF1A\u2318B\u3001\u2318I\u3001\u2318U\u3001\u2318\u21E7X\u3001\u2318\u21E7H\u3002" : "While editing a cell, selecting text shows a bar above it: bold, italic, strikethrough, underline, highlight, text colors, highlighter colors and clear, the same as in gogoga Mind Map. Without it, use the shortcuts: Mod+B, Mod+I, Mod+U, Mod+Shift+X, Mod+Shift+H.",
+      type: "toggle"
+    },
+    {
+      key: "smartDate",
+      name: zh2 ? "\u65E5\u671F\u5217\u81EA\u52A8\u8BC6\u522B\u65E5\u671F\u5199\u6CD5" : "Recognize dates typed in date columns",
+      desc: zh2 ? "\u5728\u65E5\u671F\u5217\u91CC\u6253 1/5\u300111-17\u30012026\u5E741\u67085\u65E5\u300120260105\u3001\u4ECA\u5929\u3001\u660E\u5929\u3001\u6628\u5929\uFF0C\u6309 Enter \u540E\u6362\u6210\u8FD9\u4E00\u5217\u7684\u5199\u6CD5\uFF08\u6BD4\u5982 2026-01-05\uFF0C\u6216\u65E5\u8BB0\u94FE\u63A5 [[2026-01-05]]\uFF09\uFF1B\u6CA1\u5199\u5E74\u7684\u7B97\u4ECA\u5E74\u3002\u5173\u6389\u65F6\u53EA\u7EDF\u4E00 2026-1-5 \u8FD9\u79CD\u5199\u6CD5\uFF0C\u522B\u7684\u539F\u6837\u4FDD\u5B58\u3002" : "In date columns, typing 1/5, 11-17, 2026\u5E741\u67085\u65E5, 20260105, today, tomorrow or yesterday becomes the column's date style when you press Enter (such as 2026-01-05, or a daily note link [[2026-01-05]]). Dates without a year use the current year. When off, only dates like 2026-1-5 are tidied and everything else is kept as typed.",
+      type: "toggle"
+    }
+  ];
+}
+var TableSettingTab = class extends import_obsidian7.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
     this.plugin = plugin;
   }
+  getSettingDefinitions() {
+    return settingSpecs().map((x) => ({
+      name: x.name,
+      desc: x.desc,
+      control: x.type === "toggle" ? { type: "toggle", key: x.key } : { type: "dropdown", key: x.key, options: x.options ?? {} }
+    }));
+  }
+  getControlValue(key) {
+    const v = this.plugin.settings[key];
+    return typeof v === "number" ? String(v) : v;
+  }
+  async setControlValue(key, value) {
+    const k = key;
+    const s = this.plugin.settings;
+    s[k] = typeof DEFAULT_SETTINGS[k] === "number" ? Number(value) : value;
+    await this.plugin.saveSettings();
+  }
+  /** Obsidian 1.13 以前没有声明式设置：照同一份清单画 */
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    const zh2 = (0, import_obsidian6.getLanguage)?.().startsWith("zh");
-    const s = this.plugin.settings;
-    new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u63A5\u7BA1 Markdown \u8868\u683C" : "Enhance Markdown tables").setDesc(zh2 ? "\u5173\u6389\u540E\u5B8C\u5168\u6062\u590D Obsidian \u539F\u751F\u8868\u683C\uFF1B\u6587\u4EF6\u91CC\u7684\u6CE8\u91CA\u7559\u7740\uFF0C\u4E0D\u5F71\u54CD\u663E\u793A\u3002" : "Turn off to go back to Obsidian's own tables. Comments already in your notes stay and do no harm.").addToggle(
-      (tg) => tg.setValue(s.enabled).onChange(async (v) => {
-        s.enabled = v;
-        await this.plugin.saveSettings();
-      })
-    );
-    new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u6837\u5F0F" : "Style").addDropdown(
-      (dd) => dd.addOptions(zh2 ? { default: "\u9ED8\u8BA4", zebra: "\u6591\u9A6C\u7EB9", minimal: "\u6781\u7B80\u7EBF", academic: "\u4E09\u7EBF\u8868" } : { default: "Default", zebra: "Zebra", minimal: "Minimal", academic: "Three-line" }).setValue(s.preset).onChange(async (v) => {
-        s.preset = v;
-        await this.plugin.saveSettings();
-      })
-    );
-    new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u683C\u5B50\u5DE6\u53F3\u5185\u8FB9\u8DDD" : "Cell side padding").setDesc(zh2 ? "\u683C\u5B50\u91CC\u6587\u5B57\u79BB\u5DE6\u53F3\u8FB9\u6846\u591A\u8FDC\u3002\u5ACC\u683C\u5B50\u4E24\u8FB9\u7A7A\u5F97\u591A\u53EF\u4EE5\u8C03\u5C0F\uFF1B\u884C\u8DDD\u9009\u300C\u7D27\u51D1\u300D\u7684\u8868\u683C\u6700\u591A 8\u3002" : "How far text sits from a cell's left and right borders. Lower it if cells feel too roomy; Compact tables use at most 8.").addDropdown(
-      (dd) => dd.addOptions(zh2 ? { "4": "4\uFF08\u5F88\u7A84\uFF09", "6": "6", "8": "8", "10": "10\uFF08\u9ED8\u8BA4\uFF09" } : { "4": "4 (tight)", "6": "6", "8": "8", "10": "10 (default)" }).setValue(String(s.cellPadX)).onChange(async (v) => {
-        s.cellPadX = Number(v);
-        await this.plugin.saveSettings();
-      })
-    );
-    new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u884C\u8DDD" : "Row spacing").addDropdown(
-      (dd) => dd.addOptions(zh2 ? { comfortable: "\u8212\u9002", compact: "\u7D27\u51D1" } : { comfortable: "Comfortable", compact: "Compact" }).setValue(s.density).onChange(async (v) => {
-        s.density = v;
-        await this.plugin.saveSettings();
-      })
-    );
-    new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u8868\u683C\u9ED8\u8BA4\u6491\u6EE1\u9875\u9762\u5BBD\u5EA6" : "Tables fill the page width").setDesc(
-      zh2 ? "\u6CA1\u62D6\u8FC7\u5217\u5BBD\u7684\u8868\u683C\u94FA\u6EE1\u6B63\u6587\u5BBD\u5EA6\uFF0C\u5404\u5217\u6309\u5185\u5BB9\u591A\u5C11\u5206\uFF1B\u62D6\u8FC7\u5217\u5BBD\u7684\u8868\u683C\u8FD8\u6309\u8BBE\u7684\u5BBD\u5EA6\u3002\u53EA\u6539\u663E\u793A\uFF0C\u4E0D\u5F80\u7B14\u8BB0\u91CC\u5199\u4E1C\u897F\u3002\u5355\u5F20\u8868\u4E5F\u53EF\u4EE5\u7528\u8868\u683C\u5DE6\u4E0A\u89D2\u83DC\u5355\u91CC\u7684\u300C\u6491\u6EE1\u9875\u9762\u5BBD\u5EA6\u300D\u3002" : "Tables whose column widths you haven't set stretch to the page width, with columns sized by their content; tables with set widths keep them. Display only \u2014 nothing is written to your notes. For a single table you can also use Fit to page width in its table menu."
-    ).addToggle(
-      (tg) => tg.setValue(s.fullWidth).onChange(async (v) => {
-        s.fullWidth = v;
-        await this.plugin.saveSettings();
-      })
-    );
-    new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u8868\u683C\u6837\u5F0F\u4F18\u5148\u4E8E\u4E3B\u9898" : "Table style over theme").setDesc(
-      zh2 ? "\u6709\u7684\u4E3B\u9898\uFF08OnePage\u3001Minimal\u3001Blue Topaz\u3001Border\u3001phycat \u7B49\uFF09\u4F1A\u7528 !important \u6539\u8868\u683C\u7684\u8FB9\u6846\u3001\u8868\u5934\u5E95\u8272\u548C\u6587\u5B57\u989C\u8272\uFF0C\u628A\u8868\u683C\u63D2\u4EF6\u7684\u6837\u5F0F\u76D6\u6389\u3002\u6253\u5F00\u540E\u8868\u683C\u6309\u63D2\u4EF6\u81EA\u5DF1\u7684\u6837\u5F0F\u753B\uFF08\u8FB9\u6846\u3001\u8868\u5934\u3001\u6781\u7B80\u7EBF\u548C\u4E09\u7EBF\u8868\u8FD9\u4E9B\u6837\u5F0F\uFF09\uFF0C\u5173\u6389\u5C31\u8BA9\u4E3B\u9898\u7684\u8868\u683C\u6837\u5F0F\u751F\u6548\u3002" : "Some themes (OnePage, Minimal, Blue Topaz, Border, phycat and others) restyle table borders, header backgrounds and text colors with !important, overriding this plugin. On: tables keep this plugin's look (borders, header, the Minimal and Three-line styles). Off: the theme's table style wins."
-    ).addToggle(
-      (tg) => tg.setValue(s.strictStyle).onChange(async (v) => {
-        s.strictStyle = v;
-        await this.plugin.saveSettings();
-      })
-    );
-    new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u5217\u5BBD\u6309\u6BD4\u4F8B\u7F29\u653E" : "Scale column widths to fit").setDesc(
-      zh2 ? "\u62D6\u8FC7\u5217\u5BBD\u7684\u8868\u683C\u6BD4\u6B63\u6587\u5BBD\u65F6\uFF08\u6BD4\u5982\u6253\u5F00\u4E86\u4FA7\u680F\uFF09\uFF0C\u5404\u5217\u6309\u6BD4\u4F8B\u7F29\u5C0F\u5230\u6B63\u597D\u653E\u4E0B\uFF0C\u4E0D\u51FA\u6A2A\u5411\u6EDA\u52A8\u6761\uFF1B\u6B63\u6587\u53D8\u5BBD\u540E\u6062\u590D\u539F\u6765\u7684\u5BBD\u5EA6\u3002\u53EA\u6539\u663E\u793A\uFF0C\u7B14\u8BB0\u91CC\u8FD8\u662F\u539F\u6765\u7684\u5217\u5BBD\u3002\u5217\u592A\u591A\u3001\u7F29\u5230\u5F88\u7A84\u65F6\u7167\u6837\u6A2A\u5411\u6EDA\u52A8\u3002" : "When a table with set column widths is wider than the page (say, with a sidebar open), its columns shrink proportionally to fit instead of scrolling sideways, and grow back when there's room. Display only \u2014 your notes keep the original widths. Tables with too many columns still scroll."
-    ).addToggle(
-      (tg) => tg.setValue(s.fitCols).onChange(async (v) => {
-        s.fitCols = v;
-        await this.plugin.saveSettings();
-      })
-    );
-    new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u9605\u8BFB\u89C6\u56FE\u91CC\u8868\u683C\u53EA\u8BFB" : "Read-only tables in Reading view").setDesc(
-      zh2 ? "\u548C Obsidian \u7684\u9605\u8BFB\u89C6\u56FE\u4E00\u81F4\uFF1A\u8868\u683C\u53EA\u770B\u4E0D\u6539\uFF0C\u70B9\u683C\u5B50\u4E0D\u4F1A\u8FDB\u5165\u7F16\u8F91\uFF0C\u6CA1\u6709\u624B\u67C4\u548C\u52A0\u53F7\uFF0C\u94FE\u63A5\u7167\u5E38\u80FD\u70B9\u3002\u5173\u6389\u540E\u5728\u9605\u8BFB\u89C6\u56FE\u91CC\u4E5F\u80FD\u76F4\u63A5\u6539\u8868\u683C\u3002" : "Like the rest of Reading view: tables are view-only, clicking a cell doesn't start editing, and there are no handles or add buttons; links still work. Turn off to edit tables directly in Reading view."
-    ).addToggle(
-      (tg) => tg.setValue(s.readingReadonly).onChange(async (v) => {
-        s.readingReadonly = v;
-        await this.plugin.saveSettings();
-      })
-    );
-    new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u5341\u5B57\u9AD8\u4EAE" : "Crosshair highlight").setDesc(zh2 ? "\u9009\u4E2D\u683C\u5B50\u65F6\uFF0C\u628A\u5B83\u6240\u5728\u7684\u6574\u884C\u548C\u6574\u5217\u94FA\u4E00\u5C42\u6DE1\u8272\uFF0C\u770B\u5927\u8868\u683C\u4E0D\u5BB9\u6613\u4E32\u884C\u3002\u300C\u60AC\u505C\u65F6\u300D\u8DDF\u7740\u9F20\u6807\u8D70\uFF0C\u9F20\u6807\u79BB\u5F00\u8868\u683C\u540E\u56DE\u5230\u9009\u4E2D\u7684\u683C\u5B50\u3002" : "Tint the whole row and column of the selected cell so large tables are easier to follow. On hover follows the mouse, falling back to the selected cell when the mouse leaves the table.").addDropdown(
-      (dd) => dd.addOptions(zh2 ? { off: "\u5173", select: "\u9009\u4E2D\u683C\u5B50\u65F6", hover: "\u9009\u4E2D\u548C\u60AC\u505C\u65F6" } : { off: "Off", select: "On the selected cell", hover: "On selected and hovered cells" }).setValue(s.crosshair).onChange(async (v) => {
-        s.crosshair = v;
-        await this.plugin.saveSettings();
-      })
-    );
-    new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u7F16\u8F91\u683C\u5B50\u65F6\u76F4\u63A5\u663E\u793A\u683C\u5F0F" : "Show formatting while editing a cell").setDesc(
-      zh2 ? "\u7F16\u8F91\u683C\u5B50\u65F6\uFF0C\u52A0\u7C97\u3001\u659C\u4F53\u3001\u6587\u5B57\u989C\u8272\u3001\u8367\u5149\u7B14\u3001\u4E0B\u5212\u7EBF\u76F4\u63A5\u663E\u793A\u6548\u679C\uFF0C<span style=\u2026> \u8FD9\u7C7B\u6807\u7B7E\u85CF\u8D77\u6765\uFF0C\u5220\u5B57\u65F6\u6807\u7B7E\u4FDD\u6301\u6210\u5BF9\uFF0C\u548C gogoga Mind Map \u7684\u8282\u70B9\u7F16\u8F91\u4E00\u6837\u3002\u5173\u6389\u65F6\u663E\u793A\u539F\u59CB\u7684 Markdown \u548C HTML\u3002" : "While editing a cell, bold, italic, text colors, highlighter colors and underline show as formatted, with tags like <span style=\u2026> hidden and kept paired when you delete text, as in gogoga Mind Map's node editor. When off, the raw Markdown and HTML are shown."
-    ).addToggle(
-      (tg) => tg.setValue(s.richEdit).onChange(async (v) => {
-        s.richEdit = v;
-        await this.plugin.saveSettings();
-      })
-    );
-    new import_obsidian6.Setting(containerEl).setName(zh2 ? "\u7F16\u8F91\u683C\u5B50\u65F6\u9009\u4E2D\u6587\u5B57\u663E\u793A\u683C\u5F0F\u680F" : "Format bar when selecting text in a cell").setDesc(
-      zh2 ? "\u7F16\u8F91\u683C\u5B50\u65F6\u9009\u4E2D\u4E00\u6BB5\u6587\u5B57\uFF0C\u4E0A\u65B9\u6D6E\u51FA\u4E00\u6392\u6309\u94AE\uFF1A\u52A0\u7C97\u3001\u659C\u4F53\u3001\u5220\u9664\u7EBF\u3001\u4E0B\u5212\u7EBF\u3001\u9AD8\u4EAE\u3001\u6587\u5B57\u989C\u8272\u3001\u8367\u5149\u7B14\u548C\u6E05\u9664\uFF0C\u548C gogoga Mind Map \u7684\u683C\u5F0F\u680F\u4E00\u6837\u3002\u4E0D\u6253\u5F00\u4E5F\u80FD\u7528\u5FEB\u6377\u952E\uFF1A\u2318B\u3001\u2318I\u3001\u2318U\u3001\u2318\u21E7X\u3001\u2318\u21E7H\u3002" : "While editing a cell, selecting text shows a bar above it: bold, italic, strikethrough, underline, highlight, text colors, highlighter colors and clear, the same as in gogoga Mind Map. Without it, use the shortcuts: Mod+B, Mod+I, Mod+U, Mod+Shift+X, Mod+Shift+H."
-    ).addToggle(
-      (tg) => tg.setValue(s.formatBar).onChange(async (v) => {
-        s.formatBar = v;
-        await this.plugin.saveSettings();
-      })
-    );
+    for (const x of settingSpecs()) {
+      const row = new import_obsidian7.Setting(containerEl).setName(x.name);
+      if (x.desc) row.setDesc(x.desc);
+      if (x.type === "toggle") row.addToggle((tg) => tg.setValue(this.getControlValue(x.key)).onChange((v) => this.setControlValue(x.key, v)));
+      else row.addDropdown((dd) => dd.addOptions(x.options ?? {}).setValue(this.getControlValue(x.key)).onChange((v) => this.setControlValue(x.key, v)));
+    }
   }
 };
 
