@@ -31,112 +31,21 @@
         "dimension": 89.70663921770458,
         "children": [
           {
-            "id": "3751be2de66963e4",
+            "id": "86af06b6c74d64e9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Diary/2026/20261120.md",
+                "file": "Diary/2026/W47.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "20261120"
-            }
-          },
-          {
-            "id": "42e2005309e3d977",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Diary/2026/202609.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "202609"
-            }
-          },
-          {
-            "id": "0b8145b0ebecc6d1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "OBSetting/templater/周记-一览视图.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "周记-一览视图"
-            }
-          },
-          {
-            "id": "17209fa301a24f75",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "OBSetting/templater/月报.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "月报"
-            }
-          },
-          {
-            "id": "5a30dba91c23b497",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Diary/2026/W40.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "W40"
-            }
-          },
-          {
-            "id": "e43f08cff08b8c86",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Diary/2026/W36.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "W36"
-            }
-          },
-          {
-            "id": "091194479ce62e25",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Diary/2026/W33.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "W33"
+              "title": "W47"
             }
           }
-        ],
-        "currentTab": 6
+        ]
       }
     ],
     "direction": "vertical"
@@ -408,14 +317,25 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "091194479ce62e25",
+  "active": "86af06b6c74d64e9",
   "lastOpenFiles": [
-    "Diary/2026/W36.md",
-    "Diary/2026/202609.md",
-    "OBSetting/templater/月报.md",
-    "Diary/2026/W40.md",
+    "Diary/2026/20261119.md",
+    "Diary/2026/20261118.md",
+    "Diary/2026/W47.md",
+    "Diary/_backup/20261120-035232/2026/W40-ref.md",
+    "Diary/_backup/20261120-035232/2026/20261119.md",
+    "Diary/_backup/20261120-035232/2026",
+    "Diary/_backup/20261120-035232",
+    "Diary/2026/20261120.md",
     "OBSetting/templater/周记-一览视图.md",
+    "OBSetting/templater/月报.md",
+    "Diary/2026/202609.md",
+    "Diary/_Templates/_备份/202609_备份_20261120_改造前.md",
     "Diary/2026/W33.md",
+    "Diary/_Templates/_备份/月报模板_20261120_改造前.md",
+    "Diary/_Templates/_备份",
+    "Diary/2026/W36.md",
+    "Diary/2026/W40.md",
     "Diary/_backup/wtpl-test.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md",
     "Diary/_backup/20261120-r2/appearance.json.bak",
@@ -432,20 +352,9 @@
     "Diary/_backup/20261120-r2/W40.md",
     "Diary/_backup/20261120-r2/W39.md",
     "Diary/_backup/20261120-r2/W38.md",
-    "Diary/_backup/20261120-r2/W36.md",
-    "Diary/_backup/20261120-r2/templater/月报.md",
-    "Diary/_backup/20261120-r2/templater/周记-一览视图.md",
-    "Diary/_backup/20261120-r2/月报模板.md",
-    "Diary/_backup/20261120-r2/周报模板.md",
     "Diary/_backup/20261120-r2/templater",
     "Diary/_backup/20261120-r2",
     "Diary/_backup/diary-dump.txt",
-    "Diary/2026/20261120.md",
-    "file:E:/AI workpace/Obsidian日记周期报告提示词_v3_模板驱动.md",
-    "Diary/_Templates/周报模板.md",
-    "Diary/_Templates",
-    "Diary/_backup/20261120-0150/2026",
-    "Diary/_backup/20261120-0150",
     "assets/Ink/Drawing/2026.11.19 - 23.22pm.svg",
     "assets/deutsch-kasus-adjektiv.svg",
     "assets/Designer (17).png",

@@ -19820,15 +19820,15 @@
   "Diary/2026/20261118.md": {
     "cursor": {
       "from": {
-        "line": 12,
-        "ch": 0
+        "line": 43,
+        "ch": 14
       },
       "to": {
-        "line": 12,
-        "ch": 0
+        "line": 43,
+        "ch": 14
       }
     },
-    "scroll": 4.673676622352225
+    "scroll": 34.67604340387704
   },
   "file:C:/Users/17741/Downloads/注释-(2026-11-19-00-34-02)-AZA6EXF6.md": {
     "cursor": {
@@ -19871,15 +19871,15 @@
   "Diary/2026/20261119.md": {
     "cursor": {
       "from": {
-        "line": 45,
-        "ch": 90
+        "line": 18,
+        "ch": 9
       },
       "to": {
-        "line": 45,
-        "ch": 90
+        "line": 18,
+        "ch": 9
       }
     },
-    "scroll": 4.144861865663902
+    "scroll": 44.24520700803076
   },
   "Diary/2026.md": {
     "cursor": {
@@ -19953,15 +19953,15 @@
   "Diary/2026/20261120.md": {
     "cursor": {
       "from": {
-        "line": 27,
+        "line": 0,
         "ch": 0
       },
       "to": {
-        "line": 36,
+        "line": 0,
         "ch": 0
       }
     },
-    "scroll": 8.0295825303661
+    "scroll": 0
   },
   "Diary/2026/M09.md": {
     "scroll": 246.47293612117568,
@@ -20003,15 +20003,15 @@
     }
   },
   "Diary/2026/202609.md": {
-    "scroll": 53.156065792005144,
+    "scroll": 4.135554250383339,
     "cursor": {
       "from": {
-        "line": 173,
-        "ch": 35
+        "line": 291,
+        "ch": 0
       },
       "to": {
-        "line": 173,
-        "ch": 35
+        "line": 291,
+        "ch": 0
       }
     }
   },
@@ -20071,14 +20071,14 @@
     "cursor": {
       "from": {
         "line": 8,
-        "ch": 135
+        "ch": 29
       },
       "to": {
         "line": 8,
-        "ch": 135
+        "ch": 29
       }
     },
-    "scroll": 0.05042237666307576
+    "scroll": 0
   },
   "file:E:/AI workpace/Obsidian日记周期报告提示词_v3_模板驱动.md": {
     "cursor": {
@@ -20095,5 +20095,8 @@
   },
   "Diary/2026/Untitled.md": {
     "scroll": 0
+  },
+  "Diary/2026/W47.md": {
+    "scroll": 6.643312898082877
   }
 }
