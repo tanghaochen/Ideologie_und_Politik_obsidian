@@ -4470,12 +4470,12 @@
     },
     "cursor": {
       "from": {
-        "ch": 28,
-        "line": 18
+        "ch": 0,
+        "line": 0
       },
       "to": {
-        "ch": 28,
-        "line": 18
+        "ch": 63,
+        "line": 45
       }
     }
   },
@@ -4496,6 +4496,26 @@
       "to": {
         "ch": 62,
         "line": 264
+      }
+    }
+  },
+  "file:C:/Users/17741/Downloads/Obsidian%E6%97%A5%E8%AE%B0%E7%B3%BB%E7%BB%9F%E6%8F%90%E7%A4%BA%E8%AF%8D_%E4%BC%98%E5%8C%96%E7%89%88.md": {
+    "scrollState": {
+      "top": 14389.2001953125,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 960,
+      "height": 1522,
+      "width": 972
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 0
+      },
+      "to": {
+        "ch": 0,
+        "line": 548
       }
     }
   }

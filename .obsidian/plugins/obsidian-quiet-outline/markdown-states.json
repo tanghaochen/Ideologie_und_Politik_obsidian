@@ -19953,14 +19953,15 @@
   "Diary/2026/20261120.md": {
     "cursor": {
       "from": {
-        "line": 18,
-        "ch": 28
+        "line": 0,
+        "ch": 0
       },
       "to": {
-        "line": 18,
-        "ch": 28
+        "line": 45,
+        "ch": 63
       }
-    }
+    },
+    "scroll": 0
   },
   "Diary/2026/M09.md": {
     "scroll": 246.47293612117568,
@@ -19972,6 +19973,19 @@
       "to": {
         "line": 264,
         "ch": 62
+      }
+    }
+  },
+  "file:C:/Users/17741/Downloads/Obsidian%E6%97%A5%E8%AE%B0%E7%B3%BB%E7%BB%9F%E6%8F%90%E7%A4%BA%E8%AF%8D_%E4%BC%98%E5%8C%96%E7%89%88.md": {
+    "scroll": 371.93498802598396,
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 548,
+        "ch": 0
       }
     }
   }
