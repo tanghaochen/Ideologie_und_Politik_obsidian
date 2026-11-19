@@ -16749,30 +16749,30 @@
     "scroll": 0
   },
   "Diary/2026/20260816.md": {
-    "scroll": 0,
+    "scroll": 3.0877073232201053,
     "cursor": {
       "from": {
-        "line": 4,
-        "ch": 74
+        "line": 10,
+        "ch": 18
       },
       "to": {
-        "line": 4,
-        "ch": 74
+        "line": 10,
+        "ch": 18
       }
     }
   },
   "Diary/2026/W33.md": {
     "cursor": {
       "from": {
-        "line": 0,
+        "line": 4,
         "ch": 0
       },
       "to": {
-        "line": 188,
+        "line": 4,
         "ch": 0
       }
     },
-    "scroll": 0
+    "scroll": 10.47913609427038
   },
   "Clippings/德国就业市场预测分析.md": {
     "cursor": {
@@ -17294,12 +17294,12 @@
   "Diary/2026/20260830.md": {
     "cursor": {
       "from": {
-        "line": 9,
-        "ch": 126
+        "line": 14,
+        "ch": 60
       },
       "to": {
-        "line": 9,
-        "ch": 126
+        "line": 14,
+        "ch": 60
       }
     },
     "scroll": 0
@@ -17315,7 +17315,7 @@
         "ch": 0
       }
     },
-    "scroll": 0
+    "scroll": 3.7689571975217206
   },
   "Diary/2026/20260831.md": {
     "cursor": {
@@ -19871,13 +19871,45 @@
   "Diary/2026/20261119.md": {
     "cursor": {
       "from": {
-        "line": 4,
-        "ch": 73
+        "line": 16,
+        "ch": 9
       },
       "to": {
-        "line": 4,
-        "ch": 73
+        "line": 16,
+        "ch": 9
+      }
+    },
+    "scroll": 7.46395794779727
+  },
+  "Diary/2026.md": {
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
       }
     }
+  },
+  "Diary/2026/2026年报.md": {
+    "scroll": 79.66293174476522,
+    "cursor": {
+      "from": {
+        "line": 59,
+        "ch": 50
+      },
+      "to": {
+        "line": 59,
+        "ch": 50
+      }
+    }
+  },
+  "Diary/2026/M04.md": {
+    "scroll": 62.504830691435146
+  },
+  "Diary/2026/M10.md": {
+    "scroll": 4.021808215284427
   }
 }
