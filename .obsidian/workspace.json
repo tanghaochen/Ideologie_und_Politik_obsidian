@@ -8,21 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "b396f74b1dec3e21",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "《Erinnern an den Holocaust》"
-            }
-          },
-          {
             "id": "52603972a51e39df",
             "type": "leaf",
             "state": {
@@ -38,139 +23,46 @@
             }
           },
           {
-            "id": "9b28058e4e918635",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Diary/2026/20261118.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "20261118"
-            }
-          },
-          {
-            "id": "6b48fe78b6a6e3eb",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/单词/生词/26-8.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "26-8"
-            }
-          },
-          {
-            "id": "590f29191193182d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/单词/生词/26-9.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "26-9"
-            }
-          },
-          {
-            "id": "2075ef0d8bb8fec0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "file:C:/Users/17741/Downloads/注释-(2026-11-19-00-34-02)-AZA6EXF6.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "注释-(2026-11-19-00-34-02)-AZA6EXF6"
-            }
-          },
-          {
-            "id": "26398dd8fb9772a3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "file:C:/Users/17741/Downloads/注释.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "注释"
-            }
-          },
-          {
-            "id": "2c599ddd4704d4ef",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Diary/2026/20261117.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "20261117"
-            }
-          },
-          {
-            "id": "3f3b58757384eda2",
+            "id": "ad18bac29f09b546",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md"
+                "file": "Excalidraw/ExcaliBrain Snapshot - 13 判断疑问句与动词核心框架.excalidraw.md"
               },
               "icon": "excalidraw-icon",
-              "title": "DW简单逻辑学"
+              "title": "ExcaliBrain Snapshot - 13 判断疑问句与动词核心框架.excalidraw"
             }
           },
           {
-            "id": "cf2c347bb5df5664",
+            "id": "7b84d1ee41664f25",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
+                "file": "Excalidraw/未命名.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "全面讲解否定，nein,kein,nicht等"
+              "title": "未命名"
             }
           },
           {
-            "id": "ac300e2f07b8630c",
+            "id": "ddf008a4cc44220c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "Diary/2026/20261119.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "Excalidraw/Drawing 2026-11-19 16.49.41.excalidraw.md"
               },
-              "icon": "lucide-file",
-              "title": "20261119"
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2026-11-19 16.49.41.excalidraw"
             }
           }
         ],
-        "currentTab": 10
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -442,10 +334,16 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "ac300e2f07b8630c",
+  "active": "ddf008a4cc44220c",
   "lastOpenFiles": [
-    "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
+    "assets/deutsch-kasus-adjektiv.svg",
+    "Excalidraw/未命名.md",
+    "Excalidraw/Drawing 2026-11-19 16.49.41.excalidraw.md",
+    "Excalidraw/ExcaliBrain Snapshot - 13 判断疑问句与动词核心框架.excalidraw.md",
+    "Excalidraw/ExcaliBrain Snapshot - 越南.excalidraw.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md",
     "Diary/2026/20261119.md",
+    "语言学习/德语/公共知识语法/10句型/全面讲解否定，nein,kein,nicht等.md",
     "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md",
     "语言学习/德语/AI学习记录/2026-11-19 训练摘要.md",
     "assets/Designer (17).png",
@@ -463,7 +361,6 @@
     "pixel-banner-images",
     "Diary/2026/20261117.md",
     "assets/buliten board.png",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md",
     "国家/中国/KPI与民主.md",
     "思想思维心理哲学/个人问题处理/学习计划框架/思想学习.md",
     "assets/file-20261118141223379.png",
@@ -473,17 +370,12 @@
     "思想思维心理哲学/DW个人人生思想架构.md",
     "思想思维心理哲学/过度劳累.md",
     "思想思维心理哲学/个人与社会的关系/DW 社会个人关系模型.md",
-    "思想思维心理哲学/日常记录总结/个人架构.md",
     "_AI-Diagrams/时代国家个人/四国对比-中德美与落后国家.excalidraw",
-    "国家/出国/德国/德国双元制.md",
-    "语言学习/德语/公共知识语法/格; 限定词.md",
-    "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
     "assets/1794745508852-0.png",
     "assets/Designer (12).png",
     "assets/1794742127458-0 (1).png",
     "assets/1794745241048-0 (1).png",
     "assets/_图片生成提示词：《鱼、网与天地——关于规则、认知、自由与自我超越的哲学思考》__ 一、整体创作目标 (2).png",
-    "语言学习/德语/公共知识语法/10句型/代词/da-构成的代副词.md",
     "语言学习/德语/学习记录日记-技巧/leseaufgabe",
     "Blockspace Bridge",
     "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw",
