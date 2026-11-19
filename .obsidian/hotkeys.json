@@ -102,14 +102,6 @@
   "easy-typing-obsidian:easy-typing-insert-codeblock": [],
   "easy-typing-obsidian:easy-typing-delete-blank-line": [],
   "editor:follow-link": [],
-  "editing-toolbar:toggle-bullet-list": [
-    {
-      "modifiers": [
-        "Shift"
-      ],
-      "key": "Enter"
-    }
-  ],
   "app:open-help": [],
   "note-refactor-obsidian:app:extract-selection-content-only": [],
   "footnotes:open": [
