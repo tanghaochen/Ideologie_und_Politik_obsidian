@@ -1,16 +1,36 @@
 {
   "recentFiles": [
     {
+      "basename": "W33",
+      "path": "Diary/2026/W33.md"
+    },
+    {
+      "basename": "W36",
+      "path": "Diary/2026/W36.md"
+    },
+    {
       "basename": "202609",
       "path": "Diary/2026/202609.md"
+    },
+    {
+      "basename": "月报",
+      "path": "OBSetting/templater/月报.md"
+    },
+    {
+      "basename": "W40",
+      "path": "Diary/2026/W40.md"
     },
     {
       "basename": "周记-一览视图",
       "path": "OBSetting/templater/周记-一览视图.md"
     },
     {
-      "basename": "W40",
-      "path": "Diary/2026/W40.md"
+      "basename": "Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl",
+      "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md"
+    },
+    {
+      "basename": "日记-事件模板",
+      "path": "OBSetting/templater/日记-事件模板.md"
     },
     {
       "basename": "20261120",
@@ -19,10 +39,6 @@
     {
       "basename": "Obsidian日记周期报告提示词_v3_模板驱动",
       "path": "file:E:/AI workpace/Obsidian日记周期报告提示词_v3_模板驱动.md"
-    },
-    {
-      "basename": "月报",
-      "path": "OBSetting/templater/月报.md"
     },
     {
       "basename": "周报模板",
@@ -77,10 +93,6 @@
       "path": "Diary/2026/M04.md"
     },
     {
-      "basename": "W33",
-      "path": "Diary/2026/W33.md"
-    },
-    {
       "basename": "李冉21天冥想练习视频笔记",
       "path": "思想思维心理哲学/健身/冥想/李冉21天冥想练习视频笔记.md"
     },
@@ -93,16 +105,8 @@
       "path": "Diary/2026/20260816.md"
     },
     {
-      "basename": "Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl",
-      "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md"
-    },
-    {
       "basename": "20260830",
       "path": "Diary/2026/20260830.md"
-    },
-    {
-      "basename": "W36",
-      "path": "Diary/2026/W36.md"
     },
     {
       "basename": "20260923",
@@ -111,10 +115,6 @@
     {
       "basename": "M10",
       "path": "Diary/2026/M10.md"
-    },
-    {
-      "basename": "日记-事件模板",
-      "path": "OBSetting/templater/日记-事件模板.md"
     },
     {
       "basename": "26-10",
@@ -195,10 +195,6 @@
     {
       "basename": "过度劳累",
       "path": "思想思维心理哲学/过度劳累.md"
-    },
-    {
-      "basename": "DW 社会个人关系模型",
-      "path": "思想思维心理哲学/个人与社会的关系/DW 社会个人关系模型.md"
     }
   ],
   "omittedPaths": [],
