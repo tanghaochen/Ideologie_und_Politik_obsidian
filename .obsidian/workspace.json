@@ -22,8 +22,19 @@
               "icon": "lucide-file",
               "title": "Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl"
             }
+          },
+          {
+            "id": "e35bd5caa01612bc",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "05840a4bd8c4b120",
@@ -44,8 +55,21 @@
               "icon": "lucide-file",
               "title": "W47"
             }
+          },
+          {
+            "id": "fbf4bd4373c78015",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "格; 限定词"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -318,10 +342,12 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "86af06b6c74d64e9",
+  "active": "e35bd5caa01612bc",
   "lastOpenFiles": [
-    "OBSetting/templater/周记-一览视图.md",
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md",
+    "语言学习/德语/公共知识语法/格; 限定词.md",
     "Diary/2026/W47.md",
+    "OBSetting/templater/周记-一览视图.md",
     "Diary/2026/202611.md",
     "Diary/2026/202610.md",
     "Diary/2026/W40.md",
@@ -354,8 +380,6 @@
     "Diary/2026/202609.md",
     "Diary/_Templates/_备份/202609_备份_20261120_改造前.md",
     "Diary/2026/W33.md",
-    "Diary/_Templates/_备份/月报模板_20261120_改造前.md",
-    "Diary/2026/W36.md",
     "assets/Ink/Drawing/2026.11.19 - 23.22pm.svg",
     "assets/deutsch-kasus-adjektiv.svg",
     "assets/Designer (17).png",

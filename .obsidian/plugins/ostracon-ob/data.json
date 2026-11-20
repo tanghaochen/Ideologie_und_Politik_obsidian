@@ -9734,6 +9734,18 @@
   ],
   "logs": [
     {
+      "id": "log-mwolsf5j-31dace99e18b",
+      "level": "info",
+      "message": "plugin loaded",
+      "at": "2026-11-20T06:33:51.031Z"
+    },
+    {
+      "id": "log-mwolsf4j-34a1890c6a68",
+      "level": "info",
+      "message": "ws listening on ws://[::1]:27123",
+      "at": "2026-11-20T06:33:50.996Z"
+    },
+    {
       "id": "log-mwohil2r-cf4845683f7f",
       "level": "info",
       "message": "plugin loaded",
