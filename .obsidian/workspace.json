@@ -36,9 +36,24 @@
               "icon": "lucide-file",
               "title": "26-9"
             }
+          },
+          {
+            "id": "783cf8017538e6f4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "语言学习/德语/公共知识语法/2动词/情态动词.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "情态动词"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -311,11 +326,11 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "e35bd5caa01612bc",
+  "active": "783cf8017538e6f4",
   "lastOpenFiles": [
+    "语言学习/德语/单词/生词/26-9.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
     "Diary/2026/W47.md",
-    "语言学习/德语/单词/生词/26-9.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md",
     "OBSetting/templater/周记-一览视图.md",
     "Diary/2026/202611.md",
