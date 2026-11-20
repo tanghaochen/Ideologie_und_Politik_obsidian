@@ -10,12 +10,12 @@
     },
     "cursor": {
       "from": {
-        "ch": 0,
-        "line": 181
+        "ch": 7,
+        "line": 180
       },
       "to": {
-        "ch": 0,
-        "line": 197
+        "ch": 7,
+        "line": 180
       }
     }
   },
@@ -4756,6 +4756,26 @@
       "to": {
         "ch": 2,
         "line": 180
+      }
+    }
+  },
+  "语言学习/德语/学习记录日记-技巧/leseaufgabe/2026年11月20日.md": {
+    "scrollState": {
+      "top": 1.2000000476837158,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 1931,
+      "height": 1522,
+      "width": 1943
+    },
+    "cursor": {
+      "from": {
+        "ch": 28,
+        "line": 4
+      },
+      "to": {
+        "ch": 28,
+        "line": 4
       }
     }
   }
