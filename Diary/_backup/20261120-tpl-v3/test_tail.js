@@ -1,0 +1,13 @@
+const fs = require("fs"), path = require("path");
+const ROOT = "E:/obsidianData/obsidianNote-master/obsidianNote-master/政治思想文化成长";
+const raw = fs.readFileSync(path.join(ROOT, "Diary/_Templates/月报模板.md"), "utf8");
+const blocks = [...raw.matchAll(/<%([\s\S]*?)%>/g)].map(m => m[1].replace(/^\*/, ""));
+const run = (b, title) => new Function("tp", "tR", b + "\n;return tR;")({ file: { title } }, "");
+const tail = run(blocks[1], "202611");
+console.log("===== TAIL 生成的完整尾段 =====");
+console.log(tail.slice(tail.indexOf("<!--") - 420));
+console.log("\n===== 结构检查 =====");
+const backtickFences = (tail.match(/```/g) || []).length;
+console.log("反引号围栏数（应为 2）:", backtickFences);
+console.log("含 dataviewjs:", tail.includes("```dataviewjs"));
+console.log("含 MRE 调用行数:", (tail.match(/MRE\./g) || []).length);

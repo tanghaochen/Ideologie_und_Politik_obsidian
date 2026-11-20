@@ -6,7 +6,7 @@
       {
         "id": "3bc015e7f0f64eeb",
         "type": "tabs",
-        "dimension": 10.29336078229542,
+        "dimension": 25.52753474009264,
         "children": [
           {
             "id": "52603972a51e39df",
@@ -28,7 +28,7 @@
       {
         "id": "05840a4bd8c4b120",
         "type": "tabs",
-        "dimension": 89.70663921770458,
+        "dimension": 74.47246525990737,
         "children": [
           {
             "id": "86af06b6c74d64e9",
@@ -44,69 +44,8 @@
               "icon": "lucide-file",
               "title": "W47"
             }
-          },
-          {
-            "id": "c4aca932029fc86c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "OBSetting/templater/日记-事件模板.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "日记-事件模板"
-            }
-          },
-          {
-            "id": "ced4a038c9dcc36e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "OBSetting/templater/周记-一览视图.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "周记-一览视图"
-            }
-          },
-          {
-            "id": "c7bee813deb50d66",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "OBSetting/templater/月报.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "月报"
-            }
-          },
-          {
-            "id": "2f9aa995bfccca13",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Diary/2026/20261120.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "20261120"
-            }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "vertical"
@@ -375,48 +314,48 @@
       "realclaudian:Open Claudian": false,
       "copilot:Open Copilot Agent Chat": false,
       "notebook-navigator:Notebook Navigator": false,
-      "periodic-notes:Open today": false,
-      "templates:插入模板": false
+      "templates:插入模板": false,
+      "periodic-notes:Open today": false
     }
   },
-  "active": "2f9aa995bfccca13",
+  "active": "86af06b6c74d64e9",
   "lastOpenFiles": [
-    "Diary/_backup/20261120-tpl-v3/月报模板_MRE引擎版.md",
-    "Diary/_backup/20261120-tpl-v3",
-    "OBSetting/templater/月报.md",
-    "Diary/2026/20261120.md",
-    "Diary/2026/Untitled.md",
     "OBSetting/templater/周记-一览视图.md",
-    "OBSetting/templater/日记-事件模板.md",
     "Diary/2026/W47.md",
+    "Diary/2026/202611.md",
+    "Diary/2026/202610.md",
+    "Diary/2026/W40.md",
+    "Diary/2026/20261001.md",
+    "Diary/_backup/20261120-tpl-v3/202611_旧版.md",
+    "Diary/_backup/20261120-tpl-v3/202610_旧版.md",
+    "Diary/_backup/20261120-tpl-v3/test_leak.js",
+    "OBSetting/templater/月报.md",
+    "Diary/_backup/20261120-r2/templater/月报.md",
+    "Diary/_backup/20261120-tpl-v3/build_md_templates.bak.py",
+    "Diary/_backup/20261120-tpl-v3/test_md.js",
+    "Diary/_backup/20261120-tpl-v3/build_md_templates.py",
+    "Diary/2026/20261120.md",
+    "Diary/_backup/20261120-tpl-v3/test_both.js",
+    "Diary/_backup/20261120-tpl-v3/build_both.py",
+    "Diary/_backup/20261120-tpl-v3/test_render.js",
+    "Diary/_backup/20261120-tpl-v3/test_monthly2.js",
+    "Diary/_backup/20261120-tpl-v3/build_monthly2.py",
+    "Diary/_backup/20261120-tpl-v3/test_tail.js",
+    "Diary/_backup/20261120-tpl-v3/OBSetting_周记-一览视图_旧版.md",
+    "Diary/_backup/20261120-tpl-v3/周报模板_旧版.md",
+    "Diary/_backup/20261120-tpl-v3/OBSetting_templater_月报_旧版.md",
+    "Diary/_backup/20261120-tpl-v3/月报模板_MRE引擎版.md",
+    "Diary/2026/Untitled.md",
+    "OBSetting/templater/日记-事件模板.md",
     "Diary/2026/20261119.md",
     "Diary/2026/20261118.md",
     "Diary/_backup/20261120-035232/2026/W40-ref.md",
     "Diary/_backup/20261120-035232/2026/20261119.md",
-    "Diary/_backup/20261120-035232/2026",
-    "Diary/_backup/20261120-035232",
     "Diary/2026/202609.md",
     "Diary/_Templates/_备份/202609_备份_20261120_改造前.md",
     "Diary/2026/W33.md",
     "Diary/_Templates/_备份/月报模板_20261120_改造前.md",
-    "Diary/_Templates/_备份",
     "Diary/2026/W36.md",
-    "Diary/2026/W40.md",
-    "Diary/_backup/wtpl-test.md",
-    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md",
-    "Diary/_backup/20261120-r2/appearance.json.bak",
-    "Diary/_backup/20261120-tpl/table-cell-clamp.css",
-    "Diary/_backup/20261120-tpl/appearance.json",
-    "Diary/_backup/20261120-tpl/月报模板.md",
-    "Diary/_backup/20261120-tpl/周报模板.md",
-    "Diary/_backup/20261120-tpl/templater_月报.md",
-    "Diary/_backup/20261120-tpl/templater_周记-一览视图.md",
-    "Diary/_backup/20261120-tpl",
-    "Diary/_backup/20261120-r2/202609.md",
-    "Diary/_backup/20261120-r2/W40.md",
-    "Diary/_backup/20261120-r2/W39.md",
-    "Diary/_backup/20261120-r2/templater",
-    "Diary/_backup/20261120-r2",
     "assets/Ink/Drawing/2026.11.19 - 23.22pm.svg",
     "assets/deutsch-kasus-adjektiv.svg",
     "assets/Designer (17).png",

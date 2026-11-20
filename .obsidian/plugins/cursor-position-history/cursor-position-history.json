@@ -1921,21 +1921,21 @@
   },
   "Diary/2026/20261001.md": {
     "scrollState": {
-      "top": 5140.80029296875,
+      "top": 4195.2001953125,
       "left": 0,
-      "clientHeight": 1516,
-      "clientWidth": 1036,
-      "height": 1516,
-      "width": 1048
+      "clientHeight": 1522,
+      "clientWidth": 1731,
+      "height": 1522,
+      "width": 1743
     },
     "cursor": {
       "from": {
-        "ch": 18,
-        "line": 1
+        "ch": 0,
+        "line": 0
       },
       "to": {
-        "ch": 18,
-        "line": 1
+        "ch": 0,
+        "line": 174
       }
     }
   },
@@ -4461,7 +4461,7 @@
   },
   "Diary/2026/20261120.md": {
     "scrollState": {
-      "top": 240,
+      "top": 0,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 1731,
@@ -4470,12 +4470,12 @@
     },
     "cursor": {
       "from": {
-        "ch": 34,
-        "line": 8
+        "ch": 0,
+        "line": 16
       },
       "to": {
-        "ch": 34,
-        "line": 8
+        "ch": 0,
+        "line": 16
       }
     }
   },
@@ -4521,7 +4521,7 @@
   },
   "OBSetting/templater/周记-一览视图.md": {
     "scrollState": {
-      "top": 960,
+      "top": 0,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 1731,
@@ -4530,12 +4530,12 @@
     },
     "cursor": {
       "from": {
-        "ch": 0,
-        "line": 30
+        "ch": 57,
+        "line": 150
       },
       "to": {
         "ch": 0,
-        "line": 30
+        "line": 149
       }
     }
   },
@@ -4581,7 +4581,7 @@
   },
   "Diary/2026/W40.md": {
     "scrollState": {
-      "top": 75.5999984741211,
+      "top": 0,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 1731,
@@ -4590,12 +4590,12 @@
     },
     "cursor": {
       "from": {
-        "ch": 1,
-        "line": 7
+        "ch": 11,
+        "line": 10
       },
       "to": {
-        "ch": 0,
-        "line": 27
+        "ch": 11,
+        "line": 10
       }
     }
   },
@@ -4641,7 +4641,7 @@
   },
   "OBSetting/templater/月报.md": {
     "scrollState": {
-      "top": 1882.800048828125,
+      "top": 0,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 1731,
@@ -4650,12 +4650,12 @@
     },
     "cursor": {
       "from": {
-        "ch": 0,
+        "ch": 27,
         "line": 0
       },
       "to": {
-        "ch": 0,
-        "line": 50
+        "ch": 27,
+        "line": 0
       }
     }
   },
@@ -4681,7 +4681,27 @@
   },
   "Diary/2026/W47.md": {
     "scrollState": {
-      "top": 360,
+      "top": 265.20001220703125,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 1435,
+      "height": 1522,
+      "width": 1447
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 26
+      },
+      "to": {
+        "ch": 0,
+        "line": 26
+      }
+    }
+  },
+  "Diary/_backup/20261120-r2/templater/月报.md": {
+    "scrollState": {
+      "top": 0,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 1731,
@@ -4690,12 +4710,52 @@
     },
     "cursor": {
       "from": {
-        "ch": 0,
-        "line": 0
+        "ch": 1,
+        "line": 5
       },
       "to": {
-        "ch": 0,
-        "line": 0
+        "ch": 1,
+        "line": 5
+      }
+    }
+  },
+  "Diary/2026/202611.md": {
+    "scrollState": {
+      "top": 240,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 1731,
+      "height": 1522,
+      "width": 1743
+    },
+    "cursor": {
+      "from": {
+        "ch": 1,
+        "line": 144
+      },
+      "to": {
+        "ch": 1,
+        "line": 144
+      }
+    }
+  },
+  "Diary/2026/202610.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 1731,
+      "height": 1522,
+      "width": 1743
+    },
+    "cursor": {
+      "from": {
+        "ch": 2,
+        "line": 180
+      },
+      "to": {
+        "ch": 2,
+        "line": 180
       }
     }
   }

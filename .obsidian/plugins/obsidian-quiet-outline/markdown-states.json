@@ -16827,15 +16827,15 @@
   "OBSetting/templater/周记-一览视图.md": {
     "cursor": {
       "from": {
-        "line": 30,
-        "ch": 0
+        "line": 150,
+        "ch": 57
       },
       "to": {
-        "line": 30,
+        "line": 149,
         "ch": 0
       }
     },
-    "scroll": 11.04958114308795
+    "scroll": 0
   },
   "Diary/2026/20260817.md": {
     "cursor": {
@@ -18061,15 +18061,15 @@
   "Diary/2026/20261001.md": {
     "cursor": {
       "from": {
-        "line": 1,
-        "ch": 18
+        "line": 0,
+        "ch": 0
       },
       "to": {
-        "line": 1,
-        "ch": 18
+        "line": 174,
+        "ch": 0
       }
     },
-    "scroll": 125.96896025537107
+    "scroll": 132.86772001257967
   },
   "思想思维心理哲学/思想/《当下的力量》精华总结.md": {
     "scroll": 197.95521590199687,
@@ -19953,15 +19953,15 @@
   "Diary/2026/20261120.md": {
     "cursor": {
       "from": {
-        "line": 8,
-        "ch": 34
+        "line": 16,
+        "ch": 0
       },
       "to": {
-        "line": 8,
-        "ch": 34
+        "line": 16,
+        "ch": 0
       }
     },
-    "scroll": 4.23096933778202
+    "scroll": 0
   },
   "Diary/2026/M09.md": {
     "scroll": 246.47293612117568,
@@ -20016,15 +20016,15 @@
     }
   },
   "Diary/2026/W40.md": {
-    "scroll": 0.5294349232385472,
+    "scroll": 0,
     "cursor": {
       "from": {
-        "line": 7,
-        "ch": 1
+        "line": 10,
+        "ch": 11
       },
       "to": {
-        "line": 26,
-        "ch": 0
+        "line": 10,
+        "ch": 11
       }
     }
   },
@@ -20071,14 +20071,14 @@
     "cursor": {
       "from": {
         "line": 0,
-        "ch": 0
+        "ch": 27
       },
       "to": {
-        "line": 50,
-        "ch": 0
+        "line": 0,
+        "ch": 27
       }
     },
-    "scroll": 17.465214796616305
+    "scroll": 0
   },
   "file:E:/AI workpace/Obsidian日记周期报告提示词_v3_模板驱动.md": {
     "cursor": {
@@ -20097,6 +20097,54 @@
     "scroll": 0
   },
   "Diary/2026/W47.md": {
-    "scroll": 6.643312898082877
+    "scroll": 4.38658782840596,
+    "cursor": {
+      "from": {
+        "line": 26,
+        "ch": 0
+      },
+      "to": {
+        "line": 26,
+        "ch": 0
+      }
+    }
+  },
+  "Diary/2026/202611.md": {
+    "cursor": {
+      "from": {
+        "line": 144,
+        "ch": 1
+      },
+      "to": {
+        "line": 144,
+        "ch": 1
+      }
+    },
+    "scroll": 142.09833303462136
+  },
+  "Diary/_backup/20261120-r2/templater/月报.md": {
+    "cursor": {
+      "from": {
+        "line": 5,
+        "ch": 1
+      },
+      "to": {
+        "line": 5,
+        "ch": 1
+      }
+    }
+  },
+  "Diary/2026/202610.md": {
+    "cursor": {
+      "from": {
+        "line": 180,
+        "ch": 2
+      },
+      "to": {
+        "line": 180,
+        "ch": 2
+      }
+    },
+    "scroll": 0
   }
 }
