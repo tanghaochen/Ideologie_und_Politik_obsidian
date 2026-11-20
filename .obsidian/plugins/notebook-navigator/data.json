@@ -163,7 +163,7 @@
   "colorIconOnly": false,
   "dateFormat": "MMM D, YYYY",
   "timeFormat": "h:mm a",
-  "calendarTemplateFolder": "",
+  "calendarTemplateFolder": "OBSetting/templater",
   "templateEngine": "automatic",
   "folderTemplates": {},
   "showFolderTemplateIcons": true,
