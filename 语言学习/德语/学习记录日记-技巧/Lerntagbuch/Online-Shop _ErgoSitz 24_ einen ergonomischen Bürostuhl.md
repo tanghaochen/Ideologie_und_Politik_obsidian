@@ -1,6 +1,11 @@
 ### Teil 2 — Formelle E-Mail
 
-> Situation: Sie haben vor zwei Wochen beim Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl für Ihr Homeoffice bestellt (Bestellnummer: E-2024-5567, Lieferung am 18. Mai). Beim Aufbau haben Sie festgestellt, dass die rechte Armlehne gebrochen ist und das Gestell mehrere tiefe Kratzer aufweist. Der Stuhl ist so nicht benutzbar. Sie haben bereits vor fünf Tagen eine E-Mail an den Kundenservice geschrieben, aber bis heute keine Antwort erhalten.
+> Situation: Sie h
+
+[0:50](obsidian://video-player-ai-local?path=E%3A%5CobsidianData%5CobsidianNote-master%5CobsidianNote-master%5C%E6%94%BF%E6%B2%BB%E6%80%9D%E6%83%B3%E6%96%87%E5%8C%96%E6%88%90%E9%95%BF%5Cassets%5CInk%5C%E5%AF%B9%E8%B0%88%E6%AD%A6%E5%BF%97%E7%BA%A2%EF%BC%9A%E4%B8%80%E6%97%A6%E6%81%A2%E5%A4%8D%E4%B8%BB%E4%BD%93%E6%80%A7%EF%BC%8C%E4%BA%BA%E7%94%9F%E4%BC%9A%E5%BC%80%E6%8C%82%EF%BC%81%E9%AB%98%E6%95%8F%E6%84%9F%E8%87%AA%E6%95%91%EF%BC%8C2%E6%8B%9B%E6%89%BE%E5%9B%9E%E4%B8%BB%E4%BD%93%E6%80%A7%EF%BC%81.mp4&t=50.440672)
+
+![[Video Player (AI integrated)/Screenshots/对谈武志红：一旦恢复主体性，人生会开挂！高敏感自救，2招找回主体性！ 0-50 20261120-233838.png|720]]
+aben vor zwei Wochen beim Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl für Ihr Homeoffice bestellt (Bestellnummer: E-2024-5567, Lieferung am 18. Mai). Beim Aufbau haben Sie festgestellt, dass die rechte Armlehne gebrochen ist und das Gestell mehrere tiefe Kratzer aufweist. Der Stuhl ist so nicht benutzbar. Sie haben bereits vor fünf Tagen eine E-Mail an den Kundenservice geschrieben, aber bis heute keine Antwort erhalten.
 >
 > Schreiben Sie eine E-Mail an den Kundenservice, Herrn Neumann.
 >

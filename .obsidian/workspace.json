@@ -6,7 +6,6 @@
       {
         "id": "3bc015e7f0f64eeb",
         "type": "tabs",
-        "dimension": 59.20781893004116,
         "children": [
           {
             "id": "52603972a51e39df",
@@ -82,28 +81,56 @@
               "icon": "lucide-file",
               "title": "2026年11月20日"
             }
-          }
-        ],
-        "currentTab": 4
-      },
-      {
-        "id": "bf50db3c03618891",
-        "type": "tabs",
-        "dimension": 40.79218106995885,
-        "children": [
+          },
           {
-            "id": "af8883f99da90cf5",
+            "id": "18ba0ddd605d3202",
             "type": "leaf",
             "state": {
-              "type": "mindmap",
+              "type": "video-player-ai-view",
+              "state": {},
+              "icon": "file-video",
+              "title": "对谈武志红：一旦恢复主体性，人生会开挂！高敏感自救，2招找回主体性！"
+            }
+          },
+          {
+            "id": "2c18351cb3a7e3bb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/2026年11月20日.md"
+                "file": "media-lib/Recording 20260221142357.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "mindmap-tree",
-              "title": "2026年11月20日"
+              "icon": "lucide-file",
+              "title": "Recording 20260221142357"
+            }
+          },
+          {
+            "id": "4e6f1ee702043879",
+            "type": "leaf",
+            "state": {
+              "type": "media-transcript-view",
+              "state": {
+                "file": "assets/Ink/对谈武志红：一旦恢复主体性，人生会开挂！高敏感自救，2招找回主体性！.mp4"
+              },
+              "icon": "lucide-file",
+              "title": "对谈武志红：一旦恢复主体性，人生会开挂！高敏感自救，2招找回主体性！"
+            }
+          },
+          {
+            "id": "55cbdd8b6a66cbe6",
+            "type": "leaf",
+            "state": {
+              "type": "video-library",
+              "state": {},
+              "icon": "library-big",
+              "title": "Playlists"
             }
           }
-        ]
+        ],
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -373,13 +400,25 @@
       "copilot:Open Copilot Agent Chat": false,
       "notebook-navigator:Notebook Navigator": false,
       "templates:插入模板": false,
-      "periodic-notes:Open today": false
+      "periodic-notes:Open today": false,
+      "media-transcript:媒体库": false,
+      "media-transcript:标注": false,
+      "video-player-ai:Open video player": false,
+      "video-player-ai:Playlists": false
     }
   },
-  "active": "af8883f99da90cf5",
+  "active": "2c18351cb3a7e3bb",
   "lastOpenFiles": [
-    "语言学习/德语/单词/生词/26-8.md",
+    "assets/Ink/对谈武志红：一旦恢复主体性，人生会开挂！高敏感自救，2招找回主体性！.mp4",
     "语言学习/德语/学习记录日记-技巧/leseaufgabe/2026年11月20日.md",
+    "Video Player (AI integrated)/Screenshots/对谈武志红：一旦恢复主体性，人生会开挂！高敏感自救，2招找回主体性！ 0-50 20261120-233838.png",
+    "Video Player (AI integrated)/Screenshots",
+    "Video Player (AI integrated)/Transcripts/对谈武志红：一旦恢复主体性，人生会开挂！高敏感自救，2招找回主体性！ Transcript 2.md",
+    "Video Player (AI integrated)/Transcripts/对谈武志红：一旦恢复主体性，人生会开挂！高敏感自救，2招找回主体性！ Transcript.md",
+    "Video Player (AI integrated)/Transcripts",
+    "Video Player (AI integrated)",
+    "copilot/copilot-conversations/Translation_Request@20261120_225742.md",
+    "语言学习/德语/单词/生词/26-8.md",
     "语言学习/德语/公共知识语法/2动词/情态动词.md",
     "语言学习/德语/单词/生词/26-9.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
@@ -401,19 +440,11 @@
     "Diary/2026/20261120.md",
     "Diary/_backup/20261120-tpl-v3/test_both.js",
     "Diary/_backup/20261120-tpl-v3/build_both.py",
-    "Diary/_backup/20261120-tpl-v3/test_render.js",
-    "Diary/_backup/20261120-tpl-v3/test_monthly2.js",
-    "Diary/_backup/20261120-tpl-v3/build_monthly2.py",
-    "Diary/_backup/20261120-tpl-v3/test_tail.js",
     "Diary/_backup/20261120-tpl-v3/OBSetting_周记-一览视图_旧版.md",
     "Diary/_backup/20261120-tpl-v3/周报模板_旧版.md",
     "Diary/_backup/20261120-tpl-v3/OBSetting_templater_月报_旧版.md",
     "Diary/_backup/20261120-tpl-v3/月报模板_MRE引擎版.md",
     "Diary/2026/Untitled.md",
-    "OBSetting/templater/日记-事件模板.md",
-    "Diary/2026/20261119.md",
-    "Diary/2026/20261118.md",
-    "Diary/_backup/20261120-035232/2026/W40-ref.md",
     "assets/Ink/Drawing/2026.11.19 - 23.22pm.svg",
     "assets/deutsch-kasus-adjektiv.svg",
     "assets/Designer (17).png",
@@ -423,7 +454,6 @@
     "assets/file-20261118141223379.png",
     "assets/1794745508852-0.png",
     "assets/Designer (12).png",
-    "assets/1794742127458-0 (1).png",
     "语言学习/德语/学习记录日记-技巧/2026.canvas",
     "Marginnote/Deutsch.canvas",
     "Marginnote/错题管理.canvas",

@@ -1,0 +1,67 @@
+{
+  "serverUrl": "",
+  "serverVault": "",
+  "uploadNewMedia": false,
+  "archiveTranscriptFolder": "Transcripts",
+  "subtitleDirectory": "",
+  "priorities": [
+    {
+      "marker": "",
+      "label": "Default (no marker)"
+    }
+  ],
+  "mediaFolders": [],
+  "mediaUrls": [],
+  "preferRemote": false,
+  "mediaLinks": {},
+  "supportedVideoExtensions": [
+    "mp4",
+    "webm",
+    "mkv",
+    "mov",
+    "avi",
+    "m4v"
+  ],
+  "supportedAudioExtensions": [
+    "mp3",
+    "wav",
+    "ogg",
+    "m4a",
+    "flac",
+    "aac",
+    "opus"
+  ],
+  "videoLayout": "auto",
+  "playerWidthPercent": 65,
+  "lowSideWidthPercent": null,
+  "stackVideoPercent": null,
+  "quotesKept": [],
+  "transcriptFontSize": 16,
+  "autoScroll": true,
+  "videoAudioOnly": false,
+  "playlist": [],
+  "modules": {
+    "attention": {
+      "markColor": "#f5c542",
+      "markStyle": "underline",
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "popoverOnSelection": true,
+      "enableMarkdownHost": true,
+      "enableTranscriptHost": true,
+      "enablePdfHost": true,
+      "trackReplays": false,
+      "autoRevealPanel": true,
+      "resurfaceCount": 10,
+      "keepOrphanedSidecars": true,
+      "transcriptMarksOnTrack": true,
+      "forceViewMode": false,
+      "defaultViewMode": "reading",
+      "folderViewModes": []
+    }
+  },
+  "enabledModules": {
+    "attention": true,
+    "archive": false,
+    "hotlink": true
+  }
+}

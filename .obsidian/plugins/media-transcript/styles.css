@@ -1,0 +1,3614 @@
+/* ──────────────────────────────────────────────
+   Media Transcript Plugin
+   ────────────────────────────────────────────── */
+
+.mt-view {
+  /* The plugin owns its accent instead of borrowing the theme's: transcript
+     highlighting should look the same whatever accent the vault is set to. */
+  --mt-accent: #8b5cf6;
+  --mt-accent-contrast: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Lightened so the same violet stays legible on a dark background. */
+.theme-dark .mt-view {
+  --mt-accent: #a78bfa;
+  --mt-accent-contrast: #1c1524;
+}
+
+/* Root two-column layout (video) */
+.mt-root {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Player side (video) ──────────────────────── */
+
+.mt-player-side {
+  display: flex;
+  flex-direction: column;
+  width: var(--mt-player-width, 75%);
+  min-width: 300px;
+  max-width: 75%;
+  flex-shrink: 0;
+  background: var(--background-secondary);
+  overflow-y: auto;
+}
+
+.mt-divider {
+  position: relative;
+  flex: 0 0 5px;
+  cursor: col-resize;
+  background: var(--background-modifier-border);
+  transition: background 0.12s;
+  touch-action: none;
+  z-index: 3;
+}
+
+/* A finger needs more than five pixels to take hold of. */
+.mt-divider::after {
+  content: '';
+  position: absolute;
+  inset: 0 -10px;
+}
+
+/* A grip in the middle says it can be dragged. */
+.mt-divider-grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 32px;
+  border-radius: 2px;
+  transform: translate(-50%, -50%);
+  background: var(--text-faint);
+  pointer-events: none;
+}
+
+.mt-divider:hover,
+body.mt-resizing .mt-divider,
+body.mt-resizing-rows .mt-divider {
+  background: var(--mt-accent);
+}
+
+body.mt-resizing {
+  cursor: col-resize;
+  user-select: none;
+}
+
+body.mt-resizing-rows {
+  cursor: row-resize;
+  user-select: none;
+}
+
+.mt-player-wrapper {
+  padding: 16px 16px 0;
+  position: sticky;
+  top: 0;
+}
+
+.mt-media {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  outline: none;
+  background: #000;
+}
+
+video.mt-media {
+  /* The clear poster would make it square until the first picture: its own shape instead. */
+  aspect-ratio: var(--mt-video-aspect, 16 / 9);
+  height: auto;
+  max-height: 72vh;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.mt-video-controls {
+  padding: 8px 12px 12px;
+}
+
+/* The picture on top, the transcript below: chosen in the settings, or by
+   the pane's shape ("auto", decided in pickArrangement). */
+.mt-root.is-stack { flex-direction: column; }
+.mt-root.is-stack .mt-divider { flex: 0 0 6px; cursor: row-resize; }
+.mt-root.is-stack .mt-divider::after { inset: -10px 0; }
+.mt-root.is-stack .mt-divider-grip { width: 32px; height: 4px; }
+.mt-root.is-stack.has-video-height video.mt-media { height: var(--mt-stack-video-h); max-height: none; }
+.mt-root.is-stack .mt-player-side {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+.mt-root.is-stack video.mt-media { max-height: 42vh; }
+.mt-root.is-stack .mt-transcript-side { flex: 1; min-height: 0; }
+
+/* ── Controls of our own (transcript view, cards) ─────────────────── */
+
+.mo-ctl {
+  --mo-ctl-accent: var(--mt-accent, var(--interactive-accent));
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  user-select: none;
+}
+
+.mo-ctl-play {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  border: none;
+  background: var(--mo-ctl-accent);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--mo-ctl-accent) 35%, transparent);
+  transition: transform 0.1s ease, filter 0.1s ease;
+}
+
+.mo-ctl-play:hover { filter: brightness(1.08); }
+.mo-ctl-play:active { transform: scale(0.94); }
+.mo-ctl-play-icon { display: inline-flex; }
+.mo-ctl-play-icon svg { width: 18px; height: 18px; fill: currentColor; }
+.mo-ctl:not(.is-playing) .mo-ctl-play-icon { margin-left: 2px; }
+.mo-ctl.is-waiting .mo-ctl-play { animation: mo-ctl-pulse 1s ease-in-out infinite; }
+.mo-ctl.is-failed .mo-ctl-play { background: var(--background-modifier-border); color: var(--text-muted); box-shadow: none; }
+
+@keyframes mo-ctl-pulse {
+  50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--mo-ctl-accent) 18%, transparent); }
+}
+
+.mo-ctl-time {
+  flex: 0 0 auto;
+  min-width: 34px;
+  font-size: var(--font-ui-smaller);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+.mo-ctl-at { text-align: right; color: var(--text-normal); }
+
+.mo-ctl-bar {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 60px;
+  height: 22px;
+  cursor: pointer;
+  touch-action: none;
+  outline: none;
+}
+
+.mo-ctl-bar::before,
+.mo-ctl-buffered,
+.mo-ctl-played {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 4px;
+  margin-top: -2px;
+  border-radius: 2px;
+}
+
+.mo-ctl-bar::before { right: 0; background: var(--background-modifier-border); }
+.mo-ctl-buffered { background: color-mix(in srgb, var(--text-muted) 28%, transparent); }
+.mo-ctl-played { background: var(--mo-ctl-accent); }
+
+.mo-ctl-thumb {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.3);
+  transform: scale(0);
+  transition: transform 0.12s ease;
+}
+
+.mo-ctl-bar:hover .mo-ctl-thumb,
+.mo-ctl-bar:focus-visible .mo-ctl-thumb,
+.mo-ctl.is-dragging .mo-ctl-thumb { transform: scale(1); }
+.mo-ctl-bar:hover::before, .mo-ctl.is-dragging .mo-ctl-bar::before { height: 6px; margin-top: -3px; }
+.mo-ctl-bar:focus-visible { box-shadow: 0 0 0 2px var(--background-modifier-border-focus); border-radius: 4px; }
+
+.mo-ctl-skip { position: relative; flex: 0 0 auto; }
+.mo-ctl-skip svg { width: 22px; height: 22px; }
+.mo-ctl-skip-n {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: var(--font-bold);
+  padding-top: 1px;
+  pointer-events: none;
+}
+
+.mo-ctl-rate {
+  flex: 0 0 auto;
+  min-width: 38px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 13px;
+  font-size: var(--font-ui-smaller);
+  font-variant-numeric: tabular-nums;
+  background: var(--background-modifier-hover);
+  box-shadow: none;
+  color: var(--text-muted);
+}
+
+.mo-ctl-rate.is-changed { color: var(--mo-ctl-accent); background: color-mix(in srgb, var(--mo-ctl-accent) 14%, transparent); }
+
+.mo-ctl.is-compact { gap: 6px; }
+.mo-ctl.is-compact .mo-ctl-play { width: 34px; height: 34px; }
+.mo-ctl.is-compact .mo-ctl-play-icon svg { width: 15px; height: 15px; }
+
+/* Narrow: the skips step aside before the bar gets too short. */
+@container mt-pane (max-width: 380px) {
+  .mo-ctl-skip { display: none; }
+}
+
+/* ── Audio: a card at the top (what plays, the controls), the transcript below ── */
+
+.mt-view { container: mt-pane / inline-size; }
+
+.mt-audio-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  flex-shrink: 0;
+}
+
+.mt-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.mt-head-cover.mo-cover.is-small { width: 44px; height: 44px; border-radius: 10px; font-size: 12px; }
+
+.mt-head-doc {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-modifier-hover);
+  color: var(--text-muted);
+}
+
+.mt-head-names { flex: 1; min-width: 0; }
+
+.mt-head-title {
+  font-weight: var(--font-semibold);
+  font-size: var(--font-ui-medium);
+  color: var(--text-normal);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mt-head-sub {
+  margin-top: 2px;
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mt-media-audio { display: none; }
+
+.mt-nomedia-note { cursor: help; }
+.mt-nomedia-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.mt-nomedia-actions button { font-size: var(--font-ui-small); }
+
+/* ── Transcript side ──────────────────────────── */
+
+.mt-transcript-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.mt-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 10px 6px 12px;
+  flex-shrink: 0;
+}
+
+.mt-toolbar-gap { flex: 1; }
+
+.mt-track-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 60%;
+  height: 28px;
+  padding: 0 10px 0 8px;
+  border-radius: 14px;
+  background: var(--background-modifier-hover);
+  box-shadow: none;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+}
+
+.mt-track-chip.is-single { cursor: default; }
+.mt-track-chip-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mt-track-chip-icon, .mt-track-chip-more { display: inline-flex; flex: none; }
+.mt-track-chip svg { width: 14px; height: 14px; }
+.mt-track-chip-icon { color: var(--mt-accent); }
+
+.mo-icon-btn.is-active { color: var(--mt-accent); background: color-mix(in srgb, var(--mt-accent) 12%, transparent); }
+
+/* ── Search: folded away until asked for ───────── */
+
+.mt-searchbar {
+  display: none;
+  align-items: center;
+  gap: 2px;
+  margin: 0 12px 6px;
+  padding: 0 4px 0 10px;
+  border-radius: 10px;
+  background: var(--background-modifier-form-field);
+  border: 1px solid var(--background-modifier-border);
+  flex-shrink: 0;
+}
+
+.mt-searchbar.is-open { display: flex; }
+.mt-searchbar:focus-within { border-color: var(--mt-accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--mt-accent) 20%, transparent); }
+
+.mt-search-input.mt-search-input {
+  flex: 1;
+  min-width: 0;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: none;
+  box-shadow: none;
+  font-size: var(--font-ui-small);
+}
+
+.mt-search-count {
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  padding: 0 4px;
+}
+
+.mt-search-count.mt-search-none { color: var(--text-error); }
+.mt-searchbar .mo-icon-btn { padding: 4px; }
+
+.mt-hit {
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--mt-accent) 26%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--mt-accent) 30%, transparent);
+}
+
+.mt-hit-current {
+  background: var(--mt-accent);
+  color: var(--mt-accent-contrast);
+  box-shadow: none;
+}
+
+/* ── Transcript ────────────────────────────────── */
+
+.mt-transcript {
+  flex: 1;
+  overflow-y: auto;
+  /* Tall bottom padding so even the last lines can be scrolled to the middle. */
+  padding: 4px 8px 40vh;
+  scroll-behavior: auto;
+  font-size: var(--mt-font-size, 15px);
+  /* Makes this the offsetParent of the segments (scrollActiveIntoCenter uses offsetTop). */
+  position: relative;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.mt-segment {
+  position: relative;
+  display: block;
+  line-height: 1.75;
+  padding: 8px 12px 8px 14px;
+  margin: 2px 0;
+  border-radius: 10px;
+  transition: background-color 0.15s ease;
+  user-select: none;
+}
+
+/* The words are for reading and selecting; playing is the timestamp's job. */
+.mt-txt {
+  display: inline;
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
+  color: var(--text-normal);
+}
+
+.mt-segment:hover { background: var(--background-modifier-hover); }
+
+.mt-segment.mt-active { background: color-mix(in srgb, var(--mt-accent) 12%, transparent); }
+
+.mt-segment.mt-active::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--mt-accent);
+}
+
+.mt-ts {
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: baseline;
+  margin-right: 8px;
+  padding: 0 6px;
+  border-radius: 6px;
+  font-size: 0.72em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+  box-shadow: inset 0 0 0 1px var(--background-modifier-border);
+  transition: color 0.12s ease, background-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.mt-ts:hover {
+  color: var(--mt-accent);
+  background: color-mix(in srgb, var(--mt-accent) 10%, transparent);
+  box-shadow: inset 0 0 0 1px var(--mt-accent);
+}
+
+.mt-segment.mt-active .mt-ts {
+  color: var(--mt-accent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mt-accent) 45%, transparent);
+}
+
+.mt-spk {
+  display: inline-block;
+  vertical-align: baseline;
+  margin-right: 6px;
+  font-size: 0.68em;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 0 6px;
+}
+
+/* ── States ────────────────────────────────────── */
+
+.mt-empty,
+.mt-error {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+.mt-error { color: var(--text-error); }
+
+/* ── Note embeds of media in the vault (![[talk.m4a]]): the button after the player ── */
+
+.mt-embed {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.mt-embed > audio { flex: 1; min-width: 200px; }
+
+.mt-embed-btn {
+  order: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 14px;
+  font-size: var(--font-ui-smaller);
+  color: #8b5cf6;
+  background: color-mix(in srgb, #8b5cf6 10%, transparent);
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.mt-embed-btn:hover { background: color-mix(in srgb, #8b5cf6 18%, transparent); }
+.theme-dark .mt-embed-btn { color: #a78bfa; background: color-mix(in srgb, #a78bfa 12%, transparent); }
+.mt-embed-btn-icon { display: inline-flex; }
+.mt-embed-btn-icon svg { width: 14px; height: 14px; }
+
+/* Timestamps still mark time, but there's nothing to play. */
+.mt-reading-mode .mt-ts { cursor: default; }
+.mt-reading-mode .mt-ts:hover { background: none; color: var(--text-faint); box-shadow: inset 0 0 0 1px var(--background-modifier-border); }
+.mt-link-where { color: var(--text-muted); }
+
+/* ── Transcript card (![[x.json]], or ![[x.m4a]] once the media has moved) ── */
+
+/* The host is Obsidian's own embed element; the card brings its own frame. */
+.internal-embed.mt-card-host {
+  padding: 0;
+  border: none;
+  background: none;
+  box-shadow: none;
+  text-align: start;
+}
+
+.mt-card {
+  --mt-accent: #8b5cf6;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 14px;
+  background: var(--background-secondary);
+  max-width: 640px;
+}
+
+.theme-dark .mt-card { --mt-accent: #a78bfa; }
+
+.mt-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.mt-card-head .mo-cover.is-small { width: 40px; height: 40px; border-radius: 10px; font-size: 11px; }
+
+.mt-card-names { flex: 1; min-width: 0; }
+
+.mt-card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--font-ui-small);
+  font-weight: var(--font-semibold);
+  color: var(--text-normal);
+}
+
+.mt-card-sub {
+  margin-top: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+}
+
+.mt-card .mt-embed-btn { order: 0; flex: none; }
+.mt-card-body:empty { display: none; }
+
+.mt-card-status {
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+}
+
+.mt-card-retry { color: var(--mt-accent); margin-left: 4px; }
+.mt-card-audio { display: none; }
+
+.mt-card-video {
+  display: block;
+  width: 100%;
+  max-height: 60vh;
+  border-radius: 10px;
+  background: #000;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+/* ── Module settings ──────────────────────────────────────────────────────── */
+
+.mt-module-settings {
+  padding-left: var(--size-4-3);
+  border-left: 2px solid var(--background-modifier-border);
+  margin-bottom: var(--size-4-6);
+}
+
+/* ══ Annotations module (formerly the Attention plugin) ══════════════════════ */
+
+/* ── Review panel ──────────────────────────────────────────────────────────── */
+
+.at-review {
+  padding: 0 12px 40px;
+}
+
+.at-review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 0;
+  position: sticky;
+  top: 0;
+  background: var(--background-secondary);
+  z-index: 1;
+}
+
+.at-tabs {
+  display: flex;
+  gap: 2px;
+}
+
+.at-tab {
+  font-size: var(--font-ui-smaller);
+  padding: 2px 9px;
+  cursor: pointer;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-muted);
+}
+
+.at-tab.is-active,
+.at-btn.is-active {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+  font-weight: var(--font-medium);
+}
+
+.at-review-total {
+  font-size: var(--font-ui-small);
+  color: var(--text-muted);
+}
+
+.at-btn {
+  font-size: var(--font-ui-smaller);
+  padding: 2px 10px;
+  cursor: pointer;
+}
+
+/* Sort control sits under the tabs, not beside them: the header is already
+   carrying two controls and a third would crowd a narrow sidebar. */
+.at-sortbar {
+  padding: 4px 0 2px;
+}
+
+.at-sort {
+  width: 100%;
+  font-size: var(--font-ui-smaller);
+  height: auto;
+  padding: 3px 6px;
+}
+
+.at-bucket-title {
+  font-size: var(--font-ui-smaller);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  margin: 16px 0 6px;
+}
+
+/* One marked passage. The colour of the stripe is the highlight colour. */
+.at-entry {
+  border-left: 3px solid var(--at-color, var(--text-accent));
+  padding: 6px 0 6px 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0;
+}
+
+.at-entry:hover {
+  background: var(--background-modifier-hover);
+}
+
+.at-quote {
+  font-size: var(--font-ui-small);
+  line-height: 1.5;
+  color: var(--text-normal);
+}
+
+.at-body {
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+  margin-top: 4px;
+  padding-left: 8px;
+  border-left: 2px solid var(--background-modifier-border);
+}
+
+.at-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 4px;
+  font-size: var(--font-ui-smaller);
+  color: var(--text-faint);
+}
+
+/* The name gives up space first — it's the variable-length half. */
+.at-meta-left {
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.at-source {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Times keep their full width so they line up down the list. */
+.at-meta-right {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+.at-time,
+.at-when {
+  font-variant-numeric: tabular-nums;
+}
+
+.at-empty {
+  color: var(--text-faint);
+  font-size: var(--font-ui-small);
+  padding: 24px 0;
+  line-height: 1.6;
+}
+
+/* ── Highlights painted onto a host surface ────────────────────────────────── */
+
+/* Default: an underline. Marks are meant to be many, and a filled block both
+   drowns the page and looks like Obsidian's own ==highlight== — which lives in
+   the note, unlike these. An underline also leaves the selection layer alone. */
+.at-hl {
+  box-shadow: inset 0 -0.18em 0 0 var(--at-color, #f5c542);
+  cursor: pointer;
+  transition: box-shadow 120ms ease;
+}
+
+.at-hl:hover {
+  box-shadow: inset 0 -0.32em 0 0 var(--at-color, #f5c542);
+}
+
+/* An annotation you wrote something about earns more weight than a bare mark. */
+.at-hl-comment {
+  background: color-mix(in srgb, var(--at-color, #f5c542) 18%, transparent);
+  border-radius: 2px;
+}
+
+/* Opt-in fill. Translucent on purpose: an opaque background sits on top of the
+   browser's selection colour, which is painted behind the text, so with a solid
+   fill the text still selects — it just doesn't *look* selected. */
+body.at-style-background .at-hl {
+  background: color-mix(in srgb, var(--at-color, #f5c542) 42%, transparent);
+  border-radius: 2px;
+  box-shadow: none;
+}
+
+body.at-style-background .at-hl:hover {
+  background: color-mix(in srgb, var(--at-color, #f5c542) 62%, transparent);
+  box-shadow: none;
+}
+
+/* On a PDF, a mark is a rectangle PDF++ placed over the text, in a layer of
+   its own above the page. The pointer passes through it so the text beneath
+   still selects; the host finds a mark under a click by position instead. The
+   fill blends with the page rather than covering it. */
+.pdf-plus-backlink-highlight-layer .at-pdf-hl {
+  position: absolute;
+  pointer-events: none;
+  box-shadow: none;
+  background: color-mix(in srgb, var(--at-color, #f5c542) 38%, transparent);
+  mix-blend-mode: multiply;
+  border-radius: 2px;
+}
+
+.theme-dark .pdf-plus-backlink-highlight-layer .at-pdf-hl {
+  mix-blend-mode: screen;
+}
+
+/* A region — a figure, a table — is outlined rather than filled: a fill over
+   a picture tints the picture, and the outline is what says "this part". */
+.pdf-plus-backlink-highlight-layer .at-pdf-hl.at-pdf-region {
+  background: color-mix(in srgb, var(--at-color, #f5c542) 10%, transparent);
+  outline: 2px solid var(--at-color, #f5c542);
+  outline-offset: 2px;
+  mix-blend-mode: normal;
+}
+
+.pdf-plus-backlink-highlight-layer .at-pdf-hl.at-hl-comment {
+  background: color-mix(in srgb, var(--at-color, #f5c542) 55%, transparent);
+}
+
+/* Make selection unmistakable either way. */
+.at-hl::selection {
+  background: var(--text-selection);
+}
+
+/* ── Comment bubble (clicking a highlight) ─────────────────────────────────── */
+
+.at-bubble {
+  position: fixed;
+  z-index: var(--layer-popover);
+  max-width: 320px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  box-shadow: var(--shadow-s);
+}
+
+.at-bubble-body {
+  font-size: var(--font-ui-small);
+  line-height: 1.5;
+  color: var(--text-normal);
+  white-space: pre-wrap;
+  margin-bottom: 8px;
+}
+
+.at-bubble-empty {
+  font-size: var(--font-ui-small);
+  color: var(--text-faint);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.at-bubble-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* Times a passage has caught you, listed in the bubble. */
+.at-bubble-hits {
+  margin-bottom: 8px;
+  font-size: var(--font-ui-smaller);
+  color: var(--text-faint);
+}
+
+.at-hit-count {
+  color: var(--text-muted);
+  font-weight: var(--font-medium);
+}
+
+.at-hit-time {
+  padding-left: 8px;
+}
+
+.at-pop-mark {
+  font-weight: var(--font-medium);
+}
+
+.at-when {
+  color: var(--text-faint);
+}
+
+/* Repeat count in the review panel. */
+.at-hits {
+  color: var(--text-accent);
+  font-weight: var(--font-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+.at-entry {
+  position: relative;
+  border-left-color: var(--at-color, var(--text-accent));
+}
+
+/* Row actions stay out of the way until you're pointing at the entry, so a
+   long list reads as a list rather than a control panel. */
+.at-entry-actions {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: none;
+  gap: 2px;
+  background: var(--background-secondary);
+  border-radius: 4px;
+  padding: 1px;
+}
+
+.at-entry:hover .at-entry-actions,
+.at-entry:focus-within .at-entry-actions {
+  display: flex;
+}
+
+.at-icon-btn {
+  padding: 1px 5px;
+  height: 20px;
+  font-size: 11px;
+  line-height: 1;
+  cursor: pointer;
+  background: transparent;
+  box-shadow: none;
+}
+
+.at-icon-btn:hover {
+  background: var(--background-modifier-hover);
+}
+
+.at-icon-btn.mod-warning:hover {
+  background: var(--background-modifier-error);
+  color: var(--text-on-accent);
+}
+
+/* Marks whose text is gone. Dimmed and struck through: still here, plainly not
+   pointing at anything. */
+.at-lost-title {
+  color: var(--text-error);
+}
+
+.at-entry-lost {
+  border-left-style: dashed;
+  border-left-color: var(--text-faint);
+  cursor: default;
+  opacity: 0.75;
+}
+
+.at-entry-lost .at-quote {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.at-entry-lost:hover {
+  opacity: 1;
+}
+
+/* Above a transcript: some of its marks lost their text. A click lists them. */
+.mt-transcript > .at-lost-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin: 0 0 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-s);
+  background: rgba(var(--color-red-rgb), 0.1);
+  color: var(--text-error);
+  font-size: var(--font-ui-smaller);
+  cursor: pointer;
+}
+
+.mt-transcript > .at-lost-bar:hover {
+  background: rgba(var(--color-red-rgb), 0.18);
+}
+
+/* Briefly ring an annotation the review panel jumped to. */
+@keyframes at-flash {
+  from { box-shadow: 0 0 0 3px var(--text-accent); }
+  to   { box-shadow: 0 0 0 3px transparent; }
+}
+
+.at-flash {
+  animation: at-flash 1.2s ease-out;
+  border-radius: 3px;
+}
+
+/* ── Selection popover ─────────────────────────────────────────────────────── */
+
+.at-popover {
+  position: fixed;
+  z-index: var(--layer-popover);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 7px;
+  border-radius: 8px;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  box-shadow: var(--shadow-s);
+}
+
+.at-swatch {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--background-modifier-border);
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.at-swatch:hover {
+  transform: scale(1.15);
+}
+
+.at-pop-btn {
+  padding: 0 6px;
+  height: 22px;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: none;
+  background: transparent;
+}
+
+.at-pop-btn:hover {
+  background: var(--background-modifier-hover);
+}
+
+/* ── Comment modal ─────────────────────────────────────────────────────────── */
+
+.at-comment-quote {
+  font-size: var(--font-ui-small);
+  color: var(--text-muted);
+  border-left: 3px solid var(--text-accent);
+  padding-left: 10px;
+  margin-bottom: 12px;
+  max-height: 6em;
+  overflow-y: auto;
+}
+
+.at-comment-input {
+  width: 100%;
+  min-height: 7em;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* ── Marked images ─────────────────────────────────────────────────────────── */
+
+/* A picture can't be underlined, so it gets a ring. Inset, so a marked image
+   doesn't shift the text around it. */
+.at-img {
+  outline: 3px solid var(--at-color, #f5c542);
+  outline-offset: -3px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.at-img-comment {
+  outline-style: double;
+  outline-width: 5px;
+}
+
+.at-img:hover {
+  outline-color: var(--interactive-accent);
+}
+
+/* ── Panel entries: thumbnails and long text ───────────────────────────────── */
+
+/* An image mark shows the picture, not the embed that produced it. */
+.at-thumb img {
+  max-width: 100%;
+  max-height: 120px;
+  width: auto;
+  height: auto;
+  border-radius: 3px;
+  display: block;
+}
+
+.at-thumb p {
+  margin: 0;
+}
+
+/* A quote can be a URL with no spaces in it, which would otherwise push the
+   panel wider than the sidebar and scroll the whole thing sideways. */
+.at-quote,
+.at-body {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Long quotes are trimmed rather than allowed to fill the panel; the whole
+   thing is one click away in the note. */
+.at-quote {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.at-review {
+  overflow-x: hidden;
+}
+
+/* A folder rule is two inputs and a delete, not a named setting — the name
+   column would be empty on every row. */
+.at-folder-rule {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.at-folder-rule .setting-item-info {
+  display: none;
+}
+
+.at-folder-rule .setting-item-control input[type='text'] {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Touch ─────────────────────────────────────────────────────────────────
+   A phone has no pointer to hover with, so anything that appears on hover is
+   simply unreachable there. The row's actions are shown outright instead —
+   a list of marks is short enough that they do not crowd it, and without them
+   the only way to act on a mark would be to go and find it in the note. */
+.is-mobile .at-entry-actions {
+  display: flex;
+}
+
+.is-mobile .at-icon-btn {
+  /* Comfortably larger than a fingertip's worth of certainty. */
+  height: 30px;
+  min-width: 30px;
+  font-size: 14px;
+}
+
+/* The popover is placed against a selection the reader made with a finger,
+   which their hand may still be over; a little more room makes it tappable. */
+.is-mobile .at-popover,
+.is-mobile .at-bubble {
+  font-size: var(--font-ui-medium);
+}
+
+.is-mobile .at-pop-btn {
+  height: 34px;
+  min-width: 34px;
+}
+
+/* A picture is ringed rather than underlined, so the flash needs to sit
+   outside it — on a span the box-shadow overlaps the text and reads fine, but
+   on an image it would be hidden behind the picture itself. */
+img.at-flash {
+  outline: 3px solid var(--text-accent);
+  outline-offset: 2px;
+  animation: at-flash-outline 1.2s ease-out;
+}
+
+@keyframes at-flash-outline {
+  from { outline-color: var(--text-accent); }
+  to   { outline-color: transparent; }
+}
+
+/* A region of a PDF in the review panel: the picture, cut from its page. */
+.at-thumb-pdf {
+  max-height: 160px;
+  overflow: hidden;
+}
+
+.at-quote-region {
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+}
+
+.pdf-plus-backlink-highlight-layer .at-pdf-hl.at-pdf-region.at-hl-comment {
+  background: color-mix(in srgb, var(--at-color, #f5c542) 16%, transparent);
+}
+
+/* ══ Hotlink-protected media module (formerly the Hotlink Media plugin) ══════ */
+
+.hotlink-media-failed {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	margin: 0.25em 0 1em;
+}
+
+/* ── Media library panel ───────────────────────────────────────────────────── */
+
+.mo-lib {
+  padding: var(--size-4-2);
+  display: flex;
+  flex-direction: column;
+}
+
+.mo-lib > * {
+  flex-shrink: 0;
+}
+
+.mo-lib-bar {
+  display: flex;
+  gap: var(--size-4-2);
+  align-items: center;
+}
+
+.mo-lib-search {
+  flex: 1;
+  min-width: 0;
+}
+
+.mo-lib-status {
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  margin: var(--size-4-2) 0;
+}
+
+.mo-lib-error {
+  color: var(--text-error);
+}
+
+.mo-lib-folder {
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  font-weight: var(--font-semibold);
+  margin: var(--size-4-3) 0 var(--size-4-1);
+  overflow-wrap: anywhere;
+}
+
+.mo-lib-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--size-4-1);
+  padding: var(--size-4-1) var(--size-4-2);
+  border-radius: var(--radius-s);
+}
+
+.mo-lib-row:hover {
+  background: var(--background-modifier-hover);
+}
+
+.mo-lib-main {
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.mo-lib-name {
+  overflow-wrap: anywhere;
+}
+
+.mo-lib-meta {
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+}
+
+.mo-lib-badge {
+  margin-left: var(--size-4-2);
+  padding: 0 var(--size-4-1);
+  border-radius: var(--radius-s);
+  background: var(--background-modifier-border);
+  color: var(--text-muted);
+}
+
+.mo-lib-actions {
+  display: flex;
+}
+
+.mo-lib-player {
+  flex-basis: 100%;
+}
+
+.mo-lib-player audio {
+  width: 100%;
+}
+
+.mo-lib-empty {
+  color: var(--text-muted);
+  margin: var(--size-4-4) 0;
+}
+
+.mo-lib-trash {
+  margin-top: var(--size-4-6);
+}
+
+.mo-lib-trash summary {
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.mo-lib-rename-input {
+  width: 100%;
+}
+
+.mo-lib-job-failed {
+  color: var(--text-error);
+}
+
+.mo-lib-job-claimed {
+  color: var(--text-accent);
+}
+
+.mo-lib-nobackup {
+  color: var(--text-warning);
+}
+
+/* Archive: videos linked from notes, with a bar to keep a copy */
+.mo-video {
+  display: block;
+  margin: var(--size-4-2) 0;
+}
+
+.mo-video video {
+  display: block;
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: var(--radius-s);
+  background: var(--background-secondary);
+}
+
+.mo-video-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  min-height: 28px;
+  margin-top: var(--size-2-2);
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+}
+
+.mo-video-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-2-2);
+  font-size: var(--font-ui-smaller);
+}
+
+.mo-video-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-2-2);
+}
+
+.mo-video-icon {
+  display: inline-flex;
+}
+
+.mo-video-icon svg {
+  width: var(--icon-xs);
+  height: var(--icon-xs);
+}
+
+.mo-video-replaced {
+  display: none !important;
+}
+
+/* Transcript view: the notes an archived video comes from */
+.mt-origin {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-2-2) var(--size-4-2);
+  margin-top: var(--size-4-2);
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+}
+
+.mt-origin-notes {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--size-4-2);
+}
+
+/* Library: tabs, and the archive list */
+
+.mo-lib-archive-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--size-4-2);
+  margin-bottom: var(--size-4-2);
+}
+
+.mo-lib-archive-row {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+}
+
+.mo-lib-thumb {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-s);
+  background: var(--background-secondary);
+  color: var(--text-muted);
+}
+
+.mo-lib-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mo-lib-more {
+  display: block;
+  margin: var(--size-4-2) auto;
+}
+
+.mo-lib-thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Library: look and feel */
+.mo-lib {
+  padding: 10px 10px 0;
+}
+
+.mo-lib-bar .search-input-container { flex: 1; min-width: 0; margin: 0; }
+.mo-lib-bar .search-input-container input { width: 100%; height: 32px; border-radius: 10px; }
+
+.mo-lib-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  background: var(--background-modifier-hover);
+}
+
+.mo-lib-bar + .mo-lib-tabs { margin-top: 10px; }
+
+.mo-lib button.mo-lib-tab {
+  flex: 1;
+  height: 28px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  white-space: nowrap;
+}
+
+.mo-lib button.mo-lib-tab:hover { color: var(--text-normal); }
+
+.mo-lib button.mo-lib-tab.is-active {
+  background: var(--background-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  color: var(--text-normal);
+  font-weight: var(--font-semibold);
+}
+
+/* Chips in one row that scrolls sideways, fading out at the edge. */
+.mo-lib-segments {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 1px 0 2px;
+  mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+}
+
+.mo-lib-segments::-webkit-scrollbar { display: none; }
+
+.mo-lib .mo-lib-segments button,
+.mo-lib button.mo-lib-chip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 14px;
+  background: var(--background-modifier-hover);
+  box-shadow: none;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  white-space: nowrap;
+}
+
+.mo-lib .mo-lib-segments button:hover,
+.mo-lib button.mo-lib-chip:hover { color: var(--text-normal); background: var(--background-modifier-active-hover); }
+
+.mo-lib .mo-lib-segments button.is-active,
+.mo-lib button.mo-lib-chip.is-active {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.mo-lib-chip-icon { display: inline-flex; }
+.mo-lib-chip-icon svg { width: 14px; height: 14px; }
+
+.mo-lib-collections { margin-bottom: 8px; }
+
+.mo-lib-offline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.mo-lib-offline-usage {
+  margin-left: auto;
+  font-size: var(--font-ui-smaller);
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+.mo-lib-status { margin: 2px 2px 8px; }
+
+.mo-lib-folder {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin: 10px 0 2px;
+  padding: 6px 4px;
+  background: var(--background-secondary);
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  font-weight: var(--font-semibold);
+}
+
+/* A row: the cover (play on it), the name, one line of facts with marks, where it comes from. */
+.mo-lib-media-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 6px 8px 8px;
+  border-radius: 12px;
+}
+
+.mo-lib-media-row:hover { background: var(--background-modifier-hover); }
+.mo-lib-media-row.is-playing { background: color-mix(in srgb, var(--interactive-accent) 10%, transparent); }
+
+.mo-lib-art {
+  position: relative;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+}
+
+.mo-lib-art .mo-cover.is-small { width: 44px; height: 44px; border-radius: 10px; font-size: 11px; }
+
+.mo-lib .mo-lib-art button.mo-lib-play {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.42);
+  box-shadow: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  cursor: pointer;
+}
+
+.mo-lib .mo-lib-media-row:hover button.mo-lib-play,
+.mo-lib .mo-lib-media-row.is-playing button.mo-lib-play,
+.is-mobile .mo-lib button.mo-lib-play,
+.mo-lib button.mo-lib-play:focus-visible { opacity: 1; }
+
+.is-mobile .mo-lib .mo-lib-media-row:not(.is-playing) button.mo-lib-play { background: rgba(0, 0, 0, 0.22); }
+
+.mo-lib-play svg { width: 18px; height: 18px; fill: currentColor; }
+
+.mo-lib-media-row .mo-lib-main { flex: 1; min-width: 0; }
+
+.mo-lib-media-row .mo-lib-name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--text-normal);
+  font-size: var(--font-ui-small);
+  font-weight: var(--font-medium);
+  line-height: 1.35;
+}
+
+.mo-lib-media-row.is-playing .mo-lib-name { color: var(--interactive-accent); }
+
+.mo-lib-media-row .mo-lib-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3px;
+  min-width: 0;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  font-variant-numeric: tabular-nums;
+}
+
+.mo-lib-facts { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+
+.mo-lib-flags { display: inline-flex; align-items: center; gap: 5px; flex: none; }
+
+.mo-lib-flag { display: inline-flex; align-items: center; gap: 3px; color: var(--text-muted); white-space: nowrap; }
+.mo-lib-flag svg { width: 13px; height: 13px; }
+.mo-lib-flag.is-faint { color: var(--text-faint); }
+.mo-lib-flag.mo-lib-nobackup { color: var(--color-orange); }
+.mo-lib-flag.mo-lib-job-failed { color: var(--text-error); }
+.mo-lib-flag.mo-lib-job-claimed, .mo-lib-flag.mo-lib-job-queued { color: #8b5cf6; }
+.theme-dark .mo-lib-flag.mo-lib-job-claimed, .theme-dark .mo-lib-flag.mo-lib-job-queued { color: #a78bfa; }
+.mo-lib-flag-text { font-size: var(--font-ui-smaller); }
+.mo-lib-flag.mo-lib-job-claimed svg { animation: mo-pulse 1.2s ease-in-out infinite; }
+
+@keyframes mo-pulse { 50% { opacity: 0.35; } }
+
+.mo-lib-media-row .mo-lib-badge.mo-lib-cache {
+  margin: 0;
+  padding: 0 6px;
+  border-radius: 8px;
+  font-size: calc(var(--font-ui-smaller) - 1px);
+  background: var(--background-modifier-hover);
+  color: var(--text-muted);
+}
+
+.mo-lib-media-row .mo-lib-badge.mo-lib-cache.is-kept { color: var(--color-green); background: color-mix(in srgb, var(--color-green) 12%, transparent); }
+
+.mo-lib-file {
+  margin-top: 1px;
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mo-lib-media-row .mo-lib-queue,
+.mo-lib-more-actions {
+  flex: 0 0 auto;
+  color: var(--text-faint);
+}
+
+.mo-lib-more-actions { opacity: 0; }
+
+.mo-lib-media-row:hover .mo-lib-more-actions,
+.mo-lib-media-row.is-playing .mo-lib-more-actions,
+.is-mobile .mo-lib-more-actions { opacity: 1; }
+
+.mo-lib-media-row .mo-lib-queue.is-queued { color: var(--interactive-accent); }
+
+/* The trash: a quiet row at the end, opened to restore. */
+.mo-lib-trash {
+  margin: 16px 0 12px;
+  border-radius: 12px;
+  background: var(--background-modifier-hover);
+  padding: 2px 4px;
+}
+
+.mo-lib-trash summary {
+  list-style: none;
+  padding: 8px 8px;
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  cursor: pointer;
+}
+
+.mo-lib-trash summary::-webkit-details-marker { display: none; }
+.mo-lib-trash .mo-lib-row { padding: 6px 8px; }
+.mo-lib-trash .mo-lib-name { font-size: var(--font-ui-small); }
+
+/* Library: the archive tab, in the same style */
+.mo-lib-archive-controls {
+  flex-wrap: nowrap;
+  gap: var(--size-4-2);
+}
+
+.mo-lib-archive-controls .mo-lib-segments {
+  flex: 1;
+  min-width: 0;
+}
+
+.mo-lib select.mo-lib-sort {
+  flex: 0 0 auto;
+  height: 24px;
+  padding: 0 22px 0 var(--size-4-2);
+  border-radius: 999px;
+  box-shadow: none;
+  font-size: var(--font-ui-smaller);
+}
+
+.mo-lib-archive-controls button.mod-warning {
+  flex: 0 0 auto;
+  height: 24px;
+  font-size: var(--font-ui-smaller);
+}
+
+.mo-lib-archive-row {
+  align-items: flex-start;
+  gap: var(--size-4-2);
+  padding: var(--size-4-2);
+  border-radius: var(--radius-m);
+}
+
+.mo-lib-archive-row .mo-lib-thumb {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-s);
+}
+
+.mo-lib-archive-row .mo-lib-name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: var(--font-ui-small);
+  line-height: 1.4;
+}
+
+.mo-lib-archive-row .mo-lib-meta {
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  font-variant-numeric: tabular-nums;
+}
+
+.mo-lib-archive-row .mo-lib-badge {
+  display: inline-block;
+  white-space: nowrap;
+  margin-left: var(--size-4-1);
+  padding: 0 6px;
+  border-radius: 999px;
+  font-size: calc(var(--font-ui-smaller) - 1px);
+}
+
+/* Library: archive grouped by note, as thumbnails */
+.mo-lib-group {
+  display: flex;
+  align-items: baseline;
+  gap: var(--size-4-2);
+  margin: var(--size-4-3) var(--size-4-1) var(--size-4-1);
+}
+
+.mo-lib-group-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-normal);
+  font-size: var(--font-ui-small);
+  font-weight: var(--font-semibold);
+}
+
+.mo-lib-group-title.is-link {
+  cursor: pointer;
+}
+
+.mo-lib-group-title.is-link:hover {
+  color: var(--text-accent);
+}
+
+.mo-lib-group-meta {
+  flex: 0 0 auto;
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+  font-variant-numeric: tabular-nums;
+}
+
+.mo-lib-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  gap: 6px;
+  padding: 0 var(--size-4-1);
+}
+
+.mo-lib-tile {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-s);
+  background: var(--background-secondary);
+  color: var(--text-faint);
+  cursor: pointer;
+}
+
+.mo-lib-tile img,
+.mo-lib-tile video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 120ms ease;
+}
+
+.mo-lib-tile:hover img,
+.mo-lib-tile:hover video {
+  transform: scale(1.04);
+}
+
+.mo-lib-tile-badge {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  display: flex;
+  padding: 3px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+}
+
+.mo-lib-tile-badge svg {
+  width: 12px;
+  height: 12px;
+}
+
+.mo-lib button.mo-lib-retry {
+  margin-left: var(--size-4-2);
+  height: 22px;
+  padding: 0 var(--size-4-2);
+  font-size: var(--font-ui-smaller);
+}
+
+/* Archive: an item looked at in place */
+.mo-preview {
+  width: min(720px, 94vw);
+}
+
+.mo-preview-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  max-height: 62vh;
+  overflow: hidden;
+  border-radius: var(--radius-m);
+  background: var(--background-secondary);
+}
+
+.mo-preview-stage img,
+.mo-preview-stage video {
+  max-width: 100%;
+  max-height: 62vh;
+  object-fit: contain;
+}
+
+.mo-preview-file svg {
+  width: 48px;
+  height: 48px;
+  color: var(--text-faint);
+}
+
+.mo-preview-facts {
+  margin: var(--size-4-3) 0 var(--size-4-2);
+}
+
+.mo-preview-name {
+  overflow-wrap: anywhere;
+  color: var(--text-normal);
+  font-size: var(--font-ui-small);
+}
+
+.mo-preview-meta {
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+}
+
+.mo-preview-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-4-2);
+}
+
+.mo-preview-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-2-2);
+}
+
+.mo-preview-icon {
+  display: inline-flex;
+}
+
+.mo-preview-icon svg {
+  width: var(--icon-xs);
+  height: var(--icon-xs);
+}
+
+/* ── The player: one bar, at the foot of the library and floating on a phone;
+   tap it for what is playing in full ─────────────────────────────────── */
+
+.mo-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex: 0 0 auto;
+  background: linear-gradient(135deg, var(--mo-cover-a), var(--mo-cover-b));
+  color: #fff;
+  font-weight: var(--font-bold);
+  text-align: center;
+  line-height: 1.15;
+}
+
+.mo-cover.is-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  font-size: 13px;
+  padding: 2px;
+}
+
+.mo-cover.is-medium {
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+  font-size: 15px;
+  padding: 6px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.mo-cover-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+.mo-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  padding: 6px 8px;
+  overflow: hidden;
+  background: var(--background-primary);
+  cursor: pointer;
+}
+
+.mo-bar.is-hidden,
+.mo-np-open .mo-mini-player,
+.mo-mini-player-status.is-hidden {
+  display: none;
+}
+
+.mo-bar-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.mo-bar-title,
+.mo-bar-line {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mo-bar-title {
+  font-size: var(--font-ui-small);
+}
+
+.mo-bar-line {
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+  font-variant-numeric: tabular-nums;
+}
+
+.mo-bar-line.is-error,
+.mo-np-line.is-error {
+  color: var(--text-error);
+}
+
+/* Play or pause, with how far it has played round it. */
+.mo-bar button.mo-ring {
+  position: relative;
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  color: var(--text-normal);
+}
+
+.mo-ring-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.mo-ring-svg circle {
+  fill: none;
+  stroke-width: 2.5;
+}
+
+.mo-ring-track {
+  stroke: var(--background-modifier-border);
+}
+
+.mo-ring-done {
+  stroke: var(--interactive-accent);
+  stroke-linecap: round;
+}
+
+.mo-ring-icon {
+  display: inline-flex;
+}
+
+.mo-ring-icon svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.mo-bar button.mo-bar-list {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--background-modifier-hover);
+  color: var(--interactive-accent);
+}
+
+/* At the foot of the library. */
+.mo-dock {
+  position: sticky;
+  /* down over the library's bottom padding (more on a phone), to its very foot */
+  bottom: calc(-1 * var(--mo-dock-pad, var(--size-4-2)));
+  z-index: 2;
+  margin: var(--size-4-2) calc(-1 * var(--size-4-2)) calc(-1 * var(--mo-dock-pad, var(--size-4-2)));
+  /* at the foot even under a short list */
+  margin-top: auto;
+  border-top: 1px solid var(--background-modifier-border);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* A computer's status bar floats over the foot of the right sidebar: above it. */
+body:not(.is-mobile) .mod-right-split .mo-dock {
+  bottom: calc(var(--mo-status-bar, 32px) - var(--mo-dock-pad, var(--size-4-2)));
+  margin-bottom: calc(var(--mo-status-bar, 32px) - var(--mo-dock-pad, var(--size-4-2)));
+}
+
+/* On a phone, away from the library: floating above the navigation bar. */
+.mo-mini-player {
+  position: fixed;
+  left: var(--mo-mini-left, 12px);
+  right: var(--mo-mini-right, 12px);
+  bottom: var(--mo-mini-bottom, calc(var(--mobile-navbar-height, 52px) + env(safe-area-inset-bottom, 0px) + 10px));
+  z-index: var(--layer-status-bar, 15);
+  border-radius: 16px;
+  border: 1px solid var(--background-modifier-border);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+}
+
+/* While it floats, the page's floating button moves up above it.
+   translate, not transform: the button's own transform (shown, hidden) is kept. */
+.view-actions.mod-raised .view-action {
+  transition: translate 0.2s ease;
+}
+
+body.mo-fab-lifted .view-actions.mod-raised .view-action {
+  translate: 0 calc(-1 * var(--mo-fab-lift, 0px));
+}
+
+/* On a computer: in the status bar. */
+.mo-mini-player-status {
+  gap: var(--size-2-2);
+  max-width: 340px;
+}
+
+.mo-mini-player-status .clickable-icon {
+  padding: 0 2px;
+}
+
+.mo-mini-player-status .mo-mini-label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  font-size: var(--font-ui-smaller);
+  font-variant-numeric: tabular-nums;
+}
+
+/* What is playing, in full: dark, as a podcast app's; the whole screen on a phone. */
+.modal.mo-np-modal {
+  --mo-np-fg: #f2f2f2;
+  --mo-np-dim: rgba(255, 255, 255, 0.55);
+  --mo-np-accent: #f0c419;
+  width: 440px;
+  max-width: 100vw;
+  max-height: 92vh;
+  padding: 0;
+  border: none;
+  border-radius: 20px;
+  background: radial-gradient(120% 70% at 50% 0%, #2b2b2e 0%, #121214 70%);
+  color: var(--mo-np-fg);
+}
+
+.modal.mo-np-modal {
+  height: min(860px, 92vh);
+}
+
+.is-phone .modal.mo-np-modal {
+  width: 100vw;
+  height: 100%;
+  max-height: none;
+  border-radius: 0;
+}
+
+.modal.mo-np-modal .modal-close-button,
+.modal.mo-np-modal > .modal-header-button,
+.modal.mo-np-modal > .modal-header {
+  display: none;
+}
+
+.mo-np {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--size-4-3);
+  min-height: 100%;
+  padding: var(--size-4-3) var(--size-4-5) calc(var(--size-4-6) + env(safe-area-inset-bottom, 0px));
+}
+
+.is-phone .mo-np {
+  padding-top: calc(var(--size-4-3) + env(safe-area-inset-top, 0px));
+}
+
+.mo-np .clickable-icon {
+  color: var(--mo-np-fg);
+}
+
+.mo-np .clickable-icon:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mo-np-top {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+}
+
+.mo-np-top-gap {
+  flex: 1;
+}
+
+.mo-np-top .clickable-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.mo-np-keep-label {
+  margin-left: 4px;
+  font-size: var(--font-ui-smaller);
+  font-variant-numeric: tabular-nums;
+}
+
+.mo-np-head {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  gap: var(--size-4-3);
+}
+
+.mo-np-names {
+  flex: 1;
+  min-width: 0;
+}
+
+.mo-np-title {
+  font-size: 17px;
+  font-weight: var(--font-semibold);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.mo-np-subtitle {
+  margin-top: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--mo-np-accent);
+  font-size: var(--font-ui-small);
+}
+
+/* What is being said: most of the room, the whole transcript, scrolled to follow. */
+.mo-np-lyrics {
+  position: relative;
+  flex: 1 1 0;
+  align-self: stretch;
+  min-height: 200px;
+  overflow-y: auto;
+  padding: 24vh var(--size-4-1);
+  user-select: text;
+  -webkit-user-select: text;
+  overscroll-behavior: contain;
+  /* fading out above and below */
+  mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
+  scrollbar-width: none;
+}
+
+.mo-np-lyrics::-webkit-scrollbar {
+  display: none;
+}
+
+.mo-np-lyrics-note {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mo-np-dim);
+}
+
+.mo-np-lyrics-note.is-error {
+  color: var(--text-error);
+}
+
+.mo-np-lyric {
+  padding: 8px 0;
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 17px;
+  line-height: 1.55;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.mo-np-lyric:hover {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.mo-np-lyric.is-now {
+  color: var(--mo-np-fg);
+  font-size: 21px;
+  font-weight: var(--font-semibold);
+}
+
+.mo-np-lyric::selection {
+  background: rgba(240, 196, 25, 0.35);
+}
+
+.mo-np-seekrow {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  color: var(--mo-np-dim);
+  font-size: var(--font-ui-small);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The seek bar: how much is said along it, what has played. */
+.mo-wave {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  align-self: stretch;
+  gap: 3px;
+  height: 56px;
+  margin-top: calc(-1 * var(--size-4-2));
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  touch-action: none;
+  cursor: pointer;
+}
+
+.mo-wave-bar {
+  flex: 1;
+  height: var(--h, 30%);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.mo-wave-bar.is-played {
+  background: var(--mo-np-accent);
+}
+
+.mo-wave-head {
+  position: absolute;
+  left: var(--mo-at, 0%);
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  margin-left: -1px;
+  border-radius: 1px;
+  background: #fff;
+  pointer-events: none;
+}
+
+.mo-np-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-self: stretch;
+  margin-top: var(--size-4-2);
+}
+
+.mo-np button.mo-np-rate {
+  min-width: 48px;
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  background: transparent;
+  box-shadow: none;
+  color: var(--mo-np-fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.mo-np button.mo-np-skip {
+  position: relative;
+  width: 52px;
+  height: 52px;
+}
+
+.mo-np button.mo-np-skip svg {
+  width: 40px;
+  height: 40px;
+  stroke-width: 1.6;
+}
+
+.mo-np-skip-n {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: var(--font-bold);
+}
+
+.mo-np button.mo-np-play {
+  width: 72px;
+  height: 72px;
+}
+
+.mo-np button.mo-np-play svg {
+  width: 52px;
+  height: 52px;
+  fill: currentColor;
+}
+
+.mo-np button.mo-np-sleep {
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+
+.mo-np button.mo-np-sleep svg {
+  width: 26px;
+  height: 26px;
+}
+
+.mo-np button.mo-np-sleep.is-on {
+  color: var(--mo-np-accent);
+}
+
+.mo-np-sleep-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 10px;
+  text-align: center;
+}
+
+.mo-np-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-self: stretch;
+  padding-top: var(--size-4-2);
+}
+
+.mo-np-actions .clickable-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.mo-np button.mo-np-list {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  height: 40px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+  color: var(--mo-np-fg);
+}
+
+.mo-np-action-icon {
+  display: inline-flex;
+}
+
+.mo-np-action-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ── The playlist: in the library's tab and over the player ─────────── */
+
+.modal.mo-pl-modal {
+  width: 440px;
+  max-width: 100vw;
+}
+
+.is-phone .modal.mo-pl-modal {
+  max-height: 80vh;
+}
+
+.mo-pl-head {
+  display: flex;
+  align-items: center;
+  margin: var(--size-4-1) 0 var(--size-4-2);
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+
+.mo-pl-count {
+  flex: 1;
+}
+
+.mo-pl button.mo-pl-clear {
+  height: auto;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  border: 1px solid var(--background-modifier-border);
+}
+
+.mo-pl-empty {
+  padding: var(--size-4-8) var(--size-4-4);
+  color: var(--text-faint);
+  text-align: center;
+  font-size: var(--font-ui-small);
+}
+
+.mo-pl-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  padding: 8px 4px;
+  border-radius: var(--radius-m);
+  background: var(--background-primary);
+  transform: translateY(var(--mo-drag, 0px));
+  transition: transform 0.15s ease;
+}
+
+.mo-pl-row.is-dragging {
+  z-index: 2;
+  transition: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+.mo-pl-row.is-playing .mo-pl-title {
+  color: var(--interactive-accent);
+}
+
+.mo-pl-grip {
+  display: flex;
+  padding: 6px 2px;
+  color: var(--text-faint);
+  cursor: grab;
+  touch-action: none;
+}
+
+.mo-pl-main {
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.mo-pl-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: var(--font-ui-small);
+}
+
+.mo-pl-meta {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+}
+
+.mo-pl-now {
+  display: flex;
+  color: var(--interactive-accent);
+}
+
+.mo-pl-remove {
+  color: var(--text-faint);
+}
+
+.mo-lib-media-row.is-offline {
+  opacity: 0.45;
+}
+
+
+/* An upload under way: a small item in the status bar. What is under way, atop the library. */
+.mo-upload-status {
+  gap: var(--size-2-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.mo-upload-status.is-hidden {
+  display: none;
+}
+
+.mo-upload-status-icon {
+  display: flex;
+}
+
+.mo-upload-status-icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+.mo-upload-status.is-waiting {
+  color: var(--text-warning);
+}
+
+.mo-act {
+  margin: var(--size-4-2) 0 0;
+  padding: var(--size-4-1) var(--size-4-3) var(--size-4-2);
+  border-radius: var(--radius-m);
+  background: var(--background-secondary);
+}
+
+.mo-act.is-hidden {
+  display: none;
+}
+
+.mo-act-head {
+  display: flex;
+  align-items: center;
+  gap: var(--size-2-2);
+  padding: var(--size-2-2) 0;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  font-weight: var(--font-semibold);
+}
+
+.mo-act-caret {
+  display: flex;
+}
+
+.mo-act-caret svg {
+  width: 14px;
+  height: 14px;
+}
+
+.mo-act-item {
+  padding: var(--size-4-1) 0;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.mo-act-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: var(--font-ui-small);
+  cursor: pointer;
+}
+
+.mo-act-item.is-finished .mo-act-name {
+  color: var(--text-muted);
+}
+
+.mo-act-track {
+  height: 4px;
+  margin: 6px 0 4px;
+  border-radius: 2px;
+  background: var(--background-modifier-border);
+  overflow: hidden;
+}
+
+.mo-act-fill {
+  height: 100%;
+  width: calc(var(--mo-act, 0) * 100%);
+  background: var(--interactive-accent);
+  transition: width 0.4s ease;
+}
+
+.mo-act-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px var(--size-4-3);
+  margin-top: 2px;
+  font-size: var(--font-ui-smaller);
+  font-variant-numeric: tabular-nums;
+}
+
+.mo-act-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--text-faint);
+}
+
+.mo-act-step-icon {
+  display: flex;
+}
+
+.mo-act-step-icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+.mo-act-step.is-done {
+  color: var(--text-muted);
+}
+
+.mo-act-step.is-done .mo-act-step-icon {
+  color: var(--color-green);
+}
+
+.mo-act-step.is-active {
+  color: var(--text-accent);
+  font-weight: var(--font-medium);
+}
+
+.mo-act-step.is-failed {
+  color: var(--text-error);
+}
+
+.mo-act-detail {
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  font-variant-numeric: tabular-nums;
+}
+
+.mo-act-detail.is-error {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+.mo-act-more {
+  margin-top: var(--size-4-1);
+  font-size: var(--font-ui-smaller);
+}
+
+.mo-act-title {
+  flex: 1;
+}
+
+.mo-act-all {
+  color: var(--text-accent);
+  font-weight: var(--font-normal);
+  text-decoration: none;
+}
+
+/* ── Progress tab: a page of its own. At a glance (server, transcriber, backup,
+   disks), then every file on its way as a card with a bar of where its time went.
+   Laid out by its own width: one column on a phone, wider grids beside a note. ── */
+
+.mo-lib-on-progress .mo-act {
+  display: none;
+}
+
+.mo-prog {
+  container-type: inline-size;
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4-3);
+  padding-bottom: var(--size-4-6);
+  --mo-upload: var(--color-blue);
+  --mo-wait: var(--background-modifier-border);
+  --mo-transcribe: var(--color-purple);
+  --mo-ok: var(--color-green);
+}
+
+/* At a glance */
+.mo-prog-overview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--size-4-2);
+}
+
+/* Narrow: the backup and the disks take a row each, their lines are long. */
+.mo-prog-stat.is-wide {
+  grid-column: 1 / -1;
+}
+
+@container (min-width: 620px) {
+  .mo-prog-overview {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .mo-prog-stat.is-wide {
+    grid-column: auto;
+  }
+}
+
+.mo-prog-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: var(--size-4-2) var(--size-4-3);
+  border-radius: var(--radius-l);
+  background: var(--background-secondary);
+  border: 1px solid transparent;
+}
+
+.mo-prog-stat.is-error {
+  border-color: rgba(var(--color-red-rgb), 0.35);
+  background: rgba(var(--color-red-rgb), 0.06);
+}
+
+.mo-prog-stat.is-warn {
+  border-color: rgba(var(--color-orange-rgb), 0.35);
+  background: rgba(var(--color-orange-rgb), 0.06);
+}
+
+.mo-prog-stat-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+}
+
+.mo-prog-stat-icon {
+  display: flex;
+}
+
+.mo-prog-stat-icon svg {
+  width: 13px;
+  height: 13px;
+}
+
+.mo-prog-stat-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mo-prog-dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-faint);
+}
+
+.mo-prog-stat.is-ok .mo-prog-dot { background: var(--mo-ok); }
+.mo-prog-stat.is-busy .mo-prog-dot { background: var(--mo-transcribe); animation: mo-prog-pulse 1.6s ease-in-out infinite; }
+.mo-prog-stat.is-warn .mo-prog-dot { background: var(--color-orange); }
+.mo-prog-stat.is-error .mo-prog-dot { background: var(--color-red); }
+
+@keyframes mo-prog-pulse {
+  50% { opacity: 0.35; }
+}
+
+.mo-prog-stat-value {
+  font-size: var(--font-ui-medium);
+  font-weight: var(--font-semibold);
+  line-height: 1.3;
+}
+
+.mo-prog-stat.is-error .mo-prog-stat-value { color: var(--text-error); }
+
+.mo-prog-stat-sub {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  font-variant-numeric: tabular-nums;
+}
+
+.mo-prog-stat-sub.is-error {
+  color: var(--text-error);
+}
+
+.mo-prog-disk {
+  margin-top: 2px;
+  font-size: var(--font-ui-smaller);
+}
+
+.mo-prog-disk-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.mo-prog-disk-free {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+
+.mo-prog-meter {
+  height: 4px;
+  margin-top: 3px;
+  border-radius: 2px;
+  background: var(--background-modifier-border);
+  overflow: hidden;
+}
+
+.mo-prog-meter-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--mo-ok);
+}
+
+.mo-prog-disk.is-full .mo-prog-meter-fill { background: var(--color-orange); }
+.mo-prog-disk.is-full .mo-prog-disk-free { color: var(--color-orange); }
+
+/* Filters: one row, scrolled sideways when narrow */
+.mo-prog-tabs {
+  display: flex;
+  gap: var(--size-2-3);
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin: 0 calc(-1 * var(--size-2-1));
+  padding: 2px var(--size-2-1);
+}
+
+.mo-prog-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.mo-prog-tab {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: var(--font-ui-small);
+  box-shadow: none;
+  background: var(--background-secondary);
+  color: var(--text-muted);
+}
+
+.mo-prog-tab-count {
+  min-width: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--background-modifier-hover);
+  font-size: var(--font-ui-smaller);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.mo-prog-tab.is-running .mo-prog-tab-count { background: rgba(var(--color-purple-rgb), 0.18); color: var(--color-purple); }
+.mo-prog-tab.is-failed .mo-prog-tab-count { background: rgba(var(--color-red-rgb), 0.18); color: var(--color-red); }
+.mo-prog-tab.is-backup .mo-prog-tab-count { background: rgba(var(--color-orange-rgb), 0.18); color: var(--color-orange); }
+
+.mo-prog-tab.is-active {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.mo-prog-tab.is-active .mo-prog-tab-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: inherit;
+}
+
+/* Sections and day groups */
+.mo-prog-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-2-3);
+}
+
+.mo-prog-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: var(--size-2-3);
+  padding: 0 2px;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.02em;
+}
+
+.mo-prog-count {
+  color: var(--text-faint);
+  font-weight: var(--font-normal);
+}
+
+.mo-prog-cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--size-2-3);
+}
+
+/* A file */
+.mo-prog-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-l);
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.mo-prog-card:hover {
+  border-color: var(--background-modifier-border-hover);
+  box-shadow: var(--shadow-s);
+}
+
+.mo-prog-card.is-running { border-color: rgba(var(--color-purple-rgb), 0.35); }
+.mo-prog-card.is-failed { border-color: rgba(var(--color-red-rgb), 0.35); }
+
+.mo-prog-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+}
+
+.mo-prog-icon {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-m);
+  background: rgba(var(--color-blue-rgb), 0.12);
+  color: var(--color-blue);
+}
+
+.mo-prog-icon.is-video { background: rgba(var(--color-pink-rgb), 0.12); color: var(--color-pink); }
+.mo-prog-icon.is-web { background: rgba(var(--color-cyan-rgb), 0.12); color: var(--color-cyan); }
+
+.mo-prog-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.mo-prog-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.mo-prog-name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+  font-size: var(--font-ui-small);
+  font-weight: var(--font-medium);
+  line-height: 1.35;
+}
+
+.mo-prog-meta {
+  margin-top: 2px;
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mo-prog-side {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  max-width: 40%;
+}
+
+.mo-prog-pill {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--background-secondary);
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  font-weight: var(--font-medium);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.mo-prog-pill.is-running { background: rgba(var(--color-purple-rgb), 0.14); color: var(--color-purple); }
+.mo-prog-pill.is-queued { background: rgba(var(--color-blue-rgb), 0.12); color: var(--color-blue); }
+.mo-prog-pill.is-failed { background: rgba(var(--color-red-rgb), 0.14); color: var(--color-red); }
+.mo-prog-pill.is-backup { background: rgba(var(--color-orange-rgb), 0.14); color: var(--color-orange); }
+
+.mo-prog-under {
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.mo-prog-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 42px;
+}
+
+@container (max-width: 340px) {
+  .mo-prog-card-body {
+    padding-left: 0;
+  }
+}
+
+/* Where the time went */
+.mo-prog-bar {
+  display: flex;
+  gap: 2px;
+  height: 6px;
+}
+
+.mo-prog-seg {
+  min-width: 6px;
+  flex-basis: 0;
+  border-radius: 3px;
+  background: var(--mo-wait);
+}
+
+.mo-prog-seg.is-upload { background: var(--mo-upload); }
+.mo-prog-seg.is-transcribe { background: var(--mo-transcribe); }
+.mo-prog-seg.is-left {
+  background: repeating-linear-gradient(-45deg, var(--mo-wait) 0 3px, transparent 3px 6px);
+}
+
+.mo-prog-seg.is-live {
+  background-image: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  background-size: 200% 100%;
+  animation: mo-prog-flow 1.6s linear infinite;
+}
+
+.mo-prog-seg.is-live.is-upload { background-color: var(--mo-upload); }
+.mo-prog-seg.is-live.is-transcribe { background-color: var(--mo-transcribe); }
+.mo-prog-seg.is-live.is-wait { background-color: var(--mo-wait); }
+
+@keyframes mo-prog-flow {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+
+.mo-prog-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px 12px;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  font-variant-numeric: tabular-nums;
+}
+
+.mo-prog-leg {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.mo-prog-leg-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--mo-wait);
+}
+
+.mo-prog-leg.is-upload .mo-prog-leg-dot { background: var(--mo-upload); }
+.mo-prog-leg.is-transcribe .mo-prog-leg-dot { background: var(--mo-transcribe); }
+.mo-prog-leg.is-left { color: var(--text-faint); }
+
+.mo-prog-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  white-space: nowrap;
+  color: var(--text-faint);
+}
+
+.mo-prog-badge + .mo-prog-badge {
+  margin-left: 0;
+}
+
+.mo-prog-badge.is-ok { color: var(--mo-ok); }
+.mo-prog-badge.is-wait { color: var(--color-orange); }
+
+.mo-prog-badge-icon {
+  display: flex;
+}
+
+.mo-prog-badge-icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+.mo-prog-error {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--text-error);
+  font-size: var(--font-ui-smaller);
+  word-break: break-word;
+}
+
+/* Opened: each step with its time */
+.mo-prog-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 2px;
+  padding: 10px 0 0 42px;
+  border-top: 1px solid var(--background-modifier-border);
+  cursor: default;
+}
+
+@container (max-width: 340px) {
+  .mo-prog-steps {
+    padding-left: 0;
+  }
+}
+
+.mo-prog-timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.mo-prog-tl {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding-bottom: 10px;
+  font-size: var(--font-ui-smaller);
+}
+
+.mo-prog-tl:last-child {
+  padding-bottom: 0;
+}
+
+.mo-prog-tl:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 3.5px;
+  top: 12px;
+  bottom: 0;
+  width: 1px;
+  background: var(--background-modifier-border);
+}
+
+.mo-prog-tl-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-top: 4px;
+  border-radius: 50%;
+  border: 1.5px solid var(--text-faint);
+  background: var(--background-primary);
+}
+
+.mo-prog-tl.is-done .mo-prog-tl-dot { border-color: var(--mo-ok); background: var(--mo-ok); }
+.mo-prog-tl.is-active .mo-prog-tl-dot { border-color: var(--mo-transcribe); background: var(--mo-transcribe); animation: mo-prog-pulse 1.6s ease-in-out infinite; }
+.mo-prog-tl.is-failed .mo-prog-tl-dot { border-color: var(--color-red); background: var(--color-red); }
+
+.mo-prog-tl-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mo-prog-tl-label {
+  color: var(--text-normal);
+}
+
+.mo-prog-tl.is-wait .mo-prog-tl-label { color: var(--text-muted); }
+
+.mo-prog-tl-note {
+  color: var(--text-faint);
+  word-break: break-word;
+}
+
+.mo-prog-tl.is-failed .mo-prog-tl-note { color: var(--text-error); }
+
+.mo-prog-tl-time {
+  flex: none;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.mo-prog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-2-3);
+}
+
+.mo-prog-actions button {
+  font-size: var(--font-ui-small);
+}
+
+.mo-prog-empty {
+  padding: var(--size-4-8) 0;
+  color: var(--text-faint);
+  text-align: center;
+  font-size: var(--font-ui-small);
+}
+
+/* Phone: bigger to the touch */
+.is-mobile .mo-prog-tab { height: 34px; }
+.is-mobile .mo-prog-card { padding: 12px; }
+.is-mobile .mo-prog-actions button { min-height: 36px; }
+
+/* A transcript following the library's player: its bar in place of a player of its own. */
+.mt-follow .mo-bar.mt-follow-bar {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}
+
+/* ── Phone: the picture edge to edge; bigger to the touch ── */
+
+.mt-phone .mt-player-side {
+  background: #000;
+  border-bottom: none;
+}
+
+.mt-phone .mt-player-wrapper {
+  padding: 0;
+  position: static;
+}
+
+.mt-phone video.mt-media {
+  border-radius: 0;
+  max-height: 34vh;
+}
+
+.mt-phone .mt-video-controls {
+  background: var(--background-secondary);
+  padding: 8px 12px;
+}
+
+/* Under the black of the picture, the name keeps the light of the controls. */
+.mt-phone .mt-video-head {
+  background: var(--background-secondary);
+  padding: 2px 14px 12px;
+}
+
+.mt-phone .mt-audio-bar { padding: 12px 14px 10px; }
+.mt-phone .mt-toolbar .mo-icon-btn { min-width: 36px; height: 36px; }
+.mt-phone .mt-search-input.mt-search-input { font-size: 15px; height: 38px; }
+.mt-phone .mt-searchbar .mo-icon-btn { min-width: 34px; height: 34px; }
+.mt-phone .mo-ctl-play { width: 44px; height: 44px; }
+
+.is-mobile .workspace-leaf-content .view-content.mt-phone {
+  padding: 0 0 32px;
+}
+
+
+/* Obsidian styles every button (a fill, a shadow): ours bring their own. */
+button.mo-ctl-play,
+button.mo-ctl-rate,
+button.mt-track-chip,
+button.mt-embed-btn {
+  border: none;
+  box-shadow: none;
+}
+button.mo-ctl-play { background: var(--mo-ctl-accent); color: #fff; box-shadow: 0 2px 8px color-mix(in srgb, var(--mo-ctl-accent) 35%, transparent); }
+.mo-ctl.is-failed button.mo-ctl-play { background: var(--background-modifier-border); color: var(--text-muted); box-shadow: none; }
+button.mo-ctl-rate { background: var(--background-modifier-hover); }
+button.mo-ctl-rate.is-changed { background: color-mix(in srgb, var(--mo-ctl-accent) 14%, transparent); }
+button.mt-track-chip { background: var(--background-modifier-hover); }
+button.mt-track-chip:not(.is-single):hover { background: var(--background-modifier-active-hover); color: var(--text-normal); }
+
+/* A wide pane reads as a column, not a line across the screen. */
+.mt-audio-mode .mt-audio-bar,
+.mt-reading-mode .mt-audio-bar,
+.mt-audio-mode .mt-toolbar,
+.mt-reading-mode .mt-toolbar {
+  padding-inline: max(16px, calc((100% - 860px) / 2));
+}
+.mt-audio-mode .mt-searchbar,
+.mt-reading-mode .mt-searchbar {
+  margin-inline: max(12px, calc((100% - 852px) / 2));
+}
+.mt-audio-mode .mt-transcript,
+.mt-reading-mode .mt-transcript {
+  padding-inline: max(8px, calc((100% - 880px) / 2));
+}
+button.mo-ctl-play { border-radius: 50%; }
+.mo-ctl-buffered { opacity: 0.6; }
+button.mt-embed-btn { background: color-mix(in srgb, #8b5cf6 10%, transparent); }
+button.mt-embed-btn:hover { background: color-mix(in srgb, #8b5cf6 18%, transparent); }
+.theme-dark button.mt-embed-btn { background: color-mix(in srgb, #a78bfa 12%, transparent); }
+button.mo-ctl-play { corner-shape: round; }
+
+/* Video: the transcript keeps room to be read, whatever width was dragged. */
+.mt-player-side { max-width: min(75%, calc(100% - 320px)); }
+.mt-player-wrapper { background: var(--background-secondary); z-index: 1; }
+.mt-video-controls { padding: 10px 4px 8px; }
+.mt-video-head { padding: 4px 16px 16px; display: flex; flex-direction: column; gap: 10px; }
+.mt-video-head .mt-origin { padding: 0; }
+
+.mo-lib-own-cover.mo-cover {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--interactive-accent) 80%, #fff), var(--interactive-accent));
+}
+.mo-lib-own-cover svg { width: 20px; height: 20px; }
+.mo-lib-flag.is-queued { color: var(--interactive-accent); }
+.mo-lib .mo-lib-segments button .mo-lib-count { opacity: 0.6; font-variant-numeric: tabular-nums; }
+.mo-lib-media-row .mo-lib-meta { flex-wrap: wrap; row-gap: 2px; }
+
+.mo-lib-heading {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-ui-large);
+  font-weight: var(--font-bold);
+  color: var(--text-normal);
+  padding-left: 2px;
+}
+
+button.mo-prog-tab { border: none; height: 28px; background: var(--background-modifier-hover); font-size: var(--font-ui-smaller); }
+button.mo-prog-tab:hover { background: var(--background-modifier-active-hover); color: var(--text-normal); }
+button.mo-prog-tab, button.mo-pl-clear, button.mo-act-more, button.mo-lib-more { box-shadow: none; }
+button.mo-pl-clear { border: none; background: var(--background-modifier-hover); border-radius: 14px; height: 28px; padding: 0 12px; font-size: var(--font-ui-smaller); }
+.mo-lib .mo-pl-head { margin: 4px 2px 8px; }
+.mo-lib .mo-pl-count { color: var(--text-muted); font-size: var(--font-ui-smaller); }
+
+.mo-lib-art .mo-lib-own-cover.mo-cover { width: 44px; height: 44px; border-radius: 10px; }
+.mo-cover.is-medium.mo-lib-own-cover svg { width: 30px; height: 30px; }
+
+/* ── Review panel, as the library: a heading, tabs, the order as a chip, marks as cards ── */
+.at-review { padding: 0 10px 40px; }
+.at-review-header { display: block; padding: 10px 0 6px; }
+.at-review-top { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.at-review-title { flex: 1; font-size: var(--font-ui-large); font-weight: var(--font-bold); color: var(--text-normal); padding-left: 2px; }
+.at-tabs { display: flex; gap: 2px; padding: 3px; border-radius: 12px; background: var(--background-modifier-hover); }
+button.at-tab { flex: 1; height: 28px; border: none; border-radius: 9px; background: transparent; box-shadow: none; color: var(--text-muted); font-size: var(--font-ui-small); }
+button.at-tab:hover { color: var(--text-normal); }
+button.at-tab.is-active { background: var(--background-primary); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); color: var(--text-normal); font-weight: var(--font-semibold); }
+button.at-btn, button.at-sort-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 28px; padding: 0 12px; border: none; border-radius: 14px;
+  background: var(--background-modifier-hover); box-shadow: none;
+  color: var(--text-muted); font-size: var(--font-ui-smaller);
+}
+button.at-btn:hover, button.at-sort-chip:hover { color: var(--text-normal); background: var(--background-modifier-active-hover); }
+button.at-btn.is-active { background: var(--interactive-accent); color: var(--text-on-accent); }
+.at-btn-icon { display: inline-flex; }
+.at-btn-icon svg { width: 14px; height: 14px; }
+.at-sortbar { padding: 8px 0 0; }
+.at-bucket-title { text-transform: none; letter-spacing: 0; font-weight: var(--font-semibold); color: var(--text-muted); margin: 14px 2px 6px; }
+.at-entry {
+  position: relative;
+  border-left: none;
+  padding: 10px 12px 8px 16px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  background: var(--background-primary);
+  box-shadow: 0 0 0 1px var(--background-modifier-border);
+}
+.at-entry::before {
+  content: '';
+  position: absolute;
+  left: 6px; top: 10px; bottom: 10px;
+  width: 3px; border-radius: 2px;
+  background: var(--at-color, var(--text-accent));
+}
+.at-entry:hover { background: var(--background-primary); box-shadow: 0 0 0 1px var(--background-modifier-border-hover), 0 2px 8px rgba(0, 0, 0, 0.06); }
+.at-entry-actions .at-icon-btn svg { width: 15px; height: 15px; }
+
+/* A vault audio file in a note, with a transcript: our controls in a card, the transcript button beside. */
+.mt-embed.mt-embed-ours {
+  --mt-accent: #8b5cf6;
+  padding: 10px 12px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 14px;
+  background: var(--background-secondary);
+  max-width: 640px;
+}
+.theme-dark .mt-embed.mt-embed-ours { --mt-accent: #a78bfa; }
+.mt-embed-ours > audio { display: none; }
+.mt-embed-controls { flex: 1 1 220px; min-width: 0; }
+.internal-embed.mt-embed.mt-embed-ours { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.mt-embed-ours .mt-embed-controls { order: 1; }
+.mt-embed-ours button.mt-embed-btn { order: 2; }
+.theme-dark .mt-card, .theme-dark .mt-embed.mt-embed-ours { --mt-accent-contrast: #1c1524; }
+button.mo-ctl-play { color: var(--mt-accent-contrast, var(--text-on-accent)); }
+.theme-light button.mo-ctl-play { color: #fff; }
+
+/* Phone: no hover, so the play button is a small round badge on the cover's corner. */
+.is-mobile .mo-lib .mo-lib-art button.mo-lib-play,
+.is-mobile .mo-lib .mo-lib-media-row:not(.is-playing) button.mo-lib-play {
+  inset: auto -4px -4px auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  corner-shape: round;
+  background: var(--background-primary);
+  color: var(--interactive-accent);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  opacity: 1;
+}
+.is-mobile .mo-lib-play svg { width: 11px; height: 11px; }
+.is-mobile .mo-lib .mo-lib-media-row.is-playing button.mo-lib-play { background: var(--interactive-accent); color: var(--text-on-accent); }
+.is-mobile .mo-lib-bar .search-input-container input { height: auto; }
+
+/* ── Beside and low (a phone on its side): the picture fills its side, the
+   controls and the name lie over it and go while it plays untouched, and
+   Obsidian's bar with them ── */
+.mt-root.is-overlay .mt-divider { flex-basis: 6px; }
+.mt-root.is-overlay .mt-player-side {
+  position: relative;
+  min-width: 0;
+  background: #000;
+  overflow: hidden;
+  border: none;
+}
+.mt-root.is-overlay .mt-player-wrapper { position: static; height: 100%; padding: 0; background: #000; }
+.mt-root.is-overlay video.mt-media { width: 100%; height: 100%; max-height: none; border-radius: 0; }
+.mt-root.is-overlay .mt-video-controls,
+.mt-root.is-overlay .mt-video-head {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  transition: opacity 0.25s;
+}
+.mt-root.is-overlay .mt-video-controls {
+  bottom: var(--mt-overlay-lift, 0px);
+  padding: 24px 10px 6px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+}
+.mt-root.is-overlay .mt-video-head {
+  top: 0;
+  padding: 8px 12px 24px;
+  background: linear-gradient(rgba(0, 0, 0, 0.65), transparent);
+  pointer-events: none;
+}
+.mt-root.is-overlay .mt-head-cover,
+.mt-root.is-overlay .mt-head-sub,
+.mt-root.is-overlay .mt-origin,
+.mt-root.is-overlay .mo-ctl-skip { display: none; }
+.mt-root.is-overlay .mt-head-title {
+  color: #fff;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mt-root.is-overlay .mo-ctl { gap: 6px; }
+.mt-root.is-overlay .mo-ctl-play { width: 36px; height: 36px; }
+.mt-root.is-overlay .mo-ctl-time { color: rgba(255, 255, 255, 0.9); font-size: 12px; }
+.mt-root.is-overlay .mo-ctl-bar::before { background: rgba(255, 255, 255, 0.3); }
+.mt-root.is-overlay .mo-ctl-buffered { background: rgba(255, 255, 255, 0.35); }
+.mt-root.is-overlay .mt-video-controls .mo-icon-btn { color: #fff; }
+.mt-root.is-overlay button.mo-ctl-rate { background: rgba(255, 255, 255, 0.18); color: #fff; }
+.mt-root.is-overlay.is-idle .mt-video-controls,
+.mt-root.is-overlay.is-idle .mt-video-head { opacity: 0; pointer-events: none; }
+.mt-root.is-overlay.is-idle video.mt-media { cursor: none; }
+
+.is-mobile .workspace-leaf-content.mt-overlay-leaf > .view-header { display: none; }
+.is-mobile .workspace-leaf-content.mt-overlay-leaf { --view-top-spacing: var(--safe-area-inset-top, 0px); }
+.is-mobile .workspace-leaf-content.mt-overlay-leaf > .view-content.mt-phone { padding-bottom: 0; }
+
+body.mt-immersive .mobile-navbar {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+
+/* Above, on a phone: the picture as wide as the screen, held to a share of
+   the height until dragged otherwise. */
+.mt-root.is-stack.is-overlay .mt-player-side { flex: 0 0 auto; }
+.mt-root.is-stack.is-overlay .mt-player-wrapper { height: auto; }
+.mt-root.is-stack.is-overlay video.mt-media { height: auto; max-height: 40vh; aspect-ratio: var(--mt-video-aspect, 16 / 9); }
+.mt-root.is-stack.is-overlay.has-video-height video.mt-media { height: var(--mt-stack-video-h); max-height: none; }
+
+/* A quote of a transcript in a note: play the passage, open it, and say when
+   the transcript has changed under it. */
+.callout.mt-quote > .callout-title {
+  align-items: center;
+}
+
+.mt-quote-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* In Live Preview, Obsidian's own "edit this block" button sits in the corner. */
+.markdown-source-view .mt-quote-actions {
+  margin-right: 28px;
+}
+
+.mt-quote-btn {
+  padding: 2px;
+  color: var(--callout-color, var(--text-muted));
+}
+
+.mt-quote-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.mt-quote-time {
+  font-size: var(--font-ui-smaller);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+.mt-quote-time:empty {
+  display: none;
+}
+
+.mt-quote-audio {
+  display: none;
+}
+
+button.mt-quote-outdated {
+  height: auto;
+  padding: 1px 8px;
+  margin-left: 4px;
+  border-radius: var(--radius-s);
+  background: rgba(var(--color-orange-rgb), 0.15);
+  color: var(--color-orange);
+  font-size: var(--font-ui-smaller);
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.mt-quote-diff-label {
+  margin: 12px 0 4px;
+  font-size: var(--font-ui-small);
+  color: var(--text-muted);
+}
+
+.mt-quote-diff {
+  padding: 8px 12px;
+  border-left: 3px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  background: var(--background-secondary);
+  white-space: pre-wrap;
+}
+
+.mt-quote-diff-new {
+  border-left-color: var(--interactive-accent);
+}
+
+/* The passage a quote links to, followed into the transcript. */
+.mt-segment.mt-passage {
+  background: rgba(var(--color-yellow-rgb), 0.18);
+  border-radius: var(--radius-s);
+  transition: background-color 1s;
+}
