@@ -12023,12 +12023,12 @@
     "scroll": 0,
     "cursor": {
       "from": {
-        "line": 0,
-        "ch": 0
+        "line": 593,
+        "ch": 51
       },
       "to": {
-        "line": 0,
-        "ch": 0
+        "line": 593,
+        "ch": 51
       }
     },
     "expandedKeys": []
@@ -12192,15 +12192,15 @@
     "expandedKeys": []
   },
   "思想思维心理哲学/个人问题处理/泡学/知识.md": {
-    "scroll": 0,
+    "scroll": 1.2333332549201168,
     "cursor": {
       "from": {
-        "line": 3,
-        "ch": 0
+        "line": 8,
+        "ch": 29
       },
       "to": {
-        "line": 3,
-        "ch": 0
+        "line": 8,
+        "ch": 29
       }
     },
     "expandedKeys": []
@@ -20097,15 +20097,15 @@
     "scroll": 0
   },
   "Diary/2026/W47.md": {
-    "scroll": 4.38658782840596,
+    "scroll": 133.86458245184693,
     "cursor": {
       "from": {
-        "line": 26,
-        "ch": 0
+        "line": 164,
+        "ch": 2
       },
       "to": {
-        "line": 26,
-        "ch": 0
+        "line": 164,
+        "ch": 2
       }
     }
   },
@@ -20158,7 +20158,7 @@
         "ch": 28
       }
     },
-    "scroll": 2.433333496517595
+    "scroll": 16.136532128997352
   },
   "Video Player (AI integrated)/Transcripts/对谈武志红：一旦恢复主体性，人生会开挂！高敏感自救，2招找回主体性！ Transcript.md": {
     "cursor": {
@@ -20210,5 +20210,30 @@
       }
     },
     "scroll": 5.524296675191816
+  },
+  "Diary/2026/20261121.md": {
+    "cursor": {
+      "from": {
+        "line": 7,
+        "ch": 0
+      },
+      "to": {
+        "line": 7,
+        "ch": 0
+      }
+    },
+    "scroll": 78.40418007519398
+  },
+  "思想思维心理哲学/个人问题处理/泡学/打压 PUA.md": {
+    "cursor": {
+      "from": {
+        "line": 19,
+        "ch": 49
+      },
+      "to": {
+        "line": 19,
+        "ch": 49
+      }
+    }
   }
 }

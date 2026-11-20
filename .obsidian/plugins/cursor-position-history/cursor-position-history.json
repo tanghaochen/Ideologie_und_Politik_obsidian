@@ -4681,21 +4681,21 @@
   },
   "Diary/2026/W47.md": {
     "scrollState": {
-      "top": 265.20001220703125,
+      "top": 480,
       "left": 0,
       "clientHeight": 1522,
-      "clientWidth": 1435,
+      "clientWidth": 1931,
       "height": 1522,
-      "width": 1447
+      "width": 1943
     },
     "cursor": {
       "from": {
-        "ch": 0,
-        "line": 26
+        "ch": 2,
+        "line": 164
       },
       "to": {
-        "ch": 0,
-        "line": 26
+        "ch": 2,
+        "line": 164
       }
     }
   },
@@ -4761,7 +4761,7 @@
   },
   "语言学习/德语/学习记录日记-技巧/leseaufgabe/2026年11月20日.md": {
     "scrollState": {
-      "top": 1.2000000476837158,
+      "top": 788.4000244140625,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 1931,
@@ -4856,6 +4856,66 @@
       "to": {
         "ch": 0,
         "line": 6
+      }
+    }
+  },
+  "Diary/2026/20261121.md": {
+    "scrollState": {
+      "top": 4202.39990234375,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 1931,
+      "height": 1522,
+      "width": 1943
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 253
+      },
+      "to": {
+        "ch": 0,
+        "line": 253
+      }
+    }
+  },
+  "思想思维心理哲学/个人问题处理/泡学/打压 PUA.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 1931,
+      "height": 1522,
+      "width": 1943
+    },
+    "cursor": {
+      "from": {
+        "ch": 51,
+        "line": 593
+      },
+      "to": {
+        "ch": 51,
+        "line": 593
+      }
+    }
+  },
+  "思想思维心理哲学/个人问题处理/泡学/知识.md": {
+    "scrollState": {
+      "top": 120,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 1931,
+      "height": 1522,
+      "width": 1943
+    },
+    "cursor": {
+      "from": {
+        "ch": 29,
+        "line": 8
+      },
+      "to": {
+        "ch": 29,
+        "line": 8
       }
     }
   }
