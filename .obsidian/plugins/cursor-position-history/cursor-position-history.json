@@ -4861,21 +4861,21 @@
   },
   "Diary/2026/20261121.md": {
     "scrollState": {
-      "top": 3436.800048828125,
+      "top": 4714.80029296875,
       "left": 0,
-      "clientHeight": 705,
+      "clientHeight": 657,
       "clientWidth": 771,
-      "height": 705,
+      "height": 657,
       "width": 783
     },
     "cursor": {
       "from": {
-        "ch": 125,
-        "line": 82
+        "ch": 247,
+        "line": 104
       },
       "to": {
-        "ch": 125,
-        "line": 82
+        "ch": 247,
+        "line": 104
       }
     }
   },
