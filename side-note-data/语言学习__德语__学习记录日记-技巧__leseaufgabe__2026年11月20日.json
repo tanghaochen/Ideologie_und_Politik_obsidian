@@ -1,0 +1,25 @@
+[
+  {
+    "filePath": "语言学习/德语/学习记录日记-技巧/leseaufgabe/2026年11月20日.md",
+    "startLine": 90,
+    "startChar": 30,
+    "endLine": 90,
+    "endChar": 44,
+    "absoluteFrom": 4507,
+    "absoluteTo": 4521,
+    "occurrenceIndex": 4,
+    "headingPath": [
+      "模块一：原文呈现与 Goethe B2 仿真阅读出题",
+      "【题目】1.3 阅读题（Teil 3 风格）"
+    ],
+    "selectedText": "Reparaturcafés",
+    "selectedTextHash": "da600470d6922178c0a02d9b1c88e80308a3865e0c9443cf426861ce3a19a5de",
+    "comment": "## dsfasdf\n- adfs\n1. sdfasd\n",
+    "timestamp": 1795275064639,
+    "isOrphaned": false,
+    "contextBefore": " reparieren lassen.\nb) Sie wächst weiter, und die ",
+    "contextAfter": " allein können sie nicht wesentlich verringern.\nc)",
+    "markType": "strikethrough",
+    "color": "#ec4899"
+  }
+]

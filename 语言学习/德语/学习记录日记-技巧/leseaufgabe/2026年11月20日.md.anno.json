@@ -33,7 +33,8 @@
       ],
       "body": null,
       "reviewed": [
-        "2026-11-21T14:38:11.554Z"
+        "2026-11-21T14:38:11.554Z",
+        "2026-11-21T15:13:58.490Z"
       ]
     },
     {
@@ -54,7 +55,8 @@
       "reviewed": [
         "2026-11-21T14:38:13.039Z",
         "2026-11-21T14:51:37.090Z",
-        "2026-11-21T14:51:43.448Z"
+        "2026-11-21T14:51:43.448Z",
+        "2026-11-21T15:13:57.610Z"
       ],
       "updated": "2026-11-21T14:51:41.384Z"
     },
@@ -92,39 +94,44 @@
         "2026-11-21T14:39:47.674Z"
       ],
       "body": null,
-      "reviewed": []
+      "reviewed": [
+        "2026-11-21T15:13:56.980Z"
+      ]
     },
     {
       "id": "pkawq8a2",
       "anchor": {
         "kind": "markdown",
         "quote": "konzentriert",
-        "prefix": "n, daneben sitzen Menschen, die ",
+        "prefix": "daneben sitzen Men你直接schen, die ",
         "suffix": " Schrauben lösen. Was wie ein ch",
-        "from": 557,
-        "to": 569
+        "from": 560,
+        "to": 572
       },
       "hits": [
-        "2026-11-21T14:40:11.574Z"
+        "2026-11-21T14:40:11.574Z",
+        "2026-11-21T15:19:45.378Z"
       ],
       "body": null,
-      "reviewed": []
+      "reviewed": [],
+      "updated": "2026-11-21T15:22:00.444Z"
     },
     {
       "id": "ykc9unv0",
       "anchor": {
         "kind": "markdown",
         "quote": "Schrauben",
-        "prefix": "tzen Menschen, die konzentriert ",
+        "prefix": "n Men你直接schen, die konzentriert ",
         "suffix": " lösen. Was wie ein chaotischer ",
-        "from": 570,
-        "to": 579
+        "from": 573,
+        "to": 582
       },
       "hits": [
         "2026-11-21T14:40:16.553Z"
       ],
       "body": null,
-      "reviewed": []
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:58.480Z"
     },
     {
       "id": "tvmu01h7",
@@ -133,14 +140,15 @@
         "quote": "chaotischer",
         "prefix": "rt Schrauben lösen. Was wie ein ",
         "suffix": " Flohmarkt aussieht, ist ein sog",
-        "from": 599,
-        "to": 610
+        "from": 602,
+        "to": 613
       },
       "hits": [
         "2026-11-21T14:40:28.058Z"
       ],
       "body": null,
-      "reviewed": []
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:57.558Z"
     },
     {
       "id": "8zou2ffj",
@@ -149,14 +157,15 @@
         "quote": "aussieht",
         "prefix": "s wie ein chaotischer Flohmarkt ",
         "suffix": ", ist ein sogenanntes Reparaturc",
-        "from": 621,
-        "to": 629
+        "from": 624,
+        "to": 632
       },
       "hits": [
         "2026-11-21T14:40:36.912Z"
       ],
       "body": null,
-      "reviewed": []
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:56.647Z"
     },
     {
       "id": "eev49qmu",
@@ -165,14 +174,15 @@
         "quote": "sogenanntes",
         "prefix": "her Flohmarkt aussieht, ist ein ",
         "suffix": " Reparaturcafé. Wer ein defektes",
-        "from": 639,
-        "to": 650
+        "from": 642,
+        "to": 653
       },
       "hits": [
         "2026-11-21T14:40:44.775Z"
       ],
       "body": null,
-      "reviewed": []
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:55.714Z"
     },
     {
       "id": "m54r5778",
@@ -181,14 +191,15 @@
         "quote": "ursprünglich",
         "prefix": "war kostenlos.\n\nDie Idee stammt ",
         "suffix": " aus den Niederlanden und hat si",
-        "from": 808,
-        "to": 820
+        "from": 811,
+        "to": 823
       },
       "hits": [
         "2026-11-21T14:42:33.305Z"
       ],
       "body": null,
-      "reviewed": []
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:54.579Z"
     },
     {
       "id": "9t7eu8tw",
@@ -197,14 +208,15 @@
         "quote": "Ehrenamtlichen",
         "prefix": "iativen. Die meisten werden von ",
         "suffix": " getragen, die ihre handwerklich",
-        "from": 1007,
-        "to": 1021
+        "from": 1010,
+        "to": 1024
       },
       "hits": [
         "2026-11-21T14:43:05.875Z"
       ],
       "body": null,
-      "reviewed": []
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:53.712Z"
     },
     {
       "id": "teuc2yo3",
@@ -213,14 +225,15 @@
         "quote": "erheblich",
         "prefix": "n.“\n\nDer ökologische Effekt ist ",
         "suffix": ": Jedes Gerät, das nicht neu gek",
-        "from": 1321,
-        "to": 1330
+        "from": 1324,
+        "to": 1333
       },
       "hits": [
         "2026-11-21T14:44:27.324Z"
       ],
       "body": null,
-      "reviewed": []
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:52.854Z"
     },
     {
       "id": "bfpc8r3h",
@@ -229,14 +242,15 @@
         "quote": "Rohstoffe",
         "prefix": " neu gekauft werden muss, spart ",
         "suffix": " und Energie. Eine Studie im Auf",
-        "from": 1386,
-        "to": 1395
+        "from": 1389,
+        "to": 1398
       },
       "hits": [
         "2026-11-21T14:45:39.583Z"
       ],
       "body": null,
-      "reviewed": []
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:51.990Z"
     },
     {
       "id": "oe4yytum",
@@ -245,14 +259,15 @@
         "quote": "Auftrag",
         "prefix": "ffe und Energie. Eine Studie im ",
         "suffix": " des Umweltbundesamts schätzt, d",
-        "from": 1424,
-        "to": 1431
+        "from": 1427,
+        "to": 1434
       },
       "hits": [
         "2026-11-21T14:46:15.443Z"
       ],
       "body": null,
-      "reviewed": []
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:51.129Z"
     },
     {
       "id": "ml3i8qg3",
@@ -261,14 +276,15 @@
         "quote": "schätzt",
         "prefix": "im Auftrag des Umweltbundesamts ",
         "suffix": ", dass in Deutschland jährlich r",
-        "from": 1453,
-        "to": 1460
+        "from": 1456,
+        "to": 1463
       },
       "hits": [
         "2026-11-21T14:46:19.227Z"
       ],
       "body": null,
-      "reviewed": []
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:50.273Z"
     },
     {
       "id": "63t8xpao",
@@ -277,14 +293,423 @@
         "quote": "Elektroschrott",
         "prefix": "rlich rund elf Millionen Tonnen ",
         "suffix": " anfallen – Tendenz steigend. Zw",
-        "from": 1517,
-        "to": 1531
+        "from": 1520,
+        "to": 1534
       },
       "hits": [
         "2026-11-21T14:46:31.000Z"
       ],
       "body": null,
-      "reviewed": []
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:49.412Z"
+    },
+    {
+      "id": "2q315qhu",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Bewusstsein",
+        "prefix": "ennoch tragen sie dazu bei, das ",
+        "suffix": " für den Wert von Alltagsgegenst",
+        "from": 1661,
+        "to": 1672
+      },
+      "hits": [
+        "2026-11-21T15:06:04.571Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:48.552Z"
+    },
+    {
+      "id": "zw4gaazd",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Alltagsgegenständen",
+        "prefix": "as Bewusstsein für den Wert von ",
+        "suffix": " zu schärfen.\n\nAllerdings gibt e",
+        "from": 1690,
+        "to": 1709
+      },
+      "hits": [
+        "2026-11-21T15:06:17.417Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:47.691Z"
+    },
+    {
+      "id": "ybfdoeut",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Akkus",
+        "prefix": "en Smartphones etwa lassen sich ",
+        "suffix": " oft nur mit Spezialwerkzeug tau",
+        "from": 1799,
+        "to": 1804
+      },
+      "hits": [
+        "2026-11-21T15:06:53.995Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:46.829Z"
+    },
+    {
+      "id": "58xgedvc",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Spezialwerkzeug",
+        "prefix": "a lassen sich Akkus oft nur mit ",
+        "suffix": " tauschen, und für viele Bauteil",
+        "from": 1817,
+        "to": 1832
+      },
+      "hits": [
+        "2026-11-21T15:07:09.426Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:45.971Z"
+    },
+    {
+      "id": "q1zq6678",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Bauteile",
+        "prefix": "erkzeug tauschen, und für viele ",
+        "suffix": " gibt es keine Ersatzteile mehr.",
+        "from": 1857,
+        "to": 1865
+      },
+      "hits": [
+        "2026-11-21T15:07:21.205Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:45.107Z"
+    },
+    {
+      "id": "rzozg260",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Ersatzteile",
+        "prefix": "ür viele Bauteile gibt es keine ",
+        "suffix": " mehr. Kritiker werfen den Herst",
+        "from": 1880,
+        "to": 1891
+      },
+      "hits": [
+        "2026-11-21T15:07:26.587Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:44.250Z"
+    },
+    {
+      "id": "ztsqfns3",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Lebensdauer",
+        "prefix": "en Herstellern deshalb vor, die ",
+        "suffix": " ihrer Produkte absichtlich zu v",
+        "from": 1947,
+        "to": 1958
+      },
+      "hits": [
+        "2026-11-21T15:08:00.221Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:43.389Z"
+    },
+    {
+      "id": "766e6ztu",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "absichtlich",
+        "prefix": " die Lebensdauer ihrer Produkte ",
+        "suffix": " zu verkürzen. Solange die Polit",
+        "from": 1974,
+        "to": 1985
+      },
+      "hits": [
+        "2026-11-21T15:08:04.167Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:42.529Z"
+    },
+    {
+      "id": "62b8w6ol",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Vorgaben",
+        "prefix": "ge die Politik keine strengeren ",
+        "suffix": " macht, sind Reparaturinitiative",
+        "from": 2037,
+        "to": 2045
+      },
+      "hits": [
+        "2026-11-21T15:08:36.388Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:41.663Z"
+    },
+    {
+      "id": "kb6a33cl",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Reparaturinitiativen",
+        "prefix": "strengeren Vorgaben macht, sind ",
+        "suffix": " auf das Wohlwollen der Herstell",
+        "from": 2058,
+        "to": 2078
+      },
+      "hits": [
+        "2026-11-21T15:08:51.799Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:40.803Z"
+    },
+    {
+      "id": "8jfihimu",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Wohlwollen",
+        "prefix": "nd Reparaturinitiativen auf das ",
+        "suffix": " der Hersteller angewiesen.\n\nTro",
+        "from": 2087,
+        "to": 2097
+      },
+      "hits": [
+        "2026-11-21T15:09:01.536Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:39.946Z"
+    },
+    {
+      "id": "krlhmspw",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "angewiesen",
+        "prefix": "f das Wohlwollen der Hersteller ",
+        "suffix": ".\n\nTrotzdem ist die Nachfrage un",
+        "from": 2113,
+        "to": 2123
+      },
+      "hits": [
+        "2026-11-21T15:09:05.688Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:39.087Z"
+    },
+    {
+      "id": "p7ipdaki",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Nachfrage",
+        "prefix": "r angewiesen.\n\nTrotzdem ist die ",
+        "suffix": " ungebrochen. In vielen Städten ",
+        "from": 2143,
+        "to": 2152
+      },
+      "hits": [
+        "2026-11-21T15:09:20.783Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:38.227Z"
+    },
+    {
+      "id": "8r9f91c3",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Wartelisten",
+        "prefix": "elen Städten gibt es inzwischen ",
+        "suffix": ", und manche Cafés mussten ihre ",
+        "from": 2203,
+        "to": 2214
+      },
+      "hits": [
+        "2026-11-21T15:09:41.106Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:37.369Z"
+    },
+    {
+      "id": "pqrdx1jx",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "ausweiten",
+        "prefix": "fés mussten ihre Öffnungszeiten ",
+        "suffix": ". Für Renate Koll liegt der Reiz",
+        "from": 2261,
+        "to": 2270
+      },
+      "hits": [
+        "2026-11-21T15:09:52.637Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:36.508Z"
+    },
+    {
+      "id": "yajag9l3",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "ohnehin",
+        "prefix": " Für Renate Koll liegt der Reiz ",
+        "suffix": " nicht nur im Ergebnis: „Am Ende",
+        "from": 2303,
+        "to": 2310
+      },
+      "hits": [
+        "2026-11-21T15:10:21.021Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:35.651Z"
+    },
+    {
+      "id": "ebgivxh9",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "funktionierenden",
+        "prefix": "zählt, dass die Leute mit einem ",
+        "suffix": " Gerät nach Hause gehen – und mi",
+        "from": 2375,
+        "to": 2391
+      },
+      "hits": [
+        "2026-11-21T15:11:26.229Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:34.788Z"
+    },
+    {
+      "id": "jv2xs2ka",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "hauptsächlich",
+        "prefix": "\n**1. Worum geht es in dem Text ",
+        "suffix": "?**\na) Um die Schwierigkeiten, d",
+        "from": 3752,
+        "to": 3765
+      },
+      "hits": [
+        "2026-11-21T15:15:50.277Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:33.924Z"
+    },
+    {
+      "id": "4zvkuvfn",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Umweltvorgaben",
+        "prefix": ", die Hersteller mit strengeren ",
+        "suffix": " haben.\nb) Um eine Initiative, d",
+        "from": 3826,
+        "to": 3840
+      },
+      "hits": [
+        "2026-11-21T15:16:18.362Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:33.060Z"
+    },
+    {
+      "id": "677ndm8h",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Rahmen",
+        "prefix": "te des Umweltbundesamts, die im ",
+        "suffix": " einer Studie Reparaturen durchf",
+        "from": 4134,
+        "to": 4140
+      },
+      "hits": [
+        "2026-11-21T15:18:09.198Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:32.200Z"
+    },
+    {
+      "id": "08tmphjl",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Umweltbundesamts",
+        "prefix": "en Geräte?**\na) Angestellte des ",
+        "suffix": ", die im Rahmen einer Studie Rep",
+        "from": 4109,
+        "to": 4125
+      },
+      "hits": [
+        "2026-11-21T15:18:45.044Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:31.333Z"
+    },
+    {
+      "id": "19agfj9i",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Kommunale",
+        "prefix": "die Reparaturen durchführen.\nb) ",
+        "suffix": " Fachkräfte, die defekte Geräte ",
+        "from": 4182,
+        "to": 4191
+      },
+      "hits": [
+        "2026-11-21T15:18:54.926Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:30.469Z"
+    },
+    {
+      "id": "r41lvb0d",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Fachkräfte",
+        "prefix": "turen durchführen.\nb) Kommunale ",
+        "suffix": ", die defekte Geräte kostenlos d",
+        "from": 4192,
+        "to": 4202
+      },
+      "hits": [
+        "2026-11-21T15:19:03.312Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:29.600Z"
+    },
+    {
+      "id": "w2qmy80x",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "ersetzen",
+        "prefix": "kte Geräte kostenlos durch neue ",
+        "suffix": ".\nc) Freiwillige, die ihr handwe",
+        "from": 4244,
+        "to": 4252
+      },
+      "hits": [
+        "2026-11-21T15:19:18.846Z"
+      ],
+      "body": null,
+      "reviewed": [],
+      "updated": "2026-11-21T15:21:28.634Z"
     }
   ]
 }

@@ -60,7 +60,7 @@
     }
   },
   "enabledModules": {
-    "attention": true,
+    "attention": false,
     "archive": false,
     "hotlink": true
   }

@@ -1,0 +1,42 @@
+{
+  "version": "2.0",
+  "lastModified": 1795275271460,
+  "highlights": {
+    "highlight-ef5b67a3-7f54-48e5-bbda-81e60fe53944": {
+      "text": "Austausch",
+      "position": 4755,
+      "created": 1795275226139,
+      "updated": 1795275252983,
+      "favoritedAt": 1795275252983,
+      "backgroundColor": "var(--text-highlight-bg, #ffeb3b)",
+      "syntax": "markdown",
+      "contextBefore": "rtphones häufig keine Reparaturen möglich?** a) Weil Ersatzteile fehlen und der",
+      "contextAfter": "bestimmter Teile aufwendig ist. b) Weil eine Reparatur meist teurer wäre als de",
+      "textFingerprint": "Austausch",
+      "comments": [
+        {
+          "id": "comment-1795275226139-0utk30vxb",
+          "content": "## dsfas",
+          "created": 1795275226139,
+          "updated": 1795275229737
+        }
+      ]
+    },
+    "highlight-cd08865e-9ed5-4c9b-99d0-ee804630966b": {
+      "text": "文档批注",
+      "position": 0,
+      "created": 1795275262821,
+      "updated": 1795275271460,
+      "isVirtual": true,
+      "paragraphOffset": 0,
+      "comments": [
+        {
+          "id": "comment-1795275262821-cc20vqux1",
+          "content": "23e2rf\n- dsfasdf",
+          "created": 1795275262821,
+          "updated": 1795275271460
+        }
+      ]
+    }
+  }
+}
