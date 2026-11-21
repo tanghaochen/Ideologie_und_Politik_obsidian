@@ -8,52 +8,19 @@
         "type": "tabs",
         "children": [
           {
-            "id": "52603972a51e39df",
+            "id": "a65daedc64fe309c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
               },
-              "icon": "lucide-file",
-              "title": "Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl"
+              "icon": "excalidraw-icon",
+              "title": "格; 限定词"
             }
           },
           {
-            "id": "e35bd5caa01612bc",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/单词/生词/26-9.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "26-9"
-            }
-          },
-          {
-            "id": "783cf8017538e6f4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/2动词/情态动词.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "情态动词"
-            }
-          },
-          {
-            "id": "32e298df3c1e55a0",
+            "id": "da1911b45de2dc79",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -66,84 +33,9 @@
               "icon": "lucide-file",
               "title": "26-8"
             }
-          },
-          {
-            "id": "3ab2d1429d962364",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/2026年11月20日.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "2026年11月20日"
-            }
-          },
-          {
-            "id": "7b4786d0ea5fcde0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Diary/2026/20261121.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "20261121"
-            }
-          },
-          {
-            "id": "55c6389e73edf260",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Diary/2026/W47.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "W47"
-            }
-          },
-          {
-            "id": "f758fe4d2810ef0a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/个人问题处理/泡学/知识.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "知识"
-            }
-          },
-          {
-            "id": "cea42ea3e5c2af84",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/个人问题处理/泡学/打压 PUA.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "打压 PUA"
-            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -420,9 +312,11 @@
       "video-player-ai:Playlists": false
     }
   },
-  "active": "32e298df3c1e55a0",
+  "active": "da1911b45de2dc79",
   "lastOpenFiles": [
+    "语言学习/德语/公共知识语法/格; 限定词.md",
     "Diary/2026/W47.md",
+    "语言学习/德语/单词/生词/26-8.md",
     "Diary/2026/20261121.md",
     "思想思维心理哲学/个人问题处理/泡学/知识.md",
     "Diary/_backup/_miss3.txt",
@@ -449,10 +343,8 @@
     "Video Player (AI integrated)/Transcripts/对谈武志红：一旦恢复主体性，人生会开挂！高敏感自救，2招找回主体性！ Transcript.md",
     "Video Player (AI integrated)/Transcripts",
     "copilot/copilot-conversations/Translation_Request@20261120_225742.md",
-    "语言学习/德语/单词/生词/26-8.md",
     "语言学习/德语/公共知识语法/2动词/情态动词.md",
     "语言学习/德语/单词/生词/26-9.md",
-    "语言学习/德语/公共知识语法/格; 限定词.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md",
     "OBSetting/templater/周记-一览视图.md",
     "Diary/2026/202611.md",
