@@ -31,7 +31,7 @@
     "aac",
     "opus"
   ],
-  "videoLayout": "auto",
+  "videoLayout": "stack",
   "playerWidthPercent": 65,
   "lowSideWidthPercent": null,
   "stackVideoPercent": null,
@@ -60,7 +60,7 @@
     }
   },
   "enabledModules": {
-    "attention": false,
+    "attention": true,
     "archive": false,
     "hotlink": true
   }

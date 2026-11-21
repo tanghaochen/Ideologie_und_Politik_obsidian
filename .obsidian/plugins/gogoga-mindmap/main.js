@@ -3,6 +3,7 @@ var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
@@ -16,11 +17,13 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 
 // src/main.ts
 var main_exports = {};
 __export(main_exports, {
-  default: () => MindMapPlugin
+  default: () => MindMapPlugin,
+  versionBefore: () => versionBefore
 });
 module.exports = __toCommonJS(main_exports);
 
@@ -149,8 +152,179 @@ function splitText(text, rule, keepDelims = false) {
   return parts.length >= 2 ? { lead: "", parts } : null;
 }
 
+// src/daily-note.ts
+var import_obsidian = require("obsidian");
+var mo = import_obsidian.moment;
+function noteFormat(app) {
+  const internal = app.internalPlugins;
+  const daily = internal?.getPluginById?.("daily-notes");
+  const fmt2 = daily?.enabled !== false && daily?.instance?.options?.format || "YYYY-MM-DD";
+  return fmt2.split("/").pop() || "YYYY-MM-DD";
+}
+function dailyNote(app) {
+  return {
+    name: (v) => mo({ year: v.y, month: v.m - 1, date: v.d }).format(noteFormat(app)),
+    parse: (name) => {
+      const m = mo(name, noteFormat(app), true);
+      return m.isValid() ? { y: m.year(), m: m.month() + 1, d: m.date() } : null;
+    }
+  };
+}
+
+// src/confirm.ts
+var import_obsidian2 = require("obsidian");
+function confirmBox(app, message, ok, cancel) {
+  return new Promise((resolve2) => {
+    let yes = false;
+    const m = new import_obsidian2.Modal(app);
+    m.contentEl.createEl("p", { text: message });
+    new import_obsidian2.Setting(m.contentEl).addButton((b) => b.setButtonText(cancel).onClick(() => m.close())).addButton((b) => {
+      b.setButtonText(ok).onClick(() => {
+        yes = true;
+        m.close();
+      });
+      const btn = b;
+      if (btn.setDestructive) btn.setDestructive();
+      else btn.setWarning();
+    });
+    m.onClose = () => resolve2(yes);
+    m.open();
+  });
+}
+
+// src/live-note-editor.ts
+var import_state = require("@codemirror/state");
+var import_view = require("@codemirror/view");
+var found;
+function editorClass(app) {
+  if (found !== void 0) return found;
+  found = null;
+  try {
+    const registry2 = app.embedRegistry;
+    const make = registry2?.embedByExtension?.md;
+    if (!make) return null;
+    const embed = make({ app, containerEl: createDiv(), state: {} }, null, "");
+    embed.load();
+    embed.editable = true;
+    embed.showEditor();
+    const mode = embed.editMode;
+    const ctor = mode ? Object.getPrototypeOf(Object.getPrototypeOf(mode)).constructor : null;
+    embed.unload();
+    const proto = typeof ctor === "function" ? ctor.prototype : null;
+    if (ctor && proto && typeof proto.set === "function" && typeof proto.buildLocalExtensions === "function") found = ctor;
+  } catch (e) {
+    console.warn("[gogoga-mindmap] \u627E\u4E0D\u5230 Obsidian \u7684\u7F16\u8F91\u5668\uFF0C\u5907\u6CE8\u6539\u7528\u666E\u901A\u8F93\u5165\u6846", e);
+  }
+  return found;
+}
+function createLiveNoteEditor(app, parent, o) {
+  const Base = editorClass(app);
+  if (!Base) return null;
+  const ws = app.workspace;
+  try {
+    const owner = {
+      app,
+      file: o.file,
+      getMode: () => "source",
+      onMarkdownScroll: () => {
+      }
+    };
+    let prevActive = null;
+    class Live extends Base {
+      buildLocalExtensions() {
+        const ext = super.buildLocalExtensions();
+        ext.push(
+          import_state.Prec.highest(
+            import_view.EditorView.domEventHandlers({
+              keydown: (ev) => o.onKey(ev),
+              paste: (ev) => o.onPaste(ev),
+              drop: (ev) => o.onDrop(ev),
+              dragover: (ev) => o.onDragOver(ev),
+              // 获得焦点时当成 Obsidian 的当前编辑器；失焦不还回去（斜杠菜单、插入表格的行列对话框抢走焦点后，
+              // 命令还要把内容插到这里），编辑框关掉时才还
+              focus: () => {
+                if (ws.activeEditor !== owner) {
+                  prevActive = ws.activeEditor;
+                  ws.activeEditor = owner;
+                }
+                return false;
+              }
+            })
+          ),
+          ...o.extensions ?? []
+        );
+        return ext;
+      }
+      onUpdate(update, changed) {
+        super.onUpdate(update, changed);
+        if (changed) o.onChange();
+      }
+    }
+    const box = parent.createDiv({ cls: "mm-note-live markdown-source-view mod-cm6 is-live-preview" });
+    const ed = new Live(app, box, owner);
+    owner.editor = ed.editor;
+    owner.editMode = ed;
+    ed.set(o.text, true);
+    const cm = ed.editor.cm;
+    const len = cm.state.doc.length;
+    const anchor = o.caret !== void 0 ? Math.max(0, Math.min(len, o.caret)) : len;
+    cm.dispatch({ selection: { anchor }, effects: o.caretY !== void 0 ? import_view.EditorView.scrollIntoView(anchor, { y: "center" }) : [] });
+    if (o.caretY !== void 0) {
+      const y = o.caretY;
+      cm.requestMeasure({
+        read: () => cm.coordsAtPos(anchor),
+        write: (c) => {
+          if (c) box.scrollTop += (c.top + c.bottom) / 2 - y;
+        }
+      });
+    }
+    let destroyed = false;
+    return {
+      el: box,
+      get value() {
+        return cm.state.doc.toString();
+      },
+      get selection() {
+        const s = cm.state.selection.main;
+        return { from: s.from, to: s.to };
+      },
+      replace(text, start, end) {
+        const old = cm.state.doc.toString();
+        let a = 0;
+        while (a < old.length && a < text.length && old[a] === text[a]) a++;
+        let b = 0;
+        while (b < old.length - a && b < text.length - a && old[old.length - 1 - b] === text[text.length - 1 - b]) b++;
+        cm.dispatch({ changes: { from: a, to: old.length - b, insert: text.slice(a, text.length - b) }, selection: import_state.EditorSelection.range(start, end), scrollIntoView: true });
+      },
+      insert(text) {
+        cm.dispatch(cm.state.replaceSelection(text));
+      },
+      focus() {
+        cm.focus();
+      },
+      hasFocus() {
+        return cm.hasFocus;
+      },
+      destroy() {
+        if (destroyed) return;
+        destroyed = true;
+        if (ws.activeEditor === owner) ws.activeEditor = prevActive;
+        try {
+          if (ed._loaded) ed.unload();
+          ed.destroy();
+        } catch {
+        }
+        box.remove();
+      }
+    };
+  } catch (e) {
+    console.warn("[gogoga-mindmap] \u5907\u6CE8\u7F16\u8F91\u6846\u5EFA\u4E0D\u8D77\u6765\uFF0C\u6539\u7528\u666E\u901A\u8F93\u5165\u6846", e);
+    return null;
+  }
+}
+
 // src/main.ts
-var import_obsidian14 = require("obsidian");
+var import_obsidian18 = require("obsidian");
 
 // src/bar-layout.ts
 var NODEBAR_DEFAULT = ["colors", "textColor", "highlight", "child", "sibling", "marker", "note", "!media", "box", "link", "copy", "paste", "trash", "!rel", "!table", "!fold", "!moveUp", "!moveDown"];
@@ -181,6 +355,7 @@ var TOOLBAR_DEFAULT = [
   "notes",
   "hidden",
   "recite",
+  "review",
   "layers",
   "quick"
 ];
@@ -813,6 +988,7 @@ function replaceBlock(text, range, nextInner) {
 var CELL_COLORS = ["gray", "red", "orange", "yellow", "green", "blue", "purple"];
 var CALCS = ["sum", "avg", "count", "max", "min"];
 var VALIGNS = ["middle", "bottom"];
+var CURRENCIES = ["\xA5", "$", "\u20AC", "\xA3"];
 var TABLE_STYLES = ["default", "zebra", "minimal", "academic"];
 var TABLE_DENSITIES = ["comfortable", "compact"];
 var FONT_SIZES = [0.75, 0.85, 1, 1.15, 1.3];
@@ -887,6 +1063,23 @@ function parseMetaLine(line) {
     return null;
   }
 }
+function cleanColType(x) {
+  if (!x || typeof x !== "object" || Array.isArray(x)) return null;
+  const o = x;
+  if (o.t === "date") return o.f === "slash" || o.f === "link" ? { t: "date", f: o.f } : { t: "date" };
+  if (o.t === "bar") return { t: "bar" };
+  if (o.t === "multi") return { t: "multi" };
+  if (o.t === "enc") return { t: "enc" };
+  if (o.t === "num") {
+    const n = { t: "num" };
+    if (o.g === 1) n.g = 1;
+    if (CURRENCIES.includes(o.u)) n.u = o.u;
+    if (o.p === 1) n.p = 1;
+    if (typeof o.d === "number" && Number.isInteger(o.d) && o.d >= 0 && o.d <= 4) n.d = o.d;
+    return n;
+  }
+  return null;
+}
 function sanitizeMeta(raw) {
   const meta = { ...raw };
   if (raw.w !== void 0) {
@@ -902,10 +1095,25 @@ function sanitizeMeta(raw) {
     if (calc.some(Boolean)) meta.calc = calc;
     else delete meta.calc;
   }
+  if (raw.fx !== void 0) {
+    const fx = Array.isArray(raw.fx) ? raw.fx.map((x) => typeof x === "string" && x.trim() ? x : null) : [];
+    if (fx.some(Boolean)) meta.fx = fx;
+    else delete meta.fx;
+  }
+  if (raw.fxd !== void 0) {
+    const fxd = Array.isArray(raw.fxd) ? raw.fxd.map((x) => typeof x === "number" && Number.isInteger(x) && x >= 0 && x <= 3 ? x : null) : [];
+    if (fxd.some((x) => x !== null)) meta.fxd = fxd;
+    else delete meta.fxd;
+  }
   if (raw.va !== void 0) {
     const va = Array.isArray(raw.va) ? raw.va.map((x) => VALIGNS.includes(x) ? x : null) : [];
     if (va.some(Boolean)) meta.va = va;
     else delete meta.va;
+  }
+  if (raw.ty !== void 0) {
+    const ty = Array.isArray(raw.ty) ? raw.ty.map(cleanColType) : [];
+    if (ty.some(Boolean)) meta.ty = ty;
+    else delete meta.ty;
   }
   if (raw.opts !== void 0) {
     const opts = Array.isArray(raw.opts) ? raw.opts.map((o) => {
@@ -1018,7 +1226,7 @@ function metaToWrite(meta, cols) {
   if (out.fg && !Object.keys(out.fg).length) delete out.fg;
   if (out.fz && !Object.keys(out.fz).length) delete out.fz;
   if (out.fs === 1) delete out.fs;
-  for (const key of ["calc", "opts", "va"]) {
+  for (const key of ["calc", "opts", "va", "ty"]) {
     const a = out[key];
     if (!a) continue;
     const b = a.slice(0, cols);
@@ -1038,7 +1246,7 @@ function serializeTable(t3) {
   const cols = t3.align.length;
   const src = t3.cells.map((row) => row.map(cellToSource));
   const widths2 = Array.from({ length: cols }, (_, c) => t3.style.padded ? Math.max(3, ...src.map((r3) => displayWidth(r3[c]))) : 0);
-  const pad = (s, c) => {
+  const pad2 = (s, c) => {
     if (!t3.style.padded) return s;
     const extra = widths2[c] - displayWidth(s);
     if (extra <= 0) return s;
@@ -1052,9 +1260,9 @@ function serializeTable(t3) {
     return t3.style.outerPipes ? `|${inner}|` : inner.trim() === "" ? inner : inner.replace(/^ /, "").replace(/ $/, "");
   };
   const out = [];
-  out.push(line(src[0].map(pad)));
+  out.push(line(src[0].map(pad2)));
   out.push(line(t3.align.map((a, c) => delimCell(a, widths2[c]))));
-  for (const row of src.slice(1)) out.push(line(row.map(pad)));
+  for (const row of src.slice(1)) out.push(line(row.map(pad2)));
   const meta = metaToWrite(t3.meta, cols);
   if (meta) out.push(metaLine(meta));
   return out;
@@ -1167,6 +1375,13 @@ function findTables(lines) {
       while (k < lines.length && TBLFM_RE.test(at(k) ?? "")) tail.push(at(k++));
     }
     const blockIdNoBlank = tail.length === 1 && BLOCK_ID_RE.test(tail[0]);
+    if (!blockIdNoBlank && !(k < lines.length && parseMetaLine(at(k) ?? ""))) {
+      let j = k;
+      while (j < lines.length && lines[j].trim() === "") j++;
+      if (j > k && j < lines.length && parseMetaLine(at(j) ?? "")) {
+        for (; k < j; k++) tail.push("");
+      }
+    }
     const metaText = k < lines.length ? at(k) : null;
     const meta = !blockIdNoBlank && metaText !== null ? parseMetaLine(metaText) : null;
     const metaLine2 = meta ? k : null;
@@ -1187,6 +1402,10 @@ function blockTable(lines, b) {
 }
 
 // src/model.ts
+var BRANCH_LAYOUTS = ["logic-right", "org-down", "tree-right", "timeline-h", "timeline-h-alt", "timeline-v-right", "timeline-v-left", "timeline-v-alt", "fishbone"];
+function isBranchLayout(s) {
+  return BRANCH_LAYOUTS.includes(s);
+}
 var NODE_MIN_WIDTH = 60;
 var NODE_MAX_WIDTH = 1200;
 var counter = 0;
@@ -1209,6 +1428,9 @@ function createNode(init) {
     summary: init.summary,
     width: init.width,
     side: init.side,
+    layout: init.layout,
+    review: init.review,
+    reviewId: init.reviewId,
     float: init.float,
     callout: init.callout,
     calloutColor: init.callout === void 0 ? void 0 : init.calloutColor,
@@ -1879,6 +2101,14 @@ function splitMarker(text) {
       marker.width = Math.max(NODE_MIN_WIDTH, Math.min(NODE_MAX_WIDTH, Number(lower.slice(2))));
     } else if (lower === "left" || lower === "right") {
       marker.side = lower;
+    } else if (/^layout=/.test(lower)) {
+      const v = lower.slice(7);
+      if (!isBranchLayout(v)) return { text: text.trimEnd(), marker: { folded: false } };
+      marker.layout = v;
+    } else if (lower === "review") {
+      marker.review = true;
+    } else if (/^rv=[a-z0-9]{4,16}$/.test(lower)) {
+      marker.reviewId = lower.slice(3);
     } else if (lower === "float") {
       isFloat = true;
     } else if (/^[xy]=-?\d{1,6}$/.test(lower)) {
@@ -1915,6 +2145,9 @@ function formatMarker(node, noTopic = false) {
   if (node.numbered && (!kids.length || kids.some((c) => c.kind === "heading"))) parts.push("num");
   if (node.width) parts.push(`w=${Math.round(node.width)}`);
   if (node.side) parts.push(node.side);
+  if (node.layout) parts.push(`layout=${node.layout}`);
+  if (node.review) parts.push("review");
+  if (node.reviewId) parts.push(`rv=${node.reviewId}`);
   if (node.box) {
     const title = node.box.title.replace(/["%]/g, "").trim();
     const span = spanOf(node.box);
@@ -2038,7 +2271,7 @@ function blankAfterQuotedNotes(text, original) {
     if (next === void 0 || !LIST_RE2.test(next)) continue;
     let j = i;
     while (j > 0 && quote(lines[j - 1])) j--;
-    if (lines.slice(j, i + 1).some((x) => !old.has(x)) || !old.has(next)) out.push("");
+    if (lines.slice(j, i + 1).some((x) => !old.has(x)) || !old.has(next)) out.push(l.match(/^[ \t]*/)[0]);
   }
   return out.join("\n");
 }
@@ -2046,24 +2279,24 @@ function isEscapedNote(note) {
   const lines = note.split("\n");
   return lines[0]?.trim() === NOTE_CALLOUT && lines.slice(1).every((l) => l === "" || l.startsWith(">"));
 }
-function escapeNote(plain) {
-  return [NOTE_CALLOUT, ...plain.split("\n").map((l) => l === "" ? ">" : `> ${l}`)].join("\n");
+function escapeNote(plain2) {
+  return [NOTE_CALLOUT, ...plain2.split("\n").map((l) => l === "" ? ">" : `> ${l}`)].join("\n");
 }
 function unescapeNote(note) {
   if (!isEscapedNote(note)) return note;
   return note.split("\n").slice(1).map((l) => l.replace(/^> ?/, "")).join("\n");
 }
-function normalizeNote(plain, inList = true, listsOk = false) {
-  return noteNeedsEscape(plain, inList, listsOk) ? escapeNote(plain) : plain;
+function normalizeNote(plain2, inList = true, listsOk = false) {
+  return noteNeedsEscape(plain2, inList, listsOk) ? escapeNote(plain2) : plain2;
 }
-function subtreeToList(node, indent = "	", plain = false) {
+function subtreeToList(node, indent = "	", plain2 = false) {
   const lines = [];
   const walk2 = (n, depth) => {
-    lines.push(`${indent.repeat(depth)}- ${n.text}${plain ? "" : formatMarker(n, depth === 0 && isSummaryTopic(n))}`.trimEnd());
+    lines.push(`${indent.repeat(depth)}- ${n.text}${plain2 ? "" : formatMarker(n, depth === 0 && isSummaryTopic(n))}`.trimEnd());
     if (n.note) {
       const note = normalizeNote(n.note);
       for (const l of note.split("\n")) lines.push(l === "" ? "" : `${indent.repeat(depth + 1)}${l}`);
-      if (isEscapedNote(note)) lines.push("");
+      if (isEscapedNote(note)) lines.push(indent.repeat(depth + 1));
     }
     for (const c of withTopics(n.children)) walk2(c, depth + 1);
   };
@@ -2273,7 +2506,7 @@ function parseMarkdown(src, opts = {}) {
       } else {
         while (headingStack.length > 1 && headingStack[headingStack.length - 1].level >= tok.level) headingStack.pop();
         const parent = headingStack[headingStack.length - 1];
-        const node = createNode({ parent, kind: "heading", level: tok.level, text, color: marker.color, folded: marker.folded, box: marker.box, summary: marker.summary, width: marker.width, side: marker.side, float: marker.float, callout: marker.callout, calloutColor: marker.calloutColor, hidden: marker.hidden, table: marker.table, numbered: marker.num, anchor: marker.anchor, rels: marker.rels, topicSpan: marker.summaryTopic });
+        const node = createNode({ parent, kind: "heading", level: tok.level, text, color: marker.color, folded: marker.folded, box: marker.box, summary: marker.summary, width: marker.width, side: marker.side, layout: marker.layout, review: marker.review, reviewId: marker.reviewId, float: marker.float, callout: marker.callout, calloutColor: marker.calloutColor, hidden: marker.hidden, table: marker.table, numbered: marker.num, anchor: marker.anchor, rels: marker.rels, topicSpan: marker.summaryTopic });
         if (markerGap) node.markerGap = markerGap;
         parent.children.push(node);
         headingStack.push(node);
@@ -2295,7 +2528,7 @@ function parseMarkdown(src, opts = {}) {
       const parent = listStack.length ? listStack[listStack.length - 1].node : headingStack[headingStack.length - 1];
       const { text: withoutId, blockId } = splitBlockId(tok.text);
       const { text, marker } = splitMarker(withoutId);
-      const node = createNode({ parent, kind: "list", level: 0, text, color: marker.color, folded: marker.folded, box: marker.box, summary: marker.summary, width: marker.width, side: marker.side, float: marker.float, callout: marker.callout, calloutColor: marker.calloutColor, hidden: marker.hidden, table: marker.table, numbered: marker.num, anchor: marker.anchor, rels: marker.rels, topicSpan: marker.summaryTopic, bullet: tok.bullet, blockId });
+      const node = createNode({ parent, kind: "list", level: 0, text, color: marker.color, folded: marker.folded, box: marker.box, summary: marker.summary, width: marker.width, side: marker.side, layout: marker.layout, review: marker.review, reviewId: marker.reviewId, float: marker.float, callout: marker.callout, calloutColor: marker.calloutColor, hidden: marker.hidden, table: marker.table, numbered: marker.num, anchor: marker.anchor, rels: marker.rels, topicSpan: marker.summaryTopic, bullet: tok.bullet, blockId });
       if (/\S {2,}$/.test(tok.text)) node.hardBreak = true;
       const pending = tailBuf.get(parent);
       if (pending?.some((l) => l.trim() !== "")) {
@@ -2353,11 +2586,11 @@ function parseMarkdown(src, opts = {}) {
     const n = noteBuf.get(node);
     if (n) node.note = joinNote(node.kind === "list" ? dedent(trimBlankLines(n)) : n);
     if (node.note && node.kind === "list" && opts.quoteListNotes) node.note = unquoteListNote(node.note);
-    const plain = (lines2, inList) => joinNote(inList ? dedent(trimBlankLines(lines2)) : lines2);
+    const plain2 = (lines2, inList) => joinNote(inList ? dedent(trimBlankLines(lines2)) : lines2);
     const t3 = tailBuf.get(node);
-    if (t3) node.tail = plain(t3, node.kind === "list");
+    if (t3) node.tail = plain2(t3, node.kind === "list");
     const l = leadBuf.get(node);
-    if (l) node.lead = plain(l, node.parent?.kind === "list");
+    if (l) node.lead = plain2(l, node.parent?.kind === "list");
     for (const c of node.children) finalize(c);
   };
   finalize(root);
@@ -2404,7 +2637,8 @@ function serializeMarkdown(doc) {
   normalizeKinds(doc);
   const out = [];
   const ensureBlank = () => {
-    if (out.length && out[out.length - 1] !== "") out.push("");
+    if (out.length && out[out.length - 1].trim() === "") out[out.length - 1] = "";
+    else if (out.length) out.push("");
   };
   const pushBlock = (text) => {
     if (!text) return;
@@ -2462,8 +2696,8 @@ function serializeMarkdown(doc) {
       const start = ord[0]?.n ?? 1;
       const delim = ord.find(Boolean)?.delim ?? ".";
       const lazy = kids.length > 1 && ord.every((o) => o && o.n === ord[0].n);
-      const pad = ord[0]?.pad ?? 0;
-      list = kids.map((_, i2) => `${String(lazy ? start : start + i2).padStart(pad, "0")}${delim}`);
+      const pad2 = ord[0]?.pad ?? 0;
+      list = kids.map((_, i2) => `${String(lazy ? start : start + i2).padStart(pad2, "0")}${delim}`);
       numbered.set(p, list);
       kids.forEach((c, i2) => numberedIdx.set(c, i2));
     }
@@ -2484,9 +2718,10 @@ function serializeMarkdown(doc) {
       const plainNote = note;
       if (doc.style.quoteListNotes && !(node.table && note.startsWith("|"))) note = quoteListNote(note);
       const quoted = note !== plainNote;
-      if (node.table && note.startsWith("|")) out.push("");
-      for (const l of note.split("\n")) out.push(l === "" ? "" : `${style.indent.repeat(depth + 1)}${l}`);
-      if (isEscapedNote(note) || quoted) out.push("");
+      const noteIndent = style.indent.repeat(depth + 1);
+      if (node.table && note.startsWith("|")) out.push(noteIndent);
+      for (const l of note.split("\n")) out.push(l === "" ? "" : `${noteIndent}${l}`);
+      if (isEscapedNote(note) || quoted) out.push(noteIndent);
     }
     for (const c of fileChildren(node)) emitList(c, depth + 1);
     if (node.tail) emitBlock(node.tail, depth + 1);
@@ -2513,7 +2748,7 @@ function serializeMarkdown(doc) {
     }
     for (const c of headingKids) emitHeading(c, Math.min(level, 6));
   }
-  while (out.length && out[out.length - 1] === "") out.pop();
+  while (out.length && out[out.length - 1].trim() === "") out.pop();
   return out.join("\n") + "\n";
 }
 function normalizeKinds(doc) {
@@ -2635,6 +2870,16 @@ function foldPlan(src, rule = {}) {
   for (const [node, l] of sorted) lineOf.set(pathOf(node), l);
   return { nodeLines: new Set(lines.values()), lineOf, folds, paths };
 }
+function matchLine(state) {
+  const m = state?.match;
+  if (!m || typeof m.content !== "string" || !Array.isArray(m.matches)) return null;
+  const first = m.matches[0];
+  const from = Array.isArray(first) ? first[0] : null;
+  if (typeof from !== "number" || from < 0 || from > m.content.length) return null;
+  let line = 0;
+  for (let i = m.content.indexOf("\n"); i >= 0 && i < from; i = m.content.indexOf("\n", i + 1)) line++;
+  return line;
+}
 
 // src/node-table.ts
 function noteTable(note) {
@@ -2669,13 +2914,38 @@ function withoutTable(note, inList) {
 function noteRest(note) {
   const nt = noteTable(note);
   if (!nt) return unescapeNote(note);
-  return tidy([...nt.lines.slice(0, nt.start), ...nt.lines.slice(nt.stop)]);
+  let stop = nt.stop;
+  let k = stop;
+  while (k < nt.lines.length && nt.lines[k].trim() === "") k++;
+  if (k > stop && k < nt.lines.length && BLOCK_ID_LINE.test(nt.lines[k].slice(nt.indent.length))) stop = k + 1;
+  return tidy([...nt.lines.slice(0, nt.start), ...nt.lines.slice(stop)]);
 }
+var BLOCK_ID_LINE = /^\^[A-Za-z0-9-]+[ \t]*$/;
 function addTable(note, inList, rows = 3, cols = 3) {
   const table = emptyTable(rows, cols);
   const block = serializeBlock(table, []);
   const rest = unescapeNote(note);
   return normalizeNote(rest.trim() ? [...block, "", rest].join("\n") : block.join("\n"), inList);
+}
+function splitNoteTables(md) {
+  if (!md.includes("|")) return [{ md }];
+  const lines = md.split("\n");
+  const out = [];
+  let from = 0;
+  const pushMd = (to) => {
+    const text = lines.slice(from, to).join("\n");
+    if (text.trim()) out.push({ md: text });
+  };
+  for (const b of findTables(lines)) {
+    if (b.indent) continue;
+    const table = blockTable(lines, b);
+    if (!table) continue;
+    pushMd(b.start);
+    out.push({ table });
+    from = b.stop;
+  }
+  pushMd(lines.length);
+  return out.length ? out : [{ md }];
 }
 function tableSource(table) {
   return serializeBlock(table, []).join("\n");
@@ -2697,9 +2967,35 @@ function blankBeforeNodeTables(text) {
     if (FENCE_LINE.test(l)) fence = !fence;
     if (fence || !TABLE_ITEM.test(l)) continue;
     const next = lines[i + 1];
-    if (next !== void 0 && /^\s+\|/.test(next)) out.push("");
+    if (next !== void 0 && /^\s+\|/.test(next)) out.push(next.match(/^[ \t]*/)[0]);
   }
   return out.join("\n");
+}
+function toggleTableMarkerAt(src, line, rule = {}) {
+  const srcLines = src.replace(/\r\n?/g, "\n").split("\n");
+  if (!/^\s*\|/.test(srcLines[line] ?? "")) return null;
+  const path = pathAtLine(src, line, rule);
+  if (!path) return null;
+  const lines = /* @__PURE__ */ new Map();
+  const doc = parseMarkdown(src, { lines, ...rule });
+  const node = findByPath(doc.root, path);
+  const at = node ? lines.get(node) : void 0;
+  if (!node || node === doc.root || at === void 0 || at >= line || !noteTable(node.note)) return null;
+  const on = !node.table;
+  const orig = srcLines[at];
+  const hard = / {2}$/.test(orig) ? "  " : "";
+  let body = hard ? orig.slice(0, -2) : orig;
+  const id = /[ \t]+\^[A-Za-z0-9-]+[ \t]*$/.exec(body);
+  const idPart = id ? body.slice(id.index) : "";
+  if (id) body = body.slice(0, id.index);
+  const m = MARKER_RE.exec(body);
+  if (m) {
+    const tokens = m[1].split(/\s+/).filter((x) => x && x.toLowerCase() !== "table");
+    if (on) tokens.push("table");
+    const head = body.slice(0, m.index);
+    body = tokens.length ? `${head} %%${tokens.join(" ")}%%` : head.trimEnd();
+  } else if (on) body = `${body.trimEnd()} %%table%%`;
+  return { line: at, text: body + idPart + hard, on };
 }
 
 // src/merge.ts
@@ -2803,21 +3099,21 @@ function merge3(base, ours, theirs, touching = false, refine = false) {
   const out = [];
   let pos = 0;
   for (let i = 0; i < all.length; ) {
-    const group = [all[i]];
+    const group2 = [all[i]];
     let end = all[i].end;
     let j = i + 1;
-    while (j < all.length && group.some((g) => clash(g, all[j], touching))) {
-      group.push(all[j]);
+    while (j < all.length && group2.some((g) => clash(g, all[j], touching))) {
+      group2.push(all[j]);
       end = Math.max(end, all[j].end);
       j++;
     }
-    const start = group[0].start;
+    const start = group2[0].start;
     out.push(...base.slice(pos, start));
-    const theirsHunks = group.filter((g) => g.side === "theirs");
-    if (group.length === 1) {
-      out.push(...group[0].lines);
+    const theirsHunks = group2.filter((g) => g.side === "theirs");
+    if (group2.length === 1) {
+      out.push(...group2[0].lines);
     } else if (refine) {
-      out.push(...resolve(base, start, end, group.filter((g) => g.side === "ours"), theirsHunks));
+      out.push(...resolve(base, start, end, group2.filter((g) => g.side === "ours"), theirsHunks));
     } else {
       let p = start;
       for (const h of theirsHunks) {
@@ -3015,7 +3311,7 @@ function htmlCharset(contentType, head) {
 }
 
 // src/pdf-excerpt.ts
-var import_obsidian = require("obsidian");
+var import_obsidian3 = require("obsidian");
 
 // src/i18n.ts
 var en = {
@@ -3024,6 +3320,7 @@ var en = {
   "command.openPreview": "Markdown and mind map side by side",
   "command.swapSides": "Swap Markdown and mind map sides",
   "command.newMindMap": "New mind map",
+  "command.openGuide": "Open the user guide",
   "command.linkNote": "Link to note or create note",
   "command.toggleOutline": "Toggle outline panel",
   "command.toggleHidden": "Show / stop showing hidden nodes",
@@ -3031,6 +3328,7 @@ var en = {
   "command.focusBranch": "Focus on selected branch",
   "command.exitFocus": "Exit focus",
   "command.copyNodeLink": "Copy node link",
+  "command.copyNodeLinkAlias": "Copy node link with alias",
   "command.search": "Search nodes",
   "command.expandAll": "Expand all nodes",
   "command.collapseAll": "Collapse all nodes",
@@ -3039,6 +3337,7 @@ var en = {
   "command.fitBranch": "Zoom to the selected branch",
   "command.toggleBox": "Add or remove a boundary",
   "command.toggleRecite": "Toggle recite mode",
+  "command.toggleZen": "Toggle zen mode",
   "command.togglePdfExcerpt": "Toggle PDF auto-excerpt into this mind map",
   "action.stopExcerpt": "PDF auto-excerpt is on. Click to stop",
   "notice.excerptOn": "PDF auto-excerpt is on: every link PDF++ copies is added under the selected node of this mind map. Turn on auto-copy in PDF++ to add a selection as soon as you make it",
@@ -3056,6 +3355,7 @@ var en = {
   "command.copyPng": "Copy as image",
   "menu.openAsMarkdown": "Open as Markdown",
   "menu.openAsMindMap": "Open as mind map",
+  "menu.openAsReading": "Open in reading view",
   // main.ts
   "hover.display": "Mind map",
   "notice.setIconFirst": "Set an icon value in settings first",
@@ -3063,6 +3363,8 @@ var en = {
   "notice.iconsAdded": "Added an icon to {count} mind map notes",
   "log.iconWriteFailed": "Failed to write the icon to {path}",
   "notice.created": "Created {path}",
+  "notice.guideAdded": "Added the user guide (in Chinese) to the \u201C{folder}\u201D folder",
+  "guide.folder": "Mind Map examples",
   "notice.writeBackFailed": "Failed to write back to the code block: {error}",
   "notice.rootNoRoom": "Can't save the central topic: this code block already uses headings 6 levels deep, and adding a top-level heading for the central topic would push them past the limit.",
   "notice.rootBadName": `The central topic is the note's file name, so it can't contain any of these characters: \\ / : * ? " < > | # ^ [ ]`,
@@ -3288,6 +3590,15 @@ var en = {
   "canvas.notePlaceholder": "Note (supports Markdown, including lists)",
   "canvas.clearMarkers": "Clear all markers",
   "canvas.wholeMap": "Whole map",
+  "canvas.crumbSiblings": "Focus on another topic at this level",
+  "canvas.focusPrev": "Previous topic (PageUp)",
+  "canvas.focusNext": "Next topic (PageDown)",
+  "canvas.zen": "Zen mode",
+  "canvas.zenExit": "Exit zen mode",
+  "canvas.openMap": "Open",
+  "canvas.activateMap": "Activate",
+  "canvas.fitMap": "Fit",
+  "canvas.resizeMap": "Drag to resize the preview. Double-click to reset to 320\xD7200",
   "canvas.emptyNode": "Empty",
   "canvas.untitled": "Untitled",
   // canvas.ts：折叠层级、搜索
@@ -3311,8 +3622,17 @@ var en = {
   "menu.more": "More",
   "menu.newFloat": "New floating topic here",
   "menu.toFloat": "Make floating topic",
+  "menu.branchLayout": "Branch structure",
+  "menu.branchLayoutInherit": "Same as parent",
+  "menu.branchLayoutMainTopic": "Main topics of a timeline or fishbone can't have their own structure; set it on a topic below",
+  "menu.branchLayoutRoot": "The central topic's structure is set from the toolbar",
+  "menu.branchLayoutTopic": "Summary topics can't have their own structure",
+  "structure.fishbone": "Fishbone",
   "menu.attachFloat": "Attach to central topic",
   "menu.revealInMarkdown": "Show in Markdown",
+  "menu.revealInMindMap": "Show in mind map",
+  "menu.tableInNodeMd": "Show this table inside its node in the mind map",
+  "menu.tableToNoteMd": "Show this table in the note again (not inside the node)",
   "menu.exitFocus": "Exit focus",
   "menu.focusBranch": "Focus on this branch",
   "menu.expand": "Expand",
@@ -3373,6 +3693,110 @@ var en = {
   "bar.notes": "Expand / collapse notes",
   "bar.hidden": "Show hidden nodes",
   "bar.recite": "Recite mode",
+  "bar.review": "Spaced review",
+  "command.reviewAdd": "Add this mind map to review",
+  "command.reviewRemove": "Remove this mind map from review",
+  "menu.fileReviewAdd": "Add to spaced review",
+  "menu.fileReviewStudy": "Review this map",
+  "menu.fileReviewRemove": "Remove from spaced review",
+  "notice.reviewAdded": "Added \u201C{name}\u201D to spaced review",
+  "notice.reviewRemoved": "Removed \u201C{name}\u201D from spaced review. Schedules are kept if you add it back.",
+  "command.openReview": "Open review",
+  "command.reviewMap": "Review this mind map",
+  "menu.reviewGroup": "Spaced review",
+  "menu.reviewJoinAll": "Add the whole map to review",
+  "menu.reviewJoinBranch": "Add only this branch to review",
+  "menu.reviewAddBranch": "Also add this branch to review",
+  "menu.reviewLeaveAll": "Remove the whole map from review",
+  "menu.reviewLeaveBranch": "Remove this branch from review",
+  "menu.reviewStudyBranch": "Review this branch ({n} due)",
+  "menu.reviewUnsuspend": "Resume reviewing this question",
+  "canvas.review": "Spaced review \xB7 {n} cards today",
+  "review.title": "Review",
+  "review.colDeck": "Deck",
+  "review.colNew": "New",
+  "review.colLearn": "Learn",
+  "review.colReview": "Due",
+  "mapReview.title": "Reviewing",
+  "mapReview.openTab": "Review in tab",
+  "mapReview.exit": "Exit (Esc)",
+  "mapReview.waiting": "Learning cards are waiting; the review continues when the next one is due",
+  "review.tipNew": "New: {n} cards you haven't studied yet",
+  "review.tipLearn": "Learning: {n} cards studied today, coming back after a few minutes",
+  "review.tipReview": "Due: {n} cards you learned before that are due today",
+  "review.tipCurrent": "(the card shown now is this kind)",
+  "review.studiedToday": "Studied {n} cards in {min} minutes today",
+  "review.studyAll": "Study all",
+  "review.settings": "Settings",
+  "review.empty": "No mind maps are in review yet. In a mind map, right-click the central topic or a branch and choose \u201CAdd the whole map to review\u201D.",
+  "review.start": "Study now",
+  "review.openMap": "Open in mind map",
+  "review.showAnswer": "Show answer",
+  "review.space": "Space",
+  "review.again": "Again",
+  "review.hard": "Hard",
+  "review.good": "Good",
+  "review.easy": "Easy",
+  "review.edit": "Edit",
+  "review.more": "More",
+  "review.doneTitle": "Congratulations! You have finished this deck for now.",
+  "review.doneNext": "The next card is due {when}.",
+  "review.doneNone": "No cards are scheduled yet.",
+  "review.doneStats": "Studied {n} cards in {min} minutes this session.",
+  "review.waitLearn": "Learning cards are waiting: the next one is due in {when}.",
+  "review.backHome": "Back to decks",
+  "review.single": "Single choice",
+  "review.multi": "Multiple choice",
+  "review.menuOpen": "Open in mind map",
+  "review.menuBury": "Bury card (skip until tomorrow)",
+  "review.menuSuspend": "Suspend card",
+  "review.menuUndo": "Undo last answer",
+  "review.menuInfo": "Card info",
+  "review.undone": "Undid \u201C{g}\u201D",
+  "review.buried": "Buried until tomorrow",
+  "review.suspended": "Suspended. Right-click the node in the mind map to resume it.",
+  "review.missing": "This question was deleted or moved out of review. Skipped.",
+  "review.infoAdded": "First studied",
+  "review.infoReps": "Reviews",
+  "review.infoLapses": "Lapses",
+  "review.infoDue": "Due",
+  "review.infoStability": "Stability",
+  "review.infoDifficulty": "Difficulty",
+  "review.infoState": "State",
+  "review.stateNew": "New",
+  "review.stateLearn": "Learning",
+  "review.stateReview": "Review",
+  "review.stateRelearn": "Relearning",
+  "review.infoNone": "Not studied yet",
+  "review.unitM": "m",
+  "review.unitH": "h",
+  "review.unitD": "d",
+  "review.unitMo": "mo",
+  "review.unitY": "y",
+  "review.days": "{n} days",
+  "review.statusbar": "Review \xB7 {n} today",
+  "review.tomorrow": "tomorrow",
+  "settings.review.heading": "Spaced review",
+  "settings.review.perDay": "{n} new cards a day",
+  "settings.review.intro": "Questions written for recite mode (==highlights==, multiple choice, \u{1F648} answers) become flashcards scheduled with FSRS, the algorithm Anki uses. Add a map from its right-click menu. Defaults follow Anki.",
+  "settings.review.newPerDay.name": "New cards per day",
+  "settings.review.newPerDay.desc": "The most new cards each deck shows per day.",
+  "settings.review.reviewPerDay.name": "Maximum reviews per day",
+  "settings.review.reviewPerDay.desc": "The most due cards each deck shows per day.",
+  "settings.review.learningSteps.name": "Learning steps",
+  "settings.review.learningSteps.desc": "When a new card comes back while you learn it, separated by spaces: 1m 10m.",
+  "settings.review.relearningSteps.name": "Relearning steps",
+  "settings.review.relearningSteps.desc": "When a card you forgot (Again) comes back.",
+  "settings.review.retention.name": "Desired retention",
+  "settings.review.retention.desc": "FSRS spaces cards so you remember about this share of them. Higher means more reviews.",
+  "settings.review.dayStart.name": "Next day starts at",
+  "settings.review.dayStart.desc": "Studying late at night still counts toward the previous day until this hour.",
+  "settings.review.dueDots.name": "Mark nodes with cards due",
+  "settings.review.dueDots.desc": "A small green dot on the top right of nodes that have cards due today.",
+  "settings.review.timer.name": "Show timer while reviewing",
+  "settings.review.timer.desc": "Shown on the right of the top bar, counting from zero for each card.",
+  "settings.review.crumb.name": "Show where the question is",
+  "settings.review.crumb.desc": "The path from the central topic, in small gray text above each card.",
   "bar.layers": "Expand to level",
   "bar.quick": "Quick settings",
   "menu.addRel": "Add relationship",
@@ -3430,6 +3854,10 @@ var en = {
   "command.insertBefore": "Insert sibling before",
   "command.insertParent": "Insert parent node (wrap the selected nodes)",
   "command.revealInMarkdown": "Show the selected node in Markdown",
+  "command.revealInMindMap": "Show the line at the cursor in the mind map",
+  "command.toggleNodeTableMd": "Toggle node table for the table at the cursor",
+  "notice.tableInNodeMd": "Added %%table%%: in the mind map this table is drawn inside its node",
+  "notice.tableToNoteMd": "Removed %%table%%: in the mind map this table is back in the node\u2019s note",
   "command.editNode": "Edit node",
   "command.deleteNode": "Delete node and its subtree",
   "command.deleteNodeOnly": "Delete this node only (keep its children)",
@@ -3465,6 +3893,7 @@ var en = {
   "menu.cut": "Cut",
   "menu.pasteChild": "Paste as child node",
   "menu.copyNodeLink": "Copy node link",
+  "menu.copyNodeLinkAlias": "Copy node link with alias",
   "menu.delete": "Delete",
   "menu.deleteOnly": "Delete this node only",
   "menu.extendRange": "Extend range by one node",
@@ -3478,6 +3907,7 @@ var en = {
   "notice.cannotHeading": "This level can't be converted to headings: its parent isn't a heading, or it's already at heading level 6",
   "notice.saveImageUnsupported": "Saving images isn't supported here",
   "notice.saveImageFailed": "Failed to save image: {error}",
+  "notice.oldTablePlugin": "gogoga Mind Map: your gogoga Table is {version}. Selecting text in a table inside a node's note shows the format bar (highlight, colors) only with gogoga Table {min} or later. Update it under Settings \u2192 Community plugins \u2192 Check for updates.",
   "notice.xmindTaken": "gogoga Mind Map: another plugin already opens .xmind files, so .xmind files stay with that plugin. Mind maps in notes are not affected.",
   "notice.imageAddedToNote": "Image added to this node's note",
   "notice.noBlockId": "This node has no block ID yet; one can only be generated while editing",
@@ -3505,6 +3935,11 @@ var en = {
   "settings.theme.name": "Default theme",
   "settings.theme.desc": "Theme for new files. The palette button in the toolbar switches the theme per file and writes the choice to mindmap-theme.",
   "settings.fileNameAsRoot.name": "Use the file name as the central topic",
+  "settings.renameWithRoot.name": "Rename the note with the central topic",
+  "settings.renameWithRoot.desc": "When the central topic is the note's level-1 heading and matches the file name (as in a new mind map), renaming the central topic in the mind map renames the note too. Once they differ, they're left alone.",
+  "notice.rootBadChars": `a file name can't contain \\ / : * ? " < > | # ^ [ ]`,
+  "notice.nameTaken": "a file with that name already exists in this folder",
+  "notice.renameWithRootSkipped": `The note wasn't renamed to "{name}": {why}`,
   "settings.fileNameAsRoot.desc": "Off: a note's only level-1 heading becomes the central topic. On: the central topic is always the file name and the level-1 heading becomes a first-level branch. Only changes how notes are shown; the file stays the same.",
   "settings.headingLevel.name": "Deepest heading level",
   "settings.headingLevel.desc": "When adding nodes, levels deeper than this are written back as list items instead of headings. Existing content keeps its format.",
@@ -3539,6 +3974,8 @@ var en = {
   "settings.nodeColors.desc": "Colors in the floating toolbar and the callout color menu. Click a color to change it, \xD7 to remove, drag to reorder, + to add. Built-in names (red, orange, \u2026) follow the theme and dark mode; colors picked from the palette stay the same everywhere. The \xB7\xB7\xB7 button after the colors in the toolbar picks any other color.",
   "settings.showNodebar.name": "Floating toolbar on selected nodes",
   "settings.showNodebar.desc": `The small toolbar (colors, add child, markers\u2026) above the selected node. Turn it off if it gets in the way of clicking nearby nodes; everything on it is also in the node's context menu. The "Toggle the floating toolbar" command switches it from anywhere (bind a hotkey in Settings \u2192 Hotkeys).`,
+  "settings.zenHideObsidian.name": "Hide Obsidian interface in zen mode",
+  "settings.zenHideObsidian.desc": "Zen mode also collapses the sidebars and hides the tab bar and status bar, restoring them on exit. Turn off to hide only the mind map\u2019s own toolbars.",
   "settings.group.open": "Opening and display",
   "settings.group.newMap": "New maps",
   "settings.group.parse": "How Markdown becomes nodes",
@@ -3598,7 +4035,7 @@ var en = {
   "settings.linkFocusNote.name": "Focus the note after opening it in a split",
   "settings.linkFocusNote.desc": "After a link opens in the right split, move the focus to that note, so shortcuts like close tab act on it. Off: the focus stays on the mind map so you can keep adding nodes.",
   "settings.linkReuseOpen.name": "Jump to the note if it's already open",
-  "settings.linkReuseOpen.desc": "When the linked note is already open in another tab or split, go there instead of opening it again; in a mind map the linked heading or block is selected. Handy with two maps side by side. \u2318-click (Ctrl-click) still opens a new tab.",
+  "settings.linkReuseOpen.desc": "When the linked note is already open in another tab or split, go there instead of opening it again; in a mind map the linked heading or block is selected. Applies to links in mind maps and in Markdown notes. Handy with two panes side by side. \u2318-click (Ctrl-click) still opens a new tab.",
   "settings.newNoteFolder.name": "Folder for new notes from the map",
   "settings.newNoteFolder.desc": "Where a note is created when you make a new linked note from a node, or click a link to a note that doesn't exist yet.",
   "settings.newNoteFolder.default": "Same as Obsidian's new file location",
@@ -3646,8 +4083,10 @@ var en = {
   "settings.fontScale.desc": "Scales node text in every theme, including custom themes. 100% is the theme's own size.",
   "settings.reset": "Reset to 100%",
   "settings.resetNoteHeight": "Reset to 240",
+  "settings.noteLiveEdit.name": "Edit notes as they look (WYSIWYG)",
+  "settings.noteLiveEdit.desc": "Edit notes in Obsidian's own Live Preview editor, the same as writing in a note: lists, headings, images, links and tables show as formatted while you type. When off, notes are edited as plain Markdown in a text box. Applies the next time you edit a note.",
   "settings.notePreview.name": "Preview notes while editing",
-  "settings.notePreview.desc": "When you edit a note, show how it renders next to the text box (below it when the window is narrow), updated as you type: formulas, lists, images and links look as they do in reading view. Applies the next time you edit a note.",
+  "settings.notePreview.desc": 'When you edit a note in the plain text box (with "Edit notes as they look" off), show how it renders next to the text box (below it when the window is narrow), updated as you type: formulas, lists, images and links look as they do in reading view. Applies the next time you edit a note.',
   "settings.formatBar.name": "Format bar when selecting text",
   "settings.formatBar.desc": 'While editing a node, selecting part of the text shows a small bar above it: bold, italic, strikethrough, underline, text color and highlighter (click the left part to reuse the last color, \u25BE opens the palette), clear and link. Without it, use the commands (bind your own hotkeys in Settings \u2192 Hotkeys). The "Toggle the format bar" command switches this setting.',
   "settings.textColors.name": "Text colors",
@@ -3693,14 +4132,14 @@ var en = {
   "format.textColor": "Text color {color}",
   "format.highlightColor": "Highlighter {color}",
   "format.link": "Link to a note {key}",
-  "format.clear": "Clear text and highlighter colors",
+  "format.clear": "Clear formatting",
   "command.formatBold": "Bold the selected text",
   "command.formatItalic": "Italicize the selected text",
   "command.formatUnderline": "Underline the selected text",
   "command.formatHighlight": "Highlight the selected text",
   "command.formatTextColor": "Text color {n}",
   "command.formatHighlightColor": "Highlighter color {n}",
-  "command.formatClear": "Clear text and highlighter colors",
+  "command.formatClear": "Clear formatting",
   "command.toggleNodebar": "Toggle the floating toolbar (selected nodes)",
   "command.toggleFormatBar": "Toggle the format bar (text selected while editing a node)",
   "command.toggleNoteFormatBar": "Toggle the format bar in notes",
@@ -3770,6 +4209,7 @@ var zh = {
   "command.openPreview": "Markdown \u548C\u601D\u7EF4\u5BFC\u56FE\u5206\u5C4F\u5BF9\u7167",
   "command.swapSides": "\u5206\u5C4F\u5BF9\u7167\uFF1A\u5DE6\u53F3\u4E92\u6362",
   "command.newMindMap": "\u65B0\u5EFA\u601D\u7EF4\u5BFC\u56FE",
+  "command.openGuide": "\u6253\u5F00\u4F7F\u7528\u6307\u5357",
   "command.linkNote": "\u94FE\u63A5\u5230\u7B14\u8BB0 / \u65B0\u5EFA\u7B14\u8BB0",
   "command.toggleOutline": "\u5207\u6362\u5927\u7EB2\u9762\u677F",
   "command.toggleHidden": "\u663E\u793A / \u4E0D\u663E\u793A\u9690\u85CF\u7684\u8282\u70B9",
@@ -3777,6 +4217,7 @@ var zh = {
   "command.focusBranch": "\u805A\u7126\u9009\u4E2D\u5206\u652F",
   "command.exitFocus": "\u9000\u51FA\u805A\u7126",
   "command.copyNodeLink": "\u590D\u5236\u8282\u70B9\u94FE\u63A5",
+  "command.copyNodeLinkAlias": "\u590D\u5236\u8282\u70B9\u94FE\u63A5\uFF08\u5E26\u522B\u540D\uFF09",
   "command.search": "\u641C\u7D22\u8282\u70B9",
   "command.expandAll": "\u5C55\u5F00\u5168\u90E8\u8282\u70B9",
   "command.collapseAll": "\u6298\u53E0\u5168\u90E8\u8282\u70B9",
@@ -3785,6 +4226,7 @@ var zh = {
   "command.fitBranch": "\u7F29\u653E\u5230\u9009\u4E2D\u5206\u652F",
   "command.toggleBox": "\u6DFB\u52A0 / \u79FB\u9664\u5916\u6846",
   "command.toggleRecite": "\u5207\u6362\u80CC\u8BF5\u6A21\u5F0F",
+  "command.toggleZen": "\u5207\u6362\u7985\u6A21\u5F0F",
   "command.togglePdfExcerpt": "PDF \u81EA\u52A8\u6458\u5F55\u5230\u8FD9\u5F20\u8111\u56FE\uFF08\u5F00/\u5173\uFF09",
   "action.stopExcerpt": "PDF \u81EA\u52A8\u6458\u5F55\u4E2D\uFF0C\u70B9\u51FB\u505C\u6B62",
   "notice.excerptOn": "\u5DF2\u5F00\u59CB PDF \u81EA\u52A8\u6458\u5F55\uFF1APDF++ \u6BCF\u590D\u5236\u4E00\u6B21\u94FE\u63A5\uFF0C\u5C31\u52A0\u5230\u8FD9\u5F20\u8111\u56FE\u7684\u9009\u4E2D\u8282\u70B9\u4E0B\u3002\u5728 PDF++ \u8BBE\u7F6E\u91CC\u6253\u5F00 Auto-copy\uFF0C\u9009\u4E2D\u6587\u5B57\u5C31\u76F4\u63A5\u52A0\u8FDB\u6765",
@@ -3802,12 +4244,15 @@ var zh = {
   "command.copyPng": "\u590D\u5236\u4E3A\u56FE\u7247",
   "menu.openAsMarkdown": "\u4EE5 Markdown \u6253\u5F00",
   "menu.openAsMindMap": "\u4EE5\u601D\u7EF4\u5BFC\u56FE\u6253\u5F00",
+  "menu.openAsReading": "\u5207\u6362\u5230\u9605\u8BFB\u89C6\u56FE",
   "hover.display": "\u601D\u7EF4\u5BFC\u56FE",
   "notice.setIconFirst": "\u5148\u5728\u8BBE\u7F6E\u91CC\u586B\u4E00\u4E2A\u56FE\u6807\u503C",
   "notice.allHaveIcons": "\u6240\u6709\u8111\u56FE\u7B14\u8BB0\u90FD\u5DF2\u7ECF\u6709\u56FE\u6807\u4E86",
   "notice.iconsAdded": "\u5DF2\u7ED9 {count} \u7BC7\u8111\u56FE\u7B14\u8BB0\u8865\u4E0A\u56FE\u6807",
   "log.iconWriteFailed": "\u7ED9 {path} \u5199\u56FE\u6807\u5931\u8D25",
   "notice.created": "\u5DF2\u521B\u5EFA {path}",
+  "notice.guideAdded": "\u5DF2\u628A\u4F7F\u7528\u6307\u5357\u653E\u8FDB\u300C{folder}\u300D\u6587\u4EF6\u5939",
+  "guide.folder": "\u8111\u56FE\u793A\u4F8B",
   "notice.writeBackFailed": "\u5199\u56DE\u4EE3\u7801\u5757\u5931\u8D25\uFF1A{error}",
   "notice.rootNoRoom": "\u4E2D\u5FC3\u4E3B\u9898\u5B58\u4E0D\u4E0B\uFF1A\u4EE3\u7801\u5757\u91CC\u7684\u6807\u9898\u5DF2\u7ECF\u7528\u5230\u516D\u7EA7\uFF0C\u8981\u7ED9\u4E2D\u5FC3\u4E3B\u9898\u8865\u4E00\u884C\u4E00\u7EA7\u6807\u9898\uFF0C\u539F\u6765\u7684\u6807\u9898\u90FD\u5F97\u964D\u4E00\u7EA7\uFF0C\u4F1A\u8D85\u8FC7\u4E0A\u9650\u3002",
   "notice.rootBadName": '\u4E2D\u5FC3\u4E3B\u9898\u5C31\u662F\u7B14\u8BB0\u7684\u6587\u4EF6\u540D\uFF0C\u4E0D\u80FD\u542B\u6709\u8FD9\u4E9B\u5B57\u7B26\uFF1A\\ / : * ? " < > | # ^ [ ]',
@@ -4026,6 +4471,15 @@ var zh = {
   "canvas.notePlaceholder": "\u5907\u6CE8\uFF08\u652F\u6301 Markdown\uFF0C\u53EF\u4EE5\u5199\u5217\u8868\uFF09",
   "canvas.clearMarkers": "\u6E05\u9664\u5168\u90E8\u6807\u8BB0",
   "canvas.wholeMap": "\u5168\u56FE",
+  "canvas.crumbSiblings": "\u805A\u7126\u5230\u8FD9\u4E00\u7EA7\u7684\u5176\u4ED6\u4E3B\u9898",
+  "canvas.focusPrev": "\u4E0A\u4E00\u4E2A\u4E3B\u9898\uFF08PageUp\uFF09",
+  "canvas.focusNext": "\u4E0B\u4E00\u4E2A\u4E3B\u9898\uFF08PageDown\uFF09",
+  "canvas.zen": "\u7985\u6A21\u5F0F",
+  "canvas.zenExit": "\u9000\u51FA\u7985\u6A21\u5F0F",
+  "canvas.openMap": "\u6253\u5F00",
+  "canvas.activateMap": "\u6FC0\u6D3B",
+  "canvas.fitMap": "\u9002\u5E94",
+  "canvas.resizeMap": "\u62D6\u52A8\u6539\u9884\u89C8\u5927\u5C0F\uFF0C\u53CC\u51FB\u6062\u590D 320\xD7200",
   "canvas.emptyNode": "\uFF08\u7A7A\uFF09",
   "canvas.untitled": "\u672A\u547D\u540D",
   "canvas.expandAll": "\u5C55\u5F00\u5168\u90E8",
@@ -4047,8 +4501,17 @@ var zh = {
   "menu.more": "\u66F4\u591A",
   "menu.newFloat": "\u5728\u8FD9\u91CC\u65B0\u5EFA\u81EA\u7531\u4E3B\u9898",
   "menu.toFloat": "\u8F6C\u4E3A\u81EA\u7531\u4E3B\u9898",
+  "menu.branchLayout": "\u5206\u652F\u7ED3\u6784",
+  "menu.branchLayoutInherit": "\u8DDF\u968F\u4E0A\u7EA7",
+  "menu.branchLayoutMainTopic": "\u65F6\u95F4\u8F74\u3001\u9C7C\u9AA8\u56FE\u7684\u4E3B\u4E3B\u9898\u4E0D\u80FD\u5355\u72EC\u8BBE\u7ED3\u6784\uFF0C\u53EF\u4EE5\u7ED9\u5B83\u4E0B\u9762\u7684\u4E3B\u9898\u8BBE",
+  "menu.branchLayoutRoot": "\u4E2D\u5FC3\u4E3B\u9898\u7684\u7ED3\u6784\u5728\u5DE5\u5177\u680F\u91CC\u6539",
+  "menu.branchLayoutTopic": "\u6982\u8981\u4E3B\u9898\u4E0D\u80FD\u5355\u72EC\u8BBE\u7ED3\u6784",
+  "structure.fishbone": "\u9C7C\u9AA8\u56FE",
   "menu.attachFloat": "\u6302\u56DE\u4E2D\u5FC3\u4E3B\u9898",
   "menu.revealInMarkdown": "\u5728 Markdown \u4E2D\u5B9A\u4F4D",
+  "menu.revealInMindMap": "\u5728\u8111\u56FE\u4E2D\u5B9A\u4F4D",
+  "menu.tableInNodeMd": "\u5728\u8111\u56FE\u91CC\u628A\u8FD9\u5F20\u8868\u663E\u793A\u5728\u8282\u70B9\u91CC",
+  "menu.tableToNoteMd": "\u5728\u8111\u56FE\u91CC\u628A\u8FD9\u5F20\u8868\u653E\u56DE\u5907\u6CE8",
   "menu.exitFocus": "\u9000\u51FA\u805A\u7126",
   "menu.focusBranch": "\u805A\u7126\u6B64\u5206\u652F",
   "menu.expand": "\u5C55\u5F00",
@@ -4109,6 +4572,110 @@ var zh = {
   "bar.notes": "\u5C55\u5F00 / \u6536\u8D77\u5907\u6CE8",
   "bar.hidden": "\u663E\u793A\u9690\u85CF\u7684\u8282\u70B9",
   "bar.recite": "\u80CC\u8BF5\u6A21\u5F0F",
+  "bar.review": "\u95F4\u9694\u590D\u4E60",
+  "command.reviewAdd": "\u628A\u5F53\u524D\u8111\u56FE\u52A0\u5165\u590D\u4E60",
+  "command.reviewRemove": "\u628A\u5F53\u524D\u8111\u56FE\u79FB\u51FA\u590D\u4E60",
+  "menu.fileReviewAdd": "\u52A0\u5165\u95F4\u9694\u590D\u4E60",
+  "menu.fileReviewStudy": "\u590D\u4E60\u8FD9\u5F20\u56FE",
+  "menu.fileReviewRemove": "\u79FB\u51FA\u95F4\u9694\u590D\u4E60",
+  "notice.reviewAdded": "\u300C{name}\u300D\u5DF2\u52A0\u5165\u95F4\u9694\u590D\u4E60",
+  "notice.reviewRemoved": "\u300C{name}\u300D\u5DF2\u79FB\u51FA\u95F4\u9694\u590D\u4E60\u3002\u6392\u671F\u7559\u7740\uFF0C\u518D\u52A0\u5165\u63A5\u7740\u7528\u3002",
+  "command.openReview": "\u6253\u5F00\u590D\u4E60",
+  "command.reviewMap": "\u590D\u4E60\u5F53\u524D\u8111\u56FE",
+  "menu.reviewGroup": "\u95F4\u9694\u590D\u4E60",
+  "menu.reviewJoinAll": "\u628A\u6574\u5F20\u56FE\u52A0\u5165\u590D\u4E60",
+  "menu.reviewJoinBranch": "\u53EA\u628A\u8FD9\u4E2A\u5206\u652F\u52A0\u5165\u590D\u4E60",
+  "menu.reviewAddBranch": "\u628A\u8FD9\u4E2A\u5206\u652F\u4E5F\u52A0\u5165\u590D\u4E60",
+  "menu.reviewLeaveAll": "\u628A\u6574\u5F20\u56FE\u79FB\u51FA\u590D\u4E60",
+  "menu.reviewLeaveBranch": "\u628A\u8FD9\u4E2A\u5206\u652F\u79FB\u51FA\u590D\u4E60",
+  "menu.reviewStudyBranch": "\u590D\u4E60\u8FD9\u4E2A\u5206\u652F\uFF08{n} \u5F20\u5230\u671F\uFF09",
+  "menu.reviewUnsuspend": "\u6062\u590D\u8FD9\u9053\u9898\u7684\u590D\u4E60",
+  "canvas.review": "\u95F4\u9694\u590D\u4E60 \xB7 \u4ECA\u5929 {n} \u5F20",
+  "review.title": "\u590D\u4E60",
+  "review.colDeck": "\u724C\u7EC4",
+  "review.colNew": "\u65B0\u5361",
+  "review.colLearn": "\u5B66\u4E60\u4E2D",
+  "review.colReview": "\u5F85\u590D\u4E60",
+  "mapReview.title": "\u590D\u4E60\u4E2D",
+  "mapReview.openTab": "\u5728\u590D\u4E60\u6807\u7B7E\u9875\u91CC\u590D\u4E60",
+  "mapReview.exit": "\u9000\u51FA\uFF08Esc\uFF09",
+  "mapReview.waiting": "\u5B66\u4E60\u4E2D\u7684\u5361\u8FD8\u6CA1\u5230\u70B9\uFF0C\u5230\u70B9\u4E86\u4F1A\u63A5\u7740\u51FA",
+  "review.tipNew": "\u65B0\u5361\uFF1A\u8FD8\u6CA1\u5B66\u8FC7\u7684 {n} \u5F20",
+  "review.tipLearn": "\u5B66\u4E60\u4E2D\uFF1A\u4ECA\u5929\u521A\u5B66\u3001\u8FC7\u51E0\u5206\u949F\u8FD8\u4F1A\u518D\u51FA\u7684 {n} \u5F20",
+  "review.tipReview": "\u5F85\u590D\u4E60\uFF1A\u4EE5\u524D\u5B66\u4F1A\u3001\u4ECA\u5929\u5230\u671F\u7684 {n} \u5F20",
+  "review.tipCurrent": "\uFF08\u6B63\u5728\u51FA\u7684\u8FD9\u5F20\u5C5E\u4E8E\u8FD9\u4E00\u7C7B\uFF09",
+  "review.studiedToday": "\u4ECA\u5929\u5DF2\u590D\u4E60 {n} \u5F20\uFF0C\u7528\u65F6 {min} \u5206\u949F",
+  "review.studyAll": "\u5168\u90E8\u590D\u4E60",
+  "review.settings": "\u8BBE\u7F6E",
+  "review.empty": "\u8FD8\u6CA1\u6709\u52A0\u5165\u590D\u4E60\u7684\u8111\u56FE\u3002\u5728\u8111\u56FE\u91CC\u53F3\u952E\u4E2D\u5FC3\u4E3B\u9898\u6216\u5206\u652F\uFF0C\u9009\u300C\u628A\u6574\u5F20\u56FE\u52A0\u5165\u590D\u4E60\u300D\u3002",
+  "review.start": "\u5F00\u59CB\u5B66\u4E60",
+  "review.openMap": "\u5728\u8111\u56FE\u4E2D\u6253\u5F00",
+  "review.showAnswer": "\u663E\u793A\u7B54\u6848",
+  "review.space": "\u7A7A\u683C",
+  "review.again": "\u91CD\u6765",
+  "review.hard": "\u56F0\u96BE",
+  "review.good": "\u826F\u597D",
+  "review.easy": "\u7B80\u5355",
+  "review.edit": "\u7F16\u8F91",
+  "review.more": "\u66F4\u591A",
+  "review.doneTitle": "\u8FD9\u4E2A\u724C\u7EC4\u4ECA\u5929\u590D\u4E60\u5B8C\u4E86",
+  "review.doneNext": "\u4E0B\u4E00\u5F20{when}\u5230\u671F\u3002",
+  "review.doneNone": "\u8FD8\u6CA1\u6709\u6392\u4E0A\u7684\u5361\u7247\u3002",
+  "review.doneStats": "\u8FD9\u6B21\u590D\u4E60\u4E86 {n} \u5F20\uFF0C\u7528\u65F6 {min} \u5206\u949F\u3002",
+  "review.waitLearn": "\u5B66\u4E60\u4E2D\u7684\u5361\u8FD8\u6CA1\u5230\u70B9\uFF1A\u4E0B\u4E00\u5F20 {when} \u540E\u3002",
+  "review.backHome": "\u56DE\u5230\u590D\u4E60\u4E3B\u9875",
+  "review.single": "\u5355\u9009",
+  "review.multi": "\u591A\u9009",
+  "review.menuOpen": "\u5728\u8111\u56FE\u4E2D\u6253\u5F00",
+  "review.menuBury": "\u4ECA\u5929\u5148\u4E0D\u51FA\u8FD9\u5F20",
+  "review.menuSuspend": "\u6682\u505C\u8FD9\u5F20\u5361",
+  "review.menuUndo": "\u64A4\u9500\u4E0A\u4E00\u6B21\u8BC4\u5206",
+  "review.menuInfo": "\u5361\u7247\u4FE1\u606F",
+  "review.undone": "\u5DF2\u64A4\u9500\u300C{g}\u300D",
+  "review.buried": "\u4ECA\u5929\u5148\u4E0D\u51FA\u8FD9\u5F20",
+  "review.suspended": "\u5DF2\u6682\u505C\u3002\u5728\u8111\u56FE\u91CC\u53F3\u952E\u8FD9\u4E2A\u8282\u70B9\u53EF\u4EE5\u6062\u590D\u3002",
+  "review.missing": "\u8FD9\u9053\u9898\u5220\u6389\u4E86\u6216\u79FB\u51FA\u4E86\u590D\u4E60\uFF0C\u8DF3\u8FC7\u3002",
+  "review.infoAdded": "\u7B2C\u4E00\u6B21\u5B66",
+  "review.infoReps": "\u590D\u4E60\u6B21\u6570",
+  "review.infoLapses": "\u9057\u5FD8\u6B21\u6570",
+  "review.infoDue": "\u4E0B\u6B21\u5230\u671F",
+  "review.infoStability": "\u8BB0\u5FC6\u7A33\u5B9A\u5EA6",
+  "review.infoDifficulty": "\u96BE\u5EA6",
+  "review.infoState": "\u72B6\u6001",
+  "review.stateNew": "\u65B0\u5361",
+  "review.stateLearn": "\u5B66\u4E60\u4E2D",
+  "review.stateReview": "\u5F85\u590D\u4E60",
+  "review.stateRelearn": "\u91CD\u65B0\u5B66\u4E60",
+  "review.infoNone": "\u8FD8\u6CA1\u5B66\u8FC7",
+  "review.unitM": "\u5206\u949F",
+  "review.unitH": "\u5C0F\u65F6",
+  "review.unitD": "\u5929",
+  "review.unitMo": "\u4E2A\u6708",
+  "review.unitY": "\u5E74",
+  "review.days": "{n} \u5929",
+  "review.statusbar": "\u590D\u4E60 \xB7 \u4ECA\u5929 {n}",
+  "review.tomorrow": "\u660E\u5929",
+  "settings.review.heading": "\u95F4\u9694\u590D\u4E60",
+  "settings.review.perDay": "\u6BCF\u5929 {n} \u5F20\u65B0\u5361",
+  "settings.review.intro": "\u80CC\u8BF5\u6A21\u5F0F\u91CC\u5199\u7684\u9898\uFF08==\u9AD8\u4EAE==\u3001\u9009\u62E9\u9898\u3001\u{1F648} \u7B54\u6848\uFF09\u53D8\u6210\u590D\u4E60\u5361\u7247\uFF0C\u6309 Anki \u7528\u7684 FSRS \u7B97\u6CD5\u6392\u671F\u3002\u5728\u8111\u56FE\u91CC\u53F3\u952E\u52A0\u5165\u590D\u4E60\u3002\u9ED8\u8BA4\u503C\u7167 Anki\u3002",
+  "settings.review.newPerDay.name": "\u6BCF\u5929\u65B0\u5361\u4E0A\u9650",
+  "settings.review.newPerDay.desc": "\u6BCF\u4E2A\u724C\u7EC4\u6BCF\u5929\u6700\u591A\u51FA\u51E0\u5F20\u6CA1\u5B66\u8FC7\u7684\u5361\u3002",
+  "settings.review.reviewPerDay.name": "\u6BCF\u5929\u590D\u4E60\u4E0A\u9650",
+  "settings.review.reviewPerDay.desc": "\u6BCF\u4E2A\u724C\u7EC4\u6BCF\u5929\u6700\u591A\u51FA\u51E0\u5F20\u5230\u671F\u7684\u5361\u3002",
+  "settings.review.learningSteps.name": "\u5B66\u4E60\u9636\u6BB5",
+  "settings.review.learningSteps.desc": "\u65B0\u5361\u7B2C\u4E00\u6B21\u5B66\u65F6\u9694\u591A\u4E45\u518D\u51FA\uFF0C\u7A7A\u683C\u9694\u5F00\uFF1A1m 10m\u3002",
+  "settings.review.relearningSteps.name": "\u91CD\u65B0\u5B66\u4E60\u9636\u6BB5",
+  "settings.review.relearningSteps.desc": "\u5FD8\u4E86\uFF08\u70B9\u300C\u91CD\u6765\u300D\uFF09\u4E4B\u540E\u9694\u591A\u4E45\u518D\u51FA\u3002",
+  "settings.review.retention.name": "\u76EE\u6807\u8BB0\u5FC6\u7387",
+  "settings.review.retention.desc": "FSRS \u6309\u8FD9\u4E2A\u8BB0\u5FC6\u7387\u5B89\u6392\u95F4\u9694\uFF1B\u8C03\u9AD8\u590D\u4E60\u66F4\u9891\u7E41\u3002",
+  "settings.review.dayStart.name": "\u65B0\u7684\u4E00\u5929\u5F00\u59CB\u4E8E",
+  "settings.review.dayStart.desc": "\u71AC\u591C\u590D\u4E60\u65F6\uFF0C\u5230\u8FD9\u4E2A\u949F\u70B9\u4E4B\u524D\u8FD8\u7B97\u524D\u4E00\u5929\u3002",
+  "settings.review.dueDots.name": "\u6807\u51FA\u6709\u5230\u671F\u9898\u7684\u8282\u70B9",
+  "settings.review.dueDots.desc": "\u4ECA\u5929\u6709\u5361\u7247\u5230\u671F\u7684\u8282\u70B9\uFF0C\u53F3\u4E0A\u89D2\u4E00\u4E2A\u5C0F\u7EFF\u70B9\u3002",
+  "settings.review.timer.name": "\u590D\u4E60\u65F6\u663E\u793A\u8BA1\u65F6",
+  "settings.review.timer.desc": "\u663E\u793A\u5728\u9876\u680F\u53F3\u8FB9\uFF0C\u6BCF\u5F20\u5361\u4ECE\u96F6\u8BA1\u3002",
+  "settings.review.crumb.name": "\u663E\u793A\u9898\u76EE\u5728\u8111\u56FE\u91CC\u7684\u4F4D\u7F6E",
+  "settings.review.crumb.desc": "\u5361\u7247\u4E0A\u65B9\u7528\u5C0F\u5B57\u7070\u8272\u5199\u4ECE\u4E2D\u5FC3\u4E3B\u9898\u5230\u8FD9\u9053\u9898\u7684\u8DEF\u5F84\u3002",
   "bar.layers": "\u5C55\u5F00\u5230\u7B2C\u51E0\u5C42",
   "bar.quick": "\u5FEB\u6377\u8BBE\u7F6E",
   "menu.addRel": "\u6DFB\u52A0\u5173\u8054\u7EBF",
@@ -4166,6 +4733,10 @@ var zh = {
   "command.insertBefore": "\u5728\u524D\u9762\u63D2\u5165\u8282\u70B9",
   "command.insertParent": "\u63D2\u5165\u7236\u8282\u70B9\uFF08\u628A\u9009\u4E2D\u7684\u8282\u70B9\u6536\u8FDB\u53BB\uFF09",
   "command.revealInMarkdown": "\u5728 Markdown \u4E2D\u5B9A\u4F4D\u9009\u4E2D\u7684\u8282\u70B9",
+  "command.revealInMindMap": "\u5728\u8111\u56FE\u4E2D\u5B9A\u4F4D\u5149\u6807\u6240\u5728\u7684\u884C",
+  "command.toggleNodeTableMd": "\u5149\u6807\u6240\u5728\u7684\u8868\u683C\uFF1A\u8BBE\u4E3A / \u53D6\u6D88\u8282\u70B9\u8868\u683C",
+  "notice.tableInNodeMd": "\u5DF2\u52A0\u4E0A %%table%%\uFF1A\u8111\u56FE\u91CC\u8FD9\u5F20\u8868\u4F1A\u663E\u793A\u5728\u8282\u70B9\u91CC",
+  "notice.tableToNoteMd": "\u5DF2\u53BB\u6389 %%table%%\uFF1A\u8111\u56FE\u91CC\u8FD9\u5F20\u8868\u653E\u56DE\u8282\u70B9\u7684\u5907\u6CE8",
   "command.editNode": "\u7F16\u8F91\u8282\u70B9",
   "command.deleteNode": "\u5220\u9664\u8282\u70B9\u53CA\u5176\u5B50\u6811",
   "command.deleteNodeOnly": "\u4EC5\u5220\u9664\u6B64\u8282\u70B9\uFF08\u4FDD\u7559\u5B50\u8282\u70B9\uFF09",
@@ -4201,6 +4772,7 @@ var zh = {
   "menu.cut": "\u526A\u5207",
   "menu.pasteChild": "\u7C98\u8D34\u4E3A\u5B50\u8282\u70B9",
   "menu.copyNodeLink": "\u590D\u5236\u8282\u70B9\u94FE\u63A5",
+  "menu.copyNodeLinkAlias": "\u590D\u5236\u8282\u70B9\u94FE\u63A5\uFF08\u5E26\u522B\u540D\uFF09",
   "menu.delete": "\u5220\u9664",
   "menu.deleteOnly": "\u4EC5\u5220\u9664\u6B64\u8282\u70B9\uFF08\u4FDD\u7559\u5B50\u8282\u70B9\uFF09",
   "menu.extendRange": "\u8303\u56F4\u591A\u62EC\u4E00\u4E2A\u8282\u70B9",
@@ -4213,6 +4785,7 @@ var zh = {
   "notice.cannotHeading": "\u8FD9\u4E00\u5C42\u4E0D\u80FD\u8F6C\u4E3A\u6807\u9898\uFF1A\u7236\u8282\u70B9\u4E0D\u662F\u6807\u9898\uFF0C\u6216\u5DF2\u7ECF\u662F\u516D\u7EA7\u6807\u9898",
   "notice.saveImageUnsupported": "\u5F53\u524D\u73AF\u5883\u4E0D\u652F\u6301\u4FDD\u5B58\u56FE\u7247",
   "notice.saveImageFailed": "\u4FDD\u5B58\u56FE\u7247\u5931\u8D25\uFF1A{error}",
+  "notice.oldTablePlugin": "gogoga \u8111\u56FE\uFF1A\u4F60\u88C5\u7684 gogoga Table \u662F {version}\uFF0C\u5907\u6CE8\u91CC\u7684\u8868\u683C\u9009\u4E2D\u6587\u5B57\u51FA\u683C\u5F0F\u680F\uFF08\u9AD8\u4EAE\u3001\u989C\u8272\uFF09\u8981 gogoga Table {min} \u4EE5\u4E0A\u3002\u8BF7\u5728 \u8BBE\u7F6E \u2192 \u7B2C\u4E09\u65B9\u63D2\u4EF6 \u2192 \u68C0\u67E5\u66F4\u65B0 \u91CC\u66F4\u65B0\u5B83\u3002",
   "notice.xmindTaken": "gogoga \u8111\u56FE\uFF1A\u5DF2\u7ECF\u6709\u522B\u7684\u63D2\u4EF6\u5728\u6253\u5F00 .xmind \u6587\u4EF6\uFF0C.xmind \u7EE7\u7EED\u4EA4\u7ED9\u5B83\u6253\u5F00\u3002\u7B14\u8BB0\u91CC\u7684\u8111\u56FE\u4E0D\u53D7\u5F71\u54CD\u3002",
   "notice.imageAddedToNote": "\u56FE\u7247\u5DF2\u52A0\u5230\u8FD9\u4E2A\u8282\u70B9\u7684\u5907\u6CE8\u91CC",
   "notice.noBlockId": "\u8FD9\u4E2A\u8282\u70B9\u8FD8\u6CA1\u6709\u5757 id\uFF0C\u9700\u8981\u5728\u53EF\u7F16\u8F91\u72B6\u6001\u4E0B\u751F\u6210",
@@ -4237,6 +4810,11 @@ var zh = {
   "settings.theme.name": "\u9ED8\u8BA4\u4E3B\u9898",
   "settings.theme.desc": "\u65B0\u6587\u4EF6\u7528\u7684\u4E3B\u9898\u3002\u5DE5\u5177\u680F\u7684\u8C03\u8272\u76D8\u6309\u94AE\u53EF\u4EE5\u6309\u6587\u4EF6\u5207\u6362\uFF0C\u5207\u6362\u7ED3\u679C\u4F1A\u5199\u8FDB mindmap-theme\u3002",
   "settings.fileNameAsRoot.name": "\u7528\u6587\u4EF6\u540D\u4F5C\u4E2D\u5FC3\u4E3B\u9898",
+  "settings.renameWithRoot.name": "\u6539\u4E2D\u5FC3\u4E3B\u9898\u65F6\uFF0C\u548C\u5B83\u540C\u540D\u7684\u7B14\u8BB0\u4E00\u8D77\u6539\u540D",
+  "settings.renameWithRoot.desc": "\u4E2D\u5FC3\u4E3B\u9898\u662F\u7B14\u8BB0\u7684\u4E00\u7EA7\u6807\u9898\u3001\u800C\u4E14\u548C\u6587\u4EF6\u540D\u4E00\u6837\u65F6\uFF08\u6BD4\u5982\u65B0\u5EFA\u7684\u8111\u56FE\uFF09\uFF0C\u5728\u8111\u56FE\u91CC\u6539\u4E2D\u5FC3\u4E3B\u9898\uFF0C\u7B14\u8BB0\u8DDF\u7740\u6539\u540D\u3002\u4E24\u8005\u4E0D\u4E00\u6837\u4E86\u5C31\u4E0D\u518D\u8054\u52A8\u3002",
+  "notice.rootBadChars": '\u6587\u4EF6\u540D\u4E0D\u80FD\u542B\u6709 \\ / : * ? " < > | # ^ [ ]',
+  "notice.nameTaken": "\u540C\u4E00\u4E2A\u6587\u4EF6\u5939\u91CC\u5DF2\u7ECF\u6709\u540C\u540D\u6587\u4EF6\u4E86",
+  "notice.renameWithRootSkipped": "\u7B14\u8BB0\u6CA1\u6709\u8DDF\u7740\u6539\u540D\u6210\u300C{name}\u300D\uFF1A{why}",
   "settings.fileNameAsRoot.desc": "\u5173\u95ED\u65F6\uFF0C\u7B14\u8BB0\u91CC\u552F\u4E00\u7684\u4E00\u7EA7\u6807\u9898\u5C31\u662F\u4E2D\u5FC3\u4E3B\u9898\uFF1B\u6253\u5F00\u540E\u4E2D\u5FC3\u4E3B\u9898\u59CB\u7EC8\u662F\u6587\u4EF6\u540D\uFF0C\u4E00\u7EA7\u6807\u9898\u4F5C\u4E3A\u7B2C\u4E00\u7EA7\u5206\u652F\u3002\u53EA\u6539\u53D8\u663E\u793A\u65B9\u5F0F\uFF0C\u4E0D\u6539\u6587\u4EF6\u5185\u5BB9\u3002",
   "settings.headingLevel.name": "\u6807\u9898\u7684\u6700\u6DF1\u7EA7\u522B",
   "settings.headingLevel.desc": "\u65B0\u5EFA\u8282\u70B9\u65F6\uFF0C\u6BD4\u8FD9\u66F4\u6DF1\u7684\u5C42\u7EA7\u7528\u5217\u8868\u800C\u4E0D\u662F\u6807\u9898\u5199\u56DE\u3002\u5DF2\u6709\u5185\u5BB9\u7684\u5199\u6CD5\u4E0D\u53D7\u5F71\u54CD\u3002",
@@ -4271,6 +4849,8 @@ var zh = {
   "settings.nodeColors.desc": "\u6D6E\u52A8\u5DE5\u5177\u680F\u548C\u6807\u6CE8\u989C\u8272\u83DC\u5355\u91CC\u5217\u51FA\u7684\u989C\u8272\u3002\u70B9\u8272\u5757\u6362\u989C\u8272\uFF0C\xD7 \u5220\u9664\uFF0C\u62D6\u52A8\u8C03\u987A\u5E8F\uFF0C+ \u65B0\u589E\u3002\u5185\u7F6E\u7684\u989C\u8272\u540D\uFF08\u7EA2\u3001\u6A59\u2026\u2026\uFF09\u4F1A\u8DDF\u7740\u4E3B\u9898\u548C\u6697\u8272\u6A21\u5F0F\u53D8\uFF1B\u8272\u677F\u91CC\u9009\u7684\u989C\u8272\u5728\u54EA\u91CC\u90FD\u662F\u8FD9\u4E2A\u989C\u8272\u3002\u5DE5\u5177\u680F\u91CC\u989C\u8272\u540E\u9762\u7684\u300C\xB7\xB7\xB7\u300D\u53EF\u4EE5\u4E34\u65F6\u9009\u522B\u7684\u989C\u8272\u3002",
   "settings.showNodebar.name": "\u9009\u4E2D\u8282\u70B9\u65F6\u663E\u793A\u6D6E\u52A8\u5DE5\u5177\u680F",
   "settings.showNodebar.desc": "\u9009\u4E2D\u8282\u70B9\u65F6\u4E0A\u65B9\u90A3\u6392\u5C0F\u5DE5\u5177\uFF08\u989C\u8272\u3001\u52A0\u5B50\u8282\u70B9\u3001\u6807\u8BB0\u2026\u2026\uFF09\u3002\u6321\u7740\u70B9\u65C1\u8FB9\u7684\u8282\u70B9\u65F6\u53EF\u4EE5\u5173\u6389\uFF0C\u4E0A\u9762\u7684\u64CD\u4F5C\u53F3\u952E\u83DC\u5355\u91CC\u90FD\u6709\u3002\u547D\u4EE4\u300C\u5207\u6362\u6D6E\u52A8\u5DE5\u5177\u680F\u300D\u53EF\u4EE5\u968F\u65F6\u5F00\u5173\uFF08\u5728\u300C\u8BBE\u7F6E \u2192 \u5FEB\u6377\u952E\u300D\u91CC\u7ED1\u952E\uFF09\u3002",
+  "settings.zenHideObsidian.name": "\u7985\u6A21\u5F0F\u65F6\u6536\u8D77 Obsidian \u754C\u9762",
+  "settings.zenHideObsidian.desc": "\u8FDB\u7985\u6A21\u5F0F\u65F6\u4E00\u8D77\u6536\u8D77\u5DE6\u53F3\u4FA7\u680F\u3001\u6807\u7B7E\u680F\u548C\u72B6\u6001\u680F\uFF0C\u9000\u51FA\u540E\u6309\u539F\u6837\u6062\u590D\u3002\u5173\u6389\u5C31\u53EA\u85CF\u8111\u56FE\u81EA\u5DF1\u7684\u5DE5\u5177\u680F\u3002",
   "settings.group.open": "\u6253\u5F00\u4E0E\u663E\u793A",
   "settings.group.newMap": "\u65B0\u5EFA\u8111\u56FE",
   "settings.group.parse": "Markdown \u600E\u4E48\u53D8\u6210\u8282\u70B9",
@@ -4330,7 +4910,7 @@ var zh = {
   "settings.linkFocusNote.name": "\u5206\u5C4F\u6253\u5F00\u94FE\u63A5\u540E\u628A\u7126\u70B9\u653E\u5230\u7B14\u8BB0",
   "settings.linkFocusNote.desc": "\u5728\u53F3\u4FA7\u5206\u5C4F\u6253\u5F00\u94FE\u63A5\u540E\uFF0C\u7126\u70B9\u79FB\u5230\u6253\u5F00\u7684\u7B14\u8BB0\u4E0A\uFF0C\u5173\u95ED\u6807\u7B7E\u9875\u8FD9\u7C7B\u5FEB\u6377\u952E\u4F5C\u7528\u5728\u7B14\u8BB0\u4E0A\u3002\u5173\u7740\u65F6\u7126\u70B9\u7559\u5728\u8111\u56FE\u4E0A\uFF0C\u65B9\u4FBF\u63A5\u7740\u52A0\u8282\u70B9\u3002",
   "settings.linkReuseOpen.name": "\u94FE\u63A5\u7684\u7B14\u8BB0\u5DF2\u7ECF\u5F00\u7740\u65F6\u76F4\u63A5\u8DF3\u5230\u90A3\u91CC",
-  "settings.linkReuseOpen.desc": "\u70B9\u94FE\u63A5\u65F6\uFF0C\u94FE\u5230\u7684\u7B14\u8BB0\u5DF2\u7ECF\u5728\u522B\u7684\u6807\u7B7E\u9875\u6216\u5206\u5C4F\u91CC\u5F00\u7740\uFF0C\u5C31\u8DF3\u5230\u90A3\u91CC\uFF0C\u4E0D\u518D\u5F00\u4E00\u4E2A\uFF1B\u662F\u8111\u56FE\u7684\u8BDD\u9009\u4E2D\u94FE\u5230\u7684\u6807\u9898\u3001\u5757\u5BF9\u5E94\u7684\u8282\u70B9\u3002\u4E24\u5F20\u8111\u56FE\u5DE6\u53F3\u5E76\u6392\u65F6\u597D\u7528\u3002\u2318 \u70B9\uFF08Ctrl \u70B9\uFF09\u7167\u65E7\u65B0\u6807\u7B7E\u9875\u6253\u5F00\u3002",
+  "settings.linkReuseOpen.desc": "\u70B9\u94FE\u63A5\u65F6\uFF0C\u94FE\u5230\u7684\u7B14\u8BB0\u5DF2\u7ECF\u5728\u522B\u7684\u6807\u7B7E\u9875\u6216\u5206\u5C4F\u91CC\u5F00\u7740\uFF0C\u5C31\u8DF3\u5230\u90A3\u91CC\uFF0C\u4E0D\u518D\u5F00\u4E00\u4E2A\uFF1B\u662F\u8111\u56FE\u7684\u8BDD\u9009\u4E2D\u94FE\u5230\u7684\u6807\u9898\u3001\u5757\u5BF9\u5E94\u7684\u8282\u70B9\u3002\u8111\u56FE\u91CC\u548C Markdown \u7B14\u8BB0\u91CC\u70B9\u7684\u94FE\u63A5\u90FD\u7B97\u3002\u5DE6\u53F3\u5206\u5C4F\u5BF9\u7167\u7740\u770B\u65F6\u597D\u7528\u3002\u2318 \u70B9\uFF08Ctrl \u70B9\uFF09\u7167\u65E7\u65B0\u6807\u7B7E\u9875\u6253\u5F00\u3002",
   "settings.newNoteFolder.name": "\u4ECE\u8111\u56FE\u65B0\u5EFA\u7684\u7B14\u8BB0\u653E\u5728",
   "settings.newNoteFolder.desc": "\u4ECE\u8282\u70B9\u65B0\u5EFA\u94FE\u63A5\u7B14\u8BB0\uFF0C\u6216\u8005\u70B9\u8FD8\u4E0D\u5B58\u5728\u7684\u7B14\u8BB0\u94FE\u63A5\u65F6\uFF0C\u65B0\u7B14\u8BB0\u5EFA\u5728\u54EA\u91CC\u3002",
   "settings.newNoteFolder.default": "\u8DDF\u968F Obsidian \u7684\u65B0\u6587\u4EF6\u4F4D\u7F6E",
@@ -4378,8 +4958,10 @@ var zh = {
   "settings.fontScale.desc": "\u6309\u6BD4\u4F8B\u653E\u5927\u6216\u7F29\u5C0F\u6240\u6709\u4E3B\u9898\uFF08\u5305\u62EC\u81EA\u5B9A\u4E49\u4E3B\u9898\uFF09\u7684\u8282\u70B9\u6587\u5B57\uFF0C100% \u662F\u4E3B\u9898\u539F\u672C\u7684\u5B57\u53F7\u3002",
   "settings.reset": "\u6062\u590D 100%",
   "settings.resetNoteHeight": "\u6062\u590D 240",
+  "settings.noteLiveEdit.name": "\u7F16\u8F91\u5907\u6CE8\u65F6\u6240\u89C1\u5373\u6240\u5F97",
+  "settings.noteLiveEdit.desc": "\u7528 Obsidian \u81EA\u5DF1\u7684\u5B9E\u65F6\u9884\u89C8\u7F16\u8F91\u5668\u7F16\u8F91\u5907\u6CE8\uFF0C\u548C\u5728\u7B14\u8BB0\u91CC\u5199\u5B57\u4E00\u6837\uFF1A\u5217\u8868\u3001\u6807\u9898\u3001\u56FE\u7247\u3001\u53CC\u94FE\u3001\u8868\u683C\u8FB9\u5199\u8FB9\u663E\u793A\u6548\u679C\u3002\u5173\u6389\u65F6\u662F\u666E\u901A\u8F93\u5165\u6846\uFF0C\u76F4\u63A5\u6539 Markdown \u539F\u6587\u3002\u4E0B\u6B21\u7F16\u8F91\u5907\u6CE8\u65F6\u751F\u6548\u3002",
   "settings.notePreview.name": "\u7F16\u8F91\u5907\u6CE8\u65F6\u5206\u680F\u9884\u89C8",
-  "settings.notePreview.desc": "\u7F16\u8F91\u5907\u6CE8\u65F6\uFF0C\u5728\u8F93\u5165\u6846\u65C1\u8FB9\uFF08\u7A97\u53E3\u7A84\u65F6\u5728\u4E0B\u9762\uFF09\u5B9E\u65F6\u663E\u793A\u6E32\u67D3\u6548\u679C\uFF1A\u516C\u5F0F\u3001\u5217\u8868\u3001\u56FE\u7247\u3001\u53CC\u94FE\u548C\u9605\u8BFB\u89C6\u56FE\u91CC\u4E00\u6837\u3002\u4E0B\u6B21\u7F16\u8F91\u5907\u6CE8\u65F6\u751F\u6548\u3002",
+  "settings.notePreview.desc": "\u7528\u666E\u901A\u8F93\u5165\u6846\u7F16\u8F91\u5907\u6CE8\u65F6\uFF08\u5173\u6389\u300C\u7F16\u8F91\u5907\u6CE8\u65F6\u6240\u89C1\u5373\u6240\u5F97\u300D\uFF09\uFF0C\u5728\u8F93\u5165\u6846\u65C1\u8FB9\uFF08\u7A97\u53E3\u7A84\u65F6\u5728\u4E0B\u9762\uFF09\u5B9E\u65F6\u663E\u793A\u6E32\u67D3\u6548\u679C\uFF1A\u516C\u5F0F\u3001\u5217\u8868\u3001\u56FE\u7247\u3001\u53CC\u94FE\u548C\u9605\u8BFB\u89C6\u56FE\u91CC\u4E00\u6837\u3002\u4E0B\u6B21\u7F16\u8F91\u5907\u6CE8\u65F6\u751F\u6548\u3002",
   "settings.formatBar.name": "\u9009\u4E2D\u6587\u5B57\u65F6\u663E\u793A\u683C\u5F0F\u680F",
   "settings.formatBar.desc": "\u7F16\u8F91\u8282\u70B9\u65F6\u9009\u4E2D\u4E00\u6BB5\u6587\u5B57\uFF0C\u4E0A\u65B9\u6D6E\u51FA\u4E00\u6392\u6309\u94AE\uFF1A\u52A0\u7C97\u3001\u659C\u4F53\u3001\u5220\u9664\u7EBF\u3001\u4E0B\u5212\u7EBF\u3001\u6587\u5B57\u989C\u8272\u548C\u8367\u5149\u7B14\uFF08\u70B9\u5DE6\u8FB9\u76F4\u63A5\u7528\u4E0A\u6B21\u7684\u989C\u8272\uFF0C\u70B9 \u25BE \u6253\u5F00\u8272\u677F\uFF09\u3001\u6E05\u9664\u548C\u94FE\u63A5\u3002\u4E0D\u6253\u5F00\u4E5F\u80FD\u7528\u547D\u4EE4\uFF08\u53EF\u4EE5\u5728\u300C\u8BBE\u7F6E \u2192 \u5FEB\u6377\u952E\u300D\u91CC\u7ED1\u952E\uFF09\u3002\u547D\u4EE4\u300C\u5207\u6362\u683C\u5F0F\u680F\u300D\u53EF\u4EE5\u968F\u65F6\u5F00\u5173\u8FD9\u4E2A\u8BBE\u7F6E\u3002",
   "settings.textColors.name": "\u5E38\u7528\u6587\u5B57\u989C\u8272",
@@ -4425,14 +5007,14 @@ var zh = {
   "format.textColor": "\u6587\u5B57\u989C\u8272 {color}",
   "format.highlightColor": "\u8367\u5149\u7B14 {color}",
   "format.link": "\u94FE\u63A5\u5230\u7B14\u8BB0 {key}",
-  "format.clear": "\u6E05\u9664\u6587\u5B57\u989C\u8272\u548C\u8367\u5149\u7B14",
+  "format.clear": "\u6E05\u9664\u683C\u5F0F",
   "command.formatBold": "\u52A0\u7C97\u9009\u4E2D\u7684\u6587\u5B57",
   "command.formatItalic": "\u9009\u4E2D\u7684\u6587\u5B57\u8BBE\u4E3A\u659C\u4F53",
   "command.formatUnderline": "\u7ED9\u9009\u4E2D\u7684\u6587\u5B57\u52A0\u4E0B\u5212\u7EBF",
   "command.formatHighlight": "\u9AD8\u4EAE\u9009\u4E2D\u7684\u6587\u5B57",
   "command.formatTextColor": "\u6587\u5B57\u989C\u8272 {n}",
   "command.formatHighlightColor": "\u8367\u5149\u7B14\u989C\u8272 {n}",
-  "command.formatClear": "\u6E05\u9664\u6587\u5B57\u989C\u8272\u548C\u8367\u5149\u7B14",
+  "command.formatClear": "\u6E05\u9664\u683C\u5F0F",
   "command.toggleNodebar": "\u5207\u6362\u6D6E\u52A8\u5DE5\u5177\u680F\uFF08\u9009\u4E2D\u8282\u70B9\u65F6\uFF09",
   "command.toggleFormatBar": "\u5207\u6362\u683C\u5F0F\u680F\uFF08\u7F16\u8F91\u8282\u70B9\u65F6\u9009\u4E2D\u6587\u5B57\uFF09",
   "command.toggleNoteFormatBar": "\u5207\u6362\u7B14\u8BB0\u91CC\u7684\u683C\u5F0F\u680F",
@@ -4528,19 +5110,19 @@ var PdfExcerpt = class {
   toggle(target) {
     if (this.target === target) {
       this.stop();
-      new import_obsidian.Notice(t("notice.excerptOff"));
+      new import_obsidian3.Notice(t("notice.excerptOff"));
       return;
     }
     const copyLink = pdfPlusCopyLink(this.app);
     if (!copyLink) {
-      new import_obsidian.Notice(t("notice.excerptNeedsPdfPlus"));
+      new import_obsidian3.Notice(t("notice.excerptNeedsPdfPlus"));
       return;
     }
     this.stop();
     this.hook(copyLink);
     this.target = target;
     target.setExcerpting(true);
-    new import_obsidian.Notice(t("notice.excerptOn"));
+    new import_obsidian3.Notice(t("notice.excerptOn"));
   }
   /** 关掉摘录，把 PDF++ 的方法换回去（插件卸载时也调） */
   stop() {
@@ -4611,12 +5193,13 @@ var zh2 = {
   cmd_select_col: "\u9009\u4E2D\u6574\u5217",
   cmd_toggle_checkbox: "\u5207\u6362\u52FE\u9009\u6846",
   gridTitle: "\u63D2\u5165\u8868\u683C",
-  gridHint: "{r} \u884C \xD7 {c} \u5217\uFF08\u542B\u8868\u5934\uFF09",
+  gridHint: "{r} \u884C \xD7 {c} \u5217\uFF08\u542B\u8868\u5934\uFF09\xB7 \u65B9\u5411\u952E\u8C03\u6574\uFF0C\u56DE\u8F66\u63D2\u5165",
   removeCheckbox: "\u53BB\u6389\u52FE\u9009\u6846",
   insertRowBelow: "\u5728\u4E0B\u65B9\u63D2\u5165\u884C",
   insertColLeft: "\u5728\u5DE6\u4FA7\u63D2\u5165\u5217",
   insertColRight: "\u5728\u53F3\u4FA7\u63D2\u5165\u5217",
   deleteRow: "\u5220\u9664\u884C",
+  deleteHeadRow: "\u5220\u9664\u8868\u5934\u884C\uFF08\u4E0B\u4E00\u884C\u53D8\u6210\u8868\u5934\uFF09",
   deleteCol: "\u5220\u9664\u5217",
   deleteRows: "\u5220\u9664 {n} \u884C",
   fmtBold: "\u52A0\u7C97",
@@ -4626,7 +5209,7 @@ var zh2 = {
   fmtHighlight: "\u9AD8\u4EAE\uFF08==\u6587\u5B57==\uFF09",
   fmtTextColor: "\u6587\u5B57\u989C\u8272",
   fmtHighlightColor: "\u8367\u5149\u7B14",
-  fmtClear: "\u6E05\u9664\u6587\u5B57\u989C\u8272\u548C\u8367\u5149\u7B14",
+  fmtClear: "\u6E05\u9664\u683C\u5F0F",
   mbDone: "\u5B8C\u6210",
   mbUndo: "\u64A4\u9500",
   mbRedo: "\u91CD\u505A",
@@ -4695,8 +5278,102 @@ var zh2 = {
   calc_min: "\u6700\u5C0F",
   calc_none: "\u4E0D\u5408\u8BA1",
   totalLabel: "\u5408\u8BA1",
-  statusOn: "\u8BBE\u4E3A\u72B6\u6001\u5217",
-  statusOff: "\u53D6\u6D88\u72B6\u6001\u5217",
+  totalLabelMixed: "\u7EDF\u8BA1",
+  fxOn: "\u8BBE\u4E3A\u8BA1\u7B97\u5217\u2026",
+  fxEdit: "\u7F16\u8F91\u516C\u5F0F\u2026",
+  fxOff: "\u53D6\u6D88\u8BA1\u7B97\u5217",
+  fxThisCol: "\u8FD9\u4E00\u5217",
+  fxInsert: "\u70B9\u4E00\u4E0B\u63D2\u5165\uFF1A",
+  fxNoNames: "\u522B\u7684\u5217\u90FD\u6CA1\u6709\u80FD\u5F15\u7528\u7684\u5217\u540D\uFF08\u4E0D\u80FD\u662F\u7A7A\u7684\u3001\u4E0D\u80FD\u91CD\u540D\uFF09",
+  fxHint: "\u5217\u540D\u7528\u82B1\u62EC\u53F7\u62EC\u8D77\u6765\uFF1B\u53EF\u4EE5\u7528 + \u2212 \xD7 \xF7 ( )  SUM AVG MIN MAX ROUND",
+  fxPlaces: "\u5C0F\u6570\u4F4D",
+  fxAuto: "\u81EA\u52A8",
+  fxStart: "\u5199\u4E00\u4E2A\u516C\u5F0F\uFF0C\u6BD4\u5982 {\u5355\u4EF7} * {\u6570\u91CF}",
+  fxPreview: "\u7B2C 1 \u884C\uFF1A{expr} = {v}",
+  fxPreviewEmpty: "\u7B2C 1 \u884C\uFF1A\u7ED3\u679C\u4E3A\u7A7A\uFF08{why}\uFF09",
+  fxNoRows: "\u8FD8\u6CA1\u6709\u6570\u636E\u884C",
+  fxBlank: "\u7A7A",
+  fxOk: "\u786E\u5B9A",
+  fxCancel: "\u53D6\u6D88",
+  fxLocked: "\u8FD9\u4E00\u5217\u7531\u516C\u5F0F\u7B97\u51FA\uFF0C\u5728\u5217\u83DC\u5355\u91CC\u6539\u516C\u5F0F",
+  fxBadgeTitle: "\u8BA1\u7B97\u5217\uFF1A{f}",
+  fxErr_empty: "\u8FD8\u6CA1\u5199\u516C\u5F0F",
+  fxErr_syntax: "\u516C\u5F0F\u5199\u5F97\u4E0D\u5BF9",
+  fxErr_paren: "\u62EC\u53F7\u6CA1\u914D\u5BF9",
+  fxErr_brace: "\u82B1\u62EC\u53F7\u6CA1\u914D\u5BF9\uFF1A\u5217\u540D\u8981\u5199\u6210 {\u5217\u540D}",
+  fxErr_func: "\u6CA1\u6709\u300C{name}\u300D\u8FD9\u4E2A\u51FD\u6570",
+  fxErr_args: "{name} \u7684\u53C2\u6570\u4E2A\u6570\u4E0D\u5BF9",
+  fxErr_unknownCol: "\u627E\u4E0D\u5230\u5217\u300C{name}\u300D",
+  fxErr_ambiguous: "\u6709\u597D\u51E0\u5217\u90FD\u53EB\u300C{name}\u300D\uFF0C\u5148\u6539\u4E2A\u540D",
+  fxErr_self: "\u516C\u5F0F\u4E0D\u80FD\u5F15\u7528\u8FD9\u4E00\u5217\u81EA\u5DF1",
+  fxErr_cycle: "\u51E0\u4E2A\u8BA1\u7B97\u5217\u4E92\u76F8\u5F15\u7528\uFF0C\u7ED5\u6210\u4E86\u4E00\u5708",
+  fxEmpty_input: "\u300C{name}\u300D\u662F\u7A7A\u7684\u6216\u4E0D\u662F\u6570\u5B57",
+  fxEmpty_div0: "\u9664\u4EE5 0",
+  colType: "\u5217\u7C7B\u578B\uFF1A{v}",
+  colTypeTitle: "\u5217\u7C7B\u578B",
+  colTypeFx: "\u8BA1\u7B97\u7ED3\u679C\u7684\u683C\u5F0F",
+  kind_text: "\u666E\u901A\u6587\u5B57",
+  kind_status: "\u72B6\u6001\uFF08\u5355\u9009\uFF09",
+  kind_multi: "\u591A\u9009\u6807\u7B7E",
+  kind_date: "\u65E5\u671F",
+  kind_num: "\u6570\u5B57",
+  kind_bar: "\u8FDB\u5EA6\u6761",
+  kind_enc: "\u52A0\u5BC6",
+  encUnlock: "\u8F93\u5165\u4E3B\u5BC6\u7801\u67E5\u770B",
+  encShow: "\u663E\u793A\u660E\u6587",
+  encHide: "\u9690\u85CF\u660E\u6587",
+  encCopy: "\u590D\u5236\u660E\u6587",
+  encCopied: "\u5DF2\u590D\u5236\uFF0C30 \u79D2\u540E\u4ECE\u526A\u8D34\u677F\u6E05\u9664",
+  encPlain: "\u8FD9\u683C\u8FD8\u6CA1\u52A0\u5BC6\uFF1A\u5728\u5217\u83DC\u5355\u91CC\u70B9\u300C\u52A0\u5BC6\u8FD9\u4E00\u5217\u300D",
+  encForeign: "\u5F53\u524D\u4E3B\u5BC6\u7801\u89E3\u4E0D\u5F00\u8FD9\u683C\uFF08\u53EF\u80FD\u662F\u7528\u522B\u7684\u5BC6\u7801\u52A0\u5BC6\u7684\uFF09",
+  encNoHost: "\u8FD9\u91CC\u4E0D\u80FD\u89E3\u9501\u52A0\u5BC6\u5217\uFF0C\u8BF7\u5728\u7B14\u8BB0\u91CC\u6253\u5F00\u8868\u683C",
+  encNotSaved: "\u6CA1\u6709\u89E3\u9501\uFF0C\u52A0\u5BC6\u5217\u7684\u6539\u52A8\u6CA1\u6709\u4FDD\u5B58",
+  encChanged: "\u52A0\u5BC6\u65F6\u8868\u683C\u88AB\u6539\u52A8\u4E86\uFF0C\u8FD9\u683C\u6CA1\u6709\u4FDD\u5B58\uFF0C\u8BF7\u91CD\u65B0\u8F93\u5165",
+  encSealCol: "\u52A0\u5BC6\u8FD9\u4E00\u5217",
+  encRekey: "\u66F4\u6539\u4E3B\u5BC6\u7801",
+  encRekeyTitle: "\u8BBE\u7F6E\u65B0\u7684\u4E3B\u5BC6\u7801",
+  encRekeyConfirm: "\u5C06\u7528\u65B0\u7684\u4E3B\u5BC6\u7801\u91CD\u65B0\u52A0\u5BC6 {f} \u7BC7\u7B14\u8BB0\u91CC\u7684 {n} \u6BB5\u5185\u5BB9\uFF08\u8868\u683C\u7684\u52A0\u5BC6\u683C\u5B50\uFF0C\u4EE5\u53CA Meld Encrypt \u7528\u540C\u4E00\u4E2A\u5BC6\u7801\u52A0\u5BC6\u7684\u884C\u5185\u5185\u5BB9\uFF09\u3002\u6574\u7BC7\u52A0\u5BC6\u7684 .mdenc \u6587\u4EF6\u4E0D\u4F1A\u6539\u3002\u7EE7\u7EED\uFF1F",
+  encRekeyOther: "\u53E6\u6709 {n} \u6BB5\u7528\u7684\u4E0D\u662F\u5F53\u524D\u4E3B\u5BC6\u7801\uFF0C\u4E0D\u4F1A\u6539\u52A8\u3002",
+  encRekeyGo: "\u7EE7\u7EED",
+  encRekeyFailed: "\u6709\u5185\u5BB9\u91CD\u65B0\u52A0\u5BC6\u5931\u8D25\uFF0C\u6CA1\u6709\u6539\u52A8\u4EFB\u4F55\u7B14\u8BB0\uFF0C\u4E3B\u5BC6\u7801\u6CA1\u53D8",
+  encRekeyDone: "\u4E3B\u5BC6\u7801\u5DF2\u66F4\u6539\uFF1A{f} \u7BC7\u7B14\u8BB0\u91CC\u7684 {n} \u6BB5\u5185\u5BB9\u5DF2\u91CD\u65B0\u52A0\u5BC6\u3002",
+  encRekeyKeychain: "\u94A5\u5319\u4E32\u91CC\u5B58\u7684\u4E3B\u5BC6\u7801\u4E5F\u8981\u6539\u6210\u65B0\u7684\u3002",
+  encCell: "\u52A0\u5BC6",
+  decryptCell: "\u53D6\u6D88\u52A0\u5BC6",
+  encDecryptCellConfirm: "\u628A\u9009\u4E2D\u7684\u683C\u5B50\u89E3\u5BC6\u6210\u660E\u6587\u5199\u56DE\u7B14\u8BB0\uFF1F\u4E4B\u540E\u4E0D\u7528\u4E3B\u5BC6\u7801\u4E5F\u80FD\u770B\u5230\u8FD9\u4E9B\u5185\u5BB9\u3002",
+  encLock: "\u9501\u5B9A\u52A0\u5BC6\u5185\u5BB9",
+  encDecryptConfirm: "\u628A\u8FD9\u4E00\u5217\u89E3\u5BC6\u6210\u660E\u6587\u5199\u56DE\u7B14\u8BB0\uFF1F\u4E4B\u540E\u4E0D\u7528\u4E3B\u5BC6\u7801\u4E5F\u80FD\u770B\u5230\u8FD9\u4E9B\u5185\u5BB9\u3002",
+  encDecryptOk: "\u89E3\u5BC6",
+  encForeignAbort: "\u8FD9\u4E00\u5217\u6709\u683C\u5B50\u7528\u5F53\u524D\u4E3B\u5BC6\u7801\u89E3\u4E0D\u5F00\uFF0C\u6CA1\u6709\u8F6C\u6362",
+  encSetupTitle: "\u8BBE\u7F6E\u4E3B\u5BC6\u7801",
+  encSetupDesc: "\u6240\u6709\u8868\u683C\u7684\u52A0\u5BC6\u5217\u90FD\u7528\u8FD9\u4E2A\u5BC6\u7801\u3002\u5FD8\u4E86\u5C31\u518D\u4E5F\u89E3\u4E0D\u5F00\uFF0C\u6CA1\u6709\u4EFB\u4F55\u627E\u56DE\u529E\u6CD5\u3002",
+  encPassword: "\u4E3B\u5BC6\u7801",
+  encPassword2: "\u518D\u8F93\u4E00\u904D",
+  encHint: "\u63D0\u793A\uFF08\u53EF\u4E0D\u586B\uFF0C\u63D0\u793A\u672C\u8EAB\u4E0D\u52A0\u5BC6\uFF09",
+  encMismatch: "\u4E24\u6B21\u8F93\u5165\u7684\u4E0D\u4E00\u6837",
+  encEmpty: "\u5BC6\u7801\u4E0D\u80FD\u4E3A\u7A7A",
+  encUnlockTitle: "\u89E3\u9501\u52A0\u5BC6\u5185\u5BB9",
+  encWrong: "\u5BC6\u7801\u4E0D\u5BF9",
+  encHintIs: "\u63D0\u793A\uFF1A{v}",
+  encOk: "\u786E\u5B9A",
+  encCancel: "\u53D6\u6D88",
+  dateStyle: "\u5199\u6CD5",
+  dateLink: "\u65E5\u8BB0\u94FE\u63A5 [[2026-11-17]]",
+  numFormat: "\u6570\u5B57\u683C\u5F0F",
+  numGroup: "\u5343\u5206\u4F4D 1,234",
+  numPercent: "\u767E\u5206\u6BD4 12%",
+  numCurrency: "\u8D27\u5E01",
+  numNone: "\u65E0",
+  numDecimals: "\u5C0F\u6570",
+  numAuto: "\u81EA\u52A8",
+  calPrev: "\u4E0A\u4E2A\u6708",
+  calNext: "\u4E0B\u4E2A\u6708",
+  calMonth: "{y}\u5E74{m}\u6708",
+  calWeekStart: "1",
+  calWeekdays: "\u65E5,\u4E00,\u4E8C,\u4E09,\u56DB,\u4E94,\u516D",
+  calToday: "\u4ECA\u5929",
+  calClear: "\u6E05\u7A7A",
+  notDate: "\u4E0D\u662F\u65E5\u671F\uFF1A\u65E5\u5386\u548C\u6309\u65E5\u671F\u6392\u5E8F\u4E0D\u8BA4\u5B83",
   statusColor: "\u300C{v}\u300D\u7684\u989C\u8272",
   defaultText: "\u9ED8\u8BA4\u6587\u5B57\u989C\u8272",
   foldTable: "\u6298\u53E0\u8868\u683C\uFF08\u53EA\u663E\u793A\u8868\u5934\uFF09",
@@ -4766,12 +5443,13 @@ var en2 = {
   cmd_select_col: "Select column",
   cmd_toggle_checkbox: "Toggle checkbox",
   gridTitle: "Insert table",
-  gridHint: "{r} rows \xD7 {c} columns (with header)",
+  gridHint: "{r} rows \xD7 {c} columns (with header) \xB7 arrow keys to resize, Enter to insert",
   removeCheckbox: "Remove checkbox",
   insertRowBelow: "Insert row below",
   insertColLeft: "Insert column left",
   insertColRight: "Insert column right",
   deleteRow: "Delete row",
+  deleteHeadRow: "Delete header row (the next row becomes the header)",
   deleteCol: "Delete column",
   deleteRows: "Delete {n} rows",
   fmtBold: "Bold",
@@ -4781,7 +5459,7 @@ var en2 = {
   fmtHighlight: "Highlight (==text==)",
   fmtTextColor: "Text color",
   fmtHighlightColor: "Highlighter",
-  fmtClear: "Clear text and highlighter colors",
+  fmtClear: "Clear formatting",
   mbDone: "Done",
   mbUndo: "Undo",
   mbRedo: "Redo",
@@ -4850,8 +5528,102 @@ var en2 = {
   calc_min: "Min",
   calc_none: "No total",
   totalLabel: "Total",
-  statusOn: "Use as status column",
-  statusOff: "Stop using as status column",
+  totalLabelMixed: "Summary",
+  fxOn: "Make calculated column\u2026",
+  fxEdit: "Edit formula\u2026",
+  fxOff: "Stop calculating this column",
+  fxThisCol: "This column",
+  fxInsert: "Click to insert:",
+  fxNoNames: "No other column has a usable name (not empty, not duplicated)",
+  fxHint: "Put column names in braces; you can use + \u2212 \xD7 \xF7 ( )  SUM AVG MIN MAX ROUND",
+  fxPlaces: "Decimals",
+  fxAuto: "Auto",
+  fxStart: "Write a formula, e.g. {Price} * {Qty}",
+  fxPreview: "Row 1: {expr} = {v}",
+  fxPreviewEmpty: "Row 1: empty ({why})",
+  fxNoRows: "No data rows yet",
+  fxBlank: "empty",
+  fxOk: "OK",
+  fxCancel: "Cancel",
+  fxLocked: "This column is calculated by a formula. Change the formula from the column menu.",
+  fxBadgeTitle: "Calculated: {f}",
+  fxErr_empty: "The formula is empty",
+  fxErr_syntax: "The formula isn't valid",
+  fxErr_paren: "Parentheses don't match",
+  fxErr_brace: "Braces don't match: write column names as {Name}",
+  fxErr_func: "There's no function \u201C{name}\u201D",
+  fxErr_args: "Wrong number of arguments for {name}",
+  fxErr_unknownCol: "No column named \u201C{name}\u201D",
+  fxErr_ambiguous: "Several columns are named \u201C{name}\u201D; rename one first",
+  fxErr_self: "A formula can't use its own column",
+  fxErr_cycle: "Calculated columns refer to each other in a loop",
+  fxEmpty_input: "\u201C{name}\u201D is empty or not a number",
+  fxEmpty_div0: "Division by zero",
+  colType: "Column type: {v}",
+  colTypeTitle: "Column type",
+  colTypeFx: "Result format",
+  kind_text: "Text",
+  kind_status: "Status (single select)",
+  kind_multi: "Multi-select tags",
+  kind_date: "Date",
+  kind_num: "Number",
+  kind_bar: "Progress bar",
+  kind_enc: "Encrypted",
+  encUnlock: "Enter the master password to view",
+  encShow: "Show",
+  encHide: "Hide",
+  encCopy: "Copy",
+  encCopied: "Copied. It will be cleared from the clipboard in 30 seconds.",
+  encPlain: "This cell isn't encrypted yet. Use Encrypt this column in the column menu.",
+  encForeign: "The current master password can't decrypt this cell (it may use a different password).",
+  encNoHost: "Encrypted columns can't be unlocked here. Open the table in its note.",
+  encNotSaved: "Not unlocked, so the change to the encrypted column wasn't saved.",
+  encChanged: "The table changed while encrypting, so this cell wasn't saved. Please enter it again.",
+  encSealCol: "Encrypt this column",
+  encRekey: "Change master password",
+  encRekeyTitle: "Set a new master password",
+  encRekeyConfirm: "Re-encrypt {n} items in {f} notes with a new master password (encrypted table cells, plus Meld Encrypt inline text that uses the same password)? Whole-note .mdenc files aren't changed.",
+  encRekeyOther: "{n} other items use a different password and won't be changed.",
+  encRekeyGo: "Continue",
+  encRekeyFailed: "Something couldn't be re-encrypted, so no notes were changed and the master password stays the same.",
+  encRekeyDone: "Master password changed: {n} items in {f} notes were re-encrypted.",
+  encRekeyKeychain: "Update the master password saved in the keychain too.",
+  encCell: "Encrypt",
+  decryptCell: "Remove encryption",
+  encDecryptCellConfirm: "Decrypt the selected cells and save them as plain text in the note? Anyone can then read them without the master password.",
+  encLock: "Lock encrypted content",
+  encDecryptConfirm: "Decrypt this column and save it as plain text in the note? Anyone can then read it without the master password.",
+  encDecryptOk: "Decrypt",
+  encForeignAbort: "Some cells in this column can't be decrypted with the current master password. Nothing was changed.",
+  encSetupTitle: "Set a master password",
+  encSetupDesc: "Every encrypted column uses this password. If you forget it, the content can't be recovered.",
+  encPassword: "Master password",
+  encPassword2: "Enter it again",
+  encHint: "Hint (optional, stored unencrypted)",
+  encMismatch: "The passwords don't match",
+  encEmpty: "The password can't be empty",
+  encUnlockTitle: "Unlock encrypted content",
+  encWrong: "Wrong password",
+  encHintIs: "Hint: {v}",
+  encOk: "OK",
+  encCancel: "Cancel",
+  dateStyle: "Written as",
+  dateLink: "Daily note link [[2026-11-17]]",
+  numFormat: "Number format",
+  numGroup: "Thousands separator 1,234",
+  numPercent: "Percent 12%",
+  numCurrency: "Currency",
+  numNone: "None",
+  numDecimals: "Decimals",
+  numAuto: "Auto",
+  calPrev: "Previous month",
+  calNext: "Next month",
+  calMonth: "{M} {y}",
+  calWeekStart: "0",
+  calWeekdays: "S,M,T,W,T,F,S",
+  calToday: "Today",
+  calClear: "Clear",
+  notDate: "Not a date: the calendar and date sorting skip it",
   statusColor: "Color of \u201C{v}\u201D",
   defaultText: "Default text color",
   foldTable: "Fold table (header only)",
@@ -4897,7 +5669,7 @@ function t2(key) {
 }
 
 // src/icon.ts
-var import_obsidian2 = require("obsidian");
+var import_obsidian4 = require("obsidian");
 var MINDMAP_ICON = "mindmap-tree";
 var MINDMAP_LIST_ICON = `lucide:${MINDMAP_ICON}`;
 var SCALE = "scale(0.390625)";
@@ -4905,15 +5677,15 @@ var CONTENT = '<path d="M160,112h48a16,16,0,0,0,16-16V48a16,16,0,0,0-16-16H160a1
 var MARKDOWN_ICON = "mindmap-markdown";
 var MARKDOWN_CONTENT = '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>';
 function registerMindMapIcon() {
-  (0, import_obsidian2.addIcon)(MINDMAP_ICON, `<g transform="${SCALE}" fill="currentColor" stroke="none">${CONTENT}</g>`);
-  (0, import_obsidian2.addIcon)(MARKDOWN_ICON, `<g transform="scale(4.1666667)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${MARKDOWN_CONTENT}</g>`);
+  (0, import_obsidian4.addIcon)(MINDMAP_ICON, `<g transform="${SCALE}" fill="currentColor" stroke="none">${CONTENT}</g>`);
+  (0, import_obsidian4.addIcon)(MARKDOWN_ICON, `<g transform="scale(4.1666667)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${MARKDOWN_CONTENT}</g>`);
 }
 
 // src/property-icon.ts
-var import_obsidian4 = require("obsidian");
+var import_obsidian6 = require("obsidian");
 
 // src/icon-picker.ts
-var import_obsidian3 = require("obsidian");
+var import_obsidian5 = require("obsidian");
 
 // src/icon-value.ts
 function bareId(id) {
@@ -4940,7 +5712,7 @@ function storedValue(pick) {
   return pick.kind === "emoji" ? pick.value : `lucide:${bareId(pick.id)}`;
 }
 var RECOMMENDED = ["mindmap-tree", "lucide-network", "lucide-waypoints", "lucide-workflow", "lucide-list-tree", "lucide-git-fork", "lucide-brain"];
-var IconPickerModal = class extends import_obsidian3.FuzzySuggestModal {
+var IconPickerModal = class extends import_obsidian5.FuzzySuggestModal {
   constructor(app, onPick) {
     super(app);
     this.onPick = onPick;
@@ -4954,7 +5726,7 @@ var IconPickerModal = class extends import_obsidian3.FuzzySuggestModal {
     this.modalEl.addClass("mm-icon-picker");
   }
   getItems() {
-    const all = (0, import_obsidian3.getIconIds)();
+    const all = (0, import_obsidian5.getIconIds)();
     const seen = /* @__PURE__ */ new Set();
     const ordered = [];
     for (const id of RECOMMENDED) {
@@ -4990,7 +5762,7 @@ var IconPickerModal = class extends import_obsidian3.FuzzySuggestModal {
       el.createSpan({ text: t("iconPicker.useEmoji"), cls: "mm-icon-label" });
       return;
     }
-    (0, import_obsidian3.setIcon)(preview2, match.item.id);
+    (0, import_obsidian5.setIcon)(preview2, match.item.id);
     el.createSpan({ text: bareId(match.item.id), cls: "mm-icon-label" });
     if (match.item.id === MINDMAP_ICON) el.createSpan({ text: t("iconPicker.builtIn"), cls: "mm-icon-tag" });
   }
@@ -5047,13 +5819,13 @@ var PropertyIconDecorator = class {
   }
   /** 这一行属于哪个文件：先看它所在的视图，取不到就退回当前活动文件 */
   fileOf(row) {
-    let found = null;
+    let found2 = null;
     this.app.workspace.iterateAllLeaves((leaf) => {
-      if (found) return;
+      if (found2) return;
       const view = leaf.view;
-      if (view.file && view.containerEl?.contains(row)) found = view.file;
+      if (view.file && view.containerEl?.contains(row)) found2 = view.file;
     });
-    return found ?? this.app.workspace.getActiveFile();
+    return found2 ?? this.app.workspace.getActiveFile();
   }
   pick(row) {
     const file = this.fileOf(row);
@@ -5079,7 +5851,7 @@ var PropertyIconDecorator = class {
       preview2 = createSpan({ cls: "mm-icon-prop-preview" });
       preview2.setAttribute("role", "button");
       preview2.tabIndex = 0;
-      (0, import_obsidian4.setTooltip)(preview2, t("propertyIcon.choose"), { placement: "top" });
+      (0, import_obsidian6.setTooltip)(preview2, t("propertyIcon.choose"), { placement: "top" });
       preview2.addEventListener("mousedown", (ev) => {
         ev.preventDefault();
         ev.stopPropagation();
@@ -5094,13 +5866,13 @@ var PropertyIconDecorator = class {
     }
     if (preview2.dataset.value === raw) return;
     preview2.dataset.value = raw;
-    (0, import_obsidian4.setTooltip)(preview2, t("propertyIcon.chooseCurrent", { value: raw }), { placement: "top" });
+    (0, import_obsidian6.setTooltip)(preview2, t("propertyIcon.chooseCurrent", { value: raw }), { placement: "top" });
     preview2.empty();
     preview2.toggleClass("is-emoji", isEmojiValue(raw));
     if (isEmojiValue(raw)) preview2.setText(displayEmoji(raw));
     else {
       const id = iconIdOf(raw);
-      if (id) (0, import_obsidian4.setIcon)(preview2, id);
+      if (id) (0, import_obsidian6.setIcon)(preview2, id);
     }
     const ok = preview2.childElementCount > 0 || !!preview2.textContent;
     row.classList.toggle(MARK, ok);
@@ -5165,8 +5937,8 @@ function registerNotebookNavigatorMenus(app, handlers) {
 }
 
 // src/note-picker.ts
-var import_obsidian5 = require("obsidian");
-var NotePickerModal = class extends import_obsidian5.FuzzySuggestModal {
+var import_obsidian7 = require("obsidian");
+var NotePickerModal = class extends import_obsidian7.FuzzySuggestModal {
   constructor(app, suggested, onPick) {
     super(app);
     this.suggested = suggested;
@@ -5214,16 +5986,16 @@ var NotePickerModal = class extends import_obsidian5.FuzzySuggestModal {
 };
 
 // src/block-editor.ts
-var import_obsidian6 = require("obsidian");
-var BlockEditorModal = class extends import_obsidian6.Modal {
+var import_obsidian8 = require("obsidian");
+var BlockEditorModal = class extends import_obsidian8.Modal {
   constructor(app, title, mount, onClosed) {
     super(app);
     this.title = title;
     this.mount = mount;
     this.onClosed = onClosed;
-    this.component = new import_obsidian6.Component();
+    this.component = new import_obsidian8.Component();
     this.cleanup = null;
-    this.scope = new import_obsidian6.Scope();
+    this.scope = new import_obsidian8.Scope();
   }
   onOpen() {
     this.modalEl.addClass("mm-block-editor");
@@ -5304,6 +6076,27 @@ var BRACE_W = 12;
 var SUMMARY_LABEL_GAP = 6;
 var CALLOUT_GAP = 12;
 var NOTE_GAP = 6;
+function allSpines(r3) {
+  return [...r3.spine ? [r3.spine] : [], ...r3.spines ?? []];
+}
+function branchStructure(layout, leftward) {
+  if (layout === "fishbone") return leftward ? { structure: "fishbone-right", leftward: false, toggle: "left" } : { structure: "fishbone-left", leftward: false, toggle: "right" };
+  if (layout === "logic-right") return { structure: layout, leftward, toggle: leftward ? "left" : "right" };
+  return { structure: layout, leftward: false, toggle: layout === "org-down" || layout.startsWith("timeline-v") ? "down" : "right" };
+}
+function branchOptions(opts, b) {
+  const axis = isTimeline(b.structure) || isFishbone(b.structure);
+  const gapRoot = b.structure === "org-down" ? Math.ceil((opts.gapLevel + 8) / 0.6) : opts.gapLevel;
+  return { ...opts, structure: b.structure, leftward: b.leftward, gapRoot, gapMain: axis ? opts.gapMain : opts.gapSibling };
+}
+function moveSeg(sg, mapX, dy) {
+  return { x1: mapX(sg.x1), y1: sg.y1 + dy, x2: mapX(sg.x2), y2: sg.y2 + dy };
+}
+function moveSpine(sp, mapX, dy) {
+  const segs = /* @__PURE__ */ new Map();
+  for (const [k, v] of sp.segs) segs.set(k, moveSeg(v, mapX, dy));
+  return { segs, end: sp.end && moveSeg(sp.end, mapX, dy), ...sp.plain ? { plain: true } : {} };
+}
 function splitSides(kids) {
   const half = Math.ceil(kids.length / 2);
   let r3 = kids.filter((k) => k.side === "right").length;
@@ -5485,6 +6278,42 @@ function layoutTree(root, measure, opts, measureSummary, skip, measureCallout, m
     collect(runs, groupOf, parent, list, side);
     collect(summaryRuns, summaryOf, parent, list, side);
   }
+  const nestedSpines = [];
+  const ownCache = /* @__PURE__ */ new Map();
+  function ownOf(n, leftward) {
+    if (n === root || !n.layout || isSummaryTopic(n)) return null;
+    const key = `${n.id}/${leftward ? "l" : "r"}`;
+    let o = ownCache.get(key);
+    if (!o) {
+      const b = branchStructure(n.layout, leftward);
+      const sub = layoutTree(n, measure, branchOptions(opts, b), measureSummary, void 0, measureCallout, measureNote);
+      o = { sub, rb: sub.bounds, toggle: b.toggle };
+      ownCache.set(key, o);
+    }
+    return o;
+  }
+  function placeOwn(n, o, cx, cy, side) {
+    const { sub } = o;
+    const mapX = (x) => x + cx;
+    const at = (b) => ({ ...b, x: b.x + cx, y: b.y + cy });
+    for (const q of sub.placed.values()) {
+      const moved = { ...at(q), ...q.bone ? { bone: moveSeg(q.bone, mapX, cy) } : {} };
+      if (q.node === n) {
+        moved.side = side;
+        moved.toggle = o.toggle;
+        const edge = side === "right" ? o.rb.x + cx : side === "left" ? o.rb.x + o.rb.w + cx : side === "down" ? o.rb.y + cy : void 0;
+        const at0 = side === "right" ? moved.x : side === "left" ? moved.x + moved.w : moved.y;
+        if (edge !== void 0 && Math.abs(edge - at0) > 1) moved.entry = edge;
+      }
+      placed.set(q.node.id, moved);
+    }
+    for (const x of sub.callouts) addCallout(x.node, at(x), x.dir);
+    for (const x of sub.notes) addNote(x.node, at(x), x.far);
+    for (const x of sub.boxes) branchBoxes.push(at(x));
+    for (const x of sub.summaries) branchSummaries.push({ ...x, brace: at(x.brace), label: x.label && at(x.label) });
+    for (const sp of allSpines(sub)) nestedSpines.push(moveSpine(sp, mapX, cy));
+    branchExtra.set(n.id, at(sub.bounds));
+  }
   const rs = sizeOf(root);
   const vertical = opts.structure === "org-down" || opts.structure === "tree-right" || isTimeline(opts.structure) && !isTimelineH(opts.structure);
   placed.set(root.id, { node: root, x: -rs.w / 2, y: -rs.h / 2, w: rs.w, h: rs.h, side: "right", stem: vertical ? stemOf(root) : void 0 });
@@ -5506,7 +6335,7 @@ function layoutTree(root, measure, opts, measureSummary, skip, measureCallout, m
     placeColumn(root, right, "right", 0);
     placeColumn(root, left.reverse(), "left", 0);
   } else {
-    placeColumn(root, kids, "right", 0);
+    placeColumn(root, kids, opts.leftward ? "left" : "right", 0);
   }
   function layoutTimeline(parent, list) {
     const segs = /* @__PURE__ */ new Map();
@@ -5571,13 +6400,13 @@ function layoutTree(root, measure, opts, measureSummary, skip, measureCallout, m
       const sg = summaryOf(c);
       if (g !== curBox?.g) closeBox();
       if (sg !== curSum?.g) closeSum();
-      const pad = (q) => {
+      const pad2 = (q) => {
         let r3 = q;
         if (sg) r3 = { x: r3.x - SUMMARY_GAP, y: r3.y - SUMMARY_GAP, w: r3.w + 2 * SUMMARY_GAP, h: r3.h + 2 * SUMMARY_GAP };
         if (g) r3 = { x: r3.x - BOX_PAD, y: r3.y - boxTop(g), w: r3.w + 2 * BOX_PAD, h: r3.h + boxTop(g) + BOX_PAD };
         return r3;
       };
-      const probe = parts.map(pad);
+      const probe = parts.map(pad2);
       const mainRect = { x: mx(m.x, m.w), y: m.y, w: m.w, h: m.h };
       let off = horiz ? prevEnd + gap - mainRect.x : prevEnd + gap - mainRect.y;
       for (const o of olds) {
@@ -5595,8 +6424,10 @@ function layoutTree(root, measure, opts, measureSummary, skip, measureCallout, m
         let side;
         if (own(p.node)) side = horiz ? up ? "up" : "down" : mirror ? "left" : "right";
         else side = up && p.node.parent === c ? "tree-up" : flip(p.side);
-        placed.set(p.node.id, { ...p, ...at(p, p.node), side });
+        const bone = p.bone && moveSeg(p.bone, (x) => (mirror ? -x : x) + dx, dy + (own(p.node) ? 0 : restDy));
+        placed.set(p.node.id, { ...p, ...at(p, p.node), side, ...bone ? { bone } : {} });
       }
+      for (const sp of allSpines(sub)) nestedSpines.push(moveSpine(sp, (x) => (mirror ? -x : x) + dx, dy + restDy));
       for (const x of sub.callouts) addCallout(x.node, at(x, x.node), x.dir);
       for (const x of subNotes) addNote(x.node, at(x, x.node), x.far);
       for (const x of sub.boxes) branchBoxes.push({ ...x, ...at(x), side: flip(x.side) });
@@ -5706,8 +6537,11 @@ function layoutTree(root, measure, opts, measureSummary, skip, measureCallout, m
       const bone = { x1: sx, y1: 0, x2: sx + tipX, y2: tipY };
       for (const p of sub.placed.values()) {
         const side = own(p.node) ? up ? "up" : "down" : p.node.parent === c ? "rib" : p.side;
-        placed.set(p.node.id, { ...p, ...at(p, p.node), side, ...own(p.node) ? { bone } : {} });
+        const inner = !own(p.node) && p.bone ? moveSeg(p.bone, (x) => x + restDx + sx, restDy) : void 0;
+        const toggle = side === "rib" && d < 0 ? { toggle: "left" } : {};
+        placed.set(p.node.id, { ...p, ...at(p, p.node), side, ...toggle, ...own(p.node) ? { bone } : inner ? { bone: inner } : {} });
       }
+      for (const sp of allSpines(sub)) nestedSpines.push(moveSpine(sp, (x) => x + restDx + sx, restDy));
       for (const x of sub.callouts) addCallout(x.node, at(x, x.node), x.dir);
       for (const x of sub.notes) addNote(x.node, at(x, x.node), x.far);
       for (const x of sub.boxes) branchBoxes.push({ ...x, ...at(x) });
@@ -5739,6 +6573,12 @@ function layoutTree(root, measure, opts, measureSummary, skip, measureCallout, m
   function halves(n) {
     const cached = halfCache.get(n.id);
     if (cached) return cached;
+    const ob = ownOf(n, false);
+    if (ob) {
+      const own = { up: -ob.rb.y, down: ob.rb.y + ob.rb.h, kids: 0, wide: false, noteFar: false };
+      halfCache.set(n.id, own);
+      return own;
+    }
     const s = sizeOf(n);
     const k = visibleChildren(n);
     const kids2 = k.length ? extentOfList(k, gapFor(n)) / 2 : 0;
@@ -5780,20 +6620,25 @@ function layoutTree(root, measure, opts, measureSummary, skip, measureCallout, m
       const e = v.up + v.down;
       const ccy = y + v.up;
       const x = side === "right" ? p.x + p.w + gapH : p.x - gapH - s.w;
-      placed.set(c.id, { node: c, x, y: ccy - s.h / 2, w: s.w, h: s.h, side });
-      const co = calloutOf(c);
-      if (co) {
-        const cx = side === "left" ? x + s.w - co.w : x;
-        const top = v.wide ? ccy - Math.max(s.h / 2, v.kids) : ccy - s.h / 2;
-        addCallout(c, { x: cx, y: top - CALLOUT_GAP - co.h, w: co.w, h: co.h }, "up");
+      const ob = ownOf(c, side === "left");
+      if (ob) {
+        placeOwn(c, ob, side === "left" ? p.x - gapH - (ob.rb.x + ob.rb.w) : p.x + p.w + gapH - ob.rb.x, ccy, side);
+      } else {
+        placed.set(c.id, { node: c, x, y: ccy - s.h / 2, w: s.w, h: s.h, side });
+        const co = calloutOf(c);
+        if (co) {
+          const cx = side === "left" ? x + s.w - co.w : x;
+          const top = v.wide ? ccy - Math.max(s.h / 2, v.kids) : ccy - s.h / 2;
+          addCallout(c, { x: cx, y: top - CALLOUT_GAP - co.h, w: co.w, h: co.h }, "up");
+        }
+        const no = noteOf(c);
+        if (no) {
+          const nx = side === "left" ? x + s.w - no.w : x;
+          const bottom = v.noteFar ? ccy + Math.max(s.h / 2, v.kids) : ccy + s.h / 2;
+          addNote(c, { x: nx, y: bottom + NOTE_GAP, w: no.w, h: no.h }, v.noteFar);
+        }
+        placeColumn(c, visibleChildren(c), side, ccy);
       }
-      const no = noteOf(c);
-      if (no) {
-        const nx = side === "left" ? x + s.w - no.w : x;
-        const bottom = v.noteFar ? ccy + Math.max(s.h / 2, v.kids) : ccy + s.h / 2;
-        addNote(c, { x: nx, y: bottom + NOTE_GAP, w: no.w, h: no.h }, v.noteFar);
-      }
-      placeColumn(c, visibleChildren(c), side, ccy);
       y += e + after[i];
       const end = tr.find((r3) => r3.last === i);
       if (end) topicCenter.set(end.start.id, (runTop + y) / 2);
@@ -5810,6 +6655,12 @@ function layoutTree(root, measure, opts, measureSummary, skip, measureCallout, m
   function wHalves(n) {
     const cached = wHalfCache.get(n.id);
     if (cached) return cached;
+    const ob = ownOf(n, false);
+    if (ob) {
+      const own = { left: -ob.rb.x, right: ob.rb.x + ob.rb.w };
+      wHalfCache.set(n.id, own);
+      return own;
+    }
     const s = sizeOf(n);
     const k = visibleChildren(n);
     const half = k.length ? Math.max(s.w / 2, (k.reduce((sum, c, i) => sum + extentW(c) + (i > 0 ? hGapFor(n) : 0), 0) + sidePads(k)) / 2) : s.w / 2;
@@ -5848,12 +6699,16 @@ function layoutTree(root, measure, opts, measureSummary, skip, measureCallout, m
       const v = wHalves(c);
       const e = v.left + v.right;
       const ccx = x + v.left;
-      placed.set(c.id, { node: c, x: ccx - s.w / 2, y, w: s.w, h: s.h, side: "down", stem: stemOf(c) });
-      const co = calloutOf(c);
-      if (co) addCallout(c, { x: ccx + s.w / 2 + CALLOUT_GAP, y, w: co.w, h: co.h }, "right");
-      const no = noteOf(c);
-      if (no) addNote(c, { x: ccx - no.w / 2, y: y + s.h + noteLift(c) + NOTE_GAP, w: no.w, h: no.h });
-      layoutDown(c, visibleChildren(c));
+      const ob = ownOf(c, false);
+      if (ob) placeOwn(c, ob, ccx, y - ob.rb.y, "down");
+      else {
+        placed.set(c.id, { node: c, x: ccx - s.w / 2, y, w: s.w, h: s.h, side: "down", stem: stemOf(c) });
+        const co = calloutOf(c);
+        if (co) addCallout(c, { x: ccx + s.w / 2 + CALLOUT_GAP, y, w: co.w, h: co.h }, "right");
+        const no = noteOf(c);
+        if (no) addNote(c, { x: ccx - no.w / 2, y: y + s.h + noteLift(c) + NOTE_GAP, w: no.w, h: no.h });
+        layoutDown(c, visibleChildren(c));
+      }
       x += e + (gs[i] && gs[i] !== gs[i + 1] ? BOX_PAD : 0);
       const end = tr.find((r3) => r3.last === i);
       if (end) {
@@ -5866,6 +6721,11 @@ function layoutTree(root, measure, opts, measureSummary, skip, measureCallout, m
   function treeExtent(n) {
     const cached = extents.get(n.id);
     if (cached !== void 0) return cached;
+    const ob = ownOf(n, false);
+    if (ob) {
+      extents.set(n.id, ob.rb.h);
+      return ob.rb.h;
+    }
     const k = visibleChildren(n);
     const co = calloutOf(n);
     const e = (co ? co.h + CALLOUT_GAP : 0) + sizeOf(n).h + (stemOf(n) ?? 0) + k.reduce((sum, c) => sum + opts.gapSibling + treeExtent(c), 0) + padTotal(k);
@@ -5885,13 +6745,17 @@ function layoutTree(root, measure, opts, measureSummary, skip, measureCallout, m
       if (tr.some((r3) => r3.first === i)) runTop = y;
       y += before[i];
       const s = sizeOf(c);
-      const co = calloutOf(c);
-      const top = co ? y + co.h + CALLOUT_GAP : y;
-      if (co) addCallout(c, { x, y, w: co.w, h: co.h }, "up");
-      placed.set(c.id, { node: c, x, y: top, w: s.w, h: s.h, side: "tree", stem: stemOf(c) });
-      const no = noteOf(c);
-      if (no) addNote(c, { x, y: top + s.h + NOTE_GAP, w: no.w, h: no.h });
-      layoutTreeRight(c, visibleChildren(c));
+      const ob = ownOf(c, false);
+      if (ob) placeOwn(c, ob, x - ob.rb.x, y - ob.rb.y, "tree");
+      else {
+        const co = calloutOf(c);
+        const top = co ? y + co.h + CALLOUT_GAP : y;
+        if (co) addCallout(c, { x, y, w: co.w, h: co.h }, "up");
+        placed.set(c.id, { node: c, x, y: top, w: s.w, h: s.h, side: "tree", stem: stemOf(c) });
+        const no = noteOf(c);
+        if (no) addNote(c, { x, y: top + s.h + NOTE_GAP, w: no.w, h: no.h });
+        layoutTreeRight(c, visibleChildren(c));
+      }
       y += treeExtent(c) + after[i];
       const end = tr.find((r3) => r3.last === i);
       if (end) topicCenter.set(end.start.id, (runTop + y) / 2);
@@ -5975,7 +6839,9 @@ function layoutTree(root, measure, opts, measureSummary, skip, measureCallout, m
     }
     const mx = (x, w) => (mirror ? -(x + w) : x) + dx;
     const flip = (s) => mirror && s === "right" ? "left" : s;
-    for (const p of sub.placed.values()) placed.set(p.node.id, { ...p, x: mx(p.x, p.w), y: p.y + dy, side: flip(p.side) });
+    const mapX = (x) => (mirror ? -x : x) + dx;
+    for (const p of sub.placed.values()) placed.set(p.node.id, { ...p, x: mx(p.x, p.w), y: p.y + dy, side: flip(p.side), ...p.bone ? { bone: moveSeg(p.bone, mapX, dy) } : {} });
+    for (const sp of allSpines(sub)) nestedSpines.push(moveSpine(sp, mapX, dy));
     for (const x of sub.boxes) boxes.push({ ...x, x: mx(x.x, x.w), y: x.y + dy, side: flip(x.side) });
     for (const c of sub.callouts) callouts.push({ ...c, x: mx(c.x, c.w), y: c.y + dy });
     for (const n of sub.notes) notes.push({ ...n, x: mx(n.x, n.w), y: n.y + dy });
@@ -6040,7 +6906,7 @@ function layoutTree(root, measure, opts, measureSummary, skip, measureCallout, m
     addNote(root, rect, far);
     all = union(all, rect);
   }
-  return { placed, boxes, summaries, callouts, notes, bounds: all, ...spine ? { spine } : {} };
+  return { placed, boxes, summaries, callouts, notes, bounds: all, ...spine ? { spine } : {}, ...nestedSpines.length ? { spines: nestedSpines } : {} };
 }
 function layoutMap(root, measure, opts, measureSummary, measureCallout, measureNote) {
   const floats = root.parent ? [] : visibleChildren(root).filter((c) => c.float);
@@ -6050,13 +6916,19 @@ function layoutMap(root, measure, opts, measureSummary, measureCallout, measureN
   const structure = opts.structure === "org-down" || opts.structure === "tree-right" ? opts.structure : "logic-right";
   let bounds = main.bounds;
   for (const f of floats) {
-    const sub = layoutTree(f, measure, { ...opts, structure, gapRoot: opts.gapLevel, gapMain: opts.gapSibling }, measureSummary, void 0, measureCallout, measureNote);
-    const mirror = opts.structure === "mindmap" && f.float.x < 0;
+    const left = opts.structure === "mindmap" && f.float.x < 0;
+    const own = f.layout ? branchStructure(f.layout, left) : null;
+    const sub = layoutTree(f, measure, own ? branchOptions(opts, own) : { ...opts, structure, gapRoot: opts.gapLevel, gapMain: opts.gapSibling }, measureSummary, void 0, measureCallout, measureNote);
+    const mirror = !own && left;
     const dx = f.float.x;
     const dy = f.float.y;
     const mx = (x2, w) => (mirror ? -(x2 + w) : x2) + dx;
     const flip = (side) => mirror && side === "right" ? "left" : side;
-    for (const p of sub.placed.values()) main.placed.set(p.node.id, { ...p, x: mx(p.x, p.w), y: p.y + dy, side: flip(p.side) });
+    const mapX = (x2) => (mirror ? -x2 : x2) + dx;
+    for (const p of sub.placed.values()) {
+      main.placed.set(p.node.id, { ...p, x: mx(p.x, p.w), y: p.y + dy, side: flip(p.side), ...p.bone ? { bone: moveSeg(p.bone, mapX, dy) } : {}, ...own && p.node === f ? { toggle: own.toggle } : {} });
+    }
+    for (const sp of allSpines(sub)) (main.spines ?? (main.spines = [])).push(moveSpine(sp, mapX, dy));
     for (const b2 of sub.boxes) main.boxes.push({ ...b2, x: mx(b2.x, b2.w), y: b2.y + dy, side: flip(b2.side) });
     for (const c of sub.callouts) main.callouts.push({ ...c, x: mx(c.x, c.w), y: c.y + dy });
     for (const c of sub.notes) main.notes.push({ ...c, x: mx(c.x, c.w), y: c.y + dy });
@@ -6319,6 +7191,18 @@ function formatSpans(text) {
     scan(line, offset, out);
     offset += line.length + 1;
   }
+  if (text.includes("\n")) {
+    const flat = text.replace(/\n/g, "\0");
+    for (const m of flat.matchAll(TOKEN_RE)) {
+      const g = GROUPS.find((x) => m[x.group] !== void 0);
+      if (!g?.html || !m[0].includes("\0")) continue;
+      const from = m.index ?? 0;
+      const to = from + m[0].length;
+      const innerTo = to - g.close;
+      out.push({ kind: g.kind, from, to, innerFrom: innerTo - m[g.group].length, innerTo, ...g.colorGroup ? { color: m[g.colorGroup] } : {}, html: true });
+    }
+    out.sort((x, y) => x.from - y.from || y.to - x.to);
+  }
   return out;
 }
 function scan(text, offset, out) {
@@ -6494,37 +7378,53 @@ function setCustomMarkers(emojis, exclusive) {
 }
 function splitMarkers(text) {
   const markers = [];
-  let rest = text;
+  const lead = TASK_LEAD.exec(text);
+  let rest = lead ? text.slice(lead[0].length) : text;
   for (; ; ) {
     const hit = ALL_MARKERS.find((m) => rest.startsWith(m));
     if (!hit) break;
     markers.push(hit);
     rest = rest.slice(hit.length).replace(/^\s+/, "");
   }
+  if (lead) rest = markers.length ? lead[0] + rest : text;
   return { markers, rest };
+}
+var TASK_LEAD = /^\[( |x|X)\]\s+/;
+function joinMarkers(markers, rest) {
+  const task = markers.length ? TASK_LEAD.exec(rest) : null;
+  if (task) return [task[0].trimEnd(), ...markers, rest.slice(task[0].length)].filter(Boolean).join(" ");
+  return [...markers, rest].filter(Boolean).join(" ");
 }
 function toggleMarker(text, emoji) {
   const { markers, rest } = splitMarkers(text);
-  const group = MARKER_GROUPS.find((g) => g.emojis.includes(emoji));
+  const group2 = MARKER_GROUPS.find((g) => g.emojis.includes(emoji));
   let next;
   if (markers.includes(emoji)) next = markers.filter((m) => m !== emoji);
-  else if (group?.exclusive) next = [...markers.filter((m) => !group.emojis.includes(m)), emoji];
+  else if (group2?.exclusive) next = [...markers.filter((m) => !group2.emojis.includes(m)), emoji];
   else next = [...markers, emoji];
   next.sort((a, b) => ALL_MARKERS.indexOf(a) - ALL_MARKERS.indexOf(b));
-  return [...next, rest].filter(Boolean).join(" ");
+  return joinMarkers(next, rest);
 }
 function isAnswer(text) {
   return splitMarkers(text).markers.includes(ANSWER_MARKER);
 }
 var TASK_RE = /^\[( |x|X)\]\s+/;
 function toggleTask(text, mode = "check") {
+  const flip = (box) => box === " " ? "[x]" : "[ ]";
+  const lead = TASK_RE.exec(text);
+  if (lead) {
+    const after = text.slice(lead[0].length);
+    return mode === "add-remove" ? after : `${flip(lead[1])} ${after}`;
+  }
   const { markers, rest } = splitMarkers(text);
   const m = TASK_RE.exec(rest);
-  let body;
-  if (!m) body = `[ ] ${rest}`;
-  else if (mode === "add-remove") body = rest.slice(m[0].length);
-  else body = `${m[1] === " " ? "[x]" : "[ ]"} ${rest.slice(m[0].length)}`;
-  return [...markers, body].join(" ");
+  if (!m) return `[ ] ${text}`;
+  const body = rest.slice(m[0].length);
+  if (mode === "add-remove") {
+    const glue = /^[\p{Extended_Pictographic}\p{Emoji_Presentation}]/u.test(body);
+    return markers.join(" ") + (glue ? "" : " ") + body;
+  }
+  return [...markers, `${flip(m[1])} ${body}`].join(" ");
 }
 function taskState(text) {
   const m = TASK_RE.exec(splitMarkers(text).rest);
@@ -6651,10 +7551,31 @@ function renderInline(el, text, opts = {}) {
     if (i > 0) el.appendChild(createEl("br"));
     renderSegment(el, seg, opts);
   });
+  el.classList.toggle("has-done-task", !!el.querySelector(":scope > .mm-task.is-done"));
 }
 function renderSegment(el, text, opts, nested = false) {
   let rest = text;
+  const taskBox = (task2) => {
+    const box = createSpan();
+    box.className = "mm-task" + (task2[1] === " " ? "" : " is-done");
+    box.title = t("inline.toggleTask");
+    box.addEventListener("pointerdown", (ev) => ev.stopPropagation());
+    box.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      opts.onTaskToggle?.(ev);
+    });
+    el.appendChild(box);
+  };
+  let leadTask = null;
   if (!nested && el.childElementCount === 0) {
+    const lead = /^\[( |x|X)\]\s+/.exec(rest);
+    if (lead && splitMarkers(rest).markers.length) {
+      leadTask = lead;
+      taskBox(lead);
+      rest = rest.slice(lead[0].length);
+    }
+  }
+  if (!nested && (el.childElementCount === 0 || leadTask)) {
     const { markers, rest: afterMarkers } = splitMarkers(rest);
     if (markers.length) {
       const span = createSpan();
@@ -6664,17 +7585,9 @@ function renderSegment(el, text, opts, nested = false) {
       rest = afterMarkers;
     }
   }
-  const task = nested ? null : /^\[( |x|X)\]\s+/.exec(rest);
+  const task = nested || leadTask ? null : /^\[( |x|X)\]\s+/.exec(rest);
   if (task) {
-    const box = createSpan();
-    box.className = "mm-task" + (task[1] === " " ? "" : " is-done");
-    box.title = t("inline.toggleTask");
-    box.addEventListener("pointerdown", (ev) => ev.stopPropagation());
-    box.addEventListener("click", (ev) => {
-      ev.stopPropagation();
-      opts.onTaskToggle?.(ev);
-    });
-    el.appendChild(box);
+    taskBox(task);
     rest = rest.slice(task[0].length);
   }
   let last = 0;
@@ -6696,6 +7609,7 @@ function renderSegment(el, text, opts, nested = false) {
       const href = internal ? noteHref(m[9]) : m[9];
       const a = link("", href, internal, opts);
       renderSegment(a, m[8], opts, true);
+      if (a.querySelector(".mm-color")) a.classList.add("has-color");
       el.appendChild(a);
     } else if (m[10] !== void 0 || m[11] !== void 0) {
       el.appendChild(nest("strong", m[10] ?? m[11], opts));
@@ -6790,6 +7704,34 @@ function setFrameSize(text, size) {
   attrs2 = `width="${w}" height="${h}"${attrs2.startsWith(" ") ? "" : " "}${attrs2}`.trimEnd();
   return text.slice(0, m.index) + `<iframe ${attrs2}>${m[2] ?? ""}` + text.slice(m.index + m[0].length);
 }
+var MAP_MIN_W = 160;
+var MAP_MAX_W = 1200;
+var MAP_MIN_H = 100;
+var MAP_MAX_H = 900;
+var MAP_DEFAULT_W = 320;
+var MAP_DEFAULT_H = 200;
+function mapSize(param) {
+  const p = (param ?? "").trim();
+  const clampW = (v) => Math.max(MAP_MIN_W, Math.min(MAP_MAX_W, Math.round(v)));
+  const clampH = (v) => Math.max(MAP_MIN_H, Math.min(MAP_MAX_H, Math.round(v)));
+  const both = /^(\d+)\s*[x×]\s*(\d+)$/i.exec(p);
+  if (both) return { w: clampW(Number(both[1])), h: clampH(Number(both[2])) };
+  if (/^\d+$/.test(p)) {
+    const w = clampW(Number(p));
+    return { w, h: clampH(w * 5 / 8) };
+  }
+  return { w: MAP_DEFAULT_W, h: MAP_DEFAULT_H };
+}
+function setMapSize(text, link2, size) {
+  const re = /!\[\[([^\]|]+)(?:\|([^\]]*))?\]\]/g;
+  for (const m of text.matchAll(re)) {
+    if (m[1].trim() !== link2.trim()) continue;
+    const param = size ? `|${Math.round(size.w)}x${Math.round(size.h)}` : "";
+    const idx = m.index ?? 0;
+    return text.slice(0, idx) + `![[${m[1]}${param}]]` + text.slice(idx + m[0].length);
+  }
+  return text;
+}
 var FRAME_TAG_RE = /<iframe\s([^>]*?)\/?>(\s*<\/iframe>)?/i;
 var FRAME_MIN = 80;
 var FRAME_MAX = 1200;
@@ -6883,6 +7825,10 @@ function image(link2, param, alt, opts) {
   if (isPdfCrop(link2)) return pdfCrop(link2, param, opts);
   const kind = mediaKind(link2);
   if (kind) return media(kind, link2, param, alt, opts);
+  if (opts.mapPreview && mayBeMap(link2)) {
+    const preview2 = opts.mapPreview(link2, param);
+    if (preview2) return preview2;
+  }
   const src = opts.resolveImage ? opts.resolveImage(link2) : /^https?:\/\//.test(link2) ? link2 : null;
   if (!src) return wrap("span", alt || link2);
   const img = createEl("img");
@@ -6901,6 +7847,13 @@ function image(link2, param, alt, opts) {
     opts.onImageLoad?.();
   });
   return img;
+}
+var IMAGE_EXT_RE = /\.(png|jpe?g|gif|webp|svg|bmp|avif|ico|tiff?|heic)$/i;
+function mayBeMap(link2) {
+  const path = link2.split(/[#|]/)[0].trim();
+  if (!path || /^[a-z][\w+.-]*:/i.test(path)) return false;
+  if (IMAGE_EXT_RE.test(path) || mediaKind(path) || /\.pdf$/i.test(path)) return false;
+  return !/\.[a-z0-9]+$/i.test(path) || /\.(md|xmind)$/i.test(path);
 }
 function isPdfCrop(link2) {
   return /\.pdf#/i.test(link2) && /[#&]rect=/i.test(link2);
@@ -7122,6 +8075,118 @@ function noteCardParts(note, mode) {
   return parts;
 }
 
+// src/format-apply.ts
+function applyFormat(text, start, end, fmt2) {
+  return fmt2.kind === "clear" ? clearFormat(text, start, end) : applyInlineFormat(text, start, end, fmt2);
+}
+function clearFormat(text, start, end) {
+  let r3 = clearOnce(text, start, end);
+  for (let i = 0; i < 4 && r3.text !== text && r3.start < r3.end; i++) {
+    text = r3.text;
+    const next = clearOnce(text, r3.start, r3.end);
+    if (next.text === text) break;
+    r3 = next;
+  }
+  return r3;
+}
+function clearOnce(text, start, end) {
+  let [s, e] = start === end ? [0, text.length] : [Math.min(start, end), Math.max(start, end)];
+  const spans = formatSpans(text).filter((x) => x.kind !== "code");
+  for (const x of spans) {
+    if (s > x.from && s < x.innerFrom) s = x.from;
+    if (s > x.innerTo && s < x.to) s = x.innerTo;
+    if (e > x.from && e < x.innerFrom) e = x.innerFrom;
+    if (e > x.innerTo && e < x.to) e = x.to;
+  }
+  if (s >= e) return { text, start, end };
+  for (const ch of ["*", "_"]) {
+    let a = 0;
+    let b = 0;
+    while (s - a - 1 >= 0 && text[s - a - 1] === ch) a++;
+    while (e + b < text.length && text[e + b] === ch) b++;
+    const n = Math.min(a, b);
+    s -= n;
+    e += n;
+  }
+  for (let moved = true; moved; ) {
+    moved = false;
+    for (const x of spans) {
+      if (x.innerFrom === s && x.from < s && x.innerTo <= e) {
+        s = x.from;
+        moved = true;
+      }
+      if (x.innerTo === e && x.to > e && x.innerFrom >= s) {
+        e = x.to;
+        moved = true;
+      }
+    }
+  }
+  const hit = spans.filter((x) => s < x.innerTo && e > x.innerFrom);
+  if (!hit.length) return { text, start, end };
+  const closeAtS = [];
+  const openAtE = [];
+  const del = [];
+  for (const x of hit) {
+    if (x.innerFrom < s) closeAtS.push(x);
+    else del.push([x.from, x.innerFrom]);
+    if (x.innerTo > e) openAtE.push(x);
+    else del.push([x.innerTo, x.to]);
+  }
+  closeAtS.sort((a, b) => b.from - a.from);
+  openAtE.sort((a, b) => a.from - b.from);
+  const closers = closeAtS.map((x) => text.slice(x.innerTo, x.to)).join("");
+  const openers = openAtE.map((x) => text.slice(x.from, x.innerFrom)).join("");
+  const gone = (i) => del.some(([a, b]) => i >= a && i < b);
+  let out = "";
+  let ns = -1;
+  let ne = -1;
+  for (let i = 0; i <= text.length; i++) {
+    if (i === s) {
+      out += closers;
+      ns = out.length;
+    }
+    if (i === e) {
+      ne = out.length;
+      out += openers;
+    }
+    if (i < text.length && !gone(i)) out += text[i];
+  }
+  return { text: out, start: ns, end: ne };
+}
+
+// src/note-lines.ts
+var LINE_PREFIX = /^[ \t]*(?:(?:>[ \t]?)+)?(?:[-*+][ \t]+(?:\[[ xX]\][ \t]+)?|\d+[.)][ \t]+|#{1,6}[ \t]+)?/;
+function formatLines(text, from, to, fmt2) {
+  const [a, b] = [Math.min(from, to), Math.max(from, to)];
+  if (a === b) return null;
+  const lines = text.split("\n");
+  const out = [];
+  let pos = 0;
+  let newPos = 0;
+  let start = -1;
+  let end = -1;
+  for (const line of lines) {
+    const lineEnd = pos + line.length;
+    let next = line;
+    if (lineEnd >= a && pos <= b) {
+      const prefix = LINE_PREFIX.exec(line)?.[0].length ?? 0;
+      const s = Math.max(a - pos, prefix);
+      const e = Math.min(b - pos, line.length);
+      if (s < e && line.slice(s, e).trim()) {
+        const r3 = applyFormat(line, s, e, fmt2);
+        next = r3.text;
+        if (start < 0) start = newPos + r3.start;
+        end = newPos + r3.end;
+      }
+    }
+    out.push(next);
+    pos = lineEnd + 1;
+    newPos += next.length + 1;
+  }
+  if (start < 0) return null;
+  return { text: out.join("\n"), start, end };
+}
+
 // src/format-bar.ts
 function colorTitle(color) {
   return color === THEME_HIGHLIGHT ? t("palette.themeHighlight") : color;
@@ -7288,19 +8353,19 @@ function createFormatBar(doc, o) {
 }
 
 // src/inline-editor.ts
-var import_state2 = require("@codemirror/state");
-var import_view3 = require("@codemirror/view");
+var import_state3 = require("@codemirror/state");
+var import_view4 = require("@codemirror/view");
 var import_commands = require("@codemirror/commands");
 
 // src/cm-format.ts
-var import_state = require("@codemirror/state");
-var import_view = require("@codemirror/view");
-var hideAll = import_state.Facet.define({ combine: (v) => v.some(Boolean) });
+var import_state2 = require("@codemirror/state");
+var import_view2 = require("@codemirror/view");
+var hideAll = import_state2.Facet.define({ combine: (v) => v.some(Boolean) });
 function hiddenSpans(state) {
   const all = state.facet(hideAll);
   return formatSpans(state.doc.toString()).filter((s) => all || !revealed(s, state.selection.ranges));
 }
-var keepMarksPaired = import_state.EditorState.transactionFilter.of((tr) => {
+var keepMarksPaired = import_state2.EditorState.transactionFilter.of((tr) => {
   if (!tr.docChanged || !(tr.isUserEvent("delete") || tr.isUserEvent("input.type") || tr.isUserEvent("input.paste"))) return tr;
   const st = tr.startState;
   if (st.selection.ranges.length > 1) return tr;
@@ -7315,8 +8380,8 @@ var keepMarksPaired = import_state.EditorState.transactionFilter.of((tr) => {
     hidden,
     edits,
     backward,
-    (p) => (0, import_state.findClusterBreak)(text, p, false),
-    (p) => (0, import_state.findClusterBreak)(text, p, true)
+    (p) => (0, import_state2.findClusterBreak)(text, p, false),
+    (p) => (0, import_state2.findClusterBreak)(text, p, true)
   );
   if (!fixed) return tr;
   if (!fixed.length) return [];
@@ -7324,27 +8389,27 @@ var keepMarksPaired = import_state.EditorState.transactionFilter.of((tr) => {
   const first = fixed[0];
   return {
     changes,
-    selection: import_state.EditorSelection.cursor(changes.mapPos(first.from, -1) + first.insert.length),
-    userEvent: tr.annotation(import_state.Transaction.userEvent),
+    selection: import_state2.EditorSelection.cursor(changes.mapPos(first.from, -1) + first.insert.length),
+    userEvent: tr.annotation(import_state2.Transaction.userEvent),
     scrollIntoView: tr.scrollIntoView
   };
 });
-var HIDE = import_view.Decoration.replace({});
-var prefixFacet = import_state.Facet.define({ combine: (v) => v[0] ?? "mm-ed" });
+var HIDE = import_view2.Decoration.replace({});
+var prefixFacet = import_state2.Facet.define({ combine: (v) => v[0] ?? "mm-ed" });
 var marksCache = /* @__PURE__ */ new Map();
 function marksFor(prefix) {
   let m = marksCache.get(prefix);
   if (!m) {
-    const d = (k) => import_view.Decoration.mark({ class: `${prefix}-${k}` });
+    const d = (k) => import_view2.Decoration.mark({ class: `${prefix}-${k}` });
     m = { syntax: d("syntax"), kinds: { strong: d("strong"), em: d("em"), mark: d("mark"), del: d("del"), code: d("code"), u: d("u") } };
     marksCache.set(prefix, m);
   }
   return m;
 }
 function contentMark(span, prefix) {
-  if (span.kind === "color") return import_view.Decoration.mark({ attributes: { style: `color: ${span.color}` } });
-  if (span.highlight) return import_view.Decoration.mark({ class: `${prefix}-mark`, attributes: { "data-highlight": span.highlight } });
-  if (span.kind === "bg") return import_view.Decoration.mark({ class: `${prefix}-mark`, attributes: { style: `background: ${span.color}` } });
+  if (span.kind === "color") return import_view2.Decoration.mark({ attributes: { style: `color: ${span.color}` } });
+  if (span.highlight) return import_view2.Decoration.mark({ class: `${prefix}-mark`, attributes: { "data-highlight": span.highlight } });
+  if (span.kind === "bg") return import_view2.Decoration.mark({ class: `${prefix}-mark`, attributes: { style: `background: ${span.color}` } });
   return marksFor(prefix).kinds[span.kind];
 }
 function build(state) {
@@ -7363,26 +8428,48 @@ function build(state) {
       atomic.push(...marks);
     }
   }
-  return { deco: import_view.Decoration.set(deco, true), atomic: import_view.Decoration.set(atomic, true) };
+  return { deco: import_view2.Decoration.set(deco, true), atomic: import_view2.Decoration.set(atomic, true) };
 }
-var livePreview = import_view.ViewPlugin.fromClass(
+var dragEnded = import_state2.StateEffect.define();
+var livePreview = import_view2.ViewPlugin.fromClass(
   class {
     constructor(view) {
+      this.view = view;
+      /**
+       * 按着鼠标拖选中。这期间选区变了也不改标记的显隐（#45）：拖到刚好把一段 **加粗** 整个包住时标记会藏起来，
+       * 后面的字往左挪，CodeMirror 按鼠标位置重算选区又没包住、标记露出来、字又挪回去……一直来回闪。松手再更新
+       */
+      this.dragging = false;
+      this.onDown = (ev) => {
+        if (ev.button === 0) this.dragging = true;
+      };
+      this.onUp = () => {
+        if (!this.dragging) return;
+        this.dragging = false;
+        queueMicrotask(() => this.view.dom.isConnected && this.view.dispatch({ effects: dragEnded.of(null) }));
+      };
       ({ deco: this.deco, atomic: this.atomic } = build(view.state));
+      view.contentDOM.addEventListener("mousedown", this.onDown);
+      view.dom.ownerDocument.addEventListener("mouseup", this.onUp, true);
     }
     update(update) {
-      if (update.docChanged || update.selectionSet) ({ deco: this.deco, atomic: this.atomic } = build(update.state));
+      const ended = update.transactions.some((tr) => tr.effects.some((e) => e.is(dragEnded)));
+      if (update.docChanged || ended || update.selectionSet && !this.dragging) ({ deco: this.deco, atomic: this.atomic } = build(update.state));
+    }
+    destroy() {
+      this.view.contentDOM.removeEventListener("mousedown", this.onDown);
+      this.view.dom.ownerDocument.removeEventListener("mouseup", this.onUp, true);
     }
   },
   {
     decorations: (v) => v.deco,
-    provide: (plugin) => import_view.EditorView.atomicRanges.of((view) => view.plugin(plugin)?.atomic ?? import_view.Decoration.none)
+    provide: (plugin) => import_view2.EditorView.atomicRanges.of((view) => view.plugin(plugin)?.atomic ?? import_view2.Decoration.none)
   }
 );
 function formatPreview(prefix, hideAllSyntax) {
   return [prefixFacet.of(prefix), hideAll.of(hideAllSyntax), livePreview, keepMarksPaired, balancedCopy];
 }
-var balancedCopy = import_view.EditorView.domEventHandlers({
+var balancedCopy = import_view2.EditorView.domEventHandlers({
   copy: (ev, view) => copySel(ev, view, false),
   cut: (ev, view) => copySel(ev, view, true)
 });
@@ -7434,7 +8521,7 @@ function visibleSelection(view) {
 }
 
 // src/scroll-inside.ts
-var import_view2 = require("@codemirror/view");
+var import_view3 = require("@codemirror/view");
 function scrollWithin(scroller, el, block = "center") {
   const s = scroller.getBoundingClientRect();
   const r3 = el.getBoundingClientRect();
@@ -7473,7 +8560,7 @@ function scrollEditorLineToCenter(cm, line) {
   }, 16);
 }
 function scrollInsideEditor() {
-  const facet = import_view2.EditorView.scrollHandler;
+  const facet = import_view3.EditorView.scrollHandler;
   if (!facet) return [];
   return facet.of((view, range) => {
     const c = view.coordsAtPos(range.head);
@@ -7506,17 +8593,17 @@ var InlineEditor = class {
     const later = (fn) => fn && queueMicrotask(() => !this.destroyed && fn());
     host.replaceChildren();
     host.classList.add("mm-has-editor");
-    this.view = new import_view3.EditorView({
+    this.view = new import_view4.EditorView({
       parent: host,
       // 独立窗口里的画布：编辑器要挂在那个窗口的 document 上
       root: host.ownerDocument,
-      state: import_state2.EditorState.create({
+      state: import_state3.EditorState.create({
         doc: text,
-        selection: opts.selectAll ? import_state2.EditorSelection.single(0, text.length) : import_state2.EditorSelection.cursor(text.length),
+        selection: opts.selectAll ? import_state3.EditorSelection.single(0, text.length) : import_state3.EditorSelection.cursor(text.length),
         extensions: [
           // 宿主的按键（回车提交、Esc、Tab、链接补全的上下键……）排在编辑器自己的按键前面
-          import_state2.Prec.highest(
-            import_view3.EditorView.domEventHandlers({
+          import_state3.Prec.highest(
+            import_view4.EditorView.domEventHandlers({
               keydown: (ev) => !!opts.onKey?.(ev),
               paste: (ev) => {
                 if (opts.onPaste?.(ev) || this.pasteLink(ev)) {
@@ -7527,19 +8614,19 @@ var InlineEditor = class {
               }
             })
           ),
-          import_view3.EditorView.inputHandler.of((_view, from, to, insert) => !!opts.onInput?.(from, to, insert)),
+          import_view4.EditorView.inputHandler.of((_view, from, to, insert) => !!opts.onInput?.(from, to, insert)),
           (0, import_commands.history)(),
           // 回车归宿主（提交）；能换行的用 Shift+Enter
-          import_view3.keymap.of([...opts.multiline ? [{ key: "Shift-Enter", run: insertFormatBreak }] : [], ...import_commands.historyKeymap, ...import_commands.defaultKeymap.filter((b) => b.key !== "Enter")]),
-          import_view3.EditorView.lineWrapping,
+          import_view4.keymap.of([...opts.multiline ? [{ key: "Shift-Enter", run: insertFormatBreak }] : [], ...import_commands.historyKeymap, ...import_commands.defaultKeymap.filter((b) => b.key !== "Enter")]),
+          import_view4.EditorView.lineWrapping,
           scrollInsideEditor(),
           ...formatPreview("mm-ed", !!opts.hideSyntax),
-          ...opts.placeholder ? [(0, import_view3.placeholder)(opts.placeholder)] : [],
-          import_view3.EditorView.updateListener.of((update) => {
+          ...opts.placeholder ? [(0, import_view4.placeholder)(opts.placeholder)] : [],
+          import_view4.EditorView.updateListener.of((update) => {
             if (update.docChanged) later(opts.onChange);
             if (update.docChanged || update.selectionSet) later(opts.onSelect);
           }),
-          import_view3.EditorView.domEventHandlers({
+          import_view4.EditorView.domEventHandlers({
             // 组字中途不处理（Windows 输入法打「【」也走组字，中途把【【换成 [[ 会被输入法再补一个【），结束时补一次
             compositionend: () => {
               later(opts.onChange);
@@ -7557,6 +8644,19 @@ var InlineEditor = class {
         ]
       })
     });
+    if (opts.multiline && host.ownerDocument.body.classList.contains("is-android")) {
+      this.view.dom.addEventListener(
+        "keydown",
+        (ev) => {
+          if (ev.key !== "Enter" || !ev.shiftKey || ev.isComposing || ev.keyCode === 229) return;
+          ev.stopPropagation();
+          const handled = !!opts.onKey?.(ev);
+          ev.preventDefault();
+          if (!handled) insertFormatBreak(this.view);
+        },
+        true
+      );
+    }
     this.view.focus();
   }
   get text() {
@@ -7615,13 +8715,13 @@ var InlineEditor = class {
     return this.view.composing;
   }
   select(from, to = from) {
-    this.view.dispatch({ selection: import_state2.EditorSelection.single(from, to) });
+    this.view.dispatch({ selection: import_state3.EditorSelection.single(from, to) });
   }
   /** 把 [from, to) 换成 insert，换完选中 [selFrom, selTo)；进撤销历史，⌘Z 能撤回 */
   replace(from, to, insert, selFrom, selTo = selFrom) {
     this.view.dispatch({
       changes: { from, to, insert },
-      selection: import_state2.EditorSelection.single(selFrom, selTo),
+      selection: import_state3.EditorSelection.single(selFrom, selTo),
       userEvent: "input",
       scrollIntoView: false
     });
@@ -7752,7 +8852,7 @@ function tierRules(sel, t3, depth, theme, dark) {
       `${node} { font-size: calc(${t3.fontSize}px * var(--mm-font-scale, 1)); font-weight: ${t3.bold ? 600 : 400}; font-style: ${t3.italic ? "italic" : "normal"}; }`,
       `${node}:not(.is-underline) { border-radius: ${t3.radius}px; border: ${border}; }`
     );
-    if (t3.maxWidth) out.push(`${node}:not(.has-width) { max-width: ${t3.maxWidth}px; }`);
+    if (t3.maxWidth) out.push(`${node}:not(.has-width):not(.has-table) { max-width: ${t3.maxWidth}px; }`);
   } else if (t3.borderStyle !== "none" && !t3.underline) {
     out.push(`${node}:not(.is-underline) { border-color: ${col(t3.borderColor, "stroke")}; }`);
   }
@@ -8641,16 +9741,16 @@ function parseDate(s) {
   const m = DATE_RE.exec(s.trim());
   if (!m) return null;
   const y = Number(m[1]);
-  const mo = Number(m[3]);
+  const mo2 = Number(m[3]);
   const d = Number(m[4]);
-  const t3 = Date.UTC(y, mo - 1, d);
+  const t3 = Date.UTC(y, mo2 - 1, d);
   const back = new Date(t3);
-  if (back.getUTCMonth() !== mo - 1 || back.getUTCDate() !== d) return null;
+  if (back.getUTCMonth() !== mo2 - 1 || back.getUTCDate() !== d) return null;
   return { t: t3, sep: m[2], pad: m[3].length === 2 };
 }
-function fmtDate(t3, sep, pad) {
+function fmtDate(t3, sep, pad2) {
   const d = new Date(t3);
-  const p = (n) => pad ? String(n).padStart(2, "0") : String(n);
+  const p = (n) => pad2 ? String(n).padStart(2, "0") : String(n);
   return `${d.getUTCFullYear()}${sep}${p(d.getUTCMonth() + 1)}${sep}${p(d.getUTCDate())}`;
 }
 function fillSeries(source, count, backward = false, copy = false) {
@@ -8715,6 +9815,345 @@ function fillSeries(source, count, backward = false, copy = false) {
   return out;
 }
 
+// src/table/core/coltype.ts
+var WRAP_RE = /^(\*\*|__|\*|_|==|~~|`)(.*)\1$/;
+var NUM_RE2 = /^([+-])?([¥$€£])?([+-])?(\d[\d,]*(?:\.\d+)?|\.\d+)(%)?$/;
+function readNumber(text) {
+  let s = text.trim();
+  let wrap2 = "";
+  const w = WRAP_RE.exec(s);
+  if (w) {
+    wrap2 = w[1];
+    s = w[2];
+  }
+  s = s.replace(/[\s，]/g, "");
+  const m = NUM_RE2.exec(s);
+  if (!m || m[1] && m[3]) return null;
+  const digits = m[4].replace(/,/g, "");
+  if (!/^\d*\.?\d+$/.test(digits)) return null;
+  const neg = (m[1] ?? m[3]) === "-";
+  const i = digits.indexOf(".");
+  return { shown: (neg ? -1 : 1) * Number(digits), places: i < 0 ? 0 : digits.length - i - 1, pct: !!m[5], wrap: wrap2 };
+}
+function group(int) {
+  return int.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+function formatNumber(v, f, places) {
+  if (!Number.isFinite(v)) return "";
+  const shown = f.p ? v * 100 : v;
+  return writeShown(shown, f, places);
+}
+function writeShown(shown, f, places) {
+  let body;
+  if (places === null) {
+    const r3 = Math.round(Math.abs(shown) * 100) / 100;
+    body = Number.isInteger(r3) ? String(r3) : r3.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
+  } else body = Math.abs(shown).toFixed(places);
+  if (/e/i.test(body)) return String(shown);
+  const neg = shown < 0 && !/^0(\.0+)?$/.test(body);
+  const [int, dec] = body.split(".");
+  const num2 = (f.g ? group(int) : int) + (dec !== void 0 ? "." + dec : "");
+  return (neg ? "-" : "") + (f.u ?? "") + num2 + (f.p ? "%" : "");
+}
+function reformatNumber(text, f) {
+  const n = readNumber(text);
+  if (!n) return text;
+  let shown = n.shown;
+  let places = n.places;
+  if (!f.p && n.pct) {
+    shown = n.shown / 100;
+    places += 2;
+    const s = shown.toFixed(places).replace(/0+$/, "");
+    places = s.includes(".") ? s.length - s.indexOf(".") - 1 : 0;
+  }
+  const d = f.d === void 0 ? places : Math.max(f.d, places);
+  return n.wrap + writeShown(shown, f, d) + n.wrap;
+}
+function validYmd(y, m, d) {
+  if (m < 1 || m > 12 || d < 1 || y < 1e3 || y > 9999) return false;
+  const back = new Date(Date.UTC(y, m - 1, d));
+  return back.getUTCMonth() === m - 1 && back.getUTCDate() === d;
+}
+var DATE_RE2 = /(\d{4})[-/.年](\d{1,2})[-/.月](\d{1,2})日?/;
+var ONLY_DATE_RE = /^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})$/;
+var LINK_RE = /^\[\[([^\]|#^]+)(?:[|#^][^\]]*)?\]\]$/;
+function readDate(text, parseNote) {
+  const s = text.trim();
+  const link2 = LINK_RE.exec(s);
+  if (link2 && parseNote) {
+    const name = link2[1].split("/").pop() ?? link2[1];
+    const p = parseNote(name);
+    if (p) return p;
+  }
+  const m = DATE_RE2.exec(s);
+  if (!m) return null;
+  const v = { y: +m[1], m: +m[2], d: +m[3] };
+  return validYmd(v.y, v.m, v.d) ? v : null;
+}
+var pad = (n) => String(n).padStart(2, "0");
+var isoDate = (v) => `${v.y}-${pad(v.m)}-${pad(v.d)}`;
+function writeDate(v, f, noteName) {
+  if (f === "slash") return `${v.y}/${pad(v.m)}/${pad(v.d)}`;
+  if (f === "link") return `[[${noteName ? noteName(v) : isoDate(v)}]]`;
+  return isoDate(v);
+}
+function reformatDate(text, f) {
+  if (f === "link") return text;
+  const m = ONLY_DATE_RE.exec(text.trim());
+  if (!m || !validYmd(+m[1], +m[2], +m[3])) return text;
+  return writeDate({ y: +m[1], m: +m[2], d: +m[3] }, f);
+}
+var RELATIVE_DAYS = { \u524D\u5929: -2, \u6628\u5929: -1, \u4ECA\u5929: 0, \u660E\u5929: 1, \u540E\u5929: 2, yesterday: -1, today: 0, tomorrow: 1 };
+function parseLooseDate(text, today) {
+  const s = text.trim().toLowerCase();
+  if (s in RELATIVE_DAYS) {
+    const d = new Date(Date.UTC(today.y, today.m - 1, today.d + RELATIVE_DAYS[s]));
+    return { y: d.getUTCFullYear(), m: d.getUTCMonth() + 1, d: d.getUTCDate() };
+  }
+  let m = /^(\d{4})\s*(?:[-/.]\s*(\d{1,2})\s*[-/.]|年\s*(\d{1,2})\s*月)\s*(\d{1,2})\s*(?:日|号)?$/.exec(s);
+  let v = m ? { y: +m[1], m: +(m[2] ?? m[3]), d: +m[4] } : null;
+  if (!v && (m = /^(\d{4})(\d{2})(\d{2})$/.exec(s))) v = { y: +m[1], m: +m[2], d: +m[3] };
+  if (!v && (m = /^(\d{1,2})\s*(?:[-/.]|月)\s*(\d{1,2})\s*(?:日|号)?$/.exec(s))) v = { y: today.y, m: +m[1], d: +m[2] };
+  return v && validYmd(v.y, v.m, v.d) ? v : null;
+}
+function readProgress(text) {
+  const s = text.trim().replace(/\s/g, "");
+  const frac = /^(\d+(?:\.\d+)?)\/(\d+(?:\.\d+)?)$/.exec(s);
+  if (frac) return +frac[2] > 0 ? +frac[1] / +frac[2] : null;
+  const n = readNumber(s);
+  if (!n || n.wrap) return null;
+  if (n.pct) return n.shown / 100;
+  if (n.places > 0 && Math.abs(n.shown) <= 1) return n.shown;
+  return n.shown / 100;
+}
+var TAG_SEP = /[,，、]/;
+function splitTags(text) {
+  const out = [];
+  for (const x of text.split(TAG_SEP)) {
+    const v = x.trim();
+    if (v && !out.includes(v)) out.push(v);
+  }
+  return out;
+}
+function joinTags(tags) {
+  return tags.join(", ");
+}
+
+// src/table/core/formula.ts
+var FX_FUNCS = ["SUM", "AVG", "MIN", "MAX", "ROUND"];
+var WIDE = { "\uFF08": "(", "\uFF09": ")", "\uFF0C": ",", "\xD7": "*", "\xF7": "/", "\uFF0B": "+", "\uFF0D": "-", "\u2212": "-", "\uFF0A": "*", "\uFF0F": "/", "\uFF5B": "{", "\uFF5D": "}" };
+function tokenize2(src) {
+  const s = src.replace(/[（），×÷＋－−＊／｛｝]/g, (ch) => WIDE[ch]);
+  const out = [];
+  let i = 0;
+  while (i < s.length) {
+    const ch = s[i];
+    if (/\s/.test(ch)) {
+      i++;
+      continue;
+    }
+    if (ch === "{") {
+      const j = s.indexOf("}", i + 1);
+      if (j < 0) throw new FxFail({ code: "brace" });
+      const name = s.slice(i + 1, j).trim();
+      if (!name || name.includes("{")) throw new FxFail({ code: "brace" });
+      out.push({ t: "ref", name });
+      i = j + 1;
+      continue;
+    }
+    if (ch === "}") throw new FxFail({ code: "brace" });
+    const num2 = /^(\d+(\.\d+)?|\.\d+)/.exec(s.slice(i));
+    if (num2) {
+      out.push({ t: "num", v: Number(num2[1]) });
+      i += num2[1].length;
+      continue;
+    }
+    const id = /^[A-Za-z]+/.exec(s.slice(i));
+    if (id) {
+      out.push({ t: "id", name: id[0] });
+      i += id[0].length;
+      continue;
+    }
+    if ("+-*/(),".includes(ch)) {
+      out.push({ t: "op", v: ch });
+      i++;
+      continue;
+    }
+    throw new FxFail({ code: "syntax" });
+  }
+  return out;
+}
+function parseFormula(src) {
+  if (!src.trim()) throw new FxFail({ code: "empty" });
+  const toks = tokenize2(src);
+  let i = 0;
+  const peek = () => toks[i];
+  const isOp = (v) => peek()?.t === "op" && peek().v === v;
+  const expr = () => {
+    let a = term();
+    while (isOp("+") || isOp("-")) {
+      const op = toks[i++].v;
+      a = { k: "bin", op, a, b: term() };
+    }
+    return a;
+  };
+  const term = () => {
+    let a = unary();
+    while (isOp("*") || isOp("/")) {
+      const op = toks[i++].v;
+      a = { k: "bin", op, a, b: unary() };
+    }
+    return a;
+  };
+  const unary = () => {
+    if (isOp("-")) {
+      i++;
+      return { k: "neg", a: unary() };
+    }
+    if (isOp("+")) {
+      i++;
+      return unary();
+    }
+    return primary();
+  };
+  const primary = () => {
+    const tk = toks[i];
+    if (!tk) throw new FxFail({ code: "syntax" });
+    if (tk.t === "num") {
+      i++;
+      return { k: "num", v: tk.v };
+    }
+    if (tk.t === "ref") {
+      i++;
+      return { k: "ref", name: tk.name };
+    }
+    if (tk.t === "id") {
+      const name = tk.name.toUpperCase();
+      if (!FX_FUNCS.includes(name)) throw new FxFail({ code: "func", name: tk.name });
+      i++;
+      if (!isOp("(")) throw new FxFail({ code: "syntax" });
+      i++;
+      const args = [];
+      if (!isOp(")")) {
+        args.push(expr());
+        while (isOp(",")) {
+          i++;
+          args.push(expr());
+        }
+      }
+      if (!isOp(")")) throw new FxFail({ code: "paren" });
+      i++;
+      const ok = name === "ROUND" ? args.length === 1 || args.length === 2 : args.length >= 1;
+      if (!ok) throw new FxFail({ code: "args", name });
+      return { k: "fn", name, args };
+    }
+    if (tk.v === "(") {
+      i++;
+      const e = expr();
+      if (!isOp(")")) throw new FxFail({ code: "paren" });
+      i++;
+      return e;
+    }
+    if (tk.v === ")") throw new FxFail({ code: "paren" });
+    throw new FxFail({ code: "syntax" });
+  };
+  const node = expr();
+  if (i < toks.length) throw new FxFail(isOp(")") ? { code: "paren" } : { code: "syntax" });
+  return node;
+}
+var FxFail = class extends Error {
+  constructor(info) {
+    super("code" in info ? `formula: ${info.code}` : `formula: ${info.reason}`);
+    this.info = info;
+  }
+};
+function fxErrorOf(e) {
+  return e instanceof FxFail && "code" in e.info ? e.info : null;
+}
+function formulaRefs(node) {
+  const out = [];
+  const walk2 = (n) => {
+    if (n.k === "ref") {
+      if (!out.includes(n.name)) out.push(n.name);
+    } else if (n.k === "neg") walk2(n.a);
+    else if (n.k === "bin") {
+      walk2(n.a);
+      walk2(n.b);
+    } else if (n.k === "fn") n.args.forEach(walk2);
+  };
+  walk2(node);
+  return out;
+}
+function evalFormula(node, get) {
+  const ev = (n) => {
+    switch (n.k) {
+      case "num":
+        return n.v;
+      case "ref": {
+        const v = get(n.name);
+        if (v === null) throw new FxFail({ reason: "input", name: n.name });
+        return v;
+      }
+      case "neg":
+        return -ev(n.a);
+      case "bin": {
+        const a = ev(n.a);
+        const b = ev(n.b);
+        if (n.op === "+") return a + b;
+        if (n.op === "-") return a - b;
+        if (n.op === "*") return a * b;
+        if (b === 0) throw new FxFail({ reason: "div0" });
+        return a / b;
+      }
+      case "fn": {
+        if (n.name === "ROUND") {
+          const v = ev(n.args[0]);
+          const p = n.args[1] ? Math.max(0, Math.min(10, Math.round(ev(n.args[1])))) : 0;
+          const f = 10 ** p;
+          return Math.round((v + Math.sign(v) * Number.EPSILON) * f) / f;
+        }
+        const vals = [];
+        let first = null;
+        for (const a of n.args) {
+          try {
+            vals.push(ev(a));
+          } catch (e) {
+            if (!(e instanceof FxFail)) throw e;
+            first ?? (first = e);
+          }
+        }
+        if (!vals.length) throw first ?? new FxFail({ reason: "input" });
+        if (n.name === "SUM") return vals.reduce((x, y) => x + y, 0);
+        if (n.name === "AVG") return vals.reduce((x, y) => x + y, 0) / vals.length;
+        return n.name === "MAX" ? Math.max(...vals) : Math.min(...vals);
+      }
+    }
+  };
+  return ev(node);
+}
+function fxEmptyOf(e) {
+  return e instanceof FxFail && "reason" in e.info ? e.info : null;
+}
+function formatFx(v, places) {
+  if (!Number.isFinite(v)) return "";
+  let s;
+  if (places === null) {
+    const r3 = Math.round(v * 100) / 100;
+    s = Number.isInteger(r3) ? String(r3) : r3.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
+  } else s = v.toFixed(places);
+  return /^-0(\.0+)?$/.test(s) ? s.slice(1) : s;
+}
+function nameOk(name) {
+  return !!name && !/[{}]/.test(name);
+}
+function renameInFormula(src, from, to) {
+  const esc2 = from.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return src.replace(new RegExp(`[{\uFF5B]\\s*${esc2}\\s*[}\uFF5D]`, "g"), () => `{${to}}`);
+}
+function prettyOps(src) {
+  return src.replace(/\*/g, "\xD7").replace(/\//g, "\xF7");
+}
+
 // src/table/core/ops.ts
 function cloneTable(t3) {
   return {
@@ -8731,7 +10170,10 @@ function cloneMeta(m) {
   if (m.fg) out.fg = { ...m.fg };
   if (m.fz) out.fz = { ...m.fz };
   if (m.calc) out.calc = m.calc.slice();
+  if (m.fx) out.fx = m.fx.slice();
+  if (m.fxd) out.fxd = m.fxd.slice();
   if (m.opts) out.opts = m.opts.map((o) => o ? { ...o } : null);
+  if (m.ty) out.ty = m.ty.map((x) => x ? { ...x } : null);
   if (m.merge) out.merge = m.merge.slice();
   return out;
 }
@@ -8788,7 +10230,7 @@ function remapMerges(meta, fr, fc, grow) {
   }
   meta.merge = out;
 }
-var COL_KEYS = ["w", "calc", "opts", "va"];
+var COL_KEYS = ["w", "calc", "opts", "va", "fx", "fxd", "ty"];
 function spliceCols(meta, n, op) {
   for (const key of COL_KEYS) {
     const src = meta[key];
@@ -8823,13 +10265,30 @@ function insertRow(t3, at) {
 }
 function deleteRow(t3, r3) {
   const h = headRows(t3);
-  if (r3 < 1 || r3 >= rowCount(t3) || r3 >= h && rowCount(t3) - h <= 1) return t3;
+  if (r3 === 0 && h === 1) return deleteFirstHeadRow(t3);
+  if (r3 < 0 || r3 >= rowCount(t3) || r3 >= h && rowCount(t3) - h <= 1) return t3;
   const n = cloneTable(t3);
   if (r3 < h) withHead(n, h - 1);
   if (hasTotal(t3) && r3 === rowCount(t3) - 1) delete n.meta.calc;
   n.cells.splice(r3, 1);
   remapCells(n.meta, (rr, c) => rr === r3 ? null : [rr > r3 ? rr - 1 : rr, c]);
   remapMerges(n.meta, (rr) => rr === r3 ? null : rr > r3 ? rr - 1 : rr, (c) => c, false);
+  return n;
+}
+function deleteFirstHeadRow(t3) {
+  const body = rowCount(t3) - 1 - (hasTotal(t3) ? 1 : 0);
+  if (body < 2) return t3;
+  const n = cloneTable(t3);
+  n.cells.splice(0, 1);
+  remapCells(n.meta, (rr, c) => rr === 0 ? null : [rr - 1, c]);
+  remapMerges(n.meta, (rr) => rr === 0 ? null : rr - 1, (c) => c, false);
+  if (n.meta.merge) {
+    n.meta.merge = n.meta.merge.filter((m) => {
+      const q = parseRange(m);
+      return !q || !(q.r1 < 1 && q.r2 >= 1);
+    });
+    if (!n.meta.merge.length) delete n.meta.merge;
+  }
   return n;
 }
 function insertCol(t3, at) {
@@ -9047,7 +10506,7 @@ function pasteGrid(t3, r3, c, grid) {
   while (rowCount(n) - total() < r3 + grid.length) n = insertRow(n, rowCount(n));
   while (colCount(n) < c + width2) n = insertCol(n, colCount(n));
   grid.forEach((row, i) => row.forEach((v, j) => n.cells[r3 + i][c + j] = v));
-  return n;
+  return followRenames(t3, n);
 }
 function fillRange(t3, src, dir, count, copy = false) {
   let n = cloneTable(t3);
@@ -9144,12 +10603,12 @@ function shownText(t3, r3, c) {
 }
 function editCell(t3, r3, c, text) {
   const m = mergeAt(t3, r3, c);
-  if (!m) return setCell(t3, r3, c, text);
+  if (!m) return followRenames(t3, setCell(t3, r3, c, text));
   if (text === mergedText(t3, m)) return t3;
   const n = cloneTable(t3);
   for (let i = m.r1; i <= m.r2; i++) for (let j = m.c1; j <= m.c2; j++) n.cells[i][j] = "";
   n.cells[m.r1][m.c1] = text;
-  return n;
+  return followRenames(t3, n);
 }
 var NUM_LIKE = /^[-+]?[¥$€£]?\s*[\d,]*\.?\d+\s*%?$/;
 var DATE_LIKE = /^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})/;
@@ -9168,12 +10627,26 @@ function compareCells(a, b) {
 function canSortRows(t3) {
   return !merges(t3).some((m) => m.r2 > m.r1 && m.r2 >= headRows(t3));
 }
-function sortRows(t3, c, desc, lastFixed = false) {
+function dateSortKey(text, parseNote) {
+  if (!text.trim()) return { g: 2, d: 0 };
+  const v = readDate(text, parseNote);
+  return v ? { g: 0, d: Date.UTC(v.y, v.m - 1, v.d) } : { g: 1, d: 0 };
+}
+function sortRows(t3, c, desc, lastFixed = false, parseNote) {
   if (!canSortRows(t3)) return t3;
   const last = rowCount(t3) - (lastFixed ? 1 : 0);
   const h = headRows(t3);
   const idx = Array.from({ length: Math.max(0, last - h) }, (_, i) => i + h);
+  const isDate = colTypeOf(t3, c)?.t === "date" && !formulaOf(t3, c);
+  const keys = isDate ? new Map(idx.map((r3) => [r3, dateSortKey(t3.cells[r3][c], parseNote)])) : null;
   const sorted = [...idx].sort((x, y) => {
+    if (keys) {
+      const a = keys.get(x);
+      const b = keys.get(y);
+      if (a.g !== b.g) return a.g - b.g || x - y;
+      const d2 = a.g === 0 ? a.d - b.d : a.g === 1 ? compareCells(t3.cells[x][c], t3.cells[y][c]) : 0;
+      return (desc ? -d2 : d2) || x - y;
+    }
     const d = compareCells(t3.cells[x][c], t3.cells[y][c]);
     const empty2 = !t3.cells[x][c].trim() || !t3.cells[y][c].trim();
     return (desc && !empty2 ? -d : d) || x - y;
@@ -9210,6 +10683,14 @@ function duplicateCol(t3, c) {
   n = setVAlign(n, c + 1, vAlignOf(t3, c));
   const w = widthOf(t3, c);
   if (w) n = setWidth(n, c + 1, w);
+  if (colTypeOf(t3, c)) n = setColType(n, c + 1, colTypeOf(t3, c));
+  if (t3.meta.opts?.[c]) {
+    n = cloneTable(n);
+    const opts = Array.from({ length: colCount(n) }, (_, i) => n.meta.opts?.[i] ?? null);
+    opts[c + 1] = { ...t3.meta.opts[c] };
+    n.meta.opts = opts;
+  }
+  if (formulaOf(t3, c)) n = setFormula(n, c + 1, formulaOf(t3, c), fxPlacesOf(t3, c));
   for (const key of ["bg", "fg", "fz"]) {
     const m = { ...n.meta[key] ?? {} };
     for (let r3 = 0; r3 < rowCount(t3); r3++) {
@@ -9268,16 +10749,24 @@ function calcColumn(t3, c, how) {
   }
   return fmt(how === "max" ? Math.max(...vals) : Math.min(...vals), places, pct);
 }
-function setCalc(t3, c, how, label = "\u5408\u8BA1") {
+var AUTO_LABELS = /* @__PURE__ */ new Set(["\u5408\u8BA1", "\u7EDF\u8BA1", "Total", "Summary"]);
+function totalsAllSum(t3) {
+  return (t3.meta.calc ?? []).every((x) => !x || x === "sum");
+}
+function setCalc(t3, c, how, labels = { sum: "\u5408\u8BA1", mixed: "\u7EDF\u8BA1" }) {
+  const names = typeof labels === "string" ? { sum: labels, mixed: labels } : labels;
   let n = cloneTable(t3);
-  if (how && !hasTotal(t3)) {
-    n.cells.push(Array.from({ length: colCount(t3) }, () => ""));
-    if (c !== 0) n.cells[rowCount(n) - 1][0] = label;
-  }
+  const added = !!how && !hasTotal(t3);
+  if (added) n.cells.push(Array.from({ length: colCount(t3) }, () => ""));
   const calc = Array.from({ length: colCount(n) }, (_, i) => n.meta.calc?.[i] ?? null);
   calc[c] = how;
   n.meta.calc = calc;
   if (!calc.some(Boolean)) delete n.meta.calc;
+  if (hasTotal(n) && !calc[0]) {
+    const last = rowCount(n) - 1;
+    const cur = n.cells[last][0].trim();
+    if (added && !cur || AUTO_LABELS.has(cur)) n.cells[last][0] = totalsAllSum(n) ? names.sum : names.mixed;
+  }
   n = computeTotals(n);
   return n;
 }
@@ -9287,7 +10776,9 @@ function computeTotals(t3) {
   let n = null;
   t3.meta.calc?.forEach((how, c) => {
     if (!how || c >= colCount(t3)) return;
-    const v = calcColumn(t3, c, how);
+    const raw = calcColumn(t3, c, how);
+    const nf = how === "count" ? null : numFmtOf(t3, c);
+    const v = nf && raw ? reformatNumber(raw, nf) : raw;
     if (t3.cells[last][c] !== v) {
       n ?? (n = cloneTable(t3));
       n.cells[last][c] = v;
@@ -9299,9 +10790,10 @@ var OPT_COLORS = ["blue", "green", "orange", "purple", "red", "yellow", "gray"];
 function optionValues(t3, c) {
   const end = rowCount(t3) - (hasTotal(t3) ? 1 : 0);
   const out = [];
+  const multi = t3.meta.ty?.[c]?.t === "multi";
   for (let r3 = headRows(t3); r3 < end; r3++) {
-    const v = (t3.cells[r3]?.[c] ?? "").trim();
-    if (v && !out.includes(v)) out.push(v);
+    const raw = t3.cells[r3]?.[c] ?? "";
+    for (const v of multi ? splitTags(raw) : [raw.trim()]) if (v && !out.includes(v)) out.push(v);
   }
   return out;
 }
@@ -9337,7 +10829,274 @@ function setOptionColor(t3, c, value, color) {
   return n;
 }
 function normalize2(t3) {
-  return computeTotals(syncOptions(t3));
+  return computeTotals(computeFormulas(syncOptions(applyColTypes(t3))));
+}
+function colTypeOf(t3, c) {
+  return t3.meta.ty?.[c] ?? null;
+}
+var COL_KINDS = ["text", "status", "multi", "date", "num", "bar", "enc"];
+function colKindOf(t3, c) {
+  const ty = colTypeOf(t3, c);
+  if (ty) return ty.t;
+  return t3.meta.opts?.[c] ? "status" : "text";
+}
+function setColType(t3, c, ty) {
+  if (c < 0 || c >= colCount(t3)) return t3;
+  const n = cloneTable(t3);
+  const a = Array.from({ length: colCount(n) }, (_, i) => n.meta.ty?.[i] ?? null);
+  a[c] = ty ? { ...ty } : null;
+  if (a.some(Boolean)) n.meta.ty = a;
+  else delete n.meta.ty;
+  return applyColTypes(n);
+}
+function setColKind(t3, c, kind) {
+  if (c < 0 || c >= colCount(t3) || colKindOf(t3, c) === kind) return t3;
+  if (formulaOf(t3, c) && kind !== "text" && kind !== "num") return t3;
+  const cur = colTypeOf(t3, c);
+  const ty = kind === "text" || kind === "status" ? null : cur?.t === kind ? cur : { t: kind };
+  let n = setColType(t3, c, ty);
+  const wantOpts = kind === "status" || kind === "multi";
+  if (wantOpts !== !!n.meta.opts?.[c]) n = setOptionsCol(n, c, wantOpts);
+  return normalize2(n);
+}
+function dataCells(t3, c) {
+  const out = [];
+  const end = rowCount(t3) - (hasTotal(t3) ? 1 : 0);
+  for (let r3 = headRows(t3); r3 < end; r3++) {
+    const m = mergeAt(t3, r3, c);
+    if (m && (m.r1 !== r3 || m.c1 !== c)) continue;
+    out.push(r3);
+  }
+  return out;
+}
+function applyColTypes(t3) {
+  if (!t3.meta.ty?.some(Boolean)) return t3;
+  let n = null;
+  t3.meta.ty.forEach((ty, c) => {
+    if (!ty || c >= colCount(t3) || formulaOf(t3, c)) return;
+    const fix = ty.t === "num" ? (s) => reformatNumber(s, ty) : ty.t === "date" ? (s) => reformatDate(s, ty.f) : ty.t === "multi" ? (s) => joinTags(splitTags(s)) : null;
+    if (!fix) return;
+    for (const r3 of dataCells(t3, c)) {
+      const v = (n ?? t3).cells[r3][c];
+      const next = fix(v);
+      if (next !== v) {
+        n ?? (n = cloneTable(t3));
+        n.cells[r3][c] = next;
+      }
+    }
+  });
+  return n ?? t3;
+}
+function numFmtOf(t3, c) {
+  const ty = colTypeOf(t3, c);
+  return ty?.t === "num" ? ty : null;
+}
+function formulaOf(t3, c) {
+  return t3.meta.fx?.[c] ?? null;
+}
+function fxPlacesOf(t3, c) {
+  return t3.meta.fxd?.[c] ?? null;
+}
+function isFxCell(t3, r3, c) {
+  if (!formulaOf(t3, c) || r3 < headRows(t3) || r3 >= rowCount(t3)) return false;
+  return !(hasTotal(t3) && r3 === rowCount(t3) - 1);
+}
+function columnNames(t3) {
+  const r3 = headRows(t3) - 1;
+  return Array.from({ length: colCount(t3) }, (_, c) => {
+    const m = mergeAt(t3, r3, c);
+    const src = m ? t3.cells[m.r1][m.c1] : t3.cells[r3]?.[c] ?? "";
+    return cellFromSource(src).replace(/\\\|/g, "|").replace(/\s+/g, " ").trim();
+  });
+}
+function nameIndex(t3) {
+  const idx = /* @__PURE__ */ new Map();
+  columnNames(t3).forEach((name, c) => {
+    if (!nameOk(name)) return;
+    idx.set(name, idx.has(name) ? -1 : c);
+  });
+  return idx;
+}
+function analyze(t3) {
+  const out = /* @__PURE__ */ new Map();
+  const fx = t3.meta.fx;
+  if (!fx) return out;
+  const idx = nameIndex(t3);
+  const names = columnNames(t3);
+  for (let c = 0; c < colCount(t3); c++) {
+    const src = fx[c];
+    if (!src) continue;
+    let node;
+    try {
+      node = parseFormula(src);
+    } catch (e) {
+      out.set(c, { deps: [], error: fxErrorOf(e) ?? { code: "syntax" } });
+      continue;
+    }
+    const deps = [];
+    let error;
+    for (const name of formulaRefs(node)) {
+      const at = idx.get(name);
+      if (at === void 0) error ?? (error = { code: "unknownCol", name });
+      else if (at === -1) error ?? (error = { code: "ambiguous", name });
+      else if (at === c || name === names[c]) error ?? (error = { code: "self", name });
+      else deps.push(at);
+    }
+    out.set(c, error ? { deps: [], error } : { node, deps });
+  }
+  const state = /* @__PURE__ */ new Map();
+  const stack = [];
+  const visit = (c) => {
+    const info = out.get(c);
+    if (!info || info.error) return;
+    if (state.get(c) === 2) return;
+    if (state.get(c) === 1) {
+      for (const x of stack.slice(stack.indexOf(c))) out.set(x, { deps: [], error: { code: "cycle" } });
+      return;
+    }
+    state.set(c, 1);
+    stack.push(c);
+    for (const d of info.deps) visit(d);
+    stack.pop();
+    state.set(c, 2);
+  };
+  for (const c of out.keys()) visit(c);
+  return out;
+}
+function cellNumber(s) {
+  const p = parseNum(s);
+  if (!p) return null;
+  return p.pct ? p.v / 100 : p.v;
+}
+function fxRows(t3) {
+  return [headRows(t3), rowCount(t3) - (hasTotal(t3) ? 1 : 0)];
+}
+function fxOrder(info) {
+  const order = [];
+  const seen = /* @__PURE__ */ new Set();
+  const visit = (c) => {
+    if (seen.has(c)) return;
+    seen.add(c);
+    const i = info.get(c);
+    if (i && !i.error) i.deps.forEach(visit);
+    if (i) order.push(c);
+  };
+  for (const c of info.keys()) visit(c);
+  return order;
+}
+function evalRow(t3, cells, info, r3, idx = nameIndex(t3)) {
+  try {
+    return evalFormula(info.node, (name) => {
+      const c = idx.get(name);
+      const m = mergeAt(t3, r3, c);
+      return cellNumber(m ? cells[m.r1][m.c1] : cells[r3]?.[c] ?? "");
+    });
+  } catch (e) {
+    const why = fxEmptyOf(e);
+    if (why) return why;
+    throw e;
+  }
+}
+function computeFormulas(t3) {
+  if (!t3.meta.fx?.some(Boolean)) return t3;
+  const info = analyze(t3);
+  const [r1, r22] = fxRows(t3);
+  const idx = nameIndex(t3);
+  let n = null;
+  for (const c of fxOrder(info)) {
+    const i = info.get(c);
+    for (let r3 = r1; r3 < r22; r3++) {
+      const m = mergeAt(t3, r3, c);
+      if (m && (m.r1 !== r3 || m.c1 !== c)) continue;
+      const cells = (n ?? t3).cells;
+      const v = i.error ? "" : evalRow(t3, cells, i, r3, idx);
+      const nf = numFmtOf(t3, c);
+      const text = typeof v !== "number" ? "" : nf ? formatNumber(v, nf, fxPlacesOf(t3, c) ?? nf.d ?? null) : formatFx(v, fxPlacesOf(t3, c));
+      if (cells[r3][c] !== text) {
+        n ?? (n = cloneTable(t3));
+        n.cells[r3][c] = text;
+      }
+    }
+  }
+  return n ?? t3;
+}
+function formulaError(t3, c) {
+  if (!formulaOf(t3, c)) return null;
+  return analyze(t3).get(c)?.error ?? null;
+}
+function fxCellNote(t3, r3, c) {
+  if (!isFxCell(t3, r3, c)) return null;
+  const i = analyze(t3).get(c);
+  if (!i) return null;
+  if (i.error) return i.error;
+  const v = evalRow(t3, t3.cells, i, r3);
+  return typeof v === "number" ? null : v;
+}
+function checkFormula(t3, c, src, places = null) {
+  const n = cloneTable(t3);
+  const fx = Array.from({ length: colCount(t3) }, (_, i2) => n.meta.fx?.[i2] ?? null);
+  fx[c] = src.trim() || " ";
+  n.meta.fx = fx;
+  const i = analyze(n).get(c);
+  if (i.error) return { error: i.error };
+  const [r1, r22] = fxRows(n);
+  const idx = nameIndex(n);
+  const refs = formulaRefs(i.node).map((name) => {
+    const at = idx.get(name);
+    return { name, value: r1 < r22 ? cellNumber(n.cells[r1][at] ?? "") : null };
+  });
+  if (r1 >= r22) return { refs, result: null };
+  const v = evalRow(n, n.cells, i, r1);
+  return typeof v === "number" ? { refs, result: formatFx(v, places) } : { refs, result: null, empty: v };
+}
+function setFormula(t3, c, src, places = null) {
+  if (c < 0 || c >= colCount(t3)) return t3;
+  const n = cloneTable(t3);
+  const len = colCount(t3);
+  const fx = Array.from({ length: len }, (_, i) => n.meta.fx?.[i] ?? null);
+  const fxd = Array.from({ length: len }, (_, i) => n.meta.fxd?.[i] ?? null);
+  fx[c] = src?.trim() ? src.trim() : null;
+  fxd[c] = fx[c] && places !== null ? places : null;
+  if (fx.some(Boolean)) n.meta.fx = fx;
+  else delete n.meta.fx;
+  if (fxd.some((x) => x !== null)) n.meta.fxd = fxd;
+  else delete n.meta.fxd;
+  let m = n;
+  if (fx[c] && colTypeOf(n, c) && colTypeOf(n, c).t !== "num") m = setColType(n, c, null);
+  if (fx[c] && m.meta.opts?.[c]) m = setOptionsCol(m, c, false);
+  return computeTotals(computeFormulas(m));
+}
+function followRenames(prev, next) {
+  if (next === prev || !next.meta.fx?.some(Boolean)) return next;
+  const a = columnNames(prev);
+  const b = columnNames(next);
+  const ia = nameIndex(prev);
+  const ib = nameIndex(next);
+  let out = next;
+  for (let c = 0; c < Math.min(a.length, b.length); c++) {
+    if (a[c] === b[c] || ia.get(a[c]) !== c || ib.get(b[c]) !== c) continue;
+    const fx = out.meta.fx.map((f) => f ? renameInFormula(f, a[c], b[c]) : f);
+    if (fx.every((f, i) => f === out.meta.fx[i])) continue;
+    if (out === next) out = cloneTable(next);
+    out.meta.fx = fx;
+  }
+  return out;
+}
+function keepWorkingFormulas(t3) {
+  if (!t3.meta.fx?.some(Boolean)) {
+    delete t3.meta.fx;
+    delete t3.meta.fxd;
+    return t3;
+  }
+  const info = analyze(t3);
+  for (const [c, i] of info) {
+    if (!i.error) continue;
+    t3.meta.fx[c] = null;
+    if (t3.meta.fxd) t3.meta.fxd[c] = null;
+  }
+  if (!t3.meta.fx.some(Boolean)) delete t3.meta.fx;
+  if (!t3.meta.fxd?.some((x) => x !== null)) delete t3.meta.fxd;
+  return t3;
 }
 function subTable(t3, rect) {
   const r1 = Math.max(0, rect.r1);
@@ -9362,7 +11121,10 @@ function subTable(t3, rect) {
   else delete meta.head;
   meta.w = cols(t3.meta.w);
   meta.opts = cols(t3.meta.opts);
+  meta.ty = cols(t3.meta.ty);
   meta.calc = hasTotal(t3) && r22 === rowCount(t3) - 1 ? cols(t3.meta.calc) : void 0;
+  meta.fx = cols(t3.meta.fx);
+  meta.fxd = cols(t3.meta.fxd);
   meta.bg = shift(t3.meta.bg);
   meta.fg = shift(t3.meta.fg);
   meta.fz = shift(t3.meta.fz);
@@ -9383,12 +11145,13 @@ function subTable(t3, rect) {
     const nc = Math.max(m.c1, c1);
     if ((nr !== m.r1 || nc !== m.c1) && nr <= Math.min(m.r2, r22) && nc <= Math.min(m.c2, c2)) cells[nr - r1][nc - c1] = t3.cells[m.r1][m.c1];
   }
-  return {
+  const sub = {
     cells,
     align: t3.align.slice(c1, c2 + 1),
     meta,
     style: { ...t3.style }
   };
+  return keepWorkingFormulas(sub);
 }
 
 // src/table/core/clipboard.ts
@@ -9467,15 +11230,6 @@ function sourceAttr(lines) {
   return ` ${SOURCE_ATTR}="${encodeURIComponent(lines.join("\n"))}"`;
 }
 
-// src/table/editor/cell-input.ts
-var import_state4 = require("@codemirror/state");
-var import_view5 = require("@codemirror/view");
-var import_commands2 = require("@codemirror/commands");
-
-// src/table/core/cm-format.ts
-var import_state3 = require("@codemirror/state");
-var import_view4 = require("@codemirror/view");
-
 // src/table/core/tokens.ts
 var URL_STOP2 = String.raw`\s<>\]"'\x60。，、；：！？…「」『』【】〈〉《》（）“”‘’`;
 var BARE_URL2 = String.raw`(https?:\/\/[^${URL_STOP2}]*[^${URL_STOP2},.;:!?])`;
@@ -9511,6 +11265,18 @@ function formatSpans2(text) {
   for (const line of text.split("\n")) {
     scan2(line, offset, out);
     offset += line.length + 1;
+  }
+  if (text.includes("\n")) {
+    const flat = text.replace(/\n/g, "\0");
+    for (const m of flat.matchAll(TOKEN_RE2)) {
+      const g = GROUPS2.find((x) => m[x.group] !== void 0);
+      if (!g?.html || !m[0].includes("\0")) continue;
+      const from = m.index ?? 0;
+      const to = from + m[0].length;
+      const innerTo = to - g.close;
+      out.push({ kind: g.kind, from, to, innerFrom: innerTo - m[g.group].length, innerTo, ...g.colorGroup ? { color: m[g.colorGroup] } : {}, html: true });
+    }
+    out.sort((x, y) => x.from - y.from || y.to - x.to);
   }
   return out;
 }
@@ -9643,13 +11409,99 @@ function breakInsideFormats2(text, pos) {
   return inner.map((s) => text.slice(s.innerTo, s.to)).join("") + "\n" + outer.map((s) => text.slice(s.from, s.innerFrom)).join("");
 }
 
+// src/table/core/format-apply.ts
+function applyFormat2(text, start, end, fmt2) {
+  return fmt2.kind === "clear" ? clearFormat2(text, start, end) : applyInlineFormat2(text, start, end, fmt2);
+}
+function clearFormat2(text, start, end) {
+  let r3 = clearOnce2(text, start, end);
+  for (let i = 0; i < 4 && r3.text !== text && r3.start < r3.end; i++) {
+    text = r3.text;
+    const next = clearOnce2(text, r3.start, r3.end);
+    if (next.text === text) break;
+    r3 = next;
+  }
+  return r3;
+}
+function clearOnce2(text, start, end) {
+  let [s, e] = start === end ? [0, text.length] : [Math.min(start, end), Math.max(start, end)];
+  const spans = formatSpans2(text).filter((x) => x.kind !== "code");
+  for (const x of spans) {
+    if (s > x.from && s < x.innerFrom) s = x.from;
+    if (s > x.innerTo && s < x.to) s = x.innerTo;
+    if (e > x.from && e < x.innerFrom) e = x.innerFrom;
+    if (e > x.innerTo && e < x.to) e = x.to;
+  }
+  if (s >= e) return { text, start, end };
+  for (const ch of ["*", "_"]) {
+    let a = 0;
+    let b = 0;
+    while (s - a - 1 >= 0 && text[s - a - 1] === ch) a++;
+    while (e + b < text.length && text[e + b] === ch) b++;
+    const n = Math.min(a, b);
+    s -= n;
+    e += n;
+  }
+  for (let moved = true; moved; ) {
+    moved = false;
+    for (const x of spans) {
+      if (x.innerFrom === s && x.from < s && x.innerTo <= e) {
+        s = x.from;
+        moved = true;
+      }
+      if (x.innerTo === e && x.to > e && x.innerFrom >= s) {
+        e = x.to;
+        moved = true;
+      }
+    }
+  }
+  const hit = spans.filter((x) => s < x.innerTo && e > x.innerFrom);
+  if (!hit.length) return { text, start, end };
+  const closeAtS = [];
+  const openAtE = [];
+  const del = [];
+  for (const x of hit) {
+    if (x.innerFrom < s) closeAtS.push(x);
+    else del.push([x.from, x.innerFrom]);
+    if (x.innerTo > e) openAtE.push(x);
+    else del.push([x.innerTo, x.to]);
+  }
+  closeAtS.sort((a, b) => b.from - a.from);
+  openAtE.sort((a, b) => a.from - b.from);
+  const closers = closeAtS.map((x) => text.slice(x.innerTo, x.to)).join("");
+  const openers = openAtE.map((x) => text.slice(x.from, x.innerFrom)).join("");
+  const gone = (i) => del.some(([a, b]) => i >= a && i < b);
+  let out = "";
+  let ns = -1;
+  let ne = -1;
+  for (let i = 0; i <= text.length; i++) {
+    if (i === s) {
+      out += closers;
+      ns = out.length;
+    }
+    if (i === e) {
+      ne = out.length;
+      out += openers;
+    }
+    if (i < text.length && !gone(i)) out += text[i];
+  }
+  return { text: out, start: ns, end: ne };
+}
+
+// src/table/editor/cell-input.ts
+var import_state5 = require("@codemirror/state");
+var import_view6 = require("@codemirror/view");
+var import_commands2 = require("@codemirror/commands");
+
 // src/table/core/cm-format.ts
-var hideAll2 = import_state3.Facet.define({ combine: (v) => v.some(Boolean) });
+var import_state4 = require("@codemirror/state");
+var import_view5 = require("@codemirror/view");
+var hideAll2 = import_state4.Facet.define({ combine: (v) => v.some(Boolean) });
 function hiddenSpans2(state) {
   const all = state.facet(hideAll2);
   return formatSpans2(state.doc.toString()).filter((s) => all || !revealed2(s, state.selection.ranges));
 }
-var keepMarksPaired2 = import_state3.EditorState.transactionFilter.of((tr) => {
+var keepMarksPaired2 = import_state4.EditorState.transactionFilter.of((tr) => {
   if (!tr.docChanged || !(tr.isUserEvent("delete") || tr.isUserEvent("input.type") || tr.isUserEvent("input.paste"))) return tr;
   const st = tr.startState;
   if (st.selection.ranges.length > 1) return tr;
@@ -9664,8 +11516,8 @@ var keepMarksPaired2 = import_state3.EditorState.transactionFilter.of((tr) => {
     hidden,
     edits,
     backward,
-    (p) => (0, import_state3.findClusterBreak)(text, p, false),
-    (p) => (0, import_state3.findClusterBreak)(text, p, true)
+    (p) => (0, import_state4.findClusterBreak)(text, p, false),
+    (p) => (0, import_state4.findClusterBreak)(text, p, true)
   );
   if (!fixed) return tr;
   if (!fixed.length) return [];
@@ -9673,27 +11525,27 @@ var keepMarksPaired2 = import_state3.EditorState.transactionFilter.of((tr) => {
   const first = fixed[0];
   return {
     changes,
-    selection: import_state3.EditorSelection.cursor(changes.mapPos(first.from, -1) + first.insert.length),
-    userEvent: tr.annotation(import_state3.Transaction.userEvent),
+    selection: import_state4.EditorSelection.cursor(changes.mapPos(first.from, -1) + first.insert.length),
+    userEvent: tr.annotation(import_state4.Transaction.userEvent),
     scrollIntoView: tr.scrollIntoView
   };
 });
-var HIDE2 = import_view4.Decoration.replace({});
-var prefixFacet2 = import_state3.Facet.define({ combine: (v) => v[0] ?? "mm-ed" });
+var HIDE2 = import_view5.Decoration.replace({});
+var prefixFacet2 = import_state4.Facet.define({ combine: (v) => v[0] ?? "mm-ed" });
 var marksCache2 = /* @__PURE__ */ new Map();
 function marksFor2(prefix) {
   let m = marksCache2.get(prefix);
   if (!m) {
-    const d = (k) => import_view4.Decoration.mark({ class: `${prefix}-${k}` });
+    const d = (k) => import_view5.Decoration.mark({ class: `${prefix}-${k}` });
     m = { syntax: d("syntax"), kinds: { strong: d("strong"), em: d("em"), mark: d("mark"), del: d("del"), code: d("code"), u: d("u") } };
     marksCache2.set(prefix, m);
   }
   return m;
 }
 function contentMark2(span, prefix) {
-  if (span.kind === "color") return import_view4.Decoration.mark({ attributes: { style: `color: ${span.color}` } });
-  if (span.highlight) return import_view4.Decoration.mark({ class: `${prefix}-mark`, attributes: { "data-highlight": span.highlight } });
-  if (span.kind === "bg") return import_view4.Decoration.mark({ class: `${prefix}-mark`, attributes: { style: `background: ${span.color}` } });
+  if (span.kind === "color") return import_view5.Decoration.mark({ attributes: { style: `color: ${span.color}` } });
+  if (span.highlight) return import_view5.Decoration.mark({ class: `${prefix}-mark`, attributes: { "data-highlight": span.highlight } });
+  if (span.kind === "bg") return import_view5.Decoration.mark({ class: `${prefix}-mark`, attributes: { style: `background: ${span.color}` } });
   return marksFor2(prefix).kinds[span.kind];
 }
 function build2(state) {
@@ -9712,26 +11564,48 @@ function build2(state) {
       atomic.push(...marks);
     }
   }
-  return { deco: import_view4.Decoration.set(deco, true), atomic: import_view4.Decoration.set(atomic, true) };
+  return { deco: import_view5.Decoration.set(deco, true), atomic: import_view5.Decoration.set(atomic, true) };
 }
-var livePreview2 = import_view4.ViewPlugin.fromClass(
+var dragEnded2 = import_state4.StateEffect.define();
+var livePreview2 = import_view5.ViewPlugin.fromClass(
   class {
     constructor(view) {
+      this.view = view;
+      /**
+       * 按着鼠标拖选中。这期间选区变了也不改标记的显隐（#45）：拖到刚好把一段 **加粗** 整个包住时标记会藏起来，
+       * 后面的字往左挪，CodeMirror 按鼠标位置重算选区又没包住、标记露出来、字又挪回去……一直来回闪。松手再更新
+       */
+      this.dragging = false;
+      this.onDown = (ev) => {
+        if (ev.button === 0) this.dragging = true;
+      };
+      this.onUp = () => {
+        if (!this.dragging) return;
+        this.dragging = false;
+        queueMicrotask(() => this.view.dom.isConnected && this.view.dispatch({ effects: dragEnded2.of(null) }));
+      };
       ({ deco: this.deco, atomic: this.atomic } = build2(view.state));
+      view.contentDOM.addEventListener("mousedown", this.onDown);
+      view.dom.ownerDocument.addEventListener("mouseup", this.onUp, true);
     }
     update(update) {
-      if (update.docChanged || update.selectionSet) ({ deco: this.deco, atomic: this.atomic } = build2(update.state));
+      const ended = update.transactions.some((tr) => tr.effects.some((e) => e.is(dragEnded2)));
+      if (update.docChanged || ended || update.selectionSet && !this.dragging) ({ deco: this.deco, atomic: this.atomic } = build2(update.state));
+    }
+    destroy() {
+      this.view.contentDOM.removeEventListener("mousedown", this.onDown);
+      this.view.dom.ownerDocument.removeEventListener("mouseup", this.onUp, true);
     }
   },
   {
     decorations: (v) => v.deco,
-    provide: (plugin) => import_view4.EditorView.atomicRanges.of((view) => view.plugin(plugin)?.atomic ?? import_view4.Decoration.none)
+    provide: (plugin) => import_view5.EditorView.atomicRanges.of((view) => view.plugin(plugin)?.atomic ?? import_view5.Decoration.none)
   }
 );
 function formatPreview2(prefix, hideAllSyntax) {
   return [prefixFacet2.of(prefix), hideAll2.of(hideAllSyntax), livePreview2, keepMarksPaired2, balancedCopy2];
 }
-var balancedCopy2 = import_view4.EditorView.domEventHandlers({
+var balancedCopy2 = import_view5.EditorView.domEventHandlers({
   copy: (ev, view) => copySel2(ev, view, false),
   cut: (ev, view) => copySel2(ev, view, true)
 });
@@ -9814,8 +11688,64 @@ var TextareaInput = class {
   detach() {
     this.el.remove();
   }
+  selectionRect() {
+    const ta = this.el;
+    const m = this.mirror();
+    if (!m) return null;
+    const { div, cs } = m;
+    div.append(ta.value.slice(0, ta.selectionStart));
+    const a = div.createSpan({ text: "\u200B" });
+    div.append(ta.value.slice(ta.selectionStart, ta.selectionEnd));
+    const b = div.createSpan({ text: "\u200B" });
+    div.append(ta.value.slice(ta.selectionEnd) || "\u200B");
+    const lh = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.5 || 20;
+    const r3 = ta.getBoundingClientRect();
+    const k = ta.offsetWidth ? r3.width / ta.offsetWidth : 1;
+    const x0 = r3.left - ta.scrollLeft * k;
+    const y0 = r3.top - ta.scrollTop * k;
+    const out = {
+      top: y0 + a.offsetTop * k,
+      bottom: y0 + (b.offsetTop + lh) * k,
+      left: x0 + Math.min(a.offsetLeft, b.offsetLeft) * k,
+      right: x0 + Math.max(a.offsetLeft, b.offsetLeft) * k
+    };
+    div.remove();
+    return out;
+  }
+  /** 照着 textarea 的字体、宽度、内边距排文字的隐藏元素（量光标位置用），用完自己 remove */
+  mirror() {
+    const ta = this.el;
+    const doc = ta.ownerDocument;
+    if (!ta.isConnected) return null;
+    const cs = (doc.defaultView ?? window).getComputedStyle(ta);
+    const div = doc.body.appendChild(doc.createElement("div"));
+    for (const p of ["box-sizing", "width", "padding-top", "padding-right", "padding-bottom", "padding-left", "border-top-width", "border-right-width", "border-bottom-width", "border-left-width", "border-style", "font-family", "font-size", "font-weight", "font-style", "letter-spacing", "line-height", "text-transform", "word-spacing", "tab-size", "text-indent", "word-break", "overflow-wrap"])
+      div.style.setProperty(p, cs.getPropertyValue(p));
+    div.className = "ggt-caret-mirror";
+    return { div, cs };
+  }
   visibleSelection() {
     return { from: this.el.selectionStart, to: this.el.selectionEnd };
+  }
+  atEdge(dir) {
+    const ta = this.el;
+    const pos = ta.selectionStart;
+    if (pos !== ta.selectionEnd) return false;
+    if (dir === "left") return pos === 0;
+    if (dir === "right") return pos === ta.value.length;
+    const doc = ta.ownerDocument;
+    const mm = this.mirror();
+    if (!mm) return true;
+    const { div: m, cs } = mm;
+    m.append(ta.value.slice(0, pos));
+    const mark = m.appendChild(doc.createElement("span"));
+    mark.textContent = "\u200B";
+    m.append(ta.value.slice(pos) || "\u200B");
+    const lh = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.5 || 20;
+    const top = mark.offsetTop - parseFloat(cs.paddingTop) - parseFloat(cs.borderTopWidth);
+    const height = m.scrollHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    m.remove();
+    return dir === "up" ? top < lh / 2 : top + lh * 1.5 > height;
   }
   focus() {
     this.el.focus({ preventScroll: true });
@@ -9880,8 +11810,8 @@ var CodeMirrorInput = class {
     const later = (fn) => queueMicrotask(() => this.handlers && fn());
     this.extensions = [
       // 宿主的按键、复制粘贴排在编辑器自己的前面：处理了（preventDefault）CodeMirror 就不再管
-      import_state4.Prec.highest(
-        import_view5.EditorView.domEventHandlers({
+      import_state5.Prec.highest(
+        import_view6.EditorView.domEventHandlers({
           keydown: (ev) => {
             this.handlers?.keydown(ev);
             return ev.defaultPrevented;
@@ -9918,13 +11848,13 @@ var CodeMirrorInput = class {
       ),
       (0, import_commands2.history)(),
       // Enter、Tab、Esc 归表格（提交、走格）；格子里换行用 Shift+Enter
-      import_view5.keymap.of([{ key: "Shift-Enter", run: insertFormatBreak2 }, ...import_commands2.historyKeymap, ...import_commands2.defaultKeymap.filter((b) => b.key !== "Enter" && b.key !== "Mod-Enter")]),
-      import_view5.EditorView.lineWrapping,
-      import_view5.EditorView.contentAttributes.of({ spellcheck: "false", autocapitalize: "off", autocorrect: "off" }),
+      import_view6.keymap.of([{ key: "Shift-Enter", run: insertFormatBreak2 }, ...import_commands2.historyKeymap, ...import_commands2.defaultKeymap.filter((b) => b.key !== "Enter" && b.key !== "Mod-Enter")]),
+      import_view6.EditorView.lineWrapping,
+      import_view6.EditorView.contentAttributes.of({ spellcheck: "false", autocapitalize: "off", autocorrect: "off" }),
       // 编辑器根元素的类名由 CodeMirror 管着，直接加会被它改回去
-      import_view5.EditorView.editorAttributes.of({ class: "ggt-input ggt-input-cm" }),
+      import_view6.EditorView.editorAttributes.of({ class: "ggt-input ggt-input-cm" }),
       ...formatPreview2("ggt-ed", false),
-      import_view5.EditorView.updateListener.of((u) => {
+      import_view6.EditorView.updateListener.of((u) => {
         if (this.resetting) return;
         if (u.docChanged) later(() => this.handlers?.input());
         if (u.docChanged || u.selectionSet) later(() => this.handlers?.select());
@@ -9933,7 +11863,7 @@ var CodeMirrorInput = class {
   }
   get view() {
     if (!this._view) {
-      this._view = new import_view5.EditorView({ root: this.doc, state: import_state4.EditorState.create({ doc: "", extensions: this.extensions }) });
+      this._view = new import_view6.EditorView({ root: this.doc, state: import_state5.EditorState.create({ doc: "", extensions: this.extensions }) });
       this._view.contentDOM.cellInput = this;
     }
     return this._view;
@@ -9952,13 +11882,13 @@ var CodeMirrorInput = class {
   }
   set value(v) {
     if (v === this.value) return;
-    this.view.dispatch({ changes: { from: 0, to: this.view.state.doc.length, insert: v }, selection: import_state4.EditorSelection.cursor(v.length), userEvent: "input.format" });
+    this.view.dispatch({ changes: { from: 0, to: this.view.state.doc.length, insert: v }, selection: import_state5.EditorSelection.cursor(v.length), userEvent: "input.format" });
   }
   reset(text) {
     if (!this._view && !text) return;
     this.resetting = true;
     try {
-      this.view.setState(import_state4.EditorState.create({ doc: text, selection: import_state4.EditorSelection.cursor(text.length), extensions: this.extensions }));
+      this.view.setState(import_state5.EditorState.create({ doc: text, selection: import_state5.EditorSelection.cursor(text.length), extensions: this.extensions }));
     } finally {
       this.resetting = false;
     }
@@ -9971,10 +11901,31 @@ var CodeMirrorInput = class {
   }
   setSelectionRange(start, end) {
     const len = this.view.state.doc.length;
-    this.view.dispatch({ selection: import_state4.EditorSelection.single(Math.min(start, len), Math.min(end, len)) });
+    this.view.dispatch({ selection: import_state5.EditorSelection.single(Math.min(start, len), Math.min(end, len)) });
+  }
+  selectionRect() {
+    const v = this._view;
+    if (!v) return null;
+    const r3 = v.state.selection.main;
+    const a = v.coordsAtPos(r3.from, 1);
+    const b = v.coordsAtPos(r3.to, -1);
+    if (!a || !b) return null;
+    return { top: Math.min(a.top, b.top), bottom: Math.max(a.bottom, b.bottom), left: Math.min(a.left, b.left), right: Math.max(a.right, b.right) };
   }
   visibleSelection() {
     return visibleSelection2(this.view);
+  }
+  atEdge(dir) {
+    const v = this._view;
+    if (!v) return true;
+    const r3 = v.state.selection.main;
+    if (!r3.empty) return false;
+    if (dir === "left" || dir === "right") return v.moveByChar(r3, dir === "right").head === r3.head;
+    const next = v.moveVertically(r3, dir === "down");
+    if (next.head === r3.head) return true;
+    const a = v.coordsAtPos(r3.head);
+    const b = v.coordsAtPos(next.head);
+    return !!a && !!b && Math.abs(a.top - b.top) < 2;
   }
   focus() {
     this.syncRoot();
@@ -10015,7 +11966,96 @@ var CodeMirrorInput = class {
   }
 };
 
+// src/table/core/secret.ts
+var PREFIX_HIDDEN = "%%\u{1F510}\u03B3 ";
+var PREFIX_SHOWN = "\u{1F510}\u03B3 ";
+var PREFIX_HIDDEN_B = "%%\u{1F510}\u03B2 ";
+var PREFIX_SHOWN_B = "\u{1F510}\u03B2 ";
+var SUFFIX_HIDDEN = " \u{1F510}%%";
+var SUFFIX_SHOWN = " \u{1F510}";
+var HINT = "\u{1F4A1}";
+function parseSecret(text) {
+  const s = text.trim();
+  const prefix = [PREFIX_HIDDEN, PREFIX_SHOWN, PREFIX_HIDDEN_B, PREFIX_SHOWN_B].find((p) => s.startsWith(p));
+  if (!prefix) return null;
+  const shown = !prefix.startsWith("%%");
+  const v = prefix.includes("\u03B2") ? 2 : 3;
+  const suffix = shown ? SUFFIX_SHOWN : SUFFIX_HIDDEN;
+  if (!s.endsWith(suffix) || s.length < prefix.length + suffix.length) return null;
+  let body = s.slice(prefix.length, s.length - suffix.length);
+  let hint = "";
+  if (body.startsWith(HINT)) {
+    const end = body.indexOf(HINT, HINT.length);
+    if (end < 0) return null;
+    hint = body.slice(HINT.length, end);
+    body = body.slice(end + HINT.length);
+  }
+  if (!/^[A-Za-z0-9+/]+={0,2}$/.test(body) || body.length % 4 !== 0) return null;
+  return { data: body, hint, shown, v };
+}
+var SECRET_RUN = /(?:%%)?🔐[γβ] [\s\S]*? 🔐(?:%%)?/g;
+function secretParts(text) {
+  const parts = [];
+  let rest = text;
+  for (const m of text.match(SECRET_RUN) ?? []) {
+    const p = parseSecret(m);
+    if (!p) return null;
+    parts.push(p);
+    rest = rest.replace(m, "");
+  }
+  return rest.trim() ? null : parts;
+}
+function isSealed(text) {
+  return secretParts(text) !== null;
+}
+
 // src/table/editor/editor.ts
+var KIND_ICONS = { text: "type", status: "tag", multi: "tags", date: "calendar", num: "hash", bar: "percent", enc: "lock" };
+var ARROW_EDGE = {
+  ArrowUp: { edge: "up", dr: -1, dc: 0 },
+  ArrowDown: { edge: "down", dr: 1, dc: 0 },
+  ArrowLeft: { edge: "left", dr: 0, dc: -1 },
+  ArrowRight: { edge: "right", dr: 0, dc: 1 }
+};
+function secretCellsOf(t3) {
+  const out = [];
+  const end = rowCount(t3) - (hasTotal(t3) ? 1 : 0);
+  t3.meta.ty?.forEach((ty, c) => {
+    if (ty?.t !== "enc" || c >= colCount(t3)) return;
+    for (let r3 = headRows(t3); r3 < end; r3++) {
+      const m = mergeAt(t3, r3, c);
+      if (m && (m.r1 !== r3 || m.c1 !== c)) continue;
+      out.push([r3, c, t3.cells[r3][c]]);
+    }
+  });
+  return out;
+}
+function hasSecret(md) {
+  return md.includes("\u{1F510}") && !!md.trim() && isSealed(md);
+}
+function sealedCellsOf(t3) {
+  const out = /* @__PURE__ */ new Set();
+  for (const row of t3.cells) for (const v of row) if (hasSecret(v)) out.add(v);
+  return [...out];
+}
+function freshPlain(prev, next) {
+  if (!next.meta.ty?.some((x) => x?.t === "enc")) return false;
+  const had = new Set(secretCellsOf(prev).map((x) => x[2]));
+  return secretCellsOf(next).some(([, , v]) => !!v.trim() && !isSealed(v) && !had.has(v));
+}
+async function sealTable(t3, box) {
+  const todo = secretCellsOf(t3).filter(([, , v]) => v.trim() && !isSealed(v));
+  if (!todo.length) return t3;
+  const sealed = await Promise.all(todo.map(([, , v]) => box.seal(v)));
+  let n = t3;
+  todo.forEach(([r3, c], i) => n = editCell(n, r3, c, sealed[i]));
+  return n;
+}
+function clearClipboardLater(win, text) {
+  win.setTimeout(() => {
+    void win.navigator.clipboard.readText().then((now) => now === text ? win.navigator.clipboard.writeText("") : void 0).catch(() => void 0);
+  }, 3e4);
+}
 function sameTable(a, b) {
   return JSON.stringify([a.cells, a.align, a.meta]) === JSON.stringify([b.cells, b.align, b.meta]);
 }
@@ -10042,6 +12082,10 @@ var lastActive = null;
 function markActive(e) {
   lastActive = e;
 }
+function popupParent(doc) {
+  if (doc.body.classList.contains("is-mobile")) return doc.querySelector(".app-container") ?? doc.body;
+  return doc.body;
+}
 var TableEditor = class {
   constructor(parent, table, host) {
     this.host = host;
@@ -10066,12 +12110,23 @@ var TableEditor = class {
     this.marked = [];
     this.crossed = [];
     this.popover = null;
+    /** 上次提示「计算列不能改」的时间（一直打字时别一直弹） */
+    this.fxNoticeAt = 0;
     /** 编辑时的补全列表（[[ 链接、# 标签） */
     this.suggest = null;
+    /** 日期列编辑时的日历：view 是正在看的月份，picked 是格子里现在的日期 */
+    this.cal = null;
+    /** 这次编辑里打过字（日期列「自动识别日期写法」只换打过字的格子） */
+    this.typed = false;
+    /** 上次弹菜单的位置（列类型的二级菜单在同一处打开） */
+    this.menuAt = { x: 0, y: 0 };
     this.resize = null;
     this.destroyed = false;
     /** 横向滚动条占的高度（覆盖式滚动条是 0） */
     this.scrollbarH = 0;
+    /** 浮在可视区底边的横向滚动条（表格又宽又长、自己的滚动条在屏幕下面时才出来） */
+    this.hbar = null;
+    this.hbarSync = false;
     /** 列宽按比例缩放时缩了多少（1 = 没缩）；拖列宽时按它换算回文件里的宽度 */
     this.fitScale = 1;
     /** 上一次长按开菜单的时间（安卓随后还会来一次右键事件，忽略掉） */
@@ -10088,6 +12143,9 @@ var TableEditor = class {
      * 文字跟着挪、格子底色留在原地，表头变透明压在正文上（#15）
      */
     this.headShift = 0;
+    /** 显示过明文的格子（按密文记，锁上时清掉） */
+    this.revealed = /* @__PURE__ */ new Set();
+    this.decrypting = false;
     /** 十字高亮：悬停模式下鼠标所在的格子，否则（或鼠标不在表格上）选中的格子 */
     this.crossAt = null;
     // ---------- 格式栏 ----------
@@ -10136,10 +12194,20 @@ var TableEditor = class {
       const at = headRows(this.table);
       this.apply(insertRow(this.table, at), { r: at, c: this.sel?.c ?? 0 });
     });
-    this.root.addEventListener("pointerenter", () => this.root.classList.add("is-hot"));
-    this.root.addEventListener("pointerleave", () => this.root.classList.remove("is-hot"));
+    let leaveTimer = 0;
+    this.root.addEventListener("pointerenter", () => {
+      window.clearTimeout(leaveTimer);
+      this.root.classList.add("is-hot");
+    });
+    this.root.addEventListener("pointerleave", () => {
+      window.clearTimeout(leaveTimer);
+      leaveTimer = window.setTimeout(() => this.root.classList.remove("is-hot"), 400);
+    });
+    this.cleanups.push(() => window.clearTimeout(leaveTimer));
     this.root.classList.toggle("is-readonly", !!host.readonly);
     parent.appendChild(this.root);
+    const box = host.secrets?.();
+    if (box?.subscribe) this.cleanups.push(box.subscribe(() => this.refreshSecrets()));
     this.bind();
     this.render();
     this.watchScroll();
@@ -10240,6 +12308,12 @@ var TableEditor = class {
         this.apply(duplicateCol(tb, p.c), { r: p.r, c: p.c + 1 });
         return true;
       case "delete-row": {
+        if (rows === 1 && r3.r1 === 0) {
+          const n2 = deleteRow(tb, 0);
+          if (n2 === tb) return false;
+          this.apply(n2, { r: 0, c: p.c });
+          return true;
+        }
         if (r3.r1 === 0 || rowCount(tb) - rows < 2) return false;
         if (deleteRow(tb, r3.r2) === tb) return false;
         let n = tb;
@@ -10257,7 +12331,7 @@ var TableEditor = class {
       case "sort-asc":
       case "sort-desc":
         if (!canSortRows(tb)) return false;
-        this.apply(sortRows(tb, p.c, id === "sort-desc", this.hasTotalRow()), p);
+        this.apply(sortRows(tb, p.c, id === "sort-desc", this.hasTotalRow(), this.dateParser()), p);
         return true;
       case "merge-cells":
         if (!this.isMulti()) return false;
@@ -10337,6 +12411,8 @@ var TableEditor = class {
     this.hideMobileBar();
     if (lastActive === this) lastActive = null;
     this.destroyed = true;
+    this.hbar?.remove();
+    this.hbar = null;
     this.closePopover();
     this.closeSuggest();
     for (const f of this.cleanups) f();
@@ -10358,6 +12434,7 @@ var TableEditor = class {
         this.root.style.setProperty("--ggt-sb", `${bar}px`);
       }
       this.stickHeader();
+      this.placeHBar();
       this.placeHandles();
       if (this.resizeBar.classList.contains("is-touch")) this.placeTouchResize();
       if (this.root.classList.contains("is-freeze") && this.crossBands.some((b) => b.classList.contains("is-shown"))) this.markCross();
@@ -10372,17 +12449,17 @@ var TableEditor = class {
       if (this.outer) return true;
       if (!this.root.isConnected) return false;
       let first = null;
-      let found = null;
+      let found2 = null;
       for (let el2 = this.root.parentElement; el2; el2 = el2.parentElement) {
         const oy = win.getComputedStyle(el2).overflowY;
         if (oy !== "auto" && oy !== "scroll" || el2.classList.contains("el-table")) continue;
         first ?? (first = el2);
         if (el2.scrollHeight > el2.clientHeight + 1) {
-          found = el2;
+          found2 = el2;
           break;
         }
       }
-      const el = found ?? first;
+      const el = found2 ?? first;
       if (!el) return false;
       this.outer = el;
       if (win.CSS?.supports?.("animation-timeline: scroll()")) {
@@ -10415,6 +12492,57 @@ var TableEditor = class {
     this.cleanups.push(() => ro.disconnect());
   }
   /**
+   * 又长又宽的表格：横向滚动条在表格最底下，得先翻到底才拖得到（B 站 bili_70604431418）。
+   * 表格比页面宽、底边在可视区下面、上面还有一截露在可视区里时，在可视区底边浮出一条横向滚动条，和表格一起左右滚；
+   * 表格的底边滚进来了就收起，用表格自己那条。被缩放的脑图画布里、触屏上不出（触屏直接左右划）
+   */
+  placeHBar() {
+    const sc2 = this.scroller;
+    const outer = this.outer;
+    const win = this.root.ownerDocument.defaultView ?? window;
+    const hide = () => this.hbar?.classList.remove("is-shown");
+    if (!outer || !this.root.isConnected || sc2.scrollWidth <= sc2.clientWidth + 1 || Math.abs(this.scale() - 1) > 0.01 || win.matchMedia?.("(pointer: coarse)").matches) return hide();
+    const o = outer.getBoundingClientRect();
+    const r3 = sc2.getBoundingClientRect();
+    const bottom = Math.min(o.bottom, win.innerHeight);
+    if (r3.width === 0 || r3.bottom <= bottom || r3.top > bottom - 60) return hide();
+    const left = Math.max(r3.left, o.left);
+    const right = Math.min(r3.right, o.right);
+    if (right - left < 40) return hide();
+    let bar = this.hbar;
+    if (!bar) {
+      const doc = this.root.ownerDocument;
+      bar = doc.body.appendChild(doc.createElement("div"));
+      bar.className = "ggt-hbar";
+      bar.appendChild(doc.createElement("div")).className = "ggt-hbar-inner";
+      bar.addEventListener(
+        "scroll",
+        () => {
+          if (this.hbarSync) {
+            this.hbarSync = false;
+            return;
+          }
+          const b = bar;
+          sc2.scrollLeft = b.scrollLeft / Math.max(1, b.scrollWidth - b.clientWidth) * (sc2.scrollWidth - sc2.clientWidth);
+        },
+        { passive: true }
+      );
+      this.hbar = bar;
+    }
+    const inner = bar.firstElementChild;
+    const w = right - left;
+    inner.style.width = `${Math.round(sc2.scrollWidth / sc2.clientWidth * w)}px`;
+    bar.classList.add("is-shown");
+    bar.style.left = `${Math.round(left)}px`;
+    bar.style.width = `${Math.round(w)}px`;
+    bar.style.top = `${Math.round(bottom - bar.offsetHeight)}px`;
+    const target = sc2.scrollLeft / Math.max(1, sc2.scrollWidth - sc2.clientWidth) * Math.max(0, bar.scrollWidth - bar.clientWidth);
+    if (Math.abs(bar.scrollLeft - target) > 1) {
+      this.hbarSync = true;
+      bar.scrollLeft = target;
+    }
+  }
+  /**
    * 编辑器被整体缩放了多少（脑图画布用 transform: scale 缩放，getBoundingClientRect 量到的是屏幕像素）。
    * 屏幕上量出来的距离要除以它，才是写进 style 的 CSS 像素
    */
@@ -10441,8 +12569,8 @@ var TableEditor = class {
     this.root.classList.toggle("is-native-stick", native);
     if (native && outer) {
       this.root.classList.remove("is-sd");
-      const pad = parseFloat((outer.ownerDocument.defaultView ?? window).getComputedStyle(outer).paddingTop) || 0;
-      this.root.style.setProperty("--ggt-sticky-top", `${-pad}px`);
+      const pad2 = parseFloat((outer.ownerDocument.defaultView ?? window).getComputedStyle(outer).paddingTop) || 0;
+      this.root.style.setProperty("--ggt-sticky-top", `${-pad2}px`);
       this.moveHead(head, 0);
       return;
     }
@@ -10576,10 +12704,15 @@ var TableEditor = class {
         if (tb.meta.headerCol && c === 0 && r3 >= head) cell.classList.add("is-head-col");
         if (freeze && c === 0 && (!m || m.c2 === 0)) cell.classList.add("is-frozen");
         if (!m && !widthOf(tb, c)) cell.classList.add("is-auto-width");
+        else if (!m) cell.classList.add("is-set-width");
         const content = cell.appendChild(doc.createElement("div"));
         content.className = "ggt-content";
         if (r3 === all - 1 && r3 >= head && hasTotal(tb)) cell.classList.add("is-total-row");
+        const ty = colTypeOf(tb, c);
+        if (ty && r3 >= head) cell.dataset.ty = ty.t;
         this.fillCell(content, r3, c, m ? mergedText(tb, m) : tb.cells[r3][c]);
+        if (formulaOf(tb, c)) this.markFx(cell, r3, c);
+        if (cell.classList.contains("is-total-row")) this.markCalc(cell, content, c);
       }
     }
     if (folded) {
@@ -10610,7 +12743,41 @@ var TableEditor = class {
   /** 状态列的数据格画成彩色标签，别的照常 */
   fillCell(el, r3, c, md) {
     const opts = this.table.meta.opts?.[c];
+    const ty = colTypeOf(this.table, c);
     const isData = r3 >= headRows(this.table) && !(hasTotal(this.table) && r3 === rowCount(this.table) - 1);
+    if (ty?.t === "enc" && isData || hasSecret(md)) return this.fillSecret(el, md);
+    if (el.title === t2("encPlain") || el.title === t2("encForeign")) el.removeAttribute("title");
+    el.classList.remove("is-unsealed");
+    if (opts && ty?.t === "multi" && isData && md.trim()) {
+      el.replaceChildren();
+      el.classList.remove("is-empty");
+      const wrap2 = el.appendChild(el.ownerDocument.createElement("span"));
+      wrap2.className = "ggt-pills";
+      for (const v of splitTags(md)) {
+        const pill = wrap2.appendChild(el.ownerDocument.createElement("span"));
+        pill.className = "ggt-pill";
+        pill.dataset.c = opts[v] ?? "gray";
+        pill.textContent = v;
+      }
+      return;
+    }
+    const prog = ty?.t === "bar" && isData ? readProgress(md) : null;
+    if (prog !== null) {
+      el.replaceChildren();
+      el.classList.remove("is-empty");
+      const bar = el.appendChild(el.ownerDocument.createElement("span"));
+      bar.className = "ggt-bar";
+      if (prog >= 1) bar.dataset.done = "1";
+      const track = bar.appendChild(el.ownerDocument.createElement("span"));
+      track.className = "ggt-bar-track";
+      const fill = track.appendChild(el.ownerDocument.createElement("span"));
+      fill.className = "ggt-bar-fill";
+      fill.setCssProps({ "--ggt-p": `${Math.round(Math.max(0, Math.min(1, prog)) * 1e3) / 10}%` });
+      const label = bar.appendChild(el.ownerDocument.createElement("span"));
+      label.className = "ggt-bar-text";
+      label.textContent = md.trim();
+      return;
+    }
     if (opts && isData && md.trim()) {
       el.replaceChildren();
       el.classList.remove("is-empty");
@@ -10621,6 +12788,11 @@ var TableEditor = class {
       return;
     }
     this.fill(el, md);
+    const daily = ty?.t === "date" && isData && md.trim() ? this.dailyNote() : null;
+    const notDate = ty?.t === "date" && isData && !!md.trim() && !readDate(md, daily ? (n) => daily.parse(n) : void 0);
+    el.classList.toggle("is-not-date", notDate);
+    if (notDate) el.title = t2("notDate");
+    else if (el.title === t2("notDate")) el.removeAttribute("title");
   }
   fill(el, md) {
     el.replaceChildren();
@@ -10651,6 +12823,250 @@ var TableEditor = class {
       el.textContent = md;
       if (this.host.renderMarkdown) el.dir = "auto";
     }
+  }
+  // ---------- 加密列 ----------
+  /** 这一格要按加密处理：加密列的数据格（表头、合计行不算），或者单独加密过的格子 */
+  isSecretCell(p) {
+    const tb = this.table;
+    if (hasSecret(tb.cells[p.r]?.[p.c] ?? "")) return true;
+    return colTypeOf(tb, p.c)?.t === "enc" && p.r >= headRows(tb) && !(hasTotal(tb) && p.r === rowCount(tb) - 1);
+  }
+  /**
+   * 加密格子：锁着画 ••••••（旁边一把锁，点了解锁）；解锁后还是 ••••••，旁边的眼睛显示明文、复制按钮复制明文。
+   * 还没加密的明文照常显示，标出来
+   */
+  fillSecret(el, md) {
+    const doc = el.ownerDocument;
+    el.replaceChildren();
+    el.classList.remove("is-empty", "is-not-date", "is-unsealed");
+    el.removeAttribute("title");
+    if (!md.trim()) {
+      el.classList.add("is-empty");
+      return;
+    }
+    if (!isSealed(md)) {
+      this.fill(el, md);
+      el.classList.add("is-unsealed");
+      el.title = t2("encPlain");
+      return;
+    }
+    const box = this.host.secrets?.() ?? null;
+    const plain2 = box?.peek(md);
+    if (box?.unlocked && plain2 === void 0) this.decryptSoon();
+    const wrap2 = el.appendChild(doc.createElement("span"));
+    wrap2.className = "ggt-secret";
+    const shown = typeof plain2 === "string" && this.revealed.has(md);
+    if (shown) {
+      const text = wrap2.appendChild(doc.createElement("span"));
+      text.className = "ggt-secret-text";
+      this.fill(text, plain2);
+    } else {
+      const mask = wrap2.appendChild(doc.createElement("span"));
+      mask.className = "ggt-secret-mask";
+      mask.textContent = "\u2022\u2022\u2022\u2022\u2022\u2022";
+      if (plain2 === null) {
+        wrap2.classList.add("is-foreign");
+        el.title = t2("encForeign");
+      }
+    }
+    const btn = (act, icon2, label) => {
+      const b = wrap2.appendChild(doc.createElement("button"));
+      b.type = "button";
+      b.tabIndex = -1;
+      b.className = "ggt-secret-btn clickable-icon";
+      b.dataset.act = act;
+      b.setAttribute("aria-label", label);
+      if (this.host.setIcon) this.host.setIcon(b, icon2);
+      else b.textContent = act === "unlock" ? "\u{1F512}" : act === "copy" ? "\u29C9" : "\u{1F441}";
+    };
+    if (!box) return;
+    if (!box.unlocked) btn("unlock", "lock", t2("encUnlock"));
+    else if (typeof plain2 === "string") {
+      btn("toggle", shown ? "eye-off" : "eye", t2(shown ? "encHide" : "encShow"));
+      btn("copy", "copy", t2("encCopy"));
+    }
+  }
+  /** 表里加密的格子的原文（加密列的、单独加密的） */
+  secretCells() {
+    return sealedCellsOf(this.table);
+  }
+  /** 解锁着、还有没解开的格子：解开后重画加密列 */
+  decryptSoon() {
+    const box = this.host.secrets?.();
+    if (this.decrypting || !box?.unlocked) return;
+    this.decrypting = true;
+    void box.openAll(this.secretCells()).then((fresh) => {
+      this.decrypting = false;
+      if (fresh && !this.destroyed) this.refillSecrets();
+    });
+  }
+  /** 加密列和单独加密的格子重新画一遍（正在编辑的那格不动） */
+  refillSecrets() {
+    const done = /* @__PURE__ */ new Set();
+    const tb = this.table;
+    const todo = secretCellsOf(tb).map(([r3, c]) => ({ r: r3, c }));
+    tb.cells.forEach((row, r3) => row.forEach((v, c) => hasSecret(v) && todo.push({ r: r3, c })));
+    for (const { r: r3, c } of todo) {
+      if (this.editing && this.sel && this.sel.r === r3 && this.sel.c === c) continue;
+      const cell = this.cellEl({ r: r3, c });
+      const content = cell?.querySelector(".ggt-content");
+      if (!cell || !content || done.has(cell)) continue;
+      done.add(cell);
+      const m = mergeAt(this.table, r3, c);
+      this.fillCell(content, r3, c, m ? mergedText(this.table, m) : this.table.cells[r3][c]);
+    }
+    this.refreshCross();
+  }
+  /** 主密码锁上、解锁了（refreshSecretCells 调） */
+  refreshSecrets() {
+    if (!this.table.meta.ty?.some((x) => x?.t === "enc") && !sealedCellsOf(this.table).length) return;
+    if (!this.host.secrets?.()?.unlocked) this.revealed.clear();
+    this.refillSecrets();
+  }
+  async secretButton(act, p) {
+    const box = this.host.secrets?.();
+    if (!box) return;
+    const raw = this.table.cells[p.r]?.[p.c] ?? "";
+    if (act === "unlock") {
+      if (await box.unlock(this.secretCells())) await box.openAll(this.secretCells());
+      this.refillSecrets();
+      return;
+    }
+    const plain2 = box.peek(raw);
+    if (typeof plain2 !== "string") return;
+    box.touch();
+    if (act === "toggle") {
+      if (this.revealed.has(raw)) this.revealed.delete(raw);
+      else this.revealed.add(raw);
+      this.refillSecrets();
+    } else if (act === "copy") this.copySecret(plain2);
+  }
+  /** 复制明文，30 秒后从剪贴板清掉 */
+  copySecret(plain2) {
+    const win = this.root.ownerDocument.defaultView ?? window;
+    void win.navigator.clipboard.writeText(plain2).then(() => {
+      this.host.notice?.(t2("encCopied"));
+      clearClipboardLater(win, plain2);
+    });
+  }
+  /** 锁着（或还没解开）时要编辑加密格子：先解锁、解开，再进编辑（打进来的第一个字留着） */
+  async secretEditLater(p, keep, typedText) {
+    const box = this.host.secrets?.();
+    if (!box || !await box.unlock(this.secretCells())) return;
+    await box.openAll(this.secretCells());
+    this.refillSecrets();
+    if (this.destroyed || this.editing || !this.sel || this.sel.r !== p.r || this.sel.c !== p.c) return;
+    this.input.focus();
+    if (typedText) {
+      this.input.reset(typedText);
+      const end = typedText.length;
+      this.input.setSelectionRange(end, end);
+      this.startEdit(false);
+    } else if (keep) this.startEdit(true);
+  }
+  /**
+   * 加密格子提交：空的照常写（plain）；明文没变不写（same）；变了加密后再写（async，加密好了自己写回）。
+   * 加密的时候表格被别处改了这一格，就不写（提示重新输入）
+   */
+  secretCommit(p, text) {
+    const raw = this.table.cells[p.r][p.c];
+    if (!text) return "plain";
+    const before = isSealed(raw) ? this.host.secrets?.()?.peek(raw) : raw;
+    if (before === text) return isSealed(raw) ? "same" : "plain";
+    const box = this.host.secrets?.();
+    if (!box) {
+      this.host.notice?.(t2("encNoHost"));
+      return "same";
+    }
+    void (async () => {
+      if (!box.unlocked && !await box.unlock(this.secretCells())) {
+        this.host.notice?.(t2("encNotSaved"));
+        return;
+      }
+      const sealed = await box.seal(text);
+      if (this.destroyed) return;
+      const cur = this.table;
+      if (cur.cells[p.r]?.[p.c] !== raw) {
+        this.host.notice?.(t2("encChanged"));
+        return;
+      }
+      if (this.revealed.has(raw)) this.revealed.add(sealed);
+      const next = normalize2(editCell(cur, p.r, p.c, sealed));
+      this.table = next;
+      if (!(this.editing && this.sel?.r === p.r && this.sel?.c === p.c)) this.restoreContent(p);
+      this.host.onChange(next, cur);
+    })();
+    return "async";
+  }
+  /** 改动带着加密列里的新明文：解锁、加密好再写回（base 是改之前的表，等的时候表又变了就不写） */
+  async sealThenApply(base, next, sel) {
+    const box = this.host.secrets?.();
+    if (!box) {
+      this.host.notice?.(t2("encNoHost"));
+      return;
+    }
+    if (!await box.unlock([...this.secretCells(), ...secretCellsOf(next).map((x) => x[2])])) {
+      this.host.notice?.(t2("encNotSaved"));
+      return;
+    }
+    const sealed = await sealTable(next, box);
+    if (this.destroyed) return;
+    if (this.table !== base) {
+      this.host.notice?.(t2("encChanged"));
+      return;
+    }
+    this.applyNow(sealed, sel);
+  }
+  /** 普通列改成加密列：已有的内容全部加密 */
+  async toSecretCol(c, p) {
+    const box = this.host.secrets?.();
+    if (!box) return;
+    if (this.editing) this.commit();
+    const base = this.table;
+    if (!await box.unlock(secretCellsOf(setColKind(base, c, "enc")).map((x) => x[2]))) return;
+    const sealed = await sealTable(setColKind(base, c, "enc"), box);
+    if (this.destroyed || this.table !== base) return;
+    this.applyNow(normalize2(sealed), p);
+  }
+  /** 加密列改成别的类型：问一下，解密成明文写回 */
+  async fromSecretCol(c, kind, p) {
+    const box = this.host.secrets?.();
+    if (this.editing) this.commit();
+    const base = this.table;
+    const cells = secretCellsOf(base).filter(([, cc, v]) => cc === c && v.trim() && isSealed(v));
+    if (cells.length) {
+      if (!box || !this.host.confirm || !await this.host.confirm(t2("encDecryptConfirm"), t2("encDecryptOk"))) return;
+      if (!await box.unlock(cells.map((x) => x[2]))) return;
+      await box.openAll(cells.map((x) => x[2]));
+      if (cells.some(([, , v]) => typeof box.peek(v) !== "string")) {
+        this.host.notice?.(t2("encForeignAbort"));
+        return;
+      }
+    }
+    if (this.destroyed || this.table !== base) return;
+    let n = base;
+    for (const [r3, cc, v] of cells) n = editCell(n, r3, cc, box?.peek(v) ?? v);
+    this.applyNow(normalize2(setColKind(n, c, kind)), p);
+  }
+  /** 列菜单里加密列的几项：加密还没加密的格子、锁定 */
+  secretColItems(c) {
+    if (colTypeOf(this.table, c)?.t !== "enc") return [];
+    const box = this.host.secrets?.();
+    const items = [];
+    const base = this.table;
+    if (box && secretCellsOf(base).some(([, cc, v]) => cc === c && v.trim() && !isSealed(v)))
+      items.push({
+        title: t2("encSealCol"),
+        icon: "lock",
+        disabled: !!this.host.readonly,
+        run: () => void (async () => {
+          if (!await box.unlock(this.secretCells())) return;
+          const sealed = await sealTable(base, box);
+          if (!this.destroyed && this.table === base) this.applyNow(normalize2(sealed), this.sel ?? void 0);
+        })()
+      });
+    if (box?.unlocked) items.push({ title: t2("encLock"), icon: "lock-keyhole", run: () => box.lock() });
+    return items;
   }
   /** 格子元素；落在合并区域里的取左上角那格 */
   cellEl(p) {
@@ -10850,16 +13266,55 @@ var TableEditor = class {
     if (!this.sel || this.host.readonly) return;
     const cell = this.cellEl(this.sel);
     if (!cell) return;
+    if (isFxCell(this.table, this.sel.r, this.sel.c)) {
+      this.input.reset("");
+      if (Date.now() - this.fxNoticeAt > 1500) {
+        this.fxNoticeAt = Date.now();
+        this.host.notice?.(t2("fxLocked"));
+      }
+      return;
+    }
+    let plain2 = null;
+    if (this.isSecretCell(this.sel)) {
+      const raw = this.table.cells[this.sel.r][this.sel.c];
+      const box = this.host.secrets?.() ?? null;
+      const typedText = keep ? "" : this.input.value;
+      if (!box) {
+        this.input.reset("");
+        this.host.notice?.(t2("encNoHost"));
+        return;
+      }
+      if (isSealed(raw)) {
+        const v = box.peek(raw);
+        if (v === void 0) {
+          this.input.reset("");
+          void this.secretEditLater(this.sel, keep, typedText);
+          return;
+        }
+        if (v === null) {
+          this.input.reset("");
+          this.host.notice?.(t2("encForeign"));
+          return;
+        }
+        plain2 = v;
+      } else if (!box.unlocked) {
+        this.input.reset("");
+        void this.secretEditLater(this.sel, keep, typedText);
+        return;
+      }
+      box.touch();
+    }
     if (this.anchor) {
       this.anchor = null;
       this.markSel();
     }
     this.editing = true;
+    this.typed = false;
     cell.classList.add("is-editing");
     this.fillHandle.classList.remove("is-shown");
     this.showMobileBar();
     if (keep) {
-      this.input.reset(shownText(this.table, this.sel.r, this.sel.c));
+      this.input.reset(plain2 ?? shownText(this.table, this.sel.r, this.sel.c));
       const end = this.input.value.length;
       this.input.setSelectionRange(end, end);
     }
@@ -10897,22 +13352,46 @@ var TableEditor = class {
     const p = this.sel;
     this.editing = false;
     this.cellEl(p)?.classList.remove("is-editing");
-    const text = this.input.value.replace(/\r\n?/g, "\n");
+    const text = this.smartDate(p, this.input.value.replace(/\r\n?/g, "\n").replace(/^\s+|\s+$/g, ""));
     this.input.reset("");
-    const edited = editCell(this.table, p.r, p.c, text.replace(/^\s+|\s+$/g, ""));
+    const secret = this.isSecretCell(p) ? this.secretCommit(p, text) : "plain";
+    if (secret !== "plain") {
+      const pending2 = this.pending;
+      this.pending = null;
+      if (pending2) {
+        this.table = pending2;
+        this.render();
+      } else this.restoreContent(p);
+      return;
+    }
+    const edited = editCell(this.table, p.r, p.c, text);
     const next = edited === this.table ? edited : normalize2(edited);
     const pending = this.pending;
     this.pending = null;
     if (next !== this.table) {
       const prev = this.table;
       this.table = next;
-      if (hasTotal(next) || next.meta.opts?.some(Boolean)) this.render();
+      if (hasTotal(next) || next.meta.opts?.some(Boolean) || next.meta.fx?.some(Boolean)) this.render();
       else this.restoreContent(p);
       this.host.onChange(next, prev);
     } else if (pending) {
       this.table = pending;
       this.render();
     } else this.restoreContent(p);
+  }
+  /**
+   * 日期列里改过的一格：整格是 1/5、2026年1月5日、20260105、今天 这类写法时，换成这一列的写法（日记链接列写成 [[日记]]）。
+   * 这次没打过字的不动：以前存的「今天」进编辑再按 Enter，不会被换成那一天
+   */
+  smartDate(p, text) {
+    const ty = colTypeOf(this.table, p.c);
+    if (ty?.t !== "date" || this.host.smartDate?.() === false || !text || !this.typed) return text;
+    if (p.r < headRows(this.table) || hasTotal(this.table) && p.r === rowCount(this.table) - 1 || formulaOf(this.table, p.c)) return text;
+    const now = /* @__PURE__ */ new Date();
+    const v = parseLooseDate(text, { y: now.getFullYear(), m: now.getMonth() + 1, d: now.getDate() });
+    if (!v) return text;
+    const daily = ty.f === "link" ? this.dailyNote() : null;
+    return writeDate(v, ty.f, daily ? (x) => daily.name(x) : void 0);
   }
   cancel() {
     this.closeSuggest();
@@ -10941,6 +13420,15 @@ var TableEditor = class {
   apply(nextRaw, sel) {
     if (this.editing) this.commit();
     const next = nextRaw === this.table ? nextRaw : normalize2(nextRaw);
+    if (next === this.table) return;
+    if (freshPlain(this.table, next)) {
+      void this.sealThenApply(this.table, next, sel);
+      return;
+    }
+    this.applyNow(next, sel);
+  }
+  /** 写回一张已经整理好（normalize 过、加密列都是密文）的表 */
+  applyNow(next, sel) {
     if (next === this.table) return;
     const prev = this.table;
     this.table = next;
@@ -11007,6 +13495,7 @@ var TableEditor = class {
       input: () => {
         if (!this.editing) this.startEdit(false);
         else this.autosize();
+        this.typed = true;
         this.updateSuggest();
         this.updateFormatBar();
       },
@@ -11040,7 +13529,18 @@ var TableEditor = class {
     const doc = this.root.ownerDocument;
     this.on(this.tableEl, "pointerdown", (ev) => {
       const target = ev.target;
-      if (this.input.contains(target)) return;
+      if (this.input.contains(target)) {
+        if (ev.pointerType === "touch" && this.editing && this.sel && !this.host.readonly && !this.input.value.trim()) {
+          this.touched = true;
+          this.touchStart(ev, this.sel);
+        }
+        return;
+      }
+      if (target.closest(".ggt-secret-btn")) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        return;
+      }
       const cell = target.closest(".ggt-cell");
       if (!cell || this.host.readonly) return;
       if (target.closest("a, .tag, input[type=checkbox]")) return;
@@ -11050,6 +13550,7 @@ var TableEditor = class {
         return this.touchStart(ev, p);
       }
       this.host.dismissMenus?.();
+      if (ev.button === 1) return;
       ev.preventDefault();
       if (ev.button !== 0) return;
       if (ev.shiftKey && this.sel) {
@@ -11077,6 +13578,14 @@ var TableEditor = class {
       const link2 = ev.target.closest("a.internal-link");
       const href = link2?.dataset.href ?? link2?.getAttribute("href");
       if (link2 && href) this.host.hoverLink?.(ev, href, link2);
+    });
+    this.on(this.tableEl, "click", (ev) => {
+      const btn = ev.target.closest(".ggt-secret-btn");
+      const cell = btn?.closest(".ggt-cell");
+      if (!btn || !cell) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      void this.secretButton(btn.dataset.act ?? "", { r: Number(cell.dataset.r), c: Number(cell.dataset.c) });
     });
     this.on(this.tableEl, "click", (ev) => {
       const box = ev.target.closest("input.ggt-check");
@@ -11139,6 +13648,12 @@ var TableEditor = class {
       });
     });
     this.on(this.resizeBar, "pointerdown", (ev) => this.startResize(ev, this.resizeBar));
+    for (const type of ["touchstart", "touchmove"]) {
+      this.on(this.resizeBar, type, (ev) => {
+        ev.stopPropagation();
+        if (type === "touchmove" && ev.cancelable) ev.preventDefault();
+      }, { passive: false });
+    }
     this.on(this.fillHandle, "pointerdown", (ev) => this.fillDrag(ev));
     this.on(this.root, "ggt-restyle", () => {
       this.refreshInput();
@@ -11198,11 +13713,22 @@ var TableEditor = class {
     this.bindInput();
     this.cleanups.push(() => this.input.destroy());
     this.on(doc, "scroll", () => this.formatBar && this.updateFormatBar(), { capture: true, passive: true });
+    this.on(doc, "touchstart", (ev) => {
+      const t3 = ev.touches[0];
+      const fl = t3 ? this.floatingAt(t3.clientX, t3.clientY) : null;
+      if (fl && !fl.contains(ev.target) && ev.cancelable) ev.preventDefault();
+    }, { capture: true, passive: false });
     this.on(doc, "pointerdown", (ev) => {
       const target = ev.target;
       if (this.formatBar?.contains(target)) return;
       if (this.mobileBar?.contains(target)) return;
-      if (this.suggest?.el.contains(target)) return;
+      if (this.suggest?.el.contains(target) || this.cal?.el.contains(target)) return;
+      const fl = this.floatingAt(ev.clientX, ev.clientY);
+      if (fl && !fl.contains(target) && this.tapPopoverAt(ev.clientX, ev.clientY)) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        return;
+      }
       if (this.popover && !this.popover.contains(target)) this.closePopover();
       if (this.sel && !this.root.contains(target) && !(this.popover && this.popover.contains(target))) {
         if (this.editing) this.commit();
@@ -11211,8 +13737,47 @@ var TableEditor = class {
       }
     }, { capture: true });
   }
+  /** 挂在页面上的浮层（菜单、格式栏、手机工具条、补全列表、日历）里，坐标落在哪一个上 */
+  floatingAt(x, y) {
+    for (const el of [this.popover, this.formatBar, this.mobileBar, this.suggest?.el, this.cal?.el]) {
+      if (!el || !el.isConnected) continue;
+      const r3 = el.getBoundingClientRect();
+      if (r3.width && x >= r3.left && x <= r3.right && y >= r3.top && y <= r3.bottom) return el;
+    }
+    return null;
+  }
+  /** 坐标在开着的菜单里：按位置找到菜单里的按钮（色块、对齐按钮、菜单项）点它，返回 true；不在菜单里返回 false */
+  tapPopoverAt(x, y) {
+    if (!Number.isFinite(x)) return false;
+    const pop = this.floatingAt(x, y);
+    if (!pop) return false;
+    let hit = pop;
+    let area = Infinity;
+    for (const el of Array.from(pop.querySelectorAll("*"))) {
+      const br = el.getBoundingClientRect();
+      if (!br.width || !br.height || x < br.left || x > br.right || y < br.top || y > br.bottom) continue;
+      if (br.width * br.height <= area) {
+        area = br.width * br.height;
+        hit = el;
+      }
+    }
+    const target = hit.closest("button, input, select, textarea, [role=menuitem], [role=option], [role=button]") ?? hit;
+    if (target.tagName === "BUTTON" && target.disabled) return true;
+    if (/^(INPUT|SELECT|TEXTAREA)$/.test(target.tagName)) {
+      target.focus();
+      return true;
+    }
+    const win = target.ownerDocument.defaultView ?? window;
+    const init = { bubbles: true, cancelable: true, composed: true, clientX: x, clientY: y, button: 0 };
+    target.dispatchEvent(new win.PointerEvent("pointerdown", { ...init, pointerType: "touch", isPrimary: true }));
+    target.dispatchEvent(new win.MouseEvent("mousedown", init));
+    target.dispatchEvent(new win.PointerEvent("pointerup", { ...init, pointerType: "touch", isPrimary: true }));
+    target.dispatchEvent(new win.MouseEvent("mouseup", init));
+    target.dispatchEvent(new win.MouseEvent("click", init));
+    return true;
+  }
   onKey(ev) {
-    if (ev.isComposing || ev.keyCode === 229) return;
+    if (ev.isComposing || ev.key === "Process") return;
     const mod = ev.metaKey || ev.ctrlKey;
     if (this.editing) {
       if (this.suggest && this.onSuggestKey(ev)) {
@@ -11225,7 +13790,12 @@ var TableEditor = class {
         ev.stopPropagation();
         return;
       }
-      if (ev.key === "Enter" && !ev.shiftKey && !ev.altKey && !mod) {
+      const arrow = ARROW_EDGE[ev.key];
+      if (arrow && !ev.shiftKey && !ev.altKey && !mod && this.input.atEdge(arrow.edge)) {
+        ev.preventDefault();
+        this.commit();
+        this.move(arrow.dr, arrow.dc);
+      } else if (ev.key === "Enter" && !ev.shiftKey && !ev.altKey && !mod) {
         ev.preventDefault();
         this.commit();
         this.move(1, 0);
@@ -11401,7 +13971,7 @@ var TableEditor = class {
   /** 编辑中选中了文字、宿主给了颜色：在这一格上方显示格式栏；否则收起 */
   updateFormatBar() {
     const el = this.input;
-    const colors = this.editing && !this.host.readonly && this.sel && el.selectionStart !== el.selectionEnd ? this.host.formatColors?.() : null;
+    const colors = this.editing && !this.host.readonly && this.sel && el.selectionStart !== el.selectionEnd ? this.host.formatColors?.(this.root) : null;
     const cell = colors && this.sel ? this.cellEl(this.sel) : null;
     if (!colors || !cell) return this.hideFormatBar();
     const key = JSON.stringify(colors);
@@ -11412,13 +13982,34 @@ var TableEditor = class {
     }
     const bar = this.formatBar;
     const win = this.root.ownerDocument.defaultView ?? window;
-    const r3 = cell.getBoundingClientRect();
+    const cr = cell.getBoundingClientRect();
+    const sr = this.input.selectionRect();
+    const vis = this.clipBox(cell, win);
+    const top0 = Math.max(sr ? sr.top : cr.top, vis.top);
+    const bottom0 = Math.min(sr ? sr.bottom : cr.bottom, vis.bottom);
+    const cx = sr ? (sr.left + sr.right) / 2 : cr.left + cr.width / 2;
     const w = bar.offsetWidth;
     const h = bar.offsetHeight;
-    const left = Math.max(8, Math.min(win.innerWidth - w - 8, r3.left + r3.width / 2 - w / 2));
-    const top = r3.top - h - 6 >= 8 ? r3.top - h - 6 : r3.bottom + 6;
+    const left = Math.max(8, Math.min(win.innerWidth - w - 8, cx - w / 2));
+    let top;
+    if (top0 - h - 6 >= 8) top = top0 - h - 6;
+    else if (bottom0 + 6 + h <= win.innerHeight - 8) top = bottom0 + 6;
+    else top = Math.max(8, Math.min(win.innerHeight - h - 8, vis.top + 6));
     bar.style.left = `${Math.round(left)}px`;
     bar.style.top = `${Math.round(top)}px`;
+  }
+  /** 元素看得见的那块：窗口和外面每一层会裁剪内容的框（overflow 不是 visible）的交集 */
+  clipBox(el, win) {
+    let top = 0;
+    let bottom = win.innerHeight;
+    for (let p = el.parentElement; p && p !== el.ownerDocument.body; p = p.parentElement) {
+      const cs = win.getComputedStyle(p);
+      if (cs.overflowY === "visible" && cs.overflowX === "visible") continue;
+      const r3 = p.getBoundingClientRect();
+      top = Math.max(top, r3.top);
+      bottom = Math.min(bottom, r3.bottom);
+    }
+    return bottom > top ? { top, bottom } : { top: 0, bottom: win.innerHeight };
   }
   hideFormatBar() {
     this.formatBar?.remove();
@@ -11429,7 +14020,7 @@ var TableEditor = class {
     const el = this.input;
     const { from, to } = el.visibleSelection();
     if (from === to) return;
-    const r3 = applyInlineFormat2(el.value, from, to, fmt2);
+    const r3 = applyFormat2(el.value, from, to, fmt2);
     if (r3.text !== el.value) {
       el.value = r3.text;
       el.setSelectionRange(r3.start, r3.end);
@@ -11564,7 +14155,7 @@ var TableEditor = class {
       }
       const cur = this.table.cells[pos.r]?.[pos.c];
       if (cur === void 0) return;
-      const r3 = applyInlineFormat2(cur, from, to, fmt2);
+      const r3 = applyFormat2(cur, from, to, fmt2);
       if (r3.text !== cur) this.apply(setCell(this.table, pos.r, pos.c, r3.text), pos);
     };
   }
@@ -11714,7 +14305,30 @@ var TableEditor = class {
       query = tag2[1];
       start = before.length - tag2[1].length;
     }
-    const opts = this.sel && this.sel.r >= headRows(this.table) ? this.table.meta.opts?.[this.sel.c] : null;
+    const dataRow = !!this.sel && this.sel.r >= headRows(this.table) && !(hasTotal(this.table) && this.sel.r === rowCount(this.table) - 1);
+    if (!kind && dataRow && this.sel && colTypeOf(this.table, this.sel.c)?.t === "date") {
+      this.closeSuggestList();
+      this.showCalendar();
+      return;
+    }
+    this.closeCalendar();
+    const opts = dataRow && this.sel ? this.table.meta.opts?.[this.sel.c] : null;
+    let multi;
+    if (!kind && opts && this.sel && colTypeOf(this.table, this.sel.c)?.t === "multi") {
+      const caret = el.selectionStart;
+      const v = el.value;
+      const segStart = Math.max(v.lastIndexOf(",", caret - 1), v.lastIndexOf("\uFF0C", caret - 1), v.lastIndexOf("\u3001", caret - 1)) + 1;
+      const restSep = v.slice(caret).search(/[,，、]/);
+      const segEnd = restSep < 0 ? v.length : caret + restSep;
+      multi = { before: splitTags(v.slice(0, segStart)), after: splitTags(v.slice(segEnd)) };
+      const q = v.slice(segStart, segEnd).trim();
+      const chosen = /* @__PURE__ */ new Set([...multi.before, ...multi.after]);
+      const left = Object.keys(opts).filter((x) => !chosen.has(x));
+      const items2 = !q || opts[q] ? left.filter((x) => x !== q) : left.filter((x) => x.toLowerCase().includes(q.toLowerCase()));
+      if (!items2.length) return this.closeSuggest();
+      this.openSuggestList("option", segStart, items2, multi);
+      return;
+    }
     if (!kind && opts) {
       kind = "option";
       query = el.value.trim();
@@ -11725,13 +14339,18 @@ var TableEditor = class {
       !query || opts[query] ? Object.keys(opts) : Object.keys(opts).filter((x) => x.toLowerCase().includes(query.toLowerCase()))
     ) : [];
     if (!kind || !items.length) return this.closeSuggest();
+    this.openSuggestList(kind, start, items);
+  }
+  /** 补全列表：multi（多选列）时默认不选中任何一项，Enter 照常完成编辑，按 ↓ 才挑 */
+  openSuggestList(kind, start, items, multi) {
     const doc = this.root.ownerDocument;
     const box = this.suggest?.el ?? doc.body.appendChild(doc.createElement("div"));
     box.className = "ggt-suggest";
     box.replaceChildren();
+    const first = multi ? -1 : 0;
     items.forEach((it, i) => {
       const row = box.appendChild(doc.createElement("div"));
-      row.className = "ggt-suggest-item" + (i === 0 ? " is-active" : "");
+      row.className = "ggt-suggest-item" + (i === first ? " is-active" : "");
       row.textContent = kind === "tag" ? `#${it}` : it;
       row.addEventListener("pointerdown", (e) => {
         e.preventDefault();
@@ -11742,18 +14361,22 @@ var TableEditor = class {
     const cell = this.sel && this.cellEl(this.sel);
     const r3 = (cell ?? this.input.el).getBoundingClientRect();
     box.setAttribute("style", `left:${Math.round(r3.left)}px;top:${Math.round(r3.bottom + 4)}px`);
-    this.suggest = { kind, start, items, index: 0, el: box };
+    this.suggest = { kind, start, items, index: first, el: box, multi };
   }
   /** 补全列表开着时的按键：上下选、Enter / Tab 确认、Esc 关掉。处理了返回 true */
   onSuggestKey(ev) {
     const sg = this.suggest;
     if (!sg) return false;
     if (ev.key === "ArrowDown" || ev.key === "ArrowUp") {
-      sg.index = (sg.index + (ev.key === "ArrowDown" ? 1 : -1) + sg.items.length) % sg.items.length;
+      sg.index = sg.index < 0 && ev.key === "ArrowUp" ? sg.items.length - 1 : (sg.index + (ev.key === "ArrowDown" ? 1 : -1) + sg.items.length) % sg.items.length;
       Array.from(sg.el.children).forEach((c, i) => c.classList.toggle("is-active", i === sg.index));
       return true;
     }
     if (ev.key === "Enter" || ev.key === "Tab") {
+      if (sg.index < 0) {
+        this.closeSuggest();
+        return false;
+      }
       this.acceptSuggest();
       return true;
     }
@@ -11772,6 +14395,15 @@ var TableEditor = class {
     const pick = sg.items[sg.index];
     let insert = pick;
     let rest = v.slice(caret);
+    if (sg.kind === "option" && sg.multi) {
+      const tags = [...sg.multi.before, pick, ...sg.multi.after];
+      el.value = tags.join(", ") + ", ";
+      el.setSelectionRange(el.value.length, el.value.length);
+      this.closeSuggest();
+      this.autosize();
+      this.updateSuggest();
+      return;
+    }
     if (sg.kind === "option") {
       el.value = pick;
       el.setSelectionRange(pick.length, pick.length);
@@ -11790,8 +14422,120 @@ var TableEditor = class {
     this.autosize();
   }
   closeSuggest() {
+    this.closeSuggestList();
+    this.closeCalendar();
+  }
+  closeSuggestList() {
     this.suggest?.el.remove();
     this.suggest = null;
+  }
+  // ---------- 日期列的日历 ----------
+  dailyNote() {
+    return this.host.dailyNote?.() ?? null;
+  }
+  /** 排序日期列时读日记链接用 */
+  dateParser() {
+    const daily = this.dailyNote();
+    return daily ? (n) => daily.parse(n) : void 0;
+  }
+  /** 编辑日期列的格子时在格子下面弹日历：格子里的日期选中、看它那个月；输入了新日期就跟着跳过去 */
+  showCalendar() {
+    if (!this.sel) return;
+    const daily = this.dailyNote();
+    const picked = readDate(this.input.value, daily ? (n) => daily.parse(n) : void 0);
+    const key = picked ? isoDate(picked) : "";
+    const now = /* @__PURE__ */ new Date();
+    if (!this.cal) {
+      const doc = this.root.ownerDocument;
+      const el = doc.body.appendChild(doc.createElement("div"));
+      el.className = "ggt-cal";
+      el.addEventListener("pointerdown", (e) => e.preventDefault());
+      el.addEventListener("mousedown", (e) => e.preventDefault());
+      this.cal = { el, y: picked?.y ?? now.getFullYear(), m: picked?.m ?? now.getMonth() + 1, key };
+    } else if (key !== this.cal.key) {
+      this.cal.key = key;
+      if (picked) {
+        this.cal.y = picked.y;
+        this.cal.m = picked.m;
+      }
+    }
+    this.renderCalendar(picked);
+  }
+  renderCalendar(picked) {
+    const cal = this.cal;
+    if (!cal) return;
+    const doc = this.root.ownerDocument;
+    const el = cal.el;
+    el.replaceChildren();
+    const btn = (parent, cls, text, run, label) => {
+      const b = parent.appendChild(doc.createElement("button"));
+      b.type = "button";
+      b.className = cls;
+      b.textContent = text;
+      if (label) b.setAttribute("aria-label", label);
+      b.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        run();
+      });
+      return b;
+    };
+    const shift = (k) => {
+      const d = new Date(cal.y, cal.m - 1 + k, 1);
+      cal.y = d.getFullYear();
+      cal.m = d.getMonth() + 1;
+      this.renderCalendar(picked);
+    };
+    const head = el.appendChild(doc.createElement("div"));
+    head.className = "ggt-cal-head";
+    btn(head, "ggt-cal-nav", "\u2039", () => shift(-1), t2("calPrev"));
+    const title = head.appendChild(doc.createElement("span"));
+    title.className = "ggt-cal-title";
+    title.textContent = t2("calMonth").replace("{y}", String(cal.y)).replace("{m}", String(cal.m)).replace("{M}", new Date(cal.y, cal.m - 1, 1).toLocaleString("en", { month: "long" }));
+    btn(head, "ggt-cal-nav", "\u203A", () => shift(1), t2("calNext"));
+    const grid = el.appendChild(doc.createElement("div"));
+    grid.className = "ggt-cal-grid";
+    const weekStart = Number(t2("calWeekStart"));
+    const names = t2("calWeekdays").split(",");
+    for (let i = 0; i < 7; i++) grid.appendChild(doc.createElement("span")).textContent = names[(i + weekStart) % 7];
+    for (const s of Array.from(grid.children)) s.className = "ggt-cal-wd";
+    const first = new Date(cal.y, cal.m - 1, 1);
+    const lead = (first.getDay() - weekStart + 7) % 7;
+    const now = /* @__PURE__ */ new Date();
+    const today = { y: now.getFullYear(), m: now.getMonth() + 1, d: now.getDate() };
+    for (let i = 0; i < 42; i++) {
+      const d = new Date(cal.y, cal.m - 1, 1 - lead + i);
+      const v = { y: d.getFullYear(), m: d.getMonth() + 1, d: d.getDate() };
+      const b = btn(grid, "ggt-cal-day", String(v.d), () => this.pickDate(v), isoDate(v));
+      if (v.m !== cal.m) b.classList.add("is-other");
+      if (isoDate(v) === isoDate(today)) b.classList.add("is-today");
+      if (picked && isoDate(v) === isoDate(picked)) b.classList.add("is-picked");
+    }
+    const foot = el.appendChild(doc.createElement("div"));
+    foot.className = "ggt-cal-foot";
+    btn(foot, "ggt-cal-btn", t2("calToday"), () => this.pickDate(today));
+    btn(foot, "ggt-cal-btn", t2("calClear"), () => this.pickDate(null));
+    const cell = this.sel && this.cellEl(this.sel);
+    const r3 = (cell ?? this.input.el).getBoundingClientRect();
+    const vw = doc.documentElement.clientWidth;
+    const vh = doc.documentElement.clientHeight;
+    const box = el.getBoundingClientRect();
+    const left = Math.max(8, Math.min(r3.left, vw - box.width - 8));
+    const top = r3.bottom + 4 + box.height > vh - 8 && r3.top - 4 - box.height > 8 ? r3.top - 4 - box.height : r3.bottom + 4;
+    el.setAttribute("style", `left:${Math.round(left)}px;top:${Math.round(top)}px`);
+  }
+  /** 日历里点了一天（null 是清空）：按列的写法写进格子并完成编辑 */
+  pickDate(v) {
+    if (!this.editing || !this.sel) return;
+    const ty = colTypeOf(this.table, this.sel.c);
+    const daily = ty?.t === "date" && ty.f === "link" ? this.dailyNote() : null;
+    this.input.reset(v ? writeDate(v, ty?.t === "date" ? ty.f : void 0, daily ? (x) => daily.name(x) : void 0) : "");
+    this.commit();
+    this.input.focus();
+  }
+  closeCalendar() {
+    this.cal?.el.remove();
+    this.cal = null;
   }
   // ---------- 下拉填充 ----------
   /** 按住填充柄往下 / 上 / 左 / 右拖：虚线框出要填的地方，松开按规律填上，拖出表格就加行加列 */
@@ -11857,12 +14601,12 @@ var TableEditor = class {
       const b2 = tr?.getBoundingClientRect();
       return b2 ? { a: b2.top, b: b2.bottom } : { a: 0, b: 0 };
     }
-    const b = this.tableEl.querySelectorAll("col")[i]?.getBoundingClientRect();
-    return b ? { a: b.left, b: b.right } : { a: 0, b: 0 };
+    const b = this.colBox(i);
+    return { a: b.left, b: b.right };
   }
-  showFillPreview(src, plan, rows, cols) {
+  showFillPreview(src, plan2, rows, cols) {
     const pv = this.fillPreview;
-    if (!plan) {
+    if (!plan2) {
       pv.classList.remove("is-shown");
       return;
     }
@@ -11873,10 +14617,10 @@ var TableEditor = class {
       const k2 = i - (lines.length - 1);
       return { a: last.b + (k2 - 1) * size, b: last.b + k2 * size };
     };
-    const r1 = plan.dir === "up" ? src.r1 - plan.count : plan.dir === "down" ? src.r2 + 1 : src.r1;
-    const r22 = plan.dir === "down" ? src.r2 + plan.count : plan.dir === "up" ? src.r1 - 1 : src.r2;
-    const c1 = plan.dir === "left" ? src.c1 - plan.count : plan.dir === "right" ? src.c2 + 1 : src.c1;
-    const c2 = plan.dir === "right" ? src.c2 + plan.count : plan.dir === "left" ? src.c1 - 1 : src.c2;
+    const r1 = plan2.dir === "up" ? src.r1 - plan2.count : plan2.dir === "down" ? src.r2 + 1 : src.r1;
+    const r22 = plan2.dir === "down" ? src.r2 + plan2.count : plan2.dir === "up" ? src.r1 - 1 : src.r2;
+    const c1 = plan2.dir === "left" ? src.c1 - plan2.count : plan2.dir === "right" ? src.c2 + 1 : src.c1;
+    const c2 = plan2.dir === "right" ? src.c2 + plan2.count : plan2.dir === "left" ? src.c1 - 1 : src.c2;
     const top = ext(rows, Math.max(0, r1)).a;
     const bottom = ext(rows, r22).b;
     const left = ext(cols, Math.max(0, c1)).a;
@@ -11902,6 +14646,16 @@ var TableEditor = class {
   onCopy(ev, cut) {
     if (this.editing || !this.sel || !ev.clipboardData) return;
     ev.preventDefault();
+    if (!this.isMulti() && this.isSecretCell(this.sel)) {
+      const plain2 = this.host.secrets?.()?.peek(this.table.cells[this.sel.r][this.sel.c]);
+      if (typeof plain2 === "string" && plain2) {
+        ev.clipboardData.setData("text/plain", plain2);
+        this.host.notice?.(t2("encCopied"));
+        clearClipboardLater(this.root.ownerDocument.defaultView ?? window, plain2);
+        if (cut && !this.host.readonly) this.applyKeepRange(clearCells(this.table, this.rangeCells()));
+        return;
+      }
+    }
     const grid = this.rangeGrid();
     const r3 = this.rangeRect();
     ev.clipboardData.setData("text/plain", toTSV(grid));
@@ -11937,17 +14691,17 @@ var TableEditor = class {
    * 复制出去的 HTML 表格（粘到 Word、飞书、邮件）。颜色一律按浅色主题取、半透明的叠在白底上算成实色：
    * 暗色主题下屏幕上的表头、标签是深底浅字，原样带过去在白纸上很难看。plain：只要表格，不带任何颜色
    */
-  styledHTML(rect, source = null, plain = false) {
+  styledHTML(rect, source = null, plain2 = false) {
     const body = this.root.ownerDocument.body;
     const dark = body.classList.contains("theme-dark");
-    if (dark && !plain) body.classList.replace("theme-dark", "theme-light");
+    if (dark && !plain2) body.classList.replace("theme-dark", "theme-light");
     try {
-      return this.buildHTML(rect, source, plain);
+      return this.buildHTML(rect, source, plain2);
     } finally {
-      if (dark && !plain) body.classList.replace("theme-light", "theme-dark");
+      if (dark && !plain2) body.classList.replace("theme-light", "theme-dark");
     }
   }
-  buildHTML(rect, source, plain) {
+  buildHTML(rect, source, plain2) {
     const tb = this.table;
     const esc2 = (v) => v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     const win = this.root.ownerDocument.defaultView ?? window;
@@ -11955,7 +14709,7 @@ var TableEditor = class {
     let html = `<table data-ggt="1"${source ? sourceAttr(source) : ""} style="border-collapse:collapse">`;
     html += "<colgroup>";
     const k = this.scale();
-    for (let c = rect.c1; c <= rect.c2; c++) html += `<col style="width:${Math.round((cols[c]?.getBoundingClientRect().width ?? 80 * k) / k)}px">`;
+    for (let c = rect.c1; c <= rect.c2; c++) html += `<col style="width:${Math.round((cols[c] ? this.colBox(c).width || 80 * k : 80 * k) / k)}px">`;
     html += "</colgroup>";
     for (let r3 = rect.r1; r3 <= rect.r2; r3++) {
       html += "<tr>";
@@ -11968,13 +14722,13 @@ var TableEditor = class {
         const a = tb.align[c];
         if (a) styles.push(`text-align:${a}`);
         if (cs) {
-          const bg = plain ? null : onWhite(cs.backgroundColor);
+          const bg = plain2 ? null : onWhite(cs.backgroundColor);
           if (bg && bg !== "rgb(255, 255, 255)") styles.push(`background-color:${bg}`);
-          if (!plain && fgOf(tb, r3, c)) styles.push(`color:${onWhite(cs.color) ?? cs.color}`);
+          if (!plain2 && fgOf(tb, r3, c)) styles.push(`color:${onWhite(cs.color) ?? cs.color}`);
           if (Number(cs.fontWeight) >= 600) styles.push("font-weight:600");
         }
         const size = (tb.meta.fs ?? 1) * (fontSizeOf(tb, r3, c) ?? 1);
-        if (!plain && size !== 1) styles.push(`font-size:${Math.round(size * 100)}%`);
+        if (!plain2 && size !== 1) styles.push(`font-size:${Math.round(size * 100)}%`);
         let span = "";
         if (m && m.r1 === r3 && m.c1 === c) {
           const cs2 = Math.min(m.c2, rect.c2) - c + 1;
@@ -11989,7 +14743,7 @@ var TableEditor = class {
           clone.querySelectorAll("input.ggt-check").forEach((b) => b.replaceWith(b.checked ? "\u2611 " : "\u2610 "));
           clone.querySelectorAll(".ggt-pill").forEach((pill, i) => {
             const orig = content.querySelectorAll(".ggt-pill")[i];
-            const ps = orig && !plain ? win.getComputedStyle(orig) : null;
+            const ps = orig && !plain2 ? win.getComputedStyle(orig) : null;
             if (ps) pill.setAttribute("style", `background:${onWhite(ps.backgroundColor) ?? ps.backgroundColor};color:${onWhite(ps.color) ?? ps.color};padding:0 8px;border-radius:10px`);
             else pill.removeAttribute("style");
           });
@@ -12095,6 +14849,7 @@ var TableEditor = class {
       if (moved) return;
       pressed = true;
       this.longPressAt = performance.now();
+      if (this.editing) this.commit();
       this.setSel(p, false);
       this.openMenu(this.cellMenu(p), x0, y0);
     }, 500);
@@ -12130,16 +14885,16 @@ var TableEditor = class {
     const fb = this.fillHandle.classList.contains("is-shown") ? this.fillHandle.getBoundingClientRect() : null;
     const onFill = !!fb && x >= fb.left - 4 && x <= fb.right + 4 && y >= fb.top - 4 && y <= fb.bottom + 4;
     if (!onFill && y >= t3.top && y <= t3.bottom && !this.root.classList.contains("is-dragging")) {
-      const under = Array.from(this.tableEl.querySelectorAll(".ggt-cell")).find((el) => {
+      const under2 = Array.from(this.tableEl.querySelectorAll(".ggt-cell")).find((el) => {
         const b = el.getBoundingClientRect();
         return x >= b.left - 4 && x <= b.right + 4 && y >= b.top && y <= b.bottom && el.colSpan > 1;
       });
-      const c1 = under ? Number(under.dataset.c) : -1;
-      const c2 = under ? c1 + under.colSpan - 1 : -1;
+      const c1 = under2 ? Number(under2.dataset.c) : -1;
+      const c2 = under2 ? c1 + under2.colSpan - 1 : -1;
       const cols = Array.from(this.tableEl.querySelectorAll("col"));
-      cols.forEach((col, c) => {
+      cols.forEach((_col, c) => {
         if (c >= c1 && c < c2) return;
-        const right = col.getBoundingClientRect().right;
+        const right = this.colBox(c).right;
         if (hit < 0 && Math.abs(x - right) <= 4) {
           hit = c;
           at = right;
@@ -12174,7 +14929,7 @@ var TableEditor = class {
     const t3 = this.tableEl.getBoundingClientRect();
     const base = this.root.getBoundingClientRect();
     const k = this.scale();
-    const at = col.getBoundingClientRect().right;
+    const at = this.colBox(c).right;
     bar.dataset.c = String(c);
     bar.setAttribute("style", `left:${(at - base.left) / k - 4}px;top:${(t3.top - base.top) / k}px;height:${t3.height / k}px`);
     const cb = cell.getBoundingClientRect();
@@ -12190,7 +14945,7 @@ var TableEditor = class {
     const col = this.tableEl.querySelectorAll("col")[c];
     if (!col || Number.isNaN(c)) return;
     const k = this.scale();
-    this.resize = { c, startX: ev.clientX, startW: col.getBoundingClientRect().width / k, col, fitW: this.root.classList.contains("is-fit") ? parseFloat(this.tableEl.style.width) || 0 : 0, scale: this.fitScale };
+    this.resize = { c, startX: ev.clientX, startW: this.colBox(c).width / k, col, fitW: this.root.classList.contains("is-fit") ? parseFloat(this.tableEl.style.width) || 0 : 0, scale: this.fitScale };
     const startLeft = parseFloat(handle.style.left) || 0;
     const grip = handle.style.getPropertyValue("--ggt-grip-y");
     handle.classList.add("is-active");
@@ -12322,7 +15077,8 @@ var TableEditor = class {
         this.sel = row ? { r: p.r, c: colCount(this.table) - 1 } : { r: this.shownRows() - 1, c: p.c };
         this.lineSel = true;
         this.markSel();
-        this.input.focus();
+        if (ev.pointerType === "touch") doc.activeElement?.blur?.();
+        else this.input.focus();
         const rect = handle.getBoundingClientRect();
         this.openMenu(row ? this.rowMenu(p) : this.colMenu(p), rect.left, rect.bottom + 4);
         return;
@@ -12360,7 +15116,9 @@ var TableEditor = class {
     });
     el.addEventListener("click", (ev) => {
       ev.preventDefault();
-      if (!this.host.readonly) run();
+      if (this.host.readonly) return;
+      if (this.editing) this.commit();
+      run();
     });
     return el;
   }
@@ -12550,10 +15308,34 @@ var TableEditor = class {
       ] : []
     ];
   }
+  /**
+   * 第 c 列在屏幕上的左右边：Chromium 量 <col> 就行；iPhone、iPad（WebKit）上 <col> 量出来一律是 0，
+   * 这时用这一列的格子（不跨列的那种；都被合并盖住时取格子的边线）算。调列宽的把手就是按它放的，
+   * 以前在手机上全跑到表格最左边，一拖就成了 Obsidian 拉出侧栏的手势（小红书反馈）
+   */
+  colBox(c) {
+    const col = this.tableEl.querySelectorAll("col")[c];
+    const b = col?.getBoundingClientRect();
+    if (b && b.width > 0) return { left: b.left, right: b.right, width: b.width };
+    let left = NaN;
+    let right = NaN;
+    for (const el of Array.from(this.tableEl.querySelectorAll(".ggt-cell"))) {
+      const c0 = Number(el.dataset.c);
+      const c1 = c0 + (el.colSpan || 1) - 1;
+      if (c0 !== c && c1 !== c) continue;
+      const r3 = el.getBoundingClientRect();
+      if (!r3.width) continue;
+      if (c0 === c && Number.isNaN(left)) left = r3.left;
+      if (c1 === c && Number.isNaN(right)) right = r3.right;
+      if (!Number.isNaN(left) && !Number.isNaN(right)) break;
+    }
+    if (Number.isNaN(left) || Number.isNaN(right)) return { left: 0, right: 0, width: 0 };
+    return { left, right, width: right - left };
+  }
   /** 每列现在实际的宽度 */
   colWidths() {
     const k = this.scale();
-    return Array.from(this.tableEl.querySelectorAll("col")).map((c) => c.getBoundingClientRect().width / k);
+    return Array.from(this.tableEl.querySelectorAll("col")).map((_c, i) => this.colBox(i).width / k);
   }
   /**
    * 设置「列宽按比例缩放」（#10）：设过列宽的表格比正文宽时，各列按现在的比例缩到正好放下，不出横向滚动条。
@@ -12577,7 +15359,7 @@ var TableEditor = class {
     const natural = t3.offsetWidth;
     if (avail <= 0 || !natural || natural <= avail + 1) return;
     const k = this.scale();
-    const ws = cols.map((c) => c.getBoundingClientRect().width / k);
+    const ws = cols.map((_c, i) => this.colBox(i).width / k);
     const sum = ws.reduce((a, b) => a + b, 0);
     if (!sum) return;
     const f = avail / sum;
@@ -12590,14 +15372,18 @@ var TableEditor = class {
   /** 正文给表格的宽度（量外层，表格自己比它宽时就要横向滚动） */
   availWidth() {
     const host = this.root.parentElement;
-    return host ? host.clientWidth - 2 : 0;
+    return host ? host.clientWidth - 2 - this.mobileRoom() : 0;
+  }
+  /** 手机、平板上加号收在正文里（外框不往右伸出，见 styles.css），表格能用的宽度少这一截 */
+  mobileRoom() {
+    return this.root.ownerDocument.body.classList.contains("is-mobile") ? 26 : 0;
   }
   /** 撑满页面：按现在各列的比例放大 / 缩小到正文的可用宽度 */
   fitWidths() {
     const ws = this.colWidths();
     const sum = ws.reduce((a, b) => a + b, 0) || 1;
     const host = this.root.parentElement;
-    const avail = (host?.clientWidth ?? sum) - 4;
+    const avail = (host?.clientWidth ?? sum) - 4 - this.mobileRoom();
     return ws.map((w) => w / sum * avail);
   }
   rowMenu(p) {
@@ -12613,7 +15399,7 @@ var TableEditor = class {
       ...this.colorItems(Array.from({ length: colCount(tb) }, (_, c) => ({ r: p.r, c }))),
       { separator: true },
       // 选中了好几行时和插入一样按选区来
-      this.isMulti() ? this.deleteItems(p)[0] : { title: t2("deleteRow"), icon: "trash-2", danger: true, disabled: deleteRow(tb, p.r) === tb, run: () => this.apply(deleteRow(tb, p.r), { r: Math.min(p.r, rowCount(tb) - 2), c: p.c }) }
+      this.isMulti() ? this.deleteItems(p)[0] : { title: p.r === 0 ? t2("deleteHeadRow") : t2("deleteRow"), icon: "trash-2", danger: true, disabled: deleteRow(tb, p.r) === tb, run: () => this.apply(deleteRow(tb, p.r), { r: Math.min(p.r, rowCount(tb) - 2), c: p.c }) }
     ];
   }
   colMenu(p) {
@@ -12622,11 +15408,16 @@ var TableEditor = class {
       ...this.insertColItems(p),
       { title: t2("duplicateCol"), icon: "copy-plus", run: () => this.apply(duplicateCol(tb, p.c), { r: p.r, c: p.c + 1 }) },
       { separator: true },
-      ...this.calcItems(p.c),
-      { title: tb.meta.opts?.[p.c] ? t2("statusOff") : t2("statusOn"), icon: "tags", run: () => this.apply(setOptionsCol(tb, p.c, !tb.meta.opts?.[p.c]), p) },
+      ...colKindOf(tb, p.c) === "enc" ? [] : this.calcItems(p.c),
+      { title: t2("colType").replace("{v}", t2(`kind_${colKindOf(tb, p.c)}`)), icon: KIND_ICONS[colKindOf(tb, p.c)], run: () => this.openTypeMenu(p) },
+      ...this.secretColItems(p.c),
+      ...formulaOf(tb, p.c) ? [
+        { title: t2("fxEdit"), icon: "calculator", run: () => this.openFormula(p.c) },
+        { title: t2("fxOff"), icon: "calculator", run: () => this.apply(setFormula(tb, p.c, null), p) }
+      ] : [{ title: t2("fxOn"), icon: "calculator", run: () => this.openFormula(p.c) }],
       { separator: true },
-      { title: t2("sortAsc"), icon: "arrow-down-a-z", disabled: !canSortRows(tb), run: () => this.apply(sortRows(tb, p.c, false, this.hasTotalRow()), p) },
-      { title: t2("sortDesc"), icon: "arrow-up-z-a", disabled: !canSortRows(tb), run: () => this.apply(sortRows(tb, p.c, true, this.hasTotalRow()), p) },
+      { title: t2("sortAsc"), icon: "arrow-down-a-z", disabled: !canSortRows(tb) || colKindOf(tb, p.c) === "enc", run: () => this.apply(sortRows(tb, p.c, false, this.hasTotalRow(), this.dateParser()), p) },
+      { title: t2("sortDesc"), icon: "arrow-up-z-a", disabled: !canSortRows(tb) || colKindOf(tb, p.c) === "enc", run: () => this.apply(sortRows(tb, p.c, true, this.hasTotalRow(), this.dateParser()), p) },
       { separator: true },
       { title: t2("moveColLeft"), icon: "arrow-left", disabled: p.c === 0, run: () => this.apply(moveCol(tb, p.c, p.c - 1), { r: p.r, c: p.c - 1 }) },
       { title: t2("moveColRight"), icon: "arrow-right", disabled: p.c >= colCount(tb) - 1, run: () => this.apply(moveCol(tb, p.c, p.c + 1), { r: p.r, c: p.c + 1 }) },
@@ -12666,10 +15457,68 @@ var TableEditor = class {
       { separator: true },
       { title: CHECK_RE.test(tb.cells[p.r][p.c]) ? t2("removeCheckbox") : t2("addCheckbox"), icon: "square-check", disabled: multi, run: () => this.apply(setCell(tb, p.r, p.c, CHECK_RE.test(tb.cells[p.r][p.c]) ? tb.cells[p.r][p.c].replace(CHECK_RE, "").trimStart() : `[ ] ${tb.cells[p.r][p.c]}`.trimEnd()), p) },
       { title: t2("clearCell"), icon: "eraser", disabled: !cells.some((c) => tb.cells[c.r][c.c]), run: () => this.apply(clearCells(tb, cells), this.sel ?? p) },
+      ...this.cellSecretItems(cells),
       ...this.deleteItems(p)
     ];
   }
-  /** 删除行 / 列：选区跨了几行（几列）就一次删几行（#4）；表头行不能删，至少留下表头和一行、一列 */
+  /**
+   * 格子菜单里的「加密」「取消加密」：普通列里单独加密几格（加密列整列都是加密的，不出现）。
+   * 计算列、合计行由公式写，状态、多选列的值会记成选项，这些不能加密
+   */
+  cellSecretItems(cells) {
+    const box = this.host.secrets?.();
+    if (!box || this.host.readonly) return [];
+    const tb = this.table;
+    const seen = /* @__PURE__ */ new Set();
+    const own = [];
+    for (const q of cells) {
+      const c = this.canon(q);
+      const id = `${c.r},${c.c}`;
+      if (seen.has(id) || colTypeOf(tb, c.c)?.t === "enc" || tb.meta.opts?.[c.c] || isFxCell(tb, c.r, c.c) || hasTotal(tb) && c.r === rowCount(tb) - 1) continue;
+      seen.add(id);
+      own.push(c);
+    }
+    const plain2 = own.filter((c) => tb.cells[c.r][c.c].trim() && !hasSecret(tb.cells[c.r][c.c]));
+    const sealed = own.filter((c) => hasSecret(tb.cells[c.r][c.c]));
+    const items = [];
+    if (plain2.length)
+      items.push({
+        title: t2("encCell"),
+        icon: "lock",
+        run: () => void (async () => {
+          if (!await box.unlock(this.secretCells())) return;
+          const out = await Promise.all(plain2.map((c) => box.seal(tb.cells[c.r][c.c])));
+          if (this.destroyed || this.table !== tb) return;
+          let n = tb;
+          plain2.forEach((c, i) => n = editCell(n, c.r, c.c, out[i]));
+          this.applyNow(normalize2(n), this.sel ?? void 0);
+        })()
+      });
+    if (sealed.length)
+      items.push({
+        title: t2("decryptCell"),
+        icon: "lock-open",
+        run: () => void (async () => {
+          if (!this.host.confirm || !await this.host.confirm(t2("encDecryptCellConfirm"), t2("encDecryptOk"))) return;
+          const raws = sealed.map((c) => tb.cells[c.r][c.c]);
+          if (!await box.unlock(raws)) return;
+          await box.openAll(raws);
+          if (raws.some((v) => typeof box.peek(v) !== "string")) {
+            this.host.notice?.(t2("encForeignAbort"));
+            return;
+          }
+          if (this.destroyed || this.table !== tb) return;
+          let n = tb;
+          sealed.forEach((c, i) => n = editCell(n, c.r, c.c, box.peek(raws[i]) ?? raws[i]));
+          this.applyNow(normalize2(n), this.sel ?? void 0);
+        })()
+      });
+    return items.length ? [{ separator: true }, ...items] : [];
+  }
+  /**
+   * 删除行 / 列：选区跨了几行（几列）就一次删几行（#4）；至少留下表头和一行、一列。
+   * 只选着表头那一行时也能删，下一行变成表头（#17）；选了好几行时表头还是删不了
+   */
   deleteItems(p) {
     const tb = this.table;
     const r3 = this.isMulti() && this.rangeRect() || { r1: p.r, c1: p.c, r2: p.r, c2: p.c };
@@ -12677,10 +15526,10 @@ var TableEditor = class {
     const cols = r3.c2 - r3.c1 + 1;
     return [
       {
-        title: rows > 1 ? t2("deleteRows").replace("{n}", String(rows)) : t2("deleteRow"),
+        title: rows > 1 ? t2("deleteRows").replace("{n}", String(rows)) : r3.r1 === 0 ? t2("deleteHeadRow") : t2("deleteRow"),
         icon: "trash-2",
         danger: true,
-        disabled: r3.r1 === 0 || rowCount(tb) - rows < 2 || deleteRow(tb, r3.r2) === tb,
+        disabled: rows === 1 ? deleteRow(tb, r3.r1) === tb : r3.r1 === 0 || rowCount(tb) - rows < 2 || deleteRow(tb, r3.r2) === tb,
         run: () => this.runCommand("delete-row")
       },
       {
@@ -12718,16 +15567,73 @@ var TableEditor = class {
       { title: n(k > 1 ? "insertColsRight" : "insertColRight"), icon: "arrow-right-to-line", run: () => this.apply(insertCols(tb, rr + 1, k), { r: p.r, c: rr + 1 }) }
     ];
   }
+  /** 列类型的二级菜单：普通、状态、多选、日期、数字、进度条，下面是这种类型的选项（日期写法、数字格式） */
+  openTypeMenu(p) {
+    const { x, y } = this.menuAt;
+    const again = (next) => {
+      this.apply(next, p);
+      this.openTypeMenu(p);
+    };
+    this.openMenu(this.typeItems(p, again), x, y);
+  }
+  typeItems(p, again) {
+    const tb = this.table;
+    const c = p.c;
+    const kind = colKindOf(tb, c);
+    const fx = !!formulaOf(tb, c);
+    const kinds = fx ? ["text", "num"] : COL_KINDS.filter((k) => k !== "enc" || kind === "enc" || this.host.secrets?.());
+    const items = [{ title: fx ? t2("colTypeFx") : t2("colTypeTitle") }];
+    for (const k of kinds)
+      items.push({
+        title: t2(`kind_${k}`),
+        icon: KIND_ICONS[k],
+        checked: kind === k,
+        run: () => {
+          if (k === kind) return;
+          if (k === "enc") void this.toSecretCol(c, p);
+          else if (kind === "enc") void this.fromSecretCol(c, k, p);
+          else if (k === "text" || k === "status" || k === "multi") this.apply(setColKind(tb, c, k), p);
+          else again(setColKind(tb, c, k));
+        }
+      });
+    const ty = colTypeOf(tb, c);
+    if (ty?.t === "date") {
+      const set = (f) => again(setColType(tb, c, f ? { t: "date", f } : { t: "date" }));
+      items.push({ separator: true }, { title: t2("dateStyle") });
+      items.push({ title: "2026-11-17", checked: !ty.f, run: () => set(void 0) });
+      items.push({ title: "2026/11/17", checked: ty.f === "slash", run: () => set("slash") });
+      items.push({ title: t2("dateLink"), checked: ty.f === "link", run: () => set("link") });
+    }
+    if (ty?.t === "num") {
+      const set = (patch) => {
+        const n = { ...ty, ...patch };
+        for (const k of Object.keys(n)) if (n[k] === void 0) delete n[k];
+        again(setColType(tb, c, n));
+      };
+      items.push({ separator: true }, { title: t2("numFormat") });
+      items.push({ title: t2("numGroup"), checked: !!ty.g, run: () => set({ g: ty.g ? void 0 : 1 }) });
+      items.push({ title: t2("numPercent"), checked: !!ty.p, run: () => set({ p: ty.p ? void 0 : 1, u: void 0 }) });
+      items.push({ rowLabel: t2("numCurrency"), chipText: t2("numNone"), title: t2("numNone"), checked: !ty.u, run: () => set({ u: void 0 }) });
+      for (const u of CURRENCIES) items.push({ chipText: u, title: u, checked: ty.u === u, run: () => set(ty.u ? { u } : { u, p: void 0, g: 1, d: ty.d ?? 2 }) });
+      if (!fx) {
+        items.push({ separator: true });
+        items.push({ rowLabel: t2("numDecimals"), chipText: t2("numAuto"), title: t2("numAuto"), checked: ty.d === void 0, run: () => set({ d: void 0 }) });
+        for (const d of [0, 1, 2, 3]) items.push({ chipText: String(d), title: String(d), checked: ty.d === d, run: () => set({ d }) });
+      }
+    }
+    return items;
+  }
   /** 状态列的格子：改这个状态的颜色（整列同一个状态一起变） */
   statusColorItems(p) {
-    const v = this.table.cells[p.r][p.c].trim();
+    const raw = this.table.cells[p.r][p.c];
     const opts = this.table.meta.opts?.[p.c];
-    if (!opts || !v || p.r < headRows(this.table)) return [];
-    return [
+    if (!opts || !raw.trim() || p.r < headRows(this.table)) return [];
+    const values = colTypeOf(this.table, p.c)?.t === "multi" ? splitTags(raw).slice(0, 3) : [raw.trim()];
+    return values.flatMap((v) => [
       { title: t2("statusColor").replace("{v}", v) },
       ...CELL_COLORS.map((color) => ({ swatch: color, title: t2(color), checked: opts[v] === color, run: () => this.applyKeepRange(setOptionColor(this.table, p.c, v, color)) })),
       { separator: true }
-    ];
+    ]);
   }
   /** 合计：这一列怎么算（求和、平均……），勾着的是现在的 */
   calcItems(c) {
@@ -12736,7 +15642,7 @@ var TableEditor = class {
       title: how ? t2(`calc_${how}`) : t2("calc_none"),
       checked: cur === how,
       disabled: !how && !cur,
-      run: () => this.apply(setCalc(this.table, c, how, t2("totalLabel")), this.sel ?? void 0)
+      run: () => this.apply(setCalc(this.table, c, how, { sum: t2("totalLabel"), mixed: t2("totalLabelMixed") }), this.sel ?? void 0)
     });
     return [{ title: t2("calcTitle") }, ...CALCS.map((x) => item(x)), item(null), { separator: true }];
   }
@@ -12820,8 +15726,9 @@ var TableEditor = class {
   /** 自己画的弹出菜单：样式统一，色块能排成一行，手机上也好点 */
   openMenu(items, x, y) {
     this.closePopover();
+    this.menuAt = { x, y };
     const doc = this.root.ownerDocument;
-    const pop = doc.body.appendChild(doc.createElement("div"));
+    const pop = popupParent(doc).appendChild(doc.createElement("div"));
     pop.className = "ggt-menu";
     pop.setAttribute("role", "menu");
     let swatches = null;
@@ -12927,11 +15834,27 @@ var TableEditor = class {
       });
     }
     if (pop.lastElementChild?.classList.contains("ggt-menu-sep")) pop.lastElementChild.remove();
-    const vw = doc.documentElement.clientWidth;
-    const vh = doc.documentElement.clientHeight;
-    const r3 = pop.getBoundingClientRect();
-    pop.style.left = `${Math.max(8, Math.min(x, vw - r3.width - 8))}px`;
-    pop.style.top = `${Math.max(8, y + r3.height > vh - 8 ? Math.max(8, y - r3.height) : y)}px`;
+    const place = () => {
+      const win = doc.defaultView ?? window;
+      const vv2 = win.visualViewport;
+      const vw = doc.documentElement.clientWidth;
+      const safe = parseFloat(win.getComputedStyle(doc.body).getPropertyValue("--safe-area-inset-top")) || 0;
+      const top0 = (vv2 ? vv2.offsetTop : 0) + Math.max(8, safe);
+      const bottom0 = (vv2 ? vv2.offsetTop + vv2.height : doc.documentElement.clientHeight) - 8;
+      pop.style.maxHeight = `${Math.max(120, bottom0 - top0)}px`;
+      const r3 = pop.getBoundingClientRect();
+      pop.style.left = `${Math.max(8, Math.min(x, vw - r3.width - 8))}px`;
+      const below = y + r3.height <= bottom0;
+      const above = y - r3.height >= top0;
+      const top = below ? y : above ? y - r3.height : bottom0 - r3.height;
+      pop.style.top = `${Math.max(top0, top)}px`;
+    };
+    place();
+    const vv = (doc.defaultView ?? window).visualViewport;
+    if (vv) {
+      const onVV = () => this.popover === pop ? place() : vv.removeEventListener("resize", onVV);
+      vv.addEventListener("resize", onVV);
+    }
     pop.addEventListener("keydown", (ev) => {
       if (ev.key === "Escape") {
         ev.stopPropagation();
@@ -12944,6 +15867,219 @@ var TableEditor = class {
   closePopover() {
     this.popover?.remove();
     this.popover = null;
+  }
+  /**
+   * 合计行的格子：鼠标停上去说是怎么算的；各列不全是求和时（混着平均、最大、计数），数字前面加个小标签（B 站 lucent2019）。
+   * 标签只是显示，格子里还是纯数字
+   */
+  markCalc(cell, content, c) {
+    const how = this.table.meta.calc?.[c];
+    if (!how) return;
+    cell.title = t2(`calc_${how}`);
+    if (totalsAllSum(this.table)) return;
+    const tag2 = this.root.ownerDocument.createElement("span");
+    tag2.className = "ggt-calc-tag";
+    tag2.textContent = t2(`calc_${how}`);
+    content.prepend(tag2);
+  }
+  // ---------- 计算列 ----------
+  /** 公式出错 / 某一格算不出来的原因 */
+  fxText(e) {
+    const key = "code" in e ? `fxErr_${e.code}` : `fxEmpty_${e.reason}`;
+    return t2(key).replace("{name}", e.name ?? "");
+  }
+  /** 计算列：表头（最后一行）挂 ƒx 标记，数据格加上样式，空着的格子鼠标停上去说原因 */
+  markFx(cell, r3, c) {
+    const tb = this.table;
+    if (r3 === headRows(tb) - 1) {
+      const err = formulaError(tb, c);
+      const badge = cell.appendChild(this.root.ownerDocument.createElement("span"));
+      badge.className = "ggt-fx-badge" + (err ? " is-error" : "");
+      badge.appendChild(this.root.ownerDocument.createElement("span")).textContent = "\u0192x";
+      badge.title = err ? this.fxText(err) : t2("fxBadgeTitle").replace("{f}", formulaOf(tb, c) ?? "");
+      cell.classList.add("has-fx");
+      if (!this.host.readonly) {
+        badge.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          this.openFormula(c);
+        });
+      }
+      return;
+    }
+    if (!isFxCell(tb, r3, c)) return;
+    cell.classList.add("is-fx");
+    if (!tb.cells[r3][c]) {
+      const note = fxCellNote(tb, r3, c);
+      if (note) cell.title = this.fxText(note);
+    }
+  }
+  /** 计算列的公式编辑框：挂在这一列的表头下面。输入 { 补全列名、点列名插入、边输入边用第一行数据预览 */
+  openFormula(c) {
+    if (this.host.readonly) return;
+    if (this.editing) this.commit();
+    this.closePopover();
+    const tb = this.table;
+    const doc = this.root.ownerDocument;
+    const names = columnNames(tb);
+    const usable = names.filter((n, i) => i !== c && nameOk(n) && names.indexOf(n) === names.lastIndexOf(n));
+    let places = fxPlacesOf(tb, c);
+    const el = (parent, tag2, cls, text) => {
+      const e = parent.appendChild(doc.createElement(tag2));
+      e.className = cls;
+      if (text !== void 0) e.textContent = text;
+      return e;
+    };
+    const pop = doc.body.appendChild(doc.createElement("div"));
+    pop.className = "ggt-menu ggt-fx";
+    el(pop, "div", "ggt-fx-title", `${names[c] || t2("fxThisCol")} =`);
+    const input = el(pop, "input", "ggt-fx-input");
+    input.type = "text";
+    input.spellcheck = false;
+    input.value = formulaOf(tb, c) ?? "";
+    input.placeholder = usable.length >= 2 ? `{${usable[0]}} * {${usable[1]}}` : usable.length ? `{${usable[0]}} * 2` : "1 + 2";
+    const list = el(pop, "div", "ggt-fx-suggest");
+    const chips = el(pop, "div", "ggt-fx-chips");
+    el(chips, "span", "ggt-fx-label", usable.length ? t2("fxInsert") : t2("fxNoNames"));
+    for (const name of usable) {
+      const b = el(chips, "button", "ggt-fx-chip", name);
+      b.type = "button";
+      b.addEventListener("click", () => insert(`{${name}}`));
+    }
+    el(pop, "div", "ggt-fx-hint", t2("fxHint"));
+    const placeRow = el(pop, "div", "ggt-fx-places");
+    el(placeRow, "span", "ggt-fx-label", t2("fxPlaces"));
+    const placeBtns = [];
+    for (const v of [null, 0, 1, 2, 3]) {
+      const b = el(placeRow, "button", "ggt-fx-place", v === null ? t2("fxAuto") : String(v));
+      b.type = "button";
+      b.dataset.v = String(v);
+      b.addEventListener("click", () => {
+        places = v;
+        update();
+        input.focus();
+      });
+      placeBtns.push(b);
+    }
+    const preview2 = el(pop, "div", "ggt-fx-preview");
+    const actions = el(pop, "div", "ggt-fx-actions");
+    const cancel = el(actions, "button", "ggt-fx-cancel", t2("fxCancel"));
+    cancel.type = "button";
+    const ok = el(actions, "button", "ggt-fx-ok mod-cta", t2("fxOk"));
+    ok.type = "button";
+    let picks = [];
+    let active = 0;
+    const brace = () => {
+      const pos = input.selectionStart ?? input.value.length;
+      const before = input.value.slice(0, pos).replace(/｛/g, "{").replace(/｝/g, "}");
+      const i = before.lastIndexOf("{");
+      if (i < 0 || before.lastIndexOf("}") > i) return null;
+      return { start: i, end: pos, q: before.slice(i + 1).trim().toLowerCase() };
+    };
+    const showList = () => {
+      const b = brace();
+      picks = b ? usable.filter((n) => n.toLowerCase().includes(b.q)) : [];
+      active = Math.min(active, Math.max(0, picks.length - 1));
+      list.replaceChildren();
+      list.classList.toggle("is-shown", picks.length > 0);
+      picks.forEach((name, i) => {
+        const it = el(list, "div", "ggt-suggest-item" + (i === active ? " is-active" : ""), name);
+        it.addEventListener("pointerdown", (ev) => {
+          ev.preventDefault();
+          pick(name);
+        });
+      });
+    };
+    const pick = (name) => {
+      const b = brace();
+      if (!b) return;
+      let rest = input.value.slice(b.end);
+      if (/^\s*[}｝]/.test(rest)) rest = rest.replace(/^\s*[}｝]/, "");
+      input.value = input.value.slice(0, b.start) + `{${name}}` + rest;
+      const at = b.start + name.length + 2;
+      input.setSelectionRange(at, at);
+      update();
+    };
+    const insert = (text) => {
+      const a = input.selectionStart ?? input.value.length;
+      const b = input.selectionEnd ?? a;
+      input.value = input.value.slice(0, a) + text + input.value.slice(b);
+      input.focus();
+      input.setSelectionRange(a + text.length, a + text.length);
+      update();
+    };
+    const update = () => {
+      placeBtns.forEach((b) => b.classList.toggle("is-checked", b.dataset.v === String(places)));
+      const src = input.value;
+      const res = checkFormula(this.table, c, src, places);
+      preview2.classList.remove("is-error");
+      if ("error" in res) {
+        ok.disabled = true;
+        preview2.textContent = src.trim() ? this.fxText(res.error) : t2("fxStart");
+        preview2.classList.toggle("is-error", !!src.trim());
+      } else {
+        ok.disabled = false;
+        const vals = new Map(res.refs.map((x) => [x.name, x.value]));
+        const expr = prettyOps(src.trim()).replace(/[{｛]([^}｝]*)[}｝]/g, (_, n) => {
+          const v = vals.get(n.trim());
+          return v === null || v === void 0 ? t2("fxBlank") : formatFx(v, null);
+        });
+        if (headRows(this.table) >= rowCount(this.table) - (hasTotal(this.table) ? 1 : 0)) preview2.textContent = t2("fxNoRows");
+        else if (res.result !== null) preview2.textContent = t2("fxPreview").replace("{expr}", expr).replace("{v}", res.result);
+        else preview2.textContent = t2("fxPreviewEmpty").replace("{why}", res.empty ? this.fxText(res.empty) : "");
+      }
+      showList();
+    };
+    const close = () => {
+      this.closePopover();
+      this.input.focus();
+    };
+    const confirm = () => {
+      if (ok.disabled) return;
+      const src = input.value.trim();
+      this.closePopover();
+      this.apply(setFormula(this.table, c, src, places), this.sel ?? { r: headRows(this.table) - 1, c });
+      this.input.focus();
+    };
+    cancel.addEventListener("click", close);
+    ok.addEventListener("click", confirm);
+    input.addEventListener("input", update);
+    input.addEventListener("click", showList);
+    input.addEventListener("keyup", (ev) => {
+      if (ev.key === "ArrowLeft" || ev.key === "ArrowRight" || ev.key === "Home" || ev.key === "End") showList();
+    });
+    pop.addEventListener("keydown", (ev) => {
+      if (ev.isComposing) return;
+      const listOpen = picks.length > 0 && ev.target === input;
+      if (listOpen && (ev.key === "ArrowDown" || ev.key === "ArrowUp")) {
+        ev.preventDefault();
+        active = (active + (ev.key === "ArrowDown" ? 1 : -1) + picks.length) % picks.length;
+        showList();
+      } else if (listOpen && (ev.key === "Enter" || ev.key === "Tab")) {
+        ev.preventDefault();
+        pick(picks[active]);
+      } else if (ev.key === "Escape") {
+        ev.preventDefault();
+        if (listOpen) {
+          picks = [];
+          list.classList.remove("is-shown");
+        } else close();
+      } else if (ev.key === "Enter" && ev.target === input) {
+        ev.preventDefault();
+        confirm();
+      } else return;
+      ev.stopPropagation();
+    });
+    const anchor = this.cellEl({ r: headRows(tb) - 1, c }) ?? this.root;
+    const ar = anchor.getBoundingClientRect();
+    const vw = doc.documentElement.clientWidth;
+    const vh = doc.documentElement.clientHeight;
+    const pr = pop.getBoundingClientRect();
+    pop.style.left = `${Math.max(8, Math.min(ar.left, vw - pr.width - 8))}px`;
+    pop.style.top = `${ar.bottom + 4 + pr.height > vh - 8 ? Math.max(8, ar.top - 4 - pr.height) : ar.bottom + 4}px`;
+    this.popover = pop;
+    update();
+    input.focus();
+    input.setSelectionRange(input.value.length, input.value.length);
   }
 };
 var searchMarkLayer = null;
@@ -13037,6 +16173,140 @@ function gridFromClipboard(data, doc) {
   return fromTSV(text);
 }
 
+// src/review/mindmap-cards.ts
+var REVIEW_KEY = "mindmap-review";
+var KIND_CODE = { cloze: "c", choice: "q", answer: "a" };
+var CLOZE_RE = /==(?!\s)[^=\n]+?==|<mark\b[^>]*>[\s\S]*?<\/mark>/i;
+function hasCloze(text) {
+  return CLOZE_RE.test(splitMarkers(text).rest);
+}
+function deckIdOf(frontmatter) {
+  const v = frontmatterValue(frontmatter, REVIEW_KEY);
+  if (v === null) return null;
+  const s = v.trim().replace(/^["']|["']$/g, "");
+  if (!s || s === "false") return null;
+  return /^[a-z0-9]{4,32}$/i.test(s) && s !== "true" ? s : "";
+}
+function reviewBranches(doc) {
+  const out = [];
+  const walk2 = (n) => {
+    if (n.review) out.push(n);
+    for (const c of n.children) walk2(c);
+    if (n.summary?.topic) walk2(n.summary.topic);
+  };
+  walk2(doc.root);
+  return out.length ? out : null;
+}
+function extractCards(doc) {
+  const branches = reviewBranches(doc);
+  const out = [];
+  let order = 0;
+  const seen = /* @__PURE__ */ new Set();
+  const add = (kind, node) => {
+    let id = node.reviewId ? `${node.reviewId}:${KIND_CODE[kind]}` : null;
+    if (id && seen.has(id)) id = null;
+    if (id) seen.add(id);
+    out.push({ kind, node, id, order: order++ });
+  };
+  const walk2 = (n, inScope, inside) => {
+    const scope = inScope || !!n.review;
+    const answer2 = isAnswer(n.text);
+    const option = !!n.parent && !!taskState(n.text);
+    if (scope && !inside) {
+      if (isQuestion(n)) add("choice", n);
+      if (answer2 && n.parent) add("answer", n);
+      if (!answer2 && !option && hasCloze(n.text)) add("cloze", n);
+    }
+    const deeper = inside || answer2 || option;
+    for (const c of n.children) walk2(c, scope, deeper);
+    if (n.summary?.topic) walk2(n.summary.topic, scope, deeper);
+  };
+  walk2(doc.root, branches === null, false);
+  return out;
+}
+function isQuestion(n) {
+  return n.children.some((c) => !!taskState(c.text));
+}
+function isMultiChoice(n) {
+  return n.children.filter((c) => taskState(c.text) === "done").length > 1;
+}
+function newReviewId(taken) {
+  for (; ; ) {
+    let s = "";
+    for (let i = 0; i < 6; i++) s += "abcdefghijkmnpqrstuvwxyz23456789"[Math.floor(Math.random() * 32)];
+    if (!taken.has(s)) {
+      taken.add(s);
+      return s;
+    }
+  }
+}
+function assignReviewIds(doc) {
+  const cards = extractCards(doc);
+  const taken = /* @__PURE__ */ new Set();
+  const walk2 = (n) => {
+    if (n.reviewId) taken.add(n.reviewId);
+    n.children.forEach(walk2);
+    if (n.summary?.topic) walk2(n.summary.topic);
+  };
+  walk2(doc.root);
+  const owner = /* @__PURE__ */ new Map();
+  let changed = false;
+  for (const c of cards) {
+    const rv = c.node.reviewId;
+    const dup = rv !== void 0 && owner.has(rv) && owner.get(rv) !== c.node;
+    if (!rv || dup) {
+      c.node.reviewId = newReviewId(taken);
+      changed = true;
+    }
+    owner.set(c.node.reviewId, c.node);
+  }
+  return changed;
+}
+function displayText(text) {
+  return splitMarkers(text).rest.replace(/^\[( |x|X)\]\s+/, "");
+}
+function crumbOf(node) {
+  const out = [];
+  for (let p = node.parent; p; p = p.parent) out.unshift(plain(displayText(p.text)));
+  return out;
+}
+function plain(md) {
+  return md.replace(/<br\s*\/?>/gi, " ").replace(/<[^>]+>/g, "").replace(/!\[\[[^\]]*\]\]/g, "\u{1F5BC}").replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, "$2").replace(/\[\[([^\]]+)\]\]/g, "$1").replace(/\[([^\]]*)\]\([^)]*\)/g, "$1").replace(/(\*\*|__|==|~~|\*|_|`)/g, "").trim();
+}
+
+// src/note-spot.ts
+function locateSnippet(source, before, after, ratio) {
+  for (let n = Math.min(before.length, 16), m = Math.min(after.length, 16); n + m >= 2; ) {
+    const b = before.slice(before.length - n);
+    const key = b + after.slice(0, m);
+    const hits = [];
+    for (let i = source.indexOf(key); i >= 0; i = source.indexOf(key, i + 1)) hits.push(i + b.length);
+    if (hits.length) {
+      const want = ratio * source.length;
+      return hits.reduce((best, h) => Math.abs(h - want) < Math.abs(best - want) ? h : best);
+    }
+    if (n >= m && n > 0) n--;
+    else if (m > 0) m--;
+    else break;
+  }
+  return null;
+}
+function spotInSource(container, x, y, source) {
+  const doc = container.ownerDocument;
+  const pos = doc.caretPositionFromPoint?.(x, y);
+  const old = pos ? null : doc.caretRangeFromPoint?.(x, y);
+  const node = pos ? pos.offsetNode : old?.startContainer;
+  const at = pos ? pos.offset : old?.startOffset ?? 0;
+  if (!node || node.nodeType !== Node.TEXT_NODE || !container.contains(node)) return null;
+  const text = node.textContent ?? "";
+  const all = doc.createRange();
+  all.selectNodeContents(container);
+  all.setEnd(node, at);
+  const total = container.textContent?.length ?? 0;
+  const ratio = total ? all.toString().length / total : 0;
+  return locateSnippet(source, text.slice(0, at), text.slice(at), ratio);
+}
+
 // src/canvas.ts
 function flattenMenu(entries) {
   const out = [];
@@ -13119,10 +16389,14 @@ var ICONS = {
   highlighter: '<svg viewBox="0 0 24 24"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg>',
   eraser: '<svg viewBox="0 0 24 24"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>',
   // 虚线框里一只眼睛：把藏起来的节点显示出来
+  review: '<svg viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="14" rx="2"/><path d="M7 3h11a2 2 0 0 1 2 2v12"/><path d="M7 14l2.5 2.5L13 12"/></svg>',
   hiddenNodes: '<svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M6 12s2.2-4 6-4 6 4 6 4-2.2 4-6 4-6-4-6-4z"/><circle cx="12" cy="12" r="1.5"/></svg>',
   recite: '<svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7c2.1 0 3.8.7 5.2 1.7M22 12s-3.5 7-10 7c-2.1 0-3.8-.7-5.2-1.7M9.9 9.9a3 3 0 0 0 4.2 4.2M3 3l18 18"/></svg>',
   layers: '<svg viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5ZM3 13l9 5 9-5M3 17l9 5 9-5"/></svg>',
   up: '<svg viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg>',
+  prev: '<svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>',
+  minimize: '<svg viewBox="0 0 24 24"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>',
+  next: '<svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>',
   down: '<svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>',
   close: '<svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>',
   copy: '<svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>',
@@ -13130,8 +16404,9 @@ var ICONS = {
   split: '<svg viewBox="0 0 24 24"><path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3"/><path d="m15 9 6-6"/></svg>',
   link: '<svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>',
   outline: '<svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
-  child: '<svg viewBox="0 0 24 24"><path d="M4 6h6M4 12h4M12 12h8M16 8v8"/></svg>',
-  sibling: '<svg viewBox="0 0 24 24"><path d="M4 7h8M4 12h8M4 17h8M18 10v4M16 12h4"/></svg>',
+  // 加下级 / 加同级（#44）：方框是主题，虚线框是要加的那个；下级在右边连一条短横，同级在下面用「[」连起来
+  child: '<svg viewBox="0 0 24 24"><rect x="2" y="8" width="7" height="8" rx="1.5"/><rect x="15" y="8" width="7" height="8" rx="1.5" stroke-dasharray="2.5 2.5"/><path d="M9 12h6"/></svg>',
+  sibling: '<svg viewBox="0 0 24 24"><rect x="10" y="3" width="11" height="6" rx="1.5"/><rect x="10" y="15" width="11" height="6" rx="1.5" stroke-dasharray="2.5 2.5"/><path d="M10 6H6v12h4"/></svg>',
   undo: '<svg viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-15-6.7L3 13"/></svg>',
   redo: '<svg viewBox="0 0 24 24"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 15-6.7L21 13"/></svg>',
   marker: '<svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L3.4 9.3l6-.8z"/></svg>',
@@ -13246,6 +16521,11 @@ var MindMapCanvas = class _MindMapCanvas {
     this.edgeMenu = null;
     this.editToggle = null;
     this.nodebar = null;
+    /** 手机 / 平板上选中关联线时线上方的小工具栏（编辑文字、删除）：没有 Delete 键、长按线也难按准，靠它删线 */
+    this.relbar = null;
+    /** 触屏长按关联线弹菜单的计时；fired 记下刚自己弹过菜单，系统随后再发的 contextmenu 就不重复弹 */
+    this.relPress = null;
+    this.relPressFired = 0;
     this.doc = null;
     this.layout = null;
     this.els = /* @__PURE__ */ new Map();
@@ -13267,6 +16547,10 @@ var MindMapCanvas = class _MindMapCanvas {
     this.elContent = /* @__PURE__ */ new WeakMap();
     /** 每个节点当前活着的 iframe，按 id 存，重渲染时复用同一个元素 */
     this.frames = /* @__PURE__ */ new Map();
+    /** 节点里嵌入的脑图预览：键是「节点 id|链接|参数」。重画节点时原样搬进新的标签里，不重新加载 */
+    this.mapPreviews = /* @__PURE__ */ new Map();
+    /** 激活着的预览（双击或点「激活」）：能平移、缩放、展开折叠，键同 mapPreviews */
+    this.livePreview = null;
     /** 挡板已经放开的那个节点；跨域 iframe 里点了哪儿看不见，默认全挡住免得误跳转 */
     this.liveFrame = null;
     /** 上次写进去的位置，避免重复写同样的值 */
@@ -13295,6 +16579,9 @@ var MindMapCanvas = class _MindMapCanvas {
     this.peekCallout = null;
     this.calloutButton = null;
     this.hiddenButton = null;
+    this.reviewButton = null;
+    /** 原地复习进行中 */
+    this.mapReview = null;
     this.noteLinks = [];
     this.noteEls = /* @__PURE__ */ new Map();
     this.noteNode = /* @__PURE__ */ new WeakMap();
@@ -13345,6 +16632,8 @@ var MindMapCanvas = class _MindMapCanvas {
     this.lastTap = null;
     /** 这次按下是不是落在播放器挡板上；双击挡板是「激活播放器」，不是「编辑文字」 */
     this.downOnShield = false;
+    /** 这次按下点在节点里的脑图预览上（双击它是激活，不是编辑） */
+    this.downOnPreview = null;
     /** 按下时落在图片上：双击 / 连点两下就看大图，不进编辑 */
     this.downOnImage = null;
     this.lightbox = null;
@@ -13383,6 +16672,10 @@ var MindMapCanvas = class _MindMapCanvas {
     this.retries = 0;
     this.disposers = [];
     this.formatBar = null;
+    /** 正在编辑备注时：格式命令、快捷键改的是备注里选中的字，不是节点 */
+    this.noteFormat = null;
+    /** 备注卡片、查看备注窗口里画出来的表格（只读）：卡片或窗口没了就销毁 */
+    this.noteTableEds = /* @__PURE__ */ new Set();
     /** 正在编辑的节点文字的编辑框（CodeMirror），和 editing 同生同灭 */
     this.nodeEditor = null;
     /** 正在编辑的标注的编辑框：文字颜色、高亮、加粗这些格式也能用在标注上（群里反馈） */
@@ -13431,6 +16724,11 @@ var MindMapCanvas = class _MindMapCanvas {
     this.settleTimer = null;
     // ---------- 工具栏 ----------
     this.outsideCleanups = /* @__PURE__ */ new Set();
+    // ---------- 原地复习 ----------
+    // ---------- 禅模式（#43） ----------
+    this.zen = null;
+    /** 从别处定位过来选中的（分屏联动、点链接跳过来、从 Markdown 切过来）：不弹浮动工具栏；在这张图里点一下、键盘挪一下就照常出（zhiqiang 反馈） */
+    this.quietSel = false;
     /** Shift 连选的起点：上次不按 Shift 点的节点（按编号记，重新解析后还认得） */
     this.rangeAnchor = null;
     /** 交给行内编辑框：粘贴网页地址时抓标题 */
@@ -13450,6 +16748,8 @@ var MindMapCanvas = class _MindMapCanvas {
     this.localColors = {};
     this.localRecent = {};
     this.contextMenu = null;
+    this.crumbMenu = null;
+    this.crumbMenuOpener = null;
     /** 正在进行的这次滑动归谁：节点表格 / 备注卡片的滚动区，null 是画布 */
     this.wheelLatch = null;
     this.opts = { ...opts };
@@ -13692,8 +16992,10 @@ var MindMapCanvas = class _MindMapCanvas {
     if (!this.doc || path === null) return;
     const node = findByPath(this.doc.root, path);
     if (!node) return;
-    if (this.els.has(node.id)) this.select(node);
-    else this.pendingSelectPath = path;
+    if (this.els.has(node.id)) {
+      this.select(node);
+      this.quietSelect();
+    } else this.pendingSelectPath = path;
   }
   /**
    * 选中路径对应的节点并移到画布中间（从 Markdown 切回来时用）。节点藏在折叠里就退到
@@ -13715,6 +17017,7 @@ var MindMapCanvas = class _MindMapCanvas {
       return;
     }
     this.select(node);
+    this.quietSelect();
     if (steady && this.hasView) {
       if (!this.rectInView(p)) this.showBranch(node);
       return;
@@ -13853,6 +17156,7 @@ var MindMapCanvas = class _MindMapCanvas {
     for (let a = node.parent; a; a = a.parent) if (a.folded) node = a;
     if (!this.layout?.placed.get(node.id)) return;
     this.select(node);
+    this.quietSelect();
     this.ensureVisible(node);
     this.flashNode(node);
   }
@@ -14033,6 +17337,8 @@ var MindMapCanvas = class _MindMapCanvas {
     this.el.focus({ preventScroll: true });
   }
   destroy() {
+    if (this.mapReview) this.endMapReview();
+    if (this.zen) this.setZen(false);
     liveCanvases.delete(this);
     this.sizeCheckCleanup?.();
     for (const t3 of this.sizeCheckTimers) window.clearTimeout(t3);
@@ -14040,6 +17346,10 @@ var MindMapCanvas = class _MindMapCanvas {
     this.ro?.disconnect();
     this.noteRo?.disconnect();
     for (const id of [...this.tableEds.keys()]) this.dropTable(id);
+    for (const t3 of this.noteTableEds) t3.ed.destroy();
+    this.noteTableEds.clear();
+    for (const p of this.mapPreviews.values()) p.dispose();
+    this.mapPreviews.clear();
     if (this.retryTimer !== null) window.clearTimeout(this.retryTimer);
     if (this.notifyTimer !== null) window.clearTimeout(this.notifyTimer);
     if (this.reflowTimer !== null) window.clearTimeout(this.reflowTimer);
@@ -14086,8 +17396,8 @@ var MindMapCanvas = class _MindMapCanvas {
     const ch = this.el.clientHeight;
     if (!cw || !ch) return false;
     const bar = this.toolbarInsets();
-    const pad = (inset) => inset ? Math.max(FIT_PADDING, inset + 12) : FIT_PADDING;
-    const [top, right, bottom, left] = [pad(bar.top), pad(bar.right), pad(bar.bottom), pad(bar.left)];
+    const pad2 = (inset) => inset ? Math.max(FIT_PADDING, inset + 12) : FIT_PADDING;
+    const [top, right, bottom, left] = [pad2(bar.top), pad2(bar.right), pad2(bar.bottom), pad2(bar.left)];
     let k = Math.min(maxK, (cw - left - right) / bounds.w, (ch - top - bottom) / bounds.h);
     if (k > 0.96 && k < 1.04) k = 1;
     this.k = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, k));
@@ -14181,6 +17491,7 @@ var MindMapCanvas = class _MindMapCanvas {
     this.updateCalloutButton();
     this.updateNotesButton();
     this.updateHiddenButton();
+    this.applyReviewDots();
     if (this.recite) this.applyRecite();
     this.reflow();
     if (!this.hasView && this.initialFit()) this.hasView = true;
@@ -14225,6 +17536,14 @@ var MindMapCanvas = class _MindMapCanvas {
     const prev = this.els;
     const next = /* @__PURE__ */ new Map();
     this.nodeById.clear();
+    const deck = !!this.doc && !!deckIdOf(this.doc.frontmatter);
+    const branched = deck && !!this.doc && !!reviewBranches(this.doc);
+    const inReview = (n) => {
+      if (!deck) return false;
+      if (!branched) return true;
+      for (let p = n; p; p = p.parent) if (p.review) return true;
+      return false;
+    };
     const visit = (node) => {
       this.nodeById.set(node.id, node);
       const live = () => this.nodeById.get(node.id) ?? node;
@@ -14234,7 +17553,7 @@ var MindMapCanvas = class _MindMapCanvas {
       const tableSig = nt ? `T${this.opts.editable && !this.recite ? "e" : ""}` : "";
       const num2 = numberLabel(node);
       const progMode = this.recite ? "off" : this.opts.taskProgress?.() ?? "off";
-      const prog = progMode === "off" ? null : taskProgress(node);
+      const prog = progMode === "off" || inReview(node) ? null : taskProgress(node);
       const progText = prog ? progressLabel(prog, progMode) : "";
       const progBelow = !!prog && this.opts.taskProgressPos?.() === "below";
       const contentSig = [node.text, num2 ?? "", progText + (progBelow ? "" : ""), this.noteShown(node) ? "n" : "", tableSig, node.folded ? "f" : "", node.children.length, this.opts.theme, node.callout && this.calloutsHidden ? "c" : "", node.hidden ? "h" : ""].join("");
@@ -14300,6 +17619,7 @@ var MindMapCanvas = class _MindMapCanvas {
       if (!keepChildren) {
         const label = createDiv();
         label.className = "mm-label";
+        const usedPreviews = /* @__PURE__ */ new Set();
         renderInline(label, node.text || (node.depth === 0 ? t("canvas.centralTopic") : ""), {
           onLink: (href, internal, ev) => {
             this.keepLinkNode(node);
@@ -14321,9 +17641,11 @@ var MindMapCanvas = class _MindMapCanvas {
           reuseFrame: (src) => {
             const f = this.frames.get(node.id);
             return f && f.src === src ? f : null;
-          }
+          },
+          mapPreview: (link3, param) => this.mapPreviewFor(node, link3, param, usedPreviews)
         });
-        const frame2 = label.querySelector(".mm-frame");
+        this.dropMapPreviews(node.id, usedPreviews);
+        const frame2 = [...label.querySelectorAll(".mm-frame")].find((f) => !f.closest(".mm-map-preview")) ?? null;
         if (frame2) this.frames.set(node.id, frame2);
         else this.frames.delete(node.id);
         const shield = label.querySelector(".mm-frame-shield");
@@ -14350,7 +17672,7 @@ var MindMapCanvas = class _MindMapCanvas {
       if (nt && !node.text.trim()) el.classList.add("no-title");
       if (num2) el.classList.add("has-num");
       if (progBelow) el.classList.add("has-progress-below");
-      if (el.querySelector(".mm-label img, .mm-label .mm-pdf-crop")) el.classList.add("has-image");
+      if (el.querySelector(".mm-label img, .mm-label .mm-pdf-crop, .mm-label .mm-map-preview")) el.classList.add("has-image");
       if (this.frames.has(node.id)) {
         el.classList.add("has-frame");
         if (this.liveFrame === node.id) el.classList.add("is-frame-live");
@@ -14422,11 +17744,101 @@ var MindMapCanvas = class _MindMapCanvas {
       this.elSigs.delete(el);
       this.lastPos.delete(el);
       this.frames.delete(id);
+      this.dropMapPreviews(id);
       el.remove();
     }
     this.els = next;
     this.renderCrumbs();
     this.opts.host?.afterRender?.();
+  }
+  /**
+   * 节点里 `![[另一张脑图]]` 的只读预览框（宿主认得是脑图才有）。大小见 mapSize（`|400`、`|480x300`），选中节点后右下角手柄能拖。
+   * 平时预览里的图不接鼠标（点、拖都是外面这个节点的）；双击或点「激活」后能平移、缩放、展开折叠（只影响这个预览，不写回那张图），
+   * 点外面或按 Esc 退出。右上角「打开」打开那张脑图
+   */
+  mapPreviewFor(node, link2, param, used) {
+    const host = this.opts.host;
+    if (!host?.mapPreview) return null;
+    let n = 0;
+    while (used.has(`${node.id}|${link2}|${n}`)) n++;
+    const key = `${node.id}|${link2}|${n}`;
+    const size = mapSize(param);
+    const old = this.mapPreviews.get(key);
+    if (old) {
+      used.add(key);
+      old.el.setCssProps({ "--mm-map-w": `${size.w}px`, "--mm-map-h": `${size.h}px` });
+      return old.el;
+    }
+    const box = createDiv({ cls: "mm-map-preview" });
+    box.setCssProps({ "--mm-map-w": `${size.w}px`, "--mm-map-h": `${size.h}px` });
+    box.dataset.link = link2;
+    box.dataset.key = key;
+    const inner = box.createDiv({ cls: "mm-map-preview-body" });
+    const mounted = host.mapPreview(link2, inner);
+    if (!mounted) return null;
+    for (const type of ["pointerdown", "wheel", "dblclick", "contextmenu", "click"]) {
+      inner.addEventListener(type, (ev) => {
+        if (this.livePreview === key) ev.stopPropagation();
+      });
+    }
+    box.addEventListener("keydown", (ev) => {
+      if (this.livePreview !== key) return;
+      ev.stopPropagation();
+      if (ev.key === "Escape") {
+        ev.preventDefault();
+        this.setLivePreview(null);
+        this.el.focus({ preventScroll: true });
+      }
+    });
+    const bar = box.createDiv({ cls: "mm-map-preview-bar" });
+    const button = (cls, text, run) => {
+      const b = bar.createEl("button", { cls, text });
+      b.type = "button";
+      b.addEventListener("pointerdown", (ev) => ev.stopPropagation());
+      b.addEventListener("dblclick", (ev) => ev.stopPropagation());
+      b.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        run(ev);
+      });
+      return b;
+    };
+    button("mm-map-preview-live", t("canvas.activateMap"), () => {
+      if (this.livePreview === key) mounted.fit();
+      else this.setLivePreview(key);
+    });
+    button("mm-map-preview-open", t("canvas.openMap"), (ev) => host.openLink?.(link2, true, ev));
+    this.mapPreviews.set(key, { el: box, dispose: mounted.dispose, fit: mounted.fit });
+    used.add(key);
+    return box;
+  }
+  /** 激活 / 退出节点里的脑图预览：只改 class，不重画（重画会把预览摘下来） */
+  setLivePreview(key) {
+    if (this.livePreview === key) return;
+    const prev = this.livePreview ? this.mapPreviews.get(this.livePreview) : null;
+    if (prev) {
+      prev.el.classList.remove("is-live");
+      const b2 = prev.el.querySelector(".mm-map-preview-live");
+      if (b2) b2.textContent = t("canvas.activateMap");
+    }
+    this.livePreview = key;
+    const cur = key ? this.mapPreviews.get(key) : null;
+    if (!cur) {
+      this.livePreview = null;
+      return;
+    }
+    cur.el.classList.add("is-live");
+    const b = cur.el.querySelector(".mm-map-preview-live");
+    if (b) b.textContent = t("canvas.fitMap");
+  }
+  /** 节点重画完：这次没用到的预览卸掉（链接改了、删了）；不给 keep 就是这个节点的全卸掉 */
+  dropMapPreviews(nodeId, keep) {
+    for (const [key, p] of this.mapPreviews) {
+      if (!key.startsWith(`${nodeId}|`) || keep?.has(key)) continue;
+      if (this.livePreview === key) this.livePreview = null;
+      p.dispose();
+      p.el.remove();
+      this.mapPreviews.delete(key);
+    }
   }
   scheduleSizeCheck() {
     for (const t3 of this.sizeCheckTimers) window.clearTimeout(t3);
@@ -14512,7 +17924,7 @@ var MindMapCanvas = class _MindMapCanvas {
     }
     this.sizes = new Map(this.naturalSizes);
     this.alignWidths(base);
-    const raw = { ...DEFAULT_LAYOUT, ...theme.layout, structure: this.opts.structure };
+    const raw = { ...DEFAULT_LAYOUT, ...theme.layout, structure: this.baseStructure() };
     const sp = (v) => Math.round(v * spacingScale);
     const layoutOpts = { ...raw, gapRoot: sp(raw.gapRoot), gapLevel: sp(raw.gapLevel), gapSibling: sp(raw.gapSibling), gapMain: sp(raw.gapMain) };
     this.syncSummaryLabels(base);
@@ -14546,7 +17958,10 @@ var MindMapCanvas = class _MindMapCanvas {
         this.lastPos.set(el, { x: p.x, y: p.y });
       }
       if (el.dataset.side !== p.side) el.dataset.side = p.side;
+      const toggle = p.toggle ?? (p.side === "left" || p.side === "down" || p.side === "up" ? p.side : "right");
+      if (el.dataset.toggle !== toggle) el.dataset.toggle = toggle;
     }
+    const spines = allSpines(this.layout);
     let edgeIndex = 0;
     const anchorBottom = (p) => isUnderlineAt(theme, p.node.depth - base.depth) && !p.node.color;
     for (const child of this.layout.placed.values()) {
@@ -14555,7 +17970,8 @@ var MindMapCanvas = class _MindMapCanvas {
       if (this.layout.floating?.has(child.node) || isSummaryTopic(child.node)) continue;
       const parent = this.layout.placed.get(parentNode.id);
       if (!parent) continue;
-      const seg = this.layout.spine?.segs.get(child.node.id);
+      let seg;
+      for (const sp2 of spines) if (seg = sp2.segs.get(child.node.id)) break;
       let g = edgeGeometry(parent, child);
       if (child.side === "rib") {
         if (anchorBottom(child)) g = ribGeometry(parent, child, child.y + child.h);
@@ -14576,7 +17992,15 @@ var MindMapCanvas = class _MindMapCanvas {
       edgeIndex += 1;
       const vertical = child.side === "down" || child.side === "up";
       const tail = !anchorBottom(child) ? "" : vertical ? ` M${round2(child.x)},${round2(child.y + child.h)} L${round2(child.x + child.w)},${round2(child.y + child.h)}` : child.side === "rib" ? ` L${round2(g.x2 === child.x ? child.x + child.w : child.x)},${round2(g.y2)}` : ` L${round2(child.side === "left" ? child.x : child.x + child.w)},${round2(g.y2)}`;
-      const d = seg ? `M${round2(seg.x1)},${round2(seg.y1)} L${round2(seg.x2)},${round2(seg.y2)}` : edgePath(g, style, this.opts.edge?.sharp ?? theme.sharp ? 0 : 8) + tail;
+      let straight = "";
+      if (child.entry !== void 0 && (child.side === "right" || child.side === "left")) {
+        straight = ` L${round2(g.x2)},${round2(g.y2)}`;
+        g.x2 = child.entry;
+      } else if (child.entry !== void 0 && child.side === "down") {
+        straight = ` L${round2(g.x2)},${round2(g.y2)}`;
+        g.y2 = child.entry;
+      }
+      const d = seg ? `M${round2(seg.x1)},${round2(seg.y1)} L${round2(seg.x2)},${round2(seg.y2)}` : edgePath(g, style, this.opts.edge?.sharp ?? theme.sharp ? 0 : 8) + straight + tail;
       if (path.getAttribute("d") !== d) path.setAttribute("d", d);
       const depth = String(Math.min(child.node.depth - base.depth, 3));
       if (path.dataset.depth !== depth) path.dataset.depth = depth;
@@ -14585,8 +18009,9 @@ var MindMapCanvas = class _MindMapCanvas {
       if (path.style.stroke !== stroke) path.style.stroke = stroke;
       if (path.style.display) path.setCssStyles({ display: "" });
     }
-    const end = this.layout.spine?.end;
-    if (end) {
+    for (const sp2 of spines) {
+      const end = sp2.end;
+      if (!end) continue;
       let path = this.edgePaths[edgeIndex];
       if (!path) {
         path = createSvg("path");
@@ -14602,7 +18027,7 @@ var MindMapCanvas = class _MindMapCanvas {
       const d = `M${round2(end.x1)},${round2(end.y1)} L${round2(end.x2)},${round2(end.y2)}` + head;
       if (path.getAttribute("d") !== d) path.setAttribute("d", d);
       if (path.dataset.depth !== "1") path.dataset.depth = "1";
-      const last = this.layout.spine?.plain ? void 0 : [...this.layout.spine.segs.keys()].pop();
+      const last = sp2.plain ? void 0 : [...sp2.segs.keys()].pop();
       const branch = last ? this.els.get(last)?.dataset.branch : void 0;
       const stroke = branch !== void 0 ? `var(--mm-branch-${branch})` : "";
       if (path.style.stroke !== stroke) path.style.stroke = stroke;
@@ -14676,6 +18101,7 @@ var MindMapCanvas = class _MindMapCanvas {
       r3.handles.forEach((h) => h.remove());
       this.relEls.delete(key);
     }
+    this.positionRelbar();
   }
   createRel() {
     const g = createSvg("g");
@@ -14710,6 +18136,25 @@ var MindMapCanvas = class _MindMapCanvas {
     hit.addEventListener("pointerdown", (ev) => {
       ev.stopPropagation();
       this.el.focus({ preventScroll: true });
+      if (ev.pointerType === "touch" && this.opts.editable) {
+        this.cancelRelPress();
+        const timer = window.setTimeout(() => {
+          this.relPress = null;
+          const r3 = info(hit);
+          if (!r3) return;
+          this.relPressFired = performance.now();
+          this.activateRel(r3.rel);
+          this.showContextMenu(this.relMenuEntries(r3.src, r3.rel), ev);
+        }, 450);
+        this.relPress = { timer, x: ev.clientX, y: ev.clientY };
+      }
+    });
+    hit.addEventListener("pointermove", (ev) => {
+      if (this.relPress && Math.hypot(ev.clientX - this.relPress.x, ev.clientY - this.relPress.y) > 8) this.cancelRelPress();
+    });
+    for (const type of ["pointerup", "pointercancel"]) hit.addEventListener(type, () => this.cancelRelPress());
+    hit.addEventListener("touchend", (ev) => {
+      if (performance.now() - this.relPressFired < 1500) ev.preventDefault();
     });
     hit.addEventListener("click", (ev) => {
       ev.stopPropagation();
@@ -14724,6 +18169,7 @@ var MindMapCanvas = class _MindMapCanvas {
     hit.addEventListener("contextmenu", (ev) => {
       ev.preventDefault();
       ev.stopPropagation();
+      if (this.relPress || performance.now() - this.relPressFired < 1500) return;
       const r3 = info(hit);
       if (!r3 || !this.opts.editable) return;
       this.activateRel(r3.rel);
@@ -14854,18 +18300,75 @@ var MindMapCanvas = class _MindMapCanvas {
     el.addEventListener("pointercancel", up);
   }
   relSource(rel) {
-    let found = null;
+    let found2 = null;
     if (this.doc) walkMap(this.doc.root, (n) => {
-      if (!found && n.rels?.includes(rel)) found = n;
+      if (!found2 && n.rels?.includes(rel)) found2 = n;
     });
-    return found;
+    return found2;
   }
   relTarget(rel) {
-    let found = null;
+    let found2 = null;
     if (this.doc) walkMap(this.doc.root, (n) => {
-      if (!found && n.anchor === rel.to) found = n;
+      if (!found2 && n.anchor === rel.to) found2 = n;
     });
-    return found;
+    return found2;
+  }
+  cancelRelPress() {
+    if (!this.relPress) return;
+    window.clearTimeout(this.relPress.timer);
+    this.relPress = null;
+  }
+  /** 选中的关联线上方放一个小工具栏（编辑文字、删除；跟节点的浮动工具栏一样的样式），手机上点它删线。其余操作在右键 / 长按菜单里 */
+  positionRelbar() {
+    const rel = this.activeRel;
+    const src = rel && this.doc ? this.relSource(rel) : null;
+    const entry = rel ? [...this.relEls.values()].find((r3) => this.relOf.get(r3.label)?.rel === rel) : void 0;
+    const touch = this.el.ownerDocument.body.classList.contains("is-mobile");
+    const show = touch && !!rel && !!src && !!entry && this.opts.editable && this.opts.showNodebar?.() !== false && !this.editingRel && !this.selected.size;
+    if (!show) {
+      this.relbar?.remove();
+      this.relbar = null;
+      return;
+    }
+    if (!this.relbar) {
+      const bar2 = createDiv({ cls: "mm-nodebar mm-relbar" });
+      bar2.addEventListener("pointerdown", (ev) => ev.stopPropagation());
+      bar2.addEventListener("contextmenu", (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+      });
+      const tool = (id, iconName, title, run) => {
+        const b = createEl("button");
+        b.type = "button";
+        b.className = "mm-tool";
+        b.dataset.tool = id;
+        this.tip(b, title);
+        b.append(icon(iconName));
+        b.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          const r3 = this.activeRel;
+          const s = r3 && this.relSource(r3);
+          if (r3 && s) run(s, r3);
+        });
+        bar2.append(b);
+      };
+      tool("rel-label", "pencil", t("menu.editRelLabel"), (_s, r3) => this.editRelLabel(r3));
+      tool("rel-delete", "trash", t("menu.deleteRel"), (s, r3) => this.deleteRel(s, r3));
+      this.relbar = bar2;
+      this.el.append(bar2);
+    }
+    const bar = this.relbar;
+    bar.classList.remove("is-hidden");
+    const host = this.el.getBoundingClientRect();
+    const a = entry.label.getBoundingClientRect();
+    const cx = a.left + a.width / 2 - host.left;
+    const bw = bar.offsetWidth;
+    const bh = bar.offsetHeight;
+    let top = a.top - host.top - bh - 12;
+    if (top < 4) top = a.bottom - host.top + 12;
+    bar.style.left = `${Math.max(4, Math.min(cx - bw / 2, this.el.clientWidth - bw - 4))}px`;
+    bar.style.top = `${top}px`;
+    bar.classList.toggle("is-hidden", cx < 0 || cx > this.el.clientWidth || top > this.el.clientHeight);
   }
   relMenuEntries(src, rel) {
     const dst = this.relTarget(rel);
@@ -14896,6 +18399,7 @@ var MindMapCanvas = class _MindMapCanvas {
     const before = rel.label;
     this.activateRel(rel);
     this.editingRel = rel;
+    this.positionRelbar();
     label.classList.remove("is-empty");
     label.classList.add("is-editing");
     delete label.dataset.raw;
@@ -15695,6 +19199,131 @@ var MindMapCanvas = class _MindMapCanvas {
     this.opts.onCalloutsHiddenChange?.(this.calloutsHidden);
     this.render();
   }
+  // ---------- 间隔复习 ----------
+  /** 这张图在不在复习里：没加入、整张图、只有几个分支 */
+  reviewState() {
+    if (!this.doc || deckIdOf(this.doc.frontmatter) === null) return "none";
+    return reviewBranches(this.doc) ? "branch" : "whole";
+  }
+  /** 宿主算好了今天的到期数（复习了、换天了）：刷新工具栏的数字和小绿点 */
+  refreshReview() {
+    this.updateReviewButton();
+    this.applyReviewDots();
+  }
+  updateReviewButton() {
+    const b = this.reviewButton;
+    if (!b) return;
+    const on = this.reviewState() !== "none";
+    const n = on ? this.opts.review?.due()?.count ?? 0 : 0;
+    b.classList.toggle("is-hidden", !on);
+    const c = b.querySelector(".mm-tool-count");
+    if (c) c.textContent = n ? String(n) : "";
+    this.tip(b, t("canvas.review", { n }), "toolbar");
+  }
+  /** 今天有卡片到期的节点：右上角一个小绿点（设置里可以关） */
+  applyReviewDots() {
+    if (!this.doc) return;
+    const hooks = this.opts.review;
+    const ids = hooks && hooks.dots() && this.reviewState() !== "none" ? hooks.due()?.ids ?? null : null;
+    walkMap(this.doc.root, (n) => {
+      const el = this.els.get(n.id);
+      if (!el) return;
+      const due = !!ids && !!n.reviewId && ids.has(n.reviewId);
+      if (el.classList.contains("has-review-due") !== due) el.classList.toggle("has-review-due", due);
+    });
+  }
+  /** 右键「间隔复习 ▸」：按这张图现在的状态给加入、移出、复习这个分支 */
+  reviewMenu(node) {
+    const hooks = this.opts.review;
+    if (!hooks || !this.doc) return [];
+    const editable = this.opts.editable;
+    const state = this.reviewState();
+    const out = [];
+    const isRoot = node === this.doc.root;
+    let inBranch = false;
+    for (let p = node; p; p = p.parent) if (p.review) inBranch = true;
+    const studyable = state === "whole" || state === "branch" && inBranch;
+    if (studyable) out.push({ title: t("menu.reviewStudyBranch", { n: hooks.dueIn(pathOf(node)) }), icon: "play", run: () => hooks.study(isRoot ? null : pathOf(node)) });
+    if (editable) {
+      if (state === "none") {
+        out.push({ title: t("menu.reviewJoinAll"), icon: "layers", run: () => this.setReview("all-in", node) });
+        if (!isRoot) out.push({ title: t("menu.reviewJoinBranch"), icon: "git-branch", run: () => this.setReview("branch-in", node) });
+      } else if (state === "whole") {
+        out.push({ title: t("menu.reviewLeaveAll"), icon: "x", run: () => this.setReview("all-out", node) });
+      } else {
+        if (node.review) out.push({ title: t("menu.reviewLeaveBranch"), icon: "x", run: () => this.setReview("branch-out", node) });
+        else if (!inBranch && !isRoot) out.push({ title: t("menu.reviewAddBranch"), icon: "git-branch", run: () => this.setReview("branch-in", node) });
+        out.push({ title: t("menu.reviewJoinAll"), icon: "layers", run: () => this.setReview("all-in", node) });
+        out.push({ title: t("menu.reviewLeaveAll"), icon: "x", run: () => this.setReview("all-out", node) });
+      }
+      if (node.reviewId && hooks.suspended(node.reviewId)) out.push({ separator: true }, { title: t("menu.reviewUnsuspend"), icon: "play-circle", run: () => hooks.unsuspend(node.reviewId) });
+    }
+    return out;
+  }
+  /**
+   * 加入 / 移出复习：整张图写 frontmatter 的 mindmap-review（牌组 id），只加入分支的再在分支节点写 %%review%%。
+   * 移出时卡片的 rv 留着，再加回来排期接着用
+   */
+  setReview(how, node) {
+    const doc = this.doc;
+    if (!doc || !this.opts.editable) return;
+    const clearFlags = (n) => {
+      n.review = void 0;
+      n.children.forEach(clearFlags);
+      if (n.summary?.topic) clearFlags(n.summary.topic);
+    };
+    const ensureDeck = () => {
+      if (!deckIdOf(doc.frontmatter)) doc.frontmatter = setFrontmatterValue(doc.frontmatter, REVIEW_KEY, this.opts.review?.previousDeck() ?? newReviewId(/* @__PURE__ */ new Set()));
+    };
+    if (how === "all-in") {
+      ensureDeck();
+      clearFlags(doc.root);
+    } else if (how === "branch-in") {
+      const whole = this.reviewState() === "whole";
+      ensureDeck();
+      if (whole) clearFlags(doc.root);
+      clearFlags(node);
+      node.review = true;
+    } else if (how === "all-out") {
+      doc.frontmatter = setFrontmatterValue(doc.frontmatter, REVIEW_KEY, null);
+      clearFlags(doc.root);
+    } else {
+      node.review = void 0;
+      if (!reviewBranches(doc)) doc.frontmatter = setFrontmatterValue(doc.frontmatter, REVIEW_KEY, null);
+    }
+    if (how.endsWith("-in")) assignReviewIds(doc);
+    this.render();
+    this.notify();
+    this.opts.review?.changed();
+  }
+  /** 原地复习开始前：出题的节点还没有 rv（新写的题）就补上，写回文件 */
+  ensureReviewIds() {
+    if (!this.doc || !this.opts.editable) return;
+    if (!assignReviewIds(this.doc)) return;
+    this.render();
+    this.notify();
+  }
+  /** 命令、文件菜单：整张图加入 / 移出复习（和右键菜单一样，能撤销） */
+  setWholeReview(on) {
+    if (!this.doc) return;
+    this.setReview(on ? "all-in" : "all-out", this.doc.root);
+  }
+  /** 复习时按「编辑」跳回来：按卡片的 rv 找节点（找不到按路径），展开、选中、移到中间 */
+  revealReview(reviewId, path) {
+    if (!this.doc) return false;
+    let hit = null;
+    if (reviewId) {
+      const find = (n) => {
+        if (hit) return;
+        if (n.reviewId === reviewId) hit = n;
+        n.children.forEach(find);
+        if (n.summary?.topic) find(n.summary.topic);
+      };
+      find(this.doc.root);
+    }
+    if (hit) return this.revealNode(hit);
+    return path ? this.revealPathFlash(path) : false;
+  }
   updateHiddenButton() {
     const b = this.hiddenButton;
     if (!b || !this.doc) return;
@@ -15845,13 +19474,13 @@ var MindMapCanvas = class _MindMapCanvas {
   summaryMenuEntries(start) {
     const topic = start.summary?.topic;
     if (topic) {
-      const plain = !topic.children.length && !topic.note && topic.callout === void 0 && !topic.rels?.length && !topic.anchor;
+      const plain2 = !topic.children.length && !topic.note && topic.callout === void 0 && !topic.rels?.length && !topic.anchor;
       return [
         { title: t("menu.editSummary"), icon: "type", run: () => this.editTopic(topic) },
         { title: t("menu.addSummaryTopic"), icon: "corner-down-right", run: () => this.addTopicChild(start) },
         { title: t("menu.pasteChild"), icon: "clipboard-paste", run: () => this.pasteIntoSummary(start) },
         ...this.rangeMenuEntries(start, "summary"),
-        { title: t("menu.summaryToText"), icon: "text", disabled: !plain, run: () => this.topicToText(start) },
+        { title: t("menu.summaryToText"), icon: "text", disabled: !plain2, run: () => this.topicToText(start) },
         { title: t("menu.removeSummary"), icon: "x", run: () => this.removeSummary(start) }
       ];
     }
@@ -16198,6 +19827,7 @@ var MindMapCanvas = class _MindMapCanvas {
     this.holdLayer();
     this.updateZoomLabel();
     this.positionNodebar();
+    this.positionMapReview();
     this.closePopover();
     this.opts.onViewChange?.(this.getViewState());
   }
@@ -16384,6 +20014,12 @@ var MindMapCanvas = class _MindMapCanvas {
     this.notesButton = btn("note", t("canvas.toggleNotes"), () => this.toggleNotes());
     this.hiddenButton = btn("hiddenNodes", t("canvas.showHidden"), () => this.opts.onToggleHidden?.());
     this.reciteButton = btn("recite", t("canvas.recite"), () => this.setRecite(!this.recite));
+    if (this.opts.review) {
+      const hooks = this.opts.review;
+      this.reviewButton = btn("review", "", () => hooks.study(null));
+      this.reviewButton.createSpan({ cls: "mm-tool-count" });
+      this.updateReviewButton();
+    }
     this.reciteButton.classList.toggle("is-active", this.recite);
     const layers = btn("layers", t("canvas.foldLevels"), () => this.toggleFoldMenu(layers));
     if (this.opts.quickSettings) {
@@ -16471,14 +20107,14 @@ var MindMapCanvas = class _MindMapCanvas {
       }
     });
     const cover = (n, covered) => {
-      const answer = isAnswer(n.text);
+      const answer2 = isAnswer(n.text);
       const option = !!n.parent && !!taskState(n.text) && !this.revealedQuestions.has(n.parent.id);
-      const hide = covered || answer && !this.revealedAnswers.has(n.id);
+      const hide = covered || answer2 && !this.revealedAnswers.has(n.id);
       const el = this.els.get(n.id);
       if (el) {
-        el.classList.toggle("is-answer", answer);
+        el.classList.toggle("is-answer", answer2);
         el.classList.toggle("is-answer-covered", hide);
-        if (answer && hide && !covered) el.dataset.answer = t("canvas.answerCovered");
+        if (answer2 && hide && !covered) el.dataset.answer = t("canvas.answerCovered");
         else delete el.dataset.answer;
       }
       this.calloutEls.get(n.id)?.classList.toggle("is-answer-covered", hide);
@@ -16499,15 +20135,26 @@ var MindMapCanvas = class _MindMapCanvas {
     const down = this.reciteDown;
     if (down && Math.hypot(ev.clientX - down.x, ev.clientY - down.y) > DRAG_THRESHOLD) return;
     const target = ev.target;
-    const mark = target.closest(".mm-label mark");
+    const r3 = this.mapReview;
+    if (r3?.node) {
+      const curEl = this.els.get(r3.node.id);
+      const nodeEl2 = target.closest(".gg-mm-node");
+      const hitNode = nodeEl2 ? this.nodeFromEl(nodeEl2) : null;
+      const onCurrent = r3.kind === "cloze" && !!curEl && !!target.closest(".mm-label mark") && curEl.contains(target) || r3.kind === "answer" && !!hitNode && (hitNode === r3.node || isAncestor(r3.node, hitNode)) || r3.kind === "choice" && !!target.closest(".mm-quiz-tag") && hitNode === r3.node;
+      if (onCurrent) {
+        this.revealReviewCard();
+        return;
+      }
+    }
+    const mark = target.closest(".mm-label mark, .mm-note-card-body mark, .mm-popover.is-view .mm-popover-body mark");
     if (mark) {
       mark.classList.toggle("is-revealed");
       return;
     }
     const answerEl = target.closest(".gg-mm-node.is-answer, .gg-mm-node.is-answer-covered");
-    const answer = answerEl ? this.nodeFromEl(answerEl) : null;
-    if (answer) {
-      const cover = this.coveringAnswer(answer);
+    const answer2 = answerEl ? this.nodeFromEl(answerEl) : null;
+    if (answer2) {
+      const cover = this.coveringAnswer(answer2);
       if (cover) {
         this.revealedAnswers.add(cover.id);
         this.applyRecite();
@@ -16517,8 +20164,8 @@ var MindMapCanvas = class _MindMapCanvas {
         }
         return;
       }
-      if (isAnswer(answer.text)) {
-        this.revealedAnswers.delete(answer.id);
+      if (isAnswer(answer2.text)) {
+        this.revealedAnswers.delete(answer2.id);
         this.applyRecite();
         if (this.layout) {
           this.drawCallouts();
@@ -16537,6 +20184,65 @@ var MindMapCanvas = class _MindMapCanvas {
       this.drawCallouts();
       this.drawNotes();
     }
+  }
+  /** 画出来的这张图（聚焦时是那个分支）用的结构：聚焦到设了自己结构的分支时用它的 */
+  baseStructure() {
+    const f = this.focusRoot;
+    return f?.layout ? branchStructure(f.layout, false).structure : this.opts.structure;
+  }
+  /** 设了自己结构、而且生效的分支根节点，或者画出来的这张图的根 */
+  isStructureRoot(n) {
+    return n === (this.focusRoot ?? this.doc?.root) || !!n.layout && !this.branchLayoutBlocked(n);
+  }
+  /**
+   * node 的子节点按什么结构排：往上找最近的结构根（设了自己结构的分支、或者图的根）。
+   * 时间轴、鱼骨图的分支里面不是它本身：横向时间轴和鱼骨图是树形图，纵向时间轴是逻辑图
+   */
+  kidsStructure(node) {
+    const base = this.focusRoot ?? this.doc?.root;
+    for (let a = node; a; a = a.parent) {
+      if (!this.isStructureRoot(a)) continue;
+      const s = a === base ? this.baseStructure() : branchStructure(a.layout, this.layout?.placed.get(a.id)?.side === "left").structure;
+      if (a === node) return s;
+      if (isTimelineH(s) || isFishbone(s)) return "tree-right";
+      if (isTimeline(s)) return "logic-right";
+      return s;
+    }
+    return this.opts.structure;
+  }
+  /**
+   * 混合结构：node 不能单独设结构的原因（能设返回 null）。中心主题在工具栏里改；概要主题、自由主题不行；
+   * 时间轴、鱼骨图的主主题沿主轴 / 主骨排，第一期也不行（它们下面的主题可以）
+   */
+  branchLayoutBlocked(node) {
+    const base = this.focusRoot ?? this.doc?.root;
+    if (!node.parent || node === base) return t("menu.branchLayoutRoot");
+    if (isSummaryTopic(node)) return t("menu.branchLayoutTopic");
+    if (this.isFloating(node)) return null;
+    const p = node.parent;
+    const ps = p === base ? this.baseStructure() : p.layout && !this.branchLayoutBlocked(p) ? branchStructure(p.layout, false).structure : void 0;
+    if (ps && (isTimeline(ps) || isFishbone(ps))) return t("menu.branchLayoutMainTopic");
+    return null;
+  }
+  branchLayoutMenu(node) {
+    const why = this.branchLayoutBlocked(node);
+    if (why) return [{ title: why, disabled: true }];
+    const leftward = this.layout?.placed.get(node.id)?.side === "left";
+    const label = (l) => l === "fishbone" ? t("structure.fishbone") : STRUCTURES.find((s) => s.id === l)?.label ?? l;
+    return [
+      { title: t("menu.branchLayoutInherit"), checked: !node.layout, run: () => this.setBranchLayout(void 0) },
+      { separator: true },
+      ...BRANCH_LAYOUTS.map((l) => ({ title: label(l), checked: node.layout === l, disabled: leftward && l.startsWith("timeline-h"), run: () => this.setBranchLayout(l) }))
+    ];
+  }
+  /** 选中的分支都设成 layout（undefined = 跟随上级） */
+  setBranchLayout(layout) {
+    if (!this.opts.editable || !this.doc) return;
+    const targets = [...this.selected].filter((n) => !this.branchLayoutBlocked(n) && n.layout !== layout);
+    if (!targets.length) return;
+    for (const n of targets) n.layout = layout;
+    this.render();
+    this.notify();
   }
   changeStructure(s) {
     this.setStructure(s);
@@ -16559,7 +20265,7 @@ var MindMapCanvas = class _MindMapCanvas {
     this.structureMenu = null;
   }
   /** 工具栏上方的小菜单，点外面自动关闭 */
-  buildMenu(items, anchor, close, point) {
+  buildMenu(items, anchor, close, point, opener) {
     const menu = createDiv();
     menu.className = "mm-menu";
     menu.addEventListener("pointerdown", (ev) => ev.stopPropagation());
@@ -16574,7 +20280,12 @@ var MindMapCanvas = class _MindMapCanvas {
       const b = createEl("button");
       b.type = "button";
       b.className = "mm-menu-item" + (it.active ? " is-active" : "");
-      b.textContent = it.label;
+      if (it.color) {
+        const dot = b.createSpan({ cls: "mm-outline-dot" });
+        dot.dataset.color = it.color;
+        if (!/^[a-z]+$/.test(it.color)) dot.style.background = it.color;
+      }
+      b.appendText(it.label);
       b.addEventListener("click", (ev) => {
         ev.stopPropagation();
         closeAll();
@@ -16590,7 +20301,7 @@ var MindMapCanvas = class _MindMapCanvas {
       menu.style.left = `${clampX(point?.x ?? 0)}px`;
       menu.style.top = `${clampY(point?.y ?? 0)}px`;
     } else this.placeAtAnchor(menu, anchor);
-    cleanup = this.dismissOnOutside(menu, closeAll);
+    cleanup = this.dismissOnOutside(menu, closeAll, opener);
     return menu;
   }
   /** 弹出的菜单、面板摆在按钮旁边：工具栏里的按钮按工具栏位置决定弹出方向，其他地方（节点工具栏）一律向上弹 */
@@ -16752,9 +20463,293 @@ var MindMapCanvas = class _MindMapCanvas {
       else this.el.style.removeProperty("--mm-bottom-inset");
     }
   }
+  isZen() {
+    return !!this.zen;
+  }
+  /**
+   * 禅模式：工具栏、节点浮动栏、格式栏、大纲面板都藏起来（CSS 按 is-zen），面包屑平时透明、移到上面才出来；
+   * 键盘、右键菜单照常。鼠标一动右上角淡淡出一个「退出禅模式」，停 2 秒隐去（手机上常驻半透明）。只在这个标签页里、不记住
+   */
+  /** 格式栏挂在 body 上：body 上记着这个窗口里有没有开着禅模式的脑图，样式按它藏格式栏（不用 :has） */
+  markZenBody() {
+    const doc = this.el.ownerDocument;
+    doc.body.classList.toggle("gg-mm-has-zen", !!doc.querySelector(".gg-mm-root.is-zen"));
+  }
+  setZen(on) {
+    if (!this.opts.onZen || on === !!this.zen) return;
+    if (on) {
+      this.closeQuickSettings();
+      this.closeFoldMenu();
+      const exit = this.el.createEl("button", { cls: "mm-zen-exit", attr: { type: "button" } });
+      exit.append(icon("minimize"));
+      exit.createSpan({ text: t("canvas.zenExit") });
+      exit.addEventListener("pointerdown", (ev) => ev.stopPropagation());
+      exit.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        this.setZen(false);
+      });
+      const z = {
+        exit,
+        timer: 0,
+        onMove: () => {
+          exit.classList.add("is-shown");
+          window.clearTimeout(z.timer);
+          z.timer = window.setTimeout(() => exit.classList.remove("is-shown"), 2e3);
+        }
+      };
+      this.zen = z;
+      this.el.addEventListener("pointermove", z.onMove);
+      this.el.classList.add("is-zen");
+      this.markZenBody();
+      this.updateBottomInset();
+    } else {
+      const z = this.zen;
+      if (!z) return;
+      this.zen = null;
+      window.clearTimeout(z.timer);
+      this.el.removeEventListener("pointermove", z.onMove);
+      z.exit.remove();
+      this.el.classList.remove("is-zen");
+      this.markZenBody();
+      this.updateBottomInset();
+      this.positionNodebar();
+    }
+    this.opts.onZen(on);
+    this.el.focus({ preventScroll: true });
+  }
+  isMapReviewing() {
+    return !!this.mapReview;
+  }
+  /**
+   * 原地复习：进背诵模式（高亮、答案、选择题都遮着），到期的题一道道选中、移到中间，
+   * 节点下面浮出「显示答案」，揭开后换成四个评分按钮。顶上一条显示剩余数和退出
+   */
+  startMapReview(driver) {
+    if (this.mapReview) this.endMapReview();
+    const prevRecite = this.recite;
+    if (!prevRecite) this.setRecite(true);
+    const bar = this.el.createDiv({ cls: "mm-review-bar" });
+    const pop = this.el.createDiv({ cls: "mm-review-pop" });
+    for (const el of [bar, pop]) {
+      el.addEventListener("pointerdown", (ev) => {
+        ev.stopPropagation();
+        ev.preventDefault();
+      });
+      el.addEventListener("mousedown", (ev) => ev.preventDefault());
+      el.addEventListener("dblclick", (ev) => ev.stopPropagation());
+      el.addEventListener("wheel", (ev) => ev.stopPropagation(), { passive: true });
+    }
+    this.el.classList.add("is-map-review");
+    this.mapReview = { driver, node: null, kind: null, shown: false, prevRecite, unfolded: [], bar, pop, start: Date.now(), timer: 0 };
+    this.el.focus({ preventScroll: true });
+    void this.nextReviewCard();
+  }
+  endMapReview() {
+    const r3 = this.mapReview;
+    if (!r3) return;
+    this.mapReview = null;
+    window.clearTimeout(r3.timer);
+    r3.bar.remove();
+    r3.pop.remove();
+    this.el.classList.remove("is-map-review");
+    for (const el of this.el.querySelectorAll(".is-review-current")) el.classList.remove("is-review-current");
+    for (const n of r3.unfolded) n.folded = true;
+    if (r3.unfolded.length) this.render();
+    if (!r3.prevRecite) this.setRecite(false);
+    else this.coverAll();
+    r3.driver.finish();
+  }
+  /** 揭开过的都盖回去 */
+  coverAll() {
+    this.revealedAnswers.clear();
+    this.revealedQuestions.clear();
+    for (const m of this.el.querySelectorAll(".mm-label mark.is-revealed")) m.classList.remove("is-revealed");
+    this.applyRecite();
+    if (this.layout) {
+      this.drawCallouts();
+      this.drawNotes();
+    }
+  }
+  async nextReviewCard() {
+    const r3 = this.mapReview;
+    if (!r3 || !this.doc) return;
+    window.clearTimeout(r3.timer);
+    if (r3.node) this.els.get(r3.node.id)?.classList.remove("is-review-current");
+    this.coverAll();
+    const next = r3.driver.next();
+    if ("done" in next) {
+      r3.node = null;
+      r3.kind = null;
+      this.paintReviewDone(next.wait, next.note);
+      return;
+    }
+    let hit = null;
+    const find = (n) => {
+      if (hit) return;
+      if (n.reviewId === next.reviewId) hit = n;
+      n.children.forEach(find);
+      if (n.summary?.topic) find(n.summary.topic);
+    };
+    find(this.doc.root);
+    const node = hit;
+    if (!node) {
+      await r3.driver.skip();
+      return this.nextReviewCard();
+    }
+    if (this.focusRoot && node !== this.focusRoot && !isAncestor(this.focusRoot, node)) this.exitFocus(false);
+    let unfolded = false;
+    for (let p = node.parent; p; p = p.parent)
+      if (p.folded) {
+        p.folded = false;
+        r3.unfolded.push(p);
+        unfolded = true;
+      }
+    if (unfolded) this.render();
+    r3.node = node;
+    r3.kind = next.kind;
+    r3.shown = false;
+    r3.start = Date.now();
+    this.select(node);
+    this.els.get(node.id)?.classList.add("is-review-current");
+    this.centerOn(node, true);
+    this.paintReviewBar(next.counts, next.current);
+    this.paintReviewPop();
+  }
+  paintReviewBar(counts, current2) {
+    const r3 = this.mapReview;
+    if (!r3) return;
+    r3.bar.replaceChildren();
+    r3.bar.createSpan({ cls: "mm-review-bar-title", text: t("mapReview.title") });
+    const c = r3.bar.createSpan({ cls: "mm-review-counts" });
+    const tips = [t("review.tipNew", { n: counts[0] }), t("review.tipLearn", { n: counts[1] }), t("review.tipReview", { n: counts[2] })];
+    counts.forEach((n, i) => {
+      if (i) c.appendText(" + ");
+      const s = c.createSpan({ cls: `is-c${i}${i === current2 ? " is-current" : ""}`, text: String(n) });
+      this.tip(s, i === current2 ? `${tips[i]}
+${t("review.tipCurrent")}` : tips[i], "fixed", "bottom");
+    });
+    const tab = r3.bar.createEl("button", { cls: "mm-review-bar-btn", text: t("mapReview.openTab") });
+    tab.addEventListener("click", () => {
+      const d = r3.driver;
+      this.endMapReview();
+      d.openTab();
+    });
+    const exit = r3.bar.createEl("button", { cls: "mm-review-bar-btn", text: t("mapReview.exit") });
+    exit.addEventListener("click", () => this.endMapReview());
+  }
+  /** 节点下面的浮层：翻面前「显示答案」，翻面后四个评分按钮 */
+  paintReviewPop() {
+    const r3 = this.mapReview;
+    if (!r3) return;
+    const pop = r3.pop;
+    pop.replaceChildren();
+    pop.classList.remove("is-done");
+    const btn = (cls, label, sub, run) => {
+      const b = pop.createEl("button", { cls: `mm-review-btn ${cls}` });
+      if (sub !== null) b.createSpan({ cls: "mm-review-iv", text: sub });
+      b.createSpan({ cls: "mm-review-name", text: label });
+      b.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        run();
+      });
+      return b;
+    };
+    if (!r3.shown) {
+      const b = btn("is-show", t("review.showAnswer"), null, () => this.revealReviewCard());
+      if (!this.el.ownerDocument.body.classList.contains("is-mobile")) b.createSpan({ cls: "mm-review-kbd", text: t("review.space") });
+    } else {
+      const iv = r3.driver.intervals();
+      const names = [t("review.again"), t("review.hard"), t("review.good"), t("review.easy")];
+      names.forEach((name, i) => btn(`is-g${i + 1}`, name, iv[i], () => void this.gradeReviewCard(i + 1)));
+    }
+    this.positionMapReview();
+  }
+  paintReviewDone(wait, note) {
+    const r3 = this.mapReview;
+    if (!r3) return;
+    this.select(null);
+    r3.bar.querySelector(".mm-review-counts")?.remove();
+    const pop = r3.pop;
+    pop.replaceChildren();
+    pop.classList.add("is-done");
+    pop.createDiv({ cls: "mm-review-done-title", text: wait ? t("mapReview.waiting") : t("review.doneTitle") });
+    if (note) pop.createDiv({ cls: "mm-review-done-note", text: note });
+    const row = pop.createDiv({ cls: "mm-review-done-row" });
+    const exit = row.createEl("button", { cls: "mm-review-btn is-show", text: t("mapReview.exit") });
+    exit.addEventListener("click", () => this.endMapReview());
+    if (wait) r3.timer = window.setTimeout(() => void this.nextReviewCard(), Math.max(1e3, wait - Date.now() - 20 * 6e4 + 1e3));
+    this.positionMapReview();
+  }
+  revealReviewCard() {
+    const r3 = this.mapReview;
+    if (!r3?.node || r3.shown) return;
+    r3.shown = true;
+    const n = r3.node;
+    if (r3.kind === "cloze") for (const m of this.els.get(n.id)?.querySelectorAll(".mm-label mark") ?? []) m.classList.add("is-revealed");
+    else if (r3.kind === "answer") this.revealedAnswers.add(n.id);
+    else this.revealedQuestions.add(n.id);
+    this.applyRecite();
+    if (this.layout) {
+      this.drawCallouts();
+      this.drawNotes();
+    }
+    this.paintReviewPop();
+  }
+  async gradeReviewCard(g) {
+    const r3 = this.mapReview;
+    if (!r3?.node || !r3.shown) return;
+    await r3.driver.grade(g);
+    await this.nextReviewCard();
+  }
+  /** 浮层跟着节点：放在节点下面，下面放不下放上面；顶栏贴着画布顶 */
+  positionMapReview() {
+    const r3 = this.mapReview;
+    if (!r3) return;
+    const pop = r3.pop;
+    const w = this.el.clientWidth;
+    const h = this.el.clientHeight;
+    const pw = pop.offsetWidth;
+    const ph = pop.offsetHeight;
+    const rect = r3.node ? this.screenRectOf(r3.node) : null;
+    let x = w / 2 - pw / 2;
+    let y = h / 2 - ph / 2;
+    if (rect) {
+      x = rect.left + rect.width / 2 - pw / 2;
+      y = rect.bottom + 10;
+      if (y + ph > h - 8) y = rect.top - ph - 10;
+    }
+    pop.style.left = `${Math.round(Math.max(8, Math.min(x, w - pw - 8)))}px`;
+    pop.style.top = `${Math.round(Math.max(8, Math.min(y, h - ph - 8)))}px`;
+  }
+  /** 原地复习时的按键（照 Anki）：空格 / 回车翻面，翻面后 = 良好；1–4 评分；⌘Z 撤销；Esc 退出。处理了返回 true */
+  onMapReviewKey(ev) {
+    const r3 = this.mapReview;
+    if (!r3) return false;
+    const mod = ev.metaKey || ev.ctrlKey;
+    const done = (fn) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      fn();
+      return true;
+    };
+    if (ev.key === "Escape") return done(() => this.endMapReview());
+    if (mod && !ev.shiftKey && ev.key.toLowerCase() === "z")
+      return done(() => {
+        void r3.driver.undo().then((ok) => {
+          if (ok) void this.nextReviewCard();
+        });
+      });
+    if (mod || ev.altKey) return false;
+    if (!r3.node) return ev.key === " " ? done(() => void 0) : false;
+    if (ev.key === " " || ev.key === "Enter") return done(() => r3.shown ? void this.gradeReviewCard(3) : this.revealReviewCard());
+    if (r3.shown && /^[1-4]$/.test(ev.key)) return done(() => void this.gradeReviewCard(Number(ev.key)));
+    if (ev.key.length === 1 || ev.key.startsWith("Arrow") || ev.key === "Tab" || ev.key === "Delete" || ev.key === "Backspace" || ev.key === "F2") return done(() => void 0);
+    return false;
+  }
   positionNodebar() {
     this.updateImageHandle();
-    const show = this.opts.editable && this.opts.showNodebar?.() !== false && this.primary && this.selected.size > 0 && !this.editing && !this.drag && !this.marquee && this.els.has(this.primary.id);
+    this.positionRelbar();
+    const show = this.opts.editable && this.opts.showNodebar?.() !== false && this.primary && this.selected.size > 0 && !this.quietSel && !this.editing && !this.drag && !this.marquee && this.els.has(this.primary.id);
     if (!show) {
       this.nodebar?.remove();
       this.nodebar = null;
@@ -16842,8 +20837,13 @@ var MindMapCanvas = class _MindMapCanvas {
       const target = ev.target;
       if (target.closest(".mm-toolbar, .mm-popover, .mm-nodebar")) return;
       this.downOnShield = !!target.closest(".mm-frame-shield");
+      this.downOnPreview = target.closest(".mm-map-preview")?.dataset.key ?? null;
       this.downOnImage = this.imageAt(target, ev.clientX, ev.clientY);
       const nodeEl = target.closest(".gg-mm-node");
+      if (nodeEl && this.quietSel) {
+        this.quietSel = false;
+        this.positionNodebar();
+      }
       this.cancelTapCenter();
       if (ev.isPrimary && ev.pointerType !== "mouse" && this.pointers.size) this.dropTouch();
       this.pointers.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
@@ -16979,6 +20979,7 @@ var MindMapCanvas = class _MindMapCanvas {
         if (this.lastTap && this.lastTap.node === tapped && now - this.lastTap.time < 400) {
           this.lastTap = null;
           if (this.downOnShield) this.setLiveFrame(tapped.id);
+          else if (this.downOnPreview) this.setLivePreview(this.downOnPreview);
           else if (this.downOnImage) this.openLightbox(this.downOnImage);
           else this.editOnDoubleTap(tapped);
         } else {
@@ -17081,6 +21082,15 @@ var MindMapCanvas = class _MindMapCanvas {
         { capture: true }
       );
     }
+    this.on(
+      el.ownerDocument,
+      "pointerdown",
+      (ev) => {
+        const live = this.livePreview ? this.mapPreviews.get(this.livePreview) : null;
+        if (live && !live.el.contains(ev.target)) this.setLivePreview(null);
+      },
+      { capture: true }
+    );
     this.on(el, "dblclick", (ev) => {
       if (this.opts.embedded) ev.stopPropagation();
       const nodeEl = ev.target.closest(".gg-mm-node");
@@ -17100,6 +21110,11 @@ var MindMapCanvas = class _MindMapCanvas {
         return;
       }
       ev.preventDefault();
+      const preview2 = ev.target.closest(".mm-map-preview");
+      if (preview2?.dataset.key) {
+        this.setLivePreview(preview2.dataset.key);
+        return;
+      }
       const img = this.imageAt(ev.target, ev.clientX, ev.clientY);
       if (ev.target.closest(".mm-frame-shield")) this.setLiveFrame(node.id);
       else if (img) this.openLightbox(img);
@@ -17253,6 +21268,12 @@ var MindMapCanvas = class _MindMapCanvas {
     const target = ev.target;
     if (target.closest(".gg-mm-search")) return;
     if (ev.isComposing || ev.keyCode === 229) return;
+    if (this.mapReview && target.tagName !== "TEXTAREA" && this.onMapReviewKey(ev)) return;
+    if (this.focusRoot && !this.editing && target.tagName !== "TEXTAREA" && !ev.metaKey && !ev.ctrlKey && !ev.altKey && (ev.key === "PageUp" || ev.key === "PageDown")) {
+      ev.preventDefault();
+      this.focusStep(ev.key === "PageUp" ? -1 : 1);
+      return;
+    }
     if (!this.linkSuggest && target.tagName !== "TEXTAREA" && this.opts.ownsHotkey?.(ev)) return;
     if (target.tagName === "TEXTAREA") {
       if (ev.key === "Escape" || ev.key === "Enter" && mod) {
@@ -17397,6 +21418,10 @@ var MindMapCanvas = class _MindMapCanvas {
         this.exitFocus();
         return;
       }
+      if (!this.selected.size && !this.activeGroup && !this.activeRel && this.zen) {
+        this.setZen(false);
+        return;
+      }
       this.select(null, "replace");
       this.activateGroup(null);
       return;
@@ -17474,13 +21499,18 @@ var MindMapCanvas = class _MindMapCanvas {
     if (!id || !this.doc) return null;
     const hit = this.nodeById.get(id);
     if (hit) return hit;
-    let found = null;
+    let found2 = null;
     walkMap(this.doc.root, (n) => {
-      if (n.id === id) found = n;
+      if (n.id === id) found2 = n;
     });
-    return found;
+    return found2;
+  }
+  quietSelect() {
+    this.quietSel = true;
+    this.positionNodebar();
   }
   select(node, mode = "replace") {
+    this.quietSel = false;
     if (node && this.focusRoot && node !== this.focusRoot && !isAncestor(this.focusRoot, node)) this.exitFocus(false);
     if (mode === "replace") {
       this.selected.clear();
@@ -17549,7 +21579,8 @@ var MindMapCanvas = class _MindMapCanvas {
     if (!this.layout) return;
     const p = this.layout.placed.get(node.id);
     if (!p) return;
-    const structure = this.opts.structure;
+    const own = this.kidsStructure(node);
+    const structure = node.parent && node !== (this.focusRoot ?? this.doc?.root) ? this.kidsStructure(node.parent) : own;
     const back = (n) => {
       if (isSummaryTopic(n)) this.select(n.topicOf);
       else if (n.parent && !this.isFloating(n)) this.select(n.parent);
@@ -17561,8 +21592,23 @@ var MindMapCanvas = class _MindMapCanvas {
         if (topic && this.layout?.placed.has(topic.id)) this.select(topic);
       }
     };
-    if (isTimeline(structure) && this.navigateTimeline(node, p, key, forward)) return;
-    if (isFishbone(structure) && this.navigateFishbone(node, p, key, forward)) return;
+    const root = this.isStructureRoot(node);
+    if (root && isTimeline(own) && this.navigateTimeline(node, p, key, forward, node, own)) return;
+    if (root && isFishbone(own) && this.navigateFishbone(node, p, key, forward, node, own)) return;
+    const parent = node.parent;
+    if (parent && this.isStructureRoot(parent) && !this.isFloating(node)) {
+      if (isTimeline(structure) && this.navigateTimeline(node, p, key, forward, parent, structure)) return;
+      if (isFishbone(structure) && this.navigateFishbone(node, p, key, forward, parent, structure)) return;
+    }
+    if (root && own !== structure && !isTimeline(own) && !isFishbone(own)) {
+      const into = own === "org-down" ? "ArrowDown" : own === "logic-right" && this.layout.placed.get(visibleChildren(node)[0]?.id ?? "")?.side === "left" ? "ArrowLeft" : "ArrowRight";
+      if (key === into) {
+        const kids = visibleChildren(node);
+        if (kids.length && own === "tree-right") this.select(kids[0]);
+        else forward(kids);
+        return;
+      }
+    }
     if (structure === "org-down") {
       if (key === "ArrowDown") {
         forward(visibleChildren(node));
@@ -17606,15 +21652,18 @@ var MindMapCanvas = class _MindMapCanvas {
    * 时间轴：中心主题和主主题沿主轴走（横向 ←→、纵向 ↑↓），朝分支长的方向进到分支里；
    * 分支里面照它自己的结构走（横向的分支是树形图，纵向的是逻辑图），交给 navigate 的通用逻辑。返回是否处理了
    */
-  navigateTimeline(node, p, key, forward) {
-    const base = this.focusRoot ?? this.doc?.root;
-    if (!base || !this.layout) return false;
-    const horiz = isTimelineH(this.opts.structure);
+  /** base：这条主轴的根（中心主题，或设了时间轴结构的分支）；structure：它的结构 */
+  navigateTimeline(node, p, key, forward, base, structure) {
+    if (!this.layout) return false;
+    const horiz = isTimelineH(structure);
     const mains = visibleChildren(base).filter((c) => !this.isFloating(c) && this.layout.placed.has(c.id));
     const along = horiz ? key === "ArrowLeft" ? -1 : key === "ArrowRight" ? 1 : 0 : key === "ArrowUp" ? -1 : key === "ArrowDown" ? 1 : 0;
     if (node === base) {
-      if (along > 0 && mains.length) this.select(mains[0]);
-      return true;
+      if (along > 0 && mains.length) {
+        this.select(mains[0]);
+        return true;
+      }
+      return base === (this.focusRoot ?? this.doc?.root);
     }
     const i = mains.indexOf(node);
     if (i < 0) return false;
@@ -17635,16 +21684,18 @@ var MindMapCanvas = class _MindMapCanvas {
    * 鱼骨图：鱼头和主主题沿主骨走（← → 往鱼尾 / 鱼头），从主主题朝分支那边（主骨上方的往下、下方的往上）进到分支里；
    * 分支里面交给 navigate 按树形图走。返回是否处理了
    */
-  navigateFishbone(node, p, key, forward) {
-    const base = this.focusRoot ?? this.doc?.root;
-    if (!base || !this.layout) return false;
+  navigateFishbone(node, p, key, forward, base, structure) {
+    if (!this.layout) return false;
     const mains = visibleChildren(base).filter((c) => !this.isFloating(c) && this.layout.placed.has(c.id));
-    const towardTail = this.opts.structure === "fishbone-right" ? "ArrowLeft" : "ArrowRight";
+    const towardTail = structure === "fishbone-right" ? "ArrowLeft" : "ArrowRight";
     const towardHead = towardTail === "ArrowLeft" ? "ArrowRight" : "ArrowLeft";
     const along = key === towardTail ? 1 : key === towardHead ? -1 : 0;
     if (node === base) {
-      if (along > 0 && mains.length) this.select(mains[0]);
-      return true;
+      if (along > 0 && mains.length) {
+        this.select(mains[0]);
+        return true;
+      }
+      return base === (this.focusRoot ?? this.doc?.root);
     }
     const i = mains.indexOf(node);
     if (i < 0) return false;
@@ -17866,28 +21917,28 @@ var MindMapCanvas = class _MindMapCanvas {
       if (wx >= p.x && wx <= p.x + p.w && wy >= p.y && wy <= p.y + p.h && (!hit || p.w * p.h < hit.w * hit.h)) hit = p;
     }
     if (hit) return { parent: hit.node, index: hit.node.children.length, kind: "node" };
-    const fishBase = this.focusRoot ?? this.doc?.root;
-    if (isFishbone(this.opts.structure) && fishBase) {
-      const t3 = this.fishboneDropTarget(fishBase, wx, wy, exclude);
+    const fishRoots = placed.filter((p) => this.isStructureRoot(p.node) && isFishbone(this.kidsStructure(p.node)));
+    for (const fr of fishRoots) {
+      const t3 = this.fishboneDropTarget(fr.node, wx, wy, exclude, this.kidsStructure(fr.node));
       if (t3) return t3;
     }
     const behind = this.behindTarget(placed, wx, wy);
     if (behind) return behind;
     const base = this.focusRoot ?? this.doc?.root;
     const kidsOf = (p) => visibleChildren(p.node).filter((c) => !exclude.has(c)).map((c) => this.layout.placed.get(c.id)).filter((k) => !!k);
-    if (this.opts.structure === "mindmap" && base) {
+    if (this.baseStructure() === "mindmap" && base) {
       const rp = this.layout.placed.get(base.id);
       const kids = rp ? kidsOf(rp) : [];
       const side = rp && wx < rp.x + rp.w / 2 ? "left" : "right";
       const col = kids.filter((k) => k.side === side);
-      const pad = DEFAULT_LAYOUT.gapMain;
-      const inCol = col.length && wx >= Math.min(...col.map((k) => k.x)) - 12 && wx <= Math.max(...col.map((k) => k.x + k.w)) + 12 && wy >= Math.min(...col.map((k) => k.y)) - pad && wy <= Math.max(...col.map((k) => k.y + k.h)) + pad;
+      const pad2 = DEFAULT_LAYOUT.gapMain;
+      const inCol = col.length && wx >= Math.min(...col.map((k) => k.x)) - 12 && wx <= Math.max(...col.map((k) => k.x + k.w)) + 12 && wy >= Math.min(...col.map((k) => k.y)) - pad2 && wy <= Math.max(...col.map((k) => k.y + k.h)) + pad2;
       const nearRoot = rp && !col.length && Math.abs(wy - (rp.y + rp.h / 2)) < 80 && (side === "left" ? wx < rp.x : wx > rp.x + rp.w);
       if (rp && (inCol || nearRoot)) return this.sideDropTarget(rp, kids, wx, wy);
     }
     let best = null;
     for (const p of placed) {
-      if ((this.opts.structure === "mindmap" || isFishbone(this.opts.structure)) && p.node === base) continue;
+      if (this.baseStructure() === "mindmap" && p.node === base || fishRoots.includes(p)) continue;
       const kids = kidsOf(p);
       if (!kids.length) continue;
       const across = kids[0].side === "down" || kids[0].side === "up";
@@ -17959,10 +22010,10 @@ var MindMapCanvas = class _MindMapCanvas {
    * 鱼骨图：拖到主骨附近（鱼头的鱼尾那边）就插到主主题之间，位置按各斜骨在主骨上的起点算 ——
    * 第一个离鱼头最近，落点和鱼头之间有几根斜骨就排在第几个后面
    */
-  fishboneDropTarget(base, wx, wy, exclude) {
+  fishboneDropTarget(base, wx, wy, exclude, structure) {
     const rp = this.layout?.placed.get(base.id);
     if (!rp || Math.abs(wy - (rp.y + rp.h / 2)) > 12) return null;
-    const right = this.opts.structure === "fishbone-right";
+    const right = structure === "fishbone-right";
     const headX = right ? rp.x : rp.x + rp.w;
     if (right ? wx >= headX : wx <= headX) return null;
     const mains = visibleChildren(base).filter((c) => !exclude.has(c) && !this.isFloating(c)).map((c) => this.layout.placed.get(c.id)).filter((k) => !!k?.bone);
@@ -18211,22 +22262,22 @@ var MindMapCanvas = class _MindMapCanvas {
     const groups = /* @__PURE__ */ new Map();
     for (const m of movers) groups.set(m.parent, [...groups.get(m.parent) ?? [], m]);
     let changed = false;
-    for (const [parent, group] of groups) {
+    for (const [parent, group2] of groups) {
       const kids = parent.children;
-      group.sort((a, b) => kids.indexOf(a) - kids.indexOf(b));
+      group2.sort((a, b) => kids.indexOf(a) - kids.indexOf(b));
       if (op === "up" || op === "down") {
         const dir = op === "up" ? -1 : 1;
-        const order = op === "up" ? group : [...group].reverse();
+        const order = op === "up" ? group2 : [...group2].reverse();
         const stuck = /* @__PURE__ */ new Set();
         for (const m of order) {
           const i = kids.indexOf(m);
           const j = i + dir;
           const other = kids[j];
-          if (j < 0 || j >= kids.length || stuck.has(other) && group.includes(other)) {
+          if (j < 0 || j >= kids.length || stuck.has(other) && group2.includes(other)) {
             stuck.add(m);
             continue;
           }
-          if (group.includes(other)) {
+          if (group2.includes(other)) {
             stuck.add(m);
             continue;
           }
@@ -18234,17 +22285,17 @@ var MindMapCanvas = class _MindMapCanvas {
           changed = true;
         }
       } else if (op === "indent") {
-        const first = kids.indexOf(group[0]);
-        const prev = kids.slice(0, first).reverse().find((c) => !group.includes(c));
+        const first = kids.indexOf(group2[0]);
+        const prev = kids.slice(0, first).reverse().find((c) => !group2.includes(c));
         if (!prev) continue;
         if (prev.folded) prev.folded = false;
-        for (const m of group) moveNode(m, prev, prev.children.length, style, this.promoted);
+        for (const m of group2) moveNode(m, prev, prev.children.length, style, this.promoted);
         changed = true;
       } else {
         const grand = parent.parent;
         if (!grand) continue;
         let at = grand.children.indexOf(parent) + 1;
-        for (const m of group) {
+        for (const m of group2) {
           moveNode(m, grand, at, style, this.promoted);
           at = grand.children.indexOf(m) + 1;
         }
@@ -18536,8 +22587,15 @@ var MindMapCanvas = class _MindMapCanvas {
       // 编辑节点文字时粘贴图片：标题里放不了，存成附件追加到这个节点的备注（正文）里
       onPaste: (ev) => {
         const imgs = [...ev.clipboardData?.files ?? []].filter((f) => f.type.startsWith("image/"));
-        if (!imgs.length) return false;
-        void this.addImagesToNote(node, imgs);
+        if (imgs.length) {
+          void this.addImagesToNote(node, imgs);
+          return true;
+        }
+        const plain2 = this.nodePasteText(ev.clipboardData?.getData("text/plain") ?? "");
+        const ed = this.nodeEditor;
+        if (plain2 === null || !ed) return false;
+        const { from, to } = ed.selection;
+        ed.replace(from, to, plain2, from + plain2.length);
         return true;
       },
       onChange: () => {
@@ -18906,6 +22964,15 @@ var MindMapCanvas = class _MindMapCanvas {
         }
         panel.append(row);
       }
+      if (this.opts.onZen) {
+        const row = panel.createDiv({ cls: "mm-quick-row" });
+        row.createSpan({ cls: "mm-quick-label", text: t("canvas.zen") });
+        const sw = row.createEl("button", { cls: "mm-quick-toggle", attr: { type: "button", role: "switch", "aria-checked": "false", "aria-label": t("canvas.zen") } });
+        sw.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          this.setZen(true);
+        });
+      }
     };
     fill();
     this.el.append(panel);
@@ -19152,10 +23219,21 @@ var MindMapCanvas = class _MindMapCanvas {
     if (!nodes.length) return null;
     const text = nodes.map((n) => subtreeToList(n)).join("");
     this.clipboardText = text;
-    const plain = this.opts.copyPlain?.() ? nodes.map((n) => subtreeToList(n, "	", true)).join("") : text;
-    lastCopy = { plain, full: text };
-    void navigator.clipboard?.writeText(plain).catch(() => void 0);
-    return plain;
+    const plain2 = this.opts.copyPlain?.() ? nodes.map((n) => subtreeToList(n, "	", true)).join("") : text;
+    lastCopy = { plain: plain2, full: text, titles: nodes.map((n) => n.text) };
+    void navigator.clipboard?.writeText(plain2).catch(() => void 0);
+    return plain2;
+  }
+  /**
+   * 编辑节点文字时粘贴的文字：剪贴板里是刚复制的节点，换成这几个节点自己的文字（不带子节点，多个节点一行一个）；
+   * 是一行列表项（「- 文字」，比如重启后剪贴板里还留着的节点）就去掉列表符号。别的照常粘，返回 null
+   */
+  nodePasteText(clip) {
+    const text = clip.replace(/\r/g, "");
+    if (lastCopy && (text === lastCopy.plain || text === lastCopy.full)) return lastCopy.titles.map((t3) => this.toEdit(t3)).join("\n");
+    const one = /^[ \t]*[-*+][ \t]+(?:\[[ xX]\][ \t]+)?(.*?)\s*$/.exec(text.replace(/\n+$/, ""));
+    const title = one?.[1].replace(MARKER_RE, "");
+    return title ? this.toEdit(title) : null;
   }
   cutSelection() {
     if (!this.opts.editable) return;
@@ -19583,6 +23661,7 @@ var MindMapCanvas = class _MindMapCanvas {
           node.hidden ? { title: t("menu.unhideNode"), icon: "eye", run: () => this.unhideSelected() } : { title: t("menu.hideNode"), icon: "eye-off", run: () => this.hideSelected() }
         );
       }
+      more.push({ title: t("menu.branchLayout"), icon: "network", submenu: this.branchLayoutMenu(node) });
       if (this.isFloating(node)) more.push({ title: t("menu.attachFloat"), icon: "link", run: () => this.attachFloat(node) });
       else if (node.parent && !topic && this.canFloat()) more.push({ title: t("menu.toFloat"), icon: "square-dashed-mouse-pointer", run: () => this.convertToFloat(node) });
       more.push(sep);
@@ -19595,6 +23674,7 @@ var MindMapCanvas = class _MindMapCanvas {
       );
     }
     more.push({ title: t("menu.copyNodeLink"), icon: "link-2", disabled: !this.opts.host?.fileBasename, run: () => void this.copyNodeLink(node) });
+    more.push({ title: t("menu.copyNodeLinkAlias"), icon: "link-2", disabled: !this.opts.host?.fileBasename, run: () => void this.copyNodeLink(node, true) });
     if (this.opts.onRevealInMarkdown) more.push({ title: t("menu.revealInMarkdown"), icon: "file-search", run: () => this.opts.onRevealInMarkdown?.() });
     if (editable) {
       const now = this.wholeTextColor();
@@ -19607,6 +23687,8 @@ var MindMapCanvas = class _MindMapCanvas {
         ]
       });
     }
+    const review = this.reviewMenu(node);
+    if (review.length) more.unshift({ title: t("menu.reviewGroup"), icon: "layers", submenu: review }, sep);
     entries.push({ title: t("menu.more"), icon: "more-horizontal", submenu: more });
     if (editable && node.parent) {
       entries.push(sep, { title: `${t("menu.delete")}  ${isApple() ? "\u232B" : "Delete"}`, icon: "trash", run: () => this.deleteSelected() });
@@ -19626,6 +23708,7 @@ var MindMapCanvas = class _MindMapCanvas {
       { title: t("menu.fit"), icon: "maximize", run: () => this.userFit() }
     );
     if (this.focusRoot) entries.push({ separator: true }, { title: t("menu.exitFocus"), icon: "minimize", run: () => this.exitFocus() });
+    if (this.opts.onZen) entries.push({ separator: true }, this.zen ? { title: t("canvas.zenExit"), icon: "minimize", run: () => this.setZen(false) } : { title: t("canvas.zen"), icon: "maximize-2", run: () => this.setZen(true) });
     const side = this.opts.onSideBySide;
     if (side) entries.push({ separator: true }, { title: t("command.openPreview"), icon: "columns-2", run: () => side() });
     return entries;
@@ -19657,6 +23740,10 @@ var MindMapCanvas = class _MindMapCanvas {
    */
   formatText(fmt2) {
     if (!this.opts.editable) return;
+    if (this.noteFormat) {
+      this.noteFormat(fmt2);
+      return;
+    }
     if (this.editing || this.calloutEditor) {
       this.formatEditing(fmt2);
       return;
@@ -19666,10 +23753,10 @@ var MindMapCanvas = class _MindMapCanvas {
     for (const n of this.selected) {
       const editable = this.toEdit(n.text);
       const { rest } = splitMarkers(n.text);
-      const task = /^\[( |x|X)\]\s+/.exec(rest)?.[0].length ?? 0;
-      const start = editable.length - this.toEdit(rest).length + task;
+      const body = rest.replace(/^\[( |x|X)\]\s+/, "");
+      const start = editable.length - this.toEdit(body).length;
       if (start >= editable.length) continue;
-      const next = this.fromEdit(applyInlineFormat(editable, start, editable.length, fmt2).text);
+      const next = this.fromEdit(applyFormat(editable, start, editable.length, fmt2).text);
       if (next !== n.text) {
         n.text = next;
         changed = true;
@@ -19690,7 +23777,7 @@ var MindMapCanvas = class _MindMapCanvas {
     const raw = ed.selection;
     const { from, to } = ed.visibleSelection;
     if (raw.from !== raw.to && from === to) return;
-    const r3 = applyInlineFormat(ed.text, from, to, fmt2);
+    const r3 = applyFormat(ed.text, from, to, fmt2);
     if (r3.text !== ed.text) ed.setText(r3.text, r3.start, r3.end);
   }
   /** 编辑中选中一段文字时浮在它上面的格式栏（设置里打开才有） */
@@ -19735,7 +23822,7 @@ var MindMapCanvas = class _MindMapCanvas {
           }
           if (callout) {
             if (!sel || callout.callout === void 0) return;
-            const next2 = calloutFromMarker(calloutToMarker(applyInlineFormat(callout.callout, sel.from, sel.to, fmt2).text));
+            const next2 = calloutFromMarker(calloutToMarker(applyFormat(callout.callout, sel.from, sel.to, fmt2).text));
             if (next2 === callout.callout) return;
             callout.callout = next2;
             this.render();
@@ -19743,7 +23830,7 @@ var MindMapCanvas = class _MindMapCanvas {
             return;
           }
           if (!node || !sel) return;
-          const next = this.fromEdit(applyInlineFormat(this.toEdit(node.text), sel.from, sel.to, fmt2).text);
+          const next = this.fromEdit(applyFormat(this.toEdit(node.text), sel.from, sel.to, fmt2).text);
           if (next === node.text) return;
           node.text = next;
           this.render();
@@ -19772,14 +23859,14 @@ var MindMapCanvas = class _MindMapCanvas {
       const current2 = new Set(this.primary ? splitMarkers(this.primary.text).markers : []);
       picker.querySelectorAll(".mm-marker-btn").forEach((b) => b.classList.toggle("is-active", current2.has(b.dataset.emoji ?? "")));
     };
-    for (const group of MARKER_GROUPS) {
+    for (const group2 of MARKER_GROUPS) {
       const row = createDiv();
       row.className = "mm-marker-row";
       const label = createSpan();
       label.className = "mm-marker-label";
-      label.textContent = group.name;
+      label.textContent = group2.name;
       row.append(label);
-      for (const emoji of group.emojis) {
+      for (const emoji of group2.emojis) {
         const b = createEl("button");
         b.type = "button";
         b.className = "mm-marker-btn";
@@ -19836,11 +23923,40 @@ var MindMapCanvas = class _MindMapCanvas {
       return;
     }
     if (this.editing) this.commitEdit();
+    const prev = this.focusRoot && this.hasView ? this.layout?.placed.get(this.focusRoot.id) : null;
+    const at = prev ? { x: prev.x * this.k + this.tx, y: prev.y * this.k + this.ty } : null;
     this.focusRoot = node;
-    this.hasView = false;
-    this.refitOnly = true;
+    if (!at) {
+      this.hasView = false;
+      this.refitOnly = true;
+    }
     this.select(node);
     this.render();
+    const p = at ? this.layout?.placed.get(node.id) : null;
+    if (at && p) {
+      this.stopPanAnim();
+      this.tx = at.x - p.x * this.k;
+      this.ty = at.y - p.y * this.k;
+      this.applyTransform();
+    }
+  }
+  /** 聚焦分支时的同级（上一个 / 下一个用）：隐藏的、概要主题不算 */
+  focusSiblings() {
+    const f = this.focusRoot;
+    const parent = f?.parent;
+    if (!f || !parent || !parent.children.includes(f)) return { prev: null, next: null };
+    const kids = parent.children.filter((c) => !c.hidden || c === f);
+    const i = kids.indexOf(f);
+    return { prev: kids[i - 1] ?? null, next: kids[i + 1] ?? null };
+  }
+  /** 聚焦到上一个 / 下一个同级分支；没有返回 false */
+  focusStep(dir) {
+    const { prev, next } = this.focusSiblings();
+    const to = dir < 0 ? prev : next;
+    if (!to) return false;
+    this.closeCrumbMenu();
+    this.focusOn(to);
+    return true;
   }
   exitFocus(rerender = true) {
     if (!this.focusRoot) return;
@@ -19868,9 +23984,16 @@ var MindMapCanvas = class _MindMapCanvas {
     for (let n = this.focusRoot; n; n = n.parent) chain.unshift(n);
     chain.forEach((n, i) => {
       if (i > 0) {
-        const sepEl = createSpan();
+        const sepEl = createEl("button");
+        sepEl.type = "button";
         sepEl.className = "mm-crumb-sep";
         sepEl.textContent = "\u203A";
+        sepEl.setAttr("aria-label", t("canvas.crumbSiblings"));
+        const parent = chain[i - 1];
+        sepEl.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          this.toggleCrumbMenu(sepEl, parent, n);
+        });
         bar.append(sepEl);
       }
       const b = createEl("button");
@@ -19880,8 +24003,56 @@ var MindMapCanvas = class _MindMapCanvas {
       b.addEventListener("click", () => i === 0 ? this.exitFocus() : this.focusOn(n));
       bar.append(b);
     });
+    const { prev, next } = this.focusSiblings();
+    if (prev || next) {
+      const nav = bar.createSpan({ cls: "mm-crumb-nav" });
+      for (const [dir, to, name, label] of [
+        [-1, prev, "prev", t("canvas.focusPrev")],
+        [1, next, "next", t("canvas.focusNext")]
+      ]) {
+        const nb = nav.createEl("button", { cls: "mm-crumb-step", attr: { type: "button", "data-dir": String(dir) } });
+        nb.append(icon(name));
+        this.tip(nb, to ? `${label} \xB7 ${plainText(to.text) || t("canvas.emptyNode")}` : label, "fixed", "bottom");
+        nb.toggleClass("is-disabled", !to);
+        nb.addEventListener("mousedown", (ev) => ev.preventDefault());
+        nb.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          this.focusStep(dir);
+          this.el.focus({ preventScroll: true });
+        });
+      }
+    }
     this.el.append(bar);
     this.crumbs = bar;
+  }
+  /** 面包屑分隔符的下拉：parent 的子主题（隐藏的、概要主题不算），current 打勾；面包屑在下面时往上弹 */
+  toggleCrumbMenu(anchor, parent, current2) {
+    if (this.crumbMenu) {
+      const same = this.crumbMenuOpener === anchor;
+      this.closeCrumbMenu();
+      if (same) return;
+    }
+    this.crumbMenuOpener = anchor;
+    const kids = parent.children.filter((c) => !c.hidden || c === current2);
+    if (!kids.length) return;
+    const host = this.el.getBoundingClientRect();
+    const r3 = anchor.getBoundingClientRect();
+    const menu = this.buildMenu(
+      kids.map((c) => ({ label: plainText(c.text) || t("canvas.emptyNode"), active: c === current2, run: () => this.focusOn(c), color: c.color ?? null })),
+      null,
+      () => this.closeCrumbMenu(),
+      { x: r3.left - host.left, y: r3.bottom - host.top + 4 },
+      anchor
+    );
+    menu.classList.add("mm-crumb-menu");
+    this.el.classList.add("has-crumb-menu");
+    if (r3.top - host.top > host.height / 2) menu.style.top = `${Math.max(4, r3.top - host.top - 4 - menu.offsetHeight)}px`;
+    this.crumbMenu = menu;
+  }
+  closeCrumbMenu() {
+    this.crumbMenu?.remove();
+    this.crumbMenu = null;
+    this.el.classList.remove("has-crumb-menu");
   }
   // ---------- 拖入与图片粘贴 ----------
   async handleDrop(ev, target) {
@@ -20012,7 +24183,7 @@ var MindMapCanvas = class _MindMapCanvas {
     if (!active || active === this.el.ownerDocument.body || this.el.contains(active)) this.el.focus({ preventScroll: true });
   }
   // ---------- 复制节点链接 ----------
-  async copyNodeLink(node) {
+  async copyNodeLink(node, alias = false) {
     const base = this.opts.host?.fileBasename?.();
     if (!base) return;
     let link2;
@@ -20028,6 +24199,10 @@ var MindMapCanvas = class _MindMapCanvas {
         this.notify();
       }
       link2 = `[[${base}#^${node.blockId}]]`;
+    }
+    if (alias) {
+      const label = plainText(node.text).replace(/[|[\]]/g, " ").replace(/\s+/g, " ").trim();
+      if (label && label !== base) link2 = `${link2.slice(0, -2)}|${label}]]`;
     }
     try {
       await navigator.clipboard.writeText(link2);
@@ -20089,8 +24264,8 @@ var MindMapCanvas = class _MindMapCanvas {
       if (ev.button !== 0) return;
       ev.stopPropagation();
       ev.preventDefault();
-      const group = (this.selected.size > 1 && this.selected.has(node) ? [...this.selected] : [node]).map((n) => ({ node: n, el: this.els.get(n.id) })).filter((g) => g.el && !g.el.querySelector("img.mm-img, iframe.mm-frame, video.mm-media")).map((g) => ({ ...g, w: g.el.offsetWidth }));
-      this.widthResize = { node, el, startWorldX: this.toWorld(ev.clientX, ev.clientY).x, startW: el.offsetWidth, dir, group };
+      const group2 = (this.selected.size > 1 && this.selected.has(node) ? [...this.selected] : [node]).map((n) => ({ node: n, el: this.els.get(n.id) })).filter((g) => g.el && !g.el.querySelector("img.mm-img, iframe.mm-frame, video.mm-media")).map((g) => ({ ...g, w: g.el.offsetWidth }));
+      this.widthResize = { node, el, startWorldX: this.toWorld(ev.clientX, ev.clientY).x, startW: el.offsetWidth, dir, group: group2 };
       try {
         handle.setPointerCapture(ev.pointerId);
       } catch {
@@ -20297,6 +24472,8 @@ var MindMapCanvas = class _MindMapCanvas {
     this.imgHandle = null;
     if (!this.opts.editable || !this.primary || this.editing) return;
     const el = this.els.get(this.primary.id);
+    const mapBox = el ? [...el.querySelectorAll(".mm-map-preview")].find((p) => !p.parentElement?.closest(".mm-map-preview")) ?? null : null;
+    if (el && mapBox) return this.mapResizeHandle(el, mapBox, this.primary);
     const iframe = el?.querySelector("iframe.mm-frame");
     const video = iframe ? null : el?.querySelector("video.mm-media");
     const img = iframe || video ? null : el?.querySelector("img.mm-img");
@@ -20387,6 +24564,59 @@ var MindMapCanvas = class _MindMapCanvas {
     });
     this.imgHandle = handle;
   }
+  /** 节点里嵌入的脑图预览右下角的手柄：宽高随便拖，松手写进链接（![[脑图|480x300]]）；双击恢复默认大小 */
+  mapResizeHandle(el, box, node) {
+    const link2 = box.dataset.link ?? "";
+    const handle = createDiv();
+    handle.className = "mm-img-handle";
+    this.tip(handle, t("canvas.resizeMap"), "fixed", "right");
+    el.append(handle);
+    this.placeImageHandle(handle, box);
+    let drag = null;
+    handle.addEventListener("pointerdown", (ev) => {
+      ev.stopPropagation();
+      ev.preventDefault();
+      drag = { x: ev.clientX, y: ev.clientY, w: box.offsetWidth, h: box.offsetHeight };
+      this.imgResize = { node, box, frame: false, startX: ev.clientX, startY: ev.clientY, startW: drag.w, startH: drag.h, handle };
+      try {
+        handle.setPointerCapture(ev.pointerId);
+      } catch {
+      }
+    });
+    handle.addEventListener("pointermove", (ev) => {
+      if (!drag) return;
+      ev.stopPropagation();
+      const w = Math.max(MAP_MIN_W, Math.min(MAP_MAX_W, drag.w + (ev.clientX - drag.x) / this.k));
+      const h = Math.max(MAP_MIN_H, Math.min(MAP_MAX_H, drag.h + (ev.clientY - drag.y) / this.k));
+      box.setCssProps({ "--mm-map-w": `${Math.round(w)}px`, "--mm-map-h": `${Math.round(h)}px` });
+      this.reflow();
+      this.placeImageHandle(handle, box);
+    });
+    const finish = (ev) => {
+      if (!drag) return;
+      ev.stopPropagation();
+      const start = drag;
+      drag = null;
+      this.imgResize = null;
+      const w = box.offsetWidth;
+      const h = box.offsetHeight;
+      if (w === start.w && h === start.h) return;
+      node.text = setMapSize(node.text, link2, { w, h });
+      this.render();
+      this.notify();
+    };
+    handle.addEventListener("pointerup", finish);
+    handle.addEventListener("pointercancel", finish);
+    handle.addEventListener("dblclick", (ev) => {
+      ev.stopPropagation();
+      const next = setMapSize(node.text, link2, null);
+      if (next === node.text) return;
+      node.text = next;
+      this.render();
+      this.notify();
+    });
+    this.imgHandle = handle;
+  }
   /** 放开某个节点的播放器挡板。只改 class，不重渲染 —— 重建标签会让 iframe 重新加载 */
   setLiveFrame(id) {
     if (this.liveFrame === id) return;
@@ -20419,8 +24649,8 @@ var MindMapCanvas = class _MindMapCanvas {
    * 编辑后的备注原文 → 存储形式。只把标题当节点时，标题下备注里的列表读回来还是备注，不用包成 > [!note]
    * （和写文件时一样）；以前这里没管，开着这个设置编辑一次带列表的标题备注，整段就被改写成标注块
    */
-  storeNote(node, plain) {
-    return normalizeNote(plain, node.kind === "list", !!this.doc?.style.headingsOnly && node.kind !== "list");
+  storeNote(node, plain2) {
+    return normalizeNote(plain2, node.kind === "list", !!this.doc?.style.headingsOnly && node.kind !== "list");
   }
   /**
    * 展开的卡片里显示的那部分备注：按设置只挑列表项时，原文里不挨着的几段之间插一个看不见的注释，
@@ -20488,6 +24718,9 @@ var MindMapCanvas = class _MindMapCanvas {
         const q = query.toLowerCase();
         return host.listTags().filter((x) => x.toLowerCase().includes(q)).slice(0, 12);
       } : void 0,
+      dailyNote: host?.dailyNote,
+      secrets: host?.tableSecrets,
+      confirm: host?.confirm,
       readonly: !editable,
       // 表格菜单「复制整张表格」「复制为 Markdown 表格」完成后的提示
       notice: host?.notice,
@@ -20654,6 +24887,10 @@ var MindMapCanvas = class _MindMapCanvas {
     el.addEventListener("pointerdown", (ev) => ev.stopPropagation());
     el.addEventListener("click", (ev) => {
       ev.stopPropagation();
+      if (this.recite && ev.target.closest("mark")) {
+        this.onReciteClick(ev);
+        return;
+      }
       const n = this.noteNode.get(el);
       if (!n) return;
       this.select(n);
@@ -20662,7 +24899,8 @@ var MindMapCanvas = class _MindMapCanvas {
     el.addEventListener("dblclick", (ev) => {
       ev.stopPropagation();
       const n = this.noteNode.get(el);
-      if (n && this.opts.editable && !this.recite) this.editNoteCard(n, el);
+      const body2 = el.querySelector(".mm-note-card-body");
+      if (n && this.opts.editable && !this.recite) this.editNoteCard(n, el, body2 ? this.noteSpot(body2, ev, n) : void 0);
     });
     el.addEventListener("contextmenu", (ev) => {
       ev.preventDefault();
@@ -20731,14 +24969,19 @@ var MindMapCanvas = class _MindMapCanvas {
     });
   }
   /** 在卡片原位打开编辑框：和弹窗编辑是同一套（粘贴图片、拖入笔记都能用），起码留出能写字的大小 */
-  editNoteCard(node, card) {
+  /** 双击渲染好的备注：双击的字在原文里的位置和鼠标高度（见 toggleNotePopover 的 spot）；对不上返回 undefined，光标照旧放在最后 */
+  noteSpot(body, ev, node) {
+    const at = spotInSource(body, ev.clientX, ev.clientY, unescapeNote(node.note));
+    return at === null ? void 0 : { at, y: ev.clientY };
+  }
+  editNoteCard(node, card, spot) {
     const r3 = card.getBoundingClientRect();
     const host = this.el.getBoundingClientRect();
     const w = Math.min(Math.max(r3.width, 260), Math.max(160, host.width - 16));
     const h = Math.min(Math.max(r3.height, 140), Math.max(80, host.height - 16));
     const left = Math.max(8, Math.min(r3.left - host.left, host.width - w - 8));
     const top = Math.max(8, Math.min(r3.top - host.top, host.height - h - 8));
-    this.toggleNotePopover(node, true, { left: `${left}px`, top: `${top}px`, w, h });
+    this.toggleNotePopover(node, true, { left: `${left}px`, top: `${top}px`, w, h }, spot);
   }
   /** 内容超出卡片、还没滚到底时，底部渐隐提示下面还有 */
   updateNoteFade(el) {
@@ -20920,7 +25163,11 @@ var MindMapCanvas = class _MindMapCanvas {
     this.tip(b, this.notesExpanded ? t("canvas.collapseNotes") : t("canvas.expandNotes"), "toolbar");
   }
   // ---------- 备注弹层 ----------
-  toggleNotePopover(node, edit = false, at) {
+  /**
+   * spot：双击查看中的备注进来时，双击的字在原文里的位置和鼠标的高度。编辑框打开后光标放在那里、那一行留在鼠标原来的高度，
+   * 不用在长备注里重新找刚才看到哪
+   */
+  toggleNotePopover(node, edit = false, at, spot) {
     const sameNode = this.popover?.dataset.id === node.id;
     const alreadyEditing = !!this.popover?.querySelector("textarea");
     if (sameNode && (!edit || alreadyEditing)) {
@@ -20940,13 +25187,17 @@ var MindMapCanvas = class _MindMapCanvas {
     pop.addEventListener("dragstart", () => this.dragFromPopover = true);
     pop.addEventListener("dragend", () => this.dragFromPopover = false);
     const editable = this.opts.editable && (edit || !node.note);
+    if (editable && this.opts.noteLiveEdit?.() && this.opts.host?.createNoteEditor && this.openLiveNote(node, pop, nodeEl, keep, spot)) {
+      this.popover = pop;
+      return;
+    }
     if (editable) {
       const ta = createEl("textarea");
       ta.className = "mm-note-editor";
       ta.placeholder = t("canvas.notePlaceholder");
-      const plain = unescapeNote(node.note);
-      ta.value = plain;
-      ta.rows = Math.min(12, Math.max(3, plain.split("\n").length + 1));
+      const plain2 = unescapeNote(node.note);
+      ta.value = plain2;
+      ta.rows = Math.min(12, Math.max(3, plain2.split("\n").length + 1));
       const initial = node.note;
       const scope = this.opts.notePreview?.() ? this.opts.host?.notePreviewScope?.() : void 0;
       let preview2 = null;
@@ -20961,10 +25212,14 @@ var MindMapCanvas = class _MindMapCanvas {
         return true;
       };
       let saved = false;
+      let noteBar = null;
       const save = () => {
         if (saved) return;
         saved = true;
         this.popoverApply = null;
+        this.noteFormat = null;
+        noteBar?.remove();
+        noteBar = null;
         window.clearTimeout(previewTimer);
         scope?.dispose();
         apply();
@@ -21050,6 +25305,68 @@ var MindMapCanvas = class _MindMapCanvas {
         ev.preventDefault();
         void insertImages(files);
       });
+      const formatNote = (fmt2, sel) => {
+        const from = sel?.from ?? ta.selectionStart;
+        const to = sel?.to ?? ta.selectionEnd;
+        const text = ta.isConnected ? ta.value : unescapeNote(node.note);
+        const r3 = formatLines(text, from, to, fmt2);
+        if (!r3 || r3.text === text) return;
+        if (!ta.isConnected) {
+          node.note = this.storeNote(node, r3.text.replace(/\s+$/, ""));
+          this.render();
+          this.notify();
+          return;
+        }
+        ta.focus({ preventScroll: true });
+        ta.setSelectionRange(0, ta.value.length);
+        if (!this.el.ownerDocument.execCommand("insertText", false, r3.text)) ta.value = r3.text;
+        ta.setSelectionRange(r3.start, r3.end);
+        ta.dispatchEvent(new Event("input"));
+      };
+      this.noteFormat = (fmt2) => formatNote(fmt2);
+      ta.addEventListener("keydown", (ev) => {
+        const mod = ev.metaKey || ev.ctrlKey;
+        if (!mod || ev.altKey || ev.isComposing) return;
+        const k = ev.key.toLowerCase();
+        const fmt2 = !ev.shiftKey && k === "b" ? { kind: "bold" } : !ev.shiftKey && k === "i" ? { kind: "italic" } : !ev.shiftKey && k === "u" ? { kind: "underline" } : ev.shiftKey && k === "h" ? { kind: "highlight" } : ev.shiftKey && k === "x" ? { kind: "strike" } : null;
+        if (!fmt2) return;
+        ev.preventDefault();
+        ev.stopPropagation();
+        formatNote(fmt2);
+      });
+      const placeBar = () => {
+        const has = ta.isConnected && this.el.ownerDocument.activeElement === ta && ta.selectionStart !== ta.selectionEnd;
+        if (!has) {
+          noteBar?.remove();
+          noteBar = null;
+          return;
+        }
+        if (!noteBar) {
+          noteBar = createFormatBar(this.el.ownerDocument, {
+            textColors: this.opts.textColors?.() ?? [],
+            highlightColors: this.opts.highlightColors?.() ?? [],
+            underlineKey: sc("Mod", "U"),
+            icon,
+            tip: (el, text) => this.tip(el, text),
+            onFormat: (fmt2) => formatNote(fmt2),
+            memory: this.colorMemory(),
+            onCustom: () => {
+              const sel = { from: ta.selectionStart, to: ta.selectionEnd };
+              return (fmt2) => formatNote(fmt2, sel);
+            }
+          });
+          noteBar.classList.add("mm-note-float-bar");
+          this.el.append(noteBar);
+        }
+        const host = this.el.getBoundingClientRect();
+        const r3 = pop.getBoundingClientRect();
+        const w = noteBar.offsetWidth;
+        const h = noteBar.offsetHeight;
+        const above = r3.top - host.top - h - 6;
+        noteBar.style.left = `${Math.round(Math.max(4, Math.min(host.width - w - 4, r3.left - host.left)))}px`;
+        noteBar.style.top = `${Math.round(above >= 4 ? above : r3.bottom - host.top + 6)}px`;
+      };
+      for (const type of ["select", "keyup", "mouseup", "input"]) ta.addEventListener(type, placeBar);
       this.popoverSave = save;
       this.popoverApply = apply;
       if (scope) {
@@ -21087,7 +25404,13 @@ var MindMapCanvas = class _MindMapCanvas {
         this.placePopover(pop, nodeEl);
       }
       ta.focus();
-      ta.setSelectionRange(ta.value.length, ta.value.length);
+      const caret = spot ? Math.min(spot.at, ta.value.length) : ta.value.length;
+      ta.setSelectionRange(caret, caret);
+      if (spot) {
+        const lineH = parseFloat(getComputedStyle(ta).lineHeight) || 20;
+        const row = ta.value.slice(0, caret).split("\n").length - 1;
+        ta.scrollTop = Math.max(0, row * lineH - (spot.y - ta.getBoundingClientRect().top));
+      }
     } else {
       pop.classList.add("is-view");
       const body = createDiv();
@@ -21107,7 +25430,7 @@ var MindMapCanvas = class _MindMapCanvas {
           ev.preventDefault();
           ev.stopPropagation();
           if (this.recite) return;
-          this.toggleNotePopover(node, true);
+          this.toggleNotePopover(node, true, void 0, this.noteSpot(body, ev, node));
         });
       }
       this.el.append(pop);
@@ -21116,6 +25439,164 @@ var MindMapCanvas = class _MindMapCanvas {
       body.addEventListener("load", () => this.placePopover(pop, nodeEl), true);
     }
     this.popover = pop;
+  }
+  /**
+   * 编辑备注：Obsidian 自己的实时预览编辑器（设置「编辑备注时所见即所得」，默认开）。
+   * 和普通输入框一样：边打边存、点到外面或 Esc / ⌘↵ 关掉、顶上一排格式按钮、⌘B ⌘⇧H 这些只改选中的字、粘贴拖入图片存成附件。
+   * 编辑器建不起来（Obsidian 改了内部结构）返回 false，调用方用普通输入框
+   */
+  openLiveNote(node, pop, nodeEl, keep, spot) {
+    const host = this.opts.host;
+    const initial = node.note;
+    let ed = null;
+    const apply = () => {
+      if (!ed) return false;
+      const next = this.storeNote(node, ed.value.replace(/\s+$/, ""));
+      if (next === node.note) return false;
+      node.note = next;
+      return true;
+    };
+    let saved = false;
+    const save = () => {
+      if (saved) return;
+      saved = true;
+      this.popoverApply = null;
+      this.noteFormat = null;
+      doc.removeEventListener("pointerdown", outside, true);
+      apply();
+      ed?.destroy();
+      if (node.note !== initial) {
+        this.render();
+        this.notify();
+      }
+    };
+    const formatNote = (fmt2, sel) => {
+      const live = ed && ed.el.isConnected ? ed : null;
+      const text = live ? live.value : unescapeNote(node.note);
+      const { from, to } = sel ?? live?.selection ?? { from: 0, to: 0 };
+      const r3 = formatLines(text, from, to, fmt2);
+      if (!r3 || r3.text === text) return;
+      if (!live) {
+        node.note = this.storeNote(node, r3.text.replace(/\s+$/, ""));
+        this.render();
+        this.notify();
+        return;
+      }
+      live.replace(r3.text, r3.start, r3.end);
+      live.focus();
+    };
+    const insertImages = async (files) => {
+      const links = [];
+      for (const f of files) {
+        const link2 = await this.saveImageFile(f);
+        if (link2) links.push(`![[${link2}]]`);
+      }
+      if (!links.length) return;
+      if (ed && ed.el.isConnected) {
+        ed.focus();
+        ed.insert(links.join("\n"));
+        return;
+      }
+      node.note = this.storeNote(node, [unescapeNote(node.note), ...links].filter(Boolean).join("\n"));
+      this.render();
+      this.notify();
+    };
+    const close = () => {
+      if (this.popover === pop) this.closePopover();
+      this.el.focus({ preventScroll: true });
+    };
+    pop.classList.add("is-live");
+    const markTable = (text) => pop.classList.toggle("has-table", /^[ \t]*\|.*\|[ \t]*$/m.test(text));
+    markTable(unescapeNote(node.note));
+    ed = host.createNoteEditor(pop, {
+      text: unescapeNote(node.note),
+      caret: spot?.at,
+      caretY: spot?.y,
+      onChange: () => {
+        if (apply() && !this.opts.embedded) this.scheduleNotify();
+        if (ed) markTable(ed.value);
+      },
+      onKey: (ev) => {
+        if (ev.isComposing) return false;
+        const mod = ev.metaKey || ev.ctrlKey;
+        if (ev.key === "Escape" || ev.key === "Enter" && mod) {
+          ev.preventDefault();
+          close();
+          return true;
+        }
+        if (!mod || ev.altKey) return false;
+        const k = ev.key.toLowerCase();
+        const fmt2 = !ev.shiftKey && k === "b" ? { kind: "bold" } : !ev.shiftKey && k === "i" ? { kind: "italic" } : !ev.shiftKey && k === "u" ? { kind: "underline" } : ev.shiftKey && k === "h" ? { kind: "highlight" } : ev.shiftKey && k === "x" ? { kind: "strike" } : null;
+        if (!fmt2) return false;
+        ev.preventDefault();
+        formatNote(fmt2);
+        return true;
+      },
+      onPaste: (ev) => {
+        const files = [...ev.clipboardData?.files ?? []].filter((f) => f.type.startsWith("image/"));
+        if (!files.length) return false;
+        ev.preventDefault();
+        void insertImages(files);
+        return true;
+      },
+      onDragOver: (ev) => {
+        if (ev.dataTransfer?.types.includes("Files") || host.getDraggedFiles?.()?.length) {
+          ev.preventDefault();
+          ev.dataTransfer.dropEffect = "copy";
+          return true;
+        }
+        return false;
+      },
+      onDrop: (ev) => {
+        const vaultFiles = host.getDraggedFiles?.() ?? null;
+        if (vaultFiles?.length) {
+          ev.preventDefault();
+          ed?.insert(vaultFiles.map((f) => f.isImage ? `![[${f.linktext}]]` : `[[${f.linktext}]]`).join("\n"));
+          return true;
+        }
+        const files = [...ev.dataTransfer?.files ?? []].filter((f) => f.type.startsWith("image/"));
+        if (!files.length) return false;
+        ev.preventDefault();
+        void insertImages(files);
+        return true;
+      }
+    });
+    if (!ed) {
+      pop.classList.remove("is-live");
+      return false;
+    }
+    const doc = this.el.ownerDocument;
+    const outside = (ev) => {
+      const target = ev.target;
+      if (!target || pop.contains(target) || !target.closest(".app-container")) return;
+      if (this.popover === pop) this.closePopover();
+    };
+    doc.addEventListener("pointerdown", outside, true);
+    for (const type of ["keyup", "keypress", "dragover", "drop", "dblclick", "contextmenu"]) ed.el.addEventListener(type, (ev) => ev.stopPropagation());
+    ed.el.addEventListener("keydown", (ev) => {
+      ev.stopPropagation();
+      if (ev.isComposing) return;
+      const target = ev.target;
+      const nativeCell = ev.key === "Escape" && !!target.closest("table") && !target.closest(".ggt");
+      if (ev.defaultPrevented && !nativeCell) return;
+      if (ev.key === "Escape" || ev.key === "Enter" && (ev.metaKey || ev.ctrlKey)) {
+        ev.preventDefault();
+        close();
+      }
+    });
+    this.noteFormat = (fmt2) => formatNote(fmt2);
+    this.popoverSave = save;
+    this.popoverApply = apply;
+    this.el.append(pop);
+    const room = this.el.getBoundingClientRect();
+    pop.classList.add("is-sized");
+    if (keep) pop.setCssStyles({ width: `${Math.max(keep.w, 320)}px`, height: `${Math.max(keep.h, 200)}px`, left: keep.left, top: keep.top });
+    else {
+      pop.setCssStyles({ width: `${Math.round(Math.max(200, Math.min(460, room.width - 16)))}px`, height: `${Math.round(Math.max(140, Math.min(320, room.height - 16)))}px` });
+      this.placePopover(pop, nodeEl);
+    }
+    ed.focus();
+    return true;
   }
   /** 备注正文里的双链、图片：弹窗和展开的卡片共用 */
   wireNoteBody(body) {
@@ -21140,9 +25621,39 @@ var MindMapCanvas = class _MindMapCanvas {
     });
   }
   fillNoteBody(body, note) {
-    if (this.opts.host?.renderNote) {
+    for (const t3 of this.noteTableEds) {
+      if (t3.el.isConnected && !body.contains(t3.el)) continue;
+      t3.ed.destroy();
+      this.noteTableEds.delete(t3);
+    }
+    const host = this.opts.host;
+    if (host?.renderNote) {
       body.classList.add("markdown-rendered");
-      this.opts.host.renderNote(body, unescapeNote(note));
+      const parts = splitNoteTables(unescapeNote(note));
+      if (parts.length === 1 && "md" in parts[0]) {
+        host.renderNote(body, parts[0].md);
+        return;
+      }
+      for (const part of parts) {
+        if ("md" in part) {
+          host.renderNote(body.createDiv({ cls: "mm-note-part" }), part.md);
+          continue;
+        }
+        const wrap2 = body.createDiv({ cls: "mm-node-table mm-note-table" });
+        wrap2.addEventListener("click", (ev) => {
+          if (ev.target.closest("a")) ev.stopPropagation();
+        });
+        const ed = new TableEditor(wrap2, part.table, {
+          readonly: true,
+          onChange: () => {
+          },
+          renderMarkdown: (cell, md) => host.renderNote(cell, md),
+          setIcon: host.setIcon,
+          openLink: host.openLink ? (href, ev) => host.openLink(href, true, ev) : void 0,
+          hoverLink: host.hoverLink
+        });
+        this.noteTableEds.add({ el: wrap2, ed });
+      }
     } else {
       body.classList.add("is-plain");
       body.textContent = unescapeNote(note);
@@ -21201,10 +25712,1931 @@ var MindMapCanvas = class _MindMapCanvas {
 };
 
 // src/settings.ts
-var import_obsidian8 = require("obsidian");
+var import_obsidian10 = require("obsidian");
+
+// node_modules/.pnpm/ts-fsrs@5.4.2/node_modules/ts-fsrs/dist/index.mjs
+var FSRSError = class _FSRSError extends Error {
+  constructor(message = "FSRS Error") {
+    super(message);
+    this.name = "FSRSError";
+    Error.captureStackTrace?.(this, _FSRSError);
+  }
+};
+var FSRSValidationError = class _FSRSValidationError extends FSRSError {
+  constructor(message) {
+    super(message);
+    this.name = "FSRSValidationError";
+    Error.captureStackTrace?.(this, _FSRSValidationError);
+  }
+};
+var State = /* @__PURE__ */ ((State2) => {
+  State2[State2["New"] = 0] = "New";
+  State2[State2["Learning"] = 1] = "Learning";
+  State2[State2["Review"] = 2] = "Review";
+  State2[State2["Relearning"] = 3] = "Relearning";
+  return State2;
+})(State || {});
+var Rating = /* @__PURE__ */ ((Rating2) => {
+  Rating2[Rating2["Manual"] = 0] = "Manual";
+  Rating2[Rating2["Again"] = 1] = "Again";
+  Rating2[Rating2["Hard"] = 2] = "Hard";
+  Rating2[Rating2["Good"] = 3] = "Good";
+  Rating2[Rating2["Easy"] = 4] = "Easy";
+  return Rating2;
+})(Rating || {});
+var TypeConvert = class _TypeConvert {
+  static card(card) {
+    return {
+      ...card,
+      state: _TypeConvert.state(card.state),
+      due: _TypeConvert.time(card.due),
+      last_review: card.last_review ? _TypeConvert.time(card.last_review) : void 0
+    };
+  }
+  static rating(value) {
+    if (typeof value === "string") {
+      const firstLetter = value.charAt(0).toUpperCase();
+      const restOfString = value.slice(1).toLowerCase();
+      const ret = Rating[`${firstLetter}${restOfString}`];
+      if (ret === void 0) {
+        throw new FSRSValidationError(`Invalid rating:[${value}]`);
+      }
+      return ret;
+    } else if (typeof value === "number") {
+      return value;
+    }
+    throw new FSRSValidationError(`Invalid rating:[${value}]`);
+  }
+  static state(value) {
+    if (typeof value === "string") {
+      const firstLetter = value.charAt(0).toUpperCase();
+      const restOfString = value.slice(1).toLowerCase();
+      const ret = State[`${firstLetter}${restOfString}`];
+      if (ret === void 0) {
+        throw new FSRSValidationError(`Invalid state:[${value}]`);
+      }
+      return ret;
+    } else if (typeof value === "number") {
+      return value;
+    }
+    throw new FSRSValidationError(`Invalid state:[${value}]`);
+  }
+  static time(value) {
+    if (value instanceof Date) {
+      return value;
+    }
+    const date = new Date(value);
+    if (typeof value === "object" && value !== null && !Number.isNaN(Date.parse(value) || +date)) {
+      return date;
+    } else if (typeof value === "string") {
+      const timestamp = Date.parse(value);
+      if (!Number.isNaN(timestamp)) {
+        return new Date(timestamp);
+      } else {
+        throw new FSRSValidationError(`Invalid date:[${value}]`);
+      }
+    } else if (typeof value === "number") {
+      return new Date(value);
+    }
+    throw new FSRSValidationError(`Invalid date:[${value}]`);
+  }
+  static review_log(log) {
+    return {
+      ...log,
+      due: _TypeConvert.time(log.due),
+      rating: _TypeConvert.rating(log.rating),
+      state: _TypeConvert.state(log.state),
+      review: _TypeConvert.time(log.review)
+    };
+  }
+};
+Date.prototype.scheduler = function(t3, isDay) {
+  return date_scheduler(this, t3, isDay);
+};
+Date.prototype.diff = function(pre, unit) {
+  return date_diff(this, pre, unit);
+};
+Date.prototype.format = function() {
+  return formatDate(this);
+};
+Date.prototype.dueFormat = function(last_review, unit, timeUnit) {
+  return show_diff_message(this, last_review, unit, timeUnit);
+};
+function date_scheduler(now, t3, isDay) {
+  return new Date(
+    isDay ? TypeConvert.time(now).getTime() + t3 * 24 * 60 * 60 * 1e3 : TypeConvert.time(now).getTime() + t3 * 60 * 1e3
+  );
+}
+function date_diff(now, pre, unit) {
+  if (!now || !pre) {
+    throw new FSRSValidationError("Invalid date");
+  }
+  const diff = TypeConvert.time(now).getTime() - TypeConvert.time(pre).getTime();
+  let r3 = 0;
+  switch (unit) {
+    case "days":
+      r3 = Math.floor(diff / (24 * 60 * 60 * 1e3));
+      break;
+    case "minutes":
+      r3 = Math.floor(diff / (60 * 1e3));
+      break;
+  }
+  return r3;
+}
+function formatDate(dateInput) {
+  const date = TypeConvert.time(dateInput);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
+  return `${year}-${padZero(month)}-${padZero(day)} ${padZero(hours)}:${padZero(
+    minutes
+  )}:${padZero(seconds)}`;
+}
+function padZero(num2) {
+  return num2 < 10 ? `0${num2}` : `${num2}`;
+}
+var TIMEUNIT = [60, 60, 24, 31, 12];
+var TIMEUNITFORMAT = ["second", "min", "hour", "day", "month", "year"];
+function show_diff_message(due, last_review, unit, timeUnit = TIMEUNITFORMAT) {
+  due = TypeConvert.time(due);
+  last_review = TypeConvert.time(last_review);
+  if (timeUnit.length !== TIMEUNITFORMAT.length) {
+    timeUnit = TIMEUNITFORMAT;
+  }
+  let diff = due.getTime() - last_review.getTime();
+  let i = 0;
+  diff /= 1e3;
+  for (i = 0; i < TIMEUNIT.length; i++) {
+    if (diff < TIMEUNIT[i]) {
+      break;
+    } else {
+      diff /= TIMEUNIT[i];
+    }
+  }
+  return `${Math.floor(diff)}${unit ? timeUnit[i] : ""}`;
+}
+var Grades = Object.freeze([
+  Rating.Again,
+  Rating.Hard,
+  Rating.Good,
+  Rating.Easy
+]);
+var FUZZ_RANGES = [
+  {
+    start: 2.5,
+    end: 7,
+    factor: 0.15
+  },
+  {
+    start: 7,
+    end: 20,
+    factor: 0.1
+  },
+  {
+    start: 20,
+    end: Infinity,
+    factor: 0.05
+  }
+];
+function get_fuzz_range(interval, elapsed_days, maximum_interval) {
+  let delta = 1;
+  for (const range of FUZZ_RANGES) {
+    delta += range.factor * Math.max(Math.min(interval, range.end) - range.start, 0);
+  }
+  interval = Math.min(interval, maximum_interval);
+  let min_ivl = Math.max(2, Math.round(interval - delta));
+  const max_ivl = Math.min(Math.round(interval + delta), maximum_interval);
+  if (interval > elapsed_days) {
+    min_ivl = Math.max(min_ivl, elapsed_days + 1);
+  }
+  min_ivl = Math.min(min_ivl, max_ivl);
+  return { min_ivl, max_ivl };
+}
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+function roundTo(num2, decimals2) {
+  const factor = 10 ** decimals2;
+  return Math.round(num2 * factor) / factor;
+}
+function dateDiffInDays(last, cur) {
+  const utc1 = Date.UTC(
+    last.getUTCFullYear(),
+    last.getUTCMonth(),
+    last.getUTCDate()
+  );
+  const utc2 = Date.UTC(
+    cur.getUTCFullYear(),
+    cur.getUTCMonth(),
+    cur.getUTCDate()
+  );
+  return Math.floor(
+    (utc2 - utc1) / 864e5
+    /** 1000 * 60 * 60 * 24*/
+  );
+}
+var ConvertStepUnitToMinutes = (step) => {
+  const unit = step.slice(-1);
+  const value = parseInt(step.slice(0, -1), 10);
+  if (Number.isNaN(value) || !Number.isFinite(value) || value < 0) {
+    throw new FSRSValidationError(`Invalid step value: ${step}`);
+  }
+  switch (unit) {
+    case "m":
+      return value;
+    case "h":
+      return value * 60;
+    case "d":
+      return value * 1440;
+    default:
+      throw new FSRSValidationError(
+        `Invalid step unit: ${step}, expected m/h/d`
+      );
+  }
+};
+var BasicLearningStepsStrategy = (params, state, cur_step) => {
+  const learning_steps = state === State.Relearning || state === State.Review ? params.relearning_steps : params.learning_steps;
+  const steps_length = learning_steps.length;
+  if (steps_length === 0 || cur_step >= steps_length) return {};
+  const firstStep = learning_steps[0];
+  const toMinutes = ConvertStepUnitToMinutes;
+  const getAgainInterval = () => {
+    return toMinutes(firstStep);
+  };
+  const getHardInterval = () => {
+    if (steps_length === 1) return Math.round(toMinutes(firstStep) * 1.5);
+    const nextStep = learning_steps[1];
+    return Math.round((toMinutes(firstStep) + toMinutes(nextStep)) / 2);
+  };
+  const getStepInfo = (index) => {
+    if (index < 0 || index >= steps_length) {
+      return null;
+    } else {
+      return learning_steps[index];
+    }
+  };
+  const getGoodMinutes = (step) => {
+    return toMinutes(step);
+  };
+  const result = {};
+  const step_info = getStepInfo(Math.max(0, cur_step));
+  if (state === State.Review) {
+    result[Rating.Again] = {
+      scheduled_minutes: toMinutes(step_info),
+      next_step: 0
+    };
+    return result;
+  } else {
+    result[Rating.Again] = {
+      scheduled_minutes: getAgainInterval(),
+      next_step: 0
+    };
+    result[Rating.Hard] = {
+      scheduled_minutes: getHardInterval(),
+      next_step: cur_step
+    };
+    const next_info = getStepInfo(cur_step + 1);
+    if (next_info) {
+      const nextMin = getGoodMinutes(next_info);
+      if (nextMin) {
+        result[Rating.Good] = {
+          scheduled_minutes: Math.round(nextMin),
+          next_step: cur_step + 1
+        };
+      }
+    }
+  }
+  return result;
+};
+function DefaultInitSeedStrategy() {
+  const time = this.review_time.getTime();
+  const reps = this.current.reps;
+  const mul = this.current.difficulty * this.current.stability;
+  return `${time}_${reps}_${mul}`;
+}
+var StrategyMode = /* @__PURE__ */ ((StrategyMode2) => {
+  StrategyMode2["SCHEDULER"] = "Scheduler";
+  StrategyMode2["LEARNING_STEPS"] = "LearningSteps";
+  StrategyMode2["SEED"] = "Seed";
+  return StrategyMode2;
+})(StrategyMode || {});
+var AbstractScheduler = class {
+  // init
+  constructor(card, now, algorithm, strategies) {
+    __publicField(this, "last");
+    __publicField(this, "current");
+    __publicField(this, "review_time");
+    __publicField(this, "next", /* @__PURE__ */ new Map());
+    __publicField(this, "algorithm");
+    __publicField(this, "strategies");
+    __publicField(this, "elapsed_days", 0);
+    this.algorithm = algorithm;
+    this.last = TypeConvert.card(card);
+    this.current = TypeConvert.card(card);
+    this.review_time = TypeConvert.time(now);
+    this.strategies = strategies;
+    this.init();
+  }
+  checkGrade(grade) {
+    if (!Number.isFinite(grade) || grade < 1 || grade > 4) {
+      throw new FSRSValidationError(`Invalid grade "${grade}",expected 1-4`);
+    }
+  }
+  init() {
+    const { state, last_review } = this.current;
+    let interval = 0;
+    if (state !== State.New && last_review) {
+      interval = dateDiffInDays(last_review, this.review_time);
+    }
+    this.current.last_review = this.review_time;
+    this.elapsed_days = interval;
+    this.current.elapsed_days = interval;
+    this.current.reps += 1;
+    let seed_strategy = DefaultInitSeedStrategy;
+    if (this.strategies) {
+      const custom_strategy = this.strategies.get(StrategyMode.SEED);
+      if (custom_strategy) {
+        seed_strategy = custom_strategy;
+      }
+    }
+    this.algorithm.seed = seed_strategy.call(this);
+  }
+  preview() {
+    return {
+      [Rating.Again]: this.review(Rating.Again),
+      [Rating.Hard]: this.review(Rating.Hard),
+      [Rating.Good]: this.review(Rating.Good),
+      [Rating.Easy]: this.review(Rating.Easy),
+      [Symbol.iterator]: this.previewIterator.bind(this)
+    };
+  }
+  *previewIterator() {
+    for (const grade of Grades) {
+      yield this.review(grade);
+    }
+  }
+  review(grade) {
+    const { state } = this.last;
+    let item;
+    this.checkGrade(grade);
+    switch (state) {
+      case State.New:
+        item = this.newState(grade);
+        break;
+      case State.Learning:
+      case State.Relearning:
+        item = this.learningState(grade);
+        break;
+      case State.Review:
+        item = this.reviewState(grade);
+        break;
+    }
+    return item;
+  }
+  buildLog(rating) {
+    const { last_review, due, elapsed_days } = this.last;
+    return {
+      rating,
+      state: this.current.state,
+      due: last_review || due,
+      stability: this.current.stability,
+      difficulty: this.current.difficulty,
+      elapsed_days: this.elapsed_days,
+      last_elapsed_days: elapsed_days,
+      scheduled_days: this.current.scheduled_days,
+      learning_steps: this.current.learning_steps,
+      review: this.review_time
+    };
+  }
+};
+var Alea = class {
+  constructor(seed) {
+    __publicField(this, "c");
+    __publicField(this, "s0");
+    __publicField(this, "s1");
+    __publicField(this, "s2");
+    const mash = Mash();
+    this.c = 1;
+    this.s0 = mash(" ");
+    this.s1 = mash(" ");
+    this.s2 = mash(" ");
+    if (seed == null) seed = Date.now();
+    this.s0 -= mash(seed);
+    if (this.s0 < 0) this.s0 += 1;
+    this.s1 -= mash(seed);
+    if (this.s1 < 0) this.s1 += 1;
+    this.s2 -= mash(seed);
+    if (this.s2 < 0) this.s2 += 1;
+  }
+  next() {
+    const t3 = 2091639 * this.s0 + this.c * 23283064365386963e-26;
+    this.s0 = this.s1;
+    this.s1 = this.s2;
+    this.c = t3 | 0;
+    this.s2 = t3 - this.c;
+    return this.s2;
+  }
+  set state(state) {
+    this.c = state.c;
+    this.s0 = state.s0;
+    this.s1 = state.s1;
+    this.s2 = state.s2;
+  }
+  get state() {
+    return {
+      c: this.c,
+      s0: this.s0,
+      s1: this.s1,
+      s2: this.s2
+    };
+  }
+};
+function Mash() {
+  let n = 4022871197;
+  return function mash(data) {
+    data = String(data);
+    for (let i = 0; i < data.length; i++) {
+      n += data.charCodeAt(i);
+      let h = 0.02519603282416938 * n;
+      n = h >>> 0;
+      h -= n;
+      h *= n;
+      n = h >>> 0;
+      h -= n;
+      n += h * 4294967296;
+    }
+    return (n >>> 0) * 23283064365386963e-26;
+  };
+}
+function alea(seed) {
+  const xg = new Alea(seed);
+  const prng = () => xg.next();
+  prng.int32 = () => xg.next() * 4294967296 | 0;
+  prng.double = () => prng() + (prng() * 2097152 | 0) * 11102230246251565e-32;
+  prng.state = () => xg.state;
+  prng.importState = (state) => {
+    xg.state = state;
+    return prng;
+  };
+  return prng;
+}
+var version = "5.4.2";
+var default_request_retention = 0.9;
+var default_maximum_interval = 36500;
+var default_enable_fuzz = false;
+var default_enable_short_term = true;
+var default_learning_steps = Object.freeze([
+  "1m",
+  "10m"
+]);
+var default_relearning_steps = Object.freeze([
+  "10m"
+]);
+var FSRSVersion = `v${version} using FSRS-6.0`;
+var S_MIN = 1e-3;
+var INIT_S_MAX = 100;
+var FSRS5_DEFAULT_DECAY = 0.5;
+var FSRS6_DEFAULT_DECAY = 0.1542;
+var default_w = Object.freeze([
+  0.212,
+  1.2931,
+  2.3065,
+  8.2956,
+  6.4133,
+  0.8334,
+  3.0194,
+  1e-3,
+  1.8722,
+  0.1666,
+  0.796,
+  1.4835,
+  0.0614,
+  0.2629,
+  1.6483,
+  0.6014,
+  1.8729,
+  0.5425,
+  0.0912,
+  0.0658,
+  FSRS6_DEFAULT_DECAY
+]);
+var W17_W18_Ceiling = 2;
+var CLAMP_PARAMETERS = (w17_w18_ceiling, enable_short_term = default_enable_short_term) => [
+  [S_MIN, INIT_S_MAX],
+  [S_MIN, INIT_S_MAX],
+  [S_MIN, INIT_S_MAX],
+  [S_MIN, INIT_S_MAX],
+  [1, 10],
+  [1e-3, 4],
+  [1e-3, 4],
+  [1e-3, 0.75],
+  [0, 4.5],
+  [0, 0.8],
+  [1e-3, 3.5],
+  [1e-3, 5],
+  [1e-3, 0.25],
+  [1e-3, 0.9],
+  [0, 4],
+  [0, 1],
+  [1, 6],
+  [0, w17_w18_ceiling],
+  [0, w17_w18_ceiling],
+  [
+    enable_short_term ? 0.01 : 0,
+    0.8
+  ],
+  [0.1, 0.8]
+];
+var clipParameters = (parameters, numRelearningSteps, enableShortTerm = default_enable_short_term) => {
+  const clip = CLAMP_PARAMETERS(W17_W18_Ceiling, enableShortTerm).slice(
+    0,
+    parameters.length
+  );
+  if (Math.max(0, numRelearningSteps) > 1) {
+    const w11 = clamp(parameters[11] || 0, clip[11][0], clip[11][1]);
+    const w13 = clamp(parameters[13] || 0, clip[13][0], clip[13][1]);
+    const w14 = clamp(parameters[14] || 0, clip[14][0], clip[14][1]);
+    const value = -(Math.log(w11) + Math.log(Math.pow(2, w13) - 1) + w14 * 0.3) / numRelearningSteps;
+    const w17_w18_ceiling = clamp(
+      roundTo(Math.sqrt(Math.max(value, 0)), 8),
+      0.01,
+      W17_W18_Ceiling
+    );
+    if (clip[17]) clip[17] = [clip[17][0], w17_w18_ceiling];
+    if (clip[18]) clip[18] = [clip[18][0], w17_w18_ceiling];
+  }
+  return clip.map(
+    ([min, max], index) => clamp(parameters[index] || 0, min, max)
+  );
+};
+var migrateParameters = (parameters, numRelearningSteps = 0, enableShortTerm = default_enable_short_term) => {
+  if (parameters === void 0) {
+    return [...default_w];
+  }
+  switch (parameters.length) {
+    case 21:
+      return clipParameters(
+        Array.from(parameters),
+        numRelearningSteps,
+        enableShortTerm
+      );
+    case 19:
+      console.debug("[FSRS-6]auto fill w from 19 to 21 length");
+      return clipParameters(
+        Array.from(parameters),
+        numRelearningSteps,
+        enableShortTerm
+      ).concat([0, FSRS5_DEFAULT_DECAY]);
+    case 17: {
+      const w = clipParameters(
+        Array.from(parameters),
+        numRelearningSteps,
+        enableShortTerm
+      );
+      w[4] = +(w[5] * 2 + w[4]).toFixed(8);
+      w[5] = +(Math.log(w[5] * 3 + 1) / 3).toFixed(8);
+      w[6] = +(w[6] + 0.5).toFixed(8);
+      console.debug("[FSRS-6]auto fill w from 17 to 21 length");
+      return w.concat([0, 0, 0, FSRS5_DEFAULT_DECAY]);
+    }
+    default:
+      console.warn("[FSRS]Invalid parameters length, using default parameters");
+      return [...default_w];
+  }
+};
+var generatorParameters = (props) => {
+  const learning_steps = Array.isArray(props?.learning_steps) ? props.learning_steps : default_learning_steps;
+  const relearning_steps = Array.isArray(props?.relearning_steps) ? props.relearning_steps : default_relearning_steps;
+  const enable_short_term = props?.enable_short_term ?? default_enable_short_term;
+  const w = migrateParameters(
+    props?.w,
+    relearning_steps.length,
+    enable_short_term
+  );
+  return {
+    request_retention: props?.request_retention || default_request_retention,
+    maximum_interval: props?.maximum_interval || default_maximum_interval,
+    w,
+    enable_fuzz: props?.enable_fuzz ?? default_enable_fuzz,
+    enable_short_term,
+    learning_steps,
+    relearning_steps
+  };
+};
+function createEmptyCard(now, afterHandler) {
+  const emptyCard = {
+    due: now ? TypeConvert.time(now) : /* @__PURE__ */ new Date(),
+    stability: 0,
+    difficulty: 0,
+    elapsed_days: 0,
+    scheduled_days: 0,
+    reps: 0,
+    lapses: 0,
+    learning_steps: 0,
+    state: State.New,
+    last_review: void 0
+  };
+  if (afterHandler && typeof afterHandler === "function") {
+    return afterHandler(emptyCard);
+  } else {
+    return emptyCard;
+  }
+}
+var computeDecayFactor = (decayOrParams) => {
+  const decay = typeof decayOrParams === "number" ? -decayOrParams : -decayOrParams[20];
+  const factor = Math.exp(Math.pow(decay, -1) * Math.log(0.9)) - 1;
+  return { decay, factor: roundTo(factor, 8) };
+};
+function forgetting_curve(decayOrParams, elapsed_days, stability) {
+  const { decay, factor } = computeDecayFactor(decayOrParams);
+  return roundTo(Math.pow(1 + factor * elapsed_days / stability, decay), 8);
+}
+var FSRSAlgorithm = class {
+  constructor(params) {
+    __publicField(this, "param");
+    __publicField(this, "intervalModifier");
+    __publicField(this, "_seed");
+    __publicField(this, "prepare_parameters", (params) => {
+      const generated = generatorParameters(params);
+      generated.w = clipParameters(
+        Array.from(generated.w),
+        generated.relearning_steps.length,
+        generated.enable_short_term
+      );
+      return generated;
+    });
+    /**
+     * The formula used is :
+     * $$R(t,S) = (1 + \text{FACTOR} \times \frac{t}{9 \cdot S})^{\text{DECAY}}$$
+     * @param {number} elapsed_days t days since the last review
+     * @param {number} stability Stability (interval when R=90%)
+     * @return {number} r Retrievability (probability of recall)
+     */
+    __publicField(this, "forgetting_curve");
+    this.param = new Proxy(
+      this.prepare_parameters(params),
+      this.params_handler_proxy()
+    );
+    this.intervalModifier = this.calculate_interval_modifier(
+      this.param.request_retention
+    );
+    this.forgetting_curve = forgetting_curve.bind(this, this.param.w);
+  }
+  get interval_modifier() {
+    return this.intervalModifier;
+  }
+  set seed(seed) {
+    this._seed = seed;
+  }
+  /**
+   * @see https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-Algorithm#fsrs-5
+   *
+   * The formula used is: $$I(r,s) = (r^{\frac{1}{DECAY}} - 1) / FACTOR \times s$$
+   * @param request_retention 0<request_retention<=1,Requested retention rate
+   * @throws {Error} Requested retention rate should be in the range (0,1]
+   */
+  calculate_interval_modifier(request_retention) {
+    if (request_retention <= 0 || request_retention > 1) {
+      throw new FSRSValidationError(
+        "Requested retention rate should be in the range (0,1]"
+      );
+    }
+    const { decay, factor } = computeDecayFactor(this.param.w);
+    return roundTo((Math.pow(request_retention, 1 / decay) - 1) / factor, 8);
+  }
+  /**
+   * Get the parameters of the algorithm.
+   */
+  get parameters() {
+    return this.param;
+  }
+  /**
+   * Set the parameters of the algorithm.
+   * @param params Partial<FSRSParameters>
+   */
+  set parameters(params) {
+    this.update_parameters(params);
+  }
+  params_handler_proxy() {
+    const _this = this;
+    return {
+      set: function(target, prop, value) {
+        if (prop === "request_retention" && Number.isFinite(value)) {
+          _this.intervalModifier = _this.calculate_interval_modifier(
+            Number(value)
+          );
+        } else if (prop === "w") {
+          value = migrateParameters(
+            value,
+            target.relearning_steps.length,
+            target.enable_short_term
+          );
+          value = clipParameters(
+            Array.from(value),
+            target.relearning_steps.length,
+            target.enable_short_term
+          );
+          _this.forgetting_curve = forgetting_curve.bind(this, value);
+          _this.intervalModifier = _this.calculate_interval_modifier(
+            Number(target.request_retention)
+          );
+        }
+        Reflect.set(target, prop, value);
+        return true;
+      }
+    };
+  }
+  update_parameters(params) {
+    const _params = this.prepare_parameters(params);
+    for (const key in _params) {
+      const paramKey = key;
+      this.param[paramKey] = _params[paramKey];
+    }
+  }
+  /**
+     * The formula used is :
+     * $$ S_0(G) = w_{G-1}$$
+     * $$S_0 = \max \lbrace S_0,0.1\rbrace $$
+  
+     * @param g Grade (rating at Anki) [1.again,2.hard,3.good,4.easy]
+     * @return Stability (interval when R=90%)
+     */
+  init_stability(g) {
+    return Math.max(this.param.w[g - 1], 0.1);
+  }
+  /**
+   * The formula used is :
+   * $$D_0(G) = w_4 - e^{(G-1) \cdot w_5} + 1 $$
+   * $$D_0 = \min \lbrace \max \lbrace D_0(G),1 \rbrace,10 \rbrace$$
+   * where the $$D_0(1)=w_4$$ when the first rating is good.
+   *
+   * @param {Grade} g Grade (rating at Anki) [1.again,2.hard,3.good,4.easy]
+   * @return {number} Difficulty $$D \in [1,10]$$
+   */
+  init_difficulty(g) {
+    const w = this.param.w;
+    const d = w[4] - Math.exp((g - 1) * w[5]) + 1;
+    return roundTo(d, 8);
+  }
+  /**
+   * If fuzzing is disabled or ivl is less than 2.5, it returns the original interval.
+   * @param {number} ivl - The interval to be fuzzed.
+   * @param {number} elapsed_days t days since the last review
+   * @return {number} - The fuzzed interval.
+   **/
+  apply_fuzz(ivl, elapsed_days) {
+    if (!this.param.enable_fuzz || ivl < 2.5) return Math.round(ivl);
+    const generator = alea(this._seed);
+    const fuzz_factor = generator();
+    const { min_ivl, max_ivl } = get_fuzz_range(
+      ivl,
+      elapsed_days,
+      this.param.maximum_interval
+    );
+    return Math.floor(fuzz_factor * (max_ivl - min_ivl + 1) + min_ivl);
+  }
+  /**
+   *   @see The formula used is : {@link FSRSAlgorithm.calculate_interval_modifier}
+   *   @param {number} s - Stability (interval when R=90%)
+   *   @param {number} elapsed_days t days since the last review
+   */
+  next_interval(s, elapsed_days) {
+    const newInterval = Math.min(
+      Math.max(1, Math.round(s * this.intervalModifier)),
+      this.param.maximum_interval
+    );
+    return this.apply_fuzz(newInterval, elapsed_days);
+  }
+  /**
+   * @see https://github.com/open-spaced-repetition/fsrs4anki/issues/697
+   */
+  linear_damping(delta_d, old_d) {
+    return roundTo(delta_d * (10 - old_d) / 9, 8);
+  }
+  /**
+   * The formula used is :
+   * $$\text{delta}_d = -w_6 \cdot (g - 3)$$
+   * $$\text{next}_d = D + \text{linear damping}(\text{delta}_d , D)$$
+   * $$D^\prime(D,R) = w_7 \cdot D_0(4) +(1 - w_7) \cdot \text{next}_d$$
+   * @param {number} d Difficulty $$D \in [1,10]$$
+   * @param {Grade} g Grade (rating at Anki) [1.again,2.hard,3.good,4.easy]
+   * @return {number} $$\text{next}_D$$
+   */
+  next_difficulty(d, g) {
+    const delta_d = -this.param.w[6] * (g - 3);
+    const next_d = d + this.linear_damping(delta_d, d);
+    return clamp(
+      this.mean_reversion(this.init_difficulty(Rating.Easy), next_d),
+      1,
+      10
+    );
+  }
+  /**
+   * The formula used is :
+   * $$w_7 \cdot \text{init} +(1 - w_7) \cdot \text{current}$$
+   * @param {number} init $$w_2 : D_0(3) = w_2 + (R-2) \cdot w_3= w_2$$
+   * @param {number} current $$D - w_6 \cdot (R - 2)$$
+   * @return {number} difficulty
+   */
+  mean_reversion(init, current2) {
+    const w = this.param.w;
+    return roundTo(w[7] * init + (1 - w[7]) * current2, 8);
+  }
+  /**
+   * The formula used is :
+   * $$S^\prime_r(D,S,R,G) = S\cdot(e^{w_8}\cdot (11-D)\cdot S^{-w_9}\cdot(e^{w_{10}\cdot(1-R)}-1)\cdot w_{15}(\text{if} G=2) \cdot w_{16}(\text{if} G=4)+1)$$
+   * @param {number} d Difficulty D \in [1,10]
+   * @param {number} s Stability (interval when R=90%)
+   * @param {number} r Retrievability (probability of recall)
+   * @param {Grade} g Grade (Rating[0.again,1.hard,2.good,3.easy])
+   * @return {number} S^\prime_r new stability after recall
+   */
+  next_recall_stability(d, s, r3, g) {
+    const w = this.param.w;
+    const hard_penalty = Rating.Hard === g ? w[15] : 1;
+    const easy_bound = Rating.Easy === g ? w[16] : 1;
+    return roundTo(
+      clamp(
+        s * (1 + Math.exp(w[8]) * (11 - d) * Math.pow(s, -w[9]) * (Math.exp((1 - r3) * w[10]) - 1) * hard_penalty * easy_bound),
+        S_MIN,
+        36500
+      ),
+      8
+    );
+  }
+  /**
+   * The formula used is :
+   * $$S^\prime_f(D,S,R) = w_{11}\cdot D^{-w_{12}}\cdot ((S+1)^{w_{13}}-1) \cdot e^{w_{14}\cdot(1-R)}$$
+   * enable_short_term = true : $$S^\prime_f \in \min \lbrace \max \lbrace S^\prime_f,0.01\rbrace, \frac{S}{e^{w_{17} \cdot w_{18}}} \rbrace$$
+   * enable_short_term = false : $$S^\prime_f \in \min \lbrace \max \lbrace S^\prime_f,0.01\rbrace, S \rbrace$$
+   * @param {number} d Difficulty D \in [1,10]
+   * @param {number} s Stability (interval when R=90%)
+   * @param {number} r Retrievability (probability of recall)
+   * @return {number} S^\prime_f new stability after forgetting
+   */
+  next_forget_stability(d, s, r3) {
+    const w = this.param.w;
+    return roundTo(
+      clamp(
+        w[11] * Math.pow(d, -w[12]) * (Math.pow(s + 1, w[13]) - 1) * Math.exp((1 - r3) * w[14]),
+        S_MIN,
+        36500
+      ),
+      8
+    );
+  }
+  /**
+   * The formula used is :
+   * $$S^\prime_s(S,G) = S \cdot e^{w_{17} \cdot (G-3+w_{18})}$$
+   * @param {number} s Stability (interval when R=90%)
+   * @param {Grade} g Grade (Rating[0.again,1.hard,2.good,3.easy])
+   */
+  next_short_term_stability(s, g) {
+    const w = this.param.w;
+    const sinc = Math.pow(s, -w[19]) * Math.exp(w[17] * (g - 3 + w[18]));
+    const maskedSinc = g >= Rating.Hard ? Math.max(sinc, 1) : sinc;
+    return roundTo(clamp(s * maskedSinc, S_MIN, 36500), 8);
+  }
+  /**
+   * Calculates the next state of memory based on the current state, time elapsed, and grade.
+   *
+   * @param memory_state - The current state of memory, which can be null.
+   * @param t - The time elapsed since the last review.
+   * @param {Rating} g Grade (Rating[0.Manual,1.Again,2.Hard,3.Good,4.Easy])
+   * @param r - Optional retrievability value. If not provided, it will be calculated.
+   * @returns The next state of memory with updated difficulty and stability.
+   */
+  next_state(memory_state, t3, g, r3) {
+    const { difficulty: d, stability: s } = memory_state ?? {
+      difficulty: 0,
+      stability: 0
+    };
+    if (t3 < 0) {
+      throw new FSRSValidationError(`Invalid delta_t "${t3}"`);
+    }
+    if (g < 0 || g > 4) {
+      throw new FSRSValidationError(`Invalid grade "${g}"`);
+    }
+    if (d === 0 && s === 0) {
+      return {
+        difficulty: clamp(this.init_difficulty(g), 1, 10),
+        stability: this.init_stability(g)
+      };
+    }
+    if (g === 0) {
+      return {
+        difficulty: d,
+        stability: s
+      };
+    }
+    if (d < 1 || s < S_MIN) {
+      throw new FSRSValidationError(
+        `Invalid memory state { difficulty: ${d}, stability: ${s} }`
+      );
+    }
+    const w = this.param.w;
+    r3 = typeof r3 === "number" ? r3 : this.forgetting_curve(t3, s);
+    let new_s;
+    if (t3 === 0 && this.param.enable_short_term) {
+      new_s = this.next_short_term_stability(s, g);
+    } else if (g === 1) {
+      const s_after_fail = this.next_forget_stability(d, s, r3);
+      let [w_17, w_18] = [0, 0];
+      if (this.param.enable_short_term) {
+        w_17 = w[17];
+        w_18 = w[18];
+      }
+      const next_s_min = s / Math.exp(w_17 * w_18);
+      new_s = clamp(roundTo(next_s_min, 8), S_MIN, s_after_fail);
+    } else {
+      new_s = this.next_recall_stability(d, s, r3, g);
+    }
+    const new_d = this.next_difficulty(d, g);
+    return { difficulty: new_d, stability: new_s };
+  }
+};
+var BasicScheduler = class extends AbstractScheduler {
+  constructor(card, now, algorithm, strategies) {
+    super(card, now, algorithm, strategies);
+    __publicField(this, "learningStepsStrategy");
+    let learningStepStrategy = BasicLearningStepsStrategy;
+    if (this.strategies) {
+      const custom_strategy = this.strategies.get(StrategyMode.LEARNING_STEPS);
+      if (custom_strategy) {
+        learningStepStrategy = custom_strategy;
+      }
+    }
+    this.learningStepsStrategy = learningStepStrategy;
+  }
+  getLearningInfo(card, grade) {
+    const parameters = this.algorithm.parameters;
+    card.learning_steps = card.learning_steps || 0;
+    const steps_strategy = this.learningStepsStrategy(
+      parameters,
+      card.state,
+      card.learning_steps
+    );
+    const scheduled_minutes = Math.max(
+      0,
+      steps_strategy[grade]?.scheduled_minutes ?? 0
+    );
+    const next_steps = Math.max(0, steps_strategy[grade]?.next_step ?? 0);
+    return {
+      scheduled_minutes,
+      next_steps
+    };
+  }
+  /**
+   * @description This function applies the learning steps based on the current card's state and grade.
+   */
+  applyLearningSteps(nextCard, grade, to_state) {
+    const { scheduled_minutes, next_steps } = this.getLearningInfo(
+      this.current,
+      grade
+    );
+    if (scheduled_minutes > 0 && scheduled_minutes < 1440) {
+      nextCard.learning_steps = next_steps;
+      nextCard.scheduled_days = 0;
+      nextCard.state = to_state;
+      nextCard.due = date_scheduler(
+        this.review_time,
+        Math.round(scheduled_minutes),
+        false
+        /** true:days false: minute */
+      );
+    } else {
+      nextCard.state = State.Review;
+      if (scheduled_minutes >= 1440) {
+        nextCard.learning_steps = next_steps;
+        nextCard.due = date_scheduler(
+          this.review_time,
+          Math.round(scheduled_minutes),
+          false
+          /** true:days false: minute */
+        );
+        nextCard.scheduled_days = Math.floor(scheduled_minutes / 1440);
+      } else {
+        nextCard.learning_steps = 0;
+        const interval = this.algorithm.next_interval(
+          nextCard.stability,
+          this.elapsed_days
+        );
+        nextCard.scheduled_days = interval;
+        nextCard.due = date_scheduler(this.review_time, interval, true);
+      }
+    }
+  }
+  newState(grade) {
+    const exist = this.next.get(grade);
+    if (exist) {
+      return exist;
+    }
+    const next = this.next_ds(this.elapsed_days, grade);
+    this.applyLearningSteps(next, grade, State.Learning);
+    const item = {
+      card: next,
+      log: this.buildLog(grade)
+    };
+    this.next.set(grade, item);
+    return item;
+  }
+  learningState(grade) {
+    const exist = this.next.get(grade);
+    if (exist) {
+      return exist;
+    }
+    const next = this.next_ds(this.elapsed_days, grade);
+    this.applyLearningSteps(
+      next,
+      grade,
+      this.last.state
+      /** Learning or Relearning */
+    );
+    const item = {
+      card: next,
+      log: this.buildLog(grade)
+    };
+    this.next.set(grade, item);
+    return item;
+  }
+  reviewState(grade) {
+    const exist = this.next.get(grade);
+    if (exist) {
+      return exist;
+    }
+    const interval = this.elapsed_days;
+    const retrievability = this.algorithm.forgetting_curve(
+      interval,
+      this.current.stability
+    );
+    const next_again = this.next_ds(interval, Rating.Again, retrievability);
+    const next_hard = this.next_ds(interval, Rating.Hard, retrievability);
+    const next_good = this.next_ds(interval, Rating.Good, retrievability);
+    const next_easy = this.next_ds(interval, Rating.Easy, retrievability);
+    this.next_interval(next_hard, next_good, next_easy, interval);
+    this.next_state(next_hard, next_good, next_easy);
+    this.applyLearningSteps(next_again, Rating.Again, State.Relearning);
+    next_again.lapses += 1;
+    const item_again = {
+      card: next_again,
+      log: this.buildLog(Rating.Again)
+    };
+    const item_hard = {
+      card: next_hard,
+      log: super.buildLog(Rating.Hard)
+    };
+    const item_good = {
+      card: next_good,
+      log: super.buildLog(Rating.Good)
+    };
+    const item_easy = {
+      card: next_easy,
+      log: super.buildLog(Rating.Easy)
+    };
+    this.next.set(Rating.Again, item_again);
+    this.next.set(Rating.Hard, item_hard);
+    this.next.set(Rating.Good, item_good);
+    this.next.set(Rating.Easy, item_easy);
+    return this.next.get(grade);
+  }
+  /**
+   * Review next_ds
+   */
+  next_ds(t3, g, r3) {
+    const next_state = this.algorithm.next_state(
+      {
+        difficulty: this.current.difficulty,
+        stability: this.current.stability
+      },
+      t3,
+      g,
+      r3
+    );
+    const card = TypeConvert.card(this.current);
+    card.difficulty = next_state.difficulty;
+    card.stability = next_state.stability;
+    return card;
+  }
+  /**
+   * Review next_interval
+   */
+  next_interval(next_hard, next_good, next_easy, interval) {
+    let hard_interval, good_interval;
+    hard_interval = this.algorithm.next_interval(next_hard.stability, interval);
+    good_interval = this.algorithm.next_interval(next_good.stability, interval);
+    hard_interval = Math.min(hard_interval, good_interval);
+    good_interval = Math.max(good_interval, hard_interval + 1);
+    const easy_interval = Math.max(
+      this.algorithm.next_interval(next_easy.stability, interval),
+      good_interval + 1
+    );
+    next_hard.scheduled_days = hard_interval;
+    next_hard.due = date_scheduler(this.review_time, hard_interval, true);
+    next_good.scheduled_days = good_interval;
+    next_good.due = date_scheduler(this.review_time, good_interval, true);
+    next_easy.scheduled_days = easy_interval;
+    next_easy.due = date_scheduler(this.review_time, easy_interval, true);
+  }
+  /**
+   * Review next_state
+   */
+  next_state(next_hard, next_good, next_easy) {
+    next_hard.state = State.Review;
+    next_hard.learning_steps = 0;
+    next_good.state = State.Review;
+    next_good.learning_steps = 0;
+    next_easy.state = State.Review;
+    next_easy.learning_steps = 0;
+  }
+};
+var LongTermScheduler = class extends AbstractScheduler {
+  newState(grade) {
+    const exist = this.next.get(grade);
+    if (exist) {
+      return exist;
+    }
+    this.current.scheduled_days = 0;
+    this.current.elapsed_days = 0;
+    const first_interval = 0;
+    const next_again = this.next_ds(first_interval, Rating.Again);
+    const next_hard = this.next_ds(first_interval, Rating.Hard);
+    const next_good = this.next_ds(first_interval, Rating.Good);
+    const next_easy = this.next_ds(first_interval, Rating.Easy);
+    this.next_interval(
+      next_again,
+      next_hard,
+      next_good,
+      next_easy,
+      first_interval
+    );
+    this.next_state(next_again, next_hard, next_good, next_easy);
+    this.update_next(next_again, next_hard, next_good, next_easy);
+    return this.next.get(grade);
+  }
+  next_ds(t3, g, r3) {
+    const next_state = this.algorithm.next_state(
+      {
+        difficulty: this.current.difficulty,
+        stability: this.current.stability
+      },
+      t3,
+      g,
+      r3
+    );
+    const card = TypeConvert.card(this.current);
+    card.difficulty = next_state.difficulty;
+    card.stability = next_state.stability;
+    return card;
+  }
+  /**
+   * @see https://github.com/open-spaced-repetition/ts-fsrs/issues/98#issuecomment-2241923194
+   */
+  learningState(grade) {
+    return this.reviewState(grade);
+  }
+  reviewState(grade) {
+    const exist = this.next.get(grade);
+    if (exist) {
+      return exist;
+    }
+    const interval = this.elapsed_days;
+    const retrievability = this.algorithm.forgetting_curve(
+      interval,
+      this.current.stability
+    );
+    const next_again = this.next_ds(interval, Rating.Again, retrievability);
+    const next_hard = this.next_ds(interval, Rating.Hard, retrievability);
+    const next_good = this.next_ds(interval, Rating.Good, retrievability);
+    const next_easy = this.next_ds(interval, Rating.Easy, retrievability);
+    this.next_interval(next_again, next_hard, next_good, next_easy, interval);
+    this.next_state(next_again, next_hard, next_good, next_easy);
+    next_again.lapses += 1;
+    this.update_next(next_again, next_hard, next_good, next_easy);
+    return this.next.get(grade);
+  }
+  /**
+   * Review/New next_interval
+   */
+  next_interval(next_again, next_hard, next_good, next_easy, interval) {
+    let again_interval, hard_interval, good_interval, easy_interval;
+    again_interval = this.algorithm.next_interval(
+      next_again.stability,
+      interval
+    );
+    hard_interval = this.algorithm.next_interval(next_hard.stability, interval);
+    good_interval = this.algorithm.next_interval(next_good.stability, interval);
+    easy_interval = this.algorithm.next_interval(next_easy.stability, interval);
+    again_interval = Math.min(again_interval, hard_interval);
+    hard_interval = Math.max(hard_interval, again_interval + 1);
+    good_interval = Math.max(good_interval, hard_interval + 1);
+    easy_interval = Math.max(easy_interval, good_interval + 1);
+    next_again.scheduled_days = again_interval;
+    next_again.due = date_scheduler(this.review_time, again_interval, true);
+    next_hard.scheduled_days = hard_interval;
+    next_hard.due = date_scheduler(this.review_time, hard_interval, true);
+    next_good.scheduled_days = good_interval;
+    next_good.due = date_scheduler(this.review_time, good_interval, true);
+    next_easy.scheduled_days = easy_interval;
+    next_easy.due = date_scheduler(this.review_time, easy_interval, true);
+  }
+  /**
+   * Review/New next_state
+   */
+  next_state(next_again, next_hard, next_good, next_easy) {
+    next_again.state = State.Review;
+    next_again.learning_steps = 0;
+    next_hard.state = State.Review;
+    next_hard.learning_steps = 0;
+    next_good.state = State.Review;
+    next_good.learning_steps = 0;
+    next_easy.state = State.Review;
+    next_easy.learning_steps = 0;
+  }
+  update_next(next_again, next_hard, next_good, next_easy) {
+    const item_again = {
+      card: next_again,
+      log: this.buildLog(Rating.Again)
+    };
+    const item_hard = {
+      card: next_hard,
+      log: super.buildLog(Rating.Hard)
+    };
+    const item_good = {
+      card: next_good,
+      log: super.buildLog(Rating.Good)
+    };
+    const item_easy = {
+      card: next_easy,
+      log: super.buildLog(Rating.Easy)
+    };
+    this.next.set(Rating.Again, item_again);
+    this.next.set(Rating.Hard, item_hard);
+    this.next.set(Rating.Good, item_good);
+    this.next.set(Rating.Easy, item_easy);
+  }
+};
+var Reschedule = class {
+  /**
+   * Creates an instance of the `Reschedule` class.
+   * @param fsrs - An instance of the FSRS class used for scheduling.
+   */
+  constructor(fsrs2) {
+    __publicField(this, "fsrs");
+    this.fsrs = fsrs2;
+  }
+  /**
+   * Replays a review for a card and determines the next review date based on the given rating.
+   * @param card - The card being reviewed.
+   * @param reviewed - The date the card was reviewed.
+   * @param rating - The grade given to the card during the review.
+   * @returns A `RecordLogItem` containing the updated card and review log.
+   */
+  replay(card, reviewed, rating) {
+    return this.fsrs.next(card, reviewed, rating);
+  }
+  /**
+   * Processes a manual review for a card, allowing for custom state, stability, difficulty, and due date.
+   * @param card - The card being reviewed.
+   * @param state - The state of the card after the review.
+   * @param reviewed - The date the card was reviewed.
+   * @param elapsed_days - The number of days since the last review.
+   * @param stability - (Optional) The stability of the card.
+   * @param difficulty - (Optional) The difficulty of the card.
+   * @param due - (Optional) The due date for the next review.
+   * @returns A `RecordLogItem` containing the updated card and review log.
+   * @throws Will throw an error if the state or due date is not provided when required.
+   */
+  handleManualRating(card, state, reviewed, elapsed_days, stability, difficulty, due) {
+    if (typeof state === "undefined") {
+      throw new FSRSValidationError(
+        "reschedule: state is required for manual rating"
+      );
+    }
+    let log;
+    let next_card;
+    if (state === State.New) {
+      log = {
+        rating: Rating.Manual,
+        state,
+        due: due ?? reviewed,
+        stability: card.stability,
+        difficulty: card.difficulty,
+        elapsed_days,
+        last_elapsed_days: card.elapsed_days,
+        scheduled_days: card.scheduled_days,
+        learning_steps: card.learning_steps,
+        review: reviewed
+      };
+      next_card = createEmptyCard(reviewed);
+      next_card.last_review = reviewed;
+    } else {
+      if (typeof due === "undefined") {
+        throw new FSRSValidationError(
+          "reschedule: due is required for manual rating"
+        );
+      }
+      const scheduled_days = date_diff(due, reviewed, "days");
+      log = {
+        rating: Rating.Manual,
+        state: card.state,
+        due: card.last_review || card.due,
+        stability: card.stability,
+        difficulty: card.difficulty,
+        elapsed_days,
+        last_elapsed_days: card.elapsed_days,
+        scheduled_days: card.scheduled_days,
+        learning_steps: card.learning_steps,
+        review: reviewed
+      };
+      next_card = {
+        ...card,
+        state,
+        due,
+        last_review: reviewed,
+        stability: stability || card.stability,
+        difficulty: difficulty || card.difficulty,
+        elapsed_days,
+        scheduled_days,
+        reps: card.reps + 1
+      };
+    }
+    return { card: next_card, log };
+  }
+  /**
+   * Reschedules a card based on its review history.
+   *
+   * @param current_card - The card to be rescheduled.
+   * @param reviews - An array of review history objects.
+   * @returns An array of record log items representing the rescheduling process.
+   */
+  reschedule(current_card, reviews) {
+    const collections = [];
+    let cur_card = createEmptyCard(current_card.due);
+    for (const review of reviews) {
+      let item;
+      review.review = TypeConvert.time(review.review);
+      if (review.rating === Rating.Manual) {
+        let interval = 0;
+        if (cur_card.state !== State.New && cur_card.last_review) {
+          interval = date_diff(review.review, cur_card.last_review, "days");
+        }
+        item = this.handleManualRating(
+          cur_card,
+          review.state,
+          review.review,
+          interval,
+          review.stability,
+          review.difficulty,
+          review.due ? TypeConvert.time(review.due) : void 0
+        );
+      } else {
+        item = this.replay(cur_card, review.review, review.rating);
+      }
+      collections.push(item);
+      cur_card = item.card;
+    }
+    return collections;
+  }
+  calculateManualRecord(current_card, now, record_log_item, update_memory) {
+    if (!record_log_item) {
+      return null;
+    }
+    const { card: reschedule_card, log } = record_log_item;
+    const cur_card = TypeConvert.card(current_card);
+    if (cur_card.due.getTime() === reschedule_card.due.getTime()) {
+      return null;
+    }
+    cur_card.scheduled_days = date_diff(
+      reschedule_card.due,
+      cur_card.due,
+      "days"
+    );
+    return this.handleManualRating(
+      cur_card,
+      reschedule_card.state,
+      TypeConvert.time(now),
+      log.elapsed_days,
+      update_memory ? reschedule_card.stability : void 0,
+      update_memory ? reschedule_card.difficulty : void 0,
+      reschedule_card.due
+    );
+  }
+};
+function applyAfterHandler(value, afterHandler) {
+  return typeof afterHandler === "function" ? afterHandler(value) : value;
+}
+var FSRS = class extends FSRSAlgorithm {
+  constructor(param) {
+    super(param);
+    __publicField(this, "strategyHandler", /* @__PURE__ */ new Map());
+    __publicField(this, "Scheduler");
+    const { enable_short_term } = this.parameters;
+    this.Scheduler = enable_short_term ? BasicScheduler : LongTermScheduler;
+  }
+  params_handler_proxy() {
+    const _this = this;
+    return {
+      set: function(target, prop, value) {
+        if (prop === "request_retention" && Number.isFinite(value)) {
+          _this.intervalModifier = _this.calculate_interval_modifier(
+            Number(value)
+          );
+        } else if (prop === "enable_short_term") {
+          _this.Scheduler = value === true ? BasicScheduler : LongTermScheduler;
+        } else if (prop === "w") {
+          value = migrateParameters(
+            value,
+            target.relearning_steps.length,
+            target.enable_short_term
+          );
+          value = clipParameters(
+            Array.from(value),
+            target.relearning_steps.length,
+            target.enable_short_term
+          );
+          _this.forgetting_curve = forgetting_curve.bind(this, value);
+          _this.intervalModifier = _this.calculate_interval_modifier(
+            Number(target.request_retention)
+          );
+        }
+        Reflect.set(target, prop, value);
+        return true;
+      }
+    };
+  }
+  useStrategy(mode, handler) {
+    this.strategyHandler.set(mode, handler);
+    return this;
+  }
+  clearStrategy(mode) {
+    if (mode) {
+      this.strategyHandler.delete(mode);
+    } else {
+      this.strategyHandler.clear();
+    }
+    return this;
+  }
+  getScheduler(card, now) {
+    const schedulerStrategy = this.strategyHandler.get(
+      StrategyMode.SCHEDULER
+    );
+    const Scheduler = schedulerStrategy || this.Scheduler;
+    const instance = new Scheduler(card, now, this, this.strategyHandler);
+    return instance;
+  }
+  /**
+   * Display the collection of cards and logs for the four scenarios after scheduling the card at the current time.
+   * @param card Card to be processed
+   * @param now Current time or scheduled time
+   * @param afterHandler Convert the result to another type. (Optional)
+   * @example
+   * ```typescript
+   * const card: Card = createEmptyCard(new Date());
+   * const f = fsrs();
+   * const recordLog = f.repeat(card, new Date());
+   * ```
+   * @example
+   * ```typescript
+   * interface RevLogUnchecked
+   *   extends Omit<ReviewLog, "due" | "review" | "state" | "rating"> {
+   *   cid: string;
+   *   due: Date | number;
+   *   state: StateType;
+   *   review: Date | number;
+   *   rating: RatingType;
+   * }
+   *
+   * interface RepeatRecordLog {
+   *   card: CardUnChecked; //see method: createEmptyCard
+   *   log: RevLogUnchecked;
+   * }
+   *
+   * function repeatAfterHandler(recordLog: RecordLog) {
+   *     const record: { [key in Grade]: RepeatRecordLog } = {} as {
+   *       [key in Grade]: RepeatRecordLog;
+   *     };
+   *     for (const grade of Grades) {
+   *       record[grade] = {
+   *         card: {
+   *           ...(recordLog[grade].card as Card & { cid: string }),
+   *           due: recordLog[grade].card.due.getTime(),
+   *           state: State[recordLog[grade].card.state] as StateType,
+   *           last_review: recordLog[grade].card.last_review
+   *             ? recordLog[grade].card.last_review!.getTime()
+   *             : null,
+   *         },
+   *         log: {
+   *           ...recordLog[grade].log,
+   *           cid: (recordLog[grade].card as Card & { cid: string }).cid,
+   *           due: recordLog[grade].log.due.getTime(),
+   *           review: recordLog[grade].log.review.getTime(),
+   *           state: State[recordLog[grade].log.state] as StateType,
+   *           rating: Rating[recordLog[grade].log.rating] as RatingType,
+   *         },
+   *       };
+   *     }
+   *     return record;
+   * }
+   * const card: Card = createEmptyCard(new Date(), cardAfterHandler); //see method:  createEmptyCard
+   * const f = fsrs();
+   * const recordLog = f.repeat(card, new Date(), repeatAfterHandler);
+   * ```
+   */
+  repeat(card, now, afterHandler) {
+    const instance = this.getScheduler(card, now);
+    const recordLog = instance.preview();
+    return applyAfterHandler(recordLog, afterHandler);
+  }
+  /**
+   * Display the collection of cards and logs for the card scheduled at the current time, after applying a specific grade rating.
+   * @param card Card to be processed
+   * @param now Current time or scheduled time
+   * @param grade Rating of the review (Again, Hard, Good, Easy)
+   * @param afterHandler Convert the result to another type. (Optional)
+   * @example
+   * ```typescript
+   * const card: Card = createEmptyCard(new Date());
+   * const f = fsrs();
+   * const recordLogItem = f.next(card, new Date(), Rating.Again);
+   * ```
+   * @example
+   * ```typescript
+   * interface RevLogUnchecked
+   *   extends Omit<ReviewLog, "due" | "review" | "state" | "rating"> {
+   *   cid: string;
+   *   due: Date | number;
+   *   state: StateType;
+   *   review: Date | number;
+   *   rating: RatingType;
+   * }
+   *
+   * interface NextRecordLog {
+   *   card: CardUnChecked; //see method: createEmptyCard
+   *   log: RevLogUnchecked;
+   * }
+   *
+  function nextAfterHandler(recordLogItem: RecordLogItem) {
+    const recordItem = {
+      card: {
+        ...(recordLogItem.card as Card & { cid: string }),
+        due: recordLogItem.card.due.getTime(),
+        state: State[recordLogItem.card.state] as StateType,
+        last_review: recordLogItem.card.last_review
+          ? recordLogItem.card.last_review!.getTime()
+          : null,
+      },
+      log: {
+        ...recordLogItem.log,
+        cid: (recordLogItem.card as Card & { cid: string }).cid,
+        due: recordLogItem.log.due.getTime(),
+        review: recordLogItem.log.review.getTime(),
+        state: State[recordLogItem.log.state] as StateType,
+        rating: Rating[recordLogItem.log.rating] as RatingType,
+      },
+    };
+    return recordItem
+  }
+   * const card: Card = createEmptyCard(new Date(), cardAfterHandler); //see method:  createEmptyCard
+   * const f = fsrs();
+   * const recordLogItem = f.repeat(card, new Date(), Rating.Again, nextAfterHandler);
+   * ```
+   */
+  next(card, now, grade, afterHandler) {
+    const instance = this.getScheduler(card, now);
+    const g = TypeConvert.rating(grade);
+    if (g === Rating.Manual) {
+      throw new FSRSValidationError("Cannot review a manual rating");
+    }
+    const recordLogItem = instance.review(g);
+    return applyAfterHandler(recordLogItem, afterHandler);
+  }
+  /**
+   * Get the retrievability of the card
+   * @param card  Card to be processed
+   * @param now  Current time or scheduled time
+   * @param format  default:true , Convert the result to another type. (Optional)
+   * @returns  The retrievability of the card,if format is true, the result is a string, otherwise it is a number
+   */
+  get_retrievability(card, now, format = true) {
+    const processedCard = TypeConvert.card(card);
+    now = now ? TypeConvert.time(now) : /* @__PURE__ */ new Date();
+    const t3 = processedCard.state !== State.New ? Math.max(date_diff(now, processedCard.last_review, "days"), 0) : 0;
+    const r3 = processedCard.state !== State.New ? this.forgetting_curve(t3, +processedCard.stability.toFixed(8)) : 0;
+    return format ? `${(r3 * 100).toFixed(2)}%` : r3;
+  }
+  /**
+   *
+   * @param card Card to be processed
+   * @param log last review log
+   * @param afterHandler Convert the result to another type. (Optional)
+   * @example
+   * ```typescript
+   * const now = new Date();
+   * const f = fsrs();
+   * const emptyCardFormAfterHandler = createEmptyCard(now);
+   * const repeatFormAfterHandler = f.repeat(emptyCardFormAfterHandler, now);
+   * const { card, log } = repeatFormAfterHandler[Rating.Hard];
+   * const rollbackFromAfterHandler = f.rollback(card, log);
+   * ```
+   *
+   * @example
+   * ```typescript
+   * const now = new Date();
+   * const f = fsrs();
+   * const emptyCardFormAfterHandler = createEmptyCard(now, cardAfterHandler);  //see method: createEmptyCard
+   * const repeatFormAfterHandler = f.repeat(emptyCardFormAfterHandler, now, repeatAfterHandler); //see method: fsrs.repeat()
+   * const { card, log } = repeatFormAfterHandler[Rating.Hard];
+   * const rollbackFromAfterHandler = f.rollback(card, log, cardAfterHandler);
+   * ```
+   */
+  rollback(card, log, afterHandler) {
+    const processedCard = TypeConvert.card(card);
+    const processedLog = TypeConvert.review_log(log);
+    if (processedLog.rating === Rating.Manual) {
+      throw new FSRSValidationError("Cannot rollback a manual rating");
+    }
+    let last_due;
+    let last_review;
+    let last_lapses;
+    switch (processedLog.state) {
+      case State.New:
+        last_due = processedLog.due;
+        last_review = void 0;
+        last_lapses = 0;
+        break;
+      case State.Learning:
+      case State.Relearning:
+      case State.Review:
+        last_due = processedLog.review;
+        last_review = processedLog.due;
+        last_lapses = processedCard.lapses - (processedLog.rating === Rating.Again && processedLog.state === State.Review ? 1 : 0);
+        break;
+    }
+    const prevCard = {
+      ...processedCard,
+      due: last_due,
+      stability: processedLog.stability,
+      difficulty: processedLog.difficulty,
+      elapsed_days: processedLog.last_elapsed_days,
+      scheduled_days: processedLog.scheduled_days,
+      reps: Math.max(0, processedCard.reps - 1),
+      lapses: Math.max(0, last_lapses),
+      learning_steps: processedLog.learning_steps,
+      state: processedLog.state,
+      last_review
+    };
+    return applyAfterHandler(prevCard, afterHandler);
+  }
+  /**
+   *
+   * @param card Card to be processed
+   * @param now Current time or scheduled time
+   * @param reset_count Should the review count information(reps,lapses) be reset. (Optional)
+   * @param afterHandler Convert the result to another type. (Optional)
+   * @example
+   * ```typescript
+   * const now = new Date();
+   * const f = fsrs();
+   * const emptyCard = createEmptyCard(now);
+   * const scheduling_cards = f.repeat(emptyCard, now);
+   * const { card, log } = scheduling_cards[Rating.Hard];
+   * const forgetCard = f.forget(card, new Date(), true);
+   * ```
+   *
+   * @example
+   * ```typescript
+   * interface RepeatRecordLog {
+   *   card: CardUnChecked; //see method: createEmptyCard
+   *   log: RevLogUnchecked; //see method: fsrs.repeat()
+   * }
+   *
+   * function forgetAfterHandler(recordLogItem: RecordLogItem): RepeatRecordLog {
+   *     return {
+   *       card: {
+   *         ...(recordLogItem.card as Card & { cid: string }),
+   *         due: recordLogItem.card.due.getTime(),
+   *         state: State[recordLogItem.card.state] as StateType,
+   *         last_review: recordLogItem.card.last_review
+   *           ? recordLogItem.card.last_review!.getTime()
+   *           : null,
+   *       },
+   *       log: {
+   *         ...recordLogItem.log,
+   *         cid: (recordLogItem.card as Card & { cid: string }).cid,
+   *         due: recordLogItem.log.due.getTime(),
+   *         review: recordLogItem.log.review.getTime(),
+   *         state: State[recordLogItem.log.state] as StateType,
+   *         rating: Rating[recordLogItem.log.rating] as RatingType,
+   *       },
+   *     };
+   * }
+   * const now = new Date();
+   * const f = fsrs();
+   * const emptyCardFormAfterHandler = createEmptyCard(now, cardAfterHandler); //see method:  createEmptyCard
+   * const repeatFormAfterHandler = f.repeat(emptyCardFormAfterHandler, now, repeatAfterHandler); //see method: fsrs.repeat()
+   * const { card } = repeatFormAfterHandler[Rating.Hard];
+   * const forgetFromAfterHandler = f.forget(card, date_scheduler(now, 1, true), false, forgetAfterHandler);
+   * ```
+   */
+  forget(card, now, reset_count = false, afterHandler) {
+    const processedCard = TypeConvert.card(card);
+    now = TypeConvert.time(now);
+    const scheduled_days = processedCard.state === State.New ? 0 : date_diff(now, processedCard.due, "days");
+    const forget_log = {
+      rating: Rating.Manual,
+      state: processedCard.state,
+      due: processedCard.due,
+      stability: processedCard.stability,
+      difficulty: processedCard.difficulty,
+      elapsed_days: 0,
+      last_elapsed_days: processedCard.elapsed_days,
+      scheduled_days,
+      learning_steps: processedCard.learning_steps,
+      review: now
+    };
+    const forget_card = {
+      ...processedCard,
+      due: now,
+      stability: 0,
+      difficulty: 0,
+      elapsed_days: 0,
+      scheduled_days: 0,
+      reps: reset_count ? 0 : processedCard.reps,
+      lapses: reset_count ? 0 : processedCard.lapses,
+      learning_steps: 0,
+      state: State.New,
+      last_review: processedCard.last_review
+    };
+    const recordLogItem = { card: forget_card, log: forget_log };
+    return applyAfterHandler(recordLogItem, afterHandler);
+  }
+  /**
+   * Reschedules the current card and returns the rescheduled collections and reschedule item.
+   *
+   * @template T - The type of the record log item.
+   * @param {CardInput | Card} current_card - The current card to be rescheduled.
+   * @param {Array<FSRSHistory>} reviews - The array of FSRSHistory objects representing the reviews.
+   * @param {Partial<RescheduleOptions<T>>} options - The optional reschedule options.
+   * @returns {IReschedule<T>} - The rescheduled collections and reschedule item.
+   *
+   * @example
+   * ```typescript
+   * const f = fsrs()
+   * const grades: Grade[] = [Rating.Good, Rating.Good, Rating.Good, Rating.Good]
+   * const reviews_at = [
+   *   new Date(2024, 8, 13),
+   *   new Date(2024, 8, 13),
+   *   new Date(2024, 8, 17),
+   *   new Date(2024, 8, 28),
+   * ]
+   *
+   * const reviews: FSRSHistory[] = []
+   * for (let i = 0; i < grades.length; i++) {
+   *   reviews.push({
+   *     rating: grades[i],
+   *     review: reviews_at[i],
+   *   })
+   * }
+   *
+   * const results_short = scheduler.reschedule(
+   *   createEmptyCard(),
+   *   reviews,
+   *   {
+   *     skipManual: false,
+   *   }
+   * )
+   * console.log(results_short)
+   * ```
+   */
+  reschedule(current_card, reviews = [], options = {}) {
+    const {
+      recordLogHandler,
+      reviewsOrderBy,
+      skipManual = true,
+      now = /* @__PURE__ */ new Date(),
+      update_memory_state: updateMemoryState = false
+    } = options;
+    if (reviewsOrderBy && typeof reviewsOrderBy === "function") {
+      reviews.sort(reviewsOrderBy);
+    }
+    if (skipManual) {
+      reviews = reviews.filter((review) => review.rating !== Rating.Manual);
+    }
+    const rescheduleSvc = new Reschedule(this);
+    const collections = rescheduleSvc.reschedule(
+      options.first_card || createEmptyCard(),
+      reviews
+    );
+    const len = collections.length;
+    const cur_card = TypeConvert.card(current_card);
+    const manual_item = rescheduleSvc.calculateManualRecord(
+      cur_card,
+      now,
+      len ? collections[len - 1] : void 0,
+      updateMemoryState
+    );
+    return {
+      collections: typeof recordLogHandler === "function" ? collections.map(recordLogHandler) : collections,
+      reschedule_item: manual_item ? applyAfterHandler(manual_item, recordLogHandler) : null
+    };
+  }
+};
+var fsrs = (params) => {
+  return new FSRS(params || {});
+};
+
+// src/review/core/schedule.ts
+var DEFAULT_REVIEW_PREFS = {
+  newPerDay: 20,
+  reviewPerDay: 200,
+  learningSteps: "1m 10m",
+  relearningSteps: "10m",
+  retention: 0.9,
+  dayStartHour: 4,
+  maxInterval: 36500
+};
+function parseSteps(s) {
+  return s.split(/[\s,，]+/).map((x) => x.trim().toLowerCase()).filter((x) => /^\d+(\.\d+)?[mhd]$/.test(x) && parseFloat(x) > 0);
+}
+function makeScheduler(p) {
+  return fsrs(
+    generatorParameters({
+      request_retention: Math.min(0.99, Math.max(0.7, p.retention)),
+      maximum_interval: Math.max(1, Math.round(p.maxInterval)),
+      enable_fuzz: true,
+      enable_short_term: true,
+      learning_steps: parseSteps(p.learningSteps),
+      relearning_steps: parseSteps(p.relearningSteps)
+    })
+  );
+}
+function toCard(rec, now) {
+  if (!rec) return createEmptyCard(new Date(now));
+  return {
+    due: new Date(rec.due),
+    stability: rec.s,
+    difficulty: rec.d,
+    elapsed_days: rec.ed,
+    scheduled_days: rec.sd,
+    learning_steps: rec.ls,
+    reps: rec.reps,
+    lapses: rec.lapses,
+    state: rec.st,
+    last_review: rec.lr === void 0 ? void 0 : new Date(rec.lr)
+  };
+}
+function fromCard(c, prev) {
+  const out = {
+    due: c.due.getTime(),
+    s: round(c.stability),
+    d: round(c.difficulty),
+    ed: c.elapsed_days,
+    sd: c.scheduled_days,
+    ls: c.learning_steps,
+    reps: c.reps,
+    lapses: c.lapses,
+    st: c.state
+  };
+  if (c.last_review) out.lr = c.last_review.getTime();
+  if (prev?.susp) out.susp = 1;
+  return out;
+}
+var round = (x) => Math.round(x * 1e4) / 1e4;
+var GRADES = [Rating.Again, Rating.Hard, Rating.Good, Rating.Easy];
+function previewAll(f, rec, now) {
+  const preview2 = f.repeat(toCard(rec, now), new Date(now));
+  const out = {};
+  for (const g of GRADES) out[g] = fromCard(preview2[g].card, rec);
+  return out;
+}
+function answer(f, rec, now, grade) {
+  return fromCard(f.next(toCard(rec, now), new Date(now), grade).card, rec);
+}
+function dayNumber(ms, startHour) {
+  const d = new Date(ms - startHour * 36e5);
+  return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5);
+}
+function dayEnd(day, startHour) {
+  const d = new Date(day * 864e5);
+  return new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1, startHour).getTime();
+}
+function formatInterval(ms, units2) {
+  const min = ms / 6e4;
+  if (min < 60) return `<${Math.max(1, Math.ceil(min))}${units2.m}`;
+  const h = min / 60;
+  if (h < 24) return `${Math.round(h)}${units2.h}`;
+  const d = h / 24;
+  if (d < 30) return `${Math.round(d)}${units2.d}`;
+  if (d < 365) return `${trim1(d / 30)}${units2.mo}`;
+  return `${trim1(d / 365)}${units2.y}`;
+}
+var trim1 = (x) => (Math.round(x * 10) / 10).toString();
 
 // src/custom-theme-modal.ts
-var import_obsidian7 = require("obsidian");
+var import_obsidian9 = require("obsidian");
 var SAMPLE = `# \u8BFB\u4E66\u7B14\u8BB0
 
 ## \u7B2C\u4E00\u7AE0
@@ -21271,7 +27703,7 @@ function themeFromBase(base, name, id) {
   if (th.branchColors && !tiers[1].fill) tiers[1].fill = "#e9e9ef";
   return { id, name, base, edge: th.edge, sharp: false, dashed: false, branchColors: th.branchColors, spacing: "normal", tiers };
 }
-var CustomThemeModal = class extends import_obsidian7.Modal {
+var CustomThemeModal = class extends import_obsidian9.Modal {
   constructor(app, plugin, theme, onSave) {
     super(app);
     this.plugin = plugin;
@@ -21340,12 +27772,12 @@ var CustomThemeModal = class extends import_obsidian7.Modal {
     const scroll = el.scrollTop;
     el.empty();
     const d = this.draft;
-    new import_obsidian7.Setting(el).setName(t("customTheme.name")).addText(
+    new import_obsidian9.Setting(el).setName(t("customTheme.name")).addText(
       (x) => x.setValue(d.name).onChange((v) => {
         d.name = v;
       })
     );
-    new import_obsidian7.Setting(el).setName(t("customTheme.base")).setDesc(t("customTheme.baseDesc")).addDropdown(
+    new import_obsidian9.Setting(el).setName(t("customTheme.base")).setDesc(t("customTheme.baseDesc")).addDropdown(
       (x) => x.addOptions(Object.fromEntries(THEME_LIST.map((th) => [th.name, themeShortLabel(th.name)]))).setValue(d.base).onChange((v) => {
         const fresh = themeFromBase(v, d.name, d.id);
         this.draft = fresh;
@@ -21353,31 +27785,31 @@ var CustomThemeModal = class extends import_obsidian7.Modal {
       })
     );
     el.createDiv({ cls: "mm-theme-section", text: t("customTheme.overall") });
-    new import_obsidian7.Setting(el).setName(t("customTheme.edge")).addDropdown(
+    new import_obsidian9.Setting(el).setName(t("customTheme.edge")).addDropdown(
       (x) => x.addOptions({ curve: t("edge.curve"), elbow: t("edge.elbow"), straight: t("edge.straight") }).setValue(d.edge).onChange((v) => {
         d.edge = v;
         this.changed();
       })
     );
-    new import_obsidian7.Setting(el).setName(t("edge.rounded")).addToggle(
+    new import_obsidian9.Setting(el).setName(t("edge.rounded")).addToggle(
       (x) => x.setValue(!d.sharp).onChange((v) => {
         d.sharp = !v;
         this.changed();
       })
     );
-    new import_obsidian7.Setting(el).setName(t("edge.dashed")).addToggle(
+    new import_obsidian9.Setting(el).setName(t("edge.dashed")).addToggle(
       (x) => x.setValue(d.dashed).onChange((v) => {
         d.dashed = v;
         this.changed();
       })
     );
-    new import_obsidian7.Setting(el).setName(t("customTheme.branchColors")).addToggle(
+    new import_obsidian9.Setting(el).setName(t("customTheme.branchColors")).addToggle(
       (x) => x.setValue(d.branchColors).onChange((v) => {
         d.branchColors = v;
         this.changed();
       })
     );
-    new import_obsidian7.Setting(el).setName(t("customTheme.spacing")).addDropdown(
+    new import_obsidian9.Setting(el).setName(t("customTheme.spacing")).addDropdown(
       (x) => x.addOptions({ compact: t("customTheme.spacing.compact"), normal: t("customTheme.spacing.normal"), loose: t("customTheme.spacing.loose") }).setValue(d.spacing).onChange((v) => {
         d.spacing = v;
         this.changed();
@@ -21410,6 +27842,7 @@ var CustomThemeModal = class extends import_obsidian7.Modal {
           num2.max = String(max);
           num2.step = "any";
           num2.addClass("mm-theme-num");
+          num2.parentElement?.addClass("mm-has-num");
           num2.value = String(get());
           const commit = () => {
             const raw = Number(num2.value);
@@ -21440,63 +27873,63 @@ var CustomThemeModal = class extends import_obsidian7.Modal {
         this.changed();
       })
     );
-    slider(new import_obsidian7.Setting(el).setName(t("customTheme.fontSize")), 10, 40, 1, () => tier.fontSize, (v) => tier.fontSize = v);
-    new import_obsidian7.Setting(el).setName(t("customTheme.bold")).addToggle(
+    slider(new import_obsidian9.Setting(el).setName(t("customTheme.fontSize")), 10, 40, 1, () => tier.fontSize, (v) => tier.fontSize = v);
+    new import_obsidian9.Setting(el).setName(t("customTheme.bold")).addToggle(
       (x) => x.setValue(tier.bold).onChange((v) => {
         tier.bold = v;
         this.changed();
       })
     );
-    new import_obsidian7.Setting(el).setName(t("customTheme.italic")).addToggle(
+    new import_obsidian9.Setting(el).setName(t("customTheme.italic")).addToggle(
       (x) => x.setValue(tier.italic).onChange((v) => {
         tier.italic = v;
         this.changed();
       })
     );
-    color(new import_obsidian7.Setting(el).setName(t("customTheme.textColor")), () => tier.color, (v) => tier.color = v);
+    color(new import_obsidian9.Setting(el).setName(t("customTheme.textColor")), () => tier.color, (v) => tier.color = v);
     const shape = tier.underline ? "underline" : tier.fill ? "fill" : "none";
-    new import_obsidian7.Setting(el).setName(t("customTheme.shape")).addDropdown(
+    new import_obsidian9.Setting(el).setName(t("customTheme.shape")).addDropdown(
       (x) => x.addOptions({ fill: t("customTheme.shape.fill"), none: t("customTheme.shape.none"), underline: t("customTheme.shape.underline") }).setValue(shape).onChange((v) => {
         tier.underline = v === "underline";
         tier.fill = v === "fill" ? tier.fill ?? "#f1f1f4" : null;
         this.changed(true);
       })
     );
-    if (shape === "fill") color(new import_obsidian7.Setting(el).setName(t("customTheme.fill")), () => tier.fill ?? "#f1f1f4", (v) => tier.fill = v);
+    if (shape === "fill") color(new import_obsidian9.Setting(el).setName(t("customTheme.fill")), () => tier.fill ?? "#f1f1f4", (v) => tier.fill = v);
     if (shape !== "underline") {
-      slider(new import_obsidian7.Setting(el).setName(t("customTheme.radius")), 0, 30, 1, () => tier.radius, (v) => tier.radius = v);
-      new import_obsidian7.Setting(el).setName(t("customTheme.border")).addDropdown(
+      slider(new import_obsidian9.Setting(el).setName(t("customTheme.radius")), 0, 30, 1, () => tier.radius, (v) => tier.radius = v);
+      new import_obsidian9.Setting(el).setName(t("customTheme.border")).addDropdown(
         (x) => x.addOptions({ none: t("customTheme.border.none"), solid: t("customTheme.border.solid"), dashed: t("customTheme.border.dashed") }).setValue(tier.borderStyle).onChange((v) => {
           tier.borderStyle = v;
           this.changed(true);
         })
       );
       if (tier.borderStyle !== "none") {
-        slider(new import_obsidian7.Setting(el).setName(t("customTheme.borderWidth")), 0.5, 4, 0.5, () => tier.borderWidth, (v) => tier.borderWidth = v);
-        color(new import_obsidian7.Setting(el).setName(t("customTheme.borderColor")), () => tier.borderColor, (v) => tier.borderColor = v);
+        slider(new import_obsidian9.Setting(el).setName(t("customTheme.borderWidth")), 0.5, 4, 0.5, () => tier.borderWidth, (v) => tier.borderWidth = v);
+        color(new import_obsidian9.Setting(el).setName(t("customTheme.borderColor")), () => tier.borderColor, (v) => tier.borderColor = v);
       }
     }
-    new import_obsidian7.Setting(el).setName(t("customTheme.width")).setDesc(t("customTheme.widthDesc")).addDropdown(
+    new import_obsidian9.Setting(el).setName(t("customTheme.width")).setDesc(t("customTheme.widthDesc")).addDropdown(
       (x) => x.addOptions({ auto: t("customTheme.width.auto"), custom: t("customTheme.width.custom") }).setValue(tier.maxWidth ? "custom" : "auto").onChange((v) => {
         tier.maxWidth = v === "custom" ? tier.maxWidth ?? (this.tier === 0 ? 440 : 300) : null;
         this.changed(true);
       })
     );
-    if (tier.maxWidth) slider(new import_obsidian7.Setting(el).setName(t("customTheme.widthPx")), 60, 1200, 10, () => tier.maxWidth ?? 300, (v) => tier.maxWidth = v);
-    new import_obsidian7.Setting(el).setName(t("customTheme.align")).setDesc(t("customTheme.alignDesc")).addToggle(
+    if (tier.maxWidth) slider(new import_obsidian9.Setting(el).setName(t("customTheme.widthPx")), 60, 1200, 10, () => tier.maxWidth ?? 300, (v) => tier.maxWidth = v);
+    new import_obsidian9.Setting(el).setName(t("customTheme.align")).setDesc(t("customTheme.alignDesc")).addToggle(
       (x) => x.setValue(tier.align).onChange((v) => {
         tier.align = v;
         this.changed();
       })
     );
     if (this.tier > 0) {
-      color(new import_obsidian7.Setting(el).setName(t("customTheme.lineColor")), () => tier.lineColor, (v) => tier.lineColor = v);
-      slider(new import_obsidian7.Setting(el).setName(t("customTheme.lineWidth")), 0.5, 6, 0.5, () => tier.lineWidth, (v) => tier.lineWidth = v);
+      color(new import_obsidian9.Setting(el).setName(t("customTheme.lineColor")), () => tier.lineColor, (v) => tier.lineColor = v);
+      slider(new import_obsidian9.Setting(el).setName(t("customTheme.lineWidth")), 0.5, 6, 0.5, () => tier.lineWidth, (v) => tier.lineWidth = v);
     }
     el.scrollTop = scroll;
   }
 };
-var ConfirmModal = class extends import_obsidian7.Modal {
+var ConfirmModal = class extends import_obsidian9.Modal {
   constructor(app, message, onYes) {
     super(app);
     this.message = message;
@@ -21551,6 +27984,7 @@ var DEFAULT_SETTINGS = {
   outlineWrap: false,
   toolbarPosition: "bottom",
   showNodebar: true,
+  zenHideObsidian: true,
   nodebarLayout: [],
   toolbarLayout: [],
   nodeColors: DEFAULT_NODE_COLORS,
@@ -21574,6 +28008,10 @@ var DEFAULT_SETTINGS = {
   splitMapSide: "right",
   followExpand: false,
   foldFollow: false,
+  review: { ...DEFAULT_REVIEW_PREFS },
+  reviewDueDots: true,
+  reviewTimer: false,
+  reviewCrumb: true,
   customMarkers: "",
   customMarkersExclusive: false,
   rememberView: true,
@@ -21582,6 +28020,7 @@ var DEFAULT_SETTINGS = {
   embedWheel: "click",
   embedToolbarLayout: [],
   fileNameAsRoot: false,
+  renameWithRoot: true,
   headingsOnly: false,
   quoteListNotes: false,
   followActiveNote: false,
@@ -21592,6 +28031,7 @@ var DEFAULT_SETTINGS = {
   taskProgress: "off",
   taskProgressPos: "end",
   notePreview: false,
+  noteLiveEdit: true,
   formatBar: false,
   copyPlain: false,
   pasteLinkTitle: false,
@@ -21623,10 +28063,10 @@ function indentString(s) {
   return s === "tab" ? "	" : " ".repeat(Number(s));
 }
 function declarative() {
-  return "getControlValue" in import_obsidian8.PluginSettingTab.prototype;
+  return "getControlValue" in import_obsidian10.PluginSettingTab.prototype;
 }
 var NUMBER_DROPDOWNS = /* @__PURE__ */ new Set(["maxHeadingLevel"]);
-var MindMapSettingTab = class extends import_obsidian8.PluginSettingTab {
+var MindMapSettingTab = class extends import_obsidian10.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
     this.plugin = plugin;
@@ -21695,6 +28135,11 @@ var MindMapSettingTab = class extends import_obsidian8.PluginSettingTab {
       case "colorsInNotes":
       case "markersInNotes":
         return p.applyNoteTags();
+      case "reviewDueDots":
+      case "reviewTimer":
+      case "reviewCrumb":
+        p.review?.changed();
+        return;
       case "foldFollow":
         if (value) p.syncFolds();
         return;
@@ -21716,7 +28161,7 @@ var MindMapSettingTab = class extends import_obsidian8.PluginSettingTab {
       aliases,
       control: { type: "text", key, placeholder: placeholder2 }
     });
-    const group = (heading, items) => ({ type: "group", heading, items });
+    const group2 = (heading, items) => ({ type: "group", heading, items });
     const page = (name, desc, items, displayValue) => ({
       type: "page",
       name,
@@ -21796,7 +28241,7 @@ var MindMapSettingTab = class extends import_obsidian8.PluginSettingTab {
         toggle("pasteLinkTitle", t("settings.pasteLinkTitle.name"), t("settings.pasteLinkTitle.desc"), ["link", "url", "\u94FE\u63A5", "\u7F51\u5740"]),
         toggle("cleanAttachments", t("settings.cleanAttachments.name"), t("settings.cleanAttachments.desc"), ["image", "attachment", "delete", "\u56FE\u7247", "\u9644\u4EF6", "\u5220\u9664", "\u56DE\u6536\u7AD9"]),
         { name: t("settings.hover.name"), desc: t("settings.hover.desc", { source: t("hover.display") }), aliases: ["page preview", "\u9875\u9762\u9884\u89C8"] },
-        group(t("settings.group.markers"), [
+        group2(t("settings.group.markers"), [
           text("customMarkers", t("settings.customMarkers.name"), t("settings.customMarkers.desc"), "\u{1F3AF} \u{1F4CE} \u2605 \u25C6", ["emoji", "icon", "\u56FE\u6807"]),
           toggle("customMarkersExclusive", t("settings.customMarkersExclusive.name"), t("settings.customMarkersExclusive.desc"))
         ])
@@ -21807,6 +28252,7 @@ var MindMapSettingTab = class extends import_obsidian8.PluginSettingTab {
         [
           dropdown("toolbarPosition", t("settings.toolbar.name"), t("settings.toolbar.desc"), Object.fromEntries(TOOLBAR_POSITIONS.map((x) => [x.id, x.label]))),
           toggle("showNodebar", t("settings.showNodebar.name"), t("settings.showNodebar.desc")),
+          toggle("zenHideObsidian", t("settings.zenHideObsidian.name"), t("settings.zenHideObsidian.desc")),
           this.barLayoutPage("nodebarLayout"),
           this.barLayoutPage("toolbarLayout"),
           this.barLayoutPage("embedToolbarLayout"),
@@ -21830,16 +28276,17 @@ var MindMapSettingTab = class extends import_obsidian8.PluginSettingTab {
         this.sliderWithReset("noteFontSize", t("settings.noteFontSize.name"), t("settings.noteFontSize.desc"), 11, 22, 1, DEFAULT_SETTINGS.noteFontSize, t("settings.resetNoteFontSize"), () => this.plugin.applyDisplayScale()),
         this.sizeSetting("noteMaxHeight", t("settings.noteMaxHeight.name"), t("settings.noteMaxHeight.desc"), 120, 800, t("settings.resetNoteHeight")),
         this.sizeSetting("noteMaxWidth", t("settings.noteMaxWidth.name"), t("settings.noteMaxWidth.desc"), 160, 960, t("settings.resetNoteWidth")),
-        this.sizeSetting("tableMaxWidth", t("settings.tableMaxWidth.name"), t("settings.tableMaxWidth.desc"), 320, 1600, t("settings.resetTableWidth")),
-        this.sizeSetting("tableMaxHeight", t("settings.tableMaxHeight.name"), t("settings.tableMaxHeight.desc"), 160, 1200, t("settings.resetTableHeight")),
+        this.sizeSetting("tableMaxWidth", t("settings.tableMaxWidth.name"), t("settings.tableMaxWidth.desc"), 320, 4e3, t("settings.resetTableWidth")),
+        this.sizeSetting("tableMaxHeight", t("settings.tableMaxHeight.name"), t("settings.tableMaxHeight.desc"), 160, 3e3, t("settings.resetTableHeight")),
+        toggle("noteLiveEdit", t("settings.noteLiveEdit.name"), t("settings.noteLiveEdit.desc"), ["\u6240\u89C1\u5373\u6240\u5F97", "WYSIWYG", "\u5B9E\u65F6\u9884\u89C8", "live preview", "\u7F16\u8F91\u5668"]),
         toggle("notePreview", t("settings.notePreview.name"), t("settings.notePreview.desc"))
       ]),
       page(t("settings.group.markdown"), t("settings.page.markdown"), [
-        group(t("settings.group.parse"), [
+        group2(t("settings.group.parse"), [
           toggle("headingsOnly", t("settings.headingsOnly.name"), t("settings.headingsOnly.desc")),
           dropdown("maxHeadingLevel", t("settings.headingLevel.name"), t("settings.headingLevel.desc"), { "2": t("settings.headingLevel.h2"), "3": "H3", "4": "H4", "5": "H5", "6": "H6" })
         ]),
-        group(t("settings.group.sync"), [
+        group2(t("settings.group.sync"), [
           toggle("syncSplit", t("settings.syncSplit.name"), t("settings.syncSplit.desc"), ["split", "\u5206\u5C4F", "\u8054\u52A8"]),
           dropdown("splitMapSide", t("settings.splitMapSide.name"), t("settings.splitMapSide.desc"), { right: t("settings.splitMapSide.right"), left: t("settings.splitMapSide.left") }, ["split", "\u5206\u5C4F", "\u5BF9\u7167", "\u5DE6\u8FB9", "\u53F3\u8FB9", "left", "right"]),
           toggle("followExpand", t("settings.followExpand.name"), t("settings.followExpand.desc")),
@@ -21847,10 +28294,10 @@ var MindMapSettingTab = class extends import_obsidian8.PluginSettingTab {
           toggle("followActiveNote", t("settings.followActive.name"), t("settings.followActive.desc"), ["sidebar", "\u4FA7\u8FB9\u680F"]),
           toggle("outlineWrap", t("settings.outlineWrap.name"), t("settings.outlineWrap.desc"), ["outline", "\u5927\u7EB2"])
         ]),
-        group(t("settings.group.noteDisplay"), [
+        group2(t("settings.group.noteDisplay"), [
           toggle("hideTagsInNotes", t("settings.hideTagsInNotes.name"), t("settings.hideTagsInNotes.desc"), ["html", "span", "mark", "\u6807\u7B7E", "\u4E0B\u5212\u7EBF", "underline", "\u989C\u8272"]),
           toggle("colorsInNotes", t("settings.colorsInNotes.name"), t("settings.colorsInNotes.desc"), ["color", "\u989C\u8272", "\u80CC\u666F", "\u5E95\u8272", "\u8282\u70B9\u989C\u8272"]),
-          ...import_obsidian8.Platform.isMobile ? [] : [toggle("formatBarInNotes", t("settings.formatBarInNotes.name"), t("settings.formatBarInNotes.desc"), ["format", "toolbar", "\u683C\u5F0F\u680F", "\u5DE5\u5177\u680F", "\u989C\u8272", "\u8367\u5149\u7B14", "\u52A0\u7C97"])],
+          ...import_obsidian10.Platform.isMobile ? [] : [toggle("formatBarInNotes", t("settings.formatBarInNotes.name"), t("settings.formatBarInNotes.desc"), ["format", "toolbar", "\u683C\u5F0F\u680F", "\u5DE5\u5177\u680F", "\u989C\u8272", "\u8367\u5149\u7B14", "\u52A0\u7C97"])],
           dropdown(
             "markersInNotes",
             t("settings.markersInNotes.name"),
@@ -21859,7 +28306,7 @@ var MindMapSettingTab = class extends import_obsidian8.PluginSettingTab {
             ["%%", "marker", "comment", "\u6807\u8BB0", "\u6CE8\u91CA", "\u9690\u85CF"]
           )
         ]),
-        group(t("settings.group.embed"), [
+        group2(t("settings.group.embed"), [
           toggle("claimMindmapBlock", t("settings.claimBlock.name"), t("settings.claimBlock.desc"), ["code block", "\u4EE3\u7801\u5757"]),
           {
             name: t("settings.codeBlockHeight.name"),
@@ -21876,8 +28323,10 @@ var MindMapSettingTab = class extends import_obsidian8.PluginSettingTab {
           "4": t("settings.indent.spaces", { n: 4 })
         }),
         toggle("fileNameAsRoot", t("settings.fileNameAsRoot.name"), t("settings.fileNameAsRoot.desc")),
+        toggle("renameWithRoot", t("settings.renameWithRoot.name"), t("settings.renameWithRoot.desc")),
         this.listIconSetting()
       ]),
+      this.reviewPage(),
       this.customThemesPage(),
       {
         name: t("settings.support.name"),
@@ -21887,6 +28336,76 @@ var MindMapSettingTab = class extends import_obsidian8.PluginSettingTab {
         }
       }
     ];
+  }
+  /** 间隔复习：数字、阶段这些存在 settings.review 里，自己画输入框 */
+  reviewPage() {
+    const prefs = () => this.plugin.settings.review;
+    const save = async () => {
+      await this.plugin.saveSettings();
+      this.plugin.review?.changed();
+    };
+    const num2 = (key, name, desc, min, max) => ({
+      name,
+      desc,
+      aliases: ["anki", "\u590D\u4E60", "review", "flashcard", "\u5361\u7247"],
+      render: (setting) => {
+        setting.addText((tx) => {
+          tx.inputEl.type = "number";
+          tx.inputEl.min = String(min);
+          tx.inputEl.max = String(max);
+          tx.inputEl.addClass("mm-settings-number");
+          tx.setValue(String(prefs()[key])).onChange(async (v) => {
+            const n = Math.round(Number(v));
+            if (!Number.isFinite(n) || n < min || n > max) return;
+            prefs()[key] = n;
+            await save();
+          });
+        });
+      }
+    });
+    const steps = (key, name, desc) => ({
+      name,
+      desc,
+      aliases: ["anki", "\u590D\u4E60", "review", "step", "\u9636\u6BB5"],
+      render: (setting) => {
+        setting.addText(
+          (tx) => tx.setPlaceholder(DEFAULT_REVIEW_PREFS[key]).setValue(prefs()[key]).onChange(async (v) => {
+            prefs()[key] = v.trim() || DEFAULT_REVIEW_PREFS[key];
+            await save();
+          })
+        );
+      }
+    });
+    const toggle = (key, name, desc) => ({ name, desc, control: { type: "toggle", key } });
+    return {
+      type: "page",
+      name: t("settings.review.heading"),
+      desc: t("settings.review.intro"),
+      items: [
+        num2("newPerDay", t("settings.review.newPerDay.name"), t("settings.review.newPerDay.desc"), 0, 9999),
+        num2("reviewPerDay", t("settings.review.reviewPerDay.name"), t("settings.review.reviewPerDay.desc"), 0, 99999),
+        steps("learningSteps", t("settings.review.learningSteps.name"), t("settings.review.learningSteps.desc")),
+        steps("relearningSteps", t("settings.review.relearningSteps.name"), t("settings.review.relearningSteps.desc")),
+        {
+          name: t("settings.review.retention.name"),
+          desc: t("settings.review.retention.desc"),
+          aliases: ["anki", "fsrs", "retention", "\u8BB0\u5FC6\u7387"],
+          render: (setting) => {
+            setting.addSlider(
+              (sl) => sl.setLimits(0.7, 0.99, 0.01).setValue(prefs().retention).onChange(async (v) => {
+                prefs().retention = Math.round(v * 100) / 100;
+                await save();
+              })
+            );
+          }
+        },
+        num2("dayStartHour", t("settings.review.dayStart.name"), t("settings.review.dayStart.desc"), 0, 23),
+        toggle("reviewDueDots", t("settings.review.dueDots.name"), t("settings.review.dueDots.desc")),
+        toggle("reviewCrumb", t("settings.review.crumb.name"), t("settings.review.crumb.desc")),
+        toggle("reviewTimer", t("settings.review.timer.name"), t("settings.review.timer.desc"))
+      ],
+      displayValue: () => t("settings.review.perDay", { n: this.plugin.settings.review.newPerDay })
+    };
   }
   /** 节点间距、字号：滑块加一个恢复 100% 的按钮（声明式的滑块没有按钮，自己画） */
   scaleSetting(key, name, desc, min, max) {
@@ -21936,7 +28455,7 @@ var MindMapSettingTab = class extends import_obsidian8.PluginSettingTab {
               paintColor(sw, c, kind);
               chip.createSpan({ cls: "mm-color-chip-name", text: label(c) });
               const x = chip.createSpan({ cls: "mm-color-chip-x" });
-              (0, import_obsidian8.setIcon)(x, "x");
+              (0, import_obsidian10.setIcon)(x, "x");
               x.addEventListener("click", (ev) => {
                 ev.stopPropagation();
                 const next = read();
@@ -21965,7 +28484,7 @@ var MindMapSettingTab = class extends import_obsidian8.PluginSettingTab {
               });
             });
             const add = row.createEl("button", { cls: "mm-color-list-add" });
-            (0, import_obsidian8.setIcon)(add, "plus");
+            (0, import_obsidian10.setIcon)(add, "plus");
             add.setAttr("aria-label", t("settings.colorAdd"));
             add.addEventListener(
               "click",
@@ -22025,7 +28544,7 @@ var MindMapSettingTab = class extends import_obsidian8.PluginSettingTab {
    */
   barLayoutPage(key) {
     const plugin = this.plugin;
-    const defaults = key === "nodebarLayout" ? nodebarDefault(import_obsidian8.Platform.isMobile) : key === "toolbarLayout" ? TOOLBAR_DEFAULT : EMBED_TOOLBAR_DEFAULT;
+    const defaults = key === "nodebarLayout" ? nodebarDefault(import_obsidian10.Platform.isMobile) : key === "toolbarLayout" ? TOOLBAR_DEFAULT : EMBED_TOOLBAR_DEFAULT;
     const embed = key === "embedToolbarLayout";
     const items = () => mergeLayout(plugin.settings[key], defaults);
     const save = async (next) => {
@@ -22054,7 +28573,7 @@ var MindMapSettingTab = class extends import_obsidian8.PluginSettingTab {
         setting.settingEl.dataset.mmBar = key;
         setting.settingEl.dataset.mmId = item.id;
         const grip = setting.settingEl.createDiv({ cls: "mm-setting-bar-grip" });
-        (0, import_obsidian8.setIcon)(grip, "grip-vertical");
+        (0, import_obsidian10.setIcon)(grip, "grip-vertical");
         setting.settingEl.prepend(grip);
         window.requestAnimationFrame(() => {
           const sib = setting.settingEl.parentElement?.querySelectorAll(`:scope > .mm-setting-bar-row[data-mm-bar="${key}"]`).length ?? 0;
@@ -22175,7 +28694,7 @@ var MindMapSettingTab = class extends import_obsidian8.PluginSettingTab {
           if (isEmojiValue(v)) preview2.setText(displayEmoji(v));
           else {
             const id = iconIdOf(v);
-            if (id) (0, import_obsidian8.setIcon)(preview2, id);
+            if (id) (0, import_obsidian10.setIcon)(preview2, id);
           }
           label.setText(v);
         };
@@ -22263,12 +28782,12 @@ function renderFallback(el, items, tab) {
     const item = raw;
     if ("type" in item && (item.type === "group" || item.type === "list" || item.type === "page")) {
       const heading = item.type === "page" ? item.name : item.heading;
-      if (heading) new import_obsidian8.Setting(el).setName(heading).setHeading();
+      if (heading) new import_obsidian10.Setting(el).setName(heading).setHeading();
       renderFallback(el, item.items ?? [], tab);
       continue;
     }
     const def = item;
-    const setting = new import_obsidian8.Setting(el).setName(def.name);
+    const setting = new import_obsidian10.Setting(el).setName(def.name);
     if (def.desc) setting.setDesc(def.desc);
     if (def.render) {
       def.render(setting, void 0);
@@ -22302,7 +28821,7 @@ function renderFallback(el, items, tab) {
     }
   }
 }
-var NoteSuggest = class extends import_obsidian8.AbstractInputSuggest {
+var NoteSuggest = class extends import_obsidian10.AbstractInputSuggest {
   constructor(app, input) {
     super(app, input);
     this.input = input;
@@ -22389,7 +28908,7 @@ function dragRow(ev, row, key, total, done) {
 }
 
 // src/view.ts
-var import_obsidian9 = require("obsidian");
+var import_obsidian12 = require("obsidian");
 
 // src/export.ts
 var INLINE_PROPS = [
@@ -22528,11 +29047,11 @@ function inlineStyles(orig, clone) {
 async function buildSvg(canvas, opts = {}) {
   const bounds = canvas.getBounds();
   if (!bounds) throw new Error(t("export.nothing"));
-  const pad = opts.padding ?? 32;
-  const width2 = Math.ceil(bounds.w + pad * 2);
-  const height = Math.ceil(bounds.h + pad * 2);
-  const ox = -bounds.x + pad;
-  const oy = -bounds.y + pad;
+  const pad2 = opts.padding ?? 32;
+  const width2 = Math.ceil(bounds.w + pad2 * 2);
+  const height = Math.ceil(bounds.h + pad2 * 2);
+  const ox = -bounds.x + pad2;
+  const oy = -bounds.y + pad2;
   const { nodes, edges } = canvas.layers;
   const boxes = [...edges.querySelectorAll("rect.mm-box")].filter((r3) => r3.style.display !== "none").map((r3) => {
     const cs = getComputedStyle(r3);
@@ -22594,6 +29113,11 @@ async function buildSvg(canvas, opts = {}) {
     const h = label.getBoundingClientRect().height / (scale || 1);
     const zoom = canvas.k || 1;
     if (h / zoom <= lh * 1.5) cloneLabels[i].setCssStyles({ whiteSpace: "pre" });
+  });
+  clone.querySelectorAll(".mm-map-preview").forEach((p) => {
+    const card = createDiv({ text: `\u{1F5FA} ${(p.dataset.link ?? "").split(/[#|]/)[0].split("/").pop()?.replace(/\.md$/i, "") ?? ""}` });
+    card.setCssStyles({ display: "flex", alignItems: "center", justifyContent: "center", width: p.style.getPropertyValue("--mm-map-w") || "320px", height: p.style.getPropertyValue("--mm-map-h") || "200px", boxSizing: "border-box", border: "1px solid #d0d0d0", borderRadius: "8px", fontSize: "13px", color: "#666" });
+    p.replaceWith(card);
   });
   clone.querySelectorAll(".mm-toggle:not(.is-folded), .mm-img-handle, .mm-width-handle, .mm-range-handle, .mm-summary-handle, .mm-callout-icon, .mm-callout.is-peek, .mm-note-card-fold, .mm-note-card-resize, .mm-quiz-tag, .mm-pdf-jump, .ggt-corner, .ggt-add, .ggt-handle, .ggt-resize, .ggt-fill, .ggt-fill-preview, .ggt-range-box, .ggt-cross-band, .ggt-input, .ggt-suggest").forEach((t3) => t3.remove());
   clone.querySelectorAll(".is-selected, .is-drop-target, .mm-rel-label.is-active").forEach((n) => {
@@ -22660,6 +29184,493 @@ async function svgToPdf(exp) {
     win.destroy();
     void fs.promises.rm(dir, { recursive: true, force: true });
   }
+}
+
+// src/review/service.ts
+var import_obsidian11 = require("obsidian");
+
+// src/review/core/store.ts
+var MAX_LOG = 1e5;
+function emptyDeck(path) {
+  return { v: 1, path, cards: {}, log: [] };
+}
+function parseDeck(text, path) {
+  if (!text) return emptyDeck(path);
+  try {
+    const raw = JSON.parse(text);
+    return {
+      v: 1,
+      path: typeof raw.path === "string" ? raw.path : path,
+      cards: raw.cards && typeof raw.cards === "object" ? raw.cards : {},
+      log: Array.isArray(raw.log) ? raw.log.filter((e) => e && typeof e.c === "string" && typeof e.t === "number") : []
+    };
+  } catch {
+    return emptyDeck(path);
+  }
+}
+var ReviewStore = class {
+  constructor(io) {
+    this.io = io;
+    this.decks = /* @__PURE__ */ new Map();
+    this.loading = /* @__PURE__ */ new Map();
+    this.writing = /* @__PURE__ */ new Map();
+  }
+  async deck(id, path) {
+    const have = this.decks.get(id);
+    if (have) return have;
+    let p = this.loading.get(id);
+    if (!p) {
+      p = this.io.read(`${id}.json`).then((text) => {
+        const d = parseDeck(text, path);
+        this.decks.set(id, d);
+        this.loading.delete(id);
+        return d;
+      });
+      this.loading.set(id, p);
+    }
+    return p;
+  }
+  /** 已经读进来的（同步拿，算状态栏数字用；没读过的返回 null） */
+  cached(id) {
+    return this.decks.get(id) ?? null;
+  }
+  /** 写回：同一个牌组排队写，后一次带的是最新内容 */
+  save(id) {
+    const d = this.decks.get(id);
+    if (!d) return Promise.resolve();
+    if (d.log.length > MAX_LOG) d.log.splice(0, d.log.length - MAX_LOG);
+    const prev = this.writing.get(id) ?? Promise.resolve();
+    const next = prev.then(() => this.io.write(`${id}.json`, JSON.stringify(d)));
+    this.writing.set(id, next.catch(() => void 0));
+    return next;
+  }
+  /** 所有复习数据文件：牌组 id → 记下的笔记路径（移出复习再加回来时按路径找回原来的牌组） */
+  async index() {
+    const out = /* @__PURE__ */ new Map();
+    for (const name of await this.io.list()) {
+      if (!name.endsWith(".json")) continue;
+      const id = name.slice(0, -5);
+      const d = this.decks.get(id) ?? parseDeck(await this.io.read(name), "");
+      if (d.path) out.set(id, d.path);
+    }
+    return out;
+  }
+  /** 文件被别处改了（同步进来）：扔掉缓存，下次重读 */
+  forget(id) {
+    this.decks.delete(id);
+  }
+};
+function todayCounts(d, now, startHour) {
+  const today = dayNumber(now, startHour);
+  const fresh = /* @__PURE__ */ new Set();
+  const reviewed = /* @__PURE__ */ new Set();
+  for (let i = d.log.length - 1; i >= 0; i--) {
+    const e = d.log[i];
+    if (dayNumber(e.t, startHour) !== today) {
+      if (e.t < now) break;
+      continue;
+    }
+    if (e.st === State.New) fresh.add(e.c);
+    else if (e.st === State.Review) reviewed.add(e.c);
+  }
+  return { newDone: fresh.size, reviewDone: reviewed.size };
+}
+
+// src/review/core/session.ts
+var LEARN_AHEAD = 20 * 6e4;
+function classify(rec, now, prefs) {
+  const today = dayNumber(now, prefs.dayStartHour);
+  if (rec?.susp) return null;
+  if (rec?.bury !== void 0 && rec.bury >= today) return null;
+  if (!rec || rec.st === State.New) return { kind: "new", due: 0 };
+  const end = dayEnd(today, prefs.dayStartHour);
+  if (rec.st === State.Learning || rec.st === State.Relearning) return rec.due < end ? { kind: "learn", due: rec.due } : null;
+  return rec.due < end ? { kind: "review", due: rec.due } : null;
+}
+function plan(decks, now, prefs, capTotal = decks.length > 1) {
+  const learn = [];
+  let review = [];
+  let fresh = [];
+  let newDoneAll = 0;
+  let reviewDoneAll = 0;
+  for (const d of decks) {
+    const done = todayCounts(d.data, now, prefs.dayStartHour);
+    newDoneAll += done.newDone;
+    reviewDoneAll += done.reviewDone;
+    const rv = [];
+    const nw = [];
+    for (const ref of d.cards) {
+      const c = classify(d.data.cards[ref.id], now, prefs);
+      if (!c) continue;
+      const item = { ref, kind: c.kind, due: c.due };
+      if (c.kind === "learn") learn.push(item);
+      else if (c.kind === "review") rv.push(item);
+      else nw.push(item);
+    }
+    rv.sort((a, b) => a.due - b.due || a.ref.order - b.ref.order);
+    nw.sort((a, b) => a.ref.order - b.ref.order);
+    review.push(...rv.slice(0, Math.max(0, prefs.reviewPerDay - done.reviewDone)));
+    fresh.push(...nw.slice(0, Math.max(0, prefs.newPerDay - done.newDone)));
+  }
+  if (capTotal) {
+    review = review.sort((a, b) => a.due - b.due).slice(0, Math.max(0, prefs.reviewPerDay - reviewDoneAll));
+    fresh = fresh.slice(0, Math.max(0, prefs.newPerDay - newDoneAll));
+  }
+  learn.sort((a, b) => a.due - b.due);
+  return { learn, review, fresh };
+}
+function countsOf(decks, now, prefs, capTotal = decks.length > 1) {
+  const p = plan(decks, now, prefs, capTotal);
+  return { new: p.fresh.length, learn: p.learn.length, review: p.review.length };
+}
+var Session = class {
+  constructor(decks, prefs, f, now, capTotal = decks.length > 1) {
+    this.prefs = prefs;
+    this.f = f;
+    this.shownNew = 0;
+    this.shownReview = 0;
+    this.undoStack = [];
+    /** 正在出的那张 */
+    this.current = null;
+    /** 这次复习了几张、用了多久（学完的画面用） */
+    this.done = 0;
+    this.spent = 0;
+    this.decks = new Map(decks.map((d) => [d.deckId, d.data]));
+    const p = plan(decks, now, prefs, capTotal);
+    this.learn = p.learn;
+    this.review = p.review;
+    this.fresh = p.fresh;
+    this.totalNew = p.fresh.length;
+    this.totalReview = p.review.length;
+  }
+  counts() {
+    const c = { new: this.fresh.length, learn: this.learn.length, review: this.review.length };
+    if (this.current) c[this.current.kind === "new" ? "new" : this.current.kind === "learn" ? "learn" : "review"] += 1;
+    return c;
+  }
+  /** 现在这张属于哪一类（底栏那个数加下划线） */
+  currentKind() {
+    return this.current?.kind ?? null;
+  }
+  record(ref) {
+    return this.decks.get(ref.deckId)?.cards[ref.id];
+  }
+  /** 下一张；没有了返回 null。nextLearn：只剩学习中但还没到点时，最近那张什么时候到 */
+  next(now) {
+    if (this.current) return this.current.ref;
+    let item;
+    if (this.learn.length && this.learn[0].due <= now) item = this.learn.shift();
+    else if (this.review.length || this.fresh.length) {
+      const takeNew = !this.review.length || this.fresh.length > 0 && this.shownNew * this.totalReview <= this.shownReview * this.totalNew;
+      if (takeNew) {
+        item = this.fresh.shift();
+        this.shownNew++;
+      } else {
+        item = this.review.shift();
+        this.shownReview++;
+      }
+    } else if (this.learn.length && this.learn[0].due <= now + LEARN_AHEAD) item = this.learn.shift();
+    this.current = item ?? null;
+    return this.current?.ref ?? null;
+  }
+  /** 只剩学习中的卡、都还没到点时：最近一张到点的时刻；没有返回 null */
+  nextLearnAt() {
+    return this.learn.length ? this.learn[0].due : null;
+  }
+  /** 翻面后四个按钮各自的下次到期 */
+  preview(now) {
+    if (!this.current) return null;
+    return previewAll(this.f, this.record(this.current.ref), now);
+  }
+  /** 评分：改排期、记一条记录；还在学习阶段、今天之内到点的放回学习队列。返回改了哪个牌组 */
+  grade(g, now, ms) {
+    const item = this.current;
+    if (!item) return null;
+    const deck = this.decks.get(item.ref.deckId);
+    if (!deck) return null;
+    const prev = deck.cards[item.ref.id];
+    this.pushUndo(item, prev, deck.log.length);
+    const next = answer(this.f, prev, now, g);
+    deck.cards[item.ref.id] = next;
+    const entry = { c: item.ref.id, t: now, r: g, st: prev?.st ?? State.New };
+    if (ms !== void 0) entry.ms = Math.round(ms);
+    deck.log.push(entry);
+    if ((next.st === State.Learning || next.st === State.Relearning) && next.due < dayEnd(dayNumber(now, this.prefs.dayStartHour), this.prefs.dayStartHour)) {
+      const it = { ref: item.ref, kind: "learn", due: next.due };
+      const at = this.learn.findIndex((x) => x.due > it.due);
+      if (at < 0) this.learn.push(it);
+      else this.learn.splice(at, 0, it);
+    }
+    this.current = null;
+    this.done++;
+    if (ms !== void 0) this.spent += ms;
+    return item.ref.deckId;
+  }
+  /** 今天先不出（bury）/ 暂停（suspend）：这张拿掉，不算复习 */
+  setAside(how, now) {
+    const item = this.current;
+    if (!item) return null;
+    const deck = this.decks.get(item.ref.deckId);
+    if (!deck) return null;
+    const prev = deck.cards[item.ref.id];
+    this.pushUndo(item, prev, deck.log.length);
+    const rec = prev ? { ...prev } : { due: now, s: 0, d: 0, ed: 0, sd: 0, ls: 0, reps: 0, lapses: 0, st: State.New };
+    if (how === "bury") rec.bury = dayNumber(now, this.prefs.dayStartHour);
+    else rec.susp = 1;
+    deck.cards[item.ref.id] = rec;
+    this.current = null;
+    return item.ref.deckId;
+  }
+  canUndo() {
+    return this.undoStack.length > 0;
+  }
+  /**
+   * 撤销上一次评分（或搁置、暂停）：那张卡回到「正在出」（正在出的那张放回队列）。
+   * 返回改了哪个牌组、撤销的是哪个评分（搁置、暂停的是 null）
+   */
+  undo() {
+    const s = this.undoStack.pop();
+    if (!s) return null;
+    const deck = this.decks.get(s.item.ref.deckId);
+    if (!deck) return null;
+    const grade = deck.log.length > s.logLen ? deck.log[deck.log.length - 1].r : null;
+    if (s.prev) deck.cards[s.item.ref.id] = s.prev;
+    else delete deck.cards[s.item.ref.id];
+    const graded = deck.log.length > s.logLen;
+    deck.log.length = s.logLen;
+    this.learn = s.learn;
+    this.review = s.review;
+    this.fresh = s.fresh;
+    this.shownNew = s.shownNew;
+    this.shownReview = s.shownReview;
+    this.current = s.item;
+    if (graded) this.done = Math.max(0, this.done - 1);
+    return { deckId: s.item.ref.deckId, grade };
+  }
+  pushUndo(item, prev, logLen) {
+    this.undoStack.push({
+      learn: this.learn.slice(),
+      review: this.review.slice(),
+      fresh: this.fresh.slice(),
+      shownNew: this.shownNew,
+      shownReview: this.shownReview,
+      item,
+      prev: prev ? { ...prev } : void 0,
+      logLen
+    });
+    if (this.undoStack.length > 50) this.undoStack.shift();
+  }
+};
+
+// src/review/service.ts
+var ReviewService = class {
+  constructor(host) {
+    this.host = host;
+    this.cache = /* @__PURE__ */ new Map();
+    this.sched = null;
+    this.schedKey = "";
+    this.listeners = /* @__PURE__ */ new Set();
+    /** 笔记路径 → 它用过的牌组 id（移出复习后再加回来，沿用原来的排期） */
+    this.byPath = /* @__PURE__ */ new Map();
+    const adapter = host.app.vault.adapter;
+    const dir = (0, import_obsidian11.normalizePath)(`${host.dir}/review`);
+    this.store = new ReviewStore({
+      read: async (name) => {
+        const p = `${dir}/${name}`;
+        return await adapter.exists(p) ? adapter.read(p) : null;
+      },
+      write: async (name, text) => {
+        if (!await adapter.exists(dir)) await adapter.mkdir(dir);
+        await adapter.write(`${dir}/${name}`, text);
+      },
+      list: async () => await adapter.exists(dir) ? (await adapter.list(dir)).files.map((f) => f.split("/").pop() ?? f) : []
+    });
+  }
+  prefs() {
+    return { ...DEFAULT_REVIEW_PREFS, ...this.host.prefs() };
+  }
+  scheduler() {
+    const p = this.prefs();
+    const key = JSON.stringify(p);
+    if (!this.sched || key !== this.schedKey) {
+      this.sched = makeScheduler(p);
+      this.schedKey = key;
+    }
+    return this.sched;
+  }
+  /** 读一遍复习数据文件夹，记下每个牌组对应的笔记（启动时调一次） */
+  async loadIndex() {
+    for (const [id, path] of await this.store.index()) this.byPath.set(path, id);
+  }
+  /** 这篇笔记以前用过的牌组 id（没用过返回 null） */
+  previousDeck(path) {
+    return this.byPath.get(path) ?? null;
+  }
+  /** 笔记改名、挪文件夹：复习数据里记的路径跟着改 */
+  async renamed(oldPath, newPath) {
+    this.forget(oldPath);
+    const id = this.byPath.get(oldPath);
+    if (!id) return;
+    this.byPath.delete(oldPath);
+    this.byPath.set(newPath, id);
+    const d = await this.store.deck(id, newPath);
+    d.path = newPath;
+    await this.store.save(id);
+  }
+  /** 数字可能变了（复习了一张、笔记改了、换天了）：状态栏、工具栏、复习主页各自重算 */
+  onChange(fn) {
+    this.listeners.add(fn);
+    return () => this.listeners.delete(fn);
+  }
+  changed() {
+    for (const fn of this.listeners) fn();
+  }
+  /** 加入了复习的笔记：frontmatter 里有 mindmap-review */
+  deckFiles() {
+    const out = [];
+    for (const f of this.host.app.vault.getMarkdownFiles()) {
+      const v = this.host.app.metadataCache.getFileCache(f)?.frontmatter?.[REVIEW_KEY];
+      if (v === void 0 || v === null || v === false || v === "false" || v === "") continue;
+      out.push(f);
+    }
+    return out.sort((a, b) => a.path.localeCompare(b.path, "zh-Hans-CN", { numeric: true }));
+  }
+  isDeck(path) {
+    const v = this.host.app.metadataCache.getCache(path)?.frontmatter?.[REVIEW_KEY];
+    return v !== void 0 && v !== null && v !== false && v !== "false" && v !== "";
+  }
+  parse(text, file) {
+    return parseMarkdown(text, { fallbackTitle: file.basename, ...this.host.rootRule(), showHidden: false, style: this.host.style() });
+  }
+  /** 读一张图的卡片（按修改时间缓存） */
+  async read(file) {
+    const have = this.cache.get(file.path);
+    if (have && have.mtime === file.stat.mtime && have.file === file) return have;
+    const doc = this.parse(await this.host.app.vault.cachedRead(file), file);
+    const parsed = { file, deckId: deckIdOf(doc.frontmatter) || null, doc, cards: extractCards(doc), mtime: file.stat.mtime };
+    this.cache.set(file.path, parsed);
+    return parsed;
+  }
+  forget(path) {
+    this.cache.delete(path);
+  }
+  /**
+   * 开始复习前：牌组还没有 id、卡片节点还没有 rv（或复制出来重复了）就补上，写回笔记（只改这几处）。
+   * 两张笔记的牌组 id 撞了（复制了笔记）：后一张换新的
+   */
+  async ensureIds(files) {
+    const ids = /* @__PURE__ */ new Map();
+    for (const f of this.deckFiles()) {
+      const id = deckIdOf(frontmatterOf(this.host.app, f));
+      if (id && !ids.has(id)) ids.set(id, f.path);
+    }
+    for (const file of files) {
+      const parsed = await this.read(file);
+      const dupDeck = parsed.deckId && ids.get(parsed.deckId) !== file.path;
+      const needCards = parsed.cards.some((c) => !c.id);
+      if (parsed.deckId && !dupDeck && !needCards) continue;
+      await this.host.app.vault.process(file, (text) => {
+        const doc = this.parse(text, file);
+        let changed = assignReviewIds(doc);
+        let deckId = deckIdOf(doc.frontmatter);
+        if (!deckId || ids.get(deckId) !== file.path) {
+          deckId = newReviewId(new Set(ids.keys()));
+          ids.set(deckId, file.path);
+          doc.frontmatter = setFrontmatterValue(doc.frontmatter, REVIEW_KEY, deckId);
+          changed = true;
+        }
+        if (!changed) return text;
+        const next = serializeMarkdown(doc);
+        return blankBeforeNodeTables(preserveFormat(text, next, (s) => serializeMarkdown(this.parse(s, file))));
+      });
+      this.forget(file.path);
+    }
+  }
+  /**
+   * 不开脑图也能加入 / 移出复习（命令、文件右键菜单）：直接改笔记，只动 frontmatter、%%review%% 和题上的 rv。
+   * 加入时沿用这篇笔记以前用过的牌组 id；移出时 rv 留着。返回加入后有几张卡
+   */
+  async setFileReview(file, on) {
+    let cards = 0;
+    await this.host.app.vault.process(file, (text) => {
+      const doc = this.parse(text, file);
+      const clear = (n) => {
+        n.review = void 0;
+        n.children.forEach(clear);
+        if (n.summary?.topic) clear(n.summary.topic);
+      };
+      clear(doc.root);
+      if (on) {
+        const id = deckIdOf(doc.frontmatter) || this.previousDeck(file.path) || newReviewId(new Set(this.byPath.values()));
+        doc.frontmatter = setFrontmatterValue(doc.frontmatter, REVIEW_KEY, id);
+        assignReviewIds(doc);
+        cards = extractCards(doc).length;
+      } else doc.frontmatter = setFrontmatterValue(doc.frontmatter, REVIEW_KEY, null);
+      const next = serializeMarkdown(doc);
+      return blankBeforeNodeTables(preserveFormat(text, next, (s) => serializeMarkdown(this.parse(s, file))));
+    });
+    this.forget(file.path);
+    this.changed();
+    return cards;
+  }
+  /** 复习范围里的牌组和卡片；还没有 id 的卡先用临时 id（只用来数数） */
+  async scopeDecks(scope) {
+    const decks = [];
+    const byKey = /* @__PURE__ */ new Map();
+    for (const file of scope.files) {
+      const p = await this.read(file);
+      const deckId = p.deckId ?? `tmp-${file.path}`;
+      const data = p.deckId ? await this.store.deck(p.deckId, file.path) : { v: 1, path: file.path, cards: {}, log: [] };
+      if (p.deckId) {
+        this.byPath.set(file.path, p.deckId);
+        if (data.path !== file.path) data.path = file.path;
+      }
+      const cards = [];
+      for (const c of p.cards) {
+        if (scope.branch !== void 0 && !under(pathOf(c.node), scope.branch)) continue;
+        const id = c.id ?? `tmp-${c.order}`;
+        cards.push({ deckId, id, order: c.order });
+        byKey.set(`${deckId}|${id}`, { file, card: c });
+      }
+      decks.push({ deckId, data, cards });
+    }
+    return { decks, byKey };
+  }
+  async counts(scope) {
+    const { decks } = await this.scopeDecks(scope);
+    return countsOf(decks, Date.now(), this.prefs(), scope.capTotal ?? decks.length > 1);
+  }
+  /** 全库今天要复习多少（状态栏）：各牌组按自己的上限算再加起来 */
+  async totalDue() {
+    let n = 0;
+    for (const f of this.deckFiles()) {
+      const c = await this.counts({ files: [f], title: f.basename });
+      n += c.new + c.learn + c.review;
+    }
+    return n;
+  }
+  /** 一张图里今天到期（学习中、待复习）的卡片挂在哪些节点上（rv）：画布上画小绿点 */
+  async dueNodes(file) {
+    const { decks, byKey } = await this.scopeDecks({ files: [file], title: file.basename });
+    const p = plan(decks, Date.now(), this.prefs());
+    const ids = /* @__PURE__ */ new Set();
+    for (const it of [...p.learn, ...p.review]) ids.add(it.ref.id.split(":")[0]);
+    const paths = [];
+    for (const it of [...p.learn, ...p.review, ...p.fresh]) {
+      const hit = byKey.get(`${it.ref.deckId}|${it.ref.id}`);
+      if (hit) paths.push(pathOf(hit.card.node));
+    }
+    return { ids, count: p.learn.length + p.review.length + p.fresh.length, paths };
+  }
+};
+function under(path, branch) {
+  return branch === "" || path === branch || path.startsWith(`${branch}/`);
+}
+function frontmatterOf(app, f) {
+  const v = app.metadataCache.getFileCache(f)?.frontmatter?.[REVIEW_KEY];
+  return `---
+${REVIEW_KEY}: ${typeof v === "string" ? v : String(v)}
+---`;
 }
 
 // src/outline.ts
@@ -22903,7 +29914,7 @@ function foldedSignature(doc) {
   });
   return out.join("\n");
 }
-var MindMapView = class extends import_obsidian9.TextFileView {
+var MindMapView = class extends import_obsidian12.TextFileView {
   constructor(leaf, plugin) {
     super(leaf);
     this.plugin = plugin;
@@ -22915,6 +29926,8 @@ var MindMapView = class extends import_obsidian9.TextFileView {
     this.history = new History();
     this.doc = null;
     this.following = false;
+    // ---------- 禅模式（#43）：画布藏自己的工具栏，这里收起 Obsidian 的侧栏、标签栏、状态栏 ----------
+    this.zenUndo = null;
     // ---------- PDF 自动摘录（见 pdf-excerpt.ts） ----------
     this.excerptAction = null;
     this.sideAction = null;
@@ -22924,6 +29937,10 @@ var MindMapView = class extends import_obsidian9.TextFileView {
     this.pendingLine = null;
     this.viewportTimer = null;
     this.restoringViewport = false;
+    /** 今天这张图的到期数（工具栏「复习 N」、小绿点、右键「复习这个分支」用） */
+    this.reviewDue = null;
+    this.unsubReview = null;
+    this.reviewSeq = 0;
     /** 脑图这边的文本。文件在外部变了时，Obsidian 调 setViewData 之前已经把 this.data 换成磁盘内容，本地版本靠这个找回 */
     this.local = "";
     /** 上次读入或写盘时磁盘上的文本，外部改动和本地没落盘的编辑合并时的基准 */
@@ -22933,9 +29950,11 @@ var MindMapView = class extends import_obsidian9.TextFileView {
     this.sweepTimer = null;
     /** 上次保存时折叠着的节点（路径），判断这次改动有没有改折叠 */
     this.lastFolds = null;
+    /** 上次看到的中心主题文字：改中心主题时笔记跟着改名，要知道改之前是不是和文件名一样 */
+    this.rootSeen = null;
     this.isPlaintext = false;
     this.guardLoads();
-    this.scope = new import_obsidian9.Scope(this.app.scope);
+    this.scope = new import_obsidian12.Scope(this.app.scope);
     this.scope.register(["Mod"], "f", () => {
       this.canvas?.openSearch();
       return false;
@@ -22974,9 +29993,9 @@ var MindMapView = class extends import_obsidian9.TextFileView {
   exitFocus() {
     this.canvas?.exitFocus();
   }
-  copySelectedNodeLink() {
+  copySelectedNodeLink(alias = false) {
     const n = this.canvas?.getPrimary();
-    return n ? this.canvas?.copyNodeLink(n) ?? Promise.resolve() : Promise.resolve();
+    return n ? this.canvas?.copyNodeLink(n, alias) ?? Promise.resolve() : Promise.resolve();
   }
   async toggleOutline() {
     if (this.outline) this.closeOutline();
@@ -23060,6 +30079,34 @@ var MindMapView = class extends import_obsidian9.TextFileView {
     this.canvas.setLocked(!this.canvas.isLocked());
     this.plugin.setLocked(this.file.path, this.canvas.isLocked());
   }
+  toggleZen() {
+    this.canvas?.setZen(!this.canvas.isZen());
+  }
+  zenChrome(on) {
+    this.zenUndo?.();
+    this.zenUndo = null;
+    if (!on) return;
+    this.containerEl.addClass("gg-mm-zen");
+    const undo2 = [() => this.containerEl.removeClass("gg-mm-zen")];
+    if (this.plugin.settings.zenHideObsidian && !import_obsidian12.Platform.isMobile) {
+      const ws = this.app.workspace;
+      const left = !ws.leftSplit.collapsed;
+      const right = !ws.rightSplit.collapsed;
+      if (left) ws.leftSplit.collapse();
+      if (right) ws.rightSplit.collapse();
+      document.body.addClass("gg-mm-zen-app");
+      undo2.push(() => {
+        document.body.removeClass("gg-mm-zen-app");
+        if (left) ws.leftSplit.expand();
+        if (right) ws.rightSplit.expand();
+      });
+    }
+    const ref = this.app.workspace.on("active-leaf-change", (leaf) => {
+      if (leaf && leaf !== this.leaf) this.canvas?.setZen(false);
+    });
+    undo2.push(() => this.app.workspace.offref(ref));
+    this.zenUndo = () => undo2.reverse().forEach((f) => f());
+  }
   toggleRecite() {
     this.canvas?.setRecite(!this.canvas.isRecite());
   }
@@ -23121,10 +30168,14 @@ var MindMapView = class extends import_obsidian9.TextFileView {
     return MINDMAP_ICON;
   }
   async onOpen() {
+    this.unsubReview = this.plugin.review.onChange(() => void this.refreshReview());
     this.contentEl.addClass("mm-view-content");
+    this.addAction("book-open", t("menu.openAsReading"), () => {
+      if (this.file) void this.plugin.openAsMarkdown(this.file, this.leaf, "preview");
+    }).addClass("mm-reading-action");
     this.addAction(MARKDOWN_ICON, t("menu.openAsMarkdown"), () => {
       if (this.file) void this.plugin.openAsMarkdown(this.file, this.leaf);
-    });
+    }).addClass("mm-view-switch");
     this.sideAction = this.addAction("columns-2", t("command.openPreview"), () => {
       if (this.file) void this.plugin.openSideBySide(this.file, this.leaf);
     });
@@ -23157,7 +30208,21 @@ var MindMapView = class extends import_obsidian9.TextFileView {
       onRevealInMarkdown: () => {
         if (this.file) void this.plugin.openAsMarkdown(this.file, this.leaf);
       },
+      review: {
+        due: () => this.reviewDue,
+        dueIn: (path) => (this.reviewDue?.paths ?? []).filter((p) => under(p, path)).length,
+        // 工具栏「复习 N」、右键「复习这个分支」：在脑图里原地复习
+        study: (branch) => void this.startMapReview(branch),
+        changed: () => this.plugin.review.changed(),
+        dots: () => this.plugin.settings.reviewDueDots,
+        previousDeck: () => this.file ? this.plugin.review.previousDeck(this.file.path) : null,
+        suspended: (rv) => !!this.file && this.plugin.reviewSuspended(this.file, rv),
+        unsuspend: (rv) => {
+          if (this.file) void this.plugin.reviewUnsuspend(this.file, rv);
+        }
+      },
       onToggleOutline: () => void this.toggleOutline(),
+      onZen: (on) => this.zenChrome(on),
       onSideBySide: () => {
         if (this.file) void this.plugin.openSideBySide(this.file, this.leaf);
       },
@@ -23173,6 +30238,7 @@ var MindMapView = class extends import_obsidian9.TextFileView {
       toolbarPosition: this.plugin.settings.toolbarPosition,
       wheelZoom: () => this.plugin.settings.wheelAction === "zoom",
       notePreview: () => this.plugin.settings.notePreview,
+      noteLiveEdit: () => this.plugin.settings.noteLiveEdit,
       formatBar: () => this.plugin.settings.formatBar,
       split: () => this.plugin.splitPrefs(),
       keepBlankLines: () => this.plugin.settings.keepBlankLines,
@@ -23185,7 +30251,7 @@ var MindMapView = class extends import_obsidian9.TextFileView {
       autoNumber: () => this.plugin.settings.numberByTyping,
       copyPlain: () => this.plugin.settings.copyPlain,
       showNodebar: () => this.plugin.settings.showNodebar,
-      nodebarLayout: () => mergeLayout(this.plugin.settings.nodebarLayout, nodebarDefault(import_obsidian9.Platform.isMobile)),
+      nodebarLayout: () => mergeLayout(this.plugin.settings.nodebarLayout, nodebarDefault(import_obsidian12.Platform.isMobile)),
       toolbarLayout: () => mergeLayout(this.plugin.settings.toolbarLayout, TOOLBAR_DEFAULT),
       nodeColors: () => parseNodeColors(this.plugin.settings.nodeColors),
       textColors: () => parseColorList(this.plugin.settings.textColors),
@@ -23230,9 +30296,10 @@ var MindMapView = class extends import_obsidian9.TextFileView {
       else this.pendingSubpath = sub;
       return;
     }
-    if (typeof st?.line === "number" && st.line >= 0) {
-      if (this.doc && this.canvas) this.revealLine(st.line);
-      else this.pendingLine = st.line;
+    const line = typeof st?.line === "number" && st.line >= 0 ? st.line : matchLine(state);
+    if (line !== null) {
+      if (this.doc && this.canvas) this.revealLine(line);
+      else this.pendingLine = line;
     }
   }
   revealLine(line) {
@@ -23264,7 +30331,7 @@ var MindMapView = class extends import_obsidian9.TextFileView {
    * 标签页是 B、脑图里是 A，一存盘 B 就被 A 覆盖（#30）。读完发现文件已经换了：先禁止写盘，再按现在的文件重读一遍
    */
   guardLoads() {
-    const base = import_obsidian9.TextFileView.prototype.loadFileInternal;
+    const base = import_obsidian12.TextFileView.prototype.loadFileInternal;
     if (typeof base !== "function") return;
     this.loadFileInternal = async (file, clear) => {
       await base.call(this, file, clear);
@@ -23283,7 +30350,84 @@ var MindMapView = class extends import_obsidian9.TextFileView {
     this.flushImageSweep();
     return super.onUnloadFile(file);
   }
+  async refreshReview() {
+    const file = this.file;
+    const seq = ++this.reviewSeq;
+    const on = !!file && file.extension === "md" && this.canvas?.reviewState() !== "none";
+    const due = on && file ? await this.plugin.review.dueNodes(file).catch(() => null) : null;
+    if (seq !== this.reviewSeq) return;
+    this.reviewDue = due;
+    this.canvas?.refreshReview();
+  }
+  /**
+   * 原地复习：排期和复习标签页同一套（同一个牌组文件），画布负责遮、揭开、选中和画按钮。
+   * 卡片从画布里的这张图直接读（不读磁盘：刚补的 rv 可能还没存）
+   */
+  async startMapReview(branch) {
+    const file = this.file;
+    const canvas = this.canvas;
+    if (!file || !canvas || !this.doc || canvas.reviewState() === "none") return;
+    canvas.ensureReviewIds();
+    const doc = this.doc;
+    const deckId = deckIdOf(doc.frontmatter);
+    if (!deckId) return;
+    const svc = this.plugin.review;
+    const data = await svc.store.deck(deckId, file.path);
+    const cards = extractCards(doc).filter((c) => c.id && (branch === null || under(pathOf(c.node), branch)));
+    const kindOf = new Map(cards.map((c) => [c.id, c.kind]));
+    const session = new Session([{ deckId, data, cards: cards.map((c) => ({ deckId, id: c.id, order: c.order })) }], svc.prefs(), svc.scheduler(), Date.now(), false);
+    const units2 = { m: t("review.unitM"), h: t("review.unitH"), d: t("review.unitD"), mo: t("review.unitMo"), y: t("review.unitY") };
+    let shownAt = Date.now();
+    const driver = {
+      next: () => {
+        const ref = session.next(Date.now());
+        if (!ref) return { done: true, wait: session.nextLearnAt(), note: session.done ? t("review.doneStats", { n: session.done, min: Math.max(1, Math.round(session.spent / 6e4)) }) : "" };
+        shownAt = Date.now();
+        const c = session.counts();
+        const k = session.currentKind();
+        return { reviewId: ref.id.split(":")[0], kind: kindOf.get(ref.id) ?? "cloze", counts: [c.new, c.learn, c.review], current: k === "new" ? 0 : k === "learn" ? 1 : 2 };
+      },
+      intervals: () => {
+        const now = Date.now();
+        const p = session.preview(now);
+        return [1, 2, 3, 4].map((g) => p ? formatInterval(p[g].due - now, units2) : "");
+      },
+      grade: async (g) => {
+        const now = Date.now();
+        session.grade(g, now, Math.min(now - shownAt, 6e4));
+        await svc.store.save(deckId);
+        svc.changed();
+      },
+      undo: async () => {
+        if (!session.canUndo()) return false;
+        session.current = null;
+        if (!session.undo()) return false;
+        await svc.store.save(deckId);
+        svc.changed();
+        return true;
+      },
+      skip: async () => {
+        session.setAside("bury", Date.now());
+        await svc.store.save(deckId);
+      },
+      openTab: () => void this.plugin.openReview({ file, branch }),
+      finish: () => svc.changed()
+    };
+    canvas.startMapReview(driver);
+  }
+  /** 命令、文件菜单：整张图加入 / 移出复习（走画布，能撤销） */
+  setWholeReview(on) {
+    if (!this.canvas) return false;
+    this.canvas.setWholeReview(on);
+    return true;
+  }
+  /** 复习时按「编辑」跳回来：选中这道题的节点 */
+  revealReview(reviewId, path) {
+    return this.canvas?.revealReview(reviewId, path) ?? false;
+  }
   async onClose() {
+    this.unsubReview?.();
+    this.canvas?.setZen(false);
     this.canvas?.flush();
     if (this.plugin.pdfExcerpt.isOn(this)) this.plugin.pdfExcerpt.stop();
     await super.onClose();
@@ -23301,7 +30445,7 @@ var MindMapView = class extends import_obsidian9.TextFileView {
     );
     menu.addItem((item) => item.setTitle(t("command.exportPng")).setIcon("image").setSection("pane").onClick(() => void this.exportPng()));
     menu.addItem((item) => item.setTitle(t("command.exportSvg")).setIcon("image").setSection("pane").onClick(() => void this.exportSvg()));
-    if (import_obsidian9.Platform.isDesktopApp) menu.addItem((item) => item.setTitle(t("command.exportPdf")).setIcon("file-text").setSection("pane").onClick(() => void this.exportPdf()));
+    if (import_obsidian12.Platform.isDesktopApp) menu.addItem((item) => item.setTitle(t("command.exportPdf")).setIcon("file-text").setSection("pane").onClick(() => void this.exportPdf()));
     menu.addItem((item) => item.setTitle(t("command.copyPng")).setIcon("copy").setSection("pane").onClick(() => void this.copyPng()));
   }
   // ---------- 导出 ----------
@@ -23317,9 +30461,9 @@ var MindMapView = class extends import_obsidian9.TextFileView {
       const blob = await canvas.withFullTables(async () => svgToPng(await buildSvg(canvas), 2));
       const path = await this.attachmentPath("png");
       await this.app.vault.createBinary(path, await blob.arrayBuffer());
-      new import_obsidian9.Notice(t("notice.exported", { path }));
+      new import_obsidian12.Notice(t("notice.exported", { path }));
     } catch (e) {
-      new import_obsidian9.Notice(t("notice.exportFailed", { error: e.message }));
+      new import_obsidian12.Notice(t("notice.exportFailed", { error: e.message }));
     }
   }
   async exportSvg() {
@@ -23330,9 +30474,9 @@ var MindMapView = class extends import_obsidian9.TextFileView {
       const { svg } = await canvas.withFullTables(() => buildSvg(canvas));
       const path = await this.attachmentPath("svg");
       await this.app.vault.create(path, svg);
-      new import_obsidian9.Notice(t("notice.exported", { path }));
+      new import_obsidian12.Notice(t("notice.exported", { path }));
     } catch (e) {
-      new import_obsidian9.Notice(t("notice.exportFailed", { error: e.message }));
+      new import_obsidian12.Notice(t("notice.exportFailed", { error: e.message }));
     }
   }
   /** 导出为 PDF（桌面端）：整张图一页，页面按图的大小，矢量 */
@@ -23345,9 +30489,9 @@ var MindMapView = class extends import_obsidian9.TextFileView {
       const data = await svgToPdf(exp);
       const path = await this.attachmentPath("pdf");
       await this.app.vault.createBinary(path, data);
-      new import_obsidian9.Notice(t("notice.exported", { path }));
+      new import_obsidian12.Notice(t("notice.exported", { path }));
     } catch (e) {
-      new import_obsidian9.Notice(t("notice.exportFailed", { error: e.message }));
+      new import_obsidian12.Notice(t("notice.exportFailed", { error: e.message }));
     }
   }
   async copyPng() {
@@ -23357,9 +30501,9 @@ var MindMapView = class extends import_obsidian9.TextFileView {
       const canvas = this.canvas;
       const blob = await canvas.withFullTables(async () => svgToPng(await buildSvg(canvas), 2));
       await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
-      new import_obsidian9.Notice(t("notice.copiedAsImage"));
+      new import_obsidian12.Notice(t("notice.copiedAsImage"));
     } catch (e) {
-      new import_obsidian9.Notice(t("notice.copyFailedWithError", { error: e.message }));
+      new import_obsidian12.Notice(t("notice.copyFailedWithError", { error: e.message }));
     }
   }
   /** 有没有还没写盘的改动 */
@@ -23386,6 +30530,7 @@ var MindMapView = class extends import_obsidian9.TextFileView {
     this.flushImageSweep();
     this.applyViewData(data, clear);
     this.usedImages = this.file ? this.plugin.janitor.images(this.data, this.file.path) : null;
+    void this.refreshReview();
   }
   /** 打开文件时把按路径记下的状态放到画布上，返回记下的视口（选中节点要等图建好再用） */
   restoreFileState(file) {
@@ -23403,6 +30548,8 @@ var MindMapView = class extends import_obsidian9.TextFileView {
       } finally {
         this.restoringViewport = false;
       }
+    } else {
+      this.canvas.resetView();
     }
     return saved;
   }
@@ -23415,6 +30562,7 @@ var MindMapView = class extends import_obsidian9.TextFileView {
         if (merged !== this.data) {
           this.data = this.local = merged;
           this.reparse();
+          this.rootSeen = this.doc?.root.text ?? null;
         }
         this.requestSave();
         return;
@@ -23424,6 +30572,7 @@ var MindMapView = class extends import_obsidian9.TextFileView {
     this.data = this.local = data;
     const prev = this.doc;
     this.doc = this.parseText(data);
+    this.rootSeen = this.doc.root.text;
     if (!clear && prev) adoptIds(prev.root, this.doc.root);
     this.lastFolds = foldedSignature(this.doc);
     this.applyFrontmatterOptions(this.doc);
@@ -23440,7 +30589,7 @@ var MindMapView = class extends import_obsidian9.TextFileView {
       this.canvas?.resetView();
       saved = this.restoreFileState(file);
       this.canvas?.setDoc(this.doc);
-      new import_obsidian9.Notice(t("notice.viewStateReset", { file: file.basename }));
+      new import_obsidian12.Notice(t("notice.viewStateReset", { file: file.basename }));
     }
     const sub = this.pendingSubpath;
     this.pendingSubpath = null;
@@ -23462,7 +30611,7 @@ var MindMapView = class extends import_obsidian9.TextFileView {
     if (base === null) return ours;
     const merged = mergeExternal(base, ours, disk);
     if (merged !== null) return merged;
-    new import_obsidian9.Notice(t("notice.externalConflict", { file: this.file?.basename ?? "" }));
+    new import_obsidian12.Notice(t("notice.externalConflict", { file: this.file?.basename ?? "" }));
     return ours;
   }
   /**
@@ -23516,8 +30665,32 @@ var MindMapView = class extends import_obsidian9.TextFileView {
     const snapshot = this.data;
     void this.plugin.janitor.sweep(removed, path, () => this.file?.path === path ? this.data : snapshot);
   }
+  /**
+   * 中心主题是一级标题、改之前和文件名一样（新建的图就是这样）：笔记跟着改名（设置「改中心主题时，和它同名的笔记一起改名」）。
+   * 撤销也走这里，改回去时文件名也改回去。新名字不能当文件名、或者重名时，标题照改，只是笔记不改名，提示一下
+   */
+  followRootRename() {
+    const before = this.rootSeen;
+    const doc = this.doc;
+    this.rootSeen = doc ? doc.root.text : null;
+    const file = this.file;
+    if (!file || !doc || !doc.rootFromHeading || !this.plugin.settings.renameWithRoot) return;
+    if (before === null || before.trim() !== file.basename) return;
+    const name = doc.root.text.trim();
+    if (!name || name === file.basename) return;
+    const skip = (why) => {
+      new import_obsidian12.Notice(t("notice.renameWithRootSkipped", { name, why }));
+    };
+    if (/[\\/:*?"<>|#^[\]]/.test(name)) return skip(t("notice.rootBadChars"));
+    const dir = file.parent && file.parent.path !== "/" ? `${file.parent.path}/` : "";
+    const path = (0, import_obsidian12.normalizePath)(`${dir}${name}.${file.extension}`);
+    const taken = this.app.vault.getAbstractFileByPath(path);
+    if (taken && taken !== file) return skip(t("notice.nameTaken"));
+    this.app.fileManager.renameFile(file, path).catch((e) => skip(String(e)));
+  }
   onDocChange(doc) {
     if (this.file && !doc.rootFromHeading && doc.root.text !== this.file.basename) this.renameFromRoot(doc, this.file);
+    if (doc === this.doc) this.followRootRename();
     let next = blankBeforeNodeTables(preserveFormat(this.data, serializeMarkdown(doc), (text) => serializeMarkdown(this.parseText(text))));
     if (this.plugin.settings.quoteListNotes) next = blankAfterQuotedNotes(next, this.data);
     if (this.file && next !== this.data) this.plugin.fixHeadingLinks(this.file, strippedMarkerRenames(this.data, next));
@@ -23536,14 +30709,14 @@ var MindMapView = class extends import_obsidian9.TextFileView {
   renameFromRoot(doc, file) {
     const name = doc.root.text.trim();
     const revert = (msg) => {
-      if (msg) new import_obsidian9.Notice(msg);
+      if (msg) new import_obsidian12.Notice(msg);
       doc.root.text = file.basename;
       this.contentEl.win.setTimeout(() => this.canvas?.render(), 0);
     };
     if (!name || name === file.basename) return revert();
     if (/[\\/:*?"<>|#^[\]]/.test(name)) return revert(t("notice.rootBadName"));
     const dir = file.parent && file.parent.path !== "/" ? `${file.parent.path}/` : "";
-    const path = (0, import_obsidian9.normalizePath)(`${dir}${name}.${file.extension}`);
+    const path = (0, import_obsidian12.normalizePath)(`${dir}${name}.${file.extension}`);
     const taken = this.app.vault.getAbstractFileByPath(path);
     if (taken && taken !== file) return revert(t("notice.rootNameTaken", { name }));
     doc.root.text = name;
@@ -23585,6 +30758,7 @@ var MindMapView = class extends import_obsidian9.TextFileView {
     if (prev === null) return;
     this.data = this.local = prev;
     this.reparse();
+    this.followRootRename();
     this.imagesChanged();
     this.requestSave();
   }
@@ -23594,6 +30768,7 @@ var MindMapView = class extends import_obsidian9.TextFileView {
     if (next === null) return;
     this.data = this.local = next;
     this.reparse();
+    this.followRootRename();
     this.imagesChanged();
     this.requestSave();
   }
@@ -23621,10 +30796,529 @@ var MindMapView = class extends import_obsidian9.TextFileView {
   }
 };
 
+// src/review/view.ts
+var import_obsidian13 = require("obsidian");
+var VIEW_TYPE_REVIEW = "gogoga-mindmap-review";
+var GRADE_KEYS = {
+  [Rating.Again]: "review.again",
+  [Rating.Hard]: "review.hard",
+  [Rating.Good]: "review.good",
+  [Rating.Easy]: "review.easy"
+};
+var units = () => ({ m: t("review.unitM"), h: t("review.unitH"), d: t("review.unitD"), mo: t("review.unitMo"), y: t("review.unitY") });
+var ReviewView = class extends import_obsidian13.ItemView {
+  constructor(leaf, host) {
+    super(leaf);
+    this.host = host;
+    this.screen = { kind: "home" };
+    this.session = null;
+    this.byKey = /* @__PURE__ */ new Map();
+    this.shown = false;
+    this.cardStart = 0;
+    this.timer = 0;
+    this.waitTimer = 0;
+    this.collapsed = /* @__PURE__ */ new Set();
+    this.unsub = null;
+    this.renderSeq = 0;
+    this.scope = new import_obsidian13.Scope(this.app.scope);
+    const key = (k, fn, mods = []) => this.scope.register(mods, k, (ev) => {
+      if (ev.isComposing) return;
+      fn();
+      return false;
+    });
+    key(" ", () => this.onPrimary());
+    key("Enter", () => this.onPrimary());
+    for (const g of [1, 2, 3, 4]) key(String(g), () => this.shown && void this.grade(g));
+    key("e", () => void this.openCurrent());
+    key("E", () => void this.openCurrent(), ["Shift"]);
+    key("-", () => void this.setAside("bury"));
+    key("@", () => void this.setAside("suspend"), ["Shift"]);
+    key("i", () => this.cardInfo());
+    key("Escape", () => this.back());
+    key("z", () => void this.undo(), ["Mod"]);
+  }
+  getViewType() {
+    return VIEW_TYPE_REVIEW;
+  }
+  getDisplayText() {
+    return this.screen.kind === "home" ? t("review.title") : `${t("review.title")} \xB7 ${this.screen.scope.title}`;
+  }
+  getIcon() {
+    return "layers";
+  }
+  async onOpen() {
+    this.contentEl.addClass("ggmm-review");
+    this.contentEl.tabIndex = -1;
+    const ro = new ResizeObserver(() => this.updateInset());
+    ro.observe(this.contentEl);
+    this.register(() => ro.disconnect());
+    this.unsub = this.host.service.onChange(() => {
+      if (this.screen.kind !== "study") void this.render();
+    });
+    await this.render();
+  }
+  async onClose() {
+    this.unsub?.();
+    window.clearInterval(this.timer);
+    window.clearTimeout(this.waitTimer);
+  }
+  /** 从别处打开：复习这张图（可以只要一个分支）、一个文件夹，或回到主页 */
+  async show(screen) {
+    this.screen = screen;
+    this.session = null;
+    await this.render();
+    this.contentEl.focus();
+  }
+  onPrimary() {
+    if (this.screen.kind === "overview") void this.startStudy(this.screen.scope);
+    else if (this.screen.kind === "study") {
+      if (!this.session?.current) return;
+      if (!this.shown) this.reveal();
+      else void this.grade(Rating.Good);
+    }
+  }
+  back() {
+    if (this.screen.kind === "study") void this.show({ kind: "overview", scope: this.screen.scope });
+    else if (this.screen.kind === "overview") void this.show({ kind: "home" });
+  }
+  async render() {
+    const seq = ++this.renderSeq;
+    window.clearInterval(this.timer);
+    window.clearTimeout(this.waitTimer);
+    const el = this.contentEl;
+    if (this.screen.kind === "home") {
+      const body = createDiv({ cls: "ggmm-rv-home" });
+      await this.renderHome(body);
+      if (seq !== this.renderSeq) return;
+      el.replaceChildren(body);
+    } else if (this.screen.kind === "overview") {
+      const body = createDiv({ cls: "ggmm-rv-overview" });
+      await this.renderOverview(body, this.screen.scope);
+      if (seq !== this.renderSeq) return;
+      el.replaceChildren(body);
+    } else await this.renderStudy();
+    this.leaf.updateHeader?.();
+  }
+  // ---------- 复习主页 ----------
+  async renderHome(el) {
+    const svc = this.host.service;
+    el.createEl("h4", { text: t("review.title") });
+    const files = svc.deckFiles();
+    if (!files.length) {
+      el.createDiv({ cls: "ggmm-rv-empty", text: t("review.empty") });
+      return;
+    }
+    const root = { path: "", name: "", folders: /* @__PURE__ */ new Map(), files: [] };
+    for (const f of files) {
+      let cur = root;
+      const parts = f.path.split("/").slice(0, -1);
+      for (const p2 of parts) {
+        const path = cur.path ? `${cur.path}/${p2}` : p2;
+        let next = cur.folders.get(p2);
+        if (!next) {
+          next = { path, name: p2, folders: /* @__PURE__ */ new Map(), files: [] };
+          cur.folders.set(p2, next);
+        }
+        cur = next;
+      }
+      cur.files.push(f);
+    }
+    const all = (f) => [...f.files, ...[...f.folders.values()].flatMap(all)];
+    let top = root;
+    while (!top.files.length && top.folders.size === 1) top = [...top.folders.values()][0];
+    const table = el.createEl("table", { cls: "ggmm-rv-decks" });
+    const head = table.createEl("tr");
+    head.createEl("th", { text: t("review.colDeck") });
+    for (const k of ["review.colNew", "review.colLearn", "review.colReview"]) head.createEl("th", { text: t(k) });
+    const row = async (name, scope, depth, folder) => {
+      const c = await svc.counts(scope);
+      const tr = table.createEl("tr", { cls: "ggmm-rv-deck" });
+      const td = tr.createEl("td");
+      td.setCssProps({ "--depth": String(depth) });
+      if (folder) {
+        const fold = td.createSpan({ cls: "ggmm-rv-fold", text: this.collapsed.has(folder.path) ? "\u25B8" : "\u25BE" });
+        fold.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          if (!this.collapsed.delete(folder.path)) this.collapsed.add(folder.path);
+          void this.render();
+        });
+      } else td.createSpan({ cls: "ggmm-rv-fold" });
+      const link2 = td.createSpan({ cls: "ggmm-rv-name", text: name });
+      link2.addEventListener("click", () => void this.show({ kind: "overview", scope }));
+      for (const [n2, cls] of [
+        [c.new, "is-new"],
+        [c.learn, "is-learn"],
+        [c.review, "is-review"]
+      ])
+        tr.createEl("td", { cls: `ggmm-rv-num ${n2 ? cls : "is-zero"}`, text: String(n2) });
+    };
+    const walk2 = async (f, depth) => {
+      for (const sub of f.folders.values()) {
+        await row(sub.name, { files: all(sub), title: sub.name, capTotal: true }, depth, sub);
+        if (!this.collapsed.has(sub.path)) await walk2(sub, depth + 1);
+      }
+      for (const file of f.files) await row(file.basename, { files: [file], title: file.basename }, depth);
+    };
+    await walk2(top, 0);
+    let n = 0;
+    let ms = 0;
+    const p = svc.prefs();
+    for (const f of files) {
+      const parsed = await svc.read(f);
+      if (!parsed.deckId) continue;
+      const d = await svc.store.deck(parsed.deckId, f.path);
+      const today = dayNumber(Date.now(), p.dayStartHour);
+      for (const e of d.log) if (dayNumber(e.t, p.dayStartHour) === today) {
+        n++;
+        ms += e.ms ?? 0;
+      }
+    }
+    const foot = el.createDiv({ cls: "ggmm-rv-foot" });
+    foot.createDiv({ text: t("review.studiedToday", { n, min: Math.round(ms / 6e4) }) });
+    const btns = foot.createDiv({ cls: "ggmm-rv-btns" });
+    const study = btns.createEl("button", { text: t("review.studyAll") });
+    study.addEventListener("click", () => void this.show({ kind: "overview", scope: { files, title: t("review.studyAll"), capTotal: false } }));
+    const set = btns.createEl("button", { cls: "mod-muted", text: t("review.settings") });
+    set.addEventListener("click", () => this.host.openSettings());
+  }
+  // ---------- 牌组概览 ----------
+  async renderOverview(el, scope) {
+    const c = await this.host.service.counts(scope);
+    el.createEl("h4", { text: scope.title });
+    if (scope.files.length === 1) el.createDiv({ cls: "ggmm-rv-src", text: scope.files[0].path });
+    const dl = el.createEl("dl");
+    for (const [k, n, cls] of [
+      ["review.colNew", c.new, "is-new"],
+      ["review.colLearn", c.learn, "is-learn"],
+      ["review.colReview", c.review, "is-review"]
+    ]) {
+      dl.createEl("dt", { text: t(k) });
+      dl.createEl("dd", { cls, text: String(n) });
+    }
+    const total = c.new + c.learn + c.review;
+    if (total) {
+      const go = el.createEl("button", { cls: "mod-cta ggmm-rv-start", text: t("review.start") });
+      go.addEventListener("click", () => void this.startStudy(scope));
+    } else el.createDiv({ cls: "ggmm-rv-msg", text: t("review.doneTitle") });
+    const row = el.createDiv({ cls: "ggmm-rv-btns" });
+    if (scope.files.length === 1) {
+      const open = row.createEl("button", { cls: "mod-muted", text: t("review.openMap") });
+      open.addEventListener("click", () => void this.host.openNode(scope.files[0], void 0, scope.branch ?? ""));
+    }
+    const back = row.createEl("button", { cls: "mod-muted", text: t("review.backHome") });
+    back.addEventListener("click", () => void this.show({ kind: "home" }));
+  }
+  // ---------- 复习 ----------
+  async startStudy(scope) {
+    const svc = this.host.service;
+    await svc.ensureIds(scope.files);
+    const { decks, byKey } = await svc.scopeDecks(scope);
+    for (const d of decks) d.cards = d.cards.filter((c) => !c.id.startsWith("tmp-"));
+    this.byKey = byKey;
+    this.session = new Session(
+      decks.filter((d) => !d.deckId.startsWith("tmp-")),
+      svc.prefs(),
+      svc.scheduler(),
+      Date.now(),
+      scope.capTotal ?? decks.length > 1
+    );
+    this.screen = { kind: "study", scope };
+    await this.render();
+    this.contentEl.focus();
+  }
+  current() {
+    const s = this.session;
+    const ref = s?.current?.ref;
+    return ref ? this.byKey.get(`${ref.deckId}|${ref.id}`) ?? null : null;
+  }
+  async renderStudy() {
+    const s = this.session;
+    const el = this.contentEl;
+    if (!s) return;
+    const now = Date.now();
+    const ref = s.next(now);
+    this.shown = false;
+    if (!ref) return this.renderDone();
+    const hit = this.current();
+    if (!hit) {
+      new import_obsidian13.Notice(t("review.missing"));
+      s.setAside("bury", now);
+      return this.renderStudy();
+    }
+    this.cardStart = now;
+    const wrap2 = createDiv({ cls: "ggmm-rv-study" });
+    const top = wrap2.createDiv({ cls: "ggmm-rv-top" });
+    const crumb = top.createDiv({ cls: "ggmm-rv-crumb" });
+    if (this.host.settings().reviewCrumb) {
+      const parts = crumbOf(hit.card.node);
+      if (hit.card.kind === "answer") parts.pop();
+      crumb.setText(parts.join(" \u203A "));
+      crumb.addEventListener("click", () => void this.openCurrent());
+    }
+    const clock = top.createDiv({ cls: "ggmm-rv-clock" });
+    if (this.host.settings().reviewTimer) {
+      const tick = () => {
+        const sec = Math.floor((Date.now() - this.cardStart) / 1e3);
+        clock.setText(`\u23F1 ${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, "0")}`);
+      };
+      tick();
+      this.timer = window.setInterval(tick, 1e3);
+    }
+    const card = wrap2.createDiv({ cls: "ggmm-rv-card" });
+    const bot = wrap2.createDiv({ cls: "ggmm-rv-bot" });
+    el.replaceChildren(wrap2);
+    await this.renderCard(card, hit, false);
+    card.addEventListener("click", (ev) => {
+      if (ev.target.closest("a, img")) return;
+      if (!this.shown) this.reveal();
+    });
+    this.renderBar(bot);
+  }
+  /**
+   * 底栏给浮在上面的东西让位置：手机上 Obsidian 底部悬浮的导航栏（position: fixed）、电脑上右下角的状态栏。
+   * 量出压住了多少，底栏下面多留这么多（和脑图工具栏的做法一样，#37）
+   */
+  updateInset() {
+    const doc = this.contentEl.ownerDocument;
+    const desktop = !doc.body.classList.contains("is-mobile");
+    const r3 = this.contentEl.getBoundingClientRect();
+    let inset = 0;
+    for (const b of doc.querySelectorAll(desktop ? ".status-bar" : ".mobile-navbar, .mobile-toolbar")) {
+      const br = b.getBoundingClientRect();
+      if (!br.width || !br.height || getComputedStyle(b).visibility === "hidden") continue;
+      if (br.top < r3.bottom && br.bottom > r3.top && br.left < r3.right && br.right > r3.left) inset = Math.max(inset, r3.bottom - br.top);
+    }
+    this.contentEl.setCssProps({ "--ggmm-rv-inset": `${Math.round(inset)}px` });
+  }
+  renderBar(bot) {
+    const s = this.session;
+    if (!s) return;
+    window.requestAnimationFrame(() => this.updateInset());
+    bot.empty();
+    const edit = bot.createEl("button", { cls: "ggmm-rv-edit", text: t("review.edit") });
+    edit.addEventListener("click", () => void this.openCurrent());
+    const mid = bot.createDiv({ cls: "ggmm-rv-mid" });
+    if (!this.shown) {
+      const c = s.counts();
+      const kind = s.currentKind();
+      const counts = mid.createDiv({ cls: "ggmm-rv-counts" });
+      const num2 = (n, cls, on, tip) => {
+        const sp = counts.createSpan({ cls: `${cls}${on ? " is-current" : ""}`, text: String(n) });
+        (0, import_obsidian13.setTooltip)(sp, on ? `${tip}
+${t("review.tipCurrent")}` : tip, { placement: "top" });
+        return sp;
+      };
+      num2(c.new, "is-new", kind === "new", t("review.tipNew", { n: c.new }));
+      counts.appendText(" + ");
+      num2(c.learn, "is-learn", kind === "learn", t("review.tipLearn", { n: c.learn }));
+      counts.appendText(" + ");
+      num2(c.review, "is-review", kind === "review", t("review.tipReview", { n: c.review }));
+      const show = mid.createEl("button", { cls: "mod-cta ggmm-rv-show" });
+      show.createSpan({ text: t("review.showAnswer") });
+      if (!import_obsidian13.Platform.isMobile) show.createSpan({ cls: "ggmm-rv-kbd", text: t("review.space") });
+      show.addEventListener("click", () => this.reveal());
+    } else {
+      const now = Date.now();
+      const p = s.preview(now);
+      const grades = mid.createDiv({ cls: "ggmm-rv-grades" });
+      for (const g of [Rating.Again, Rating.Hard, Rating.Good, Rating.Easy]) {
+        const b = grades.createEl("button", { cls: `ggmm-rv-grade is-g${g}` });
+        b.createSpan({ cls: "ggmm-rv-iv", text: p ? formatInterval(p[g].due - now, units()) : "" });
+        b.createSpan({ cls: "ggmm-rv-gname", text: t(GRADE_KEYS[g]) });
+        if (!import_obsidian13.Platform.isMobile) b.createSpan({ cls: "ggmm-rv-kbd", text: g === Rating.Good ? `${g} / ${t("review.space")}` : String(g) });
+        b.addEventListener("click", () => void this.grade(g));
+      }
+    }
+    const more = bot.createEl("button", { cls: "ggmm-rv-more", text: `${t("review.more")} \u25BE` });
+    more.addEventListener("click", (ev) => this.moreMenu(ev));
+  }
+  reveal() {
+    const hit = this.current();
+    if (!hit || this.shown) return;
+    this.shown = true;
+    const card = this.contentEl.querySelector(".ggmm-rv-card");
+    const bot = this.contentEl.querySelector(".ggmm-rv-bot");
+    if (card) void this.renderCard(card, hit, true);
+    if (bot) this.renderBar(bot);
+  }
+  async grade(g) {
+    const s = this.session;
+    if (!s?.current || !this.shown) return;
+    const now = Date.now();
+    const deckId = s.grade(g, now, Math.min(now - this.cardStart, 6e4));
+    if (deckId) await this.host.service.store.save(deckId);
+    this.host.service.changed();
+    await this.renderStudy();
+  }
+  async setAside(how) {
+    const s = this.session;
+    if (this.screen.kind !== "study" || !s?.current) return;
+    const deckId = s.setAside(how, Date.now());
+    if (deckId) await this.host.service.store.save(deckId);
+    new import_obsidian13.Notice(t(how === "bury" ? "review.buried" : "review.suspended"));
+    this.host.service.changed();
+    await this.renderStudy();
+  }
+  async undo() {
+    const s = this.session;
+    if (this.screen.kind !== "study" || !s?.canUndo()) return;
+    s.current = null;
+    const done = s.undo();
+    if (!done) return;
+    await this.host.service.store.save(done.deckId);
+    this.host.service.changed();
+    const hit = this.current();
+    if (done.grade) new import_obsidian13.Notice(t("review.undone", { g: t(GRADE_KEYS[done.grade]) }));
+    this.shown = false;
+    const card = this.contentEl.querySelector(".ggmm-rv-card");
+    const bot = this.contentEl.querySelector(".ggmm-rv-bot");
+    if (card && hit) await this.renderCard(card, hit, false);
+    this.cardStart = Date.now();
+    if (bot) this.renderBar(bot);
+  }
+  async openCurrent() {
+    const hit = this.current();
+    if (!hit) return;
+    await this.host.openNode(hit.file, hit.card.node.reviewId, pathOf(hit.card.node));
+  }
+  moreMenu(ev) {
+    const m = new import_obsidian13.Menu();
+    m.addItem((i) => i.setTitle(`${t("review.menuOpen")}  E`).setIcon("network").onClick(() => void this.openCurrent()));
+    m.addSeparator();
+    m.addItem((i) => i.setTitle(`${t("review.menuBury")}  -`).setIcon("eye-off").onClick(() => void this.setAside("bury")));
+    m.addItem((i) => i.setTitle(`${t("review.menuSuspend")}  @`).setIcon("pause").onClick(() => void this.setAside("suspend")));
+    m.addSeparator();
+    m.addItem(
+      (i) => i.setTitle(`${t("review.menuUndo")}  ${import_obsidian13.Platform.isMacOS ? "\u2318Z" : "Ctrl+Z"}`).setIcon("undo-2").setDisabled(!this.session?.canUndo()).onClick(() => void this.undo())
+    );
+    m.addItem((i) => i.setTitle(`${t("review.menuInfo")}  I`).setIcon("info").onClick(() => this.cardInfo()));
+    m.showAtMouseEvent(ev);
+  }
+  cardInfo() {
+    const s = this.session;
+    const ref = s?.current?.ref;
+    if (!s || !ref) return;
+    const rec = s.record(ref);
+    const modal = new import_obsidian13.Modal(this.app);
+    modal.titleEl.setText(t("review.menuInfo"));
+    const table = modal.contentEl.createEl("table", { cls: "ggmm-rv-info" });
+    const row = (k, v) => {
+      const tr = table.createEl("tr");
+      tr.createEl("th", { text: k });
+      tr.createEl("td", { text: v });
+    };
+    const fmt2 = (ms) => new Date(ms).toLocaleString();
+    const st = { [State.New]: t("review.stateNew"), [State.Learning]: t("review.stateLearn"), [State.Review]: t("review.stateReview"), [State.Relearning]: t("review.stateRelearn") };
+    if (!rec || rec.reps === 0) row(t("review.infoState"), t("review.infoNone"));
+    else {
+      const deck = this.host.service.store.cached(ref.deckId);
+      const first = deck?.log.find((e) => e.c === ref.id);
+      row(t("review.infoState"), st[rec.st]);
+      if (first) row(t("review.infoAdded"), fmt2(first.t));
+      row(t("review.infoDue"), fmt2(rec.due));
+      row(t("review.infoReps"), String(rec.reps));
+      row(t("review.infoLapses"), String(rec.lapses));
+      row(t("review.infoStability"), t("review.days", { n: Math.round(rec.s * 10) / 10 }));
+      row(t("review.infoDifficulty"), `${Math.round(rec.d * 10) / 10} / 10`);
+    }
+    modal.open();
+  }
+  renderDone() {
+    const s = this.session;
+    const el = this.contentEl;
+    const box = createDiv({ cls: "ggmm-rv-done" });
+    const wait = s?.nextLearnAt();
+    if (wait) {
+      box.createDiv({ cls: "ggmm-rv-msg", text: t("review.waitLearn", { when: formatInterval(wait - Date.now(), units()).replace(/^</, "") }) });
+      this.waitTimer = window.setTimeout(() => void this.renderStudy(), Math.max(1e3, wait - Date.now() - 20 * 6e4 + 1e3));
+    } else {
+      box.createDiv({ cls: "ggmm-rv-title", text: t("review.doneTitle") });
+      if (s?.done) box.createDiv({ cls: "ggmm-rv-msg", text: t("review.doneStats", { n: s.done, min: Math.max(1, Math.round(s.spent / 6e4)) }) });
+      void this.nextDue().then((when) => box.createDiv({ cls: "ggmm-rv-msg", text: when ? t("review.doneNext", { when }) : t("review.doneNone") }));
+    }
+    const back = box.createEl("button", { text: t("review.backHome") });
+    back.addEventListener("click", () => void this.show({ kind: "home" }));
+    el.replaceChildren(box);
+  }
+  /** 学完后：范围里下一张什么时候到期 */
+  async nextDue() {
+    if (this.screen.kind !== "study") return null;
+    const { decks } = await this.host.service.scopeDecks(this.screen.scope);
+    let min = Infinity;
+    for (const d of decks)
+      for (const c of d.cards) {
+        const r3 = d.data.cards[c.id];
+        if (r3 && !r3.susp && r3.st !== State.New) min = Math.min(min, r3.due);
+      }
+    if (!Number.isFinite(min)) return null;
+    const p = this.host.service.prefs();
+    const days = dayNumber(min, p.dayStartHour) - dayNumber(Date.now(), p.dayStartHour);
+    const time = new Date(min).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    if (days <= 0) return ` ${time} `;
+    if (days === 1) return ` ${t("review.tomorrow")} ${time} `;
+    return ` ${new Date(min).toLocaleDateString()} `;
+  }
+  // ---------- 卡片内容 ----------
+  async md(el, text, path) {
+    await import_obsidian13.MarkdownRenderer.render(this.app, text, el, path, this);
+  }
+  async renderCard(el, hit, back) {
+    const { card, file } = hit;
+    const n = card.node;
+    const body = createDiv({ cls: `ggmm-rv-body is-${card.kind}` });
+    if (card.kind === "cloze") {
+      const q = body.createDiv({ cls: "ggmm-rv-q" });
+      await this.md(q, displayText(n.text), file.path);
+      for (const m of q.querySelectorAll("mark")) m.addClass(back ? "ggmm-rv-reveal" : "ggmm-rv-mask");
+      if (back && n.note) await this.extra(body, n.note, file.path);
+    } else if (card.kind === "answer") {
+      const parent = n.parent;
+      const q = body.createDiv({ cls: "ggmm-rv-q" });
+      await this.md(q, displayText(parent.text), file.path);
+      if (back) {
+        body.createEl("hr", { cls: "ggmm-rv-hr" });
+        const a = body.createDiv({ cls: "ggmm-rv-a" });
+        await this.md(a, displayText(n.text), file.path);
+        await this.subtree(body, n, file.path);
+      }
+    } else {
+      const quiz = body.createDiv({ cls: "ggmm-rv-quiz" });
+      const stem = quiz.createDiv({ cls: "ggmm-rv-stem" });
+      await this.md(stem, displayText(n.text), file.path);
+      stem.createSpan({ cls: "ggmm-rv-badge", text: t(isMultiChoice(n) ? "review.multi" : "review.single") });
+      for (const o of n.children) {
+        const state = taskState(o.text);
+        if (!state) continue;
+        const opt = quiz.createDiv({ cls: "ggmm-rv-opt" });
+        if (back) opt.addClass(state === "done" ? "is-ok" : "is-no");
+        const box = opt.createSpan({ cls: "ggmm-rv-box" });
+        if (back && state === "done") (0, import_obsidian13.setIcon)(box, "check");
+        const txt = opt.createDiv({ cls: "ggmm-rv-opttext" });
+        await this.md(txt, displayText(o.text), file.path);
+        if (back) await this.subtree(txt, o, file.path);
+      }
+      if (back && n.note) await this.extra(body, n.note, file.path);
+    }
+    el.replaceChildren(body);
+  }
+  /** 子节点（和备注）按缩进列在答案下面，小一号、灰一点 */
+  async subtree(el, n, path) {
+    if (n.note) await this.extra(el, n.note, path);
+    if (!n.children.length) return;
+    const list = n.children.map((c) => subtreeToList(c, "	", true)).join("");
+    const box = el.createDiv({ cls: "ggmm-rv-extra" });
+    await this.md(box, list, path);
+  }
+  async extra(el, note, path) {
+    const box = el.createDiv({ cls: "ggmm-rv-extra" });
+    await this.md(box, note, path);
+  }
+};
+
 // src/note-tags.ts
-var import_state6 = require("@codemirror/state");
-var import_view6 = require("@codemirror/view");
-var import_obsidian10 = require("obsidian");
+var import_state7 = require("@codemirror/state");
+var import_view7 = require("@codemirror/view");
+var import_obsidian14 = require("obsidian");
 
 // src/fence.ts
 function fencedLines(line, count) {
@@ -23651,10 +31345,10 @@ function fencedLines(line, count) {
 }
 
 // src/note-tags.ts
-var HIDE3 = import_view6.Decoration.replace({});
-var U = import_view6.Decoration.mark({ class: "mm-note-u" });
-var MARK2 = import_view6.Decoration.mark({ class: "mm-note-mark" });
-var livePreview3 = (state) => state.field(import_obsidian10.editorLivePreviewField, false) ?? false;
+var HIDE3 = import_view7.Decoration.replace({});
+var U = import_view7.Decoration.mark({ class: "mm-note-u" });
+var MARK2 = import_view7.Decoration.mark({ class: "mm-note-mark" });
+var livePreview3 = (state) => state.field(import_obsidian14.editorLivePreviewField, false) ?? false;
 function fenced(state, upToLine) {
   const doc = state.doc;
   return fencedLines((i) => doc.line(i + 1).text, Math.min(upToLine, doc.lines));
@@ -23664,11 +31358,11 @@ function lineSpans(lineFrom, text) {
   return formatSpans(text).filter((s) => s.html).map((s) => ({ ...s, from: s.from + lineFrom, to: s.to + lineFrom, innerFrom: s.innerFrom + lineFrom, innerTo: s.innerTo + lineFrom }));
 }
 function contentMark3(span) {
-  if (span.kind === "color") return import_view6.Decoration.mark({ attributes: { style: `color: ${span.color}` } });
-  if (span.kind === "bg") return import_view6.Decoration.mark({ class: "mm-note-mark", attributes: { style: `background: ${span.color}` } });
+  if (span.kind === "color") return import_view7.Decoration.mark({ attributes: { style: `color: ${span.color}` } });
+  if (span.kind === "bg") return import_view7.Decoration.mark({ class: "mm-note-mark", attributes: { style: `background: ${span.color}` } });
   return span.kind === "u" ? U : MARK2;
 }
-var TagsWidget = class extends import_view6.WidgetType {
+var TagsWidget = class extends import_view7.WidgetType {
   constructor(src) {
     super();
     this.src = src;
@@ -23680,8 +31374,8 @@ var TagsWidget = class extends import_view6.WidgetType {
     const el = createSpan({ cls: "mm-note-tags" });
     renderInline(el, this.src, {
       renderMath: (tex) => {
-        const m = (0, import_obsidian10.renderMath)(tex, false);
-        void (0, import_obsidian10.finishRenderMath)();
+        const m = (0, import_obsidian14.renderMath)(tex, false);
+        void (0, import_obsidian14.finishRenderMath)();
         return m;
       }
     });
@@ -23715,7 +31409,7 @@ function build3(view) {
           if (spans.some((o) => o !== span && o.from <= span.from && o.to >= span.to && (o.from < span.from || o.to > span.to))) continue;
           if (touched(view, span.from, span.to)) continue;
           drawn.push(span);
-          deco.push(import_view6.Decoration.replace({ widget: new TagsWidget(view.state.sliceDoc(span.from, span.to)) }).range(span.from, span.to));
+          deco.push(import_view7.Decoration.replace({ widget: new TagsWidget(view.state.sliceDoc(span.from, span.to)) }).range(span.from, span.to));
         }
         for (const span of spans) {
           if (drawn.some((d) => d.from <= span.from && d.to >= span.to)) continue;
@@ -23728,9 +31422,9 @@ function build3(view) {
       }
     }
   }
-  return { deco: import_view6.Decoration.set(deco, true), atomic: import_view6.Decoration.set(atomic, true) };
+  return { deco: import_view7.Decoration.set(deco, true), atomic: import_view7.Decoration.set(atomic, true) };
 }
-var tagsPlugin = import_view6.ViewPlugin.fromClass(
+var tagsPlugin = import_view7.ViewPlugin.fromClass(
   class {
     constructor(view) {
       ({ deco: this.deco, atomic: this.atomic } = build3(view));
@@ -23743,10 +31437,10 @@ var tagsPlugin = import_view6.ViewPlugin.fromClass(
   },
   {
     decorations: (v) => v.deco,
-    provide: (plugin) => import_view6.EditorView.atomicRanges.of((view) => view.plugin(plugin)?.atomic ?? import_view6.Decoration.none)
+    provide: (plugin) => import_view7.EditorView.atomicRanges.of((view) => view.plugin(plugin)?.atomic ?? import_view7.Decoration.none)
   }
 );
-var keepTagsPaired = import_state6.EditorState.transactionFilter.of((tr) => {
+var keepTagsPaired = import_state7.EditorState.transactionFilter.of((tr) => {
   if (!tr.docChanged || !(tr.isUserEvent("delete") || tr.isUserEvent("input.type") || tr.isUserEvent("input.paste"))) return tr;
   const st = tr.startState;
   if (st.selection.ranges.length > 1 || !livePreview3(st)) return tr;
@@ -23765,8 +31459,8 @@ var keepTagsPaired = import_state6.EditorState.transactionFilter.of((tr) => {
     hidden.map(local),
     edits.map((e) => ({ from: e.from - off, to: e.to - off, insert: e.insert })),
     backward,
-    (p) => (0, import_state6.findClusterBreak)(text, p, false),
-    (p) => (0, import_state6.findClusterBreak)(text, p, true)
+    (p) => (0, import_state7.findClusterBreak)(text, p, false),
+    (p) => (0, import_state7.findClusterBreak)(text, p, true)
   );
   if (!fixed) return tr;
   if (!fixed.length) return [];
@@ -23774,12 +31468,12 @@ var keepTagsPaired = import_state6.EditorState.transactionFilter.of((tr) => {
   const first = fixed[0];
   return {
     changes,
-    selection: import_state6.EditorSelection.cursor(changes.mapPos(first.from + off, -1) + first.insert.length),
-    userEvent: tr.annotation(import_state6.Transaction.userEvent),
+    selection: import_state7.EditorSelection.cursor(changes.mapPos(first.from + off, -1) + first.insert.length),
+    userEvent: tr.annotation(import_state7.Transaction.userEvent),
     scrollIntoView: tr.scrollIntoView
   };
 });
-var splitTagsOnNewline = import_state6.EditorState.transactionFilter.of((tr) => {
+var splitTagsOnNewline = import_state7.EditorState.transactionFilter.of((tr) => {
   if (!tr.docChanged || !tr.isUserEvent("input") || tr.isUserEvent("input.paste")) return tr;
   const st = tr.startState;
   const sel = st.selection;
@@ -23822,21 +31516,33 @@ var splitTagsOnNewline = import_state6.EditorState.transactionFilter.of((tr) => 
   if (pos === at && !inside.length) return tr;
   return {
     changes: { from: pos, insert: out },
-    selection: import_state6.EditorSelection.cursor(pos + out.length),
-    userEvent: tr.annotation(import_state6.Transaction.userEvent),
+    selection: import_state7.EditorSelection.cursor(pos + out.length),
+    userEvent: tr.annotation(import_state7.Transaction.userEvent),
     scrollIntoView: true
   };
 });
 function noteTagsExtension() {
-  return [import_state6.Prec.highest(tagsPlugin), keepTagsPaired, splitTagsOnNewline];
+  return [import_state7.Prec.highest(tagsPlugin), keepTagsPaired, splitTagsOnNewline];
 }
 
+// examples/Mind Map 使用指南.md
+var Mind_Map_default = '---\nmindmap: true\nicon: lucide:mindmap-tree\nmindmap-structure: mindmap\n---\n\n# Mind Map \u4F7F\u7528\u6307\u5357\n%%w=504%%\n\n\u8FD9\u5F20\u56FE\u672C\u8EAB\u5C31\u662F\u4E00\u7BC7\u666E\u901A\u7684 Markdown \u7B14\u8BB0\uFF0C\u7528\u8111\u56FE\u89C6\u56FE\u6253\u5F00\u800C\u5DF2\u3002\u5207\u5230 Markdown \u5C31\u80FD\u770B\u5230\u5B83\u7684\u6E90\u7801\uFF0C\u6539\u54EA\u8FB9\u53E6\u4E00\u8FB9\u90FD\u8DDF\u7740\u53D8\u3002\n\n\u6309 `/` \u6298\u53E0\u5C55\u5F00\u4E00\u652F\uFF0C\u5DE5\u5177\u680F\u7684\u5C42\u7EA7\u6309\u94AE\u53EF\u4EE5\u4E00\u952E\u300C\u5C55\u5F00\u5168\u90E8\u300D\u3002\n\n## \u4ECE\u8FD9\u91CC\u5F00\u59CB\n%%green fold%%\n\n### \u600E\u4E48\u65B0\u5EFA\n\n- \u6587\u4EF6\u5939\u53F3\u952E \u2192 **\u65B0\u5EFA\u601D\u7EF4\u5BFC\u56FE**\n- \u547D\u4EE4\u9762\u677F \u2192 **\u65B0\u5EFA\u601D\u7EF4\u5BFC\u56FE**\n- \u5DE6\u4FA7\u8FB9\u680F\u7684\u8111\u56FE\u56FE\u6807\n- \u60F3\u6BCF\u6B21\u90FD\u4ECE\u81EA\u5DF1\u7684\u7ED3\u6784\u5F00\u59CB\uFF0C\u5728\u8BBE\u7F6E\u300C\u65B0\u5EFA\u601D\u7EF4\u5BFC\u56FE\u7684\u6A21\u677F\u300D\u91CC\u9009\u4E00\u7BC7\u7B14\u8BB0\uFF0C`{{title}}`\u3001`{{date}}`\u3001`{{time}}` \u4F1A\u81EA\u52A8\u66FF\u6362\n\n### \u600E\u4E48\u628A\u5DF2\u6709\u7B14\u8BB0\u53D8\u6210\u8111\u56FE\n\nfrontmatter \u5C31\u662F\u7B14\u8BB0\u6700\u5F00\u5934 `---` \u5305\u8D77\u6765\u7684\u90A3\u51E0\u884C\u3002\n\n- \u5728 frontmatter \u91CC\u52A0\u4E00\u884C `mindmap: true`\uFF0C\u4E4B\u540E\u8FD9\u7BC7\u7B14\u8BB0\u9ED8\u8BA4\u5C31\u4EE5\u8111\u56FE\u6253\u5F00\n- \u6216\u8005\u7B14\u8BB0\u53F3\u952E \u2192 **\u4EE5\u601D\u7EF4\u5BFC\u56FE\u6253\u5F00**\uFF0C\u53EA\u770B\u4E00\u6B21\u4E0D\u6539\u6587\u4EF6\n\n### \u600E\u4E48\u5207\u56DE Markdown\n\n- \u8111\u56FE\u53F3\u4E0A\u89D2\u7684\u6587\u6863\u6309\u94AE\uFF0C\u6216\u547D\u4EE4 **\u5728\u601D\u7EF4\u5BFC\u56FE\u548C Markdown \u4E4B\u95F4\u5207\u6362**\n- \u6587\u4EF6\u53F3\u952E \u2192 **\u4EE5 Markdown \u6253\u5F00**\uFF1B\u5207\u8FC7\u53BB\u4E4B\u540E\u53F3\u4E0A\u89D2\u6709\u6309\u94AE\u5207\u56DE\u8111\u56FE\n- \u4E24\u4E2A\u89C6\u56FE\u5171\u7528\u4E00\u4E2A\u6587\u4EF6\uFF0C\u6765\u56DE\u5207\u4E0D\u4F1A\u4E22\u4E1C\u897F\n- \u4E0D\u60F3\u8BA9\u5207\u6362\u5199\u5165 `mindmap: true`\uFF0C\u5728\u8BBE\u7F6E\u91CC\u5173\u6389\u300C\u5207\u6362\u6210\u601D\u7EF4\u5BFC\u56FE\u65F6\u8BB0\u4F4F\u300D\n\n### \u8FB9\u5199\u8FB9\u770B\n\n- \u547D\u4EE4 **Markdown \u548C\u601D\u7EF4\u5BFC\u56FE\u5206\u5C4F\u5BF9\u7167**\uFF08\u6587\u4EF6\u53F3\u952E\u83DC\u5355\u3001\u8111\u56FE\u7A7A\u767D\u5904\u53F3\u952E\u83DC\u5355\u91CC\u4E5F\u6709\uFF09\uFF1A\u5DE6\u8FB9\u7167\u5E38\u5199 Markdown\uFF0C\u53F3\u8FB9\u5B9E\u65F6\u957F\u51FA\u8111\u56FE\uFF1B\u6B63\u770B\u7740\u8111\u56FE\u65F6\u7528\uFF0C\u5DE6\u8FB9\u4F1A\u5207\u56DE Markdown\n- \u4E0D\u6539\u6587\u4EF6\uFF0C\u9002\u5408\u53EA\u60F3\u7528\u8111\u56FE\u770B\u4E00\u773C\u5927\u7EB2\n\n### \u4E09\u79CD\u6253\u5F00\u65B9\u5F0F\n\n- \u6574\u7BC7\u7B14\u8BB0\uFF1A\u4E00\u5F20\u5927\u56FE\uFF0C\u5360\u6EE1\u6807\u7B7E\u9875\n- \u4EE3\u7801\u5757\u5D4C\u5165\uFF1A\u666E\u901A\u7B14\u8BB0\u91CC\u63D2\u4E00\u6BB5 mindmap \u4EE3\u7801\u5757\uFF0C\u6E32\u67D3\u6210\u5C0F\u56FE\n- \u5D4C\u5165\u5DF2\u6709\u8111\u56FE\uFF1A`![[\u8111\u56FE\u7B14\u8BB0]]`\u3001`![[\u6587\u4EF6.xmind]]` \u663E\u793A\u53EA\u8BFB\u9884\u89C8\n- `.xmind` \u6587\u4EF6\uFF1A\u76F4\u63A5\u62D6\u8FDB vault \u5C31\u80FD\u6253\u5F00\n\n## \u7F16\u8F91\u8282\u70B9\n%%blue%%\n\n### \u589E\u5220\u6539\n%%fold%%\n\n- Tab \u52A0\u5B50\u8282\u70B9\uFF0CEnter \u52A0\u5144\u5F1F\u8282\u70B9\uFF0CShift+Enter \u63D2\u5230\u5F53\u524D\u8282\u70B9\u524D\u9762\uFF0C\u2318\u21B5 \u63D2\u5165\u7236\u8282\u70B9\n- \u53CC\u51FB / \u7A7A\u683C / F2 \u8FDB\u5165\u7F16\u8F91\uFF0C\u9ED8\u8BA4\u5168\u9009\u6587\u5B57\u3001\u6253\u5B57\u76F4\u63A5\u66FF\u6362\uFF1B\u60F3\u63A5\u7740\u5199\u53EF\u4EE5\u5728\u8BBE\u7F6E\u300C\u8FDB\u5165\u7F16\u8F91\u8282\u70B9\u65F6\u300D\u6539\u6210\u5149\u6807\u5728\u672B\u5C3E\u3002Enter \u63D0\u4EA4\uFF0CEsc \u53D6\u6D88\n- Delete / Backspace \u5220\u9664\u8282\u70B9\u548C\u5B83\u4E0B\u9762\u7684\u6574\u68F5\u5B50\u6811\n- \u2318\u232B \u53EA\u5220\u8FD9\u4E00\u4E2A\u8282\u70B9\uFF0C\u5B83\u7684\u5B50\u8282\u70B9\u63A5\u5230\u539F\u6765\u7684\u4F4D\u7F6E\uFF08\u53F3\u952E\u83DC\u5355\u300C\u4EC5\u5220\u9664\u6B64\u8282\u70B9\u300D\uFF09\n- \u7F16\u8F91\u65F6 Shift+Enter \u6362\u884C\uFF0C\u591A\u884C\u6587\u672C\u5B58\u6210 `<br>`\n\n### \u632A\u4F4D\u7F6E\n%%fold%%\n\n- **\u62D6\u62FD\u8282\u70B9**\u5230\u53E6\u4E00\u4E2A\u8282\u70B9\u4E0A\uFF0C\u6216\u8005\u5B83\u540E\u9762\u7684\u7A7A\u767D\u5904\uFF0C\u6210\u4E3A\u5B83\u7684\u5B50\u8282\u70B9\uFF1B\u5148\u591A\u9009\u51E0\u4E2A\u518D\u62D6\uFF0C\u6574\u7EC4\u4E00\u8D77\u8D70\n- \u62D6\u5230\u753B\u5E03\u8FB9\u7F18\uFF0C\u753B\u5E03\u4F1A\u81EA\u52A8\u8DDF\u7740\u6EDA\n- \u62D6\u5230\u5B50\u8282\u70B9\u4E4B\u95F4\u7684\u7A7A\u9699\u91CC\uFF0C\u63D2\u5230\u90A3\u4E2A\u4F4D\u7F6E\n- \u5DE6\u53F3\u5206\u5E03\u7ED3\u6784\u91CC\uFF0C\u62D6\u5230\u53E6\u4E00\u4FA7\u4E5F\u53EF\u4EE5\uFF0C\u62D6\u5230\u54EA\u8FB9\u5C31\u56FA\u5B9A\u5728\u54EA\u8FB9\uFF08`%%left%%` / `%%right%%`\uFF09\uFF0C\u522B\u7684\u5206\u652F\u4E0D\u4F1A\u88AB\u6324\u8FC7\u53BB\n- Alt+\u2191\u2193 \u5728\u5144\u5F1F\u4E4B\u95F4\u6392\u5E8F\uFF0CAlt+\u2190\u2192 \u5347\u7EA7\u964D\u7EA7\uFF0C\u591A\u9009\u65F6\u6574\u7EC4\u4E00\u8D77\u52A8\n\n### \u9009\u4E2D\n%%fold%%\n\n- \u5355\u51FB\u9009\u4E2D\uFF0CShift \u70B9\u51FB\u52A0\u9009\uFF0C\u2318 \u70B9\u51FB\u53CD\u9009\n- Shift \u5728\u7A7A\u767D\u5904\u62D6\u52A8 = \u6846\u9009\n- \u4E60\u60EF XMind\uFF1A\u8BBE\u7F6E\u91CC\u300C\u5DE6\u952E\u62D6\u52A8\u7A7A\u767D\u5904\u300D\u9009\u300C\u6846\u9009\u300D\uFF0C\u5DE6\u952E\u76F4\u63A5\u6846\u9009\uFF0C\u53F3\u952E\u6216\u4E2D\u952E\u62D6\u52A8\u5E73\u79FB\n- \u2318A \u5168\u9009\uFF1B\u591A\u9009\u540E\u4E0A\u8272\u3001\u5220\u9664\u5BF9\u6574\u7EC4\u751F\u6548\n\n### \u6D6E\u52A8\u5DE5\u5177\u680F\n%%fold%%\n\n\u9009\u4E2D\u8282\u70B9\u540E\uFF0C\u8282\u70B9\u4E0A\u65B9\u4F1A\u6D6E\u51FA\u4E00\u6761\u5C0F\u5DE5\u5177\u680F\u3002\n\n- \u4E5D\u79CD\u989C\u8272 + \u6E05\u9664\u989C\u8272\n- \u52A0\u5B50\u8282\u70B9 / \u52A0\u5144\u5F1F\u8282\u70B9\n- \u6807\u8BB0\u3001\u5907\u6CE8\u3001\u5916\u6846\u3001\u94FE\u63A5\u7B14\u8BB0\n- \u590D\u5236\u5B50\u6811 / \u7C98\u8D34\u4E3A\u5B50\u8282\u70B9 / \u5220\u9664\n\n### \u53F3\u952E\u83DC\u5355\n%%fold%%\n\n- \u8282\u70B9\u4E0A\uFF1A\u7F16\u8F91\u3001\u589E\u5220\u3001\u805A\u7126\u3001\u6298\u53E0\u3001\u94FE\u63A5\u3001\u5907\u6CE8\u3001\u6807\u8BB0\u3001\u4EFB\u52A1\u3001\u8F6C\u6807\u9898/\u5217\u8868\u3001\u590D\u5236\u94FE\u63A5\n- \u7A7A\u767D\u5904\uFF1A\u7C98\u8D34\u3001\u5C55\u5F00\u5168\u90E8\u3001\u53EA\u663E\u793A\u4E3B\u4E3B\u9898\u3001\u9002\u5E94\u753B\u5E03\n- \u5DE5\u5177\u680F\u4E0A\uFF1A\u5207\u6362\u5DE5\u5177\u680F\u4F4D\u7F6E\n\n## \u8282\u70B9\u80FD\u505A\u4EC0\u4E48\n%%purple%%\n\n### \u989C\u8272\n%%fold%%\n\n\u989C\u8272\u4EE5 `%%green%%` \u7684\u5F62\u5F0F\u5B58\u4E0B\u6765\uFF1A\u5217\u8868\u9879\u5199\u5728\u884C\u5C3E\uFF0C\u6807\u9898\u5199\u5728\u6807\u9898\u4E0B\u9762\u5355\u72EC\u4E00\u884C\uFF08\u8FD9\u6837 `[[\u7B14\u8BB0#\u6807\u9898]]` \u7684\u94FE\u63A5\u4E0D\u4F1A\u65AD\uFF09\u3002\u8FD9\u662F Obsidian \u7684\u6CE8\u91CA\u8BED\u6CD5\uFF0C\u9605\u8BFB\u6A21\u5F0F\u91CC\u770B\u4E0D\u89C1\u3002\n\n- \u{1F7E5} \u7EA2 %%red%%\n- \u{1F7E7} \u6A59 %%orange%%\n- \u{1F7E8} \u9EC4 %%yellow%%\n- \u{1F7E9} \u7EFF %%green%%\n- \u{1F7E6} \u84DD %%blue%%\n- \u{1F7EA} \u7D2B %%purple%%\n- \u9752 / \u7C89 / \u7070 %%teal%%\n\n### \u6807\u8BB0\n%%fold%%\n\n\u6807\u8BB0\u5C31\u662F\u5B58\u5728\u6587\u5B57\u5F00\u5934\u7684 emoji\uFF0C\u4EFB\u4F55\u5730\u65B9\u90FD\u663E\u793A\u5F97\u51FA\u6765\uFF0C\u522B\u7684\u8F6F\u4EF6\u6253\u5F00\u4E5F\u4E0D\u4F1A\u4E71\u3002\n\n- 1\uFE0F\u20E3 \u4F18\u5148\u7EA7 \xB7 \u4E94\u4E2A\u6570\u5B57\uFF0C\u540C\u7EC4\u4E92\u65A5\n- \u23F3 \u8FDB\u5EA6 \xB7 \u5F85\u529E\u3001\u5B8C\u6210\u3001\u653E\u5F03\n- \u{1F6A9} \u65D7\u5E1C \xB7 \u516D\u79CD\u989C\u8272\n- \u2B50 \u7B26\u53F7 \xB7 \u661F\u3001\u611F\u53F9\u3001\u95EE\u53F7\u3001\u706F\u6CE1\u3001\u8B66\u544A\u3001\u706B\u3001\u5FC3\u3001\u56FE\u9489\n- \u{1F3AF} \u81EA\u5B9A\u4E49 \xB7 \u5728\u8BBE\u7F6E\u91CC\u586B\u81EA\u5DF1\u5E38\u7528\u7684 emoji \u6216\u7B26\u53F7\uFF08\u7A7A\u683C\u9694\u5F00\uFF09\uFF0C\u6807\u8BB0\u9762\u677F\u91CC\u591A\u51FA\u4E00\u7EC4\uFF1B\u53EF\u4EE5\u8BBE\u6210\u6BCF\u4E2A\u8282\u70B9\u53EA\u80FD\u9009\u4E00\u4E2A\n\n### \u5907\u6CE8\n%%fold%%\n\n\u8FD9\u6BB5\u8BDD\u672C\u8EAB\u5C31\u662F\u4E00\u6761\u5907\u6CE8\u3002\u5907\u6CE8\u91CC\u53EF\u4EE5\u5199\u4EE3\u7801\uFF1A\n\n```js\nconsole.log("hello");\n```\n\n\u5199\u56DE\u6587\u4EF6\u65F6\u5B83\u5C31\u8001\u8001\u5B9E\u5B9E\u5F85\u5728\u8282\u70B9\u4E0B\u9762\u3002\n\n- \u8282\u70B9\u4E0B\u9762\u7684\u6BB5\u843D\u5C31\u662F\u5907\u6CE8\uFF0C\u8282\u70B9\u4E0A\u4F1A\u51FA\u73B0\u4E00\u4E2A \u2261 \u56FE\u6807\n- \u70B9 \u2261 \u67E5\u770B\uFF0C\u5DE5\u5177\u680F\u7684\u5907\u6CE8\u6309\u94AE\u76F4\u63A5\u7F16\u8F91\n- \u67E5\u770B\u5F39\u7A97\u53F3\u4E0B\u89D2\u53EF\u4EE5\u62D6\u52A8\u6539\u5927\u5C0F\uFF0C\u4E0B\u6B21\u6253\u5F00\u6CBF\u7528\uFF0C\u70B9\u300C\u7F16\u8F91\u300D\u65F6\u5927\u5C0F\u548C\u4F4D\u7F6E\u4E0D\u53D8\uFF1B\u5907\u6CE8\u91CC\u7684\u56FE\u7247\u70B9\u4E00\u4E0B\u5168\u5C4F\u653E\u5927\uFF0C`[[\u53CC\u94FE]]` \u70B9\u51FB\u5C31\u80FD\u6253\u5F00\n- \u7F16\u8F91\u5907\u6CE8\u65F6\u76F4\u63A5\u7C98\u8D34\u6216\u62D6\u5165\u56FE\u7247\uFF0C\u81EA\u52A8\u5B58\u8FDB\u9644\u4EF6\u3001\u63D2\u5728\u5149\u6807\u5904\uFF1B\u7F16\u8F91\u8282\u70B9\u6587\u5B57\u65F6\u7C98\u8D34\u56FE\u7247\uFF0C\u4F1A\u52A0\u5230\u8FD9\u4E2A\u8282\u70B9\u7684\u5907\u6CE8\u91CC\n- \u8282\u70B9\u53F3\u952E \u2192 \u66F4\u591A \u2192 \u5728 Markdown \u4E2D\u5B9A\u4F4D\uFF0C\u76F4\u63A5\u8DF3\u5230\u8FD9\u4E00\u884C\uFF1B\u5207\u56DE\u8111\u56FE\u4F1A\u9009\u4E2D\u5149\u6807\u6240\u5728\u7684\u8282\u70B9\n- \u5DE6\u53F3\u5206\u5C4F\u540C\u65F6\u5F00\u7740\u8111\u56FE\u548C Markdown \u65F6\uFF0C\u5728\u8BBE\u7F6E\u91CC\u6253\u5F00\u300C\u548C Markdown \u5206\u5C4F\u8054\u52A8\u300D\uFF1A\u9009\u4E2D\u8282\u70B9\uFF0CMarkdown \u6EDA\u5230\u90A3\u4E00\u884C\uFF1BMarkdown \u91CC\u5149\u6807\u6362\u884C\uFF0C\u8111\u56FE\u9009\u4E2D\u5BF9\u5E94\u8282\u70B9\uFF0C\u8DF3\u5230\u7684\u90A3\u4E00\u884C\u6216\u8282\u70B9\u4F1A\u95EA\u4E00\u4E0B\n- \u5907\u6CE8\u652F\u6301 Markdown\uFF1A\u5217\u8868\u3001\u4EE3\u7801\u5757\u3001\u52A0\u7C97\u90FD\u884C\n\n### \u81EA\u7531\u4E3B\u9898\n%%fold%%\n\n\u4E0D\u548C\u4E2D\u5FC3\u4E3B\u9898\u8FDE\u7EBF\u3001\u53EF\u4EE5\u968F\u4FBF\u6446\u7684\u4E3B\u9898\uFF0C\u9002\u5408\u653E\u7075\u611F\u3001\u5F85\u5B9A\u7684\u95EE\u9898\u3002\n\n- \u53CC\u51FB\u7A7A\u767D\u5904\uFF0C\u6216\u8005\u53F3\u952E\u7A7A\u767D\u5904 \u2192 \u5728\u8FD9\u91CC\u65B0\u5EFA\u81EA\u7531\u4E3B\u9898\n- \u8282\u70B9\u53F3\u952E \u2192 \u66F4\u591A \u2192 \u8F6C\u4E3A\u81EA\u7531\u4E3B\u9898\uFF0C\u8FDE\u540C\u5206\u652F\u539F\u5730\u8131\u79BB\u51FA\u6765\n- \u62D6\u52A8\u5B83\u5C31\u80FD\u632A\u4F4D\u7F6E\uFF1B\u62D6\u5230\u67D0\u4E2A\u8282\u70B9\u4E0A\u5C31\u6302\u8FC7\u53BB\uFF0C\u53F3\u952E \u2192 \u66F4\u591A \u2192 \u6302\u56DE\u4E2D\u5FC3\u4E3B\u9898\u4E5F\u884C\n- \u5728\u81EA\u7531\u4E3B\u9898\u4E0A\u6309 Enter\uFF0C\u5728\u5B83\u4E0B\u65B9\u518D\u5EFA\u4E00\u4E2A\n- \u8BBE\u7F6E\u91CC\u6253\u5F00\u300C\u628A\u8282\u70B9\u62D6\u5230\u7A7A\u767D\u5904\u53D8\u6210\u81EA\u7531\u4E3B\u9898\u300D\uFF0C\u5C31\u80FD\u50CF XMind \u90A3\u6837\u76F4\u63A5\u62D6\u51FA\u6765\uFF08\u9ED8\u8BA4\u5173\uFF09\n- \u5B58\u6210\u4E2D\u5FC3\u4E3B\u9898\u4E0B\u5E26 `%%float x=320 y=-80%%` \u7684\u666E\u901A\u7AE0\u8282\uFF0CMarkdown \u91CC\u7167\u6837\u80FD\u8BFB\n\n### \u5916\u6846\n%%fold%%\n\n\u628A\u4E00\u4E2A\u8282\u70B9\u8FDE\u540C\u5B83\u7684\u5206\u652F\u6846\u8D77\u6765\uFF0C\u6216\u8005\u628A\u51E0\u4E2A\u76F8\u90BB\u7684\u5144\u5F1F\u6846\u6210\u4E00\u7EC4\u3002\n\n- \u9009\u4E2D\u540E\u70B9\u5DE5\u5177\u680F\u7684\u5916\u6846\u6309\u94AE\uFF0C\u6216\u6309 \u2318\u21E7B\uFF1B\u2318\u21E7B \u518D\u6309\u4E00\u6B21\u53BB\u6389\n- \u5148\u591A\u9009\u51E0\u4E2A\u76F8\u90BB\u7684\u5144\u5F1F\u518D\u52A0\uFF0C\u5C31\u6846\u6210\u4E00\u4E2A %%box=2 "\u8FD9\u4E24\u6761\u662F\u4E00\u7EC4"%%\n- \u52A0\u6807\u9898\uFF1A\u53CC\u51FB\u5916\u6846\u91CC\u7684\u7A7A\u767D\u5904\u76F4\u63A5\u5199\uFF1B\u53F3\u952E\u5916\u6846\u91CC\u7684\u7A7A\u767D\u5904\uFF0C\u6216\u9009\u4E2D\u6846\u5185\u8282\u70B9\u518D\u70B9\u4E00\u6B21\u5916\u6846\u6309\u94AE\uFF0C\u53EF\u4EE5\u52A0 / \u6539\u6807\u9898\u3001\u79FB\u9664\u5916\u6846\n- \u6539\u6846\u4F4F\u7684\u8303\u56F4\uFF1A\u5355\u51FB\u5916\u6846\u91CC\u7684\u7A7A\u767D\u5904\u9009\u4E2D\u5B83\uFF0C\u62D6\u4E0A\u4E0B\u4E24\u5934\u7684\u5C0F\u624B\u67C4\uFF1B\u53F3\u952E\u4E5F\u6709\u300C\u8303\u56F4\u591A\u62EC\u4E00\u4E2A / \u5C11\u62EC\u4E00\u4E2A\u8282\u70B9\u300D\n- \u5B58\u6210 `%%box%%`\u3001`%%box=2 "\u6807\u9898"%%`\uFF0C\u5BFC\u51FA\u56FE\u7247\u65F6\u4E00\u8D77\u5E26\u4E0A\n\n### \u6982\u8981\n%%fold%%\n\n\u51E0\u4E2A\u76F8\u90BB\u7684\u5144\u5F1F\u5916\u4FA7\u753B\u4E00\u4E2A\u5927\u62EC\u53F7\uFF0C\u540E\u9762\u6302\u4E00\u53E5\u6982\u62EC\u3002\n\n- \u9009\u4E2D\u4E00\u4E2A\u6216\u51E0\u4E2A\u76F8\u90BB\u7684\u5144\u5F1F\uFF0C\u53F3\u952E \u2192 \u6DFB\u52A0\u6982\u8981\uFF0C\u52A0\u4E0A\u5C31\u76F4\u63A5\u5199\u6587\u5B57 %%summary=2 "\u524D\u4E24\u6761\u662F\u64CD\u4F5C"%%\n- \u6587\u5B57\u652F\u6301\u884C\u5185 Markdown\uFF0C\u53EF\u4EE5\u653E [[\u94FE\u63A5]]\u3001**\u52A0\u7C97**\n- \u53CC\u51FB\u6982\u8981\u6587\u5B57\u4FEE\u6539\uFF0C\u53F3\u952E\u6982\u8981\u53EF\u4EE5\u79FB\u9664\uFF1B\u6E05\u7A7A\u6587\u5B57\u4E5F\u7B49\u4E8E\u79FB\u9664\n- \u62D6\u6982\u8981\u5916\u4FA7\u8FB9\u7F18\u7684\u5C0F\u7AD6\u6761\u6539\u5BBD\u5EA6\uFF0C\u6587\u5B57\u8DDF\u7740\u6362\u884C\uFF1B\u53CC\u51FB\u7AD6\u6761\u6062\u590D\u81EA\u9002\u5E94\n- \u6539\u62EC\u4F4F\u7684\u8303\u56F4\uFF1A\u5355\u51FB\u6982\u8981\u6587\u5B57\uFF0C\u5927\u62EC\u53F7\u4E24\u5934\u51FA\u73B0\u5C0F\u624B\u67C4\uFF0C\u62D6\u5230\u54EA\u4E2A\u5144\u5F1F\u5C31\u62EC\u5230\u54EA\uFF1B\u53F3\u952E\u4E5F\u6709\u300C\u8303\u56F4\u591A\u62EC\u4E00\u4E2A / \u5C11\u62EC\u4E00\u4E2A\u8282\u70B9\u300D\n- \u62EC\u53F7\u4F1A\u62EC\u4F4F\u8FD9\u51E0\u4E2A\u8282\u70B9\u8FDE\u540C\u5B83\u4EEC\u7684\u5206\u652F\uFF0C\u5DE6\u53F3\u5206\u5E03\u65F6\u5DE6\u8FB9\u7684\u671D\u5DE6\uFF0C\u7EC4\u7EC7\u7ED3\u6784\u56FE\u91CC\u753B\u5728\u4E0B\u65B9\n- \u5B58\u6210 `%%summary=2 "\u6587\u5B57"%%`\uFF0C\u5BFC\u51FA\u56FE\u7247\u65F6\u4E00\u8D77\u5E26\u4E0A\n\n### \u6807\u6CE8\n%%fold%%\n\n\u6302\u5728\u8282\u70B9\u65C1\u8FB9\u7684\u4E00\u4E2A\u5C0F\u6C14\u6CE1\uFF0C\u76F8\u5F53\u4E8E\u770B\u5F97\u89C1\u7684\u5907\u6CE8\uFF0C\u9002\u5408\u5199\u4E00\u53E5\u63D0\u9192\u3002\n\n- \u53F3\u952E\u8282\u70B9 \u2192 \u6DFB\u52A0\u6807\u6CE8\uFF0C\u76F4\u63A5\u8F93\u5165\uFF1BEnter \u5B8C\u6210\uFF0CShift+Enter \u6362\u884C\uFF0CEsc \u53D6\u6D88 %%callout "\u8FD9\u5C31\u662F\u4E00\u6761\u6807\u6CE8"%%\n- \u6587\u5B57\u652F\u6301\u884C\u5185 Markdown\uFF0C\u53EF\u4EE5\u653E [[\u94FE\u63A5]]\u3001**\u52A0\u7C97**\u3001\u516C\u5F0F\n- \u53CC\u51FB\u6C14\u6CE1\u4FEE\u6539\uFF0C\u53F3\u952E\u6C14\u6CE1\u53EF\u4EE5\u5220\u9664\uFF1B\u6E05\u7A7A\u6587\u5B57\u4E5F\u7B49\u4E8E\u5220\u9664\n- \u91CD\u8981\u7684\u6807\u6CE8\u53EF\u4EE5\u4E0A\u8272\uFF1A\u53F3\u952E\u6C14\u6CE1 \u2192 \u6807\u6CE8\u989C\u8272 %%callout "\u8FD9\u6761\u662F\u9EC4\u8272\u7684" cc=yellow%%\n- \u6C14\u6CE1\u6392\u5728\u8282\u70B9\u4E0A\u65B9\u5E76\u8BA9\u51FA\u4F4D\u7F6E\uFF0C\u4E0D\u4F1A\u538B\u5230\u522B\u7684\u8282\u70B9\uFF1B\u7EC4\u7EC7\u7ED3\u6784\u56FE\u91CC\u653E\u5728\u8282\u70B9\u53F3\u8FB9\n- \u6807\u6CE8\u4E00\u591A\u5ACC\u4E71\uFF1A\u70B9\u5DE5\u5177\u680F\u7684\u6C14\u6CE1\u6309\u94AE\u6574\u4F53\u9690\u85CF\uFF0C\u8282\u70B9\u4E0A\u7559\u4E2A\u5C0F\u56FE\u6807\uFF0C\u70B9\u4E00\u4E0B\u4E34\u65F6\u770B\u90A3\u4E00\u6761\uFF1B\u6BCF\u4E2A\u6587\u4EF6\u8BB0\u4F4F\u5404\u81EA\u7684\u663E\u793A / \u9690\u85CF\n- \u5B58\u6210 `%%callout "\u7B2C\u4E00\u884C<br>\u7B2C\u4E8C\u884C"%%`\uFF0C\u5BFC\u51FA\u56FE\u7247\u65F6\u663E\u793A\u4E2D\u7684\u6807\u6CE8\u4E00\u8D77\u5E26\u4E0A\uFF1B.xmind \u91CC\u7684\u6807\u6CE8\u4E5F\u80FD\u5BFC\u5165\n\n### \u8282\u70B9\u5BBD\u5EA6\n%%fold%%\n\n- \u9009\u4E2D\u8282\u70B9\uFF0C\u62D6\u5B83\u5916\u4FA7\u8FB9\u7F18\u7684\u5C0F\u7AD6\u6761\u6539\u5BBD\u5EA6\uFF0C\u6587\u5B57\u8DDF\u7740\u6362\u884C\uFF1B\u62D6\u5230\u753B\u5E03\u8FB9\u7F18\u4F1A\u81EA\u52A8\u8DDF\u7740\u6EDA\n- \u53CC\u51FB\u7AD6\u6761\u6216\u53F3\u952E **\u6062\u590D\u81EA\u52A8\u5BBD\u5EA6** \u8FD8\u539F\n- \u5B58\u6210 `%%w=240%%`\uFF0C\u4E2D\u5FC3\u4E3B\u9898\u300CMind Map \u4F7F\u7528\u6307\u5357\u300D\u5C31\u8BBE\u4E86\u5BBD\u5EA6\n\n### \u4EFB\u52A1\u590D\u9009\u6846\n%%fold%%\n\n- [ ] \u8FD8\u6CA1\u505A\u7684\u4E8B\n- [x] \u5DF2\u7ECF\u505A\u5B8C\u7684\u4E8B\n- [ ] \u70B9\u4E00\u4E0B\u65B9\u6846\u5728\u300C\u672A\u5B8C\u6210 \u2192 \u5B8C\u6210 \u2192 \u53BB\u6389\u300D\u4E4B\u95F4\u5207\u6362\n\n### \u6807\u7B7E\u4E0E\u516C\u5F0F\n\n- \u5199 `#\u6807\u7B7E` \u4F1A\u6E32\u67D3\u6210\u6807\u7B7E\u6837\u5F0F\uFF0C\u70B9\u51FB\u6253\u5F00\u5168\u5C40\u641C\u7D22 #\u8111\u56FE/\u793A\u4F8B\n- \u5199 `$E = mc^2$` \u6E32\u67D3\u6210\u516C\u5F0F\uFF1A$E = mc^2$\n- \u4E24\u5BF9 `$$` \u6309\u5C55\u793A\u6837\u5F0F\u6392\uFF0C\u5927\u4E00\u53F7\uFF1A$$\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}$$\n- \u591A\u884C\u516C\u5F0F\u7528 aligned \u73AF\u5883\uFF1A$\\begin{aligned} a &= b + c \\\\ d &= e \\end{aligned}$\n- \u66F4\u957F\u7684\u516C\u5F0F\u5199\u8FDB\u5907\u6CE8\u91CC\uFF0C\u7528 `$$` \u5757\uFF0C\u8DDF\u666E\u901A\u7B14\u8BB0\u4E00\u6837\n- \u52A0\u7C97 **\u50CF\u8FD9\u6837**\uFF0C\u659C\u4F53 *\u50CF\u8FD9\u6837*\uFF0C\u2318B / \u2318I \u5BF9\u6574\u4E2A\u8282\u70B9\u751F\u6548\n\n### \u56FE\u7247\n%%fold%%\n\n- \u62D6\u4E00\u5F20\u56FE\u7247\u8FDB\u753B\u5E03\uFF0C\u6216\u8005\u76F4\u63A5 \u2318V \u7C98\u8D34\uFF0C\u4F1A\u5B58\u8FDB\u9644\u4EF6\u76EE\u5F55\u5E76\u751F\u6210\u56FE\u7247\u8282\u70B9\n- \u56FE\u7247\u8282\u70B9\u53F3\u952E\u9009\u300C\u590D\u5236\u56FE\u7247\u300D\uFF0C\u628A\u56FE\u7247\u672C\u8EAB\u590D\u5236\u51FA\u53BB\uFF0C\u53EF\u4EE5\u7C98\u5230\u5176\u4ED6\u8F6F\u4EF6\u91CC\n- \u8BED\u6CD5\u5C31\u662F Obsidian \u81EA\u5DF1\u7684 `![[\u56FE\u7247.png|160]]`\uFF0C\u7AD6\u7EBF\u540E\u9762\u662F\u5BBD\u5EA6\n- \u9009\u4E2D\u56FE\u7247\u8282\u70B9\uFF0C\u53F3\u4E0B\u89D2\u6709\u4E2A\u624B\u67C4\uFF0C**\u62D6\u52A8\u6539\u5927\u5C0F**\uFF0C\u53CC\u51FB\u624B\u67C4\u6062\u590D\u539F\u59CB\u5C3A\u5BF8\n- **\u53CC\u51FB\u56FE\u7247\u770B\u5927\u56FE**\uFF0C\u70B9\u4EFB\u610F\u5904\u6216 Esc \u5173\u95ED\uFF1B\u53CC\u51FB\u8282\u70B9\u7684\u6587\u5B57\u90E8\u5206\u8FD8\u662F\u7F16\u8F91\n- \u7F51\u56FE\u4E5F\u80FD\u76F4\u63A5\u5F15\uFF1A![Obsidian|120](https://obsidian.md/images/obsidian-logo-gradient.svg)\n\n### \u89C6\u9891\u5D4C\u5165\n%%fold%%\n\n\u4ECE B \u7AD9\u3001YouTube \u90A3\u91CC\u590D\u5236\u7684 `<iframe \u2026>` \u5D4C\u5165\u4EE3\u7801\uFF0C\u76F4\u63A5\u7C98\u8FDB\u8282\u70B9\u5C31\u6E32\u67D3\u6210\u64AD\u653E\u5668\u3002\n\n- <iframe width="278" height="157" src="https://player.bilibili.com/player.html?bvid=BV1WAuG6wEWZ&page=1&high_quality=1&danmaku=0" title="Bilibili video player" frameborder="0" allowfullscreen></iframe>\n- \u53EA\u8BA4 iframe \u8FD9\u4E00\u4E2A\u6807\u7B7E\uFF0C`src` \u5FC5\u987B\u662F http(s)\uFF1B`javascript:` \u548C\u522B\u7684\u6807\u7B7E\u4E00\u5F8B\u5F53\u666E\u901A\u6587\u5B57\u663E\u793A\n- \u5BBD\u9AD8\u53D6\u4EE3\u7801\u91CC\u7684 width / height\uFF0C\u94B3\u5728 80\u20131200 \u4E4B\u95F4\n- \u64AD\u653E\u5668\u4E0A\u76D6\u4E86\u4E00\u5C42\u6321\u677F\uFF1A\u5355\u51FB\u53EA\u662F\u9009\u4E2D\u8282\u70B9\uFF0C\u6FC0\u6D3B\u4E4B\u540E\u624D\u80FD\u64AD\u653E\u3001\u624D\u70B9\u5F97\u5230\u300C\u8FDB\u5165 B \u7AD9\u300D\u90A3\u79CD\u8DF3\u8F6C\u6309\u94AE\n- \u4E24\u79CD\u6FC0\u6D3B\u65B9\u5F0F\uFF1A**\u53CC\u51FB\u753B\u9762**\uFF0C\u6216\u8005\u70B9\u53F3\u4E0B\u89D2\u6D6E\u51FA\u6765\u7684**\u300C\u6FC0\u6D3B\u300D\u6309\u94AE**\uFF08\u9F20\u6807\u60AC\u505C\u65F6\u51FA\u73B0\uFF0C\u8282\u70B9\u9009\u4E2D\u65F6\u5E38\u9A7B\uFF09\n- \u6FC0\u6D3B\u7684\u8282\u70B9\u5E26\u4E00\u5708\u865A\u7EBF\uFF1B\u70B9\u753B\u5E03\u7A7A\u767D\u5904\u6216\u9009\u522B\u7684\u8282\u70B9\u5C31\u81EA\u52A8\u6536\u56DE\u6321\u677F\n- \u9009\u4E2D\u540E\u53F3\u4E0B\u89D2\u6709\u624B\u67C4\uFF0C**\u62D6\u52A8\u6539\u5927\u5C0F**\uFF08\u9ED8\u8BA4\u9501 16:9\uFF0C\u6309\u4F4F Shift \u5355\u72EC\u62C9\u9AD8\u5EA6\uFF09\uFF0C\u53CC\u51FB\u6062\u590D 560\xD7315\n- \u9ED8\u8BA4**\u4E0D\u81EA\u52A8\u64AD\u653E**\uFF0C\u5C55\u5F00\u4E5F\u53EA\u662F\u628A\u64AD\u653E\u5668\u6446\u5728\u90A3\u513F\uFF0C\u60F3\u770B\u70B9\u4E00\u4E0B\n- \u771F\u8981\u5B83\u81EA\u5DF1\u64AD\uFF0C\u5728\u5730\u5740\u91CC\u5199 `autoplay=1`\n- \u6298\u53E0\u7740\u7684\u5206\u652F\u6839\u672C\u4E0D\u52A0\u8F7D\uFF0C\u5C55\u5F00\u624D\u5EFA iframe\n- \u5907\u6CE8\u91CC\u4E5F\u80FD\u653E\uFF0C\u90A3\u6761\u8DEF\u8D70 Obsidian \u81EA\u5DF1\u7684\u6E32\u67D3\u5668\uFF0C\u70B9\u5F00 \u2261 \u624D\u52A0\u8F7D\n\n### \u94FE\u63A5\u5230\u7B14\u8BB0\n%%fold%%\n\n- \u7F16\u8F91\u65F6\u76F4\u63A5\u6253 `[[`\uFF08\u4E2D\u6587\u8F93\u5165\u6CD5\u6253 `\u3010\u3010` \u4E5F\u884C\uFF09\uFF0C\u5F39\u51FA\u6587\u4EF6\u5217\u8868\uFF0C\u56DE\u8F66\u63D2\u5165\n- \u5148\u9009\u4E2D\u6587\u5B57\u518D\u6253 `\u3010`\uFF0C\u5305\u6210\u3010\u6587\u5B57\u3011\uFF1B\u518D\u6253\u4E00\u6B21\u53D8\u6210 `[[\u6587\u5B57]]` \u94FE\u63A5\n- \u2318K \u6216\u5DE5\u5177\u680F\u7684\u94FE\u63A5\u6309\u94AE\uFF0C\u641C\u4E00\u7BC7\u5DF2\u6709\u7B14\u8BB0\u6302\u4E0A\u53BB\n- \u641C\u4E0D\u5230\u5C31\u76F4\u63A5\u6309\u8FD9\u4E2A\u540D\u5B57\u65B0\u5EFA\u4E00\u7BC7\uFF0C\u5E76\u5728\u53F3\u4FA7\u5206\u680F\u6253\u5F00\n- \u6302\u4E0A\u4E4B\u540E\u6807\u7B7E\u53D8\u6210 `[[\u7B14\u8BB0\u540D|\u539F\u6765\u7684\u6587\u5B57]]`\uFF0C\u6309\u4F4F \u2318 \u60AC\u505C\u6709\u9884\u89C8\n- \u4ECE\u6587\u4EF6\u5217\u8868\u628A\u7B14\u8BB0\u62D6\u5230\u8282\u70B9\u4E0A\uFF0C\u4E5F\u4F1A\u53D8\u6210\u4E00\u4E2A\u94FE\u63A5\u5B50\u8282\u70B9\n- \u5C31\u50CF\u8FD9\u4E00\u4E2A \u2192 [[\u8111\u56FE\u4EE3\u7801\u5757\u5D4C\u5165\u793A\u4F8B|\u4E00\u7BC7\u5E26\u5D4C\u5165\u8111\u56FE\u7684\u7B14\u8BB0]]\uFF0C\u6309\u4F4F \u2318 \u60AC\u505C\u80FD\u9884\u89C8\n- \u5916\u90E8\u7F51\u5740\u5199\u6210 Markdown \u94FE\u63A5\u5C31\u884C\uFF0C\u6BD4\u5982 [Obsidian \u5B98\u7F51](https://obsidian.md)\uFF0C\u70B9\u51FB\u7528\u6D4F\u89C8\u5668\u6253\u5F00\n- \u76F4\u63A5\u7C98\u4E00\u4E2A\u88F8\u7F51\u5740\u4E5F\u4F1A\u81EA\u52A8\u6210\u94FE\uFF0C\u53E5\u5C3E\u7684\u6807\u70B9\u4E0D\u4F1A\u88AB\u5403\u8FDB\u53BB\n- \u5B98\u7F51\u662F https://obsidian.md \u53EF\u4EE5\u70B9\n\n### \u590D\u5236\u8282\u70B9\u94FE\u63A5\n%%fold%%\n\n- \u6807\u9898\u8282\u70B9\u7ED9 `[[\u7B14\u8BB0#\u6807\u9898]]`\n- \u5217\u8868\u8282\u70B9\u81EA\u52A8\u8865\u4E00\u4E2A\u5757 id\uFF0C\u7ED9 `[[\u7B14\u8BB0#^id]]`\n- \u522B\u7684\u7B14\u8BB0\u91CC\u53EF\u4EE5\u76F4\u63A5\u5F15\u7528\u8111\u56FE\u91CC\u7684\u67D0\u4E00\u4E2A\u8282\u70B9\n\n## \u770B\u56FE\u4E0E\u627E\u4E1C\u897F\n%%teal%%\n\n### \u7F29\u653E\u5E73\u79FB\n%%fold%%\n\n- \u6EDA\u8F6E / \u62D6\u7A7A\u767D\u5904 = \u5E73\u79FB\n- \u2318+\u6EDA\u8F6E / \u53CC\u6307\u634F\u5408 / \u2318= \u2318- = \u7F29\u653E\n- \u4E60\u60EF XMind \u7684\u8BDD\uFF0C\u8BBE\u7F6E\u91CC\u628A\u300C\u9F20\u6807\u6EDA\u8F6E\u300D\u6539\u6210\u7F29\u653E\uFF0CShift+\u6EDA\u8F6E\u5E73\u79FB\n- \u23180 \u9002\u5E94\u753B\u5E03\uFF0C\u2318\u21E70 \u7F29\u653E\u5230\u9009\u4E2D\u7684\u5206\u652F\uFF0C\u70B9\u5DE5\u5177\u680F\u7684\u767E\u5206\u6BD4\u56DE\u5230 100%\n\n### \u6298\u53E0\n%%fold%%\n\n- \u8282\u70B9\u53F3\u8FB9\u7684\u5C0F\u5706\u70B9\uFF0C\u6216\u8005\u6309 `/`\n- \u6570\u5B57\u952E 1\u20139\uFF1A\u9009\u4E2D\u8282\u70B9\u5F80\u4E0B\u53EA\u663E\u793A N \u5C42\uFF0C0 \u628A\u8FD9\u4E00\u652F\u5168\u90E8\u5C55\u5F00\uFF0C\u5176\u4ED6\u5206\u652F\u4E0D\u52A8\uFF1B\u9009\u4E2D\u4E2D\u5FC3\u4E3B\u9898\u65F6\u4F5C\u7528\u4E8E\u6574\u5F20\u56FE\u5E76\u9002\u5E94\u753B\u5E03\n- \u5DE5\u5177\u680F\u5C42\u7EA7\u6309\u94AE\uFF1A\u5C55\u5F00\u5168\u90E8\u3001\u53EA\u663E\u793A\u4E3B\u4E3B\u9898\u3001\u663E\u793A\u5230\u7B2C 2 / 3 \u5C42\n- \u6298\u53E0\u72B6\u6001\u5B58\u5728\u6587\u4EF6\u91CC\uFF08`%%fold%%`\uFF09\uFF0C\u4E0B\u6B21\u6253\u5F00\u8FD8\u662F\u8FD9\u6837\n\n### \u805A\u7126\u5206\u652F\n%%fold%%\n\n- \u53F3\u952E \u2192 **\u805A\u7126\u6B64\u5206\u652F**\uFF0C\u628A\u8FD9\u4E00\u652F\u5F53\u6210\u6839\u5355\u72EC\u770B\n- \u9876\u90E8\u51FA\u73B0\u9762\u5305\u5C51\uFF0C\u70B9\u4E00\u4E0B\u56DE\u5230\u5168\u56FE\u6216\u4EFB\u610F\u4E00\u5C42\u7956\u5148\n- Esc \u4E5F\u80FD\u9000\u51FA\n\n### \u641C\u7D22\n%%fold%%\n\n- \u2318F \u6253\u5F00\u641C\u7D22\u6846\n- \u5339\u914D\u7684\u8282\u70B9\u9AD8\u4EAE\uFF0CEnter / Shift+Enter \u5728\u7ED3\u679C\u4E4B\u95F4\u8DF3\n- \u6298\u53E0\u7740\u7684\u7956\u5148\u4F1A\u81EA\u52A8\u5C55\u5F00\uFF0C\u8DF3\u5230\u54EA\u91CC\u5C31\u5C45\u4E2D\u5230\u54EA\u91CC\n\n### \u5927\u7EB2\u9762\u677F\n%%fold%%\n\n- \u5DE5\u5177\u680F\u6700\u5DE6\u8FB9\u7684\u6309\u94AE\uFF0C\u6216\u547D\u4EE4**\u5207\u6362\u5927\u7EB2\u9762\u677F**\n- \u5DE6\u4FA7\u51FA\u73B0\u6811\u5F62\u5217\u8868\uFF0C\u548C\u753B\u5E03\u53CC\u5411\u8054\u52A8\n- \u5728\u5927\u7EB2\u91CC\u5C31\u80FD\u6539\u540D\u5B57\u3001\u8C03\u5C42\u7EA7\n\n### \u9501\u5B9A\u7F16\u8F91\n%%fold%%\n\n- \u5DE5\u5177\u680F\u5927\u7EB2\u65C1\u8FB9\u7684\u9501\u6309\u94AE\uFF0C\u6216\u547D\u4EE4**\u9501\u5B9A / \u89E3\u9501\u7F16\u8F91**\n- \u9501\u4E0A\u540E\u53EA\u80FD\u770B\uFF1A\u7F29\u653E\u3001\u5E73\u79FB\u3001\u6298\u53E0\u3001\u641C\u7D22\u7167\u5E38\uFF0C\u62D6\u753B\u5E03\u4E0D\u4F1A\u8BEF\u78B0\u8282\u70B9\n- \u6309\u6587\u4EF6\u8BB0\u4F4F\uFF0C\u4E0D\u5199\u8FDB\u7B14\u8BB0\n\n### \u80CC\u8BF5\u6A21\u5F0F\n%%fold%%\n\n\u628A\u8111\u56FE\u5F53\u590D\u4E60\u5361\u7528\uFF1A\u5DE5\u5177\u680F\u7684\u773C\u775B\u6309\u94AE\uFF0C\u6216\u547D\u4EE4**\u5207\u6362\u80CC\u8BF5\u6A21\u5F0F**\u3002\u53EA\u6539\u663E\u793A\uFF0C\u4E0D\u5199\u8FDB\u6587\u4EF6\u3002\n\n- \u586B\u7A7A\uFF1A\u8282\u70B9\u91CC\u7528 ==\u9AD8\u4EAE== \u6807\u51FA\u8981\u80CC\u7684\u8BCD\uFF0C\u80CC\u8BF5\u6A21\u5F0F\u4E0B\u906E\u6210\u6A2A\u7EBF\uFF0C\u70B9\u4E00\u4E0B\u63ED\u5F00\u3001\u518D\u70B9\u76D6\u56DE\n- \u9009\u62E9\u9898\uFF1A\u9898\u76EE\u7684\u5B50\u8282\u70B9\u5199\u6210 `[x] \u6B63\u786E\u9009\u9879`\u3001`[ ] \u9519\u8BEF\u9009\u9879`\uFF0C\u80CC\u8BF5\u6A21\u5F0F\u4E0B\u5168\u90FD\u663E\u793A\u6210\u6CA1\u52FE\uFF0C\u70B9\u9898\u76EE\u63ED\u6653\uFF1A\u5BF9\u7684\u53D8\u7EFF\u3001\u9519\u7684\u53D8\u6DE1\n- \u6B63\u786E\u9009\u9879\u6709\u4E24\u4E2A\u4EE5\u4E0A\u7684\u9898\u76EE\u81EA\u52A8\u6807\u300C\u591A\u9009\u300D\n- \u7B54\u6848\uFF1A\u7ED9\u8282\u70B9\u52A0\u4E0A \u{1F648} \u6807\u8BB0\uFF08\u6807\u8BB0\u9762\u677F\u7684\u300C\u80CC\u8BF5\u300D\u7EC4\uFF09\uFF0C\u80CC\u8BF5\u6A21\u5F0F\u4E0B\u8FDE\u540C\u5B50\u8282\u70B9\u4E00\u8D77\u906E\u4F4F\uFF0C\u56FE\u7247\u4E5F\u906E\uFF0C\u70B9\u4E00\u4E0B\u63ED\u5F00\u3001\u518D\u70B9\u76D6\u56DE\u3002\u622A\u56FE\u9898\u5C31\u628A\u9898\u76EE\u56FE\u7247\u548C\u5E26 \u{1F648} \u7684\u7B54\u6848\u56FE\u7247\u5206\u6210\u4E0A\u4E0B\u4E24\u4E2A\u8282\u70B9\n\n## \u6362\u4E2A\u6837\u5B50\n%%orange%%\n\n### \u4E03\u4E2A\u4E3B\u9898\n%%fold%%\n\n\u5DE5\u5177\u680F\u7684\u8C03\u8272\u76D8\u6309\u94AE\u5207\u6362\u3002\u5207\u5B8C\u4F1A\u5199\u8FDB frontmatter \u7684 `mindmap-theme`\uFF0C\u8FD9\u4E00\u7BC7\u5C31\u56FA\u5B9A\u7528\u5B83\u3002\n\n- \u96EA\u677E \xB7 \u6DF1\u8272\u4E2D\u5FC3\uFF0C\u7070\u5E95\u8282\u70B9\uFF08\u9ED8\u8BA4\uFF09\n- \u5F69\u8679 \xB7 \u5206\u652F\u5404\u4E00\u8272\uFF0C\u66F2\u7EBF\n- \u5546\u52A1 \xB7 \u84DD\u8272\u7CFB\uFF0C\u76F4\u89D2\u6298\u7EBF\n- \u6696\u9633 \xB7 \u6A59\u8C03\uFF0C\u5927\u5706\u89D2\u66F2\u7EBF\n- \u6781\u7B80 \xB7 \u9ED1\u767D\u63CF\u8FB9\uFF0C\u7EC6\u7EBF\n- \u7EBF\u6761 \xB7 \u7EAF\u6587\u5B57\u8282\u70B9\uFF0C\u7EC6\u6298\u7EBF\n- \u68EE\u6797 \xB7 \u7EFF\u8C03\u5206\u652F\uFF0C\u66F2\u7EBF\n\n### \u81EA\u5B9A\u4E49\u4E3B\u9898\n%%fold%%\n\n\u8BBE\u7F6E \u2192 \u81EA\u5B9A\u4E49\u4E3B\u9898 \u2192 \u65B0\u5EFA\uFF0C\u9009\u4E00\u4E2A\u5185\u7F6E\u4E3B\u9898\u5F53\u8D77\u70B9\uFF0C\u53F3\u8FB9\u5B9E\u65F6\u9884\u89C8\u3002\n\n- \u6309 4 \u6863\u5C42\u7EA7\u6539\uFF1A\u4E2D\u5FC3\u4E3B\u9898 \xB7 \u4E3B\u4E3B\u9898 \xB7 \u5B50\u4E3B\u9898 \xB7 \u7B2C 3 \u5C42\u53CA\u4EE5\u4E0B\n- \u6BCF\u6863\u53EF\u6539\u5B57\u53F7\u3001\u7C97\u4F53\u659C\u4F53\u3001\u6587\u5B57\u8272\u3001\u80CC\u666F\u6216\u4E0B\u5212\u7EBF\u3001\u5706\u89D2\u3001\u8FB9\u6846\u3001\u6700\u5927\u5BBD\u5EA6\uFF08\u53EF\u9009\u540C\u5C42\u5BBD\u5EA6\u5BF9\u9F50\uFF09\u3001\u8FDE\u7EBF\u989C\u8272\u7C97\u7EC6\n- \u6574\u4F53\u53EF\u6539\u8FDE\u7EBF\u7C7B\u578B\u3001\u62D0\u89D2\u3001\u865A\u7EBF\u3001\u5206\u652F\u5404\u4E00\u8272\u3001\u95F4\u8DDD\n- \u6DF1\u8272\u914D\u8272\u81EA\u52A8\u63A8\u7B97\uFF1B\u4FDD\u5B58\u540E\u5728\u8C03\u8272\u76D8\u83DC\u5355\u91CC\u9009\u7528\n\n### \u95F4\u8DDD\u548C\u5B57\u53F7\n%%fold%%\n\n- \u8BBE\u7F6E\u91CC\u7684\u300C\u8282\u70B9\u95F4\u8DDD\u300D\u300C\u8282\u70B9\u5B57\u53F7\u300D\uFF0C\u6309\u767E\u5206\u6BD4\u8C03\u6574\u6240\u6709\u4E3B\u9898\n- 100% \u662F\u4E3B\u9898\u539F\u6837\uFF0C\u8C03\u5C0F\u4E00\u70B9\u4E00\u5C4F\u80FD\u770B\u5230\u66F4\u591A\n\n### \u8FDE\u7EBF\u6837\u5F0F\n%%fold%%\n\n\u5DE5\u5177\u680F\u8C03\u8272\u76D8\u65C1\u8FB9\u7684\u8FDE\u7EBF\u6309\u94AE\uFF0C\u548C\u4E3B\u9898\u914D\u8272\u5206\u5F00\u9009\uFF0C\u5199\u8FDB `mindmap-edge` / `mindmap-edge-dash` / `mindmap-edge-corner`\u3002\n\n- \u8DDF\u968F\u4E3B\u9898 \xB7 \u66F2\u7EBF \xB7 \u76F4\u89D2\u6298\u7EBF \xB7 \u76F4\u7EBF\n- \u865A\u7EBF\u5F00\u5173\n- \u5706\u89D2\u62D0\u89D2\u5F00\u5173\uFF1A\u5173\u6389\u5C31\u662F\u5C16\u89D2\n\n### \u56DB\u79CD\u7ED3\u6784\n%%fold%%\n\n\u5DE5\u5177\u680F\u7684\u7ED3\u6784\u6309\u94AE\u5207\u6362\uFF0C\u5199\u8FDB `mindmap-structure`\u3002\n\n- \u903B\u8F91\u56FE\uFF08\u5411\u53F3\uFF09\xB7 \u5168\u90E8\u5F80\u53F3\u94FA\u5F00\n- \u601D\u7EF4\u5BFC\u56FE\uFF08\u5DE6\u53F3\u5206\u5E03\uFF09\xB7 \u4E2D\u5FC3\u5728\u4E2D\u95F4\uFF0C\u5DE6\u53F3\u5404\u4E00\u534A \u2190 \u8FD9\u5F20\u56FE\u7528\u7684\u5C31\u662F\u5B83\n- \u7EC4\u7EC7\u7ED3\u6784\u56FE\uFF08\u5411\u4E0B\uFF09\xB7 \u81EA\u4E0A\u800C\u4E0B\uFF0C\u50CF\u7EC4\u7EC7\u67B6\u6784\n- \u6811\u5F62\u56FE \xB7 \u7F29\u8FDB\u5F0F\uFF0C\u50CF\u6587\u4EF6\u6811\n\n### \u5DE5\u5177\u680F\u4F4D\u7F6E\n%%fold%%\n\n- \u4E0A\u65B9 / \u4E0B\u65B9\u662F\u6C34\u5E73\u6761\uFF0C\u5DE6\u4FA7 / \u53F3\u4FA7\u662F\u5782\u76F4\u6761\n- \u8BBE\u7F6E\u91CC\u6539\uFF0C\u6216\u8005\u76F4\u63A5\u5728\u5DE5\u5177\u680F\u4E0A\u53F3\u952E\n\n## Markdown \u5C31\u662F\u6570\u636E\n%%gray%%\n\n### \u6620\u5C04\u89C4\u5219\n%%fold%%\n\n\u9ED8\u8BA4\u524D\u4E09\u7EA7\u7528\u6807\u9898\uFF0C\u518D\u5F80\u4E0B\u7528\u5217\u8868\uFF0C\u53EF\u4EE5\u5728\u8BBE\u7F6E\u91CC\u6539\u3002\n\n- `# \u4E00\u7EA7\u6807\u9898` \u2192 \u4E2D\u5FC3\u4E3B\u9898\uFF08\u6CA1\u6709\u5C31\u7528\u6587\u4EF6\u540D\uFF09\n- `## \uFF5E ###### \u6807\u9898` \u2192 \u5404\u7EA7\u8282\u70B9\n- `- \u5217\u8868\u9879`\uFF08\u7F29\u8FDB\u5D4C\u5957\uFF09\u2192 \u66F4\u6DF1\u7684\u5C42\u7EA7\n- \u8282\u70B9\u4E0B\u9762\u7684\u6BB5\u843D \u2192 \u5907\u6CE8\n- \u5728\u8111\u56FE\u91CC\u6539\u4E86\u4EC0\u4E48\u5C31\u53EA\u5199\u56DE\u90A3\u51E0\u884C\uFF0C\u7A7A\u884C\u3001\u7F29\u8FDB\u3001\u5217\u8868\u7B26\u53F7\u8FD9\u4E9B\u539F\u6837\u4E0D\u52A8\n\n### \u85CF\u5728\u6CE8\u91CA\u91CC\u7684\u4E1C\u897F\n%%fold%%\n\n\u7528\u7684\u662F Obsidian \u7684 `%%\u6CE8\u91CA%%` \u8BED\u6CD5\uFF0C\u9605\u8BFB\u6A21\u5F0F\u548C\u522B\u7684\u7F16\u8F91\u5668\u91CC\u90FD\u770B\u4E0D\u89C1\uFF0C\u4E0D\u4F1A\u6C61\u67D3\u6B63\u6587\u3002\n\n- \u989C\u8272\uFF1A`%%green%%` \u6216 `%%#a3e5a2%%`\n- \u6298\u53E0\uFF1A`%%fold%%`\n- \u8282\u70B9\u5BBD\u5EA6\uFF1A`%%w=240%%`\n- \u5DE6\u53F3\u5206\u5E03\u91CC\u56FA\u5B9A\u5728\u54EA\u8FB9\uFF1A`%%left%%` / `%%right%%`\n- \u5916\u6846\uFF1A`%%box%%`\u3001`%%box=3 "\u6807\u9898"%%`\n- \u6982\u8981\uFF1A`%%summary%%`\u3001`%%summary=3 "\u6587\u5B57"%%`\n- \u6807\u6CE8\uFF1A`%%callout "\u6587\u5B57"%%`\uFF0C\u6362\u884C\u5199\u6210 `<br>`\uFF0C`cc=yellow` \u662F\u6C14\u6CE1\u989C\u8272\n- \u81EA\u7531\u4E3B\u9898\uFF1A`%%float x=320 y=-80%%`\uFF08\u53EA\u8BA4\u4E2D\u5FC3\u4E3B\u9898\u4E0B\u7684\uFF09\n- \u51E0\u4E2A\u4E00\u8D77\u5199\u5C31 `%%green fold w=240%%`\n\n### \u4E3A\u4EC0\u4E48\u8FD9\u4E48\u8BBE\u8BA1\n%%fold%%\n\n- \u8111\u56FE\u89C6\u56FE\u53EA\u662F\u540C\u4E00\u4E2A `.md` \u7684\u53E6\u4E00\u4E2A\u7F16\u8F91\u5668\uFF0C\u6CA1\u6709\u79C1\u6709\u683C\u5F0F\n- \u63D2\u4EF6\u54EA\u5929\u4E0D\u7528\u4E86\uFF0C\u7B14\u8BB0\u8FD8\u662F\u597D\u597D\u7684 Markdown\n- \u53CC\u94FE\u3001\u6807\u7B7E\u3001\u641C\u7D22\u3001\u540C\u6B65\u3001\u7248\u672C\u7BA1\u7406\u5168\u90FD\u7167\u5E38\n- XMind \u5BFC\u51FA\u7684 Markdown \u5C31\u662F\u8FD9\u5957\u5C42\u7EA7\uFF0C\u53EF\u4EE5\u76F4\u63A5\u6253\u5F00\uFF1B\u53CD\u8FC7\u6765\u4E5F\u80FD\u88AB XMind \u5BFC\u5165\n\n## \u8FDB\u51FA\u4E0E\u5D4C\u5165\n%%pink%%\n\n### \u5BFC\u51FA\n%%fold%%\n\n- \u5BFC\u51FA\u4E3A PNG \xB7 \u4E24\u500D\u5206\u8FA8\u7387\uFF0C\u5B57\u4F53\u5185\u5D4C\uFF0C\u548C\u5C4F\u5E55\u4E0A\u4E00\u6A21\u4E00\u6837\n- \u5BFC\u51FA\u4E3A SVG \xB7 \u77E2\u91CF\uFF0C\u653E\u591A\u5927\u90FD\u6E05\u695A\n- \u590D\u5236\u4E3A\u56FE\u7247 \xB7 \u76F4\u63A5\u7C98\u5230\u522B\u7684\u5730\u65B9\n\n### \u6253\u5F00 .xmind\n%%fold%%\n\n- `.xmind` \u6587\u4EF6\u653E\u8FDB vault \u5C31\u80FD\u76F4\u63A5\u6253\u5F00\uFF0C\u53EA\u8BFB\u6E32\u67D3\n- \u591A\u4E2A\u5DE5\u4F5C\u8868\u53EF\u4EE5\u5207\u6362\n- \u53F3\u4E0A\u89D2\u4E00\u952E**\u8F6C\u6362\u4E3A Markdown \u7B14\u8BB0**\uFF0C\u8F6C\u5B8C\u5C31\u80FD\u7F16\u8F91\n- XMind Zen / 2020 \u4E4B\u540E\u7684 content.json \u548C XMind 8 \u7684 content.xml \u90FD\u8BA4\n- \u5916\u6846\u3001\u6982\u8981\u3001\u6807\u6CE8\u548C\u4E2D\u5FC3\u4E3B\u9898\u4E0B\u7684\u81EA\u7531\u4E3B\u9898\u4F1A\u4E00\u8D77\u8F6C\u8FC7\u6765\uFF1B\u8054\u7CFB\u7EBF\u3001\u6982\u8981\u4E0B\u9762\u6302\u7684\u5B50\u4E3B\u9898\u3001\u8BC4\u8BBA\u6682\u4E0D\u652F\u6301\uFF0C\u53F3\u4E0A\u89D2\u4F1A\u63D0\u793A\u4E22\u4E86\u51E0\u9879\n\n### \u4EE3\u7801\u5757\u5D4C\u5165\n\n\u5728\u4EFB\u4F55\u666E\u901A\u7B14\u8BB0\u91CC\u5199\u4E00\u4E2A mindmap \u4EE3\u7801\u5757\uFF0C\u5757\u91CC\u653E\u540C\u6837\u7684 Markdown\uFF0C\u9605\u8BFB\u6A21\u5F0F\u548C\u5B9E\u65F6\u9884\u89C8\u90FD\u4F1A\u6E32\u67D3\u6210\u4E00\u5F20\u5C0F\u56FE\u3002\n\n- \u4EE3\u7801\u5757\u540D\u5199\u6210 gogoga-mindmap \u4E5F\u884C\uFF1B\u540C\u65F6\u88C5\u4E86 Markmind \u7684\u8BDD\uFF0C\u53EF\u4EE5\u5728\u8BBE\u7F6E\u91CC\u5173\u6389\u300C\u6E32\u67D3 ```mindmap \u4EE3\u7801\u5757\u300D\uFF0C\u628A mindmap \u8BA9\u7ED9\u5B83\n- \u9ED8\u8BA4\u53EA\u8BFB\uFF0C\u70B9\u94C5\u7B14\u6216\u53CC\u51FB\u8282\u70B9\u8FDB\u5165\u7F16\u8F91\n- \u6539\u52A8\u76F4\u63A5\u5199\u56DE\u8FD9\u4E2A\u4EE3\u7801\u5757\n- \u64A4\u9500\u91CD\u505A\u53EA\u4F5C\u7528\u5728\u5757\u91CC\uFF0C\u4E0D\u4F1A\u6CE2\u53CA\u6574\u7BC7\u7B14\u8BB0\n- \u9AD8\u5EA6\u6309\u5185\u5BB9\u81EA\u9002\u5E94\uFF0C\u4E0A\u9650\u5728\u8BBE\u7F6E\u91CC\u8C03\n- \u5ACC\u5DE5\u5177\u680F\u788D\u773C\uFF0C\u5728\u8BBE\u7F6E\u91CC\u6253\u5F00\u300C\u5D4C\u5165\u7684\u8111\u56FE\u9690\u85CF\u5DE5\u5177\u680F\u300D\uFF1A\u9605\u8BFB\u6A21\u5F0F\u4E0D\u663E\u793A\uFF0C\u7F16\u8F91\u6A21\u5F0F\u9F20\u6807\u79FB\u4E0A\u53BB\u624D\u51FA\u73B0\n- \u6D3B\u7684\u4F8B\u5B50\uFF1A[[\u8111\u56FE\u4EE3\u7801\u5757\u5D4C\u5165\u793A\u4F8B]]\uFF0C\u91CC\u9762\u63D2\u4E86\u4E24\u5757\uFF0C\u7ED3\u6784\u548C\u4E3B\u9898\u5404\u4E0D\u4E00\u6837\n\n### \u5D4C\u5165\u5DF2\u6709\u7684\u8111\u56FE\n\n\u60F3\u5F15\u7528\u4E00\u5F20\u5DF2\u7ECF\u753B\u597D\u7684\u8111\u56FE\uFF0C\u50CF\u5D4C\u5165\u666E\u901A\u7B14\u8BB0\u4E00\u6837\u5199 `![[\u8111\u56FE\u7B14\u8BB0\u540D]]`\uFF0CXMind \u6587\u4EF6\u5199 `![[\u6587\u4EF6\u540D.xmind]]`\u3002\n\n- \u663E\u793A\u53EA\u8BFB\u9884\u89C8\uFF0C\u539F\u6587\u4EF6\u6539\u4E86\u9884\u89C8\u8DDF\u7740\u53D8\n- \u70B9\u5DE5\u5177\u680F\u7684\u300C\u6253\u5F00\u300D\u6216\u53CC\u51FB\u8282\u70B9\uFF0C\u6253\u5F00\u539F\u6587\u4EF6\u7F16\u8F91\n- \u94FE\u63A5\u5E26\u4E0A\u8282\u70B9\u53EA\u663E\u793A\u90A3\u4E00\u652F\uFF1A`![[\u8111\u56FE#\u8282\u70B9\u540D]]`\u3001\u91CD\u540D\u5199\u8DEF\u5F84 `![[\u8111\u56FE#\u4E0A\u7EA7#\u8282\u70B9\u540D]]`\uFF0C\u6216\u5757\u5F15\u7528 `![[\u8111\u56FE#^id]]`\n- \u62D6\u8FDB\u767D\u677F\uFF08Canvas\uFF09\u4E5F\u663E\u793A\u6210\u8111\u56FE\uFF0C\u94FA\u6EE1\u5361\u7247\n- \u666E\u901A\u7B14\u8BB0\u7167\u5E38\u663E\u793A\n\n### \u590D\u5236\u7C98\u8D34\n%%fold%%\n\n- \u2318C / \u2318X \u590D\u5236\u3001\u526A\u5207\u6574\u68F5\u5B50\u6811\n- \u526A\u8D34\u677F\u91CC\u662F\u7F29\u8FDB\u5217\u8868\u5F62\u5F0F\u7684 Markdown\uFF0C\u53EF\u4EE5\u7C98\u5230\u4EFB\u4F55\u5730\u65B9\n- \u2318V \u628A\u526A\u8D34\u677F\u91CC\u7684\u5185\u5BB9\u7C98\u6210\u5B50\u8282\u70B9\uFF0C\u4ECE\u522B\u5904\u6284\u6765\u7684\u5217\u8868\u4E5F\u80FD\u76F4\u63A5\u53D8\u6210\u5206\u652F\n\n## \u8BBE\u7F6E\u9879\n\n### \u6253\u5F00\u65B9\u5F0F\n%%fold%%\n\n- \u5207\u6362\u6210\u601D\u7EF4\u5BFC\u56FE\u65F6\u8BB0\u4F4F \xB7 \u5173\u6389\u540E\u5207\u6362\u53EA\u6362\u5F53\u524D\u6807\u7B7E\u9875\uFF0C\u4E0D\u5199 `mindmap: true`\n- \u6253\u5F00\u8111\u56FE\u65F6 \xB7 \u6CA1\u6709\u8BB0\u4F4F\u7684\u4F4D\u7F6E\u65F6\u663E\u793A\u6574\u5F20\u56FE\uFF08\u9002\u5E94\u753B\u5E03\uFF09\uFF0C\u6216\u8005\u4E2D\u5FC3\u4E3B\u9898 100% \u5927\u5C0F\n- \u548C Markdown \u5206\u5C4F\u8054\u52A8 \xB7 \u9ED8\u8BA4\u5173\uFF0C\u6253\u5F00\u540E\u4E24\u8FB9\u7684\u9009\u4E2D\u548C\u5149\u6807\u4E92\u76F8\u8DDF\u968F\n- \u8DDF\u968F\u5F53\u524D\u7B14\u8BB0 \xB7 \u9ED8\u8BA4\u5173\uFF0C\u7F16\u8F91\u5668\u91CC\u6362\u7B14\u8BB0\u65F6\u65C1\u8FB9\u7684\u8111\u56FE\u8DDF\u7740\u6362\uFF0C\u9489\u4F4F\u7684\u4E0D\u8DDF\n\n### \u65B0\u6587\u4EF6\u7528\u4EC0\u4E48\n%%fold%%\n\n- \u65B0\u5EFA\u601D\u7EF4\u5BFC\u56FE\u7684\u6A21\u677F \xB7 \u9009\u4E00\u7BC7\u7B14\u8BB0\u5F53\u521D\u59CB\u5185\u5BB9\uFF0C\u7559\u7A7A\u7528\u300C\u4E3B\u9898 1/2/3\u300D\n- \u7528\u6587\u4EF6\u540D\u4F5C\u4E2D\u5FC3\u4E3B\u9898 \xB7 \u9ED8\u8BA4\u5173\uFF0C\u552F\u4E00\u7684\u4E00\u7EA7\u6807\u9898\u5C31\u662F\u4E2D\u5FC3\u4E3B\u9898\uFF1B\u6253\u5F00\u540E\u4E00\u7EA7\u6807\u9898\u4F5C\u4E3A\u7B2C\u4E00\u7EA7\u5206\u652F\n- \u9ED8\u8BA4\u7ED3\u6784 \xB7 \u5355\u7BC7\u53EF\u4EE5\u7528 `mindmap-structure` \u8986\u76D6\n- \u9ED8\u8BA4\u4E3B\u9898 \xB7 \u5355\u7BC7\u53EF\u4EE5\u7528 `mindmap-theme` \u8986\u76D6\n- \u6807\u9898\u7684\u6700\u6DF1\u7EA7\u522B \xB7 \u6BD4\u8FD9\u66F4\u6DF1\u5C31\u7528\u5217\u8868\u5199\u56DE\n- \u65B0\u6587\u4EF6\u7684\u5217\u8868\u7F29\u8FDB \xB7 Tab \u6216\u7A7A\u683C\n\n### \u754C\u9762\n%%fold%%\n\n- \u6587\u4EF6\u5217\u8868\u91CC\u7684\u56FE\u6807 \xB7 \u7ED9\u8111\u56FE\u7B14\u8BB0\u914D\u4E00\u4E2A icon\uFF0C\u652F\u6301\u641C\u7D22\u9009\u62E9\n- \u5DE5\u5177\u680F\u4F4D\u7F6E \xB7 \u4E0A\u4E0B\u5DE6\u53F3\n- \u9F20\u6807\u6EDA\u8F6E \xB7 \u5E73\u79FB\uFF08\u9ED8\u8BA4\uFF09\u6216\u7F29\u653E\n- \u4EE3\u7801\u5757\u5D4C\u5165\u7684\u6700\u5927\u9AD8\u5EA6\n\n### \u60AC\u505C\u9884\u89C8\n%%fold%%\n\n- \u6309\u4F4F \u2318 / Ctrl \u505C\u5728\u94FE\u63A5\u8282\u70B9\u4E0A\uFF0C\u5F39\u51FA\u7B14\u8BB0\u9884\u89C8\n- \u60F3\u4E0D\u6309\u952E\u5C31\u663E\u793A\uFF0C\u53BB\u6838\u5FC3\u63D2\u4EF6\u300C\u9875\u9762\u9884\u89C8\u300D\u7684\u8BBE\u7F6E\u91CC\u627E\u300C\u601D\u7EF4\u5BFC\u56FE\u300D\u90A3\u4E00\u9879\n\n## \u5FEB\u6377\u952E\n\n### \u589E\u5220\u6539\n%%fold%%\n\n- Tab \xB7 \u52A0\u5B50\u8282\u70B9\n- Enter \xB7 \u52A0\u5144\u5F1F\u8282\u70B9\uFF08\u5728\u4E2D\u5FC3\u4E3B\u9898\u4E0A\u662F\u52A0\u5B50\u8282\u70B9\uFF09\uFF0CShift+Enter \u63D2\u5230\u524D\u9762\n- \u7A7A\u683C / F2 / \u53CC\u51FB \xB7 \u7F16\u8F91\n- Delete / Backspace \xB7 \u5220\u9664\n- \u2318\u232B \xB7 \u4EC5\u5220\u9664\u6B64\u8282\u70B9\uFF0C\u4FDD\u7559\u5B50\u8282\u70B9\n- \u2318\u21B5 \xB7 \u63D2\u5165\u7236\u8282\u70B9\uFF0C\u9009\u4E2D\u7684\u5144\u5F1F\u4E00\u8D77\u6536\u8FDB\u53BB\n- \u2318B / \u2318I \xB7 \u52A0\u7C97 / \u659C\u4F53\n- \u2318\u21E7B \xB7 \u52A0\u5916\u6846 / \u53BB\u6389\u5916\u6846\n\n### \u9009\u62E9\u4E0E\u79FB\u52A8\n%%fold%%\n\n- \u65B9\u5411\u952E \xB7 \u5728\u8282\u70B9\u4E4B\u95F4\u8D70\n- Shift+\u70B9\u51FB / \u2318+\u70B9\u51FB / Shift+\u62D6\u62FD / \u2318A \xB7 \u52A0\u9009 / \u53CD\u9009 / \u6846\u9009 / \u5168\u9009\n- Alt+\u2191\u2193 \xB7 \u5144\u5F1F\u95F4\u6392\u5E8F\n- Alt+\u2190\u2192 \xB7 \u5347\u7EA7 / \u964D\u7EA7\n\n### \u89C6\u56FE\n%%fold%%\n\n- `/` \xB7 \u6298\u53E0\u3001\u5C55\u5F00\n- 1\u20139 / 0 \xB7 \u9009\u4E2D\u8282\u70B9\u5F80\u4E0B\u53EA\u663E\u793A N \u5C42 / \u8FD9\u4E00\u652F\u5168\u90E8\u5C55\u5F00\uFF08\u53F3\u952E\u83DC\u5355\u300C\u6298\u53E0 / \u5C55\u5F00\u300D\u91CC\u4E5F\u6709\u300C\u53EA\u5C55\u5F00\u4E0B\u4E00\u7EA7\u300D\u300C\u5C55\u5F00\u5168\u90E8\u5B50\u5206\u652F\u300D\uFF09\n- \u2318F \xB7 \u641C\u7D22\n- \u2318= / \u2318- / \u23180 \xB7 \u653E\u5927 / \u7F29\u5C0F / \u9002\u5E94\u753B\u5E03\n- \u2318\u21E70 \xB7 \u7F29\u653E\u5230\u9009\u4E2D\u7684\u5206\u652F\n- Esc \xB7 \u53D6\u6D88\u9009\u62E9\uFF0C\u518D\u6309\u9000\u51FA\u805A\u7126\n\n### \u5176\u4ED6\n\n- \u2318C / \u2318X / \u2318V \xB7 \u590D\u5236 / \u526A\u5207 / \u7C98\u8D34\u5B50\u6811\n- \u2318K \xB7 \u94FE\u63A5\u5230\u7B14\u8BB0\n- \u2318Z / \u2318\u21E7Z \xB7 \u64A4\u9500 / \u91CD\u505A\n- \u52A0\u5B50\u8282\u70B9\u3001\u52A0\u5144\u5F1F\u3001\u5728\u524D\u9762\u63D2\u5165\u3001\u5220\u9664\u3001\u4EC5\u5220\u9664\u6B64\u8282\u70B9\u3001\u4E0A\u79FB\u4E0B\u79FB\u3001\u5347\u964D\u7EA7\u3001\u6298\u53E0\u3001\u5C42\u7EA7\u3001\u5916\u6846\u3001\u6982\u8981\u90FD\u662F\u547D\u4EE4\uFF0C\u53EF\u4EE5\u5728\u300C\u8BBE\u7F6E \u2192 \u5FEB\u6377\u952E\u300D\u91CC\u641C gogoga Mind Map \u7ED1\u6210\u81EA\u5DF1\u7684\u4E60\u60EF\n\n## \u624B\u673A\u4E0A\u4E5F\u80FD\u7528\n%%fold%%\n\n### \u624B\u52BF\n%%fold%%\n\n- \u5355\u6307\u62D6\u52A8 = \u5E73\u79FB\u753B\u5E03\n- \u53CC\u6307\u634F\u5408 = \u7F29\u653E\n- \u8F7B\u70B9 = \u9009\u4E2D\n- \u6309\u4F4F 0.4 \u79D2\u518D\u62D6 = \u6362\u7236\u8282\u70B9\n\n### \u754C\u9762\n%%fold%%\n\n- \u6309\u94AE\u5728\u89E6\u5C4F\u4E0A\u81EA\u52A8\u653E\u5927\n- \u8282\u70B9\u5DE5\u5177\u680F\u6709\u52A0\u5B50\u8282\u70B9\u3001\u52A0\u5144\u5F1F\n- \u5E95\u90E8\u5DE5\u5177\u680F\u6709\u64A4\u9500\u91CD\u505A\n- \u6CA1\u6709\u952E\u76D8\u4E5F\u80FD\u5B8C\u6574\u5730\u7F16\u8F91\u4E00\u5F20\u56FE\n';
+
+// examples/脑图代码块嵌入示例.md
+var __default = "# \u8111\u56FE\u4EE3\u7801\u5757\u5D4C\u5165\u793A\u4F8B\n\n\u8FD9\u662F\u4E00\u7BC7**\u666E\u901A\u7B14\u8BB0**\uFF0Cfrontmatter \u91CC\u6CA1\u6709 `mindmap: true`\u3002\u5B83\u7167\u5E38\u662F\u6587\u5B57\uFF0C\u53EA\u662F\u4E2D\u95F4\u63D2\u4E86\u51E0\u6BB5 `mindmap` \u4EE3\u7801\u5757\uFF0C\u9605\u8BFB\u6A21\u5F0F\u548C\u5B9E\u65F6\u9884\u89C8\u90FD\u4F1A\u628A\u5B83\u4EEC\u6E32\u67D3\u6210\u5C0F\u8111\u56FE\u3002\n\n\u5199\u4F5C\u7684\u65F6\u5019\u7528\u6587\u5B57\uFF0C\u9700\u8981\u7406\u6E05\u7ED3\u6784\u7684\u5730\u65B9\u5C31\u63D2\u4E00\u5F20\u56FE\uFF0C\u4E0D\u7528\u4E3A\u4E86\u4E00\u5F20\u5C0F\u56FE\u5355\u72EC\u5F00\u4E00\u4E2A\u6587\u4EF6\u3002\n\n## \u63D2\u4E00\u5F20\u8FDB\u6765\n\n\u56F4\u680F\u8BED\u8A00\u5199 `mindmap`\uFF0C\u5757\u91CC\u7684\u5185\u5BB9\u548C\u6574\u7BC7\u8111\u56FE\u7B14\u8BB0\u662F\u540C\u4E00\u5957 Markdown \u6620\u5C04\uFF1A\n\n```mindmap\n# \u672C\u5468\u8BA1\u5212\n\n## \u4EA7\u54C1\n%%blue%%\n\n- 1\uFE0F\u20E3 \u9700\u6C42\u8BC4\u5BA1\n- 2\uFE0F\u20E3 \u539F\u578B\u8D70\u67E5\n\n## \u7814\u53D1\n%%green%%\n\n- \u23F3 \u63A5\u53E3\u8054\u8C03\n- \u2705 \u57CB\u70B9\u4E0A\u7EBF\n\n## \u98CE\u9669\n%%red%%\n\n- \u2757 \u8BBE\u8BA1\u7A3F\u8FD8\u6CA1\u5B9A\n```\n\n\u989C\u8272\u3001\u6807\u8BB0\u3001\u6298\u53E0\u8FD9\u4E9B\u5728\u5757\u91CC\u4E00\u6837\u7BA1\u7528\uFF0C\u56E0\u4E3A\u5B83\u4EEC\u672C\u6765\u5C31\u53EA\u662F\u6587\u672C\u3002\n\n## \u6BCF\u4E00\u5757\u53EF\u4EE5\u4E0D\u4E00\u6837\n\n\u5757\u91CC\u53EF\u4EE5\u518D\u5199\u4E00\u5C42 frontmatter\uFF0C\u53EA\u5BF9\u8FD9\u4E00\u5757\u751F\u6548\uFF1A\n\n```mindmap\n---\nmindmap-structure: org-down\nmindmap-theme: business\n---\n\n# \u53D1\u5E03\u6D41\u7A0B\n\n## \u63D0\u6D4B\n\n## \u56DE\u5F52\n\n## \u7070\u5EA6\n\n## \u5168\u91CF\n```\n\n\u540C\u4E00\u7BC7\u7B14\u8BB0\u91CC\uFF0C\u4E0A\u9762\u90A3\u5757\u662F\u9ED8\u8BA4\u7684\u903B\u8F91\u56FE + \u96EA\u677E\u4E3B\u9898\uFF0C\u8FD9\u5757\u662F\u7EC4\u7EC7\u7ED3\u6784\u56FE + \u5546\u52A1\u4E3B\u9898\u3002\n\n## \u600E\u4E48\u73A9\n\n- \u9ED8\u8BA4**\u53EA\u8BFB**\uFF0C\u514D\u5F97\u770B\u7B14\u8BB0\u7684\u65F6\u5019\u624B\u6ED1\u6539\u4E86\u4E1C\u897F\n- \u70B9\u5DE5\u5177\u680F\u6700\u5DE6\u8FB9\u7684\u94C5\u7B14\uFF0C\u6216\u8005\u53CC\u51FB\u4EFB\u610F\u8282\u70B9\uFF0C\u5C31\u8FDB\u5165\u7F16\u8F91\n- \u6539\u5B8C\u7ACB\u523B\u5199\u56DE\u8FD9\u4E2A\u4EE3\u7801\u5757\uFF0C\u5207\u8D70\u518D\u56DE\u6765\u8FD8\u662F\u4F60\u6539\u7684\u6837\u5B50\n- \u2318Z \u64A4\u9500\u53EA\u4F5C\u7528\u5728\u5757\u91CC\uFF0C\u4E0D\u4F1A\u628A\u6574\u7BC7\u7B14\u8BB0\u4E00\u8D77\u56DE\u6EDA\n- \u9AD8\u5EA6\u6309\u5185\u5BB9\u81EA\u9002\u5E94\uFF0C\u8D85\u8FC7\u8BBE\u7F6E\u91CC\u7684\u4E0A\u9650\u5C31\u51FA\u6EDA\u52A8\u6761\n- \u5DE5\u5177\u680F\u3001\u53F3\u952E\u83DC\u5355\u3001\u62D6\u62FD\u3001\u6298\u53E0\uFF0C\u548C\u6574\u9875\u8111\u56FE\u5B8C\u5168\u4E00\u6837\n\n## \u4EC0\u4E48\u65F6\u5019\u7528\u54EA\u79CD\n\n| | \u6574\u7BC7\u8111\u56FE\u7B14\u8BB0 | \u4EE3\u7801\u5757\u5D4C\u5165 |\n|---|---|---|\n| \u52A0\u4EC0\u4E48 | frontmatter \u91CC `mindmap: true` | \u4E00\u6BB5 `mindmap` \u56F4\u680F |\n| \u4E00\u7BC7\u51E0\u5F20 | \u4E00\u5F20 | \u60F3\u63D2\u51E0\u5F20\u63D2\u51E0\u5F20 |\n| \u9002\u5408 | \u56FE\u5C31\u662F\u8FD9\u7BC7\u7B14\u8BB0\u672C\u8EAB | \u6587\u7AE0\u91CC\u987A\u624B\u753B\u4E00\u5F20\u8BF4\u660E\u7ED3\u6784 |\n| \u9ED8\u8BA4\u53EF\u7F16\u8F91 | \u662F | \u5426\uFF0C\u70B9\u94C5\u7B14\u624D\u7F16\u8F91 |\n\n\u56DE\u5230 [[Mind Map \u4F7F\u7528\u6307\u5357]]\u3002\n";
+
+// src/guide.ts
+var GUIDE_FILES = [
+  { name: "Mind Map \u4F7F\u7528\u6307\u5357.md", text: Mind_Map_default },
+  { name: "\u8111\u56FE\u4EE3\u7801\u5757\u5D4C\u5165\u793A\u4F8B.md", text: __default }
+];
+
 // src/note-markers.ts
-var import_state8 = require("@codemirror/state");
-var import_view7 = require("@codemirror/view");
+var import_state9 = require("@codemirror/state");
+var import_view8 = require("@codemirror/view");
 
 // src/note-markers-core.ts
-var import_state7 = require("@codemirror/state");
+var import_state8 = require("@codemirror/state");
 var HEADING_LINE = /^#{1,6}(?:[ \t]|$)/;
 function markerInLine(text, lineFrom) {
   if (!text.includes("%%")) return null;
@@ -23896,7 +31602,7 @@ function allHidden(state) {
   return out;
 }
 function keepCursorBefore(active) {
-  return import_state7.EditorState.transactionFilter.of((tr) => {
+  return import_state8.EditorState.transactionFilter.of((tr) => {
     if (!tr.selection && !tr.docChanged) return tr;
     const st = tr.state;
     if (!active(st)) return tr;
@@ -23910,7 +31616,7 @@ function keepCursorBefore(active) {
     const prev = tr.startState.selection.main;
     const prevPos = tr.docChanged ? tr.changes.mapPos(prev.head, -1) : prev.head;
     const target = !tr.docChanged && prev.empty && prevPos === r3.from && line.number < st.doc.lines ? line.to + 1 : r3.from;
-    return [tr, { selection: import_state7.EditorSelection.cursor(target), sequential: true }];
+    return [tr, { selection: import_state8.EditorSelection.cursor(target), sequential: true }];
   });
 }
 function trimChange(c, deleted) {
@@ -23920,7 +31626,7 @@ function trimChange(c, deleted) {
   return { from: c.from + a, to: c.to, insert: c.insert.slice(a) };
 }
 function guardEdits(active) {
-  return import_state7.EditorState.transactionFilter.of((tr) => {
+  return import_state8.EditorState.transactionFilter.of((tr) => {
     if (!tr.docChanged || tr.isUserEvent("move") || !(tr.isUserEvent("delete") || tr.isUserEvent("input"))) return tr;
     const st = tr.startState;
     if (!active(st) || st.selection.ranges.length > 1) return tr;
@@ -23930,10 +31636,10 @@ function guardEdits(active) {
     const doc = st.doc;
     const c = trimChange(raw[0], doc.sliceString(raw[0].from, raw[0].to));
     if (!c) return tr;
-    const userEvent = tr.annotation(import_state7.Transaction.userEvent);
+    const userEvent = tr.annotation(import_state8.Transaction.userEvent);
     const spec = (ch, cursor) => ({
       changes: ch,
-      selection: import_state7.EditorSelection.cursor(cursor),
+      selection: import_state8.EditorSelection.cursor(cursor),
       userEvent,
       scrollIntoView: tr.scrollIntoView
     });
@@ -23963,7 +31669,7 @@ function guardEdits(active) {
         if (c.insert) return spec([{ from: r3.from, insert: c.insert }], r3.from + c.insert.length);
         const ownerLine = doc.lineAt(r3.owner);
         if (tr.isUserEvent("delete.backward") && r3.from > ownerLine.from) {
-          const p = (0, import_state7.findClusterBreak)(ownerLine.text, r3.from - ownerLine.from, false) + ownerLine.from;
+          const p = (0, import_state8.findClusterBreak)(ownerLine.text, r3.from - ownerLine.from, false) + ownerLine.from;
           return spec([{ from: p, to: r3.from }], p);
         }
         return [];
@@ -23976,7 +31682,7 @@ function guardEdits(active) {
   });
 }
 function keepUnitsOnMove(active) {
-  return import_state7.EditorState.transactionFilter.of((tr) => {
+  return import_state8.EditorState.transactionFilter.of((tr) => {
     if (!tr.docChanged || !tr.isUserEvent("move.line")) return tr;
     const st = tr.startState;
     if (!active(st) || st.selection.ranges.length > 1) return tr;
@@ -24010,7 +31716,7 @@ ${block}`;
     const shift = up ? -(other.length + 1) : other.length + 1;
     return {
       changes: { from, to, insert },
-      selection: import_state7.EditorSelection.range(sel.anchor + shift, sel.head + shift),
+      selection: import_state8.EditorSelection.range(sel.anchor + shift, sel.head + shift),
       userEvent: "move.line",
       scrollIntoView: true
     };
@@ -24021,7 +31727,7 @@ function markerGuards(active) {
 }
 
 // src/note-markers.ts
-var MarkerDot = class extends import_view7.WidgetType {
+var MarkerDot = class extends import_view8.WidgetType {
   constructor(raw, innerOffset) {
     super();
     this.raw = raw;
@@ -24047,7 +31753,7 @@ var MarkerDot = class extends import_view7.WidgetType {
     return true;
   }
 };
-var HiddenMarker = class extends import_view7.WidgetType {
+var HiddenMarker = class extends import_view8.WidgetType {
   eq() {
     return true;
   }
@@ -24058,31 +31764,31 @@ var HiddenMarker = class extends import_view7.WidgetType {
     return true;
   }
 };
-var NOTHING = import_view7.Decoration.replace({ widget: new HiddenMarker() });
+var NOTHING = import_view8.Decoration.replace({ widget: new HiddenMarker() });
 function build4(state, mode, active) {
-  if (!active(state)) return import_view7.Decoration.none;
+  if (!active(state)) return import_view8.Decoration.none;
   const deco = [];
   for (const r3 of allHidden(state)) {
     const raw = state.doc.sliceString(r3.from, r3.to).trim();
-    deco.push((mode === "hide" ? NOTHING : import_view7.Decoration.replace({ widget: new MarkerDot(raw, r3.inner - r3.from) })).range(r3.from, r3.to));
+    deco.push((mode === "hide" ? NOTHING : import_view8.Decoration.replace({ widget: new MarkerDot(raw, r3.inner - r3.from) })).range(r3.from, r3.to));
   }
-  return import_view7.Decoration.set(deco, true);
+  return import_view8.Decoration.set(deco, true);
 }
 function noteMarkersExtension(mode, active) {
-  const field = import_state8.StateField.define({
+  const field = import_state9.StateField.define({
     create: (state) => build4(state, mode, active),
     update: (deco, tr) => tr.docChanged || tr.selection || active(tr.state) !== active(tr.startState) ? build4(tr.state, mode, active) : deco,
-    provide: (f) => [import_view7.EditorView.decorations.from(f), import_view7.EditorView.atomicRanges.of((view) => view.state.field(f))]
+    provide: (f) => [import_view8.EditorView.decorations.from(f), import_view8.EditorView.atomicRanges.of((view) => view.state.field(f))]
   });
   return [field, markerGuards(active)];
 }
 
 // src/note-format-bar.ts
-var import_view8 = require("@codemirror/view");
-var import_obsidian11 = require("obsidian");
+var import_view9 = require("@codemirror/view");
+var import_obsidian15 = require("obsidian");
 
 // src/note-format-core.ts
-var import_state9 = require("@codemirror/state");
+var import_state10 = require("@codemirror/state");
 function lineContentRange(text) {
   const head = /^\s*(?:>\s?)*(?:\[![^\]\s]*\][+-]?\s*)?(?:#{1,6}\s+|(?:[-*+]|\d{1,9}[.)])\s+(?:\[.\]\s+)?)?/.exec(text);
   const start = head ? head[0].length : 0;
@@ -24125,14 +31831,14 @@ function formatSelection(state, fmt2) {
     const s = Math.max(cs, sel.from - line.from);
     const e = Math.min(ce, sel.to - line.from);
     if (s >= e || !line.text.slice(s, e).trim()) continue;
-    const r3 = applyInlineFormat(line.text, s, e, fmt2);
+    const r3 = applyFormat(line.text, s, e, fmt2);
     if (r3.text !== line.text) changes.push({ from: line.from, to: line.to, insert: r3.text });
     from ?? (from = line.from + delta + r3.start);
     to = line.from + delta + r3.end;
     delta += r3.text.length - line.text.length;
   }
   if (from === null || !changes.length) return null;
-  return { changes, selection: import_state9.EditorSelection.single(from, to) };
+  return { changes, selection: import_state10.EditorSelection.single(from, to) };
 }
 function canShowFormatBar(state) {
   const lines = selectedLines(state);
@@ -24149,8 +31855,11 @@ function canShowFormatBar(state) {
 }
 
 // src/note-format-bar.ts
+function isTableCellEditor(view) {
+  return !!view.dom.parentElement?.closest(".table-cell-wrapper");
+}
 function noteFormatBarExtension(o) {
-  return import_view8.ViewPlugin.fromClass(
+  return import_view9.ViewPlugin.fromClass(
     class {
       constructor(view) {
         this.view = view;
@@ -24183,7 +31892,7 @@ function noteFormatBarExtension(o) {
         view.requestMeasure({
           read: () => {
             const state = view.state;
-            if (!view.hasFocus || !state.field(import_obsidian11.editorLivePreviewField, false) || !canShowFormatBar(state)) return null;
+            if (!view.hasFocus || o.skip?.(view) || !(state.field(import_obsidian15.editorLivePreviewField, false) || o.cell?.(view)) || !canShowFormatBar(state)) return null;
             const sel = state.selection.main;
             const a = view.coordsAtPos(sel.from, 1);
             const b = view.coordsAtPos(sel.to, -1);
@@ -24240,11 +31949,11 @@ function noteFormatBarExtension(o) {
 }
 
 // src/note-colors.ts
-var import_state11 = require("@codemirror/state");
-var import_view9 = require("@codemirror/view");
+var import_state12 = require("@codemirror/state");
+var import_view10 = require("@codemirror/view");
 
 // src/note-colors-core.ts
-var import_state10 = require("@codemirror/state");
+var import_state11 = require("@codemirror/state");
 var LIST_LINE = /^\s*(?:>\s?)*(?:[-*+]|\d{1,9}[.)])(?:[ \t]|$)/;
 var HEADING_LINE2 = /^\s*#{1,6}(?:[ \t]|$)/;
 var BLOCK_ID = /\s+\^[A-Za-z0-9-]+\s*$/;
@@ -24283,7 +31992,7 @@ function colorRanges(doc, upTo = doc.lines) {
   return out.sort((a, b) => a.from - b.from);
 }
 function sectionColors(fullText, lineStart, lineEnd) {
-  const doc = import_state10.Text.of(fullText.split("\n"));
+  const doc = import_state11.Text.of(fullText.split("\n"));
   const colors = lineColors(doc, Math.min(lineEnd + 1, doc.lines));
   const headings = /* @__PURE__ */ new Map();
   const items = /* @__PURE__ */ new Map();
@@ -24317,24 +32026,24 @@ function attrs(c) {
   return c.named ? { class: "mm-note-node-color", "data-color": c.color } : { class: "mm-note-node-color", style: `--mm-note-color: ${c.color}` };
 }
 function noteColorsExtension(active) {
-  return import_view9.ViewPlugin.fromClass(
+  return import_view10.ViewPlugin.fromClass(
     class {
       constructor(view) {
         this.decorations = this.build(view);
       }
       update(u) {
-        if (u.docChanged || u.viewportChanged || u.startState.facet(import_view9.EditorView.editable) !== u.state.facet(import_view9.EditorView.editable) || u.transactions.some((t3) => t3.reconfigured))
+        if (u.docChanged || u.viewportChanged || u.startState.facet(import_view10.EditorView.editable) !== u.state.facet(import_view10.EditorView.editable) || u.transactions.some((t3) => t3.reconfigured))
           this.decorations = this.build(u.view);
       }
       build(view) {
-        const b = new import_state11.RangeSetBuilder();
+        const b = new import_state12.RangeSetBuilder();
         if (!active(view)) return b.finish();
         const doc = view.state.doc;
         const last = view.visibleRanges.length ? doc.lineAt(view.visibleRanges[view.visibleRanges.length - 1].to).number : doc.lines;
         const first = view.visibleRanges.length ? view.visibleRanges[0].from : 0;
         for (const r3 of colorRanges(doc, last)) {
           if (r3.to < first) continue;
-          b.add(r3.from, r3.to, import_view9.Decoration.mark({ attributes: attrs(r3.color) }));
+          b.add(r3.from, r3.to, import_view10.Decoration.mark({ attributes: attrs(r3.color) }));
         }
         return b.finish();
       }
@@ -24383,9 +32092,41 @@ function paintNoteColors(el, ctx, isMindMap, fallbackText) {
 }
 
 // src/xmind-view.ts
-var import_obsidian12 = require("obsidian");
+var import_obsidian16 = require("obsidian");
 
 // src/xmind.ts
+var XMIND_STRUCTURES = {
+  "org.xmind.ui.logic.right": "logic-right",
+  "org.xmind.ui.logic.left": "logic-right",
+  "org.xmind.ui.logic-chart.right": "logic-right",
+  "org.xmind.ui.logic-chart.left": "logic-right",
+  "org.xmind.ui.map": "mindmap",
+  "org.xmind.ui.map.unbalanced": "mindmap",
+  "org.xmind.ui.map.clockwise": "mindmap",
+  "org.xmind.ui.map.anticlockwise": "mindmap",
+  "org.xmind.ui.map.floating": "mindmap",
+  "org.xmind.ui.map.floating.clockwise": "mindmap",
+  "org.xmind.ui.map.floating.anticlockwise": "mindmap",
+  "org.xmind.ui.org-chart.down": "org-down",
+  "org.xmind.ui.org-chart.up": "org-down",
+  "org.xmind.ui.tree.right": "tree-right",
+  "org.xmind.ui.tree.left": "tree-right",
+  "org.xmind.ui.timeline.horizontal": "timeline-h-alt",
+  "org.xmind.ui.timeline.horizontal.down": "timeline-h",
+  "org.xmind.ui.timeline.horizontal.up": "timeline-h",
+  "org.xmind.ui.timeline.vertical": "timeline-v-alt",
+  "org.xmind.ui.fishbone.leftHeaded": "fishbone-left",
+  "org.xmind.ui.fishbone.rightHeaded": "fishbone-right"
+};
+function xmindRootStructure(cls) {
+  return cls ? XMIND_STRUCTURES[cls] : void 0;
+}
+function xmindBranchLayout(cls) {
+  const s = xmindRootStructure(cls);
+  if (!s || s === "mindmap") return void 0;
+  if (s === "fishbone-left" || s === "fishbone-right") return "fishbone";
+  return s;
+}
 var noLoss = () => ({ detached: 0, relationships: 0, summaries: 0, comments: 0, images: 0 });
 function packagePath(src) {
   const m = /^xap:(.+)$/.exec((src ?? "").trim());
@@ -24477,8 +32218,8 @@ function fromJsonTopic(t3, lost = noLoss(), isRoot = false) {
   const fill = t3.style?.properties?.["fill"];
   const color = fill && /^#[0-9a-f]{6}/i.test(fill) ? fill.slice(0, 7).toLowerCase() : void 0;
   const notes = [];
-  const plain = t3.notes?.plain?.content?.trim();
-  if (plain) notes.push(plain);
+  const plain2 = t3.notes?.plain?.content?.trim();
+  if (plain2) notes.push(plain2);
   if (t3.labels?.length) notes.push(t3.labels.map((l) => `#${l.replace(/\s+/g, "-")}`).join(" "));
   const detached = t3.children?.detached ?? [];
   if (!isRoot) lost.detached += detached.length;
@@ -24491,6 +32232,7 @@ function fromJsonTopic(t3, lost = noLoss(), isRoot = false) {
     folded: t3.branch === "folded" || void 0,
     callout: calloutText((t3.children?.callout ?? []).map((c) => c.title)),
     image: imageOf(t3.image?.src, t3.image?.width, t3.image?.align),
+    structure: t3.structureClass || void 0,
     children: [
       ...(t3.children?.attached ?? []).map((c) => fromJsonTopic(c, lost)),
       ...isRoot ? detached.map((d, i) => ({ ...fromJsonTopic(d, lost), float: floatPos(d.position?.x, d.position?.y, i) })) : []
@@ -24595,7 +32337,7 @@ function childrenByName(el, name) {
 function fromXmlTopic(el, lost = noLoss(), isRoot = false) {
   const title = cleanTitle(childrenByName(el, "title")[0]?.text ?? "");
   const notesEl = childrenByName(el, "notes")[0];
-  const plain = notesEl ? childrenByName(notesEl, "plain")[0]?.text.trim() : void 0;
+  const plain2 = notesEl ? childrenByName(notesEl, "plain")[0]?.text.trim() : void 0;
   const children = [];
   const floats = [];
   const callouts = [];
@@ -24625,10 +32367,11 @@ function fromXmlTopic(el, lost = noLoss(), isRoot = false) {
   const topic = {
     id: el.attrs["id"],
     title,
-    note: plain || void 0,
+    note: plain2 || void 0,
     image: img ? imageOf(img.attrs["xhtml:src"] ?? img.attrs["src"], Number(img.attrs["svg:width"]), img.attrs["align"]) : void 0,
     folded: el.attrs["branch"] === "folded" || void 0,
     callout: calloutText(callouts),
+    structure: el.attrs["structure-class"] || void 0,
     children
   };
   for (const bs of childrenByName(el, "boundaries")) {
@@ -24725,8 +32468,20 @@ function xmindSheetToDoc(sheet, style = {}, imageLink) {
   const st = { ...DEFAULT_STYLE, ...style };
   const maxHeading = Math.min(6, Math.max(1, st.maxHeadingLevel));
   const byId = /* @__PURE__ */ new Map();
-  const build5 = (t3, parent, depth) => {
+  const rootStructure = xmindRootStructure(sheet.root.structure);
+  const layoutOf = (t3, inner, axis, float) => {
+    const own = xmindBranchLayout(t3.structure);
+    if (!own || axis && !float) return void 0;
+    const same = own === inner || own === "fishbone" && isFishbone(inner);
+    return same ? void 0 : own;
+  };
+  const below = (s) => isTimelineH(s) || isFishbone(s) ? "tree-right" : isTimeline(s) ? "logic-right" : s === "mindmap" ? "logic-right" : s;
+  const axisOf = (s) => isTimeline(s) || isFishbone(s);
+  const build5 = (t3, parent, depth, inner = rootStructure ?? "logic-right", axis = false) => {
     const asHeading = depth + 1 <= maxHeading;
+    const isFloat = !!(parent && !parent.parent && t3.float);
+    const ctx = isFloat ? inner === "org-down" || inner === "tree-right" ? inner : "logic-right" : inner;
+    const layout = parent ? layoutOf(t3, ctx, axis, isFloat) : void 0;
     const node = createNode({
       parent,
       text: withImage(t3.title, t3.image, t3.image && imageLink ? imageLink(t3.image.src) : null),
@@ -24738,11 +32493,15 @@ function xmindSheetToDoc(sheet, style = {}, imageLink) {
       summary: t3.summary && (t3.summary.topic ? { span: t3.summary.span, text: "", topic: build5(t3.summary.topic, parent, depth) } : { span: t3.summary.span, text: t3.summary.text }),
       float: parent && !parent.parent && t3.float ? { ...t3.float } : void 0,
       callout: t3.callout,
+      layout,
       kind: asHeading ? "heading" : "list",
       level: asHeading ? depth + 1 : 0
     });
     if (t3.id) byId.set(t3.id, node);
-    node.children = t3.children.map((c) => build5(c, node, depth + 1));
+    const mine = !parent ? rootStructure ?? "logic-right" : layout ? layout === "fishbone" ? "fishbone-left" : layout : void 0;
+    const kidsInner = mine ?? (axis ? below(inner) : ctx);
+    const kidsAxis = !!mine && axisOf(mine);
+    node.children = t3.children.map((c) => build5(c, node, depth + 1, kidsInner, kidsAxis));
     return node;
   };
   const root = build5(sheet.root, null, 0);
@@ -24755,7 +32514,11 @@ function xmindSheetToDoc(sheet, style = {}, imageLink) {
     to.anchor ?? (to.anchor = `r${++n}`);
     (from.rels ?? (from.rels = [])).push({ to: to.anchor, label: r3.title.replace(/["%]/g, "").trim() });
   }
-  return { root, frontmatter: "---\nmindmap: true\n---", preamble: "", rootFromHeading: true, style: st };
+  const fm = rootStructure ? `---
+mindmap: true
+mindmap-structure: ${rootStructure}
+---` : "---\nmindmap: true\n---";
+  return { root, frontmatter: fm, preamble: "", rootFromHeading: true, style: st };
 }
 function xmindSheetToMarkdown(sheet, style = {}, imageLink) {
   return serializeMarkdown(xmindSheetToDoc(sheet, style, imageLink));
@@ -24763,7 +32526,7 @@ function xmindSheetToMarkdown(sheet, style = {}, imageLink) {
 
 // src/xmind-view.ts
 var VIEW_TYPE_XMIND = "mindmap-xmind";
-var XmindView = class extends import_obsidian12.FileView {
+var XmindView = class extends import_obsidian16.FileView {
   constructor(leaf, plugin) {
     super(leaf);
     this.plugin = plugin;
@@ -24811,7 +32574,7 @@ var XmindView = class extends import_obsidian12.FileView {
       this.sheets = await parseXmind(await this.app.vault.readBinary(file));
     } catch (e) {
       this.sheets = [];
-      new import_obsidian12.Notice(t("xmind.readFailed", { name: file.name, error: e.message }));
+      new import_obsidian16.Notice(t("xmind.readFailed", { name: file.name, error: e.message }));
     }
     this.current = 0;
     this.renderSheet();
@@ -24834,7 +32597,9 @@ var XmindView = class extends import_obsidian12.FileView {
     }
     const urls = sheetImageUrls(sheet);
     this.releaseImages = urls.revoke;
-    this.canvas.setDoc(xmindSheetToDoc(sheet, this.docStyle(), urls.link));
+    const doc = xmindSheetToDoc(sheet, this.docStyle(), urls.link);
+    this.canvas.setStructure(xmindRootStructure(sheet.root.structure) ?? this.plugin.settings.defaultStructure);
+    this.canvas.setDoc(doc);
     prev?.();
     const lost = describeLost(sheet.lost);
     if (lost) {
@@ -24881,13 +32646,13 @@ icon: ${icon2}
     const created = await this.app.vault.create(path, md);
     await this.leaf.setViewState({ type: VIEW_TYPE_MINDMAP, state: { file: created.path }, active: true });
     const lost = describeLost(sheet.lost);
-    new import_obsidian12.Notice(t("xmind.converted", { path: created.path }) + (lost ? `
+    new import_obsidian16.Notice(t("xmind.converted", { path: created.path }) + (lost ? `
 ${lost}` : ""), lost ? 8e3 : void 0);
   }
 };
 
 // src/embed.ts
-var import_obsidian13 = require("obsidian");
+var import_obsidian17 = require("obsidian");
 function registerMindMapEmbeds(plugin) {
   const registry2 = plugin.app.embedRegistry;
   if (!registry2?.registerExtension) return;
@@ -24909,13 +32674,14 @@ function registerMindMapEmbeds(plugin) {
     });
   }
 }
-var MindMapEmbed = class extends import_obsidian13.Component {
-  constructor(plugin, ctx, file, subpath = "") {
+var MindMapEmbed = class extends import_obsidian17.Component {
+  constructor(plugin, ctx, file, subpath = "", inNode = false) {
     super();
     this.plugin = plugin;
     this.ctx = ctx;
     this.file = file;
     this.subpath = subpath;
+    this.inNode = inNode;
     this.canvas = null;
     this.wrap = null;
     this.lastHeight = 0;
@@ -24927,9 +32693,13 @@ var MindMapEmbed = class extends import_obsidian13.Component {
     this.shownK = 0;
     this.zoomSaveTimer = null;
   }
+  /** 回到整张图（节点里的预览点「适应」） */
+  fitView() {
+    this.canvas?.fit();
+  }
   /** 放在白板卡片里：卡片多大就铺多大，而不是按图的大小算高度 */
   inCanvas() {
-    return !!this.ctx.containerEl.closest(".canvas-node");
+    return this.inNode || !!this.ctx.containerEl.closest(".canvas-node");
   }
   onload() {
     this.registerEvent(
@@ -24966,7 +32736,8 @@ var MindMapEmbed = class extends import_obsidian13.Component {
         edge: edgeFromFrontmatter(fm),
         editable: false,
         embedded: true,
-        embedWheelLock: () => settings.embedWheel !== "always",
+        // 节点里的预览激活了才接鼠标，激活后滚轮直接拿来缩放、平移，不用再点一下
+        embedWheelLock: () => !this.inNode && settings.embedWheel !== "always",
         toolbarPosition: settings.toolbarPosition,
         wheelZoom: () => settings.wheelAction === "zoom",
         notePreview: () => settings.notePreview,
@@ -24978,7 +32749,7 @@ var MindMapEmbed = class extends import_obsidian13.Component {
         autoNumber: () => settings.numberByTyping,
         copyPlain: () => settings.copyPlain,
         showNodebar: () => settings.showNodebar,
-        nodebarLayout: () => mergeLayout(settings.nodebarLayout, nodebarDefault(import_obsidian13.Platform.isMobile)),
+        nodebarLayout: () => mergeLayout(settings.nodebarLayout, nodebarDefault(import_obsidian17.Platform.isMobile)),
         toolbarLayout: () => embedToolbarLayout(settings),
         nodeColors: () => parseNodeColors(settings.nodeColors),
         textColors: () => parseColorList(settings.textColors),
@@ -24999,7 +32770,7 @@ var MindMapEmbed = class extends import_obsidian13.Component {
           this.shownK = state.k;
           this.rememberZoom(state.k);
         },
-        host: this.plugin.canvasHost(() => this.ctx.sourcePath, this),
+        host: this.plugin.canvasHost(() => this.ctx.sourcePath, this, void 0, { mapPreview: !this.inNode }),
         onOpenFile: () => void this.plugin.app.workspace.openLinkText(this.file.path, this.ctx.sourcePath),
         onLayout: (bounds) => {
           this.bounds = bounds;
@@ -25095,9 +32866,9 @@ var MindMapEmbed = class extends import_obsidian13.Component {
   focusSubpath(root) {
     const canvas = this.canvas;
     if (!canvas || !this.subpath) return;
-    const found = findSubpathNode(root, this.subpath);
-    if (!found || found === root || canvas.getFocus() === found) return;
-    canvas.focusOn(found);
+    const found2 = findSubpathNode(root, this.subpath);
+    if (!found2 || found2 === root || canvas.getFocus() === found2) return;
+    canvas.focusOn(found2);
     canvas.select(null);
   }
   /** release：.xmind 图片的 blob: 地址，换上新图之后再释放 */
@@ -25274,7 +33045,8 @@ function previewElAtLine(view, line) {
 }
 function previewCenterLine(view) {
   const secs = previewSections(view);
-  const scroller = secs.length ? scrollParentWithin(secs[0].el, view.containerEl) : null;
+  const live = secs.find((s) => s.el.isConnected);
+  const scroller = live ? scrollParentWithin(live.el, view.containerEl) : null;
   if (!scroller) return Math.max(0, Math.round(view.previewMode.getScroll()));
   const b = scroller.getBoundingClientRect();
   const cy = b.top + b.height / 2;
@@ -25292,6 +33064,35 @@ function previewCenterLine(view) {
     }
   }
   return best ? best.line : Math.max(0, Math.round(view.previewMode.getScroll()));
+}
+function previewFocusLine(view, pick) {
+  const sel = view.containerEl.win.getSelection();
+  const anchor = sel && !sel.isCollapsed ? sel.anchorNode : null;
+  const anchorEl = anchor ? anchor.nodeType === Node.ELEMENT_NODE ? anchor : anchor.parentElement : null;
+  if (anchorEl && anchorEl.closest(".markdown-reading-view") && view.containerEl.contains(anchorEl)) {
+    const line = previewLineAt(view, anchorEl);
+    if (line !== null) return line;
+  }
+  if (pick && pick.el.isConnected && view.containerEl.contains(pick.el)) {
+    const scroller = scrollParentWithin(pick.el, view.containerEl);
+    const r3 = pick.el.getBoundingClientRect();
+    const b = scroller?.getBoundingClientRect();
+    if (b && r3.height > 0 && r3.bottom > b.top && r3.top < b.bottom) return pick.line;
+  }
+  return previewCenterLine(view);
+}
+function flashEl(el) {
+  const accent = el.win.getComputedStyle(el).getPropertyValue("--interactive-accent").trim() || "#155dff";
+  const bg = `color-mix(in srgb, ${accent} 22%, transparent)`;
+  const bar = `inset 3px 0 0 ${accent}`;
+  el.animate(
+    [
+      { backgroundColor: bg, boxShadow: bar },
+      { backgroundColor: bg, boxShadow: bar, offset: 0.6 },
+      { backgroundColor: "transparent", boxShadow: "inset 3px 0 0 transparent" }
+    ],
+    { duration: 2e3, easing: "ease-out" }
+  );
 }
 function sourceFocusLine(view) {
   const cm = view.editor.cm;
@@ -25330,20 +33131,34 @@ function previewLineAt(view, target) {
   const li = target.closest("li[data-line]");
   return li && sec.el.contains(li) ? sec.start.line + Number(li.dataset.line) : sec.start.line;
 }
-var MindMapPlugin = class extends import_obsidian14.Plugin {
+var MIN_TABLE_VERSION = "0.22.1";
+function versionBefore(a, b) {
+  const pa = a.split(".").map((x) => parseInt(x, 10) || 0);
+  const pb = b.split(".").map((x) => parseInt(x, 10) || 0);
+  for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+    const d = (pa[i] ?? 0) - (pb[i] ?? 0);
+    if (d) return d < 0;
+  }
+  return false;
+}
+var MindMapPlugin = class extends import_obsidian18.Plugin {
   constructor() {
     super(...arguments);
     this.settings = { ...DEFAULT_SETTINGS };
+    this.reviewStatus = null;
+    this.reviewTimer = 0;
     /** PDF 自动摘录：同一时间只有一张脑图接 PDF++ 复制的内容 */
     this.pdfExcerpt = new PdfExcerpt(this.app);
     /** 删除节点时清理不再使用的图片（设置项 cleanAttachments） */
-    this.janitor = new AttachmentJanitor(this.app, (n) => new import_obsidian14.Notice(t("notice.attachmentsCleaned", { n: String(n) })));
+    this.janitor = new AttachmentJanitor(this.app, (n) => new import_obsidian18.Notice(t("notice.attachmentsCleaned", { n: String(n) })));
     /** 用户明确要求以 Markdown 打开的文件，跳过一次视图重定向 */
     this.markdownOverride = /* @__PURE__ */ new Set();
     /** 脑图笔记临时以 Markdown 打开时，标签页右上角那个「以思维导图打开」按钮 */
     this.mapButtons = /* @__PURE__ */ new Map();
     this.mathReady = false;
     this.propertyIcons = null;
+    /** 备注里的表格由 gogoga Table 画：它太旧时格子里选中文字不出格式栏（群友装着 0.19.2，以为高亮没修好）。每次启动只提示一次 */
+    this.oldTableWarned = false;
     /** 「在笔记里隐藏格式标签」：开关时换掉注册给编辑器的扩展，updateOptions 让打开着的笔记立刻生效 */
     this.noteTagExt = [];
     /** 「显示隐藏的节点」：只在这次运行里有效，所有脑图一起切换 */
@@ -25376,6 +33191,8 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     /** 用户最后在用的（不算空标签页）是不是 PDF：判断「是不是从 PDF 跳回来的」 */
     this.lastLeafWasPdf = false;
     /** 同一个标签页在 Markdown 和脑图之间来回切：每篇笔记记住 Markdown 那边的模式、滚动位置和光标（只在这次运行里） */
+    /** 阅读模式里上次点的位置（每个 Markdown 视图一份） */
+    this.previewPick = /* @__PURE__ */ new WeakMap();
     this.mdSpot = /* @__PURE__ */ new Map();
     /**
      * 分屏联动（设置里打开）：同一文件的脑图和 Markdown 同时显示时，Markdown 里的光标换了行，
@@ -25386,6 +33203,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     this.lastFollowKey = "";
     /** Markdown 跟着脑图折叠：每个 Markdown 视图上次跟着脑图折起来的节点（路径）。按它算增减，用户自己折的不碰 */
     this.appliedFolds = /* @__PURE__ */ new WeakMap();
+    this.reviewKnown = /* @__PURE__ */ new Set();
     // ---------- 代码块 ----------
     /** 代码块重新渲染之间要保住的状态，按「文件路径:起始行」缓存 */
     this.blockStates = /* @__PURE__ */ new Map();
@@ -25404,12 +33222,21 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     /** 上次从脑图打开链接用的右侧分屏：还开着就接着用，免得每点一个链接多分一屏 */
     this.linkLeaf = null;
   }
+  warnOldTablePlugin() {
+    if (this.oldTableWarned) return;
+    const table = this.app.plugins?.plugins?.["gogoga-table"];
+    const version2 = table?.manifest?.version;
+    if (!version2 || !versionBefore(version2, MIN_TABLE_VERSION)) return;
+    this.oldTableWarned = true;
+    new import_obsidian18.Notice(t("notice.oldTablePlugin", { version: version2, min: MIN_TABLE_VERSION }), 15e3);
+  }
   async onload() {
     const atStartup = !this.app.workspace.layoutReady;
-    setLocale((0, import_obsidian14.getLanguage)());
-    setLanguage((0, import_obsidian14.getLanguage)());
+    setLocale((0, import_obsidian18.getLanguage)());
+    setLanguage((0, import_obsidian18.getLanguage)());
     registerMindMapIcon();
     await this.loadSettings();
+    this.createReviewService();
     this.register(() => this.pdfExcerpt.stop());
     this.applyCustomThemes();
     this.applyCustomMarkers(false);
@@ -25441,8 +33268,8 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
       for (const el of this.customCssEls) el.remove();
       this.customCssEls = [];
     });
-    void (0, import_obsidian14.loadMathJax)().then(() => this.mathReady = true).catch(() => void 0);
-    void (0, import_obsidian14.loadPrism)().catch(() => void 0);
+    void (0, import_obsidian18.loadMathJax)().then(() => this.mathReady = true).catch(() => void 0);
+    void (0, import_obsidian18.loadPrism)().catch(() => void 0);
     this.registerHoverLinkSource(HOVER_SOURCE, { display: t("hover.display"), defaultMod: true });
     try {
       this.registerView(VIEW_TYPE_MINDMAP, (leaf) => new MindMapView(leaf, this));
@@ -25452,12 +33279,13 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
       this.registerView(VIEW_TYPE_MINDMAP, (leaf) => new MindMapView(leaf, this));
     }
     this.registerView(VIEW_TYPE_XMIND, (leaf) => new XmindView(leaf, this));
+    this.setupReview();
     try {
       this.registerExtensions(["xmind"], VIEW_TYPE_XMIND);
     } catch (e) {
       console.warn("gogoga Mind Map: .xmind is opened by another plugin", e);
       if (!this.settings.xmindTakenNoticed) {
-        new import_obsidian14.Notice(t("notice.xmindTaken"), 1e4);
+        new import_obsidian18.Notice(t("notice.xmindTaken"), 1e4);
         this.settings.xmindTakenNoticed = true;
         void this.saveSettings();
       }
@@ -25478,18 +33306,18 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
         ctx,
         (text) => this.isMindMapFile(ctx.sourcePath) || textIsMindMap(text),
         () => {
-          let found = "";
+          let found2 = "";
           this.app.workspace.iterateAllLeaves((leaf) => {
-            if (!found && leaf.view instanceof import_obsidian14.MarkdownView && leaf.view.file?.path === ctx.sourcePath) found = leaf.view.data;
+            if (!found2 && leaf.view instanceof import_obsidian18.MarkdownView && leaf.view.file?.path === ctx.sourcePath) found2 = leaf.view.data;
           });
-          return found;
+          return found2;
         }
       );
     });
     this.registerCommands();
     this.registerEvent(
       this.app.workspace.on("file-menu", (menu, file, _source, leaf) => {
-        if (file instanceof import_obsidian14.TFolder) this.addFolderMenuItems(menu, file);
+        if (file instanceof import_obsidian18.TFolder) this.addFolderMenuItems(menu, file);
         else this.addFileMenuItems(menu, file, leaf);
       })
     );
@@ -25506,6 +33334,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     this.registerSplitSync();
     this.registerFoldFollow();
     this.registerFollowActive();
+    this.registerReuseOpenLinks();
     const syncButtons = () => this.syncMapButtons();
     this.registerEvent(this.app.workspace.on("layout-change", syncButtons));
     this.registerEvent(this.app.workspace.on("file-open", syncButtons));
@@ -25553,6 +33382,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
   async loadSettings() {
     const raw = await this.loadData() ?? {};
     this.settings = { ...DEFAULT_SETTINGS, ...raw };
+    this.settings.review = { ...DEFAULT_REVIEW_PREFS, ...raw.review ?? {} };
     this.settings.colorMemory = { last: { ...raw.colorMemory?.last }, recent: { ...raw.colorMemory?.recent } };
     this.fileState = new FileStateStore(this.app.vault.adapter, `${this.manifest.dir}/state.json`);
     await this.fileState.load();
@@ -25653,36 +33483,28 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     if (this.settings.colorsInNotes) {
       this.noteTagExt.push(
         noteColorsExtension((view) => {
-          if (!view.state.field(import_obsidian14.editorLivePreviewField, false)) return false;
-          const path = view.state.field(import_obsidian14.editorInfoField, false)?.file?.path;
+          if (!view.state.field(import_obsidian18.editorLivePreviewField, false)) return false;
+          const path = view.state.field(import_obsidian18.editorInfoField, false)?.file?.path;
           return !!path && this.isMindMapFile(path) || textIsMindMap(view.state.sliceDoc(0, 2e3));
         })
       );
     }
     if (refresh) this.rerenderReadingViews();
-    if (this.settings.formatBarInNotes && !import_obsidian14.Platform.isMobile) {
+    if (!import_obsidian18.Platform.isMobile) {
+      const inLive = (view) => !!view.dom.closest(".mm-note-live");
       this.noteTagExt.push(
         noteFormatBarExtension({
-          bar: () => ({
-            textColors: parseColorList(this.settings.textColors),
-            highlightColors: parseColorList(this.settings.highlightColors, true),
-            memory: this.colorMemory,
-            underlineKey: import_obsidian14.Platform.isMacOS ? "\u2318U" : "Ctrl+U",
-            icon: (name) => {
-              const span = createSpan({ cls: "mm-icon" });
-              (0, import_obsidian14.setIcon)(span, name);
-              return span;
-            },
-            tip: (el, text) => (0, import_obsidian14.setTooltip)(el, text, { placement: "top" })
-          })
+          bar: () => this.noteBarOptions(),
+          skip: (view) => inLive(view) ? !isTableCellEditor(view) : !this.settings.formatBarInNotes,
+          cell: isTableCellEditor
         })
       );
     }
     if (this.settings.markersInNotes !== "show") {
       this.noteTagExt.push(
         noteMarkersExtension(this.settings.markersInNotes, (s) => {
-          if (!s.field(import_obsidian14.editorLivePreviewField, false)) return false;
-          const path = s.field(import_obsidian14.editorInfoField, false)?.file?.path;
+          if (!s.field(import_obsidian18.editorLivePreviewField, false)) return false;
+          const path = s.field(import_obsidian18.editorInfoField, false)?.file?.path;
           return !!path && this.isMindMapFile(path) || textIsMindMap(s.sliceDoc(0, 2e3));
         })
       );
@@ -25692,7 +33514,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
   /** 设置改了以后，打开着的阅读视图重新渲染（节点颜色是渲染时加上去的） */
   rerenderReadingViews() {
     this.app.workspace.iterateAllLeaves((l) => {
-      if (l.view instanceof import_obsidian14.MarkdownView && l.view.getMode() === "preview") l.view.previewMode.rerender(true);
+      if (l.view instanceof import_obsidian18.MarkdownView && l.view.getMode() === "preview") l.view.previewMode.rerender(true);
     });
   }
   toggleShowHidden() {
@@ -25703,7 +33525,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
   quickSettings() {
     const s = this.settings;
     const save = () => void this.saveSettings();
-    const touch = import_obsidian14.Platform.isMobile || window.matchMedia("(pointer: coarse)").matches;
+    const touch = import_obsidian18.Platform.isMobile || window.matchMedia("(pointer: coarse)").matches;
     return [
       {
         label: t("settings.showNodebar.name"),
@@ -25878,8 +33700,8 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
       let count = 0;
       for (const src of sources) {
         const srcFile = this.app.vault.getAbstractFileByPath(src);
-        const cache = srcFile instanceof import_obsidian14.TFile ? this.app.metadataCache.getFileCache(srcFile) : null;
-        if (!(srcFile instanceof import_obsidian14.TFile) || !cache) continue;
+        const cache = srcFile instanceof import_obsidian18.TFile ? this.app.metadataCache.getFileCache(srcFile) : null;
+        if (!(srcFile instanceof import_obsidian18.TFile) || !cache) continue;
         const swaps = [];
         for (const l of [...cache.links ?? [], ...cache.embeds ?? []]) {
           const hash = l.link.indexOf("#");
@@ -25906,7 +33728,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
           return text;
         });
       }
-      if (count) new import_obsidian14.Notice(t("notice.headingLinksUpdated", { n: count }));
+      if (count) new import_obsidian18.Notice(t("notice.headingLinksUpdated", { n: count }));
     })();
   }
   /** 中心主题规则这类影响解析的设置变了：已打开的脑图重新解析 */
@@ -25939,12 +33761,12 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
   async addListIcons() {
     const icon2 = this.settings.listIcon;
     if (!icon2) {
-      new import_obsidian14.Notice(t("notice.setIconFirst"));
+      new import_obsidian18.Notice(t("notice.setIconFirst"));
       return;
     }
     const targets = this.app.vault.getMarkdownFiles().filter((f) => this.isMindMapFile(f.path) && !this.app.metadataCache.getCache(f.path)?.frontmatter?.[ICON_KEY]);
     if (!targets.length) {
-      new import_obsidian14.Notice(t("notice.allHaveIcons"));
+      new import_obsidian18.Notice(t("notice.allHaveIcons"));
       return;
     }
     let done = 0;
@@ -25958,7 +33780,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
         console.error(t("log.iconWriteFailed", { path: file.path }), e);
       }
     }
-    new import_obsidian14.Notice(t("notice.iconsAdded", { count: done }));
+    new import_obsidian18.Notice(t("notice.iconsAdded", { count: done }));
   }
   /** 把设置里的工具栏位置应用到所有打开的脑图视图（except 可跳过刚发起改动的那个） */
   applyToolbarPosition(except) {
@@ -25975,7 +33797,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
   }
   patchSetViewState() {
     const shouldRedirect = (file) => !this.markdownOverride.has(file) && this.isMindMapFile(file);
-    const proto = import_obsidian14.WorkspaceLeaf.prototype;
+    const proto = import_obsidian18.WorkspaceLeaf.prototype;
     const plugin = this;
     const original = Object.getOwnPropertyDescriptor(proto, "setViewState").value;
     proto.setViewState = function(state, eState) {
@@ -26014,7 +33836,8 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     }
   }
   /** 从脑图切到 Markdown：选中了节点就跳到它那一行（先落盘，行号按文件里的实际文本算） */
-  async openAsMarkdown(file, leaf) {
+  /** mode 给了就用它（脑图视图里的 📖 打开阅读模式），否则回到上次在这篇 Markdown 里的模式 */
+  async openAsMarkdown(file, leaf, mode) {
     const from = leaf.view;
     let path = null;
     if (from instanceof MindMapView && from.file === file) {
@@ -26025,18 +33848,18 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     const spot = this.mdSpot.get(file.path);
     this.markdownOverride.add(file.path);
     try {
-      await leaf.setViewState({ type: "markdown", state: { file: file.path, mode: spot?.mode ?? "source" }, active: true }, spot ? { scroll: spot.scroll } : void 0);
+      await leaf.setViewState({ type: "markdown", state: { file: file.path, mode: mode ?? spot?.mode ?? "source" }, active: true }, spot ? { scroll: spot.scroll } : void 0);
     } finally {
       this.markdownOverride.delete(file.path);
     }
     const view = leaf.view;
-    if (!(view instanceof import_obsidian14.MarkdownView) || view.file !== file) return;
+    if (!(view instanceof import_obsidian18.MarkdownView) || view.file !== file) return;
     const editor = view.editor;
     const line = path === null ? null : lineOfPath(editor.getValue(), path, this.rootRule());
     const rule = this.rootRule();
     const keepCursor = !!spot?.cursor && line !== null && spot.cursor.line < editor.lineCount() && pathAtLine(editor.getValue(), spot.cursor.line, rule) === path;
     if (view.getMode() === "preview") {
-      if (line !== null) this.revealPreviewLine(view, line, { flash: false, onlyIfHidden: !!spot });
+      if (line !== null) this.revealPreviewLine(view, line, { flash: false, onlyIfHidden: !!spot, restoring: spot?.scroll });
       return;
     }
     const cm = editor.cm;
@@ -26060,12 +33883,13 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     const live = /* @__PURE__ */ new Set();
     for (const leaf of this.app.workspace.getLeavesOfType("markdown")) {
       const view = leaf.view;
-      if (!(view instanceof import_obsidian14.MarkdownView) || !view.file || !this.isMindMapFile(view.file.path)) continue;
+      if (!(view instanceof import_obsidian18.MarkdownView) || !view.file || !this.isMindMapFile(view.file.path)) continue;
       live.add(view);
       if (this.mapButtons.has(view)) continue;
       const el = view.addAction(MINDMAP_ICON, t("menu.openAsMindMap"), () => {
         if (view.file) void this.openAsMindMap(view.file, view.leaf);
       });
+      el.addClass("mm-view-switch");
       this.mapButtons.set(view, el);
     }
     for (const [view, el] of this.mapButtons) {
@@ -26084,7 +33908,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     const onSelectionChange = (ev) => {
       if (!this.settings.syncSplit) return;
       const doc = ev.target;
-      const view = this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).find((v) => v instanceof import_obsidian14.MarkdownView && v.containerEl.doc === doc && v.editor.hasFocus());
+      const view = this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).find((v) => v instanceof import_obsidian18.MarkdownView && v.containerEl.doc === doc && v.editor.hasFocus());
       const file = view?.file;
       if (!view || !file || !view.editor.hasFocus()) return;
       const maps = this.visibleMapsOf(file.path);
@@ -26102,14 +33926,15 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
       }, 200);
     };
     const onPreviewClick = (ev) => {
-      if (!this.settings.syncSplit) return;
       const target = ev.target;
       if (!target?.closest?.(".markdown-reading-view")) return;
-      const view = this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).find((v) => v instanceof import_obsidian14.MarkdownView && v.getMode() === "preview" && v.containerEl.contains(target));
+      const view = this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).find((v) => v instanceof import_obsidian18.MarkdownView && v.getMode() === "preview" && v.containerEl.contains(target));
       const file = view?.file;
       if (!view || !file) return;
       const line = previewLineAt(view, target);
       if (line === null) return;
+      this.previewPick.set(view, { el: target, line, path: file.path });
+      if (!this.settings.syncSplit) return;
       const maps = this.visibleMapsOf(file.path);
       if (!maps.length) return;
       this.lastFollowKey = `${file.path}${line}`;
@@ -26134,10 +33959,27 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
    * 跟随当前笔记（设置里打开）：编辑器里换了一篇 Markdown 笔记，旁边正显示着的脑图也换成它。
    * 只动一个脑图标签页（最近用过的那个），钉住的不动；那篇已经有脑图在显示就不用换
    */
+  /**
+   * 设置「链接的笔记已经开着时直接跳到那里」也管 Markdown 里点的链接（zhiqiang 反馈）：Markdown 跳脑图、Markdown 跳 Markdown，
+   * 块链接、标题链接都一样。Obsidian 点内部链接走 workspace.openLinkText，不新开（没按 ⌘ 等）时先看链到的笔记是不是已经开着
+   */
+  registerReuseOpenLinks() {
+    const ws = this.app.workspace;
+    const orig = ws.openLinkText;
+    const reveal = (linktext, sourcePath) => this.revealInOpenLeaf(linktext, sourcePath);
+    const on = () => this.settings.linkReuseOpen;
+    ws.openLinkText = function(linktext, sourcePath, newLeaf, openViewState) {
+      if (!newLeaf && on() && reveal(linktext, sourcePath)) return Promise.resolve();
+      return orig.call(this, linktext, sourcePath, newLeaf, openViewState);
+    };
+    this.register(() => {
+      ws.openLinkText = orig;
+    });
+  }
   registerFollowActive() {
     const followOnce = async () => {
       if (!this.settings.followActiveNote) return false;
-      const view = this.app.workspace.getActiveViewOfType(import_obsidian14.MarkdownView);
+      const view = this.app.workspace.getActiveViewOfType(import_obsidian18.MarkdownView);
       const file = view?.file;
       if (!view || !file || file.extension !== "md") return false;
       const maps = this.app.workspace.getLeavesOfType(VIEW_TYPE_MINDMAP).filter((l) => l !== view.leaf && l.view instanceof MindMapView && l.view.containerEl.isShown());
@@ -26185,7 +34027,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     this.registerEvent(this.app.workspace.on("layout-change", soon));
     this.registerEvent(
       this.app.vault.on("modify", (f) => {
-        if (f instanceof import_obsidian14.TFile && this.app.workspace.getLeavesOfType("markdown").some((l) => l.view.file?.path === f.path)) soon();
+        if (f instanceof import_obsidian18.TFile && this.app.workspace.getLeavesOfType("markdown").some((l) => l.view.file?.path === f.path)) soon();
       })
     );
     this.register(() => {
@@ -26200,19 +34042,19 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     if (!this.settings.foldFollow) return;
     for (const leaf of this.app.workspace.getLeavesOfType("markdown")) {
       const view = leaf.view;
-      if (!(view instanceof import_obsidian14.MarkdownView) || !view.file) continue;
+      if (!(view instanceof import_obsidian18.MarkdownView) || !view.file) continue;
       if (!this.isMindMapFile(view.file.path) && !this.visibleMapsOf(view.file.path).length) continue;
       const mode = view.currentMode;
       if (typeof mode?.getFoldInfo !== "function" || typeof mode.applyFoldInfo !== "function") continue;
-      const plan = foldPlan(view.editor.getValue(), this.rootRule());
-      const now = new Set(plan.paths);
+      const plan2 = foldPlan(view.editor.getValue(), this.rootRule());
+      const now = new Set(plan2.paths);
       const prev = this.appliedFolds.get(view);
       const modeName = `${view.file.path}${view.getMode()}`;
       const before = prev && prev.mode === modeName ? prev.paths : /* @__PURE__ */ new Set();
       if (prev && prev.mode === modeName && before.size === now.size && [...now].every((p) => before.has(p))) continue;
       this.appliedFolds.set(view, { mode: modeName, paths: now });
-      const unfold = new Set([...before].filter((p) => !now.has(p)).map((p) => plan.lineOf.get(p)).filter((l) => l !== void 0));
-      const add = plan.folds.filter((f) => !before.has(plan.paths[plan.folds.indexOf(f)]));
+      const unfold = new Set([...before].filter((p) => !now.has(p)).map((p) => plan2.lineOf.get(p)).filter((l) => l !== void 0));
+      const add = plan2.folds.filter((f) => !before.has(plan2.paths[plan2.folds.indexOf(f)]));
       const cur = mode.getFoldInfo()?.folds ?? [];
       const kept = cur.filter((f) => !unfold.has(f.from) && !add.some((a) => a.from === f.from));
       const folds = [...kept, ...add].sort((a, b) => a.from - b.from);
@@ -26252,7 +34094,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
   /** 每个脑图看一下同一篇的 Markdown 有没有显示着，有才在工具栏显示分屏联动按钮 */
   updateSplitSyncButtons() {
     const shownMd = new Set(
-      this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).filter((v) => v instanceof import_obsidian14.MarkdownView && !!v.file && v.containerEl.isShown()).map((v) => v.file.path)
+      this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).filter((v) => v instanceof import_obsidian18.MarkdownView && !!v.file && v.containerEl.isShown()).map((v) => v.file.path)
     );
     for (const l of this.app.workspace.getLeavesOfType(VIEW_TYPE_MINDMAP)) {
       const v = l.view;
@@ -26268,13 +34110,13 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     const path = from.getSelectedPath();
     if (path === null) return;
     const file = from.file;
-    const stale = this.app.workspace.getLeavesOfType("markdown").some((l) => l.view instanceof import_obsidian14.MarkdownView && l.view.file === file && l.view.containerEl.isShown() && l.view.editor.getValue() !== from.getViewData());
+    const stale = this.app.workspace.getLeavesOfType("markdown").some((l) => l.view instanceof import_obsidian18.MarkdownView && l.view.file === file && l.view.containerEl.isShown() && l.view.editor.getValue() !== from.getViewData());
     if (stale && from.hasUnsavedChanges()) {
       void (async () => {
         await from.save();
         const win = from.containerEl.win;
         const started = win.performance.now();
-        const ready = () => this.app.workspace.getLeavesOfType("markdown").every((l) => !(l.view instanceof import_obsidian14.MarkdownView) || l.view.file !== file || l.view.editor.getValue() === from.getViewData());
+        const ready = () => this.app.workspace.getLeavesOfType("markdown").every((l) => !(l.view instanceof import_obsidian18.MarkdownView) || l.view.file !== file || l.view.editor.getValue() === from.getViewData());
         while (!ready() && win.performance.now() - started < 1e3) await new Promise((r3) => win.setTimeout(r3, 30));
         if (from.file === file && from.getSelectedPath() === path) this.revealSelectedInMarkdown(from, path);
       })();
@@ -26286,7 +34128,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     if (!from.file) return;
     for (const leaf of this.app.workspace.getLeavesOfType("markdown")) {
       const view = leaf.view;
-      if (!(view instanceof import_obsidian14.MarkdownView) || view.file?.path !== from.file.path || !view.containerEl.isShown()) continue;
+      if (!(view instanceof import_obsidian18.MarkdownView) || view.file?.path !== from.file.path || !view.containerEl.isShown()) continue;
       if (view.getMode() === "preview") {
         const line2 = lineOfPath(view.editor.getValue(), path, this.rootRule());
         if (line2 === null) continue;
@@ -26312,9 +34154,18 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     const win = view.containerEl.win;
     if (opts.onlyIfHidden) {
       const t0 = win.performance.now();
+      let settled = opts.restoring === void 0 ? t0 : null;
       const wait = () => {
+        const now = win.performance.now();
+        if (settled === null) {
+          if (Math.abs(view.previewMode.getScroll() - opts.restoring) > 1 && now - t0 < 1500) {
+            win.setTimeout(wait, 16);
+            return;
+          }
+          settled = now;
+        }
         const hit = previewElAtLine(view, line);
-        if (!hit?.ready && win.performance.now() - t0 < 300) {
+        if (!hit?.ready && now - settled < 300) {
           win.setTimeout(wait, 16);
           return;
         }
@@ -26356,8 +34207,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
       };
       win.setTimeout(recheck, 16);
       if (opts.flash === false || !el.animate) return;
-      const color = win.getComputedStyle(el).getPropertyValue("--text-highlight-bg").trim() || "rgba(255, 208, 0, 0.4)";
-      el.animate([{ backgroundColor: color }, { backgroundColor: color, offset: 0.5 }, { backgroundColor: "transparent" }], { duration: 1500, easing: "ease-out" });
+      flashEl(el);
     };
     win.requestAnimationFrame(tick);
   }
@@ -26375,8 +34225,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
         const node = cm.domAtPos(pos).node;
         const el = (node.instanceOf(HTMLElement) ? node : node.parentElement)?.closest(".cm-line");
         if (!el?.animate) return;
-        const color = win.getComputedStyle(el).getPropertyValue("--text-highlight-bg").trim() || "rgba(255, 208, 0, 0.4)";
-        el.animate([{ backgroundColor: color }, { backgroundColor: color, offset: 0.5 }, { backgroundColor: "transparent" }], { duration: 1500, easing: "ease-out" });
+        flashEl(el);
       })
     );
   }
@@ -26446,7 +34295,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     const ws = this.app.workspace;
     if (root === ws.leftSplit || root === ws.rightSplit) return null;
     const leafOf = (n, last) => {
-      if (n instanceof import_obsidian14.WorkspaceTabs) return n;
+      if (n instanceof import_obsidian18.WorkspaceTabs) return n;
       const kids = n.children ?? [];
       for (const k of last ? [...kids].reverse() : kids) {
         const hit = leafOf(k, last);
@@ -26489,7 +34338,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
       mapLeaf.view.rememberViewportNow();
       await mapLeaf.view.save();
     }
-    if (mdLeaf.view instanceof import_obsidian14.MarkdownView) await mdLeaf.view.save();
+    if (mdLeaf.view instanceof import_obsidian18.MarkdownView) await mdLeaf.view.save();
     const mdState = mdLeaf.getViewState();
     await mdLeaf.setViewState({ type: VIEW_TYPE_MINDMAP, state: { file: file.path }, active: false });
     this.markdownOverride.add(file.path);
@@ -26513,15 +34362,203 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     }
     const from = leaf.view;
     let path = null;
-    if (from instanceof import_obsidian14.MarkdownView && from.file === file) {
+    if (from instanceof import_obsidian18.MarkdownView && from.file === file) {
       const mode = from.getMode();
       this.mdSpot.set(file.path, { mode, scroll: from.currentMode.getScroll(), cursor: mode === "source" ? from.editor.getCursor() : this.mdSpot.get(file.path)?.cursor ?? null });
-      const line = mode === "preview" ? previewCenterLine(from) : sourceFocusLine(from);
+      const line = mode === "preview" ? previewFocusLine(from, this.previewPick.get(from)?.path === file.path ? this.previewPick.get(from) : void 0) : sourceFocusLine(from);
       path = line === null ? null : pathAtLine(from.editor.getValue(), line, this.rootRule());
       if (path === "") path = null;
     }
     await leaf.setViewState({ type: VIEW_TYPE_MINDMAP, state: { file: file.path }, active: true });
     if (path !== null && leaf.view instanceof MindMapView) leaf.view.revealPath(path, true);
+  }
+  /** 把 toggleTableMarkerAt 算好的那一行写回编辑器（一次改动，⌘Z 能撤销） */
+  applyTableMarker(editor, hit) {
+    const old = editor.getLine(hit.line);
+    editor.replaceRange(hit.text, { line: hit.line, ch: 0 }, { line: hit.line, ch: old.length });
+    new import_obsidian18.Notice(t(hit.on ? "notice.tableInNodeMd" : "notice.tableToNoteMd"));
+  }
+  /** Markdown 里光标所在的行 → 脑图里对应的节点：旁边开着这篇的脑图就在那边选中、居中；没开就把这个标签页切成脑图（切过去时本来就按光标选中） */
+  async revealInMindMap(view) {
+    const file = view.file;
+    if (!file) return;
+    const side = this.app.workspace.getLeavesOfType(VIEW_TYPE_MINDMAP).find((l) => l !== view.leaf && l.view instanceof MindMapView && l.view.file === file);
+    if (!side) {
+      await this.openAsMindMap(file, view.leaf, false);
+      return;
+    }
+    const line = view.getMode() === "preview" ? previewFocusLine(view, this.previewPick.get(view)?.path === file.path ? this.previewPick.get(view) : void 0) : view.editor.getCursor().line;
+    const path = line === null ? null : pathAtLine(view.editor.getValue(), line, this.rootRule());
+    if (path === null) return;
+    await this.app.workspace.revealLeaf(side);
+    side.view.revealPath(path, true);
+  }
+  // ---------- 间隔复习 ----------
+  /** 复习服务要在注册脑图视图之前建好：Obsidian 注册视图时就会恢复开着的脑图，它们一打开就要用 */
+  createReviewService() {
+    this.review = new ReviewService({
+      app: this.app,
+      dir: this.manifest.dir ?? `${this.app.vault.configDir}/plugins/${this.manifest.id}`,
+      prefs: () => this.settings.review,
+      rootRule: () => this.rootRule(),
+      style: () => ({ maxHeadingLevel: this.settings.headingsOnly ? 6 : this.settings.maxHeadingLevel, indent: indentString(this.settings.indent) })
+    });
+  }
+  setupReview() {
+    this.registerView(
+      VIEW_TYPE_REVIEW,
+      (leaf) => new ReviewView(leaf, {
+        service: this.review,
+        settings: () => this.settings,
+        openNode: (file, rv, path) => this.openReviewNode(file, rv, path),
+        openSettings: () => {
+          const s = this.app.setting;
+          s?.open();
+          s?.openTabById(this.manifest.id);
+        }
+      })
+    );
+    this.addRibbonIcon("layers", t("command.openReview"), () => void this.openReview());
+    this.addCommand({ id: "open-review", name: t("command.openReview"), callback: () => void this.openReview() });
+    this.addCommand({
+      id: "add-map-to-review",
+      name: t("command.reviewAdd"),
+      checkCallback: (checking) => {
+        const file = this.reviewTarget();
+        if (!file || this.review.isDeck(file.path)) return false;
+        if (!checking) void this.setReviewFor(file, true);
+        return true;
+      }
+    });
+    this.addCommand({
+      id: "remove-map-from-review",
+      name: t("command.reviewRemove"),
+      checkCallback: (checking) => {
+        const file = this.reviewTarget();
+        if (!file || !this.review.isDeck(file.path)) return false;
+        if (!checking) void this.setReviewFor(file, false);
+        return true;
+      }
+    });
+    this.addCommand({
+      id: "review-map",
+      name: t("command.reviewMap"),
+      checkCallback: (checking) => {
+        const file = this.app.workspace.getActiveFile();
+        if (!file || !this.review.isDeck(file.path)) return false;
+        if (!checking) void this.openReview({ file, branch: null });
+        return true;
+      }
+    });
+    const status = this.addStatusBarItem();
+    status.addClass("mm-review-status", "mod-clickable");
+    status.addEventListener("click", () => void this.openReview());
+    this.reviewStatus = status;
+    this.register(this.review.onChange(() => this.updateReviewStatusSoon()));
+    this.registerEvent(
+      this.app.metadataCache.on("changed", (file) => {
+        const fm = this.app.metadataCache.getFileCache(file)?.frontmatter?.[REVIEW_KEY];
+        if (fm === void 0 && !this.reviewKnown.has(file.path)) return;
+        if (fm === void 0) this.reviewKnown.delete(file.path);
+        else this.reviewKnown.add(file.path);
+        this.review.forget(file.path);
+        this.review.changed();
+      })
+    );
+    this.registerEvent(this.app.vault.on("rename", (f, old) => void this.review.renamed(old, f.path)));
+    this.registerEvent(this.app.vault.on("delete", (f) => this.review.forget(f.path)));
+    this.registerInterval(window.setInterval(() => this.review.changed(), 6e4));
+    this.app.workspace.onLayoutReady(() => {
+      for (const f of this.review.deckFiles()) this.reviewKnown.add(f.path);
+      void this.review.loadIndex();
+      this.updateReviewStatusSoon();
+    });
+  }
+  /** 命令作用的脑图：当前开着的笔记，是脑图（脑图视图里，或 frontmatter 标了 mindmap）才算 */
+  reviewTarget() {
+    const view = this.app.workspace.getActiveViewOfType(MindMapView);
+    if (view?.file) return view.file;
+    const file = this.app.workspace.getActiveFile();
+    return file && file.extension === "md" && this.isMindMapFile(file.path) ? file : null;
+  }
+  /** 整张图加入 / 移出复习：脑图开着就走画布（能撤销），没开就直接改笔记 */
+  async setReviewFor(file, on) {
+    const leaf = this.app.workspace.getLeavesOfType(VIEW_TYPE_MINDMAP).find((l) => l.view instanceof MindMapView && l.view.file === file);
+    if (leaf && leaf.view instanceof MindMapView && leaf.view.setWholeReview(on)) {
+      new import_obsidian18.Notice(t(on ? "notice.reviewAdded" : "notice.reviewRemoved", { name: file.basename }));
+      return;
+    }
+    await this.review.setFileReview(file, on);
+    new import_obsidian18.Notice(t(on ? "notice.reviewAdded" : "notice.reviewRemoved", { name: file.basename }));
+  }
+  updateReviewStatusSoon() {
+    window.clearTimeout(this.reviewTimer);
+    this.reviewTimer = window.setTimeout(() => void this.updateReviewStatus(), 300);
+  }
+  async updateReviewStatus() {
+    const el = this.reviewStatus;
+    if (!el) return;
+    if (!this.review.deckFiles().length) {
+      el.hide();
+      return;
+    }
+    const n = await this.review.totalDue();
+    el.setText(t("review.statusbar", { n }));
+    el.show();
+  }
+  /** 打开复习标签页：给了图就到这张图（或它的一个分支）的概览，否则到复习主页 */
+  async openReview(target) {
+    let leaf = this.app.workspace.getLeavesOfType(VIEW_TYPE_REVIEW)[0];
+    if (!leaf) {
+      leaf = this.app.workspace.getLeaf("tab");
+      await leaf.setViewState({ type: VIEW_TYPE_REVIEW, active: true });
+    }
+    await this.app.workspace.revealLeaf(leaf);
+    const view = leaf.view;
+    if (!(view instanceof ReviewView)) return;
+    if (!target) return view.show({ kind: "home" });
+    const title = target.branch ? `${target.file.basename} \u203A ${await this.branchTitle(target.file, target.branch)}` : target.file.basename;
+    await view.show({ kind: "overview", scope: { files: [target.file], branch: target.branch ?? void 0, title } });
+  }
+  async branchTitle(file, path) {
+    const parsed = await this.review.read(file);
+    let n = parsed.doc.root;
+    for (const i of path.split("/").filter(Boolean)) n = n.children[Number(i)] ?? n;
+    return n.text.replace(/[*_=~`<>]/g, "").slice(0, 30);
+  }
+  /** 复习时按「编辑」：在脑图里打开这张图，选中这道题（已经开着就切过去） */
+  async openReviewNode(file, reviewId, path) {
+    let leaf = this.app.workspace.getLeavesOfType(VIEW_TYPE_MINDMAP).find((l) => l.view instanceof MindMapView && l.view.file === file);
+    if (!leaf) {
+      leaf = this.app.workspace.getLeaf("tab");
+      await this.openAsMindMap(file, leaf, false);
+    }
+    await this.app.workspace.revealLeaf(leaf);
+    this.app.workspace.setActiveLeaf(leaf, { focus: true });
+    for (let i = 0; i < 20; i++) {
+      const v = leaf.view;
+      if (v instanceof MindMapView && v.revealReview(reviewId, path)) return;
+      await new Promise((r3) => window.setTimeout(r3, 100));
+    }
+  }
+  /** 这道题（节点的 rv）有暂停的卡没有：右键「恢复这道题的复习」 */
+  reviewSuspended(file, reviewId) {
+    const deckId = this.deckIdOfFile(file);
+    const deck = deckId ? this.review.store.cached(deckId) : null;
+    if (!deck) return false;
+    return Object.entries(deck.cards).some(([id, r3]) => id.startsWith(`${reviewId}:`) && r3.susp);
+  }
+  async reviewUnsuspend(file, reviewId) {
+    const deckId = this.deckIdOfFile(file);
+    if (!deckId) return;
+    const deck = await this.review.store.deck(deckId, file.path);
+    for (const [id, r3] of Object.entries(deck.cards)) if (id.startsWith(`${reviewId}:`)) delete r3.susp;
+    await this.review.store.save(deckId);
+    this.review.changed();
+  }
+  deckIdOfFile(file) {
+    const v = this.app.metadataCache.getFileCache(file)?.frontmatter?.[REVIEW_KEY];
+    return typeof v === "string" && /^[a-z0-9]{4,32}$/i.test(v) ? v : null;
   }
   // ---------- 命令 ----------
   registerCommands() {
@@ -26529,7 +34566,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
       id: "toggle-view",
       name: t("command.toggleView"),
       checkCallback: (checking) => {
-        const view = this.app.workspace.getActiveViewOfType(import_obsidian14.FileView);
+        const view = this.app.workspace.getActiveViewOfType(import_obsidian18.FileView);
         const leaf = view?.leaf;
         const file = view?.file;
         if (!leaf || !file || !view) return false;
@@ -26540,11 +34577,47 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
       }
     });
     this.addCommand({
+      id: "reveal-in-mindmap",
+      name: t("command.revealInMindMap"),
+      checkCallback: (checking) => {
+        const view = this.app.workspace.getActiveViewOfType(import_obsidian18.MarkdownView);
+        if (!view?.file || !this.isMindMapFile(view.file.path)) return false;
+        if (!checking) void this.revealInMindMap(view);
+        return true;
+      }
+    });
+    this.addCommand({
+      id: "toggle-node-table-in-markdown",
+      name: t("command.toggleNodeTableMd"),
+      editorCheckCallback: (checking, editor, info) => {
+        const view = info instanceof import_obsidian18.MarkdownView ? info : null;
+        if (!view?.file || !this.isMindMapFile(view.file.path)) return false;
+        const hit = toggleTableMarkerAt(editor.getValue(), editor.getCursor().line, this.rootRule());
+        if (!hit) return false;
+        if (!checking) this.applyTableMarker(editor, hit);
+        return true;
+      }
+    });
+    this.registerEvent(
+      this.app.workspace.on("editor-menu", (menu, editor, info) => {
+        const view = info instanceof import_obsidian18.MarkdownView ? info : null;
+        if (!view?.file || !this.isMindMapFile(view.file.path)) return;
+        menu.addItem((item) => item.setTitle(t("menu.revealInMindMap")).setIcon(MINDMAP_ICON).setSection("view").onClick(() => void this.revealInMindMap(view)));
+        const hit = toggleTableMarkerAt(editor.getValue(), editor.getCursor().line, this.rootRule());
+        if (hit) menu.addItem((item) => item.setTitle(t(hit.on ? "menu.tableInNodeMd" : "menu.tableToNoteMd")).setIcon("table").setSection("view").onClick(() => this.applyTableMarker(editor, hit)));
+      })
+    );
+    this.addCommand({
       id: "new-mindmap",
       name: t("command.newMindMap"),
       callback: () => void this.createMindMap()
     });
     this.addRibbonIcon(MINDMAP_ICON, t("command.newMindMap"), () => void this.createMindMap());
+    this.addCommand({
+      id: "open-guide",
+      name: t("command.openGuide"),
+      callback: () => void this.openGuide()
+    });
     const exportCommand = (id, name, run) => this.addCommand({
       id,
       name,
@@ -26559,7 +34632,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
       id: "swap-sides",
       name: t("command.swapSides"),
       checkCallback: (checking) => {
-        const leaf = this.app.workspace.getActiveViewOfType(import_obsidian14.MarkdownView)?.leaf ?? this.app.workspace.getActiveViewOfType(MindMapView)?.leaf;
+        const leaf = this.app.workspace.getActiveViewOfType(import_obsidian18.MarkdownView)?.leaf ?? this.app.workspace.getActiveViewOfType(MindMapView)?.leaf;
         if (!leaf || !this.sidePartner(leaf)) return false;
         if (!checking) void this.swapSides(leaf);
         return true;
@@ -26569,7 +34642,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
       id: "open-preview",
       name: t("command.openPreview"),
       checkCallback: (checking) => {
-        const view = this.app.workspace.getActiveViewOfType(import_obsidian14.MarkdownView) ?? this.app.workspace.getActiveViewOfType(MindMapView);
+        const view = this.app.workspace.getActiveViewOfType(import_obsidian18.MarkdownView) ?? this.app.workspace.getActiveViewOfType(MindMapView);
         const file = view?.file;
         if (!view || !file || file.extension !== "md") return false;
         if (!checking) void this.openSideBySide(file, view.leaf);
@@ -26586,6 +34659,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     exportCommand("focus-branch", t("command.focusBranch"), async (v) => v.focusSelected());
     exportCommand("exit-focus", t("command.exitFocus"), async (v) => v.exitFocus());
     exportCommand("copy-node-link", t("command.copyNodeLink"), (v) => v.copySelectedNodeLink());
+    exportCommand("copy-node-link-alias", t("command.copyNodeLinkAlias"), (v) => v.copySelectedNodeLink(true));
     exportCommand("search", t("command.search"), async (v) => v.openSearch());
     exportCommand("toggle-fold", t("command.toggleFold"), async (v) => v.toggleFoldSelected());
     for (const n of [1, 2, 3, 4, 5]) exportCommand(`show-level-${n}`, t("command.showLevel", { n }), async (v) => v.showLevelFromSelected(n));
@@ -26594,6 +34668,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     exportCommand("toggle-summary", t("command.toggleSummary"), async (v) => v.toggleSummaryOnSelected());
     exportCommand("toggle-numbering", t("command.toggleNumbering"), async (v) => v.toggleNumberingOnSelected());
     exportCommand("toggle-recite", t("command.toggleRecite"), async (v) => v.toggleRecite());
+    exportCommand("toggle-zen", t("command.toggleZen"), async (v) => v.toggleZen());
     exportCommand("toggle-pdf-excerpt", t("command.togglePdfExcerpt"), async (v) => this.pdfExcerpt.toggle(v));
     exportCommand("toggle-callouts", t("command.toggleCallouts"), async (v) => v.toggleCallouts());
     exportCommand("toggle-notes", t("command.toggleNotes"), async (v) => v.toggleNotes());
@@ -26639,7 +34714,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
         await this.saveSettings();
         if (key === "formatBarInNotes") this.applyNoteTags();
         else refreshAllBars();
-        new import_obsidian14.Notice(t(this.settings[key] ? "notice.toggledOn" : "notice.toggledOff", { name: t(label) }));
+        new import_obsidian18.Notice(t(this.settings[key] ? "notice.toggledOn" : "notice.toggledOff", { name: t(label) }));
       }
     });
     toggleSetting("toggle-nodebar", "showNodebar", "command.toggleNodebar", "settings.showNodebar.name");
@@ -26648,7 +34723,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     exportCommand("expand-all", t("command.expandAll"), async (v) => v.setFoldLevel(null));
     exportCommand("collapse-all", t("command.collapseAll"), async (v) => v.setFoldLevel(1));
     exportCommand("export-png", t("command.exportPng"), (v) => v.exportPng());
-    if (import_obsidian14.Platform.isDesktopApp) exportCommand("export-pdf", t("command.exportPdf"), (v) => v.exportPdf());
+    if (import_obsidian18.Platform.isDesktopApp) exportCommand("export-pdf", t("command.exportPdf"), (v) => v.exportPdf());
     exportCommand("export-svg", t("command.exportSvg"), (v) => v.exportSvg());
     exportCommand("copy-png", t("command.copyPng"), (v) => v.copyPng());
   }
@@ -26664,7 +34739,7 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
    * leaf 是标签页 ⋯ 菜单传进来的；文件列表右键没有 leaf，就看当前活动标签页是不是这个文件。
    */
   addFileMenuItems(menu, file, leaf) {
-    if (!(file instanceof import_obsidian14.TFile) || file.extension !== "md") return;
+    if (!(file instanceof import_obsidian18.TFile) || file.extension !== "md") return;
     const active = this.app.workspace.getMostRecentLeaf();
     const shown = leaf ?? (active?.view?.file === file ? active : null);
     const shownType = shown?.view.getViewType();
@@ -26678,6 +34753,11 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     menu.addItem(
       (item) => item.setTitle(t("command.openPreview")).setIcon("columns-2").onClick(() => void this.openSideBySide(file, shown ?? void 0))
     );
+    if (!isMap) return;
+    if (this.review.isDeck(file.path)) {
+      menu.addItem((item) => item.setTitle(t("menu.fileReviewStudy")).setIcon("layers").onClick(() => void this.openReview({ file, branch: null })));
+      menu.addItem((item) => item.setTitle(t("menu.fileReviewRemove")).setIcon("x").onClick(() => void this.setReviewFor(file, false)));
+    } else menu.addItem((item) => item.setTitle(t("menu.fileReviewAdd")).setIcon("layers").onClick(() => void this.setReviewFor(file, true)));
   }
   /** 不传文件夹就按 Obsidian 的新建笔记位置设置来 */
   async createMindMap(target) {
@@ -26691,7 +34771,32 @@ var MindMapPlugin = class extends import_obsidian14.Plugin {
     const file = await this.app.vault.create(joinPath(folder.path, name), content);
     const leaf = this.app.workspace.getLeaf(false);
     await leaf.setViewState({ type: VIEW_TYPE_MINDMAP, state: { file: file.path }, active: true });
-    new import_obsidian14.Notice(t("notice.created", { path: file.path }));
+    new import_obsidian18.Notice(t("notice.created", { path: file.path }));
+  }
+  /**
+   * 「打开使用指南」：库里没有就把指南和它链接到的示例放进根目录的「脑图示例」文件夹，再用脑图打开指南。
+   * 库里已有同名笔记（比如用户复制过 examples 文件夹）就直接打开那篇，绝不覆盖；链接到的示例同理，有就不再建一份
+   */
+  async openGuide() {
+    const find = (name) => this.app.metadataCache.getFirstLinkpathDest(name.replace(/\.md$/, ""), "");
+    const [guide] = GUIDE_FILES;
+    let file = find(guide.name);
+    if (!file) {
+      const folder = t("guide.folder");
+      const taken = this.app.vault.getAbstractFileByPath(folder);
+      const dir = !taken ? (await this.app.vault.createFolder(folder), folder) : taken instanceof import_obsidian18.TFolder ? folder : "";
+      for (const f of GUIDE_FILES) {
+        if (find(f.name)) continue;
+        const path = joinPath(dir, f.name);
+        if (this.app.vault.getAbstractFileByPath(path)) continue;
+        await this.app.vault.create(path, f.text);
+      }
+      file = this.app.vault.getFileByPath(joinPath(dir, guide.name));
+      if (!file) return;
+      new import_obsidian18.Notice(t("notice.guideAdded", { folder: dir || "/" }));
+    }
+    const leaf = this.app.workspace.getLeaf(false);
+    await leaf.setViewState({ type: VIEW_TYPE_MINDMAP, state: { file: file.path }, active: true });
   }
   /** 内置的起始内容：跟随界面语言；只影响新建的文件 */
   defaultContent(title) {
@@ -26712,11 +34817,11 @@ ${topics}`;
     const path = this.settings.newFileTemplate.trim();
     if (!path) return null;
     const file = this.app.vault.getAbstractFileByPath(path) ?? this.app.metadataCache.getFirstLinkpathDest(path.replace(/\.md$/, ""), "");
-    if (!(file instanceof import_obsidian14.TFile)) {
-      new import_obsidian14.Notice(t("notice.templateMissing", { path }));
+    if (!(file instanceof import_obsidian18.TFile)) {
+      new import_obsidian18.Notice(t("notice.templateMissing", { path }));
       return null;
     }
-    const text = fillTemplate(await this.app.vault.cachedRead(file), title, (p) => (0, import_obsidian14.moment)().format(p));
+    const text = fillTemplate(await this.app.vault.cachedRead(file), title, (p) => (0, import_obsidian18.moment)().format(p));
     const values = [[FRONTMATTER_KEY, "true"]];
     if (this.settings.listIcon) values.push([ICON_KEY, this.settings.listIcon]);
     return withFrontmatter(text, values, [ICON_KEY]);
@@ -26724,7 +34829,7 @@ ${topics}`;
   registerCodeBlock() {
     const processor = (source, el, ctx) => {
       const wrap2 = el.createDiv({ cls: "mm-codeblock" });
-      const child = new import_obsidian14.MarkdownRenderChild(wrap2);
+      const child = new import_obsidian18.MarkdownRenderChild(wrap2);
       const info = ctx.getSectionInfo(el);
       const key = `${ctx.sourcePath}:${info?.lineStart ?? "?"}`;
       const state = this.blockStates.get(key) ?? { view: null, viewAuto: true, keepView: false, selected: null, editable: false, focused: false, history: new History() };
@@ -26752,7 +34857,7 @@ ${topics}`;
           try {
             await this.replaceCodeBlock(ctx, el, prev, next);
           } catch (e) {
-            new import_obsidian14.Notice(t("notice.writeBackFailed", { error: e.message }));
+            new import_obsidian18.Notice(t("notice.writeBackFailed", { error: e.message }));
           }
         });
       };
@@ -26773,7 +34878,7 @@ ${topics}`;
         },
         onChange: (d) => {
           if (promoteRoot(d) === "full") {
-            new import_obsidian14.Notice(t("notice.rootNoRoom"));
+            new import_obsidian18.Notice(t("notice.rootNoRoom"));
             d.root.text = "";
             wrap2.win.setTimeout(() => canvas.render(), 0);
           }
@@ -26851,6 +34956,21 @@ ${topics}`;
         console.warn("gogoga Mind Map: the mindmap code block is taken by another plugin; use gogoga-mindmap", e);
       }
   }
+  /** 选中文字时浮出的格式栏（Markdown 笔记里、脑图备注编辑框里）：颜色跟着设置 */
+  noteBarOptions() {
+    return {
+      textColors: parseColorList(this.settings.textColors),
+      highlightColors: parseColorList(this.settings.highlightColors, true),
+      memory: this.colorMemory,
+      underlineKey: import_obsidian18.Platform.isMacOS ? "\u2318U" : "Ctrl+U",
+      icon: (name) => {
+        const span = createSpan({ cls: "mm-icon" });
+        (0, import_obsidian18.setIcon)(span, name);
+        return span;
+      },
+      tip: (el, text) => (0, import_obsidian18.setTooltip)(el, text, { placement: "top" })
+    };
+  }
   /** 把新的块内容写回宿主笔记：文件在编辑器里打开就走编辑器，否则直接改文件 */
   /** 代码块嵌入和大窗口编辑共用的画布设置 */
   blockCanvasOptions() {
@@ -26858,6 +34978,7 @@ ${topics}`;
       toolbarPosition: this.settings.toolbarPosition,
       wheelZoom: () => this.settings.wheelAction === "zoom",
       notePreview: () => this.settings.notePreview,
+      noteLiveEdit: () => this.settings.noteLiveEdit,
       formatBar: () => this.settings.formatBar,
       split: () => this.splitPrefs(),
       keepBlankLines: () => this.settings.keepBlankLines,
@@ -26869,7 +34990,7 @@ ${topics}`;
       autoNumber: () => this.settings.numberByTyping,
       copyPlain: () => this.settings.copyPlain,
       showNodebar: () => this.settings.showNodebar,
-      nodebarLayout: () => mergeLayout(this.settings.nodebarLayout, nodebarDefault(import_obsidian14.Platform.isMobile)),
+      nodebarLayout: () => mergeLayout(this.settings.nodebarLayout, nodebarDefault(import_obsidian18.Platform.isMobile)),
       nodeColors: () => parseNodeColors(this.settings.nodeColors),
       textColors: () => parseColorList(this.settings.textColors),
       highlightColors: () => parseColorList(this.settings.highlightColors, true),
@@ -26913,7 +35034,7 @@ ${topics}`;
               await this.replaceBlockAt(target, prev, next);
               if (target.hint) target.hint = { lineStart: target.hint.lineStart, lineEnd: target.hint.lineStart + 1 + (next === "" ? 0 : next.split("\n").length) };
             } catch (e) {
-              new import_obsidian14.Notice(t("notice.writeBackFailed", { error: e.message }));
+              new import_obsidian18.Notice(t("notice.writeBackFailed", { error: e.message }));
             }
           });
         };
@@ -26927,7 +35048,7 @@ ${topics}`;
           host: this.canvasHost(() => ctx.sourcePath, component),
           onChange: (d) => {
             if (promoteRoot(d) === "full") {
-              new import_obsidian14.Notice(t("notice.rootNoRoom"));
+              new import_obsidian18.Notice(t("notice.rootNoRoom"));
               d.root.text = "";
               host.win.setTimeout(() => canvas.render(), 0);
             }
@@ -27000,7 +35121,7 @@ ${topics}`;
       return;
     }
     const file = this.app.vault.getAbstractFileByPath(target.sourcePath);
-    if (!(file instanceof import_obsidian14.TFile)) throw new Error(t("error.fileNotFound", { path: target.sourcePath }));
+    if (!(file instanceof import_obsidian18.TFile)) throw new Error(t("error.fileNotFound", { path: target.sourcePath }));
     const views = this.app.workspace.getLeavesOfType("markdown").map((l) => l.view).filter((v) => v.file?.path === file.path);
     const editorView = target.view && views.includes(target.view) ? target.view : views[0];
     if (editorView && editorView.getMode() === "source") {
@@ -27102,7 +35223,7 @@ ${topics}`;
   /** 抓网页标题；10 秒没回来、出错、不是网页都当没有 */
   async fetchPageTitle(url) {
     const fetch2 = (async () => {
-      const res = await (0, import_obsidian14.requestUrl)({ url, method: "GET", throw: false });
+      const res = await (0, import_obsidian18.requestUrl)({ url, method: "GET", throw: false });
       if (res.status >= 400) return null;
       const type = res.headers["content-type"] ?? res.headers["Content-Type"];
       if (type && !/html/i.test(type)) return null;
@@ -27123,10 +35244,22 @@ ${topics}`;
       return null;
     }
   }
-  canvasHost(sourcePath, component, hoverParent) {
+  canvasHost(sourcePath, component, hoverParent, opts = {}) {
     return {
+      // 节点里的 ![[另一张脑图]]：显示成只读预览（预览里的节点再嵌脑图就不展开了，只嵌一层；嵌自己也不展开）
+      mapPreview: opts.mapPreview === false ? void 0 : (link2, el) => {
+        const hash = link2.indexOf("#");
+        const path = hash < 0 ? link2 : link2.slice(0, hash);
+        const file = this.app.metadataCache.getFirstLinkpathDest(path, sourcePath());
+        if (!file || file.path === sourcePath()) return null;
+        if (file.extension !== "xmind" && !(file.extension === "md" && this.isMindMapFile(file.path))) return null;
+        const embed = new MindMapEmbed(this, { app: this.app, containerEl: el, sourcePath: sourcePath() }, file, hash < 0 ? "" : link2.slice(hash + 1), true);
+        component.addChild(embed);
+        void embed.loadFile();
+        return { dispose: () => component.removeChild(embed), fit: () => embed.fitView() };
+      },
       claimKeys: (el, onKey) => {
-        const scope = new import_obsidian14.Scope(this.app.scope);
+        const scope = new import_obsidian18.Scope(this.app.scope);
         scope.register([], "F2", (ev) => {
           onKey(ev);
           return false;
@@ -27159,22 +35292,27 @@ ${topics}`;
           pop();
         };
       },
+      createNoteEditor: (parent, o) => {
+        const f = this.app.vault.getAbstractFileByPath(sourcePath());
+        if (/^\s*\|.*\|\s*$/m.test(o.text)) this.warnOldTablePlugin();
+        return createLiveNoteEditor(this.app, parent, { ...o, file: f instanceof import_obsidian18.TFile ? f : null, extensions: [noteFormatBarExtension({ bar: () => this.noteBarOptions() })] });
+      },
       notePreviewScope: () => {
-        const scope = new import_obsidian14.Component();
+        const scope = new import_obsidian18.Component();
         scope.load();
         let child = null;
         return {
           render: (el, markdown) => {
             if (child) scope.removeChild(child);
-            child = scope.addChild(new import_obsidian14.Component());
+            child = scope.addChild(new import_obsidian18.Component());
             el.empty();
-            void import_obsidian14.MarkdownRenderer.render(this.app, markdown, el, sourcePath(), child);
+            void import_obsidian18.MarkdownRenderer.render(this.app, markdown, el, sourcePath(), child);
           },
           dispose: () => scope.unload()
         };
       },
       renderNote: (el, markdown) => {
-        void import_obsidian14.MarkdownRenderer.render(this.app, markdown, el, sourcePath(), component).then(() => {
+        void import_obsidian18.MarkdownRenderer.render(this.app, markdown, el, sourcePath(), component).then(() => {
           const prism = window.Prism;
           if (el.querySelector("pre code[class*=language-]")) prism?.highlightAllUnder?.(el);
         });
@@ -27182,13 +35320,13 @@ ${topics}`;
       renderMath: (tex) => {
         if (!this.mathReady) return null;
         try {
-          return (0, import_obsidian14.renderMath)(tex, false);
+          return (0, import_obsidian18.renderMath)(tex, false);
         } catch {
           return null;
         }
       },
       afterRender: () => {
-        if (this.mathReady) void (0, import_obsidian14.finishRenderMath)();
+        if (this.mathReady) void (0, import_obsidian18.finishRenderMath)();
       },
       renderPdfCrop: (link2, el, onImage) => {
         const plugins = this.app.plugins;
@@ -27207,7 +35345,7 @@ ${topics}`;
           else img.addEventListener("load", () => settle(img), { once: true });
         });
         observer.observe(el, { childList: true, subtree: true });
-        void import_obsidian14.MarkdownRenderer.render(this.app, `![[${link2}]]`, el, sourcePath(), component);
+        void import_obsidian18.MarkdownRenderer.render(this.app, `![[${link2}]]`, el, sourcePath(), component);
         return true;
       },
       resolveImage: (link2) => {
@@ -27216,10 +35354,10 @@ ${topics}`;
         return file ? this.app.vault.getResourcePath(file) : null;
       },
       showMenu: (entries, ev, onClose) => {
-        const menu = new import_obsidian14.Menu();
+        const menu = new import_obsidian18.Menu();
         if (onClose) menu.onHide(onClose);
         let canSub = false;
-        new import_obsidian14.Menu().addItem((item) => {
+        new import_obsidian18.Menu().addItem((item) => {
           canSub = typeof item.setSubmenu === "function";
         });
         const fill = (m, list) => {
@@ -27235,6 +35373,7 @@ ${topics}`;
               item.setDisabled(!!e.disabled);
               if (e.submenu) {
                 const sub = item.setSubmenu();
+                fixNestedSubmenu(sub);
                 fill(sub, e.submenu);
               } else {
                 item.onClick(() => e.run?.());
@@ -27253,7 +35392,7 @@ ${topics}`;
         const d = this.app.dragManager?.draggable;
         if (!d) return null;
         const files = d.type === "file" && d.file ? [d.file] : d.type === "files" && d.files ? d.files : [];
-        return files.filter((f) => f instanceof import_obsidian14.TFile).map((f) => ({
+        return files.filter((f) => f instanceof import_obsidian18.TFile).map((f) => ({
           name: f.name,
           basename: f.basename,
           linktext: this.app.metadataCache.fileToLinktext(f, sourcePath()),
@@ -27269,20 +35408,24 @@ ${topics}`;
       fileBasename: () => {
         const p = sourcePath();
         const f = this.app.vault.getAbstractFileByPath(p);
-        return f instanceof import_obsidian14.TFile ? f.basename : p.replace(/\.md$/, "").split("/").pop() ?? p;
+        return f instanceof import_obsidian18.TFile ? f.basename : p.replace(/\.md$/, "").split("/").pop() ?? p;
       },
-      notice: (m) => new import_obsidian14.Notice(m),
+      notice: (m) => new import_obsidian18.Notice(m),
       linkTitle: (url) => this.settings.pasteLinkTitle ? this.fetchPageTitle(url) : null,
       // 工具栏按钮只有图标：提示别让人等（Obsidian 默认要停一会儿才出）
-      setTooltip: (el, text, placement) => (0, import_obsidian14.setTooltip)(el, text, { placement, delay: 150 }),
-      setIcon: (el, name) => (0, import_obsidian14.setIcon)(el, name),
+      setTooltip: (el, text, placement) => (0, import_obsidian18.setTooltip)(el, text, { placement, delay: 150 }),
+      setIcon: (el, name) => (0, import_obsidian18.setIcon)(el, name),
+      dailyNote: () => dailyNote(this.app),
+      // 节点表格的加密格子：用 gogoga Table 的主密码会话（两边共用主密码、一起锁定）；没装、没开就只能看到 ••••••
+      tableSecrets: () => this.app.plugins?.plugins?.["gogoga-table"]?.secrets ?? null,
+      confirm: (message, ok) => confirmBox(this.app, message, ok, t("customTheme.cancel")),
       listTags: () => Object.keys(this.app.metadataCache.getTags?.() ?? {}).map((x) => x.replace(/^#/, "")),
       openLink: (href, internal, ev) => {
         if (!internal) {
           window.open(href, "_blank");
           return;
         }
-        const mod = import_obsidian14.Keymap.isModEvent(ev);
+        const mod = import_obsidian18.Keymap.isModEvent(ev);
         const sp = sourcePath();
         if (!mod && this.revealInOpenPdf(href, sp)) return;
         if (!mod && this.settings.linkReuseOpen && this.revealInOpenLeaf(href, sp)) return;
@@ -27293,7 +35436,7 @@ ${topics}`;
         })();
       },
       linkContextMenu: (ev, linktext, extra) => {
-        const menu = new import_obsidian14.Menu();
+        const menu = new import_obsidian18.Menu();
         for (const x of extra)
           menu.addItem((item) => {
             item.setSection(x.warning ? "danger" : "action").setTitle(x.title).setIcon(x.icon).onClick(() => x.run());
@@ -27331,15 +35474,15 @@ ${topics}`;
     const mode = this.settings.newNoteFolder;
     if (mode === "default") return fallback;
     const map = this.app.vault.getAbstractFileByPath(sourcePath);
-    const parent = map instanceof import_obsidian14.TFile ? map.parent : null;
+    const parent = map instanceof import_obsidian18.TFile ? map.parent : null;
     let path = "";
     if (mode === "map") path = parent?.path ?? "/";
-    else if (mode === "mapSub") path = map instanceof import_obsidian14.TFile ? joinPath(parent?.path ?? "", map.basename) : "";
-    else path = (0, import_obsidian14.normalizePath)(this.settings.newNoteFolderPath.trim() || "/");
+    else if (mode === "mapSub") path = map instanceof import_obsidian18.TFile ? joinPath(parent?.path ?? "", map.basename) : "";
+    else path = (0, import_obsidian18.normalizePath)(this.settings.newNoteFolderPath.trim() || "/");
     if (!path) return fallback;
     if (path === "/") return this.app.vault.getRoot();
     const hit = this.app.vault.getAbstractFileByPath(path);
-    if (hit instanceof import_obsidian14.TFolder) return hit;
+    if (hit instanceof import_obsidian18.TFolder) return hit;
     if (hit) return fallback;
     try {
       return await this.app.vault.createFolder(path);
@@ -27353,7 +35496,7 @@ ${topics}`;
    */
   async ensureLinkTarget(href, sourcePath) {
     if (this.settings.newNoteFolder === "default") return;
-    const { path } = (0, import_obsidian14.parseLinktext)(href);
+    const { path } = (0, import_obsidian18.parseLinktext)(href);
     if (!path || path.includes("/") || this.app.metadataCache.getFirstLinkpathDest(path, sourcePath)) return;
     const ext = /\.([^./]+)$/.exec(path)?.[1];
     if (ext && ext.toLowerCase() !== "md") return;
@@ -27364,7 +35507,7 @@ ${topics}`;
     try {
       await this.app.vault.create(file, "");
     } catch (e) {
-      new import_obsidian14.Notice(t("notice.createNoteFailed", { error: e.message }));
+      new import_obsidian18.Notice(t("notice.createNoteFailed", { error: e.message }));
     }
   }
   /**
@@ -27372,11 +35515,12 @@ ${topics}`;
    * 同一组标签页里的（切过去就看不到脑图了）焦点跟过去；别的分屏里的，焦点按「分屏打开链接后把焦点放到笔记」走
    */
   revealInOpenLeaf(href, sourcePath) {
-    const { path, subpath } = (0, import_obsidian14.parseLinktext)(href);
+    const { path, subpath } = (0, import_obsidian18.parseLinktext)(href);
     if (!path) return false;
     const file = this.app.metadataCache.getFirstLinkpathDest(path, sourcePath);
     if (!file) return false;
-    const origin = this.app.workspace.getActiveViewOfType(import_obsidian14.ItemView)?.leaf;
+    const origin = this.app.workspace.getActiveViewOfType(import_obsidian18.ItemView)?.leaf;
+    if (origin?.view?.file?.path === file.path) return false;
     const open = [];
     this.app.workspace.iterateAllLeaves((l) => {
       if (l !== origin && l.view.file?.path === file.path) open.push(l);
@@ -27399,16 +35543,16 @@ ${topics}`;
     const folder = await this.newNoteFolder(sourcePath);
     const path = joinPath(folder.path, `${name}.md`);
     let file = this.app.vault.getAbstractFileByPath(path);
-    if (!(file instanceof import_obsidian14.TFile)) {
+    if (!(file instanceof import_obsidian18.TFile)) {
       try {
         file = await this.app.vault.create(path, "");
       } catch (e) {
-        new import_obsidian14.Notice(t("notice.createNoteFailed", { error: e.message }));
+        new import_obsidian18.Notice(t("notice.createNoteFailed", { error: e.message }));
         return null;
       }
     }
-    if (!(file instanceof import_obsidian14.TFile)) return null;
-    const origin = this.app.workspace.getActiveViewOfType(import_obsidian14.ItemView)?.leaf;
+    if (!(file instanceof import_obsidian18.TFile)) return null;
+    const origin = this.app.workspace.getActiveViewOfType(import_obsidian18.ItemView)?.leaf;
     const leaf = this.linkSplit(origin);
     await leaf.openFile(file, { active: false });
     this.focusAfterLinkSplit(origin, leaf);
@@ -27425,8 +35569,8 @@ ${topics}`;
   }
   /** 在右侧分屏里打开链接，焦点留在脑图上 */
   async openInLinkSplit(href, sourcePath) {
-    const origin = this.app.workspace.getActiveViewOfType(import_obsidian14.ItemView)?.leaf;
-    const { path, subpath } = (0, import_obsidian14.parseLinktext)(href);
+    const origin = this.app.workspace.getActiveViewOfType(import_obsidian18.ItemView)?.leaf;
+    const { path, subpath } = (0, import_obsidian18.parseLinktext)(href);
     const file = this.app.metadataCache.getFirstLinkpathDest(path, sourcePath);
     if (!file) {
       await this.app.workspace.openLinkText(href, sourcePath, "split");
@@ -27440,5 +35584,34 @@ ${topics}`;
 function joinPath(folder, name) {
   return folder && folder !== "/" ? `${folder}/${name}` : name;
 }
+function fixNestedSubmenu(menu) {
+  const m = menu;
+  const open = m.openSubmenu;
+  const close = m.closeSubmenu;
+  if (typeof open !== "function" || typeof close !== "function" || typeof m.openSubmenuSoon?.cancel !== "function") return;
+  const fixed = (item) => {
+    if (m.currentSubmenu && item.submenu && m.currentSubmenu !== item.submenu && !item.disabled) close.call(menu);
+    open.call(menu, item);
+  };
+  let timer = 0;
+  const soon = (item) => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(() => fixed(item), 250);
+  };
+  soon.cancel = () => window.clearTimeout(timer);
+  m.openSubmenu = fixed;
+  m.openSubmenuSoon = soon;
+}
+/*! Bundled license information:
+
+ts-fsrs/dist/index.mjs:
+  (* istanbul ignore next -- @preserve *)
+
+ts-fsrs/dist/index.mjs:
+  (* istanbul ignore next -- @preserve *)
+
+ts-fsrs/dist/index.mjs:
+  (* istanbul ignore next -- @preserve *)
+*/
 
 /* nosourcemap */

@@ -710,6 +710,22 @@
       "body": null,
       "reviewed": [],
       "updated": "2026-11-21T15:21:28.634Z"
+    },
+    {
+      "id": "h95julyt",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "第四天",
+        "prefix": "| **120 分钟** |\n\n次日另加 15～20 分钟回译；",
+        "suffix": "只复测错误句子。\n\n# 草稿\n\n# 生词\n\n---\n\n# 标注汇",
+        "from": 28906,
+        "to": 28909
+      },
+      "hits": [
+        "2026-11-21T16:24:43.359Z"
+      ],
+      "body": null,
+      "reviewed": []
     }
   ]
 }

@@ -1,12 +1,28 @@
 {
   "recentFiles": [
     {
+      "basename": "W47",
+      "path": "Diary/2026/W47.md"
+    },
+    {
       "basename": "20261121",
       "path": "Diary/2026/20261121.md"
     },
     {
+      "basename": "20261122",
+      "path": "Diary/2026/20261122.md"
+    },
+    {
+      "basename": "20261120",
+      "path": "Diary/2026/20261120.md"
+    },
+    {
       "basename": "2026年11月20日",
       "path": "语言学习/德语/学习记录日记-技巧/leseaufgabe/2026年11月20日.md"
+    },
+    {
+      "basename": "《Erinnern an den Holocaust》",
+      "path": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md"
     },
     {
       "basename": "冠词类限定词（Artikelwörter）及其形容词词尾变化",
@@ -15,10 +31,6 @@
     {
       "basename": "2026年11月20日 - SideNote 20261121233157",
       "path": "2026年11月20日 - SideNote 20261121233157.md"
-    },
-    {
-      "basename": "《Erinnern an den Holocaust》",
-      "path": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md"
     },
     {
       "basename": "格; 限定词",
@@ -31,10 +43,6 @@
     {
       "basename": "26-8",
       "path": "语言学习/德语/单词/生词/26-8.md"
-    },
-    {
-      "basename": "W47",
-      "path": "Diary/2026/W47.md"
     },
     {
       "basename": "知识",
@@ -103,10 +111,6 @@
     {
       "basename": "月报",
       "path": "Diary/_backup/20261120-r2/templater/月报.md"
-    },
-    {
-      "basename": "20261120",
-      "path": "Diary/2026/20261120.md"
     },
     {
       "basename": "日记-事件模板",
@@ -195,10 +199,6 @@
     {
       "basename": "20260816",
       "path": "Diary/2026/20260816.md"
-    },
-    {
-      "basename": "20260830",
-      "path": "Diary/2026/20260830.md"
     }
   ],
   "omittedPaths": [],
