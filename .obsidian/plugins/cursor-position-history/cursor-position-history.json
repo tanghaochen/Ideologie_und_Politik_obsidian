@@ -3921,21 +3921,21 @@
   },
   "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md": {
     "scrollState": {
-      "top": 13928.400390625,
+      "top": 1440,
       "left": 0,
-      "clientHeight": 1522,
-      "clientWidth": 2083,
-      "height": 1522,
-      "width": 2095
+      "clientHeight": 705,
+      "clientWidth": 771,
+      "height": 705,
+      "width": 783
     },
     "cursor": {
       "from": {
-        "ch": 0,
-        "line": 356
+        "ch": 36,
+        "line": 24
       },
       "to": {
         "ch": 0,
-        "line": 356
+        "line": 24
       }
     }
   },
@@ -4916,6 +4916,26 @@
       "to": {
         "ch": 29,
         "line": 8
+      }
+    }
+  },
+  "语言学习/德语/单词/生词/2026年6月.md": {
+    "scrollState": {
+      "top": 5642.39990234375,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 1931,
+      "height": 1522,
+      "width": 1943
+    },
+    "cursor": {
+      "from": {
+        "ch": 5,
+        "line": 136
+      },
+      "to": {
+        "ch": 5,
+        "line": 136
       }
     }
   }

@@ -6,51 +6,71 @@
       {
         "id": "3bc015e7f0f64eeb",
         "type": "tabs",
+        "dimension": 62.62529832935561,
         "children": [
           {
-            "id": "a65daedc64fe309c",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "格; 限定词"
-            }
-          },
-          {
-            "id": "da1911b45de2dc79",
+            "id": "b396f74b1dec3e21",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/单词/生词/26-8.md",
+                "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "26-8"
-            }
-          },
-          {
-            "id": "fdb26ae62749af05",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Diary/2026/20261121.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "20261121"
+              "title": "《Erinnern an den Holocaust》"
             }
           }
+        ]
+      },
+      {
+        "id": "3f4797f1cf032a12",
+        "type": "split",
+        "dimension": 37.37470167064439,
+        "children": [
+          {
+            "id": "ca5d38080bc71ab3",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "b759e66aa4fb2711",
+                "type": "leaf",
+                "state": {
+                  "type": "mindmap",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md"
+                  },
+                  "icon": "mindmap-tree",
+                  "title": "《Erinnern an den Holocaust》"
+                }
+              }
+            ]
+          },
+          {
+            "id": "4679dcaf02fa313f",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "8273a369856b9641",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "《Erinnern an den Holocaust》"
+                }
+              }
+            ]
+          }
         ],
-        "currentTab": 2
+        "direction": "horizontal"
       }
     ],
     "direction": "vertical"
@@ -82,7 +102,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "{1}{1|rgba(255,255,255,0.1)|diagonal}",
+                "query": "",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -127,7 +147,7 @@
       {
         "id": "0ed9c27411998641",
         "type": "tabs",
-        "dimension": 52.59621258399512,
+        "dimension": 75.59779276517474,
         "children": [
           {
             "id": "dd8c0de9236cf3b8",
@@ -145,8 +165,8 @@
             "state": {
               "type": "copilot-chat-view",
               "state": {},
-              "icon": "message-square",
-              "title": "Copilot Quick Chat"
+              "icon": "lucide-ghost",
+              "title": "copilot-chat-view"
             }
           },
           {
@@ -239,13 +259,23 @@
               "icon": "lucide-archive",
               "title": "添加笔记属性"
             }
+          },
+          {
+            "id": "02b4c98c9d3789ee",
+            "type": "leaf",
+            "state": {
+              "type": "ostracon-inbox-view",
+              "state": {},
+              "icon": "inbox",
+              "title": "MN 卡片"
+            }
           }
         ]
       },
       {
         "id": "28e75bfc7e894da7",
         "type": "tabs",
-        "dimension": 47.40378741600489,
+        "dimension": 24.40220723482526,
         "children": [
           {
             "id": "c3592eded90586bf",
@@ -288,11 +318,15 @@
       }
     ],
     "direction": "horizontal",
-    "width": 659.099853515625
+    "width": 507.5
   },
   "left-ribbon": {
     "hiddenItems": {
-      "obsidian-local-images-plus:Local Images Plus  0.19.3\r\nLocalize attachments (plugin folder)": false,
+      "templates:插入模板": false,
+      "media-transcript:媒体库": false,
+      "media-transcript:标注": false,
+      "video-player-ai:Open video player": false,
+      "video-player-ai:Playlists": false,
       "gogoga-mindmap:新建思维导图": false,
       "smart-composer:Open smart composer": false,
       "ostracon-ob:获取MN数据": false,
@@ -319,20 +353,17 @@
       "realclaudian:Open Claudian": false,
       "copilot:Open Copilot Agent Chat": false,
       "notebook-navigator:Notebook Navigator": false,
-      "templates:插入模板": false,
       "periodic-notes:Open today": false,
-      "media-transcript:媒体库": false,
-      "media-transcript:标注": false,
-      "video-player-ai:Open video player": false,
-      "video-player-ai:Playlists": false
+      "obsidian-local-images-plus:Local Images Plus  0.19.3\r\nLocalize attachments (plugin folder)": false
     }
   },
-  "active": "fdb26ae62749af05",
+  "active": "8273a369856b9641",
   "lastOpenFiles": [
-    "语言学习/德语/单词/生词/26-8.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
-    "Diary/2026/W47.md",
     "Diary/2026/20261121.md",
+    "语言学习/德语/单词/生词/2026年6月.md",
+    "语言学习/德语/单词/生词/26-8.md",
+    "Diary/2026/W47.md",
     "思想思维心理哲学/个人问题处理/泡学/知识.md",
     "Diary/_backup/_miss3.txt",
     "Diary/_backup/_miss2.txt",
@@ -370,7 +401,6 @@
     "Diary/_backup/20261120-tpl-v3/202610_旧版.md",
     "OBSetting/templater/月报.md",
     "Diary/_backup/20261120-r2/templater/月报.md",
-    "Diary/2026/20261120.md",
     "assets/Ink/Drawing/2026.11.19 - 23.22pm.svg",
     "assets/deutsch-kasus-adjektiv.svg",
     "assets/Designer (17).png",
