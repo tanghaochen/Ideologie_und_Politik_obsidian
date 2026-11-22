@@ -14207,14 +14207,14 @@
     "expandedKeys": []
   },
   "语言学习/德语/公共知识语法/5介词/介词和动词名词化的搭配.md": {
-    "scroll": 27.123749470790262,
+    "scroll": 54.550622714320966,
     "cursor": {
       "from": {
-        "line": 11,
+        "line": 68,
         "ch": 0
       },
       "to": {
-        "line": 11,
+        "line": 68,
         "ch": 0
       }
     },
@@ -19664,7 +19664,7 @@
     }
   },
   "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md": {
-    "scroll": 642.3894922388741,
+    "scroll": 633.9968471883826,
     "cursor": {
       "from": {
         "line": 646,
@@ -20251,17 +20251,29 @@
   "Diary/2026/20261122.md": {
     "cursor": {
       "from": {
-        "line": 8,
-        "ch": 16
+        "line": 84,
+        "ch": 0
       },
       "to": {
-        "line": 8,
-        "ch": 16
+        "line": 84,
+        "ch": 0
       }
     },
-    "scroll": 38.96958090657674
+    "scroll": 31.25145821562079
   },
   "file:E:/AI workpace/app-watch/README.md": {
     "scroll": 0
+  },
+  "Diary/2026/20261123.md": {
+    "cursor": {
+      "from": {
+        "line": 12,
+        "ch": 63
+      },
+      "to": {
+        "line": 12,
+        "ch": 63
+      }
+    }
   }
 }

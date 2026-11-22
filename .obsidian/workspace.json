@@ -4,89 +4,40 @@
     "type": "split",
     "children": [
       {
-        "id": "3bc015e7f0f64eeb",
+        "id": "4679dcaf02fa313f",
         "type": "tabs",
-        "dimension": 62.62529832935561,
         "children": [
           {
-            "id": "b396f74b1dec3e21",
+            "id": "e1c142bfc1f70dbd",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/2026年11月20日.md",
+                "file": "Diary/2026/20261123.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "2026年11月20日"
+              "title": "20261123"
             }
           },
           {
-            "id": "c322baa743a7f7fb",
+            "id": "85491280abc22a02",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/5介词/介词和动词名词化的搭配.md",
+                "file": "Diary/2026/20261122.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "介词和动词名词化的搭配"
+              "title": "20261122"
             }
           }
-        ],
-        "currentTab": 1
-      },
-      {
-        "id": "3f4797f1cf032a12",
-        "type": "split",
-        "dimension": 37.37470167064439,
-        "children": [
-          {
-            "id": "ca5d38080bc71ab3",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "b759e66aa4fb2711",
-                "type": "leaf",
-                "state": {
-                  "type": "mindmap",
-                  "state": {
-                    "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md"
-                  },
-                  "icon": "mindmap-tree",
-                  "title": "《Erinnern an den Holocaust》"
-                }
-              }
-            ]
-          },
-          {
-            "id": "4679dcaf02fa313f",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "8273a369856b9641",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
-                    "mode": "source",
-                    "source": false,
-                    "backlinks": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "《Erinnern an den Holocaust》"
-                }
-              }
-            ]
-          }
-        ],
-        "direction": "horizontal"
+        ]
       }
     ],
     "direction": "vertical"
@@ -163,7 +114,7 @@
       {
         "id": "0ed9c27411998641",
         "type": "tabs",
-        "dimension": 75.59779276517474,
+        "dimension": 66.30036630036629,
         "children": [
           {
             "id": "dd8c0de9236cf3b8",
@@ -301,7 +252,7 @@
       {
         "id": "28e75bfc7e894da7",
         "type": "tabs",
-        "dimension": 24.40220723482526,
+        "dimension": 33.6996336996337,
         "children": [
           {
             "id": "c3592eded90586bf",
@@ -387,13 +338,15 @@
       "obsidian-local-images-plus:Local Images Plus  0.19.3\r\nLocalize attachments (plugin folder)": false
     }
   },
-  "active": "c322baa743a7f7fb",
+  "active": "e1c142bfc1f70dbd",
   "lastOpenFiles": [
-    "语言学习/德语/学习记录日记-技巧/leseaufgabe/2026年11月20日.md",
+    "Diary/2026/20261122.md",
+    "Diary/2026/20261123.md",
     "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
+    "语言学习/德语/学习记录日记-技巧/leseaufgabe/2026年11月20日.md",
+    "语言学习/德语/公共知识语法/5介词/介词和动词名词化的搭配.md",
     "语言学习/德语/公共知识语法/10句型/从句合集/题目/德语从句  出题范围规范.md",
     "Diary/2026/20261121.md",
-    "Diary/2026/20261122.md",
     "语言学习/德语/单词/生词/2026年6月.md",
     "file:E:/AI workpace/app-watch/README.md",
     "Diary/2026/W47.md",
@@ -429,8 +382,6 @@
     "Video Player (AI integrated)/Transcripts/对谈武志红：一旦恢复主体性，人生会开挂！高敏感自救，2招找回主体性！ Transcript 2.md",
     "Video Player (AI integrated)/Transcripts/对谈武志红：一旦恢复主体性，人生会开挂！高敏感自救，2招找回主体性！ Transcript.md",
     "copilot/copilot-conversations/Translation_Request@20261120_225742.md",
-    "语言学习/德语/公共知识语法/2动词/情态动词.md",
-    "语言学习/德语/单词/生词/26-9.md",
     "assets/Ink/Drawing/2026.11.19 - 23.22pm.svg",
     "assets/deutsch-kasus-adjektiv.svg",
     "assets/Designer (17).png",
