@@ -20306,15 +20306,15 @@
   "Diary/2026/W46.md": {
     "cursor": {
       "from": {
-        "line": 0,
-        "ch": 0
+        "line": 260,
+        "ch": 3
       },
       "to": {
-        "line": 0,
-        "ch": 0
+        "line": 260,
+        "ch": 3
       }
     },
-    "scroll": 0
+    "scroll": 123.27164320370557
   },
   "file:C:/Users/17741/Downloads/Obsidian周报模板_v7_纯MD表格内嵌DataviewJS.md": {
     "cursor": {
@@ -20332,25 +20332,50 @@
   "OBSetting/templater/启动-周报引擎.md": {
     "cursor": {
       "from": {
-        "line": 235,
-        "ch": 2
+        "line": 0,
+        "ch": 0
       },
       "to": {
-        "line": 235,
-        "ch": 2
+        "line": 260,
+        "ch": 3
       }
     }
   },
   "OBSetting/templater/周报-MD表格模板.md": {
     "cursor": {
       "from": {
-        "line": 117,
-        "ch": 2
+        "line": 1,
+        "ch": 0
       },
       "to": {
-        "line": 117,
-        "ch": 2
+        "line": 1,
+        "ch": 0
       }
     }
+  },
+  "Diary/2026/2026年报-全年脉络.excalidraw.md": {
+    "cursor": {
+      "from": {
+        "line": 5,
+        "ch": 0
+      },
+      "to": {
+        "line": 5,
+        "ch": 0
+      }
+    }
+  },
+  "OBSetting/templater/周报模板.md": {
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "scroll": 0.7433628193110438
   }
 }

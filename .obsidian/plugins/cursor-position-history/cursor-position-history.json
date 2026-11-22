@@ -5050,18 +5050,18 @@
     },
     "cursor": {
       "from": {
-        "ch": 46,
-        "line": 5
+        "ch": 0,
+        "line": 1
       },
       "to": {
-        "ch": 9,
-        "line": 26
+        "ch": 0,
+        "line": 1
       }
     }
   },
   "Diary/2026/W46.md": {
     "scrollState": {
-      "top": 0,
+      "top": 14.40000057220459,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 2083,
@@ -5070,12 +5070,12 @@
     },
     "cursor": {
       "from": {
-        "ch": 0,
-        "line": 0
+        "ch": 3,
+        "line": 260
       },
       "to": {
-        "ch": 0,
-        "line": 0
+        "ch": 3,
+        "line": 260
       }
     }
   },
@@ -5099,7 +5099,7 @@
       }
     }
   },
-  "OBSetting/templater/周报-MD表格模板.md": {
+  "Diary/2026/2026年报-全年脉络.excalidraw.md": {
     "scrollState": {
       "top": 0,
       "left": 0,
@@ -5110,12 +5110,32 @@
     },
     "cursor": {
       "from": {
-        "ch": 49,
-        "line": 8
+        "ch": 0,
+        "line": 5
       },
       "to": {
-        "ch": 49,
-        "line": 8
+        "ch": 0,
+        "line": 5
+      }
+    }
+  },
+  "OBSetting/templater/周报模板.md": {
+    "scrollState": {
+      "top": 84,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 2083,
+      "height": 1522,
+      "width": 2095
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 0
+      },
+      "to": {
+        "ch": 0,
+        "line": 0
       }
     }
   }
