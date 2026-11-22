@@ -1,6 +1,10 @@
 {
   "recentFiles": [
     {
+      "basename": "README",
+      "path": "file:E:/AI workpace/app-watch/README.md"
+    },
+    {
       "basename": "W47",
       "path": "Diary/2026/W47.md"
     },
@@ -195,10 +199,6 @@
     {
       "basename": "2026",
       "path": "Diary/2026.md"
-    },
-    {
-      "basename": "20260816",
-      "path": "Diary/2026/20260816.md"
     }
   ],
   "omittedPaths": [],

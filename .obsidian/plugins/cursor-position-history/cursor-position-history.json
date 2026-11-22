@@ -4998,5 +4998,25 @@
         "line": 87
       }
     }
+  },
+  "file:E:/AI workpace/app-watch/README.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 1300,
+      "height": 1522,
+      "width": 1312
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 0
+      },
+      "to": {
+        "ch": 0,
+        "line": 0
+      }
+    }
   }
 }
