@@ -4081,21 +4081,21 @@
   },
   "Diary/2026/20261117.md": {
     "scrollState": {
-      "top": 16476,
+      "top": 0,
       "left": 0,
-      "clientHeight": 1520,
+      "clientHeight": 1522,
       "clientWidth": 2083,
-      "height": 1520,
+      "height": 1522,
       "width": 2095
     },
     "cursor": {
       "from": {
-        "ch": 123,
-        "line": 604
+        "ch": 10,
+        "line": 0
       },
       "to": {
-        "ch": 123,
-        "line": 604
+        "ch": 10,
+        "line": 0
       }
     }
   },
@@ -4519,26 +4519,6 @@
       }
     }
   },
-  "OBSetting/templater/周记-一览视图.md": {
-    "scrollState": {
-      "top": 0,
-      "left": 0,
-      "clientHeight": 1522,
-      "clientWidth": 1731,
-      "height": 1522,
-      "width": 1743
-    },
-    "cursor": {
-      "from": {
-        "ch": 57,
-        "line": 150
-      },
-      "to": {
-        "ch": 0,
-        "line": 149
-      }
-    }
-  },
   "Diary/2026/W38.md": {
     "scrollState": {
       "top": 240,
@@ -4644,9 +4624,9 @@
       "top": 0,
       "left": 0,
       "clientHeight": 1522,
-      "clientWidth": 1731,
+      "clientWidth": 2083,
       "height": 1522,
-      "width": 1743
+      "width": 2095
     },
     "cursor": {
       "from": {
@@ -4681,21 +4661,21 @@
   },
   "Diary/2026/W47.md": {
     "scrollState": {
-      "top": 549.6000366210938,
+      "top": 0,
       "left": 0,
       "clientHeight": 1522,
-      "clientWidth": 1300,
+      "clientWidth": 2083,
       "height": 1522,
-      "width": 1312
+      "width": 2095
     },
     "cursor": {
       "from": {
-        "ch": 2,
-        "line": 164
+        "ch": 0,
+        "line": 0
       },
       "to": {
-        "ch": 2,
-        "line": 164
+        "ch": 0,
+        "line": 0
       }
     }
   },
@@ -4861,21 +4841,21 @@
   },
   "Diary/2026/20261121.md": {
     "scrollState": {
-      "top": 1294.800048828125,
+      "top": 972,
       "left": 0,
       "clientHeight": 1522,
-      "clientWidth": 1279,
+      "clientWidth": 2083,
       "height": 1522,
-      "width": 1291
+      "width": 2095
     },
     "cursor": {
       "from": {
-        "ch": 79,
-        "line": 43
+        "ch": 0,
+        "line": 47
       },
       "to": {
-        "ch": 3,
-        "line": 52
+        "ch": 0,
+        "line": 47
       }
     }
   },
@@ -4981,7 +4961,7 @@
   },
   "Diary/2026/20261122.md": {
     "scrollState": {
-      "top": 1162.800048828125,
+      "top": 1614,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 2083,
@@ -4990,12 +4970,12 @@
     },
     "cursor": {
       "from": {
-        "ch": 0,
-        "line": 84
+        "ch": 36,
+        "line": 67
       },
       "to": {
-        "ch": 0,
-        "line": 84
+        "ch": 36,
+        "line": 67
       }
     }
   },
@@ -5021,6 +5001,46 @@
   },
   "Diary/2026/20261123.md": {
     "scrollState": {
+      "top": 1462.800048828125,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 2083,
+      "height": 1522,
+      "width": 2095
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 41
+      },
+      "to": {
+        "ch": 0,
+        "line": 41
+      }
+    }
+  },
+  "Diary/2026/W48.md": {
+    "scrollState": {
+      "top": 960,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 2083,
+      "height": 1522,
+      "width": 2095
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 137
+      },
+      "to": {
+        "ch": 0,
+        "line": 151
+      }
+    }
+  },
+  "file:C:/Users/17741/Downloads/Obsidian周报模板_DataviewJS_自动合并.md": {
+    "scrollState": {
       "top": 0,
       "left": 0,
       "clientHeight": 1522,
@@ -5030,12 +5050,72 @@
     },
     "cursor": {
       "from": {
-        "ch": 63,
-        "line": 12
+        "ch": 46,
+        "line": 5
       },
       "to": {
-        "ch": 63,
-        "line": 12
+        "ch": 9,
+        "line": 26
+      }
+    }
+  },
+  "Diary/2026/W46.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 2083,
+      "height": 1522,
+      "width": 2095
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 0
+      },
+      "to": {
+        "ch": 0,
+        "line": 0
+      }
+    }
+  },
+  "file:C:/Users/17741/Downloads/Obsidian周报模板_v7_纯MD表格内嵌DataviewJS.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 2083,
+      "height": 1522,
+      "width": 2095
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 0
+      },
+      "to": {
+        "ch": 0,
+        "line": 289
+      }
+    }
+  },
+  "OBSetting/templater/周报-MD表格模板.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 2083,
+      "height": 1522,
+      "width": 2095
+    },
+    "cursor": {
+      "from": {
+        "ch": 49,
+        "line": 8
+      },
+      "to": {
+        "ch": 49,
+        "line": 8
       }
     }
   }

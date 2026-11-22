@@ -16827,12 +16827,12 @@
   "OBSetting/templater/周记-一览视图.md": {
     "cursor": {
       "from": {
-        "line": 150,
-        "ch": 57
+        "line": 8,
+        "ch": 49
       },
       "to": {
-        "line": 149,
-        "ch": 0
+        "line": 8,
+        "ch": 49
       }
     },
     "scroll": 0
@@ -19744,12 +19744,12 @@
   "Diary/2026/20261117.md": {
     "cursor": {
       "from": {
-        "line": 604,
-        "ch": 123
+        "line": 0,
+        "ch": 10
       },
       "to": {
-        "line": 604,
-        "ch": 123
+        "line": 0,
+        "ch": 10
       }
     },
     "scroll": 553.741225240748
@@ -20097,15 +20097,15 @@
     "scroll": 0
   },
   "Diary/2026/W47.md": {
-    "scroll": 134.95452758704633,
+    "scroll": 0,
     "cursor": {
       "from": {
-        "line": 164,
-        "ch": 2
+        "line": 0,
+        "ch": 0
       },
       "to": {
-        "line": 164,
-        "ch": 2
+        "line": 0,
+        "ch": 0
       }
     }
   },
@@ -20214,15 +20214,15 @@
   "Diary/2026/20261121.md": {
     "cursor": {
       "from": {
-        "line": 43,
-        "ch": 79
+        "line": 47,
+        "ch": 0
       },
       "to": {
-        "line": 52,
-        "ch": 3
+        "line": 47,
+        "ch": 0
       }
     },
-    "scroll": 33.764583030409305
+    "scroll": 26.24270691918011
   },
   "思想思维心理哲学/个人问题处理/泡学/打压 PUA.md": {
     "cursor": {
@@ -20251,15 +20251,15 @@
   "Diary/2026/20261122.md": {
     "cursor": {
       "from": {
-        "line": 84,
-        "ch": 0
+        "line": 67,
+        "ch": 36
       },
       "to": {
-        "line": 84,
-        "ch": 0
+        "line": 67,
+        "ch": 36
       }
     },
-    "scroll": 31.25145821562079
+    "scroll": 43.7376871398001
   },
   "file:E:/AI workpace/app-watch/README.md": {
     "scroll": 0
@@ -20267,12 +20267,89 @@
   "Diary/2026/20261123.md": {
     "cursor": {
       "from": {
-        "line": 12,
-        "ch": 63
+        "line": 41,
+        "ch": 0
       },
       "to": {
-        "line": 12,
-        "ch": 63
+        "line": 41,
+        "ch": 0
+      }
+    },
+    "scroll": 40.72520810920664
+  },
+  "Diary/2026/W48.md": {
+    "cursor": {
+      "from": {
+        "line": 137,
+        "ch": 0
+      },
+      "to": {
+        "line": 151,
+        "ch": 0
+      }
+    },
+    "scroll": 140.8670225585164
+  },
+  "file:C:/Users/17741/Downloads/Obsidian周报模板_DataviewJS_自动合并.md": {
+    "scroll": 0,
+    "cursor": {
+      "from": {
+        "line": 1,
+        "ch": 0
+      },
+      "to": {
+        "line": 1,
+        "ch": 0
+      }
+    }
+  },
+  "Diary/2026/W46.md": {
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 0,
+        "ch": 0
+      }
+    },
+    "scroll": 0
+  },
+  "file:C:/Users/17741/Downloads/Obsidian周报模板_v7_纯MD表格内嵌DataviewJS.md": {
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 289,
+        "ch": 0
+      }
+    },
+    "scroll": 0
+  },
+  "OBSetting/templater/启动-周报引擎.md": {
+    "cursor": {
+      "from": {
+        "line": 235,
+        "ch": 2
+      },
+      "to": {
+        "line": 235,
+        "ch": 2
+      }
+    }
+  },
+  "OBSetting/templater/周报-MD表格模板.md": {
+    "cursor": {
+      "from": {
+        "line": 117,
+        "ch": 2
+      },
+      "to": {
+        "line": 117,
+        "ch": 2
       }
     }
   }
