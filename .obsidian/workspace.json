@@ -350,9 +350,6 @@
       "media-transcript:标注": false,
       "video-player-ai:Open video player": false,
       "video-player-ai:Playlists": false,
-      "side-comments-origin:Side note: Open in sidebar": false,
-      "hi-note:HiCard": false,
-      "hi-note:HiNote": false,
       "gogoga-mindmap:打开复习": false,
       "gogoga-mindmap:新建思维导图": false,
       "smart-composer:Open smart composer": false,
@@ -367,7 +364,6 @@
       "pdf-plus:PDF++: Toggle auto-paste": true,
       "workspaces:管理工作区布局": false,
       "templater-obsidian:Templater": false,
-      "table-editor-obsidian:Advanced Tables Toolbar": true,
       "audio-recorder:开始/结束录音": true,
       "obsidian-git:Open Git source control": true,
       "pexels-banner:🚩 Pixel Banner Menu": true,
@@ -380,8 +376,8 @@
       "realclaudian:Open Claudian": false,
       "copilot:Open Copilot Agent Chat": false,
       "notebook-navigator:Notebook Navigator": false,
-      "periodic-notes:Open today": false,
-      "obsidian-local-images-plus:Local Images Plus  0.19.3\r\nLocalize attachments (plugin folder)": false
+      "obsidian-local-images-plus:Local Images Plus  0.19.3\r\nLocalize attachments (plugin folder)": false,
+      "periodic-notes:Open today": false
     }
   },
   "active": "e47178f9bdab6f1a",
