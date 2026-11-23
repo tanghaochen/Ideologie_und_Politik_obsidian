@@ -1,16 +1,28 @@
 {
   "recentFiles": [
     {
-      "basename": "20261123",
-      "path": "Diary/2026/20261123.md"
+      "basename": "格; 限定词",
+      "path": "语言学习/德语/公共知识语法/格; 限定词.md"
     },
     {
       "basename": "eine neue Wohnung Einladung",
       "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md"
     },
     {
+      "basename": "听说读写 以及学习外语的核心方法",
+      "path": "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md"
+    },
+    {
       "basename": "周报模板",
       "path": "OBSetting/templater/周报模板.md"
+    },
+    {
+      "basename": "20261123",
+      "path": "Diary/2026/20261123.md"
+    },
+    {
+      "basename": "20261124",
+      "path": "Diary/2026/20261124.md"
     },
     {
       "basename": "W48",
@@ -31,10 +43,6 @@
     {
       "basename": "eine neue Wohnung Einladung.md.anno",
       "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md.anno.json"
-    },
-    {
-      "basename": "听说读写 以及学习外语的核心方法",
-      "path": "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md"
     },
     {
       "basename": "《Erinnern an den Holocaust》",
@@ -129,10 +137,6 @@
       "path": "2026年11月20日 - SideNote 20261121233157.md"
     },
     {
-      "basename": "格; 限定词",
-      "path": "语言学习/德语/公共知识语法/格; 限定词.md"
-    },
-    {
       "basename": "26-8",
       "path": "语言学习/德语/单词/生词/26-8.md"
     },
@@ -195,10 +199,6 @@
     {
       "basename": "20261119",
       "path": "Diary/2026/20261119.md"
-    },
-    {
-      "basename": "20261118",
-      "path": "Diary/2026/20261118.md"
     }
   ],
   "omittedPaths": [],

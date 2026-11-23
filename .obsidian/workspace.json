@@ -6,7 +6,6 @@
       {
         "id": "3bc015e7f0f64eeb",
         "type": "tabs",
-        "dimension": 24.534606205250597,
         "children": [
           {
             "id": "c3db4cb6edb5114e",
@@ -22,16 +21,9 @@
               "icon": "lucide-file",
               "title": "听说读写 以及学习外语的核心方法"
             }
-          }
-        ]
-      },
-      {
-        "id": "4679dcaf02fa313f",
-        "type": "tabs",
-        "dimension": 75.4653937947494,
-        "children": [
+          },
           {
-            "id": "6ff1e746c2de935d",
+            "id": "de774a5211ad465c",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -46,52 +38,19 @@
             }
           },
           {
-            "id": "4217ec7616e123b9",
+            "id": "bfed35163d2c03a8",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "OBSetting/templater/周报模板.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
               },
-              "icon": "lucide-file",
-              "title": "周报模板"
-            }
-          },
-          {
-            "id": "bf201653d60e29f4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Diary/2026/W48.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "W48"
-            }
-          },
-          {
-            "id": "af713ac22e3788fe",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Diary/2026/20261123.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "20261123"
+              "icon": "excalidraw-icon",
+              "title": "格; 限定词"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -328,7 +287,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "Diary/2026/20261123.md"
+                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -388,11 +347,13 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "af713ac22e3788fe",
+  "active": "bfed35163d2c03a8",
   "lastOpenFiles": [
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md",
+    "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
     "OBSetting/templater/周报模板.md",
     "Diary/2026/20261123.md",
+    "Diary/2026/20261124.md",
     "Diary/2026/W48.md",
     "copilot/copilot-conversations/Collapsible_Annotation_Answers@20261123_214854.md",
     "Diary/_backup/20261123-2150/20261123_before_organize.md",
@@ -407,7 +368,6 @@
     "Diary/_backup/20261123-w48-static",
     "语言学习/德语/公共知识语法/1词/名词化.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md.anno.json",
-    "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
     "assets/image-519.png",
     "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
     "语言学习/德语/公共知识语法/连词成对.md",
@@ -420,7 +380,6 @@
     "file:C:/Users/17741/Downloads/Obsidian周报模板_v7_纯MD表格内嵌DataviewJS.md",
     "OBSetting/templater/启动-周报引擎.md",
     "OBSetting/templater/周报模板-完整版.md",
-    "OBSetting/templater/周报-MD表格模板.md",
     "Diary/_backup/_engine_src.js",
     "Diary/_backup/20261123-w47-test",
     "Diary/_backup/_engine_test.js",

@@ -10,7 +10,7 @@
   "attachmentFolderPath": "/assets",
   "alwaysUpdateLinks": true,
   "promptDelete": false,
-  "strictLineBreaks": true,
+  "strictLineBreaks": false,
   "readableLineLength": true,
   "propertiesInDocument": "visible",
   "useTab": true,

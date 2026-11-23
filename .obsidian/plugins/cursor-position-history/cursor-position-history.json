@@ -5001,7 +5001,7 @@
   },
   "Diary/2026/20261123.md": {
     "scrollState": {
-      "top": 2214,
+      "top": 5656.80029296875,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 1569,
@@ -5011,11 +5011,11 @@
     "cursor": {
       "from": {
         "ch": 0,
-        "line": 80
+        "line": 129
       },
       "to": {
         "ch": 0,
-        "line": 80
+        "line": 129
       }
     }
   },
@@ -5161,21 +5161,21 @@
   },
   "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md": {
     "scrollState": {
-      "top": 21350.400390625,
+      "top": 23650.80078125,
       "left": 0,
       "clientHeight": 1522,
-      "clientWidth": 1569,
+      "clientWidth": 2083,
       "height": 1522,
-      "width": 1581
+      "width": 2095
     },
     "cursor": {
       "from": {
-        "ch": 40,
-        "line": 687
+        "ch": 0,
+        "line": 776
       },
       "to": {
-        "ch": 40,
-        "line": 687
+        "ch": 53,
+        "line": 776
       }
     }
   },
@@ -5196,6 +5196,26 @@
       "to": {
         "ch": 0,
         "line": 300
+      }
+    }
+  },
+  "Diary/2026/20261124.md": {
+    "scrollState": {
+      "top": 11672.400390625,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 1569,
+      "height": 1522,
+      "width": 1581
+    },
+    "cursor": {
+      "from": {
+        "ch": 8,
+        "line": 341
+      },
+      "to": {
+        "ch": 28,
+        "line": 398
       }
     }
   }

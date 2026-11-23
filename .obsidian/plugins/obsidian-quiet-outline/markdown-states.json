@@ -20267,15 +20267,15 @@
   "Diary/2026/20261123.md": {
     "cursor": {
       "from": {
-        "line": 2,
+        "line": 129,
         "ch": 0
       },
       "to": {
-        "line": 2,
+        "line": 129,
         "ch": 0
       }
     },
-    "scroll": 0
+    "scroll": 155.91979243470558
   },
   "Diary/2026/W48.md": {
     "cursor": {
@@ -20381,14 +20381,27 @@
   "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md": {
     "cursor": {
       "from": {
-        "line": 687,
-        "ch": 40
+        "line": 776,
+        "ch": 0
       },
       "to": {
-        "line": 687,
-        "ch": 40
+        "line": 776,
+        "ch": 53
       }
     },
-    "scroll": 674.1986222473809
+    "scroll": 754.8000638699829
+  },
+  "Diary/2026/20261124.md": {
+    "cursor": {
+      "from": {
+        "line": 341,
+        "ch": 8
+      },
+      "to": {
+        "line": 398,
+        "ch": 28
+      }
+    },
+    "scroll": 362.21681353447644
   }
 }
