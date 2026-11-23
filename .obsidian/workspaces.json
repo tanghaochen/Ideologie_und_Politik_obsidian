@@ -1397,42 +1397,6 @@
                   "icon": "excalidraw-icon",
                   "title": "DW简单逻辑学"
                 }
-              },
-              {
-                "id": "34475f1101eb8aa5",
-                "type": "leaf",
-                "state": {
-                  "type": "excalidraw",
-                  "state": {
-                    "file": "_AI-Diagrams/简单逻辑学-全书逻辑图谱.excalidraw"
-                  },
-                  "icon": "excalidraw-icon",
-                  "title": "简单逻辑学-全书逻辑图谱"
-                }
-              },
-              {
-                "id": "8fad9431bd094621",
-                "type": "leaf",
-                "state": {
-                  "type": "excalidraw",
-                  "state": {
-                    "file": "_AI-Diagrams/简单逻辑学-论证流水线.excalidraw"
-                  },
-                  "icon": "excalidraw-icon",
-                  "title": "简单逻辑学-论证流水线"
-                }
-              },
-              {
-                "id": "187cec01b10e64bd",
-                "type": "leaf",
-                "state": {
-                  "type": "excalidraw",
-                  "state": {
-                    "file": "_AI-Diagrams/简单逻辑学-全书逻辑图.excalidraw"
-                  },
-                  "icon": "excalidraw-icon",
-                  "title": "简单逻辑学-全书逻辑图"
-                }
               }
             ]
           }
@@ -1573,8 +1537,8 @@
                 "state": {
                   "type": "advanced-tables-toolbar",
                   "state": {},
-                  "icon": "spreadsheet",
-                  "title": "Advanced Tables"
+                  "icon": "lucide-ghost",
+                  "title": "advanced-tables-toolbar"
                 }
               },
               {
@@ -1605,8 +1569,8 @@
                 "state": {
                   "type": "mxmind-view",
                   "state": {},
-                  "icon": "network",
-                  "title": "Mxmind"
+                  "icon": "lucide-ghost",
+                  "title": "mxmind-view"
                 }
               },
               {
@@ -1707,7 +1671,7 @@
                 "state": {
                   "type": "notebook-navigator-calendar",
                   "state": {},
-                  "icon": "lucide-calendar-days",
+                  "icon": "calendar-days",
                   "title": "日历"
                 }
               }
@@ -1720,8 +1684,15 @@
       },
       "left-ribbon": {
         "hiddenItems": {
+          "templates:插入模板": false,
+          "media-transcript:媒体库": false,
+          "media-transcript:标注": false,
+          "video-player-ai:Open video player": false,
+          "video-player-ai:Playlists": false,
+          "gogoga-mindmap:打开复习": false,
+          "gogoga-mindmap:新建思维导图": false,
+          "obsidian-local-images-plus:Local Images Plus  0.19.3\r\nLocalize attachments (plugin folder)": false,
           "ostracon-ob:获取MN数据": false,
-          "obsidian-local-images-plus:Local Images Plus  0.17.1\r\nLocalize attachments (plugin folder)": false,
           "media-extended:打开媒体库": true,
           "media-extended:打开媒体快速切换器": true,
           "mermaid-tools:Open Mermaid Toolbar": true,
@@ -1732,8 +1703,6 @@
           "pdf-plus:PDF++: Toggle auto-paste": true,
           "workspaces:管理工作区布局": false,
           "templater-obsidian:Templater": false,
-          "table-editor-obsidian:Advanced Tables Toolbar": true,
-          "mxmind:Mxmind": true,
           "audio-recorder:开始/结束录音": true,
           "obsidian-git:Open Git source control": true,
           "pexels-banner:🚩 Pixel Banner Menu": true,
@@ -1750,50 +1719,8 @@
           "smart-composer:Open smart composer": false
         }
       },
-      "floating": {
-        "id": "70d84ea69b8e85fe",
-        "type": "floating",
-        "children": [
-          {
-            "id": "67d1c2fe6692e418",
-            "type": "window",
-            "children": [
-              {
-                "id": "11ad2369815a11ea",
-                "type": "tabs",
-                "children": [
-                  {
-                    "id": "d052bf28bb0037b5",
-                    "type": "leaf",
-                    "pinned": true,
-                    "state": {
-                      "type": "markdown",
-                      "state": {
-                        "file": "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
-                        "mode": "source",
-                        "source": false,
-                        "backlinks": false
-                      },
-                      "pinned": true,
-                      "icon": "lucide-file",
-                      "title": "简单逻辑学Z"
-                    }
-                  }
-                ]
-              }
-            ],
-            "direction": "vertical",
-            "x": -953,
-            "y": 344,
-            "width": 601,
-            "height": 601,
-            "maximize": false,
-            "zoom": -1
-          }
-        ]
-      },
-      "active": "5962dcef85933e57",
-      "mtime": "2026-11-08T09:59:21+08:00"
+      "active": "043053a7ed81e90e",
+      "mtime": "2026-11-24T01:23:11+08:00"
     },
     "错题": {
       "main": {
