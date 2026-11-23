@@ -66,54 +66,9 @@
               "icon": "lucide-file",
               "title": "20261123"
             }
-          },
-          {
-            "id": "e47178f9bdab6f1a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/单词/生词/26-10.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "26-10"
-            }
-          },
-          {
-            "id": "f611d6597ca4da35",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/单词/生词/26-9.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "26-9"
-            }
-          },
-          {
-            "id": "ae7973ddc44e8c21",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Clippings/德国就业市场预测分析.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "德国就业市场预测分析"
-            }
           }
         ],
-        "currentTab": 6
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -410,8 +365,9 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "ae7973ddc44e8c21",
+  "active": "6bd749d1004d975a",
   "lastOpenFiles": [
+    "Clippings/德国就业市场预测分析.md",
     "语言学习/德语/单词/生词/26-9.md",
     "语言学习/德语/单词/生词/26-10.md",
     "Diary/2026/20261123.md",
@@ -442,7 +398,6 @@
     "html",
     "Diary/2026/20261117.md",
     "Diary/2026/20261122.md",
-    "Diary/2026/20261121.md",
     "Diary/_backup/20261123-w48-v6",
     "Diary/_backup/_tpl_dryrun.js",
     "Diary/_backup/_tpl_test2.js",

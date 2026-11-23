@@ -5001,7 +5001,7 @@
   },
   "Diary/2026/20261123.md": {
     "scrollState": {
-      "top": 5392.80029296875,
+      "top": 4990.80029296875,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 2083,
@@ -5150,12 +5150,12 @@
     },
     "cursor": {
       "from": {
-        "ch": 0,
-        "line": 11
+        "ch": 3,
+        "line": 32
       },
       "to": {
-        "ch": 0,
-        "line": 11
+        "ch": 3,
+        "line": 32
       }
     }
   }
