@@ -1,12 +1,24 @@
 {
   "recentFiles": [
     {
+      "basename": "20261124",
+      "path": "Diary/2026/20261124.md"
+    },
+    {
+      "basename": "李冉21天冥想练习视频笔记",
+      "path": "思想思维心理哲学/健身/冥想/李冉21天冥想练习视频笔记.md"
+    },
+    {
       "basename": "eine neue Wohnung Einladung",
       "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md"
     },
     {
-      "basename": "20261124",
-      "path": "Diary/2026/20261124.md"
+      "basename": "eine neue Wohnung Einladung.md.anno",
+      "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md.anno.json"
+    },
+    {
+      "basename": "未命名",
+      "path": "思想思维心理哲学/健身/冥想/未命名.md"
     },
     {
       "basename": "格; 限定词",
@@ -39,10 +51,6 @@
     {
       "basename": "名词化",
       "path": "语言学习/德语/公共知识语法/1词/名词化.md"
-    },
-    {
-      "basename": "eine neue Wohnung Einladung.md.anno",
-      "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md.anno.json"
     },
     {
       "basename": "《Erinnern an den Holocaust》",
@@ -191,14 +199,6 @@
     {
       "basename": "20261001",
       "path": "Diary/2026/20261001.md"
-    },
-    {
-      "basename": "月报",
-      "path": "Diary/_backup/20261120-r2/templater/月报.md"
-    },
-    {
-      "basename": "20261119",
-      "path": "Diary/2026/20261119.md"
     }
   ],
   "omittedPaths": [],

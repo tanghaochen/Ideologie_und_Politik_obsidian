@@ -697,67 +697,52 @@
             "type": "tabs",
             "children": [
               {
-                "id": "b396f74b1dec3e21",
+                "id": "c3db4cb6edb5114e",
                 "type": "leaf",
                 "state": {
                   "type": "markdown",
                   "state": {
-                    "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
+                    "file": "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
                     "mode": "source",
                     "source": false,
                     "backlinks": false
                   },
                   "icon": "lucide-file",
-                  "title": "《Erinnern an den Holocaust》"
+                  "title": "听说读写 以及学习外语的核心方法"
                 }
-              }
-            ]
-          },
-          {
-            "id": "3f4797f1cf032a12",
-            "type": "split",
-            "children": [
-              {
-                "id": "ca5d38080bc71ab3",
-                "type": "tabs",
-                "children": [
-                  {
-                    "id": "b759e66aa4fb2711",
-                    "type": "leaf",
-                    "state": {
-                      "type": "mindmap",
-                      "state": {
-                        "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md"
-                      },
-                      "icon": "mindmap-tree",
-                      "title": "《Erinnern an den Holocaust》"
-                    }
-                  }
-                ]
               },
               {
-                "id": "4679dcaf02fa313f",
-                "type": "tabs",
-                "children": [
-                  {
-                    "id": "8273a369856b9641",
-                    "type": "leaf",
-                    "state": {
-                      "type": "markdown",
-                      "state": {
-                        "file": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
-                        "mode": "source",
-                        "source": false,
-                        "backlinks": false
-                      },
-                      "icon": "lucide-file",
-                      "title": "《Erinnern an den Holocaust》"
-                    }
-                  }
-                ]
+                "id": "de774a5211ad465c",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "eine neue Wohnung Einladung"
+                }
+              },
+              {
+                "id": "0c742dcfff531657",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "Diary/2026/20261124.md",
+                    "mode": "source",
+                    "source": false,
+                    "backlinks": false
+                  },
+                  "icon": "lucide-file",
+                  "title": "20261124"
+                }
               }
             ],
-            "direction": "horizontal"
+            "currentTab": 1
           }
         ],
         "direction": "vertical"
@@ -834,7 +819,7 @@
           {
             "id": "0ed9c27411998641",
             "type": "tabs",
-            "dimension": 75.59779276517474,
+            "dimension": 67.9902260232132,
             "children": [
               {
                 "id": "dd8c0de9236cf3b8",
@@ -882,8 +867,8 @@
                 "state": {
                   "type": "advanced-tables-toolbar",
                   "state": {},
-                  "icon": "spreadsheet",
-                  "title": "Advanced Tables"
+                  "icon": "lucide-ghost",
+                  "title": "advanced-tables-toolbar"
                 }
               },
               {
@@ -946,13 +931,33 @@
                   "icon": "lucide-archive",
                   "title": "添加笔记属性"
                 }
+              },
+              {
+                "id": "ea03bc998a9d233a",
+                "type": "leaf",
+                "state": {
+                  "type": "attention-review",
+                  "state": {},
+                  "icon": "highlighter",
+                  "title": "标注"
+                }
+              },
+              {
+                "id": "317e559ebfcbc4be",
+                "type": "leaf",
+                "state": {
+                  "type": "copilot-agent-chat-view",
+                  "state": {},
+                  "icon": "copilot-agent",
+                  "title": "Copilot Agent Chat"
+                }
               }
             ]
           },
           {
             "id": "28e75bfc7e894da7",
             "type": "tabs",
-            "dimension": 24.40220723482526,
+            "dimension": 32.0097739767868,
             "children": [
               {
                 "id": "c3592eded90586bf",
@@ -974,7 +979,7 @@
                 "state": {
                   "type": "footnotes",
                   "state": {
-                    "file": "思想思维心理哲学/个人问题处理/芜湖.md"
+                    "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md"
                   },
                   "icon": "lucide-file-signature",
                   "title": "脚注"
@@ -986,7 +991,7 @@
                 "state": {
                   "type": "notebook-navigator-calendar",
                   "state": {},
-                  "icon": "lucide-calendar-days",
+                  "icon": "calendar-days",
                   "title": "日历"
                 }
               }
@@ -999,10 +1004,16 @@
       },
       "left-ribbon": {
         "hiddenItems": {
+          "templates:插入模板": false,
+          "media-transcript:媒体库": false,
+          "media-transcript:标注": false,
+          "video-player-ai:Open video player": false,
+          "video-player-ai:Playlists": false,
+          "gogoga-mindmap:打开复习": false,
+          "obsidian-local-images-plus:Local Images Plus  0.19.3\r\nLocalize attachments (plugin folder)": false,
           "gogoga-mindmap:新建思维导图": false,
           "smart-composer:Open smart composer": false,
           "ostracon-ob:获取MN数据": false,
-          "obsidian-local-images-plus:Local Images Plus  0.17.1\r\nLocalize attachments (plugin folder)": false,
           "media-extended:打开媒体库": true,
           "media-extended:打开媒体快速切换器": true,
           "mermaid-tools:Open Mermaid Toolbar": true,
@@ -1013,7 +1024,6 @@
           "pdf-plus:PDF++: Toggle auto-paste": true,
           "workspaces:管理工作区布局": false,
           "templater-obsidian:Templater": false,
-          "table-editor-obsidian:Advanced Tables Toolbar": true,
           "audio-recorder:开始/结束录音": true,
           "obsidian-git:Open Git source control": true,
           "pexels-banner:🚩 Pixel Banner Menu": true,
@@ -1029,8 +1039,8 @@
           "periodic-notes:Open today": false
         }
       },
-      "active": "8273a369856b9641",
-      "mtime": "2026-11-13T23:57:29+08:00"
+      "active": "de774a5211ad465c",
+      "mtime": "2026-11-23T23:49:58+08:00"
     },
     "生词": {
       "main": {
