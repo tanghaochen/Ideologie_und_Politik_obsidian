@@ -1,8 +1,40 @@
 {
   "recentFiles": [
     {
-      "basename": "未命名",
-      "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md"
+      "basename": "20261123",
+      "path": "Diary/2026/20261123.md"
+    },
+    {
+      "basename": "eine neue Wohnung Einladung",
+      "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md"
+    },
+    {
+      "basename": "周报模板",
+      "path": "OBSetting/templater/周报模板.md"
+    },
+    {
+      "basename": "W48",
+      "path": "Diary/2026/W48.md"
+    },
+    {
+      "basename": "obsidian样式技巧",
+      "path": "电脑、软件、系统/obsidian plugin/obsidian样式技巧.md"
+    },
+    {
+      "basename": "W47",
+      "path": "Diary/2026/W47.md"
+    },
+    {
+      "basename": "名词化",
+      "path": "语言学习/德语/公共知识语法/1词/名词化.md"
+    },
+    {
+      "basename": "eine neue Wohnung Einladung.md.anno",
+      "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md.anno.json"
+    },
+    {
+      "basename": "听说读写 以及学习外语的核心方法",
+      "path": "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md"
     },
     {
       "basename": "《Erinnern an den Holocaust》",
@@ -17,14 +49,6 @@
       "path": "语言学习/德语/公共知识语法/形容词.md"
     },
     {
-      "basename": "W47",
-      "path": "Diary/2026/W47.md"
-    },
-    {
-      "basename": "20261123",
-      "path": "Diary/2026/20261123.md"
-    },
-    {
       "basename": "德国就业市场预测分析",
       "path": "Clippings/德国就业市场预测分析.md"
     },
@@ -37,10 +61,6 @@
       "path": "语言学习/德语/单词/生词/26-10.md"
     },
     {
-      "basename": "W48",
-      "path": "Diary/2026/W48.md"
-    },
-    {
       "basename": "W46",
       "path": "Diary/2026/W46.md"
     },
@@ -51,10 +71,6 @@
     {
       "basename": "Obsidian周报模板_v7_纯MD表格内嵌DataviewJS",
       "path": "file:C:/Users/17741/Downloads/Obsidian周报模板_v7_纯MD表格内嵌DataviewJS.md"
-    },
-    {
-      "basename": "周报模板",
-      "path": "OBSetting/templater/周报模板.md"
     },
     {
       "basename": "Obsidian周报模板_DataviewJS_自动合并",
@@ -183,22 +199,6 @@
     {
       "basename": "20261118",
       "path": "Diary/2026/20261118.md"
-    },
-    {
-      "basename": "202609",
-      "path": "Diary/2026/202609.md"
-    },
-    {
-      "basename": "W33",
-      "path": "Diary/2026/W33.md"
-    },
-    {
-      "basename": "W36",
-      "path": "Diary/2026/W36.md"
-    },
-    {
-      "basename": "Obsidian日记周期报告提示词_v3_模板驱动",
-      "path": "file:E:/AI workpace/Obsidian日记周期报告提示词_v3_模板驱动.md"
     }
   ],
   "omittedPaths": [],

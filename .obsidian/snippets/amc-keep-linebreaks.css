@@ -1,0 +1,13 @@
+/* Advanced Multi Column：分栏渲染后保留源码里的单个换行
+ *
+ * 背景：插件失焦后用 Obsidian 的 MarkdownRenderer 渲染分栏内容。
+ * 本库开启了「严格换行」(strictLineBreaks)，Markdown 会把单个换行
+ * 当作软换行（渲染成空格）。渲染器输出的段落文本里仍带着换行符，
+ * 默认 CSS white-space: normal 会把它折叠；这里对分栏内的段落
+ * 改为 pre-wrap，让软换行按源码原样显示。
+ *
+ * 只作用于 Advanced Multi Column 的分栏容器，不影响普通笔记。
+ */
+.columns-container .markdown-rendered p {
+    white-space: pre-wrap;
+}

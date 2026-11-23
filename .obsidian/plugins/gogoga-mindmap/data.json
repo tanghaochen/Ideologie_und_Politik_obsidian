@@ -10,6 +10,7 @@
   "outlineWrap": true,
   "toolbarPosition": "bottom",
   "showNodebar": true,
+  "zenHideObsidian": true,
   "nodebarLayout": [],
   "toolbarLayout": [],
   "nodeColors": "red, orange, yellow, green, teal, blue, purple, pink, gray",
@@ -36,6 +37,18 @@
   "splitMapSide": "right",
   "followExpand": false,
   "foldFollow": false,
+  "review": {
+    "newPerDay": 20,
+    "reviewPerDay": 200,
+    "learningSteps": "1m 10m",
+    "relearningSteps": "10m",
+    "retention": 0.9,
+    "dayStartHour": 4,
+    "maxInterval": 36500
+  },
+  "reviewDueDots": true,
+  "reviewTimer": false,
+  "reviewCrumb": true,
   "customMarkers": "",
   "customMarkersExclusive": false,
   "rememberView": true,
@@ -44,6 +57,7 @@
   "embedWheel": "click",
   "embedToolbarLayout": [],
   "fileNameAsRoot": false,
+  "renameWithRoot": true,
   "headingsOnly": true,
   "quoteListNotes": false,
   "followActiveNote": false,
@@ -54,6 +68,7 @@
   "taskProgress": "off",
   "taskProgressPos": "end",
   "notePreview": false,
+  "noteLiveEdit": true,
   "formatBar": false,
   "copyPlain": false,
   "pasteLinkTitle": false,
@@ -80,5 +95,8 @@
   "tableMaxHeight": 480,
   "customThemes": [],
   "listIcon": "lucide:mindmap-tree",
-  "xmindTakenNoticed": true
+  "xmindTakenNoticed": true,
+  "embedZoom": {
+    "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md|语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md#": 0.2
+  }
 }
