@@ -1,6 +1,26 @@
 {
   "recentFiles": [
     {
+      "basename": "DW简单逻辑学",
+      "path": "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md"
+    },
+    {
+      "basename": "简单逻辑学Z",
+      "path": "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md"
+    },
+    {
+      "basename": "从“分析”到“综合”",
+      "path": "思想思维心理哲学/阅读/简单逻辑学/从“分析”到“综合”.md"
+    },
+    {
+      "basename": "Designer (17)",
+      "path": "assets/Designer (17).png"
+    },
+    {
+      "basename": "《Erinnern an den Holocaust》",
+      "path": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md"
+    },
+    {
       "basename": "20261124",
       "path": "Diary/2026/20261124.md"
     },
@@ -51,10 +71,6 @@
     {
       "basename": "名词化",
       "path": "语言学习/德语/公共知识语法/1词/名词化.md"
-    },
-    {
-      "basename": "《Erinnern an den Holocaust》",
-      "path": "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md"
     },
     {
       "basename": "连词成对",
@@ -183,22 +199,6 @@
     {
       "basename": "Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl",
       "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/Online-Shop _ErgoSitz 24_ einen ergonomischen Bürostuhl.md"
-    },
-    {
-      "basename": "202611",
-      "path": "Diary/2026/202611.md"
-    },
-    {
-      "basename": "202610",
-      "path": "Diary/2026/202610.md"
-    },
-    {
-      "basename": "W40",
-      "path": "Diary/2026/W40.md"
-    },
-    {
-      "basename": "20261001",
-      "path": "Diary/2026/20261001.md"
     }
   ],
   "omittedPaths": [],

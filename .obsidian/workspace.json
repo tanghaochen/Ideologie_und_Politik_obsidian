@@ -4,83 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "3bc015e7f0f64eeb",
+        "id": "b5dbd09e7753bfc0",
         "type": "tabs",
         "children": [
           {
-            "id": "c3db4cb6edb5114e",
+            "id": "043053a7ed81e90e",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md"
               },
-              "icon": "lucide-file",
-              "title": "听说读写 以及学习外语的核心方法"
-            }
-          },
-          {
-            "id": "de774a5211ad465c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "eine neue Wohnung Einladung"
-            }
-          },
-          {
-            "id": "bd25a84da0c41576",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "思想思维心理哲学/健身/冥想/李冉21天冥想练习视频笔记.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "李冉21天冥想练习视频笔记"
-            }
-          },
-          {
-            "id": "9d53276be7b72631",
-            "type": "leaf",
-            "state": {
-              "type": "media-transcript-view",
-              "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md.anno.json"
-              },
-              "icon": "lucide-file",
-              "title": "eine neue Wohnung Einladung.md.anno"
-            }
-          },
-          {
-            "id": "0c742dcfff531657",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Diary/2026/20261124.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "20261124"
+              "icon": "excalidraw-icon",
+              "title": "DW简单逻辑学"
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "vertical"
@@ -148,7 +87,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 425.5125274658203
+    "width": 449.5125274658203
   },
   "right": {
     "id": "b2bf97bc0c7f8080",
@@ -157,7 +96,7 @@
       {
         "id": "0ed9c27411998641",
         "type": "tabs",
-        "dimension": 67.9902260232132,
+        "dimension": 75.59779276517474,
         "children": [
           {
             "id": "dd8c0de9236cf3b8",
@@ -172,11 +111,25 @@
           {
             "id": "36c96029ae4dd065",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "copilot-chat-view",
               "state": {},
+              "pinned": true,
               "icon": "message-square",
-              "title": "Copilot Quick Chat"
+              "title": "Copilot (Quick Chat)"
+            }
+          },
+          {
+            "id": "0904c4f879fe7747",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "smtcmp-chat-view",
+              "state": {},
+              "pinned": true,
+              "icon": "wand-sparkles",
+              "title": "Smart composer chat"
             }
           },
           {
@@ -271,23 +224,33 @@
             }
           },
           {
-            "id": "ea03bc998a9d233a",
+            "id": "2cb591d0cac3ef1b",
             "type": "leaf",
             "state": {
-              "type": "attention-review",
+              "type": "ostracon-inbox-view",
               "state": {},
-              "icon": "highlighter",
-              "title": "标注"
+              "icon": "inbox",
+              "title": "MN 卡片"
             }
           },
           {
-            "id": "317e559ebfcbc4be",
+            "id": "9755f4126e7d9700",
             "type": "leaf",
             "state": {
-              "type": "copilot-agent-chat-view",
+              "type": "ostracon-inbox-view",
               "state": {},
-              "icon": "copilot-agent",
-              "title": "Copilot Agent Chat"
+              "icon": "inbox",
+              "title": "MN 卡片"
+            }
+          },
+          {
+            "id": "3389fbe2cbe03848",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw-sidepanel",
+              "state": {},
+              "icon": "excalidraw-icon",
+              "title": "Excalidraw 侧边面板"
             }
           }
         ]
@@ -295,7 +258,7 @@
       {
         "id": "28e75bfc7e894da7",
         "type": "tabs",
-        "dimension": 32.0097739767868,
+        "dimension": 24.40220723482526,
         "children": [
           {
             "id": "c3592eded90586bf",
@@ -317,7 +280,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md"
+                "file": "思想思维心理哲学/个人问题处理/芜湖.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -338,7 +301,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 507.5
+    "width": 512.699951171875
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -348,9 +311,8 @@
       "video-player-ai:Open video player": false,
       "video-player-ai:Playlists": false,
       "gogoga-mindmap:打开复习": false,
-      "obsidian-local-images-plus:Local Images Plus  0.19.3\r\nLocalize attachments (plugin folder)": false,
       "gogoga-mindmap:新建思维导图": false,
-      "smart-composer:Open smart composer": false,
+      "obsidian-local-images-plus:Local Images Plus  0.19.3\r\nLocalize attachments (plugin folder)": false,
       "ostracon-ob:获取MN数据": false,
       "media-extended:打开媒体库": true,
       "media-extended:打开媒体快速切换器": true,
@@ -374,18 +336,26 @@
       "realclaudian:Open Claudian": false,
       "copilot:Open Copilot Agent Chat": false,
       "notebook-navigator:Notebook Navigator": false,
-      "periodic-notes:Open today": false
+      "periodic-notes:Open today": false,
+      "smart-composer:Open smart composer": false
     }
   },
-  "active": "0c742dcfff531657",
+  "active": "043053a7ed81e90e",
   "lastOpenFiles": [
+    "语言学习/德语/AI学习记录/2026-11-24 训练摘要.md",
+    "思想思维心理哲学/阅读/思维的利剑",
+    "思想思维心理哲学/阅读/简单逻辑学/简单逻辑学Z.md",
+    "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md",
+    "思想思维心理哲学/阅读/简单逻辑学/从“分析”到“综合”.md",
+    "assets/Designer (17).png",
+    "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
+    "Diary/2026/20261124.md",
     "思想思维心理哲学/健身/冥想/李冉21天冥想练习视频笔记.md",
     "copilot/copilot-conversations/第三天冥想：稳定坐姿@20261123_235923.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md.anno.json",
     "思想思维心理哲学/健身/冥想/未命名.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/李冉在冥想.md",
-    "Diary/2026/20261124.md",
     "语言学习/德语/公共知识语法/格; 限定词.md",
     "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
     "OBSetting/templater/周报模板.md",
@@ -404,18 +374,12 @@
     "Diary/_backup/20261123-w48-static",
     "语言学习/德语/公共知识语法/1词/名词化.md",
     "assets/image-519.png",
-    "语言学习/德语/学习记录日记-技巧/leseaufgabe/《Erinnern an den Holocaust》.md",
     "语言学习/德语/公共知识语法/连词成对.md",
-    "语言学习/德语/公共知识语法/形容词.md",
-    "Clippings/德国就业市场预测分析.md",
-    "语言学习/德语/单词/生词/26-9.md",
-    "语言学习/德语/单词/生词/26-10.md",
     "Diary/_backup/_engine_src.js",
     "Diary/_backup/20261123-w47-test",
     "Diary/_backup/_engine_test.js",
     "Diary/_backup/_w48.html",
     "html",
-    "Diary/_backup/20261123-w48-v6",
     "assets/image-518.png",
     "assets/image-517.png",
     "assets/image-516.png",
@@ -424,7 +388,6 @@
     "Video Player (AI integrated)/Screenshots/对谈武志红：一旦恢复主体性，人生会开挂！高敏感自救，2招找回主体性！ 0-50 20261120-233838.png",
     "assets/Ink/Drawing/2026.11.19 - 23.22pm.svg",
     "assets/deutsch-kasus-adjektiv.svg",
-    "assets/Designer (17).png",
     "语言学习/德语/学习记录日记-技巧/2026.canvas",
     "Marginnote/Deutsch.canvas",
     "Marginnote/错题管理.canvas",
