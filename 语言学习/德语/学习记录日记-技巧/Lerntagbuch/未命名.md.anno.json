@@ -9,14 +9,15 @@
         "quote": "Einweihungsparty",
         "prefix": "Sie am Samstag zu einer kleinen ",
         "suffix": " ein. Leider können Sie nicht di",
-        "from": 142,
-        "to": 158
+        "from": 165,
+        "to": 181
       },
       "hits": [
         "2026-11-23T10:43:48.049Z"
       ],
       "body": null,
-      "reviewed": []
+      "reviewed": [],
+      "updated": "2026-11-23T12:27:57.706Z"
     },
     {
       "id": "l7ky9wto",
@@ -25,14 +26,15 @@
         "quote": "ganze Zeit",
         "prefix": "in. Leider können Sie nicht die ",
         "suffix": " dabei sein.\n\nSchreiben Sie eine",
-        "from": 192,
-        "to": 202
+        "from": 215,
+        "to": 225
       },
       "hits": [
         "2026-11-23T10:43:51.792Z"
       ],
       "body": null,
-      "reviewed": []
+      "reviewed": [],
+      "updated": "2026-11-23T12:27:56.888Z"
     }
   ]
 }
