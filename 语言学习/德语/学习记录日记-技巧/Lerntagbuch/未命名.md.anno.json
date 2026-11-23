@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "target": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/未命名.md",
+  "annotations": [
+    {
+      "id": "583t5fd9",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "Einweihungsparty",
+        "prefix": "Sie am Samstag zu einer kleinen ",
+        "suffix": " ein. Leider können Sie nicht di",
+        "from": 142,
+        "to": 158
+      },
+      "hits": [
+        "2026-11-23T10:43:48.049Z"
+      ],
+      "body": null,
+      "reviewed": []
+    },
+    {
+      "id": "l7ky9wto",
+      "anchor": {
+        "kind": "markdown",
+        "quote": "ganze Zeit",
+        "prefix": "in. Leider können Sie nicht die ",
+        "suffix": " dabei sein.\n\nSchreiben Sie eine",
+        "from": 192,
+        "to": 202
+      },
+      "hits": [
+        "2026-11-23T10:43:51.792Z"
+      ],
+      "body": null,
+      "reviewed": []
+    }
+  ]
+}
