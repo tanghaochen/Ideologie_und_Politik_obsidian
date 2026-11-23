@@ -9,15 +9,15 @@
         "quote": "Einweihungsparty",
         "prefix": "m Samstag habe ich wegen deiner ",
         "suffix": " schnell in der Altstadt ein Ges",
-        "from": 30921,
-        "to": 30937
+        "from": 30985,
+        "to": 31001
       },
       "hits": [
         "2026-11-23T10:43:48.049Z"
       ],
       "body": null,
       "reviewed": [],
-      "updated": "2026-11-23T13:51:57.146Z"
+      "updated": "2026-11-23T15:33:24.993Z"
     },
     {
       "id": "l7ky9wto",
@@ -26,15 +26,15 @@
         "quote": "ganze Zeit",
         "prefix": "in. Leider können Sie nicht die ",
         "suffix": " dabei sein.\n\nSchreiben Sie eine",
-        "from": 193,
-        "to": 203
+        "from": 195,
+        "to": 205
       },
       "hits": [
         "2026-11-23T10:43:51.792Z"
       ],
       "body": null,
       "reviewed": [],
-      "updated": "2026-11-23T13:23:12.593Z"
+      "updated": "2026-11-23T15:20:01.748Z"
     }
   ]
 }

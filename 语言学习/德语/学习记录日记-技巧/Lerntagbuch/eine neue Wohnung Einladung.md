@@ -1,21 +1,29 @@
+# Teil 1 — Informelle E-Mail (ca. 80 Wörter)
 
-Teil 1 — Informelle E-Mail (ca. 80 Wörter)
 Ihre Freundin Nina hat endlich eine neue Wohnung gefunden und lädt Sie am Samstag zu einer kleinen Einweihungsparty ein. Leider können Sie nicht die ganze Zeit dabei sein.
 
 Schreiben Sie eine E-Mail an Nina. Schreiben Sie etwas zu allen drei Punkten:
 
 Bedanken Sie sich für die Einladung und sagen Sie, warum Sie sich freuen.
+
 Erklären Sie, warum Sie später kommen oder früher gehen müssen.
+
 Fragen Sie, ob Sie etwas mitbringen sollen.
+
 Schreiben Sie ca. 80 Wörter. Vergessen Sie Anrede und Gruß nicht.
 
 90
 
 Sehr geehren Frau Nina,
+
 Ich freue mich von dich der Einladung erhalten. Es bedautet nicht nur Anfang der neuen erfahrung und sonder auch hat an der bequemer Dort commen.
+
 Aber ich kann nicht im weil meine Unternehmen viel Arbeiten zu machen habe. Sodass ich möglich am 9.Juni erreiche, das möglisch zu früher für dich doch aber Arbeiten beschäftigt ist, tute mir leider.
-Was brauchst du etwa Sächen? Das is glück, habe hier einer brauchtmarkt, wenn du 
+
+Was brauchst du etwa Sächen? Das is glück, habe hier einer brauchtmarkt, wenn du
+
 Möbel bauchst, die ich will mit dem auto shicken.
+
 170
 
 # 📝 B1 写作批改报告 · Schreiben Teil 1（Informelle E-Mail）
@@ -249,7 +257,7 @@ Möbel bauchst, die ich will mit dem auto shicken.
 
 ⑤ 🔬 本句重写示范（同一原意 × 两种写法）
 
-- 🛡️【最小化改写（保分版）】：Aber ich kann leider nicht die ganze Zeit dabei sein, weil ich in meiner Firma viel zu tun habe.
+- 🛡️【最小化改写（保分版）】：Aber ich kann leider nicht die ganze Zeit dabei sein, weil ich in meiner Firma viel zu tun habe. 可惜我实在无法一直待在旁边，因为公司里有太多工作要处理。
 - 🚀【高级改写（冲刺版）】：Leider kann ich nicht von Anfang bis Ende bleiben, denn ich habe an diesem Tag noch viel Arbeit.（*denn* 是并列连词，后面用**正常主句语序**，与 weil 从句形成对比，B1 加分点）
 
 ---
@@ -675,18 +683,25 @@ Möbel bauchst, die ich will mit dem auto shicken.
 - ③ 建立一张"自造词黑名单"（*brauchtmarkt, commen, tute, Sächen, bedautet*），考前扫一遍。
 
 只要把"缺主语 + 介词/格"这两类错误压下去，这篇作文立刻能进 **65–75 分区间**。加油！💪
-## 1
+
+# 语法错误练习题
+
 %%w=170%%
 
 根据上面的错误，整理出 Anki 卡片以及对应的题目。比如：
+
 第一句是“不同的信件有不同的称谓”；
+
 第二句则是关于情绪，应该全部都使用介词 über。并且一个句子里面包含了情绪动词以外，就不能再多加一个动词
 
-
 第 1 题｜题型 1 中译德（阶梯）
+
 情境：给 Nina 写邮件，第一句要谢邀请。
+
 Lv1（给词：sich freuen / die Einladung）：我很高兴收到你的邀请。
+
 Lv2（三个关键词：ich – riesig – Einladung）：同上，语气更热情。
+
 Lv3（无提示）：我很期待周六的聚会。
 
 > [!note]- 答案与解析｜第 1 题
@@ -704,8 +719,11 @@ Lv3（无提示）：我很期待周六的聚会。
 > 🏷️ 结构｜sich freuen über/auf + Akk.｜层 L2｜错码 Präp｜重测 D1/D3/D7/D21｜⏱️ 4 Min.
 
 第 2 题｜题型 3 名动互换双向
+
 情境：Nina 问你怎么来得晚，你把同一件事写两遍。
+
 (a) 从句 → 介词短语：„Weil ich am Samstag bis 18 Uhr arbeiten muss, komme ich später.“ 改成一个含介词短语的句子。
+
 (b) 名词化 → 动词句：„Wegen einer dienstlichen Verpflichtung kann ich leider erst um 19 Uhr bei dir sein.“ 改成带连词的动词句，语气适合私人邮件。
 
 > [!note]- 答案与解析｜第 2 题
@@ -723,6 +741,7 @@ Lv3（无提示）：我很期待周六的聚会。
 > 🏷️ 结构｜Kausalangabe: weil-Satz ↔ wegen + Gen.｜层 L3｜错码 Konnektor｜重测 D1/D3/D7/D21｜⏱️ 5 Min.
 
 第 3 题｜题型 8 诱错对比句
+
 情境：你想告诉 Nina，你住处附近有二手店、有集市、也有便宜家具。三句都用「有」的存在表达写出来。
 
 > [!note]- 答案与解析｜第 3 题
@@ -737,10 +756,13 @@ Lv3（无提示）：我很期待周六的聚会。
 > 🏷️ 结构｜es gibt + Akk.｜层 L2｜错码 Kasus｜重测 D1/D3/D7/D21｜⏱️ 4 Min.
 
 第 4 题｜题型 4 句子合并
+
 把三句合成一句，必须含 nicht nur … sondern auch 与一个关系从句：
 
 Nina hat endlich eine Wohnung gefunden.
+
 Für sie ist das ein Neuanfang.
+
 Sie feiert am Samstag ein.
 
 > [!note]- 答案与解析｜第 4 题
@@ -756,7 +778,9 @@ Sie feiert am Samstag ein.
 > 🏷️ 结构｜nicht nur … sondern auch（同格并列）｜层 L2｜错码 Konnektor｜重测 D1/D3/D7/D21｜⏱️ 5 Min.
 
 第 5 题｜题型 9 补全后重写（热身）
+
 下面这半句不能这样开头：„Sodass ich erst um 19 Uhr bei dir ankomme.“
+
 请把「我周六要上到 18 点，所以 19 点才能到你那儿」写成完整正确的一句，并说明为什么原写法不能起句。
 
 > [!note]- 答案与解析｜第 5 题
@@ -771,10 +795,13 @@ Sie feiert am Samstag ein.
 > 🏷️ 结构｜Konsekutiv: deshalb（主句）vs. sodass（从句）｜层 L2｜错码 Konnektor｜重测 D1/D3/D7/D21｜⏱️ 4 Min.
 
 第 6 题｜题型 8 诱错对比句（三句同结构）
+
 用关系从句合成：
 
 Ich habe einen Nachbarn. Er kann mir am Samstag helfen.
+
 Das ist der Tisch. Ich will ihn mit dem Auto abholen.
+
 Ich kenne einen Laden. Dort kann man gebrauchte Möbel kaufen.
 
 > [!note]- 答案与解析｜第 6 题
@@ -792,7 +819,9 @@ Ich kenne einen Laden. Dort kann man gebrauchte Möbel kaufen.
 > 🏷️ 结构｜关系从句 + 情态动词句末｜层 L3｜错码 Wortstellung｜重测 D1/D3/D7/D21｜⏱️ 5 Min.
 
 第 7 题｜题型 11 滚雪球扩写
+
 主干：„Ich habe ein Geschenk gekauft.“
+
 Lv1 加时间（am Samstag）→ Lv2 加原因（wegen deiner Einweihungsparty）→ Lv3 加方式（schnell）→ Lv4 加地点（in der Altstadt）。末级必须让「ein Geschenk」留在全句最后。
 
 > [!note]- 答案与解析｜第 7 题
@@ -812,7 +841,9 @@ Lv1 加时间（am Samstag）→ Lv2 加原因（wegen deiner Einweihungsparty�
 > 🏷️ 结构｜Mittelfeld: Te-Ka-Mo-Lo + 不定指宾语后置｜层 L3｜错码 Wortstellung｜重测 D1/D3/D7/D21｜⏱️ 6 Min.
 
 第 8 题｜题型 10 语域改写
+
 把下面正式邮件片段改成给 Nina 的私人邮件，改完列出替换清单：
+
 „Sehr geehrte Frau Berger, vielen Dank für Ihre Einladung. Leider kann ich erst später erscheinen. Für eine kurze Rückmeldung wäre ich Ihnen dankbar. Mit freundlichen Grüßen“
 
 > [!note]- 答案与解析｜第 8 题
@@ -826,3 +857,66 @@ Lv1 加时间（am Samstag）→ Lv2 加原因（wegen deiner Einweihungsparty�
 > 🔄 变式：正式版结尾：Ich würde mich über eine kurze Rückmeldung freuen. ／ Mit freundlichen Grüßen
 > ✍️ 你来总结：＿＿＿
 > 🏷️ 结构｜语域：私人邮件 Anrede/Gruß 与 du-Form｜层 L2｜错码 Wortschatz(Register)｜重测 D1/D3/D7/D21｜⏱️ 5 Min.
+
+
+#### 2
+
+第 3 题｜题型 1 中译德（阶梯）
+情境：邮件里说说自己公司的情况。
+Lv1（给词：Unternehmen / viel）：我们公司很小，但工作很多。
+Lv2（三个关键词：mein – Arbeit – Termine）：我的公司最近活儿特别多，周六我也排满了日程。
+Lv3（无提示）：这周我事情太多，几乎没有空闲时间。
+
+> [!note]- 答案与解析｜第 3 题
+> ✅ 答案：
+> Lv1：Mein Unternehmen ist klein, aber es gibt viel Arbeit. ／ Meine Firma ist klein, aber wir haben viel Arbeit.
+> Lv2：In meinem Unternehmen gibt es zurzeit sehr viel Arbeit, und am Samstag habe ich viele Termine. ／ Mein Unternehmen hat gerade viel Arbeit, und am Samstag habe ich viele Termine.
+> Lv3：Diese Woche habe ich zu viel Arbeit und fast keine Freizeit. ／ Ich habe diese Woche so viel zu tun, dass ich kaum Freizeit habe.
+> ① 同义替换：viel Arbeit = viel zu tun（口语）／ein hohes Arbeitspensum（正式）；viele Termine = ein voller Terminplan
+> ② 句式重构：es gibt + Akk. 换成主语式：In meinem Unternehmen fällt im Moment sehr viel Arbeit an.（动词 anfallen 可分，正式）
+> 📏 考点要害：viel 配不可数或抽象名词（Arbeit、Zeit、Stress）不变格，viele 配可数复数（Termine、Leute）；边界：Unternehmen 是中性且单复数同形，物主冠词只能是 mein（不是 meine），复数才写 die Unternehmen。
+> 来源：Duden – Die Grammatik，「Artikelwörter und Mengenwörter」章；Langenscheidt Großwörterbuch DaF，「viel」条目
+> ⚠️ 诱错：meine Unternehmen viel Arbeiten — 汉语“我的公司”看不出性，“很多工作”也不标可数性，两处一起错。
+> 🔄 变式：Ich habe diese Woche viele Termine, aber nur wenig Zeit.
+> ✍️ 你来总结：＿＿＿
+> 🏷️ 结构｜数量词 + 名词性数｜层 L1/L2/L3｜错码 N-03｜重测 D1/D3/D7/D21｜⏱️ 4 Min.
+
+第 4 题｜题型 1 中译德（阶梯）
+情境：告诉 Nina 你大概几点能到。
+Lv1（给词：können / ankommen）：我大概八点才能到你家。
+Lv2（三个关键词：leider – erst – ankommen）：火车晚点了，我恐怕九点才能到你那儿。
+Lv3（无提示）：如果你需要，我可以用车把家具给你送过去。
+
+> [!note]- 答案与解析｜第 4 题
+> ✅ 答案：
+> Lv1：Ich kann leider erst gegen acht bei dir ankommen. ／ Ich kann leider erst gegen acht bei dir sein.
+> Lv2：Mein Zug hat leider Verspätung, deshalb kann ich erst gegen neun bei dir ankommen. ／ Leider hat mein Zug Verspätung, ich kann erst gegen neun bei dir sein.
+> Lv3：Wenn du möchtest, kann ich dir die Möbel mit dem Auto vorbeibringen. ／ Ich kann dir die Möbel mit dem Auto bringen, wenn du willst.
+> ① 同义替换：ankommen = eintreffen（正式）／da sein（口语）；vorbeibringen = vorbeifahren und abgeben（口语）
+> ② 句式重构：时间状语前置倒装：Gegen acht kann ich erst bei dir ankommen.（Vorfeld + 动词第二位）
+> 📏 考点要害：情态动词占第二位、实义动词原形压句末，中间夹全部状语和宾语；边界：带情态动词时，可分动词在句末保持原形连写（ankommen、vorbeibringen），只有现在时或过去时的主句里才拆开（Der Zug kommt um acht an）。
+> 来源：Duden – Die Grammatik，「Satzbau」章（Satzklammer / Modalverben）；Helbig/Buscha《Deutsche Grammatik》情态动词章
+> ⚠️ 诱错：…die ich will mit dem Auto schicken. — 汉语“我想用汽车寄”把“想”当普通动词摆中间，句末原形位置随之丢失；另外“到达某地”裸用 erreichen 也错，它是及物动词，得带第四格宾语（den Bahnhof erreichen）。
+> 🔄 变式：Ich kann dir morgen leider nicht helfen, weil ich bis acht arbeiten muss.
+> ✍️ 你来总结：＿＿＿
+> 🏷️ 结构｜情态动词框架 + 可分动词｜层 L1/L2/L3｜错码 V-04｜重测 D1/D3/D7/D21｜⏱️ 5 Min.
+
+第 5 题｜题型 1 中译德（阶梯）
+情境：问 Nina 要不要带点吃的。
+Lv1（给词：sollen / mitbringen）：要不要我带点什么？
+Lv2（三个关键词：fragen – ob – mitbringen）：想问一下，需不需要我带点吃的或者喝的？
+Lv3（无提示）：你别客气，缺什么尽管跟我说。
+
+> [!note]- 答案与解析｜第 5 题
+> ✅ 答案：
+> Lv1：Soll ich etwas mitbringen? ／ Soll ich was mitbringen?
+> Lv2：Ich wollte fragen, ob ich etwas zu essen oder zu trinken mitbringen soll. ／ Darf ich fragen, ob ich etwas zu essen oder zu trinken mitbringen soll?
+> Lv3：Mach dir keine Umstände – sag einfach Bescheid, wenn dir etwas fehlt. ／ Sei bitte nicht so zurückhaltend, sag einfach, was du noch brauchst.
+> ① 同义替换：Soll ich …？= Möchtest du, dass ich …？（更间接，带 dass-从句）；Bescheid sagen = sich melden（口语）
+> ② 句式重构：命令式换成条件句：Wenn du noch etwas brauchst, sag einfach Bescheid.（条件从句前置 + 主句倒装）
+> 📏 考点要害：是非问句变间接问句只能用 ob，变位动词落句末；边界：原句带疑问词时不能用 ob，疑问词要留在原位（Was soll ich mitbringen? → Ich möchte fragen, was ich mitbringen soll）。
+> 来源：Duden – Die Grammatik，「Indirekte Rede und indirekte Fragen」章；Langenscheidt Großwörterbuch DaF，「ob」条目
+> ⚠️ 诱错：Was brauchst du etwa Sachen? — 汉语“要不要带点东西”是选择问，直接按“需要什么东西”译过去，ob 结构整个消失；Sachen 还被误拼成 Sächen。
+> 🔄 变式：Ich weiß noch nicht, ob ich am Samstag pünktlich kommen kann.
+> ✍️ 你来总结：＿＿＿
+> 🏷️ 结构｜间接问句（ob）+ 情态动词句末｜层 L1/L2/L3｜错码 S-05｜重测 D1/D3/D7/D21｜⏱️ 4 Min.

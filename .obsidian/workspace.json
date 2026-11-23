@@ -38,19 +38,22 @@
             }
           },
           {
-            "id": "bfed35163d2c03a8",
+            "id": "0c742dcfff531657",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
+                "file": "Diary/2026/20261124.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "excalidraw-icon",
-              "title": "格; 限定词"
+              "icon": "lucide-file",
+              "title": "20261124"
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -287,7 +290,7 @@
             "state": {
               "type": "footnotes",
               "state": {
-                "file": "语言学习/德语/公共知识语法/格; 限定词.md"
+                "file": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md"
               },
               "icon": "lucide-file-signature",
               "title": "脚注"
@@ -347,13 +350,14 @@
       "periodic-notes:Open today": false
     }
   },
-  "active": "bfed35163d2c03a8",
+  "active": "de774a5211ad465c",
   "lastOpenFiles": [
+    "Diary/2026/20261124.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md",
+    "语言学习/德语/公共知识语法/格; 限定词.md",
     "语言学习/德语/学习记录日记-技巧/听说读写 以及学习外语的核心方法.md",
     "OBSetting/templater/周报模板.md",
     "Diary/2026/20261123.md",
-    "Diary/2026/20261124.md",
     "Diary/2026/W48.md",
     "copilot/copilot-conversations/Collapsible_Annotation_Answers@20261123_214854.md",
     "Diary/_backup/20261123-2150/20261123_before_organize.md",
@@ -379,7 +383,6 @@
     "Diary/2026/2026年报-全年脉络.excalidraw.md",
     "file:C:/Users/17741/Downloads/Obsidian周报模板_v7_纯MD表格内嵌DataviewJS.md",
     "OBSetting/templater/启动-周报引擎.md",
-    "OBSetting/templater/周报模板-完整版.md",
     "Diary/_backup/_engine_src.js",
     "Diary/_backup/20261123-w47-test",
     "Diary/_backup/_engine_test.js",
