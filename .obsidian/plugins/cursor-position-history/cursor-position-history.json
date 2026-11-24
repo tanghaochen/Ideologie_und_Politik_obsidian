@@ -3581,21 +3581,21 @@
   },
   "语言学习/德语/单词/生词/2026-11.md": {
     "scrollState": {
-      "top": 3165.60009765625,
+      "top": 1951.2000732421875,
       "left": 0,
       "clientHeight": 1522,
-      "clientWidth": 1330,
+      "clientWidth": 2054,
       "height": 1522,
-      "width": 1342
+      "width": 2066
     },
     "cursor": {
       "from": {
-        "ch": 7,
-        "line": 68
+        "ch": 0,
+        "line": 37
       },
       "to": {
-        "ch": 7,
-        "line": 68
+        "ch": 0,
+        "line": 53
       }
     }
   },
@@ -5201,7 +5201,7 @@
   },
   "Diary/2026/20261124.md": {
     "scrollState": {
-      "top": 0,
+      "top": 1730.4000244140625,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 2054,
@@ -5210,12 +5210,32 @@
     },
     "cursor": {
       "from": {
-        "ch": 41,
-        "line": 18
+        "ch": 0,
+        "line": 40
       },
       "to": {
-        "ch": 41,
-        "line": 18
+        "ch": 90,
+        "line": 77
+      }
+    }
+  },
+  "Diary/2026/20261125.md": {
+    "scrollState": {
+      "top": 1800,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 2054,
+      "height": 1522,
+      "width": 2066
+    },
+    "cursor": {
+      "from": {
+        "ch": 267,
+        "line": 28
+      },
+      "to": {
+        "ch": 267,
+        "line": 28
       }
     }
   }
