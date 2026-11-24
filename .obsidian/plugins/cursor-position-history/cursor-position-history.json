@@ -5001,7 +5001,7 @@
   },
   "Diary/2026/20261123.md": {
     "scrollState": {
-      "top": 4275.60009765625,
+      "top": 5500.80029296875,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 2054,
@@ -5011,11 +5011,11 @@
     "cursor": {
       "from": {
         "ch": 0,
-        "line": 142
+        "line": 178
       },
       "to": {
         "ch": 0,
-        "line": 142
+        "line": 178
       }
     }
   },
@@ -5201,7 +5201,7 @@
   },
   "Diary/2026/20261124.md": {
     "scrollState": {
-      "top": 1730.4000244140625,
+      "top": 5317.2001953125,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 2054,
@@ -5210,12 +5210,12 @@
     },
     "cursor": {
       "from": {
-        "ch": 0,
-        "line": 40
+        "ch": 3,
+        "line": 167
       },
       "to": {
-        "ch": 90,
-        "line": 77
+        "ch": 0,
+        "line": 167
       }
     }
   },
@@ -5236,6 +5236,26 @@
       "to": {
         "ch": 267,
         "line": 28
+      }
+    }
+  },
+  "file:C:/Users/17741/Downloads/Obsidian日记提示词_v6_行为纠偏增强.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 2054,
+      "height": 1522,
+      "width": 2066
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 10
+      },
+      "to": {
+        "ch": 0,
+        "line": 10
       }
     }
   }
