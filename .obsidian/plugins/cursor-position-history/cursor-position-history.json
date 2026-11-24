@@ -5201,7 +5201,7 @@
   },
   "Diary/2026/20261124.md": {
     "scrollState": {
-      "top": 5317.2001953125,
+      "top": 4761.60009765625,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 2054,
@@ -5210,18 +5210,18 @@
     },
     "cursor": {
       "from": {
-        "ch": 3,
-        "line": 167
+        "ch": 87,
+        "line": 170
       },
       "to": {
-        "ch": 0,
-        "line": 167
+        "ch": 87,
+        "line": 170
       }
     }
   },
   "Diary/2026/20261125.md": {
     "scrollState": {
-      "top": 1800,
+      "top": 2857.199951171875,
       "left": 0,
       "clientHeight": 1522,
       "clientWidth": 2054,
@@ -5230,12 +5230,12 @@
     },
     "cursor": {
       "from": {
-        "ch": 267,
-        "line": 28
+        "ch": 0,
+        "line": 98
       },
       "to": {
-        "ch": 267,
-        "line": 28
+        "ch": 0,
+        "line": 98
       }
     }
   },
