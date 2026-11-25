@@ -20407,15 +20407,15 @@
   "Diary/2026/20261125.md": {
     "cursor": {
       "from": {
-        "line": 98,
+        "line": 94,
         "ch": 0
       },
       "to": {
-        "line": 98,
+        "line": 94,
         "ch": 0
       }
     },
-    "scroll": 72.83832748169407
+    "scroll": 74.87833386241061
   },
   "file:C:/Users/17741/Downloads/Obsidian日记提示词_v6_行为纠偏增强.md": {
     "cursor": {
@@ -20426,6 +20426,18 @@
       "to": {
         "line": 10,
         "ch": 0
+      }
+    }
+  },
+  "Diary/2026/20261126.md": {
+    "cursor": {
+      "from": {
+        "line": 6,
+        "ch": 45
+      },
+      "to": {
+        "line": 6,
+        "ch": 45
       }
     }
   }
