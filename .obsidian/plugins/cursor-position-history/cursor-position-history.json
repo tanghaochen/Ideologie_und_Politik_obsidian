@@ -5264,18 +5264,18 @@
       "top": 0,
       "left": 0,
       "clientHeight": 1522,
-      "clientWidth": 2054,
+      "clientWidth": 1299,
       "height": 1522,
-      "width": 2066
+      "width": 1311
     },
     "cursor": {
       "from": {
-        "ch": 45,
-        "line": 6
+        "ch": 26,
+        "line": 9
       },
       "to": {
-        "ch": 45,
-        "line": 6
+        "ch": 26,
+        "line": 9
       }
     }
   }
