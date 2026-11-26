@@ -1,8 +1,16 @@
 {
   "recentFiles": [
     {
+      "basename": "20261121",
+      "path": "Diary/2026/20261121.md"
+    },
+    {
       "basename": "eine neue Wohnung Einladung",
       "path": "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md"
+    },
+    {
+      "basename": "不定式",
+      "path": "语言学习/德语/公共知识语法/1名词/不定式.md"
     },
     {
       "basename": "83 反身代词和动词 Reflexivpronomen；形容词变名词",
@@ -161,10 +169,6 @@
       "path": "Diary/2026/20261122.md"
     },
     {
-      "basename": "20261121",
-      "path": "Diary/2026/20261121.md"
-    },
-    {
       "basename": "月报",
       "path": "OBSetting/templater/月报.md"
     },
@@ -195,10 +199,6 @@
     {
       "basename": "20261120",
       "path": "Diary/2026/20261120.md"
-    },
-    {
-      "basename": "2026年11月20日 - SideNote 20261121233157",
-      "path": "2026年11月20日 - SideNote 20261121233157.md"
     }
   ],
   "omittedPaths": [],
