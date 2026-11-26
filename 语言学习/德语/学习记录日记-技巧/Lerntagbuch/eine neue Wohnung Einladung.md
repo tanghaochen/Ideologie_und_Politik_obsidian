@@ -1,6 +1,6 @@
 # Teil 1 — Informelle E-Mail (ca. 80 Wörter)
 
-Ihre Freundin Nina hat endlich eine neue Wohnung gefunden und lädt Sie am Samstag zu einer kleinen Einweihungsparty ein. Leider können Sie nicht die ganze Zeit dabei sein.
+Ihre Freundin Nina hat endlich eine neue Wohnung gefunden und lädt Sie am Samstag zu einer kleinen Einweihungs party ein. Leider können Sie nicht die ganze Zeit dabei sein.
 
 Schreiben Sie eine E-Mail an Nina. Schreiben Sie etwas zu allen drei Punkten:
 
@@ -25,7 +25,13 @@ Was brauchst du etwa Sächen? Das is glück, habe hier einer brauchtmarkt, wenn 
 Möbel bauchst, die ich will mit dem auto shicken.
 
 170
+2026年11月26日16:40:08
+11307
 
+Liebe Nina,
+Ich viel gl
+
+11388
 # 📝 B1 写作批改报告 · Schreiben Teil 1（Informelle E-Mail）
 
 > ⚠️ 说明：本篇题目属于 **歌德 B1 Schreiben Teil 1**，因此以下全部按 **B1 标准** 评分与改写（不按 B2 拔高）。
