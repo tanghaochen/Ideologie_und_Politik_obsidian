@@ -28,49 +28,23 @@
       ],
       "navRainbow": {
         "mode": "none",
-        "balanceHueLuminance": true,
-        "separateThemeColors": false,
+        "intensity": 100,
         "shortcuts": {
-          "enabled": false,
-          "firstColor": "#ef4444",
-          "lastColor": "#8b5cf6",
-          "darkFirstColor": "#ef4444",
-          "darkLastColor": "#8b5cf6",
-          "transitionStyle": "rgb"
+          "theme": "none"
         },
         "recent": {
-          "enabled": false,
-          "firstColor": "#ef4444",
-          "lastColor": "#8b5cf6",
-          "darkFirstColor": "#ef4444",
-          "darkLastColor": "#8b5cf6",
-          "transitionStyle": "rgb"
+          "theme": "none"
         },
         "folders": {
-          "enabled": true,
-          "firstColor": "#ef4444",
-          "lastColor": "#8b5cf6",
-          "darkFirstColor": "#fb7185",
-          "darkLastColor": "#c084fc",
-          "transitionStyle": "hue",
+          "theme": "rainbow",
           "scope": "root"
         },
         "tags": {
-          "enabled": false,
-          "firstColor": "#ef4444",
-          "lastColor": "#8b5cf6",
-          "darkFirstColor": "#fb7185",
-          "darkLastColor": "#c084fc",
-          "transitionStyle": "hue",
+          "theme": "none",
           "scope": "root"
         },
         "properties": {
-          "enabled": false,
-          "firstColor": "#ef4444",
-          "lastColor": "#8b5cf6",
-          "darkFirstColor": "#fb7185",
-          "darkLastColor": "#c084fc",
-          "transitionStyle": "hue",
+          "theme": "none",
           "scope": "root"
         }
       },
@@ -78,6 +52,7 @@
     }
   ],
   "vaultProfile": "default",
+  "navRainbowThemes": [],
   "vaultTitle": "navigation",
   "syncModes": {
     "vaultProfile": "synced",
@@ -196,7 +171,6 @@
   "showSectionIcons": true,
   "showShortcuts": true,
   "shortcutBadgeDisplay": "index",
-  "skipAutoScroll": false,
   "showRecentNotes": true,
   "hideRecentNotes": "none",
   "pinRecentNotesWithShortcuts": false,
@@ -215,6 +189,7 @@
   "folderNoteOpenLocation": "current-tab",
   "showNearestFolderNoteInSidebar": true,
   "showTags": true,
+  "tagSource": "all",
   "showTagIcons": true,
   "showAllTagsFolder": true,
   "showUntagged": true,
@@ -639,7 +614,7 @@
     "#404040",
     "#404040"
   ],
-  "lastShownVersion": "3.5.1",
+  "lastShownVersion": "3.5.3",
   "rootTagOrder": [],
   "rootPropertyOrder": []
 }

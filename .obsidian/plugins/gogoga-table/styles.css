@@ -4,6 +4,9 @@
  * 颜色全部取 Obsidian 主题变量，换主题、深浅色都跟着变。
  */
 
+/* 样式表加载了的标记：插件启动时检查它，没有就提示 styles.css 没加载 */
+body { --ggt-styles-loaded: 1; }
+
 .ggt {
   --ggt-line: var(--table-border-color, var(--background-modifier-border));
   --ggt-head-bg: rgba(var(--mono-rgb-100), 0.035);
@@ -26,6 +29,13 @@
 
 /* 右边、下边留出位置：骑在表格右下角的填充柄（连同它放大的点击范围）不会被裁掉，也不会把表格撑出横向滚动 */
 .ggt-scroll { overflow-x: auto; overflow-y: visible; padding: 0 12px 12px 0; margin: 0 -12px -12px 0; }
+/* 设置「表格居中」：装表格的那层（.ggt-lp / .ggt-reading，插件加 ggt-center-host）把表格的外框排到中间。
+   外框左边留 14px 放行手柄（margin-left: -14px 抵掉）、右边留 26px 放加号：右边再抵掉 26px，排到中间的就正好是表格本身。
+   safe center：表格比正文宽时退回靠左（左边照旧和正文对齐，右边横向滚动），不会往两边溢出；撑满页面宽度的表格不参与 */
+.ggt-lp.ggt-center-host, .ggt-reading.ggt-center-host, .markdown-source-view.mod-cm6 .cm-content > .ggt-lp.ggt-center-host { display: flex !important; justify-content: safe center; }
+.ggt-center-host > .ggt { min-width: 0; }
+.ggt-center-host > .ggt:not(.is-full) { margin-right: -26px; }
+.ggt-center-host > .ggt.is-full { flex: none; }
 .ggt-table {
   border-collapse: separate;
   border-spacing: 0;
@@ -49,6 +59,11 @@
 .ggt.is-full .ggt-table { width: 100% !important; min-width: 0 !important; max-width: none !important; }
 /* 设置「列宽按比例缩放」：设过列宽、比正文宽的表，各列按比例缩到正好放下（列宽由编辑器按比例算好写在 col 上） */
 .ggt.is-fit .ggt-table { table-layout: fixed; }
+/* 手机、平板：外框右边那 26px（放加号）不再伸出正文。手机上页面左右边距窄，伸出去会把整页撑出横向滚动，手指一划整页左右晃。
+   宽表格的滚动区因此比正文窄 26px，加号收在正文里面；左边照旧往外挪 14px 放行手柄（左边溢出不会产生滚动） */
+.is-mobile .ggt { max-width: calc(100% + 14px); }
+.is-mobile .ggt.is-full { width: calc(100% + 14px); }
+.is-mobile .ggt-center-host > .ggt:not(.is-full) { margin-right: 0; }
 /* 拖过宽度的列按拖到的宽度画（最窄 40px，拖动时限制）；没拖过的列最少 80px（见 .ggt-cell），新表格不会挤成一团 */
 .ggt .ggt-cell.is-set-width { min-width: 0; }
 /* 编辑时量光标在第几行用的影子（照着输入框排一份文字，量完就删） */
@@ -56,7 +71,9 @@
 .ggt.is-fit .ggt-cell { min-width: 0; }
 .ggt .ggt-cell {
   position: relative;
-  padding: 0;
+  /* 内边距在里面的 .ggt-content 上，格子本身必须是 0。Minimal 等主题给 td:first-child 另设左内边距、选择器比这里强：
+     合并后被盖住的格子不画，第二列成了那几行的第一个元素，单独多/少一截，列就对不齐了（群友反馈） */
+  padding: 0 !important;
   min-width: 80px;
   border: 0;
   border-right: 1px solid var(--ggt-line);
@@ -74,6 +91,12 @@
 .ggt .ggt-cell[data-valign="middle"] { vertical-align: middle; }
 .ggt .ggt-cell[data-valign="bottom"] { vertical-align: bottom; }
 .ggt .ggt-cell[data-align="right"] { text-align: right; }
+/* 对齐再写到格子里面这一层（显示的内容、编辑框）：不少主题、CSS 片段给 table td / th 设了 text-align: center（有的还带 !important），
+   只设在格子上，左对齐的列会被盖成居中，点左对齐、居中都「没反应」（B站 Kenhalid）。主题的规则一般只到 td，碰不到里面 */
+.ggt .ggt-cell { --ggt-align: left; }
+.ggt .ggt-cell[data-align="center"] { --ggt-align: center; }
+.ggt .ggt-cell[data-align="right"] { --ggt-align: right; }
+.ggt .ggt-cell > .ggt-content, .ggt .ggt-cell > .ggt-content > p, .ggt .ggt-cell .ggt-input, .ggt .ggt-cell .ggt-input.ggt-input-cm :is(.cm-content, .cm-line) { text-align: var(--ggt-align) !important; }
 
 .ggt-content {
   padding: var(--ggt-pad-y) var(--ggt-pad-x);
@@ -168,7 +191,8 @@
   position: fixed;
   left: 0;
   right: 0;
-  bottom: var(--ggt-kb, 0px);
+  /* iOS 上软键盘盖在网页上面，可见区域不变：跟 Obsidian 自己的工具条一样，按它写在页面上的 --keyboard-height 往上抬 */
+  bottom: max(var(--ggt-kb, 0px), var(--keyboard-height, 0px));
   z-index: var(--layer-popover, 30);
   display: flex;
   align-items: center;
@@ -183,6 +207,7 @@
   user-select: none;
   -webkit-user-select: none;
 }
+body.ggt-cell-editing .mobile-toolbar { display: none !important; }
 .ggt-mobile-bar .ggt-mobile-btn { all: unset; flex: none; display: flex; align-items: center; justify-content: center; width: 40px; height: 36px; border-radius: 8px; color: var(--text-normal); font-weight: 600; }
 .ggt-mobile-bar .ggt-mobile-btn:active { background: var(--background-modifier-hover); }
 .ggt-mobile-bar .ggt-mobile-btn svg { width: 20px; height: 20px; }
@@ -268,6 +293,8 @@
 .ggt .ggt-table td.ggt-fold-bar button.ggt-fold-btn:hover { background: rgba(var(--mono-rgb-100), 0.04); color: var(--text-normal); }
 
 /* 弹出菜单 */
+/* 手机上压在编辑器上面（iPhone 上点击判定还是会落到后面，editor.ts 里按坐标认菜单兜底） */
+body.is-mobile .ggt-menu { z-index: 2147483000; backdrop-filter: none; -webkit-backdrop-filter: none; transform: translateZ(0); isolation: isolate; }
 .ggt-menu {
   position: fixed;
   z-index: var(--layer-menu, 65);
@@ -309,6 +336,11 @@
 .ggt-menu button.ggt-menu-item.is-icon.is-checked { background: var(--background-modifier-active-hover, var(--background-modifier-hover)); color: var(--interactive-accent); }
 .ggt-menu-icons-sep { width: 1px; height: 16px; margin: 0 4px; background: var(--background-modifier-border); }
 .ggt-menu button.ggt-menu-item:disabled { opacity: 0.4; cursor: default; }
+/* 灰掉但写了原因的项：悬停看原因、点一下弹提示（见 explainDisabled） */
+.ggt-menu button.ggt-menu-item.is-disabled,
+.ggt-menu button.ggt-size-chip.is-disabled { opacity: 0.4; cursor: help; }
+.ggt-menu button.ggt-menu-item.is-disabled:hover,
+.ggt-menu button.ggt-size-chip.is-disabled:hover { background: transparent; }
 .ggt-menu button.ggt-menu-item.is-danger:not(:disabled) { color: var(--text-error); }
 .ggt-menu-icon { display: inline-flex; width: 16px; color: var(--text-muted); }
 .ggt-menu-icon svg { width: 15px; height: 15px; }
@@ -419,7 +451,8 @@
 .ggt-fill { position: absolute; z-index: 6; display: none; width: 8px; height: 8px; box-sizing: border-box; border: 1.5px solid var(--background-primary); border-radius: 2px; background: var(--ggt-sel); cursor: crosshair; touch-action: none; }
 .ggt-fill.is-shown { display: block; }
 .ggt-fill::before { content: ""; position: absolute; inset: -6px; }
-.is-mobile .ggt-fill { width: 14px; height: 14px; border-radius: 4px; }
+.is-mobile .ggt-fill { width: 14px; height: 14px; border-radius: 50%; }
+.is-mobile .ggt-fill::before { inset: -18px; }
 .ggt-fill-preview { position: absolute; z-index: 3; display: none; border: 1.5px dashed var(--ggt-sel); border-radius: 2px; pointer-events: none; box-sizing: border-box; }
 .ggt-fill-preview.is-shown { display: block; }
 .ggt.is-filling, .ggt.is-filling * { cursor: crosshair !important; user-select: none; }
@@ -516,6 +549,20 @@
 .ggt-bar[data-done] .ggt-bar-fill { background: var(--color-green); }
 .ggt-bar-text { flex: none; font-size: 0.92em; color: var(--text-muted); font-variant-numeric: tabular-nums; }
 /* 日期列里读不出日子的格子：淡淡的波浪线，悬停有说明（只是显示） */
+/* 加密列：•••••• + 按钮（锁 / 眼睛 / 复制），按钮悬停格子时才显出来；手机上一直显示 */
+.ggt-secret { display: inline-flex; align-items: center; gap: 4px; max-width: 100%; vertical-align: middle; }
+.ggt-secret-mask { letter-spacing: 0.12em; color: var(--text-muted); white-space: nowrap; user-select: none; }
+.ggt-secret.is-foreign .ggt-secret-mask { color: var(--text-faint); text-decoration: line-through; }
+.ggt-secret-text { min-width: 0; overflow-wrap: anywhere; }
+.ggt-secret-btn.clickable-icon { flex: none; width: 22px; height: 22px; padding: 3px; margin: 0; border: none; background: transparent; box-shadow: none; color: var(--text-faint); opacity: 0; transition: opacity 0.12s ease; }
+.ggt-secret-btn .svg-icon { width: 14px; height: 14px; }
+.ggt-secret-btn[data-act="unlock"], .ggt-cell:hover .ggt-secret-btn, .ggt-cell.is-selected .ggt-secret-btn, .is-mobile .ggt-secret-btn { opacity: 1; }
+.ggt-secret-btn:hover { color: var(--text-normal); background: var(--background-modifier-hover); }
+.ggt-cell .is-unsealed { text-decoration: underline dashed color-mix(in srgb, var(--text-error) 60%, transparent); text-underline-offset: 3px; }
+.ggt-secret-modal .ggt-secret-input { display: block; width: 100%; margin-bottom: 10px; }
+.ggt-secret-modal .ggt-secret-keychain-wrong { margin: 0 0 8px; padding: 6px 10px; border-radius: var(--radius-s); background: rgba(var(--color-orange-rgb), 0.12); color: var(--text-normal); font-size: var(--font-ui-small); }
+.ggt-secret-modal .ggt-secret-error { min-height: 1.4em; color: var(--text-error); font-size: var(--font-ui-small); }
+.ggt-secret-modal .setting-item { border: none; padding-bottom: 0; }
 .ggt-cell .is-not-date { text-decoration: underline wavy color-mix(in srgb, var(--text-warning) 55%, transparent); text-decoration-skip-ink: none; text-underline-offset: 3px; }
 
 /* 日期列的日历：和补全列表一样的浮层 */
@@ -646,6 +693,10 @@
 .ggt .ggt-input.ggt-input-cm .cm-scroller { overflow: hidden !important; font-family: inherit !important; line-height: inherit !important; padding: 0 !important; }
 .ggt .ggt-input.ggt-input-cm .cm-content { padding: 0 !important; min-height: 0 !important; caret-color: var(--ggt-sel); font: inherit !important; color: inherit !important; max-width: none !important; white-space: pre-wrap; }
 .ggt .ggt-input.ggt-input-cm .cm-line { padding: 0 !important; text-indent: 0 !important; }
+/* 不给滚动条留位置（Obsidian 给编辑器设了 scrollbar-gutter: stable，格子编辑框右边就空出 15px）：居中、右对齐的格子编辑时字往左偏（B站反馈「居中、居右失效」） */
+.ggt .ggt-input.ggt-input-cm .cm-scroller { scrollbar-gutter: auto !important; }
+/* 字号、字体、行高一律跟格子：有的主题给编辑器（.cm-editor、.cm-scroller、.cm-line）定了字号，不压回去编辑时字就比查看时大或小（群友反馈，脑图节点表格里最明显） */
+.ggt .ggt-cell .ggt-input.ggt-input-cm, .ggt .ggt-input.ggt-input-cm :is(.cm-scroller, .cm-content, .cm-line) { font-size: inherit !important; font-family: inherit !important; line-height: inherit !important; }
 .ggt .ggt-input.ggt-input-cm.cm-focused { outline: none !important; }
 .ggt .ggt-input.ggt-input-cm .cm-gutters { display: none !important; }
 .ggt .ggt-input.ggt-input-cm .cm-cursor { border-left-color: var(--ggt-sel); }
@@ -864,3 +915,42 @@
 .ggt-hbar::-webkit-scrollbar-thumb { border: 3px solid transparent; border-radius: 6px; background-clip: padding-box; background-color: var(--scrollbar-thumb-bg, rgba(0, 0, 0, 0.2)); }
 .ggt-hbar::-webkit-scrollbar-thumb:hover { background-color: var(--scrollbar-active-thumb-bg, rgba(0, 0, 0, 0.35)); }
 @media print { .ggt-hbar { display: none !important; } }
+
+/* 设置「隐藏表格上方的空行」：表格前面那个空行（Markdown 要求的）不显示，光标在这一行（.cm-active）时照常显示（B站天堂鸟0 的建议） */
+.markdown-source-view.mod-cm6 .cm-content > .cm-line:not(.cm-active):has(> br:only-child):has(+ .ggt-lp.ggt-hide-blank-above) { display: none; }
+
+/* 手机、平板：长按格子是「按住再拖 = 框选」，系统的长按选字会把一整行字选上、冒出选字手柄（iPhone 实测）。
+   格子的显示内容不让系统选字、不弹长按气泡；编辑格子用的是单独的输入框，不受影响；只读的表格照旧能长按选字复制 */
+.is-mobile .ggt:not(.is-readonly) .ggt-cell .ggt-content {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* 更新内容（whatsnew.ts，两个插件共用）和诊断提示里的按钮 */
+.gg-whatsnew-modal { width: min(640px, 92vw); }
+.gg-whatsnew { max-height: 60vh; overflow-y: auto; }
+.gg-whatsnew-version + .gg-whatsnew-version { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--background-modifier-border); }
+.gg-whatsnew-version > h2 { display: flex; align-items: baseline; gap: 10px; margin: 0 0 6px; font-size: var(--h3-size, 1.2em); }
+.gg-whatsnew-date { color: var(--text-muted); font-size: var(--font-ui-small); font-weight: var(--font-normal, 400); }
+.gg-whatsnew-body h3 { margin: 10px 0 4px; font-size: var(--font-ui-medium); color: var(--text-muted); }
+.gg-whatsnew-body ul { margin: 0; padding-inline-start: 1.4em; }
+.gg-whatsnew-body li { margin: 3px 0; line-height: 1.55; }
+.gg-whatsnew-foot { margin-top: 14px; text-align: right; font-size: var(--font-ui-small); }
+.gg-whatsnew-support { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--background-modifier-border); text-align: center; }
+.gg-whatsnew-support-text { color: var(--text-muted); font-size: var(--font-ui-small); margin-bottom: 12px; }
+.gg-whatsnew-support-actions { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.gg-whatsnew-fund { display: inline-flex; align-items: center; gap: 6px; }
+.gg-whatsnew-fund-icon { display: inline-flex; }
+.gg-whatsnew-fund-icon svg { width: 16px; height: 16px; }
+.gg-diag-notice-actions { display: flex; gap: 6px; margin-top: 8px; }
+/* 右上角的更新提示（whatsnew.ts）：图标 + 插件名 + 版本号小标签，一行亮点，两个按钮；外框还是 Obsidian 的提示 */
+.notice.gg-update-notice { min-width: 260px; max-width: 360px; }
+.gg-update-notice-head { display: flex; align-items: center; gap: 8px; }
+.gg-update-notice-icon { display: inline-flex; color: var(--interactive-accent); }
+.gg-update-notice-icon svg { width: 18px; height: 18px; }
+.gg-update-notice-name { font-weight: var(--font-semibold, 600); }
+.gg-update-notice-version { padding: 1px 7px; border-radius: 999px; background: var(--interactive-accent); color: var(--text-on-accent); font-size: var(--font-ui-smaller); font-variant-numeric: tabular-nums; line-height: 1.5; }
+.gg-update-notice-text { margin-top: 6px; color: inherit; opacity: 0.78; font-size: var(--font-ui-small); line-height: 1.5; }
+.gg-update-notice-actions { display: flex; justify-content: flex-end; gap: 6px; margin-top: 10px; }
+.gg-update-notice-actions button { font-size: var(--font-ui-small); }

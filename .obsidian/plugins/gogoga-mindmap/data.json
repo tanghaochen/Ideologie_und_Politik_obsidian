@@ -8,8 +8,11 @@
   "rememberViewport": true,
   "outlineOpen": false,
   "outlineWrap": true,
+  "outlineFoldSync": false,
   "toolbarPosition": "bottom",
+  "inlineTitle": false,
   "showNodebar": true,
+  "barPlacement": "above",
   "zenHideObsidian": true,
   "nodebarLayout": [],
   "toolbarLayout": [],
@@ -31,6 +34,8 @@
   "linkReuseOpen": false,
   "newNoteFolder": "default",
   "newNoteFolderPath": "",
+  "newMapFolder": "default",
+  "newMapFolderPath": "",
   "dragToFloat": false,
   "openView": "fit",
   "syncSplit": true,
@@ -51,7 +56,10 @@
   "reviewCrumb": true,
   "customMarkers": "",
   "customMarkersExclusive": false,
+  "answerMarker": "🙈",
+  "menuLayout": {},
   "rememberView": true,
+  "whatsNew": true,
   "newFileTemplate": "",
   "embedToolbar": "full",
   "embedWheel": "click",
@@ -67,6 +75,13 @@
   "noteCardShow": "all",
   "taskProgress": "off",
   "taskProgressPos": "end",
+  "relShape": "curve",
+  "levelColors": "off",
+  "levelPalette": "#e03e3e, #d9730d, #dfab01, #0f7b6c, #0b6e99, #6940a5",
+  "pdfBorder": false,
+  "pdfBorderFade": 30,
+  "mapFont": "interface",
+  "mapFontName": "",
   "notePreview": false,
   "noteLiveEdit": true,
   "formatBar": false,
@@ -98,5 +113,6 @@
   "xmindTakenNoticed": true,
   "embedZoom": {
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md|语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md#": 0.2
-  }
+  },
+  "lastSeenVersion": "1.0.0"
 }

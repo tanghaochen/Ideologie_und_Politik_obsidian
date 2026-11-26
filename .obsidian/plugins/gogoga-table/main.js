@@ -23,7 +23,7 @@ __export(main_exports, {
   default: () => TablePlugin
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian7 = require("obsidian");
+var import_obsidian10 = require("obsidian");
 
 // src/editor/i18n.ts
 var zh = {
@@ -59,7 +59,7 @@ var zh = {
   cmd_select_col: "\u9009\u4E2D\u6574\u5217",
   cmd_toggle_checkbox: "\u5207\u6362\u52FE\u9009\u6846",
   gridTitle: "\u63D2\u5165\u8868\u683C",
-  gridHint: "{r} \u884C \xD7 {c} \u5217\uFF08\u542B\u8868\u5934\uFF09",
+  gridHint: "{r} \u884C \xD7 {c} \u5217\uFF08\u542B\u8868\u5934\uFF09\xB7 \u65B9\u5411\u952E\u8C03\u6574\uFF0C\u56DE\u8F66\u63D2\u5165",
   removeCheckbox: "\u53BB\u6389\u52FE\u9009\u6846",
   insertRowBelow: "\u5728\u4E0B\u65B9\u63D2\u5165\u884C",
   insertColLeft: "\u5728\u5DE6\u4FA7\u63D2\u5165\u5217",
@@ -75,8 +75,9 @@ var zh = {
   fmtHighlight: "\u9AD8\u4EAE\uFF08==\u6587\u5B57==\uFF09",
   fmtTextColor: "\u6587\u5B57\u989C\u8272",
   fmtHighlightColor: "\u8367\u5149\u7B14",
-  fmtClear: "\u6E05\u9664\u6587\u5B57\u989C\u8272\u548C\u8367\u5149\u7B14",
+  fmtClear: "\u6E05\u9664\u683C\u5F0F",
   mbDone: "\u5B8C\u6210",
+  mbMenu: "\u8868\u683C\u83DC\u5355",
   mbUndo: "\u64A4\u9500",
   mbRedo: "\u91CD\u505A",
   mbLink: "\u63D2\u5165\u53CC\u94FE",
@@ -119,6 +120,7 @@ var zh = {
   autoWidth: "\u81EA\u52A8\u5217\u5BBD",
   clearCell: "\u6E05\u7A7A\u5185\u5BB9",
   mergeCells: "\u5408\u5E76\u5355\u5143\u683C",
+  dragToSelect: "\u957F\u6309\u683C\u5B50\u540E\u62D6\u52A8\u53EF\u591A\u9009",
   fill: "\u62D6\u52A8\u6309\u89C4\u5F8B\u586B\u5145\uFF0C\u6309\u4F4F \u2325 \u7167\u6284",
   tableMenu: "\u8868\u683C\u8BBE\u7F6E",
   tableStyle: "\u8FD9\u5F20\u8868\u7684\u6837\u5F0F",
@@ -184,6 +186,46 @@ var zh = {
   kind_date: "\u65E5\u671F",
   kind_num: "\u6570\u5B57",
   kind_bar: "\u8FDB\u5EA6\u6761",
+  kind_enc: "\u52A0\u5BC6",
+  encUnlock: "\u8F93\u5165\u4E3B\u5BC6\u7801\u67E5\u770B",
+  encShow: "\u663E\u793A\u660E\u6587",
+  encHide: "\u9690\u85CF\u660E\u6587",
+  encCopy: "\u590D\u5236\u660E\u6587",
+  encCopied: "\u5DF2\u590D\u5236\uFF0C30 \u79D2\u540E\u4ECE\u526A\u8D34\u677F\u6E05\u9664",
+  encPlain: "\u8FD9\u683C\u8FD8\u6CA1\u52A0\u5BC6\uFF1A\u5728\u5217\u83DC\u5355\u91CC\u70B9\u300C\u52A0\u5BC6\u8FD9\u4E00\u5217\u300D",
+  encForeign: "\u5F53\u524D\u4E3B\u5BC6\u7801\u89E3\u4E0D\u5F00\u8FD9\u683C\uFF08\u53EF\u80FD\u662F\u7528\u522B\u7684\u5BC6\u7801\u52A0\u5BC6\u7684\uFF09",
+  encNoHost: "\u8FD9\u91CC\u4E0D\u80FD\u89E3\u9501\u52A0\u5BC6\u5217\uFF0C\u8BF7\u5728\u7B14\u8BB0\u91CC\u6253\u5F00\u8868\u683C",
+  encNotSaved: "\u6CA1\u6709\u89E3\u9501\uFF0C\u52A0\u5BC6\u5217\u7684\u6539\u52A8\u6CA1\u6709\u4FDD\u5B58",
+  encChanged: "\u52A0\u5BC6\u65F6\u8868\u683C\u88AB\u6539\u52A8\u4E86\uFF0C\u8FD9\u683C\u6CA1\u6709\u4FDD\u5B58\uFF0C\u8BF7\u91CD\u65B0\u8F93\u5165",
+  encSealCol: "\u52A0\u5BC6\u8FD9\u4E00\u5217",
+  encRekey: "\u66F4\u6539\u4E3B\u5BC6\u7801",
+  encRekeyTitle: "\u8BBE\u7F6E\u65B0\u7684\u4E3B\u5BC6\u7801",
+  encRekeyConfirm: "\u5C06\u7528\u65B0\u7684\u4E3B\u5BC6\u7801\u91CD\u65B0\u52A0\u5BC6 {f} \u7BC7\u7B14\u8BB0\u91CC\u7684 {n} \u6BB5\u5185\u5BB9\uFF08\u8868\u683C\u7684\u52A0\u5BC6\u683C\u5B50\uFF0C\u4EE5\u53CA Meld Encrypt \u7528\u540C\u4E00\u4E2A\u5BC6\u7801\u52A0\u5BC6\u7684\u884C\u5185\u5185\u5BB9\uFF09\u3002\u6574\u7BC7\u52A0\u5BC6\u7684 .mdenc \u6587\u4EF6\u4E0D\u4F1A\u6539\u3002\u7EE7\u7EED\uFF1F",
+  encRekeyOther: "\u53E6\u6709 {n} \u6BB5\u7528\u7684\u4E0D\u662F\u5F53\u524D\u4E3B\u5BC6\u7801\uFF0C\u4E0D\u4F1A\u6539\u52A8\u3002",
+  encRekeyGo: "\u7EE7\u7EED",
+  encRekeyFailed: "\u6709\u5185\u5BB9\u91CD\u65B0\u52A0\u5BC6\u5931\u8D25\uFF0C\u6CA1\u6709\u6539\u52A8\u4EFB\u4F55\u7B14\u8BB0\uFF0C\u4E3B\u5BC6\u7801\u6CA1\u53D8",
+  encRekeyDone: "\u4E3B\u5BC6\u7801\u5DF2\u66F4\u6539\uFF1A{f} \u7BC7\u7B14\u8BB0\u91CC\u7684 {n} \u6BB5\u5185\u5BB9\u5DF2\u91CD\u65B0\u52A0\u5BC6\u3002",
+  encRekeyKeychain: "\u94A5\u5319\u4E32\u91CC\u5B58\u7684\u4E3B\u5BC6\u7801\u4E5F\u8981\u6539\u6210\u65B0\u7684\u3002",
+  encCell: "\u52A0\u5BC6",
+  decryptCell: "\u53D6\u6D88\u52A0\u5BC6",
+  encDecryptCellConfirm: "\u628A\u9009\u4E2D\u7684\u683C\u5B50\u89E3\u5BC6\u6210\u660E\u6587\u5199\u56DE\u7B14\u8BB0\uFF1F\u4E4B\u540E\u4E0D\u7528\u4E3B\u5BC6\u7801\u4E5F\u80FD\u770B\u5230\u8FD9\u4E9B\u5185\u5BB9\u3002",
+  encLock: "\u9501\u5B9A\u52A0\u5BC6\u5185\u5BB9",
+  encDecryptConfirm: "\u628A\u8FD9\u4E00\u5217\u89E3\u5BC6\u6210\u660E\u6587\u5199\u56DE\u7B14\u8BB0\uFF1F\u4E4B\u540E\u4E0D\u7528\u4E3B\u5BC6\u7801\u4E5F\u80FD\u770B\u5230\u8FD9\u4E9B\u5185\u5BB9\u3002",
+  encDecryptOk: "\u89E3\u5BC6",
+  encForeignAbort: "\u8FD9\u4E00\u5217\u6709\u683C\u5B50\u7528\u5F53\u524D\u4E3B\u5BC6\u7801\u89E3\u4E0D\u5F00\uFF0C\u6CA1\u6709\u8F6C\u6362",
+  encSetupTitle: "\u8BBE\u7F6E\u4E3B\u5BC6\u7801",
+  encSetupDesc: "\u6240\u6709\u8868\u683C\u7684\u52A0\u5BC6\u5217\u90FD\u7528\u8FD9\u4E2A\u5BC6\u7801\u3002\u5FD8\u4E86\u5C31\u518D\u4E5F\u89E3\u4E0D\u5F00\uFF0C\u6CA1\u6709\u4EFB\u4F55\u627E\u56DE\u529E\u6CD5\u3002",
+  encPassword: "\u4E3B\u5BC6\u7801",
+  encPassword2: "\u518D\u8F93\u4E00\u904D",
+  encHint: "\u63D0\u793A\uFF08\u53EF\u4E0D\u586B\uFF0C\u63D0\u793A\u672C\u8EAB\u4E0D\u52A0\u5BC6\uFF09",
+  encMismatch: "\u4E24\u6B21\u8F93\u5165\u7684\u4E0D\u4E00\u6837",
+  encEmpty: "\u5BC6\u7801\u4E0D\u80FD\u4E3A\u7A7A",
+  encUnlockTitle: "\u8F93\u5165\u4E3B\u5BC6\u7801",
+  encKeychainWrong: "\u94A5\u5319\u4E32\u91CC\u5B58\u7684\u4E0D\u662F\u4E3B\u5BC6\u7801\uFF0C\u6CA1\u6709\u7528\u4E0A\u3002\u4E3B\u5BC6\u7801\u662F\u7B2C\u4E00\u6B21\u52A0\u5BC6\u65F6\u8BBE\u7684\u90A3\u4E2A\uFF1B\u60F3\u6362\u4E3B\u5BC6\u7801\u7528\u547D\u4EE4\u300C\u66F4\u6539\u4E3B\u5BC6\u7801\u300D\u3002",
+  encWrong: "\u5BC6\u7801\u4E0D\u5BF9",
+  encHintIs: "\u63D0\u793A\uFF1A{v}",
+  encOk: "\u786E\u5B9A",
+  encCancel: "\u53D6\u6D88",
   dateStyle: "\u5199\u6CD5",
   dateLink: "\u65E5\u8BB0\u94FE\u63A5 [[2026-11-17]]",
   numFormat: "\u6570\u5B57\u683C\u5F0F",
@@ -235,7 +277,16 @@ var zh = {
   yellow: "\u9EC4",
   green: "\u7EFF",
   blue: "\u84DD",
-  purple: "\u7D2B"
+  purple: "\u7D2B",
+  stylesMissing: "gogoga Table \u7684\u6837\u5F0F\u6587\u4EF6 styles.css \u6CA1\u6709\u52A0\u8F7D\uFF0C\u8868\u683C\u4F1A\u663E\u793A\u9519\u4E71\uFF08\u8868\u683C\u4E0B\u9762\u591A\u51FA\u4E00\u6392\u6309\u94AE\u3001\u6BCF\u884C\u5F88\u9AD8\uFF09\u3002\u8BF7\u770B\u4E00\u4E0B\u63D2\u4EF6\u6587\u4EF6\u5939 {dir} \u91CC\u6709\u6CA1\u6709 styles.css\uFF0C\u6216\u8005\u5728\u300C\u8BBE\u7F6E \u2192 \u7B2C\u4E09\u65B9\u63D2\u4EF6\u300D\u91CC\u5378\u8F7D\u540E\u91CD\u65B0\u5B89\u88C5\u3002",
+  whyHeadRowsFew: "\u8868\u683C\u884C\u6570\u4E0D\u591F\uFF1A\u8868\u5934\u8BBE\u6210 {n} \u884C\u540E\u5C31\u6CA1\u6709\u6570\u636E\u884C\u4E86",
+  whyHeadRowsMerge: "\u6709\u5408\u5E76\u7684\u683C\u5B50\u8DE8\u8FC7\u8868\u5934\u7684\u8FB9\u754C\uFF0C\u8868\u5934\u8BBE\u4E0D\u6210 {n} \u884C\u3002\u5148\u53D6\u6D88\u8FD9\u4E2A\u5408\u5E76",
+  whyFoldNoRows: "\u8868\u683C\u53EA\u6709\u8868\u5934\uFF0C\u6CA1\u6709\u53EF\u4EE5\u6298\u53E0\u7684\u884C",
+  whyDupHead: "\u8868\u5934\u884C\u4E0D\u80FD\u590D\u5236",
+  whySortEnc: "\u52A0\u5BC6\u5217\u4E0D\u80FD\u6392\u5E8F",
+  whySortMerge: "\u6709\u8DE8\u884C\u5408\u5E76\u7684\u683C\u5B50\uFF0C\u6392\u5E8F\u4F1A\u628A\u5B83\u62C6\u4E71\u3002\u5148\u53D6\u6D88\u5408\u5E76\u518D\u6392\u5E8F",
+  whyMergeHead: "\u9009\u533A\u8DE8\u8FC7\u4E86\u8868\u5934\uFF0C\u8868\u5934\u548C\u6570\u636E\u884C\u4E0D\u80FD\u5408\u5E76\u5728\u4E00\u8D77",
+  whyCheckboxMulti: "\u9009\u4E2D\u4E86\u591A\u4E2A\u683C\u5B50\uFF0C\u52FE\u9009\u6846\u4E00\u6B21\u53EA\u80FD\u52A0\u5230\u4E00\u4E2A\u683C\u5B50"
 };
 var en = {
   insertRowAbove: "Insert row above",
@@ -270,7 +321,7 @@ var en = {
   cmd_select_col: "Select column",
   cmd_toggle_checkbox: "Toggle checkbox",
   gridTitle: "Insert table",
-  gridHint: "{r} rows \xD7 {c} columns (with header)",
+  gridHint: "{r} rows \xD7 {c} columns (with header) \xB7 arrow keys to resize, Enter to insert",
   removeCheckbox: "Remove checkbox",
   insertRowBelow: "Insert row below",
   insertColLeft: "Insert column left",
@@ -286,8 +337,9 @@ var en = {
   fmtHighlight: "Highlight (==text==)",
   fmtTextColor: "Text color",
   fmtHighlightColor: "Highlighter",
-  fmtClear: "Clear text and highlighter colors",
+  fmtClear: "Clear formatting",
   mbDone: "Done",
+  mbMenu: "Table menu",
   mbUndo: "Undo",
   mbRedo: "Redo",
   mbLink: "Insert link",
@@ -330,6 +382,7 @@ var en = {
   autoWidth: "Auto width",
   clearCell: "Clear contents",
   mergeCells: "Merge cells",
+  dragToSelect: "Press and hold a cell, then drag to select more",
   fill: "Drag to fill a series, hold \u2325 to copy",
   tableMenu: "Table options",
   tableStyle: "Style for this table",
@@ -395,6 +448,46 @@ var en = {
   kind_date: "Date",
   kind_num: "Number",
   kind_bar: "Progress bar",
+  kind_enc: "Encrypted",
+  encUnlock: "Enter the master password to view",
+  encShow: "Show",
+  encHide: "Hide",
+  encCopy: "Copy",
+  encCopied: "Copied. It will be cleared from the clipboard in 30 seconds.",
+  encPlain: "This cell isn't encrypted yet. Use Encrypt this column in the column menu.",
+  encForeign: "The current master password can't decrypt this cell (it may use a different password).",
+  encNoHost: "Encrypted columns can't be unlocked here. Open the table in its note.",
+  encNotSaved: "Not unlocked, so the change to the encrypted column wasn't saved.",
+  encChanged: "The table changed while encrypting, so this cell wasn't saved. Please enter it again.",
+  encSealCol: "Encrypt this column",
+  encRekey: "Change master password",
+  encRekeyTitle: "Set a new master password",
+  encRekeyConfirm: "Re-encrypt {n} items in {f} notes with a new master password (encrypted table cells, plus Meld Encrypt inline text that uses the same password)? Whole-note .mdenc files aren't changed.",
+  encRekeyOther: "{n} other items use a different password and won't be changed.",
+  encRekeyGo: "Continue",
+  encRekeyFailed: "Something couldn't be re-encrypted, so no notes were changed and the master password stays the same.",
+  encRekeyDone: "Master password changed: {n} items in {f} notes were re-encrypted.",
+  encRekeyKeychain: "Update the master password saved in the keychain too.",
+  encCell: "Encrypt",
+  decryptCell: "Remove encryption",
+  encDecryptCellConfirm: "Decrypt the selected cells and save them as plain text in the note? Anyone can then read them without the master password.",
+  encLock: "Lock encrypted content",
+  encDecryptConfirm: "Decrypt this column and save it as plain text in the note? Anyone can then read it without the master password.",
+  encDecryptOk: "Decrypt",
+  encForeignAbort: "Some cells in this column can't be decrypted with the current master password. Nothing was changed.",
+  encSetupTitle: "Set a master password",
+  encSetupDesc: "Every encrypted column uses this password. If you forget it, the content can't be recovered.",
+  encPassword: "Master password",
+  encPassword2: "Enter it again",
+  encHint: "Hint (optional, stored unencrypted)",
+  encMismatch: "The passwords don't match",
+  encEmpty: "The password can't be empty",
+  encUnlockTitle: "Enter master password",
+  encKeychainWrong: "The password in the keychain isn't the master password, so it wasn't used. The master password is the one you set when you first encrypted something. To change it, use the Change master password command.",
+  encWrong: "Wrong password",
+  encHintIs: "Hint: {v}",
+  encOk: "OK",
+  encCancel: "Cancel",
   dateStyle: "Written as",
   dateLink: "Daily note link [[2026-11-17]]",
   numFormat: "Number format",
@@ -446,7 +539,16 @@ var en = {
   yellow: "Yellow",
   green: "Green",
   blue: "Blue",
-  purple: "Purple"
+  purple: "Purple",
+  stylesMissing: "gogoga Table's stylesheet (styles.css) didn't load, so tables will look broken (a row of buttons under each table, very tall rows). Check that the plugin folder {dir} contains styles.css, or uninstall and reinstall the plugin in Settings \u2192 Community plugins.",
+  whyHeadRowsFew: "Not enough rows: with {n} header rows there would be no data rows left",
+  whyHeadRowsMerge: "A merged cell crosses the header boundary, so the header can't be {n} rows. Unmerge it first",
+  whyFoldNoRows: "The table only has header rows, nothing to fold",
+  whyDupHead: "The header row can't be duplicated",
+  whySortEnc: "Encrypted columns can't be sorted",
+  whySortMerge: "Cells merged across rows would be broken apart by sorting. Unmerge them first",
+  whyMergeHead: "The selection crosses the header; header and data cells can't be merged together",
+  whyCheckboxMulti: "Several cells are selected; a checkbox can only be added to one cell at a time"
 };
 var lang = "en";
 function setLanguage(code) {
@@ -1046,6 +1148,7 @@ function cleanColType(x) {
   if (o.t === "date") return o.f === "slash" || o.f === "link" ? { t: "date", f: o.f } : { t: "date" };
   if (o.t === "bar") return { t: "bar" };
   if (o.t === "multi") return { t: "multi" };
+  if (o.t === "enc") return { t: "enc" };
   if (o.t === "num") {
     const n = { t: "num" };
     if (o.g === 1) n.g = 1;
@@ -2268,6 +2371,21 @@ function toggleCheck(t2, r, c) {
   if (!m) return t2;
   return setCell(t2, r, c, (m[1] === " " ? "[x]" : "[ ]") + v.slice(3));
 }
+var TASK_RE = /^(\s*(?:[-*+]|\d+[.)])\s+\[)([^\]])\]/;
+function toggleTask(t2, r, c, n) {
+  const v = t2.cells[r]?.[c];
+  if (v === void 0) return t2;
+  const parts = v.split(/(<br\s*\/?>|\n)/i);
+  let k = 0;
+  for (let i = 0; i < parts.length; i += 2) {
+    const m = TASK_RE.exec(parts[i]);
+    if (!m) continue;
+    if (k++ !== n) continue;
+    parts[i] = m[1] + (m[2] === " " ? "x" : " ") + parts[i].slice(m[1].length + 1);
+    return setCell(t2, r, c, parts.join(""));
+  }
+  return t2;
+}
 function hasTotal(t2) {
   return !!t2.meta.calc?.some(Boolean);
 }
@@ -2384,7 +2502,7 @@ function normalize(t2) {
 function colTypeOf(t2, c) {
   return t2.meta.ty?.[c] ?? null;
 }
-var COL_KINDS = ["text", "status", "multi", "date", "num", "bar"];
+var COL_KINDS = ["text", "status", "multi", "date", "num", "bar", "enc"];
 function colKindOf(t2, c) {
   const ty = colTypeOf(t2, c);
   if (ty) return ty.t;
@@ -2790,15 +2908,6 @@ function sourceFromHTML(html) {
   }
 }
 
-// src/editor/cell-input.ts
-var import_state2 = require("@codemirror/state");
-var import_view2 = require("@codemirror/view");
-var import_commands = require("@codemirror/commands");
-
-// src/core/cm-format.ts
-var import_state = require("@codemirror/state");
-var import_view = require("@codemirror/view");
-
 // src/core/tokens.ts
 var URL_STOP = String.raw`\s<>\]"'\x60。，、；：！？…「」『』【】〈〉《》（）“”‘’`;
 var BARE_URL = String.raw`(https?:\/\/[^${URL_STOP}]*[^${URL_STOP},.;:!?])`;
@@ -2834,6 +2943,18 @@ function formatSpans(text) {
   for (const line of text.split("\n")) {
     scan(line, offset, out);
     offset += line.length + 1;
+  }
+  if (text.includes("\n")) {
+    const flat = text.replace(/\n/g, "\0");
+    for (const m of flat.matchAll(TOKEN_RE)) {
+      const g = GROUPS.find((x) => m[x.group] !== void 0);
+      if (!g?.html || !m[0].includes("\0")) continue;
+      const from = m.index ?? 0;
+      const to = from + m[0].length;
+      const innerTo = to - g.close;
+      out.push({ kind: g.kind, from, to, innerFrom: innerTo - m[g.group].length, innerTo, ...g.colorGroup ? { color: m[g.colorGroup] } : {}, html: true });
+    }
+    out.sort((x, y) => x.from - y.from || y.to - x.to);
   }
   return out;
 }
@@ -2959,14 +3080,114 @@ function balancedSlice(text, from, to) {
   post.sort((a, b) => b.from - a.from);
   return pre.map((s) => text.slice(s.from, s.innerFrom)).join("") + text.slice(from, to) + post.map((s) => text.slice(s.innerTo, s.to)).join("");
 }
-function breakInsideFormats(text, pos) {
-  const spans = formatSpans(text).filter((s) => s.innerFrom <= pos && pos <= s.innerTo && s.innerFrom < s.innerTo);
+function formatBreak(text, pos) {
+  const all = formatSpans(text);
+  for (let moved = true; moved; ) {
+    moved = false;
+    for (const s of all) {
+      if (s.innerFrom === s.innerTo) continue;
+      if (pos === s.innerFrom && s.from < pos) {
+        pos = s.from;
+        moved = true;
+      } else if (pos === s.innerTo && s.to > pos) {
+        pos = s.to;
+        moved = true;
+      }
+    }
+  }
+  const spans = all.filter((s) => s.innerFrom < pos && pos < s.innerTo);
   const outer = [...spans].sort((a, b) => a.from - b.from);
   const inner = [...spans].sort((a, b) => b.from - a.from);
-  return inner.map((s) => text.slice(s.innerTo, s.to)).join("") + "\n" + outer.map((s) => text.slice(s.from, s.innerFrom)).join("");
+  return { pos, insert: inner.map((s) => text.slice(s.innerTo, s.to)).join("") + "\n" + outer.map((s) => text.slice(s.from, s.innerFrom)).join("") };
 }
 
+// src/core/format-apply.ts
+function applyFormat(text, start, end, fmt2) {
+  return fmt2.kind === "clear" ? clearFormat(text, start, end) : applyInlineFormat(text, start, end, fmt2);
+}
+function clearFormat(text, start, end) {
+  let r = clearOnce(text, start, end);
+  for (let i = 0; i < 4 && r.text !== text && r.start < r.end; i++) {
+    text = r.text;
+    const next = clearOnce(text, r.start, r.end);
+    if (next.text === text) break;
+    r = next;
+  }
+  return r;
+}
+function clearOnce(text, start, end) {
+  let [s, e] = start === end ? [0, text.length] : [Math.min(start, end), Math.max(start, end)];
+  const spans = formatSpans(text).filter((x) => x.kind !== "code");
+  for (const x of spans) {
+    if (s > x.from && s < x.innerFrom) s = x.from;
+    if (s > x.innerTo && s < x.to) s = x.innerTo;
+    if (e > x.from && e < x.innerFrom) e = x.innerFrom;
+    if (e > x.innerTo && e < x.to) e = x.to;
+  }
+  if (s >= e) return { text, start, end };
+  for (const ch of ["*", "_"]) {
+    let a = 0;
+    let b = 0;
+    while (s - a - 1 >= 0 && text[s - a - 1] === ch) a++;
+    while (e + b < text.length && text[e + b] === ch) b++;
+    const n = Math.min(a, b);
+    s -= n;
+    e += n;
+  }
+  for (let moved = true; moved; ) {
+    moved = false;
+    for (const x of spans) {
+      if (x.innerFrom === s && x.from < s && x.innerTo <= e) {
+        s = x.from;
+        moved = true;
+      }
+      if (x.innerTo === e && x.to > e && x.innerFrom >= s) {
+        e = x.to;
+        moved = true;
+      }
+    }
+  }
+  const hit = spans.filter((x) => s < x.innerTo && e > x.innerFrom);
+  if (!hit.length) return { text, start, end };
+  const closeAtS = [];
+  const openAtE = [];
+  const del = [];
+  for (const x of hit) {
+    if (x.innerFrom < s) closeAtS.push(x);
+    else del.push([x.from, x.innerFrom]);
+    if (x.innerTo > e) openAtE.push(x);
+    else del.push([x.innerTo, x.to]);
+  }
+  closeAtS.sort((a, b) => b.from - a.from);
+  openAtE.sort((a, b) => a.from - b.from);
+  const closers = closeAtS.map((x) => text.slice(x.innerTo, x.to)).join("");
+  const openers = openAtE.map((x) => text.slice(x.from, x.innerFrom)).join("");
+  const gone = (i) => del.some(([a, b]) => i >= a && i < b);
+  let out = "";
+  let ns = -1;
+  let ne = -1;
+  for (let i = 0; i <= text.length; i++) {
+    if (i === s) {
+      out += closers;
+      ns = out.length;
+    }
+    if (i === e) {
+      ne = out.length;
+      out += openers;
+    }
+    if (i < text.length && !gone(i)) out += text[i];
+  }
+  return { text: out, start: ns, end: ne };
+}
+
+// src/editor/cell-input.ts
+var import_state2 = require("@codemirror/state");
+var import_view2 = require("@codemirror/view");
+var import_commands = require("@codemirror/commands");
+
 // src/core/cm-format.ts
+var import_state = require("@codemirror/state");
+var import_view = require("@codemirror/view");
 var hideAll = import_state.Facet.define({ combine: (v) => v.some(Boolean) });
 function hiddenSpans(state) {
   const all = state.facet(hideAll);
@@ -3037,13 +3258,35 @@ function build(state) {
   }
   return { deco: import_view.Decoration.set(deco, true), atomic: import_view.Decoration.set(atomic, true) };
 }
+var dragEnded = import_state.StateEffect.define();
 var livePreview = import_view.ViewPlugin.fromClass(
   class {
     constructor(view) {
+      this.view = view;
+      /**
+       * 按着鼠标拖选中。这期间选区变了也不改标记的显隐（#45）：拖到刚好把一段 **加粗** 整个包住时标记会藏起来，
+       * 后面的字往左挪，CodeMirror 按鼠标位置重算选区又没包住、标记露出来、字又挪回去……一直来回闪。松手再更新
+       */
+      this.dragging = false;
+      this.onDown = (ev) => {
+        if (ev.button === 0) this.dragging = true;
+      };
+      this.onUp = () => {
+        if (!this.dragging) return;
+        this.dragging = false;
+        queueMicrotask(() => this.view.dom.isConnected && this.view.dispatch({ effects: dragEnded.of(null) }));
+      };
       ({ deco: this.deco, atomic: this.atomic } = build(view.state));
+      view.contentDOM.addEventListener("mousedown", this.onDown);
+      view.dom.ownerDocument.addEventListener("mouseup", this.onUp, true);
     }
     update(update) {
-      if (update.docChanged || update.selectionSet) ({ deco: this.deco, atomic: this.atomic } = build(update.state));
+      const ended = update.transactions.some((tr) => tr.effects.some((e) => e.is(dragEnded)));
+      if (update.docChanged || ended || update.selectionSet && !this.dragging) ({ deco: this.deco, atomic: this.atomic } = build(update.state));
+    }
+    destroy() {
+      this.view.contentDOM.removeEventListener("mousedown", this.onDown);
+      this.view.dom.ownerDocument.removeEventListener("mouseup", this.onUp, true);
     }
   },
   {
@@ -3072,8 +3315,9 @@ function copySel(ev, view, cut) {
 function insertFormatBreak(view) {
   const { from, to } = view.state.selection.main;
   const text = view.state.doc.toString();
-  const ins = breakInsideFormats(text.slice(0, from) + text.slice(to), from);
-  view.dispatch({ changes: { from, to, insert: ins }, selection: { anchor: from + ins.length }, userEvent: "input" });
+  const b = formatBreak(text.slice(0, from) + text.slice(to), from);
+  const changes = from === to ? [{ from: b.pos, insert: b.insert }] : [{ from, to }, { from: b.pos <= from ? b.pos : b.pos + (to - from), insert: b.insert }];
+  view.dispatch({ changes, selection: { anchor: b.pos + b.insert.length }, userEvent: "input" });
   return true;
 }
 function visibleSelection(view) {
@@ -3137,6 +3381,42 @@ var TextareaInput = class {
   detach() {
     this.el.remove();
   }
+  selectionRect() {
+    const ta = this.el;
+    const m = this.mirror();
+    if (!m) return null;
+    const { div, cs } = m;
+    div.append(ta.value.slice(0, ta.selectionStart));
+    const a = div.createSpan({ text: "\u200B" });
+    div.append(ta.value.slice(ta.selectionStart, ta.selectionEnd));
+    const b = div.createSpan({ text: "\u200B" });
+    div.append(ta.value.slice(ta.selectionEnd) || "\u200B");
+    const lh = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.5 || 20;
+    const r = ta.getBoundingClientRect();
+    const k = ta.offsetWidth ? r.width / ta.offsetWidth : 1;
+    const x0 = r.left - ta.scrollLeft * k;
+    const y0 = r.top - ta.scrollTop * k;
+    const out = {
+      top: y0 + a.offsetTop * k,
+      bottom: y0 + (b.offsetTop + lh) * k,
+      left: x0 + Math.min(a.offsetLeft, b.offsetLeft) * k,
+      right: x0 + Math.max(a.offsetLeft, b.offsetLeft) * k
+    };
+    div.remove();
+    return out;
+  }
+  /** 照着 textarea 的字体、宽度、内边距排文字的隐藏元素（量光标位置用），用完自己 remove */
+  mirror() {
+    const ta = this.el;
+    const doc = ta.ownerDocument;
+    if (!ta.isConnected) return null;
+    const cs = (doc.defaultView ?? window).getComputedStyle(ta);
+    const div = doc.body.appendChild(doc.createElement("div"));
+    for (const p of ["box-sizing", "width", "padding-top", "padding-right", "padding-bottom", "padding-left", "border-top-width", "border-right-width", "border-bottom-width", "border-left-width", "border-style", "font-family", "font-size", "font-weight", "font-style", "letter-spacing", "line-height", "text-transform", "word-spacing", "tab-size", "text-indent", "word-break", "overflow-wrap"])
+      div.style.setProperty(p, cs.getPropertyValue(p));
+    div.className = "ggt-caret-mirror";
+    return { div, cs };
+  }
   visibleSelection() {
     return { from: this.el.selectionStart, to: this.el.selectionEnd };
   }
@@ -3147,11 +3427,9 @@ var TextareaInput = class {
     if (dir === "left") return pos === 0;
     if (dir === "right") return pos === ta.value.length;
     const doc = ta.ownerDocument;
-    const cs = (doc.defaultView ?? window).getComputedStyle(ta);
-    const m = doc.body.appendChild(doc.createElement("div"));
-    for (const p of ["box-sizing", "width", "padding-top", "padding-right", "padding-bottom", "padding-left", "border-top-width", "border-right-width", "border-bottom-width", "border-left-width", "border-style", "font-family", "font-size", "font-weight", "font-style", "letter-spacing", "line-height", "text-transform", "word-spacing", "tab-size", "text-indent", "word-break", "overflow-wrap"])
-      m.style.setProperty(p, cs.getPropertyValue(p));
-    m.className = "ggt-caret-mirror";
+    const mm = this.mirror();
+    if (!mm) return true;
+    const { div: m, cs } = mm;
     m.append(ta.value.slice(0, pos));
     const mark = m.appendChild(doc.createElement("span"));
     mark.textContent = "\u200B";
@@ -3318,6 +3596,15 @@ var CodeMirrorInput = class {
     const len = this.view.state.doc.length;
     this.view.dispatch({ selection: import_state2.EditorSelection.single(Math.min(start, len), Math.min(end, len)) });
   }
+  selectionRect() {
+    const v = this._view;
+    if (!v) return null;
+    const r = v.state.selection.main;
+    const a = v.coordsAtPos(r.from, 1);
+    const b = v.coordsAtPos(r.to, -1);
+    if (!a || !b) return null;
+    return { top: Math.min(a.top, b.top), bottom: Math.max(a.bottom, b.bottom), left: Math.min(a.left, b.left), right: Math.max(a.right, b.right) };
+  }
   visibleSelection() {
     return visibleSelection(this.view);
   }
@@ -3372,14 +3659,176 @@ var CodeMirrorInput = class {
   }
 };
 
+// src/core/secret.ts
+var PREFIX_HIDDEN = "%%\u{1F510}\u03B3 ";
+var PREFIX_SHOWN = "\u{1F510}\u03B3 ";
+var PREFIX_HIDDEN_B = "%%\u{1F510}\u03B2 ";
+var PREFIX_SHOWN_B = "\u{1F510}\u03B2 ";
+var ITERATIONS_B = 21e4;
+var SUFFIX_HIDDEN = " \u{1F510}%%";
+var SUFFIX_SHOWN = " \u{1F510}";
+var HINT = "\u{1F4A1}";
+var ITERATIONS = 22e4;
+var MAX_ITERATIONS = 2e6;
+function parseSecret(text) {
+  const s = text.trim();
+  const prefix = [PREFIX_HIDDEN, PREFIX_SHOWN, PREFIX_HIDDEN_B, PREFIX_SHOWN_B].find((p) => s.startsWith(p));
+  if (!prefix) return null;
+  const shown = !prefix.startsWith("%%");
+  const v = prefix.includes("\u03B2") ? 2 : 3;
+  const suffix = shown ? SUFFIX_SHOWN : SUFFIX_HIDDEN;
+  if (!s.endsWith(suffix) || s.length < prefix.length + suffix.length) return null;
+  let body = s.slice(prefix.length, s.length - suffix.length);
+  let hint = "";
+  if (body.startsWith(HINT)) {
+    const end = body.indexOf(HINT, HINT.length);
+    if (end < 0) return null;
+    hint = body.slice(HINT.length, end);
+    body = body.slice(end + HINT.length);
+  }
+  if (!/^[A-Za-z0-9+/]+={0,2}$/.test(body) || body.length % 4 !== 0) return null;
+  return { data: body, hint, shown, v };
+}
+function writeSecret(data, hint = "", shown = false) {
+  const h = hint ? HINT + hint + HINT : "";
+  return shown ? `${PREFIX_SHOWN}${h}${data}${SUFFIX_SHOWN}` : `${PREFIX_HIDDEN}${h}${data}${SUFFIX_HIDDEN}`;
+}
+var SECRET_RUN = /(?:%%)?🔐[γβ] [\s\S]*? 🔐(?:%%)?/g;
+function secretParts(text) {
+  const parts = [];
+  let rest = text;
+  for (const m of text.match(SECRET_RUN) ?? []) {
+    const p = parseSecret(m);
+    if (!p) return null;
+    parts.push(p);
+    rest = rest.replace(m, "");
+  }
+  return rest.trim() ? null : parts;
+}
+function findSecrets(text) {
+  return (text.match(SECRET_RUN) ?? []).filter((m) => parseSecret(m));
+}
+function isSealed(text) {
+  return secretParts(text) !== null;
+}
+function toBase64(bytes) {
+  let s = "";
+  for (let i = 0; i < bytes.length; i += 32768) s += String.fromCharCode(...bytes.subarray(i, i + 32768));
+  return btoa(s);
+}
+function fromBase64(s) {
+  const bin = atob(s);
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+function openData(data, v = 3) {
+  let b;
+  try {
+    b = fromBase64(data);
+  } catch {
+    return null;
+  }
+  if (v === 2) return b.length < 48 ? null : { v, iterations: ITERATIONS_B, iv: b.slice(0, 16), salt: b.slice(16, 32), cipher: b.slice(32) };
+  if (b.length < 48 || b[0] !== 1) return null;
+  const iterations = b[1] * 65536 + b[2] * 256 + b[3];
+  if (iterations < ITERATIONS || iterations > MAX_ITERATIONS) return null;
+  return { v, iterations, salt: b.slice(4, 20), iv: b.slice(20, 32), cipher: b.slice(32) };
+}
+function envelopeOf(text) {
+  const p = parseSecret(text);
+  return p ? openData(p.data, p.v) : null;
+}
+function packData(e) {
+  const b = new Uint8Array(32 + e.cipher.length);
+  b[0] = 1;
+  b[1] = e.iterations >>> 16 & 255;
+  b[2] = e.iterations >>> 8 & 255;
+  b[3] = e.iterations & 255;
+  b.set(e.salt, 4);
+  b.set(e.iv, 20);
+  b.set(e.cipher, 32);
+  return toBase64(b);
+}
+function aad(iterations, salt, iv) {
+  return new TextEncoder().encode(
+    JSON.stringify({
+      version: "3.0",
+      kdf: { name: "PBKDF2", hash: "SHA-512", iterations, salt: toBase64(salt) },
+      cipher: { name: "AES-GCM", keyLength: 256, iv: toBase64(iv), tagLength: 128 }
+    })
+  );
+}
+var buf = (b) => b.slice().buffer;
+async function deriveKey(password, salt, iterations) {
+  const material = await crypto.subtle.importKey("raw", buf(new TextEncoder().encode(password)), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name: "PBKDF2", hash: "SHA-512", salt: buf(salt), iterations }, material, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
+}
+function newSalt() {
+  return crypto.getRandomValues(new Uint8Array(16));
+}
+async function encryptData(key, salt, iterations, text) {
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const cipher = await crypto.subtle.encrypt({ name: "AES-GCM", iv: buf(iv), tagLength: 128, additionalData: buf(aad(iterations, salt, iv)) }, key, buf(new TextEncoder().encode(text)));
+  return packData({ v: 3, iterations, salt, iv, cipher: new Uint8Array(cipher) });
+}
+async function decryptData(key, e) {
+  try {
+    const algo = e.v === 2 ? { name: "AES-GCM", iv: buf(e.iv) } : { name: "AES-GCM", iv: buf(e.iv), tagLength: 128, additionalData: buf(aad(e.iterations, e.salt, e.iv)) };
+    const plain = await crypto.subtle.decrypt(algo, key, buf(e.cipher));
+    return new TextDecoder().decode(plain);
+  } catch {
+    return null;
+  }
+}
+
 // src/editor/editor.ts
-var KIND_ICONS = { text: "type", status: "tag", multi: "tags", date: "calendar", num: "hash", bar: "percent" };
+var KIND_ICONS = { text: "type", status: "tag", multi: "tags", date: "calendar", num: "hash", bar: "percent", enc: "lock" };
 var ARROW_EDGE = {
   ArrowUp: { edge: "up", dr: -1, dc: 0 },
   ArrowDown: { edge: "down", dr: 1, dc: 0 },
   ArrowLeft: { edge: "left", dr: 0, dc: -1 },
   ArrowRight: { edge: "right", dr: 0, dc: 1 }
 };
+function secretCellsOf(t2) {
+  const out = [];
+  const end = rowCount(t2) - (hasTotal(t2) ? 1 : 0);
+  t2.meta.ty?.forEach((ty, c) => {
+    if (ty?.t !== "enc" || c >= colCount(t2)) return;
+    for (let r = headRows(t2); r < end; r++) {
+      const m = mergeAt(t2, r, c);
+      if (m && (m.r1 !== r || m.c1 !== c)) continue;
+      out.push([r, c, t2.cells[r][c]]);
+    }
+  });
+  return out;
+}
+function hasSecret(md) {
+  return md.includes("\u{1F510}") && !!md.trim() && isSealed(md);
+}
+function sealedCellsOf(t2) {
+  const out = /* @__PURE__ */ new Set();
+  for (const row of t2.cells) for (const v of row) if (hasSecret(v)) out.add(v);
+  return [...out];
+}
+function freshPlain(prev, next) {
+  if (!next.meta.ty?.some((x) => x?.t === "enc")) return false;
+  const had = new Set(secretCellsOf(prev).map((x) => x[2]));
+  return secretCellsOf(next).some(([, , v]) => !!v.trim() && !isSealed(v) && !had.has(v));
+}
+async function sealTable(t2, box) {
+  const todo = secretCellsOf(t2).filter(([, , v]) => v.trim() && !isSealed(v));
+  if (!todo.length) return t2;
+  const sealed = await Promise.all(todo.map(([, , v]) => box.seal(v)));
+  let n = t2;
+  todo.forEach(([r, c], i) => n = editCell(n, r, c, sealed[i]));
+  return n;
+}
+function clearClipboardLater(win, text) {
+  win.setTimeout(() => {
+    void win.navigator.clipboard.readText().then((now) => now === text ? win.navigator.clipboard.writeText("") : void 0).catch(() => void 0);
+  }, 3e4);
+}
 function sameTable(a, b) {
   return JSON.stringify([a.cells, a.align, a.meta]) === JSON.stringify([b.cells, b.align, b.meta]);
 }
@@ -3430,6 +3879,10 @@ var TABLE_COMMANDS = [
   "select-col",
   "toggle-checkbox"
 ];
+function popupParent(doc) {
+  if (doc.body.classList.contains("is-mobile")) return doc.querySelector(".app-container") ?? doc.body;
+  return doc.body;
+}
 var TableEditor = class {
   constructor(parent, table, host) {
     this.host = host;
@@ -3448,6 +3901,9 @@ var TableEditor = class {
     this.scrolledAt = 0;
     /** 最近一次是用手指点的：触屏没有悬停，手柄跟着选中的格子显示 */
     this.touched = false;
+    /** 触屏上的「多选格子」：点格子不进编辑，而是从起点选到这一格（相当于电脑上按住 Shift 点），长按选区出菜单 */
+    /** 刚按坐标替菜单点过按钮：这次触摸剩下的事件（iPhone 上 touchstart 在 pointerdown 之后才来，那时菜单已经关了）别再落到后面的正文、格子上 */
+    this.swallowUntil = 0;
     /** 每个位置 → 显示它的格子元素（被合并盖住的位置指向左上角那格）。render 时建，大表格里不用每次 querySelector 全表 */
     this.grid = [];
     /** 上一次加了选中样式、十字高亮的格子：下次只清这些，不扫全表 */
@@ -3487,6 +3943,9 @@ var TableEditor = class {
      * 文字跟着挪、格子底色留在原地，表头变透明压在正文上（#15）
      */
     this.headShift = 0;
+    /** 显示过明文的格子（按密文记，锁上时清掉） */
+    this.revealed = /* @__PURE__ */ new Set();
+    this.decrypting = false;
     /** 十字高亮：悬停模式下鼠标所在的格子，否则（或鼠标不在表格上）选中的格子 */
     this.crossAt = null;
     // ---------- 格式栏 ----------
@@ -3495,6 +3954,17 @@ var TableEditor = class {
     // ---------- 手机上的编辑工具条 ----------
     this.mobileBar = null;
     this.mobileBarCleanup = null;
+    /**
+     * 第 c 列在屏幕上的左右边：Chromium 量 <col> 就行；iPhone、iPad（WebKit）上 <col> 量出来一律是 0，
+     * 这时用这一列的格子（不跨列的那种；都被合并盖住时取格子的边线）算。调列宽的把手就是按它放的，
+     * 以前在手机上全跑到表格最左边，一拖就成了 Obsidian 拉出侧栏的手势（小红书反馈）
+     */
+    /**
+     * 旧内核（Chromium 114 这类：Electron 25 的老安装器，Windows 上常见）量 <col> 时，每一列的位置都报成表格的左边，只有宽度对。
+     * 拿它判断列边线，拖列宽的触发点、十字高亮都会往左错（#22）。量到第二列没接在第一列后面，就改量格子。
+     * 内核不会中途变，判断一次就记住；还没画出来（宽度为 0）时先不下结论
+     */
+    this.colRectsOk = null;
     this.table = table;
     const doc = parent.ownerDocument;
     this.root = doc.createElement("div");
@@ -3519,6 +3989,8 @@ var TableEditor = class {
     this.resizeBar = this.root.appendChild(doc.createElement("div"));
     this.resizeBar.className = "ggt-resize";
     this.resizeBar.setAttribute("aria-label", t("resize"));
+    this.resizeBar.dataset.ignoreSwipe = "true";
+    this.fillHandle.dataset.ignoreSwipe = "true";
     this.rowHandle = this.handle("ggt-row-handle", t("rowMenu"), "grip-vertical");
     this.cornerBtn = this.root.appendChild(doc.createElement("button"));
     this.cornerBtn.setAttribute("type", "button");
@@ -3547,6 +4019,8 @@ var TableEditor = class {
     this.cleanups.push(() => window.clearTimeout(leaveTimer));
     this.root.classList.toggle("is-readonly", !!host.readonly);
     parent.appendChild(this.root);
+    const box = host.secrets?.();
+    if (box?.subscribe) this.cleanups.push(box.subscribe(() => this.refreshSecrets()));
     this.bind();
     this.render();
     this.watchScroll();
@@ -4084,6 +4558,9 @@ var TableEditor = class {
     const opts = this.table.meta.opts?.[c];
     const ty = colTypeOf(this.table, c);
     const isData = r >= headRows(this.table) && !(hasTotal(this.table) && r === rowCount(this.table) - 1);
+    if (ty?.t === "enc" && isData || hasSecret(md)) return this.fillSecret(el, md);
+    if (el.title === t("encPlain") || el.title === t("encForeign")) el.removeAttribute("title");
+    el.classList.remove("is-unsealed");
     if (opts && ty?.t === "multi" && isData && md.trim()) {
       el.replaceChildren();
       el.classList.remove("is-empty");
@@ -4160,6 +4637,250 @@ var TableEditor = class {
       if (this.host.renderMarkdown) el.dir = "auto";
     }
   }
+  // ---------- 加密列 ----------
+  /** 这一格要按加密处理：加密列的数据格（表头、合计行不算），或者单独加密过的格子 */
+  isSecretCell(p) {
+    const tb = this.table;
+    if (hasSecret(tb.cells[p.r]?.[p.c] ?? "")) return true;
+    return colTypeOf(tb, p.c)?.t === "enc" && p.r >= headRows(tb) && !(hasTotal(tb) && p.r === rowCount(tb) - 1);
+  }
+  /**
+   * 加密格子：锁着画 ••••••（旁边一把锁，点了解锁）；解锁后还是 ••••••，旁边的眼睛显示明文、复制按钮复制明文。
+   * 还没加密的明文照常显示，标出来
+   */
+  fillSecret(el, md) {
+    const doc = el.ownerDocument;
+    el.replaceChildren();
+    el.classList.remove("is-empty", "is-not-date", "is-unsealed");
+    el.removeAttribute("title");
+    if (!md.trim()) {
+      el.classList.add("is-empty");
+      return;
+    }
+    if (!isSealed(md)) {
+      this.fill(el, md);
+      el.classList.add("is-unsealed");
+      el.title = t("encPlain");
+      return;
+    }
+    const box = this.host.secrets?.() ?? null;
+    const plain = box?.peek(md);
+    if (box?.unlocked && plain === void 0) this.decryptSoon();
+    const wrap = el.appendChild(doc.createElement("span"));
+    wrap.className = "ggt-secret";
+    const shown = typeof plain === "string" && this.revealed.has(md);
+    if (shown) {
+      const text = wrap.appendChild(doc.createElement("span"));
+      text.className = "ggt-secret-text";
+      this.fill(text, plain);
+    } else {
+      const mask = wrap.appendChild(doc.createElement("span"));
+      mask.className = "ggt-secret-mask";
+      mask.textContent = "\u2022\u2022\u2022\u2022\u2022\u2022";
+      if (plain === null) {
+        wrap.classList.add("is-foreign");
+        el.title = t("encForeign");
+      }
+    }
+    const btn = (act, icon, label) => {
+      const b = wrap.appendChild(doc.createElement("button"));
+      b.type = "button";
+      b.tabIndex = -1;
+      b.className = "ggt-secret-btn clickable-icon";
+      b.dataset.act = act;
+      b.setAttribute("aria-label", label);
+      if (this.host.setIcon) this.host.setIcon(b, icon);
+      else b.textContent = act === "unlock" ? "\u{1F512}" : act === "copy" ? "\u29C9" : "\u{1F441}";
+    };
+    if (!box) return;
+    if (!box.unlocked) btn("unlock", "lock", t("encUnlock"));
+    else if (typeof plain === "string") {
+      btn("toggle", shown ? "eye-off" : "eye", t(shown ? "encHide" : "encShow"));
+      btn("copy", "copy", t("encCopy"));
+    }
+  }
+  /** 表里加密的格子的原文（加密列的、单独加密的） */
+  secretCells() {
+    return sealedCellsOf(this.table);
+  }
+  /** 解锁着、还有没解开的格子：解开后重画加密列 */
+  decryptSoon() {
+    const box = this.host.secrets?.();
+    if (this.decrypting || !box?.unlocked) return;
+    this.decrypting = true;
+    void box.openAll(this.secretCells()).then((fresh) => {
+      this.decrypting = false;
+      if (fresh && !this.destroyed) this.refillSecrets();
+    });
+  }
+  /** 加密列和单独加密的格子重新画一遍（正在编辑的那格不动） */
+  refillSecrets() {
+    const done = /* @__PURE__ */ new Set();
+    const tb = this.table;
+    const todo = secretCellsOf(tb).map(([r, c]) => ({ r, c }));
+    tb.cells.forEach((row, r) => row.forEach((v, c) => hasSecret(v) && todo.push({ r, c })));
+    for (const { r, c } of todo) {
+      if (this.editing && this.sel && this.sel.r === r && this.sel.c === c) continue;
+      const cell = this.cellEl({ r, c });
+      const content = cell?.querySelector(".ggt-content");
+      if (!cell || !content || done.has(cell)) continue;
+      done.add(cell);
+      const m = mergeAt(this.table, r, c);
+      this.fillCell(content, r, c, m ? mergedText(this.table, m) : this.table.cells[r][c]);
+    }
+    this.refreshCross();
+  }
+  /** 主密码锁上、解锁了（refreshSecretCells 调） */
+  refreshSecrets() {
+    if (!this.table.meta.ty?.some((x) => x?.t === "enc") && !sealedCellsOf(this.table).length) return;
+    if (!this.host.secrets?.()?.unlocked) this.revealed.clear();
+    this.refillSecrets();
+  }
+  async secretButton(act, p) {
+    const box = this.host.secrets?.();
+    if (!box) return;
+    const raw = this.table.cells[p.r]?.[p.c] ?? "";
+    if (act === "unlock") {
+      if (await box.unlock(this.secretCells())) await box.openAll(this.secretCells());
+      this.refillSecrets();
+      return;
+    }
+    const plain = box.peek(raw);
+    if (typeof plain !== "string") return;
+    box.touch();
+    if (act === "toggle") {
+      if (this.revealed.has(raw)) this.revealed.delete(raw);
+      else this.revealed.add(raw);
+      this.refillSecrets();
+    } else if (act === "copy") this.copySecret(plain);
+  }
+  /** 复制明文，30 秒后从剪贴板清掉 */
+  copySecret(plain) {
+    const win = this.root.ownerDocument.defaultView ?? window;
+    void win.navigator.clipboard.writeText(plain).then(() => {
+      this.host.notice?.(t("encCopied"));
+      clearClipboardLater(win, plain);
+    });
+  }
+  /** 锁着（或还没解开）时要编辑加密格子：先解锁、解开，再进编辑（打进来的第一个字留着） */
+  async secretEditLater(p, keep, typedText) {
+    const box = this.host.secrets?.();
+    if (!box || !await box.unlock(this.secretCells())) return;
+    await box.openAll(this.secretCells());
+    this.refillSecrets();
+    if (this.destroyed || this.editing || !this.sel || this.sel.r !== p.r || this.sel.c !== p.c) return;
+    this.input.focus();
+    if (typedText) {
+      this.input.reset(typedText);
+      const end = typedText.length;
+      this.input.setSelectionRange(end, end);
+      this.startEdit(false);
+    } else if (keep) this.startEdit(true);
+  }
+  /**
+   * 加密格子提交：空的照常写（plain）；明文没变不写（same）；变了加密后再写（async，加密好了自己写回）。
+   * 加密的时候表格被别处改了这一格，就不写（提示重新输入）
+   */
+  secretCommit(p, text) {
+    const raw = this.table.cells[p.r][p.c];
+    if (!text) return "plain";
+    const before = isSealed(raw) ? this.host.secrets?.()?.peek(raw) : raw;
+    if (before === text) return isSealed(raw) ? "same" : "plain";
+    const box = this.host.secrets?.();
+    if (!box) {
+      this.host.notice?.(t("encNoHost"));
+      return "same";
+    }
+    void (async () => {
+      if (!box.unlocked && !await box.unlock(this.secretCells())) {
+        this.host.notice?.(t("encNotSaved"));
+        return;
+      }
+      const sealed = await box.seal(text);
+      if (this.destroyed) return;
+      const cur = this.table;
+      if (cur.cells[p.r]?.[p.c] !== raw) {
+        this.host.notice?.(t("encChanged"));
+        return;
+      }
+      if (this.revealed.has(raw)) this.revealed.add(sealed);
+      const next = normalize(editCell(cur, p.r, p.c, sealed));
+      this.table = next;
+      if (!(this.editing && this.sel?.r === p.r && this.sel?.c === p.c)) this.restoreContent(p);
+      this.host.onChange(next, cur);
+    })();
+    return "async";
+  }
+  /** 改动带着加密列里的新明文：解锁、加密好再写回（base 是改之前的表，等的时候表又变了就不写） */
+  async sealThenApply(base, next, sel) {
+    const box = this.host.secrets?.();
+    if (!box) {
+      this.host.notice?.(t("encNoHost"));
+      return;
+    }
+    if (!await box.unlock([...this.secretCells(), ...secretCellsOf(next).map((x) => x[2])])) {
+      this.host.notice?.(t("encNotSaved"));
+      return;
+    }
+    const sealed = await sealTable(next, box);
+    if (this.destroyed) return;
+    if (this.table !== base) {
+      this.host.notice?.(t("encChanged"));
+      return;
+    }
+    this.applyNow(sealed, sel);
+  }
+  /** 普通列改成加密列：已有的内容全部加密 */
+  async toSecretCol(c, p) {
+    const box = this.host.secrets?.();
+    if (!box) return;
+    if (this.editing) this.commit();
+    const base = this.table;
+    if (!await box.unlock(secretCellsOf(setColKind(base, c, "enc")).map((x) => x[2]))) return;
+    const sealed = await sealTable(setColKind(base, c, "enc"), box);
+    if (this.destroyed || this.table !== base) return;
+    this.applyNow(normalize(sealed), p);
+  }
+  /** 加密列改成别的类型：问一下，解密成明文写回 */
+  async fromSecretCol(c, kind, p) {
+    const box = this.host.secrets?.();
+    if (this.editing) this.commit();
+    const base = this.table;
+    const cells = secretCellsOf(base).filter(([, cc, v]) => cc === c && v.trim() && isSealed(v));
+    if (cells.length) {
+      if (!box || !this.host.confirm || !await this.host.confirm(t("encDecryptConfirm"), t("encDecryptOk"))) return;
+      if (!await box.unlock(cells.map((x) => x[2]))) return;
+      await box.openAll(cells.map((x) => x[2]));
+      if (cells.some(([, , v]) => typeof box.peek(v) !== "string")) {
+        this.host.notice?.(t("encForeignAbort"));
+        return;
+      }
+    }
+    if (this.destroyed || this.table !== base) return;
+    let n = base;
+    for (const [r, cc, v] of cells) n = editCell(n, r, cc, box?.peek(v) ?? v);
+    this.applyNow(normalize(setColKind(n, c, kind)), p);
+  }
+  /** 列菜单里加密列的几项：加密还没加密的格子、锁定 */
+  secretColItems(c) {
+    if (colTypeOf(this.table, c)?.t !== "enc") return [];
+    const box = this.host.secrets?.();
+    const items = [];
+    const base = this.table;
+    if (box && secretCellsOf(base).some(([, cc, v]) => cc === c && v.trim() && !isSealed(v)))
+      items.push({
+        title: t("encSealCol"),
+        icon: "lock",
+        disabled: !!this.host.readonly,
+        run: () => void (async () => {
+          if (!await box.unlock(this.secretCells())) return;
+          const sealed = await sealTable(base, box);
+          if (!this.destroyed && this.table === base) this.applyNow(normalize(sealed), this.sel ?? void 0);
+        })()
+      });
+    if (box?.unlocked) items.push({ title: t("encLock"), icon: "lock-keyhole", run: () => box.lock() });
+    return items;
+  }
   /** 格子元素；落在合并区域里的取左上角那格 */
   cellEl(p) {
     return this.grid[p.r]?.[p.c] ?? null;
@@ -4228,9 +4949,13 @@ var TableEditor = class {
     const k = this.scale();
     return { x: (box.l - base.left) / k + this.scroller.scrollLeft, y: (box.t - base.top) / k + this.scroller.scrollTop, w: (box.r - box.l) / k, h: (box.b - box.t) / k };
   }
-  /** 填充柄放在选区右下角；没选中、在编辑、只读时不显示 */
+  /**
+   * 填充柄放在选区右下角；没选中、在编辑、只读时不显示。
+   * 手指点的时候也不显示：触屏上多选改成长按格子后拖动，右下角的小圆点难按、和调列宽的把手挤在一起（群友在路上）。
+   * 鼠标、手写笔照旧有
+   */
   placeFill() {
-    const box = !this.editing && !this.host.readonly && !this.folded() ? this.selBox() : null;
+    const box = !this.editing && !this.host.readonly && !this.folded() && !this.touched ? this.selBox() : null;
     this.fillHandle.classList.toggle("is-shown", !!box);
     if (box) this.fillHandle.setAttribute("style", `left:${box.x + box.w - 4}px;top:${box.y + box.h - 4}px`);
   }
@@ -4331,7 +5056,7 @@ var TableEditor = class {
     if (sb) this.rangeBox.setAttribute("style", `left:${sb.x}px;top:${sb.y}px;width:${sb.w}px;height:${sb.h}px`);
     this.rangeBox.classList.toggle("is-under-frozen", !!sb && this.root.classList.contains("is-freeze") && (this.rangeRect()?.c1 ?? 0) > 0);
     this.markCross();
-    if (cell) this.placeFill();
+    this.placeFill();
     this.placeHandles();
     this.placeTouchResize();
   }
@@ -4366,6 +5091,36 @@ var TableEditor = class {
       }
       return;
     }
+    let plain = null;
+    if (this.isSecretCell(this.sel)) {
+      const raw = this.table.cells[this.sel.r][this.sel.c];
+      const box = this.host.secrets?.() ?? null;
+      const typedText = keep ? "" : this.input.value;
+      if (!box) {
+        this.input.reset("");
+        this.host.notice?.(t("encNoHost"));
+        return;
+      }
+      if (isSealed(raw)) {
+        const v = box.peek(raw);
+        if (v === void 0) {
+          this.input.reset("");
+          void this.secretEditLater(this.sel, keep, typedText);
+          return;
+        }
+        if (v === null) {
+          this.input.reset("");
+          this.host.notice?.(t("encForeign"));
+          return;
+        }
+        plain = v;
+      } else if (!box.unlocked) {
+        this.input.reset("");
+        void this.secretEditLater(this.sel, keep, typedText);
+        return;
+      }
+      box.touch();
+    }
     if (this.anchor) {
       this.anchor = null;
       this.markSel();
@@ -4376,7 +5131,7 @@ var TableEditor = class {
     this.fillHandle.classList.remove("is-shown");
     this.showMobileBar();
     if (keep) {
-      this.input.reset(shownText(this.table, this.sel.r, this.sel.c));
+      this.input.reset(plain ?? shownText(this.table, this.sel.r, this.sel.c));
       const end = this.input.value.length;
       this.input.setSelectionRange(end, end);
     }
@@ -4416,6 +5171,16 @@ var TableEditor = class {
     this.cellEl(p)?.classList.remove("is-editing");
     const text = this.smartDate(p, this.input.value.replace(/\r\n?/g, "\n").replace(/^\s+|\s+$/g, ""));
     this.input.reset("");
+    const secret = this.isSecretCell(p) ? this.secretCommit(p, text) : "plain";
+    if (secret !== "plain") {
+      const pending2 = this.pending;
+      this.pending = null;
+      if (pending2) {
+        this.table = pending2;
+        this.render();
+      } else this.restoreContent(p);
+      return;
+    }
     const edited = editCell(this.table, p.r, p.c, text);
     const next = edited === this.table ? edited : normalize(edited);
     const pending = this.pending;
@@ -4472,6 +5237,15 @@ var TableEditor = class {
   apply(nextRaw, sel) {
     if (this.editing) this.commit();
     const next = nextRaw === this.table ? nextRaw : normalize(nextRaw);
+    if (next === this.table) return;
+    if (freshPlain(this.table, next)) {
+      void this.sealThenApply(this.table, next, sel);
+      return;
+    }
+    this.applyNow(next, sel);
+  }
+  /** 写回一张已经整理好（normalize 过、加密列都是密文）的表 */
+  applyNow(next, sel) {
     if (next === this.table) return;
     const prev = this.table;
     this.table = next;
@@ -4572,7 +5346,18 @@ var TableEditor = class {
     const doc = this.root.ownerDocument;
     this.on(this.tableEl, "pointerdown", (ev) => {
       const target = ev.target;
-      if (this.input.contains(target)) return;
+      if (this.input.contains(target)) {
+        if (ev.pointerType === "touch" && this.editing && this.sel && !this.host.readonly && !this.input.value.trim()) {
+          this.touched = true;
+          this.touchStart(ev, this.sel);
+        }
+        return;
+      }
+      if (target.closest(".ggt-secret-btn")) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        return;
+      }
       const cell = target.closest(".ggt-cell");
       if (!cell || this.host.readonly) return;
       if (target.closest("a, .tag, input[type=checkbox]")) return;
@@ -4612,13 +5397,33 @@ var TableEditor = class {
       if (link && href) this.host.hoverLink?.(ev, href, link);
     });
     this.on(this.tableEl, "click", (ev) => {
-      const box = ev.target.closest("input.ggt-check");
+      const btn = ev.target.closest(".ggt-secret-btn");
+      const cell = btn?.closest(".ggt-cell");
+      if (!btn || !cell) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      void this.secretButton(btn.dataset.act ?? "", { r: Number(cell.dataset.r), c: Number(cell.dataset.c) });
+    });
+    this.on(this.tableEl, "click", (ev) => {
+      const box = ev.target.closest("input.ggt-check, .ggt-content input.task-list-item-checkbox");
       const cell = box?.closest(".ggt-cell");
-      if (!box || !cell) return;
+      if (!box || !cell || this.editing) return;
       ev.preventDefault();
       if (this.host.readonly) return;
       const p = { r: Number(cell.dataset.r), c: Number(cell.dataset.c) };
-      this.apply(toggleCheck(this.table, p.r, p.c), p);
+      if (box.classList.contains("ggt-check")) return this.apply(toggleCheck(this.table, p.r, p.c), p);
+      const n = [...cell.querySelectorAll(".ggt-content input.task-list-item-checkbox:not(.ggt-check)")].indexOf(box);
+      if (n >= 0) this.apply(toggleTask(this.table, p.r, p.c, n), p);
+    });
+    this.on(this.tableEl, "click", (ev) => {
+      if (this.root.dataset.clickEdit !== "1" || ev.detail !== 1 || ev.button !== 0) return;
+      if (ev.shiftKey || ev.metaKey || ev.ctrlKey || ev.altKey || this.touched) return;
+      if (this.editing || this.host.readonly || this.isMulti() || !this.sel) return;
+      const target = ev.target;
+      const cell = target.closest(".ggt-cell");
+      if (!cell || target.closest("a, .tag, input, img, .ggt-secret-btn, .internal-embed")) return;
+      if (Number(cell.dataset.r) !== this.sel.r || Number(cell.dataset.c) !== this.sel.c) return;
+      this.startEdit(true);
     });
     this.on(this.tableEl, "dblclick", (ev) => {
       const target = ev.target;
@@ -4672,7 +5477,19 @@ var TableEditor = class {
       });
     });
     this.on(this.resizeBar, "pointerdown", (ev) => this.startResize(ev, this.resizeBar));
-    this.on(this.fillHandle, "pointerdown", (ev) => this.fillDrag(ev));
+    for (const type of ["touchstart", "touchmove"]) {
+      this.on(this.resizeBar, type, (ev) => {
+        ev.stopPropagation();
+        if (type === "touchmove" && ev.cancelable) ev.preventDefault();
+      }, { passive: false });
+    }
+    this.on(this.fillHandle, "pointerdown", (ev) => ev.pointerType === "mouse" ? this.fillDrag(ev) : this.rangeDrag(ev));
+    for (const type of ["touchstart", "touchmove"]) {
+      this.on(this.fillHandle, type, (ev) => {
+        ev.stopPropagation();
+        if (type === "touchmove" && ev.cancelable) ev.preventDefault();
+      }, { passive: false });
+    }
     this.on(this.root, "ggt-restyle", () => {
       this.refreshInput();
       this.applyLook();
@@ -4731,18 +5548,76 @@ var TableEditor = class {
     this.bindInput();
     this.cleanups.push(() => this.input.destroy());
     this.on(doc, "scroll", () => this.formatBar && this.updateFormatBar(), { capture: true, passive: true });
+    this.on(doc, "touchstart", (ev) => {
+      const t2 = ev.touches[0];
+      const fl = t2 ? this.floatingAt(t2.clientX, t2.clientY) : null;
+      const swallow = performance.now() < this.swallowUntil;
+      if ((fl && !fl.contains(ev.target) || swallow) && ev.cancelable) ev.preventDefault();
+    }, { capture: true, passive: false });
     this.on(doc, "pointerdown", (ev) => {
       const target = ev.target;
+      if (performance.now() < this.swallowUntil) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        return;
+      }
       if (this.formatBar?.contains(target)) return;
       if (this.mobileBar?.contains(target)) return;
       if (this.suggest?.el.contains(target) || this.cal?.el.contains(target)) return;
+      const fl = this.floatingAt(ev.clientX, ev.clientY);
+      if (fl && !fl.contains(target) && this.tapPopoverAt(ev.clientX, ev.clientY)) {
+        this.swallowUntil = performance.now() + 500;
+        ev.preventDefault();
+        ev.stopPropagation();
+        return;
+      }
       if (this.popover && !this.popover.contains(target)) this.closePopover();
-      if (this.sel && !this.root.contains(target) && !(this.popover && this.popover.contains(target))) {
+      const bare = target === doc.documentElement || target === doc.body;
+      if (this.sel && !bare && !this.root.contains(target) && !(this.popover && this.popover.contains(target))) {
         if (this.editing) this.commit();
         this.sel = null;
         this.markSel();
       }
     }, { capture: true });
+  }
+  /** 挂在页面上的浮层（菜单、格式栏、手机工具条、补全列表、日历）里，坐标落在哪一个上 */
+  floatingAt(x, y) {
+    for (const el of [this.popover, this.formatBar, this.mobileBar, this.suggest?.el, this.cal?.el]) {
+      if (!el || !el.isConnected) continue;
+      const r = el.getBoundingClientRect();
+      if (r.width && x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return el;
+    }
+    return null;
+  }
+  /** 坐标在开着的菜单里：按位置找到菜单里的按钮（色块、对齐按钮、菜单项）点它，返回 true；不在菜单里返回 false */
+  tapPopoverAt(x, y) {
+    if (!Number.isFinite(x)) return false;
+    const pop = this.floatingAt(x, y);
+    if (!pop) return false;
+    let hit = pop;
+    let area = Infinity;
+    for (const el of Array.from(pop.querySelectorAll("*"))) {
+      const br = el.getBoundingClientRect();
+      if (!br.width || !br.height || x < br.left || x > br.right || y < br.top || y > br.bottom) continue;
+      if (br.width * br.height <= area) {
+        area = br.width * br.height;
+        hit = el;
+      }
+    }
+    const target = hit.closest("button, input, select, textarea, [role=menuitem], [role=option], [role=button]") ?? hit;
+    if (target.tagName === "BUTTON" && target.disabled) return true;
+    if (/^(INPUT|SELECT|TEXTAREA)$/.test(target.tagName)) {
+      target.focus();
+      return true;
+    }
+    const win = target.ownerDocument.defaultView ?? window;
+    const init = { bubbles: true, cancelable: true, composed: true, clientX: x, clientY: y, button: 0 };
+    target.dispatchEvent(new win.PointerEvent("pointerdown", { ...init, pointerType: "touch", isPrimary: true }));
+    target.dispatchEvent(new win.MouseEvent("mousedown", init));
+    target.dispatchEvent(new win.PointerEvent("pointerup", { ...init, pointerType: "touch", isPrimary: true }));
+    target.dispatchEvent(new win.MouseEvent("mouseup", init));
+    target.dispatchEvent(new win.MouseEvent("click", init));
+    return true;
   }
   onKey(ev) {
     if (ev.isComposing || ev.key === "Process") return;
@@ -4939,7 +5814,7 @@ var TableEditor = class {
   /** 编辑中选中了文字、宿主给了颜色：在这一格上方显示格式栏；否则收起 */
   updateFormatBar() {
     const el = this.input;
-    const colors = this.editing && !this.host.readonly && this.sel && el.selectionStart !== el.selectionEnd ? this.host.formatColors?.() : null;
+    const colors = this.editing && !this.host.readonly && this.sel && el.selectionStart !== el.selectionEnd ? this.host.formatColors?.(this.root) : null;
     const cell = colors && this.sel ? this.cellEl(this.sel) : null;
     if (!colors || !cell) return this.hideFormatBar();
     const key = JSON.stringify(colors);
@@ -4950,13 +5825,34 @@ var TableEditor = class {
     }
     const bar = this.formatBar;
     const win = this.root.ownerDocument.defaultView ?? window;
-    const r = cell.getBoundingClientRect();
+    const cr = cell.getBoundingClientRect();
+    const sr = this.input.selectionRect();
+    const vis = this.clipBox(cell, win);
+    const top0 = Math.max(sr ? sr.top : cr.top, vis.top);
+    const bottom0 = Math.min(sr ? sr.bottom : cr.bottom, vis.bottom);
+    const cx = sr ? (sr.left + sr.right) / 2 : cr.left + cr.width / 2;
     const w = bar.offsetWidth;
     const h = bar.offsetHeight;
-    const left = Math.max(8, Math.min(win.innerWidth - w - 8, r.left + r.width / 2 - w / 2));
-    const top = r.top - h - 6 >= 8 ? r.top - h - 6 : r.bottom + 6;
+    const left = Math.max(8, Math.min(win.innerWidth - w - 8, cx - w / 2));
+    let top;
+    if (top0 - h - 6 >= 8) top = top0 - h - 6;
+    else if (bottom0 + 6 + h <= win.innerHeight - 8) top = bottom0 + 6;
+    else top = Math.max(8, Math.min(win.innerHeight - h - 8, vis.top + 6));
     bar.style.left = `${Math.round(left)}px`;
     bar.style.top = `${Math.round(top)}px`;
+  }
+  /** 元素看得见的那块：窗口和外面每一层会裁剪内容的框（overflow 不是 visible）的交集 */
+  clipBox(el, win) {
+    let top = 0;
+    let bottom = win.innerHeight;
+    for (let p = el.parentElement; p && p !== el.ownerDocument.body; p = p.parentElement) {
+      const cs = win.getComputedStyle(p);
+      if (cs.overflowY === "visible" && cs.overflowX === "visible") continue;
+      const r = p.getBoundingClientRect();
+      top = Math.max(top, r.top);
+      bottom = Math.min(bottom, r.bottom);
+    }
+    return bottom > top ? { top, bottom } : { top: 0, bottom: win.innerHeight };
   }
   hideFormatBar() {
     this.formatBar?.remove();
@@ -4967,7 +5863,7 @@ var TableEditor = class {
     const el = this.input;
     const { from, to } = el.visibleSelection();
     if (from === to) return;
-    const r = applyInlineFormat(el.value, from, to, fmt2);
+    const r = applyFormat(el.value, from, to, fmt2);
     if (r.text !== el.value) {
       el.value = r.text;
       el.setSelectionRange(r.start, r.end);
@@ -5102,7 +5998,7 @@ var TableEditor = class {
       }
       const cur = this.table.cells[pos.r]?.[pos.c];
       if (cur === void 0) return;
-      const r = applyInlineFormat(cur, from, to, fmt2);
+      const r = applyFormat(cur, from, to, fmt2);
       if (r.text !== cur) this.apply(setCell(this.table, pos.r, pos.c, r.text), pos);
     };
   }
@@ -5140,6 +6036,7 @@ var TableEditor = class {
       bar.append(s);
     };
     btn("check", "\u2713", t("mbDone"), () => this.commit());
+    btn("more-horizontal", "\u22EF", t("mbMenu"), () => this.menuFromBar());
     btn("undo-2", "\u21B6", t("mbUndo"), () => this.input.undo());
     btn("redo-2", "\u21B7", t("mbRedo"), () => this.input.redo());
     sep();
@@ -5155,9 +6052,13 @@ var TableEditor = class {
     btn("arrow-left", "\u2190", t("mbPrevCell"), () => this.editNext(-1));
     btn("arrow-right", "\u2192", t("mbNextCell"), () => this.editNext(1));
     doc.body.append(bar);
+    doc.body.classList.add("ggt-cell-editing");
     const vv = win.visualViewport;
     const place = () => {
-      const bottom = vv ? Math.max(0, win.innerHeight - (vv.offsetTop + vv.height)) : 0;
+      let bottom = vv ? Math.max(0, win.innerHeight - (vv.offsetTop + vv.height)) : 0;
+      const nav = doc.querySelector(".mobile-navbar");
+      const nb = nav && nav.offsetParent ? nav.getBoundingClientRect() : null;
+      if (nb && nb.height && nb.top < win.innerHeight - bottom) bottom = Math.max(bottom, win.innerHeight - nb.top + 4);
       bar.style.setProperty("--ggt-kb", `${Math.round(bottom)}px`);
     };
     place();
@@ -5169,7 +6070,24 @@ var TableEditor = class {
     };
     this.mobileBar = bar;
   }
+  menuFromBar() {
+    const p = this.sel;
+    if (!p) return;
+    this.commit();
+    this.touched = true;
+    this.markSel();
+    this.dropKeyboard();
+    const box = this.cellEl(p)?.getBoundingClientRect();
+    if (!box) return;
+    this.openMenu(this.cellMenu(p), box.left, box.bottom + 8, () => this.touchAvoid());
+  }
+  /** 触屏上开表格菜单前收起软键盘：焦点在格子的输入框或正文编辑器里，键盘会一直弹着、挡住菜单 */
+  dropKeyboard() {
+    const ae = this.root.ownerDocument.activeElement;
+    if (ae && (ae.isContentEditable || ae.tagName === "INPUT" || ae.tagName === "TEXTAREA")) ae.blur();
+  }
   hideMobileBar() {
+    if (this.mobileBar) this.root.ownerDocument.body.classList.remove("ggt-cell-editing");
     this.mobileBarCleanup?.();
     this.mobileBarCleanup = null;
     this.mobileBar?.remove();
@@ -5541,6 +6459,58 @@ var TableEditor = class {
     handle.addEventListener("pointerup", up);
     handle.addEventListener("pointercancel", cancel);
   }
+  /** 手指按住选区右下角的圆点拖：从选区左上角扩到手指下的格子，松手出菜单（合并在最上面） */
+  rangeDrag(ev) {
+    const src = this.rangeRect();
+    if (!src || this.host.readonly) return;
+    ev.preventDefault();
+    ev.stopPropagation();
+    this.closePopover();
+    const handle = this.fillHandle;
+    try {
+      handle.setPointerCapture(ev.pointerId);
+    } catch {
+    }
+    this.touched = true;
+    const start = { r: src.r1, c: src.c1 };
+    const rows = Array.from({ length: rowCount(this.table) }, (_, r) => this.lineBox(r, true));
+    const cols = Array.from({ length: colCount(this.table) }, (_, c) => this.lineBox(c, false));
+    const indexAt = (v, lines) => {
+      for (let i = 0; i < lines.length; i++) if (v < lines[i].b) return i;
+      return lines.length - 1;
+    };
+    let last = "";
+    const move = (e) => {
+      const to = { r: Math.max(start.r, indexAt(e.clientY, rows)), c: Math.max(start.c, indexAt(e.clientX, cols)) };
+      const key = `${to.r},${to.c}`;
+      if (key === last) return;
+      last = key;
+      this.sel = start;
+      this.anchor = null;
+      this.setSel(to, false, true);
+    };
+    const up = (e) => {
+      handle.removeEventListener("pointermove", move);
+      handle.removeEventListener("pointerup", up);
+      handle.removeEventListener("pointercancel", up);
+      if (!e || e.type !== "pointerup" || !this.sel) return;
+      const b = handle.getBoundingClientRect();
+      this.openMenu(this.cellMenu(this.sel), b.left, b.bottom + 10, () => this.touchAvoid());
+    };
+    handle.addEventListener("pointermove", move);
+    handle.addEventListener("pointerup", up);
+    handle.addEventListener("pointercancel", up);
+  }
+  /** 选区连同右下角圆点在屏幕上的上下边：触屏菜单避开这一段 */
+  touchAvoid() {
+    const r = this.rangeRect();
+    if (!r) return void 0;
+    const a = this.cellEl({ r: r.r1, c: r.c1 })?.getBoundingClientRect();
+    const f = this.fillHandle.classList.contains("is-shown") ? this.fillHandle.getBoundingClientRect() : null;
+    if (!a) return void 0;
+    const bottom = Math.max(this.lineBox(r.r2, true).b, f ? f.bottom + 12 : 0);
+    return { top: a.top, bottom };
+  }
   /** 第 i 行（或列）在屏幕上的起止 */
   lineBox(i, row) {
     if (row) {
@@ -5548,8 +6518,8 @@ var TableEditor = class {
       const b2 = tr?.getBoundingClientRect();
       return b2 ? { a: b2.top, b: b2.bottom } : { a: 0, b: 0 };
     }
-    const b = this.tableEl.querySelectorAll("col")[i]?.getBoundingClientRect();
-    return b ? { a: b.left, b: b.right } : { a: 0, b: 0 };
+    const b = this.colBox(i);
+    return { a: b.left, b: b.right };
   }
   showFillPreview(src, plan, rows, cols) {
     const pv = this.fillPreview;
@@ -5593,6 +6563,16 @@ var TableEditor = class {
   onCopy(ev, cut) {
     if (this.editing || !this.sel || !ev.clipboardData) return;
     ev.preventDefault();
+    if (!this.isMulti() && this.isSecretCell(this.sel)) {
+      const plain = this.host.secrets?.()?.peek(this.table.cells[this.sel.r][this.sel.c]);
+      if (typeof plain === "string" && plain) {
+        ev.clipboardData.setData("text/plain", plain);
+        this.host.notice?.(t("encCopied"));
+        clearClipboardLater(this.root.ownerDocument.defaultView ?? window, plain);
+        if (cut && !this.host.readonly) this.applyKeepRange(clearCells(this.table, this.rangeCells()));
+        return;
+      }
+    }
     const grid = this.rangeGrid();
     const r = this.rangeRect();
     ev.clipboardData.setData("text/plain", toTSV(grid));
@@ -5646,7 +6626,7 @@ var TableEditor = class {
     let html = `<table data-ggt="1"${source ? sourceAttr(source) : ""} style="border-collapse:collapse">`;
     html += "<colgroup>";
     const k = this.scale();
-    for (let c = rect.c1; c <= rect.c2; c++) html += `<col style="width:${Math.round((cols[c]?.getBoundingClientRect().width ?? 80 * k) / k)}px">`;
+    for (let c = rect.c1; c <= rect.c2; c++) html += `<col style="width:${Math.round((cols[c] ? this.colBox(c).width || 80 * k : 80 * k) / k)}px">`;
     html += "</colgroup>";
     for (let r = rect.r1; r <= rect.r2; r++) {
       html += "<tr>";
@@ -5774,33 +6754,132 @@ var TableEditor = class {
   }
   // ---------- 触屏 ----------
   /**
-   * 手指按在格子上：轻点是选中并进入编辑（键盘弹出来），按住不动半秒是菜单，滑动是滚动（什么都不做）。
-   * 不在按下时 preventDefault，滚动照常
+   * 手指按在格子上：轻点是选中并进入编辑（键盘弹出来），滑动是滚动（什么都不做）。
+   * 按住不动半秒：选中这一格；接着不松手拖，就从这一格框选到手指下的格子（群友在路上建议：右下角的圆点太难按），
+   * 松手出菜单（框选了就是选区的菜单，「合并单元格」在最上面）；按住后没拖就松手，是这一格的菜单。
+   * 不在按下时 preventDefault，滚动照常；长按生效后才拦住这次触摸的滚动
    */
   touchStart(ev, p) {
     const x0 = ev.clientX;
     const y0 = ev.clientY;
     let moved = false;
     let pressed = false;
+    let dragged = false;
+    let lastX = x0;
+    let lastY = y0;
+    let rows = [];
+    let cols = [];
+    let last = "";
+    const indexAt = (v, lines) => {
+      for (let i = 0; i < lines.length; i++) if (v < lines[i].b) return i;
+      return lines.length - 1;
+    };
     const timer = window.setTimeout(() => {
       if (moved) return;
       pressed = true;
       this.longPressAt = performance.now();
+      if (this.editing) this.commit();
+      this.touched = true;
       this.setSel(p, false);
-      this.openMenu(this.cellMenu(p), x0, y0);
-    }, 500);
-    const move = (e) => {
-      if (Math.hypot(e.clientX - x0, e.clientY - y0) > 8) {
-        moved = true;
-        window.clearTimeout(timer);
+      this.dropKeyboard();
+      const ws = doc.getSelection();
+      if (ws && !ws.isCollapsed && this.tableEl.contains(ws.anchorNode)) ws.removeAllRanges();
+      this.root.classList.add("is-pressing");
+      try {
+        navigator.vibrate?.(10);
+      } catch {
       }
+    }, 500);
+    const measure = () => {
+      rows = Array.from({ length: rowCount(this.table) }, (_, r) => this.lineBox(r, true));
+      cols = Array.from({ length: colCount(this.table) }, (_, c) => this.lineBox(c, false));
     };
+    const selectAt = (x, y) => {
+      const to = { r: indexAt(y, rows), c: indexAt(x, cols) };
+      const key = `${to.r},${to.c}`;
+      if (key === last) return;
+      last = key;
+      this.sel = p;
+      this.anchor = null;
+      this.setSel(to, false, true);
+    };
+    const win = this.root.ownerDocument.defaultView ?? window;
+    let raf = 0;
+    const EDGE = 44;
+    const EDGE_BOTTOM = 72;
+    const speed = (depth, edge) => Math.ceil(Math.min(edge, Math.max(0, depth)) / edge * 16);
+    const tick = () => {
+      raf = 0;
+      if (!dragged) return;
+      let dx = 0;
+      let dy = 0;
+      const sc = this.scroller;
+      if (sc.scrollWidth > sc.clientWidth + 1) {
+        const r = sc.getBoundingClientRect();
+        if (lastX > r.right - EDGE && sc.scrollLeft < sc.scrollWidth - sc.clientWidth) dx = speed(lastX - (r.right - EDGE), EDGE);
+        else if (lastX < r.left + EDGE && sc.scrollLeft > 0) dx = -speed(r.left + EDGE - lastX, EDGE);
+      }
+      if (!this.outer) this.findOuter?.();
+      const out = this.outer;
+      if (out && out.scrollHeight > out.clientHeight + 1) {
+        const r = out.getBoundingClientRect();
+        const vv = win.visualViewport;
+        const top = Math.max(r.top, vv ? vv.offsetTop : 0);
+        const bottom = Math.min(r.bottom, vv ? vv.offsetTop + vv.height : win.innerHeight);
+        if (lastY > bottom - EDGE_BOTTOM && out.scrollTop < out.scrollHeight - out.clientHeight) dy = speed(lastY - (bottom - EDGE_BOTTOM), EDGE_BOTTOM);
+        else if (lastY < top + EDGE && out.scrollTop > 0) dy = -speed(top + EDGE - lastY, EDGE);
+      }
+      if (dx) sc.scrollLeft += dx;
+      if (dy) out.scrollTop += dy;
+      if (dx || dy) {
+        measure();
+        selectAt(lastX, lastY);
+      }
+      raf = win.requestAnimationFrame(tick);
+    };
+    const move = (e) => {
+      if (!pressed) {
+        if (Math.hypot(e.clientX - x0, e.clientY - y0) > 8) {
+          moved = true;
+          window.clearTimeout(timer);
+        }
+        return;
+      }
+      lastX = e.clientX;
+      lastY = e.clientY;
+      if (!dragged) {
+        if (Math.hypot(e.clientX - x0, e.clientY - y0) < 8) return;
+        dragged = true;
+        this.closePopover();
+        measure();
+        raf = win.requestAnimationFrame(tick);
+      }
+      selectAt(e.clientX, e.clientY);
+    };
+    const block = (e) => {
+      if (pressed && e.cancelable) e.preventDefault();
+    };
+    const noSelect = (e) => {
+      if (!this.input.contains(e.target)) e.preventDefault();
+    };
+    const doc = this.root.ownerDocument;
     const end = (e) => {
       window.clearTimeout(timer);
+      if (raf) win.cancelAnimationFrame(raf);
+      raf = 0;
       this.tableEl.removeEventListener("pointermove", move);
       this.tableEl.removeEventListener("pointerup", end);
       this.tableEl.removeEventListener("pointercancel", end);
-      if (moved || pressed || e.type === "pointercancel") return;
+      this.tableEl.removeEventListener("touchmove", block);
+      doc.removeEventListener("selectstart", noSelect, true);
+      this.root.classList.remove("is-pressing");
+      if (pressed) {
+        if (!this.sel) return;
+        if (dragged) this.openMenu(this.cellMenu(this.sel), lastX, lastY + 10, () => this.touchAvoid());
+        else this.openMenu(this.cellMenu(p), x0, y0, () => this.touchAvoid());
+        return;
+      }
+      if (moved || e.type === "pointercancel") return;
       const same = this.sel && this.sel.r === p.r && this.sel.c === p.c;
       if (same && this.editing) return;
       this.setSel(p, true);
@@ -5809,6 +6888,8 @@ var TableEditor = class {
     this.tableEl.addEventListener("pointermove", move);
     this.tableEl.addEventListener("pointerup", end);
     this.tableEl.addEventListener("pointercancel", end);
+    this.tableEl.addEventListener("touchmove", block, { passive: false });
+    doc.addEventListener("selectstart", noSelect, true);
   }
   // ---------- 列宽 ----------
   /** 指针离哪条列边线（每列的右边）不到 4 像素，就把调列宽的线放到那里；不在附近就藏起来 */
@@ -5827,10 +6908,10 @@ var TableEditor = class {
       });
       const c1 = under ? Number(under.dataset.c) : -1;
       const c2 = under ? c1 + under.colSpan - 1 : -1;
-      const cols = Array.from(this.tableEl.querySelectorAll("col"));
-      cols.forEach((col, c) => {
+      const boxes = this.colBoxes();
+      boxes.forEach((box, c) => {
         if (c >= c1 && c < c2) return;
-        const right = col.getBoundingClientRect().right;
+        const right = box.right;
         if (hit < 0 && Math.abs(x - right) <= 4) {
           hit = c;
           at = right;
@@ -5865,7 +6946,7 @@ var TableEditor = class {
     const t2 = this.tableEl.getBoundingClientRect();
     const base = this.root.getBoundingClientRect();
     const k = this.scale();
-    const at = col.getBoundingClientRect().right;
+    const at = this.colBox(c).right;
     bar.dataset.c = String(c);
     bar.setAttribute("style", `left:${(at - base.left) / k - 4}px;top:${(t2.top - base.top) / k}px;height:${t2.height / k}px`);
     const cb = cell.getBoundingClientRect();
@@ -5881,7 +6962,7 @@ var TableEditor = class {
     const col = this.tableEl.querySelectorAll("col")[c];
     if (!col || Number.isNaN(c)) return;
     const k = this.scale();
-    this.resize = { c, startX: ev.clientX, startW: col.getBoundingClientRect().width / k, col, fitW: this.root.classList.contains("is-fit") ? parseFloat(this.tableEl.style.width) || 0 : 0, scale: this.fitScale };
+    this.resize = { c, startX: ev.clientX, startW: this.colBox(c).width / k, col, fitW: this.root.classList.contains("is-fit") ? parseFloat(this.tableEl.style.width) || 0 : 0, scale: this.fitScale };
     const startLeft = parseFloat(handle.style.left) || 0;
     const grip = handle.style.getPropertyValue("--ggt-grip-y");
     handle.classList.add("is-active");
@@ -5935,6 +7016,7 @@ var TableEditor = class {
     const el = this.root.appendChild(doc.createElement("button"));
     el.type = "button";
     el.className = `ggt-handle ${cls}`;
+    el.dataset.ignoreSwipe = "true";
     el.setAttribute("aria-label", label);
     el.tabIndex = -1;
     if (this.host.setIcon) this.host.setIcon(el, icon);
@@ -6013,7 +7095,8 @@ var TableEditor = class {
         this.sel = row ? { r: p.r, c: colCount(this.table) - 1 } : { r: this.shownRows() - 1, c: p.c };
         this.lineSel = true;
         this.markSel();
-        this.input.focus();
+        if (ev.pointerType === "touch") doc.activeElement?.blur?.();
+        else this.input.focus();
         const rect = handle.getBoundingClientRect();
         this.openMenu(row ? this.rowMenu(p) : this.colMenu(p), rect.left, rect.bottom + 4);
         return;
@@ -6051,7 +7134,9 @@ var TableEditor = class {
     });
     el.addEventListener("click", (ev) => {
       ev.preventDefault();
-      if (!this.host.readonly) run();
+      if (this.host.readonly) return;
+      if (this.editing) this.commit();
+      run();
     });
     return el;
   }
@@ -6191,6 +7276,7 @@ var TableEditor = class {
         title: t("headerRowsN").replace("{n}", String(i + 1)),
         checked: headRows(tb) === i + 1,
         disabled: headRows(tb) !== i + 1 && !canSetHead(tb, i + 1),
+        why: rowCount(tb) - (i + 1) < 1 ? t("whyHeadRowsFew").replace("{n}", String(i + 1)) : t("whyHeadRowsMerge").replace("{n}", String(i + 1)),
         run: () => keep(setTableLook(this.table, { head: i + 1 }))
       })),
       { separator: true },
@@ -6199,6 +7285,7 @@ var TableEditor = class {
         icon: "chevrons-down-up",
         checked: tb.meta.fold === 1,
         disabled: tb.meta.fold !== 1 && rowCount(tb) <= headRows(tb),
+        why: t("whyFoldNoRows"),
         run: () => {
           this.localUnfold = false;
           keep(setFolded(this.table, this.table.meta.fold !== 1));
@@ -6210,17 +7297,18 @@ var TableEditor = class {
       { separator: true },
       { title: t("distributeCols"), icon: "columns-3", run: () => keep(setWidths(this.table, this.colWidths().map((_, _i, all) => all.reduce((a, b) => a + b, 0) / all.length))) },
       { title: t("fitWidth"), icon: "move-horizontal", run: () => keep(setWide(setWidths(this.table, this.fitWidths()), false)) },
-      { title: t("autoWidthAll"), icon: "move-horizontal", disabled: !tb.meta.w?.some((x) => x != null), run: () => keep(autoWidthAll(this.table)) },
-      { title: t("clearAllBg"), icon: "paintbrush", disabled: !Object.keys(tb.meta.bg ?? {}).length && !Object.keys(tb.meta.fg ?? {}).length, run: () => keep(clearAllBg(this.table)) },
+      // 没拖过列宽、没上过色时不出现（灰着不说原因，会被当成功能坏了）
+      ...tb.meta.w?.some((x) => x != null) ? [{ title: t("autoWidthAll"), icon: "move-horizontal", run: () => keep(autoWidthAll(this.table)) }] : [],
+      ...Object.keys(tb.meta.bg ?? {}).length || Object.keys(tb.meta.fg ?? {}).length ? [{ title: t("clearAllBg"), icon: "paintbrush", run: () => keep(clearAllBg(this.table)) }] : [],
       { separator: true },
       { title: t("copyTable"), icon: "copy", run: () => this.copyWhole(false) },
       { title: t("copyMarkdown"), icon: "file-code", run: () => this.copyWhole(true) },
       ...this.host.indentTable ? [
         { separator: true },
-        ...[1, -1].map((dir) => ({
+        // 表格上方是列表项才能缩进、本来在列表里才能减少缩进：用不了的不出现
+        ...[1, -1].filter((dir) => this.host.canIndentTable?.(dir)).map((dir) => ({
           title: t(dir > 0 ? "indentTable" : "outdentTable"),
           icon: dir > 0 ? "indent-increase" : "indent-decrease",
-          disabled: !this.host.canIndentTable?.(dir),
           run: () => {
             if (this.editing) this.commit();
             this.host.indentTable?.(dir);
@@ -6241,10 +7329,60 @@ var TableEditor = class {
       ] : []
     ];
   }
+  colRectsUsable() {
+    if (this.colRectsOk !== null) return this.colRectsOk;
+    const cols = this.tableEl.querySelectorAll("col");
+    if (cols.length < 2) return true;
+    const a = cols[0].getBoundingClientRect();
+    const b = cols[1].getBoundingClientRect();
+    if (!(a.width > 0 && b.width > 0)) return true;
+    this.colRectsOk = Math.abs(b.left - a.right) < 2;
+    return this.colRectsOk;
+  }
+  colBox(c) {
+    const col = this.tableEl.querySelectorAll("col")[c];
+    const b = col?.getBoundingClientRect();
+    if (b && b.width > 0 && this.colRectsUsable()) return { left: b.left, right: b.right, width: b.width };
+    return this.cellColBoxes(c)[c] ?? { left: 0, right: 0, width: 0 };
+  }
+  /** 每列的屏幕起止（要一次拿全部列时用：量格子只扫一遍） */
+  colBoxes() {
+    const cols = Array.from(this.tableEl.querySelectorAll("col"));
+    const rects = cols.map((col) => col.getBoundingClientRect());
+    if (rects.every((b) => b.width > 0) && this.colRectsUsable()) return rects.map((b) => ({ left: b.left, right: b.right, width: b.width }));
+    const fromCells = this.cellColBoxes();
+    return cols.map((_c, i) => fromCells[i] ?? (rects[i].width > 0 ? { left: rects[i].left, right: rects[i].right, width: rects[i].width } : { left: 0, right: 0, width: 0 }));
+  }
+  /** 从格子量每列的起止（合并格只算它两头那一列）。只要第 only 列时找到就停 */
+  cellColBoxes(only) {
+    const n = this.tableEl.querySelectorAll("col").length;
+    const left = new Array(n).fill(NaN);
+    const right = new Array(n).fill(NaN);
+    let missing = only === void 0 ? 2 * n : 2;
+    const want = (i) => only === void 0 || i === only;
+    for (const el of Array.from(this.tableEl.querySelectorAll(".ggt-cell"))) {
+      const c0 = Number(el.dataset.c);
+      const c1 = c0 + (el.colSpan || 1) - 1;
+      if (!(c0 >= 0 && c0 < n)) continue;
+      if (!want(c0) && !want(c1)) continue;
+      const r = el.getBoundingClientRect();
+      if (!r.width) continue;
+      if (want(c0) && Number.isNaN(left[c0])) {
+        left[c0] = r.left;
+        missing--;
+      }
+      if (c1 < n && want(c1) && Number.isNaN(right[c1])) {
+        right[c1] = r.right;
+        missing--;
+      }
+      if (missing <= 0) break;
+    }
+    return left.map((l, i) => Number.isNaN(l) || Number.isNaN(right[i]) ? void 0 : { left: l, right: right[i], width: right[i] - l });
+  }
   /** 每列现在实际的宽度 */
   colWidths() {
     const k = this.scale();
-    return Array.from(this.tableEl.querySelectorAll("col")).map((c) => c.getBoundingClientRect().width / k);
+    return this.colBoxes().map((b) => b.width / k);
   }
   /**
    * 设置「列宽按比例缩放」（#10）：设过列宽的表格比正文宽时，各列按现在的比例缩到正好放下，不出横向滚动条。
@@ -6268,7 +7406,8 @@ var TableEditor = class {
     const natural = t2.offsetWidth;
     if (avail <= 0 || !natural || natural <= avail + 1) return;
     const k = this.scale();
-    const ws = cols.map((c) => c.getBoundingClientRect().width / k);
+    const all = this.colBoxes();
+    const ws = cols.map((_c, i) => (all[i]?.width ?? 0) / k);
     const sum = ws.reduce((a, b) => a + b, 0);
     if (!sum) return;
     const f = avail / sum;
@@ -6281,22 +7420,43 @@ var TableEditor = class {
   /** 正文给表格的宽度（量外层，表格自己比它宽时就要横向滚动） */
   availWidth() {
     const host = this.root.parentElement;
-    return host ? host.clientWidth - 2 : 0;
+    return host ? host.clientWidth - 2 - this.mobileRoom() : 0;
+  }
+  /** 手机、平板上加号收在正文里（外框不往右伸出，见 styles.css），表格能用的宽度少这一截 */
+  mobileRoom() {
+    return this.root.ownerDocument.body.classList.contains("is-mobile") ? 26 : 0;
   }
   /** 撑满页面：按现在各列的比例放大 / 缩小到正文的可用宽度 */
   fitWidths() {
     const ws = this.colWidths();
     const sum = ws.reduce((a, b) => a + b, 0) || 1;
     const host = this.root.parentElement;
-    const avail = (host?.clientWidth ?? sum) - 4;
+    const avail = (host?.clientWidth ?? sum) - 4 - this.mobileRoom();
     return ws.map((w) => w / sum * avail);
+  }
+  /**
+   * 灰掉、又写了原因的项：不用原生 disabled（点了什么事件都没有），改成看着灰、悬停显示原因、
+   * 点一下弹提示（手机上没有悬停）。处理了返回 true，调用方就不再挂执行的点击
+   */
+  explainDisabled(b, item) {
+    if (!item.disabled || !item.why) return false;
+    const why = item.why;
+    b.disabled = false;
+    b.classList.add("is-disabled");
+    b.setAttribute("aria-disabled", "true");
+    b.title = why;
+    b.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      this.host.notice?.(why);
+    });
+    return true;
   }
   rowMenu(p) {
     const tb = this.table;
     const head = p.r < headRows(tb);
     return [
       ...this.insertRowItems(p),
-      { title: t("duplicateRow"), icon: "copy-plus", disabled: p.r === 0, run: () => this.apply(duplicateRow(tb, p.r), { r: p.r + 1, c: p.c }) },
+      { title: t("duplicateRow"), icon: "copy-plus", disabled: p.r === 0, why: t("whyDupHead"), run: () => this.apply(duplicateRow(tb, p.r), { r: p.r + 1, c: p.c }) },
       { separator: true },
       { title: t("moveRowUp"), icon: "arrow-up", disabled: head || moveRow(tb, p.r, p.r - 1) === tb, run: () => this.apply(moveRow(tb, p.r, p.r - 1), { r: p.r - 1, c: p.c }) },
       { title: t("moveRowDown"), icon: "arrow-down", disabled: head || moveRow(tb, p.r, p.r + 1) === tb, run: () => this.apply(moveRow(tb, p.r, p.r + 1), { r: p.r + 1, c: p.c }) },
@@ -6313,21 +7473,22 @@ var TableEditor = class {
       ...this.insertColItems(p),
       { title: t("duplicateCol"), icon: "copy-plus", run: () => this.apply(duplicateCol(tb, p.c), { r: p.r, c: p.c + 1 }) },
       { separator: true },
-      ...this.calcItems(p.c),
+      ...colKindOf(tb, p.c) === "enc" ? [] : this.calcItems(p.c),
       { title: t("colType").replace("{v}", t(`kind_${colKindOf(tb, p.c)}`)), icon: KIND_ICONS[colKindOf(tb, p.c)], run: () => this.openTypeMenu(p) },
+      ...this.secretColItems(p.c),
       ...formulaOf(tb, p.c) ? [
         { title: t("fxEdit"), icon: "calculator", run: () => this.openFormula(p.c) },
         { title: t("fxOff"), icon: "calculator", run: () => this.apply(setFormula(tb, p.c, null), p) }
       ] : [{ title: t("fxOn"), icon: "calculator", run: () => this.openFormula(p.c) }],
       { separator: true },
-      { title: t("sortAsc"), icon: "arrow-down-a-z", disabled: !canSortRows(tb), run: () => this.apply(sortRows(tb, p.c, false, this.hasTotalRow(), this.dateParser()), p) },
-      { title: t("sortDesc"), icon: "arrow-up-z-a", disabled: !canSortRows(tb), run: () => this.apply(sortRows(tb, p.c, true, this.hasTotalRow(), this.dateParser()), p) },
+      { title: t("sortAsc"), icon: "arrow-down-a-z", disabled: !canSortRows(tb) || colKindOf(tb, p.c) === "enc", why: colKindOf(tb, p.c) === "enc" ? t("whySortEnc") : t("whySortMerge"), run: () => this.apply(sortRows(tb, p.c, false, this.hasTotalRow(), this.dateParser()), p) },
+      { title: t("sortDesc"), icon: "arrow-up-z-a", disabled: !canSortRows(tb) || colKindOf(tb, p.c) === "enc", why: colKindOf(tb, p.c) === "enc" ? t("whySortEnc") : t("whySortMerge"), run: () => this.apply(sortRows(tb, p.c, true, this.hasTotalRow(), this.dateParser()), p) },
       { separator: true },
       { title: t("moveColLeft"), icon: "arrow-left", disabled: p.c === 0, run: () => this.apply(moveCol(tb, p.c, p.c - 1), { r: p.r, c: p.c - 1 }) },
       { title: t("moveColRight"), icon: "arrow-right", disabled: p.c >= colCount(tb) - 1, run: () => this.apply(moveCol(tb, p.c, p.c + 1), { r: p.r, c: p.c + 1 }) },
       { separator: true },
       ...this.alignItems(p.c),
-      { title: t("autoWidth"), icon: "move-horizontal", disabled: widthOf(tb, p.c) == null, run: () => this.apply(setWidth(tb, p.c, null), p) },
+      ...widthOf(tb, p.c) != null ? [{ title: t("autoWidth"), icon: "move-horizontal", run: () => this.apply(setWidth(tb, p.c, null), p) }] : [],
       { separator: true },
       ...this.colorItems(Array.from({ length: rowCount(tb) }, (_, r) => ({ r, c: p.c }))),
       { separator: true },
@@ -6340,16 +7501,19 @@ var TableEditor = class {
     const rect = this.rangeRect();
     const merged = mergeAt(tb, p.r, p.c);
     const mergeItems = [];
-    if (multi && rect) mergeItems.push({ title: t("mergeCells"), icon: "combine", disabled: crossesHead(tb, rect), run: () => this.apply(mergeCells(tb, rect), { r: rect.r1, c: rect.c1 }) });
+    if (multi && rect) mergeItems.push({ title: t("mergeCells"), icon: "combine", disabled: crossesHead(tb, rect), why: t("whyMergeHead"), run: () => this.apply(mergeCells(tb, rect), { r: rect.r1, c: rect.c1 }) });
     if (merged) mergeItems.push({ title: t("unmergeCells"), icon: "split", run: () => this.apply(unmergeAt(tb, p.r, p.c), { r: merged.r1, c: merged.c1 }) });
+    if (this.touched && !multi && !this.host.readonly) mergeItems.push({ title: t("dragToSelect") });
     const cells = multi ? this.rangeCells() : [p];
     const cols = multi && rect ? Array.from({ length: rect.c2 - rect.c1 + 1 }, (_, i) => rect.c1 + i) : [p.c];
+    const mergeFirst = this.touched && multi;
     return [
+      ...mergeFirst ? [...mergeItems, { separator: true }] : [],
       ...this.insertRowItems(p, merged?.r2),
       ...this.insertColItems(p, merged?.c2),
       { separator: true },
-      ...mergeItems,
-      ...mergeItems.length ? [{ separator: true }] : [],
+      ...mergeFirst ? [] : mergeItems,
+      ...!mergeFirst && mergeItems.length ? [{ separator: true }] : [],
       ...this.alignItems(cols),
       { separator: true },
       ...this.statusColorItems(p),
@@ -6359,10 +7523,65 @@ var TableEditor = class {
         return this.sizeItems(t("fontSize"), sizes.size === 1 ? [...sizes][0] : void 0, (v) => this.applyKeepRange(setFontSize(this.table, cells, v)));
       })(),
       { separator: true },
-      { title: CHECK_RE.test(tb.cells[p.r][p.c]) ? t("removeCheckbox") : t("addCheckbox"), icon: "square-check", disabled: multi, run: () => this.apply(setCell(tb, p.r, p.c, CHECK_RE.test(tb.cells[p.r][p.c]) ? tb.cells[p.r][p.c].replace(CHECK_RE, "").trimStart() : `[ ] ${tb.cells[p.r][p.c]}`.trimEnd()), p) },
-      { title: t("clearCell"), icon: "eraser", disabled: !cells.some((c) => tb.cells[c.r][c.c]), run: () => this.apply(clearCells(tb, cells), this.sel ?? p) },
+      { title: CHECK_RE.test(tb.cells[p.r][p.c]) ? t("removeCheckbox") : t("addCheckbox"), icon: "square-check", disabled: multi, why: t("whyCheckboxMulti"), run: () => this.apply(setCell(tb, p.r, p.c, CHECK_RE.test(tb.cells[p.r][p.c]) ? tb.cells[p.r][p.c].replace(CHECK_RE, "").trimStart() : `[ ] ${tb.cells[p.r][p.c]}`.trimEnd()), p) },
+      ...cells.some((c) => tb.cells[c.r][c.c]) ? [{ title: t("clearCell"), icon: "eraser", run: () => this.apply(clearCells(tb, cells), this.sel ?? p) }] : [],
+      ...this.cellSecretItems(cells),
       ...this.deleteItems(p)
     ];
+  }
+  /**
+   * 格子菜单里的「加密」「取消加密」：普通列里单独加密几格（加密列整列都是加密的，不出现）。
+   * 计算列、合计行由公式写，状态、多选列的值会记成选项，这些不能加密
+   */
+  cellSecretItems(cells) {
+    const box = this.host.secrets?.();
+    if (!box || this.host.readonly) return [];
+    const tb = this.table;
+    const seen = /* @__PURE__ */ new Set();
+    const own = [];
+    for (const q of cells) {
+      const c = this.canon(q);
+      const id = `${c.r},${c.c}`;
+      if (seen.has(id) || colTypeOf(tb, c.c)?.t === "enc" || tb.meta.opts?.[c.c] || isFxCell(tb, c.r, c.c) || hasTotal(tb) && c.r === rowCount(tb) - 1) continue;
+      seen.add(id);
+      own.push(c);
+    }
+    const plain = own.filter((c) => tb.cells[c.r][c.c].trim() && !hasSecret(tb.cells[c.r][c.c]));
+    const sealed = own.filter((c) => hasSecret(tb.cells[c.r][c.c]));
+    const items = [];
+    if (plain.length)
+      items.push({
+        title: t("encCell"),
+        icon: "lock",
+        run: () => void (async () => {
+          if (!await box.unlock(this.secretCells())) return;
+          const out = await Promise.all(plain.map((c) => box.seal(tb.cells[c.r][c.c])));
+          if (this.destroyed || this.table !== tb) return;
+          let n = tb;
+          plain.forEach((c, i) => n = editCell(n, c.r, c.c, out[i]));
+          this.applyNow(normalize(n), this.sel ?? void 0);
+        })()
+      });
+    if (sealed.length)
+      items.push({
+        title: t("decryptCell"),
+        icon: "lock-open",
+        run: () => void (async () => {
+          if (!this.host.confirm || !await this.host.confirm(t("encDecryptCellConfirm"), t("encDecryptOk"))) return;
+          const raws = sealed.map((c) => tb.cells[c.r][c.c]);
+          if (!await box.unlock(raws)) return;
+          await box.openAll(raws);
+          if (raws.some((v) => typeof box.peek(v) !== "string")) {
+            this.host.notice?.(t("encForeignAbort"));
+            return;
+          }
+          if (this.destroyed || this.table !== tb) return;
+          let n = tb;
+          sealed.forEach((c, i) => n = editCell(n, c.r, c.c, box.peek(raws[i]) ?? raws[i]));
+          this.applyNow(normalize(n), this.sel ?? void 0);
+        })()
+      });
+    return items.length ? [{ separator: true }, ...items] : [];
   }
   /**
    * 删除行 / 列：选区跨了几行（几列）就一次删几行（#4）；至少留下表头和一行、一列。
@@ -6430,9 +7649,21 @@ var TableEditor = class {
     const c = p.c;
     const kind = colKindOf(tb, c);
     const fx = !!formulaOf(tb, c);
-    const kinds = fx ? ["text", "num"] : COL_KINDS;
+    const kinds = fx ? ["text", "num"] : COL_KINDS.filter((k) => k !== "enc" || kind === "enc" || this.host.secrets?.());
     const items = [{ title: fx ? t("colTypeFx") : t("colTypeTitle") }];
-    for (const k of kinds) items.push({ title: t(`kind_${k}`), icon: KIND_ICONS[k], checked: kind === k, run: () => k === "text" || k === "status" || k === "multi" ? this.apply(setColKind(tb, c, k), p) : again(setColKind(tb, c, k)) });
+    for (const k of kinds)
+      items.push({
+        title: t(`kind_${k}`),
+        icon: KIND_ICONS[k],
+        checked: kind === k,
+        run: () => {
+          if (k === kind) return;
+          if (k === "enc") void this.toSecretCol(c, p);
+          else if (kind === "enc") void this.fromSecretCol(c, k, p);
+          else if (k === "text" || k === "status" || k === "multi") this.apply(setColKind(tb, c, k), p);
+          else again(setColKind(tb, c, k));
+        }
+      });
     const ty = colTypeOf(tb, c);
     if (ty?.t === "date") {
       const set = (f) => again(setColType(tb, c, f ? { t: "date", f } : { t: "date" }));
@@ -6478,10 +7709,9 @@ var TableEditor = class {
     const item = (how) => ({
       title: how ? t(`calc_${how}`) : t("calc_none"),
       checked: cur === how,
-      disabled: !how && !cur,
       run: () => this.apply(setCalc(this.table, c, how, { sum: t("totalLabel"), mixed: t("totalLabelMixed") }), this.sel ?? void 0)
     });
-    return [{ title: t("calcTitle") }, ...CALCS.map((x) => item(x)), item(null), { separator: true }];
+    return [{ title: t("calcTitle") }, ...CALCS.map((x) => item(x)), ...cur ? [item(null)] : [], { separator: true }];
   }
   /** 有没有合计行 */
   hasTotalRow() {
@@ -6561,11 +7791,12 @@ var TableEditor = class {
     return FONT_SIZES.map((v, i) => ({ sizeChip: v, rowLabel: i === 0 ? title : void 0, title: t(names[i]), checked: current === v, run: () => set(v === 1 ? null : v) }));
   }
   /** 自己画的弹出菜单：样式统一，色块能排成一行，手机上也好点 */
-  openMenu(items, x, y) {
+  /** avoid：菜单别盖住的一块（屏幕坐标），放不下就贴着它的上边或下边、限高滚动 */
+  openMenu(items, x, y, avoidAt) {
     this.closePopover();
     this.menuAt = { x, y };
     const doc = this.root.ownerDocument;
-    const pop = doc.body.appendChild(doc.createElement("div"));
+    const pop = popupParent(doc).appendChild(doc.createElement("div"));
     pop.className = "ggt-menu";
     pop.setAttribute("role", "menu");
     let swatches = null;
@@ -6593,6 +7824,7 @@ var TableEditor = class {
         b2.disabled = !!item.disabled;
         b2.setAttribute("aria-label", item.title ?? "");
         b2.title = item.title ?? "";
+        if (this.explainDisabled(b2, item)) continue;
         b2.addEventListener("click", () => {
           this.closePopover();
           item.run?.();
@@ -6665,17 +7897,46 @@ var TableEditor = class {
         if (this.host.setIcon) this.host.setIcon(ck, "check");
         else ck.textContent = "\u2713";
       }
+      if (this.explainDisabled(b, item)) continue;
       b.addEventListener("click", () => {
         this.closePopover();
         item.run?.();
       });
     }
     if (pop.lastElementChild?.classList.contains("ggt-menu-sep")) pop.lastElementChild.remove();
-    const vw = doc.documentElement.clientWidth;
-    const vh = doc.documentElement.clientHeight;
-    const r = pop.getBoundingClientRect();
-    pop.style.left = `${Math.max(8, Math.min(x, vw - r.width - 8))}px`;
-    pop.style.top = `${Math.max(8, y + r.height > vh - 8 ? Math.max(8, y - r.height) : y)}px`;
+    const place = () => {
+      const win = doc.defaultView ?? window;
+      const vv2 = win.visualViewport;
+      const vw = doc.documentElement.clientWidth;
+      const safe = parseFloat(win.getComputedStyle(doc.body).getPropertyValue("--safe-area-inset-top")) || 0;
+      const top0 = (vv2 ? vv2.offsetTop : 0) + Math.max(8, safe);
+      const kb = parseFloat(win.getComputedStyle(doc.documentElement).getPropertyValue("--keyboard-height")) || 0;
+      const bottom0 = Math.min((vv2 ? vv2.offsetTop + vv2.height : doc.documentElement.clientHeight) - 8, win.innerHeight - kb - 8);
+      pop.style.maxHeight = `${Math.max(120, bottom0 - top0)}px`;
+      const avoid = avoidAt?.();
+      const r = pop.getBoundingClientRect();
+      pop.style.left = `${Math.max(8, Math.min(x, vw - r.width - 8))}px`;
+      if (avoid) {
+        const roomB = bottom0 - (avoid.bottom + 8);
+        const roomA = avoid.top - 8 - top0;
+        const down = r.height <= roomB || r.height > roomA && roomB >= roomA;
+        const h = Math.min(r.height, Math.max(120, down ? roomB : roomA));
+        pop.style.maxHeight = `${h}px`;
+        pop.style.top = `${Math.max(top0, down ? avoid.bottom + 8 : avoid.top - 8 - h)}px`;
+        return;
+      }
+      const below = y + r.height <= bottom0;
+      const above = y - r.height >= top0;
+      const top = below ? y : above ? y - r.height : bottom0 - r.height;
+      pop.style.top = `${Math.max(top0, top)}px`;
+    };
+    place();
+    if (avoidAt) for (const ms of [350, 700]) window.setTimeout(() => this.popover === pop && place(), ms);
+    const vv = (doc.defaultView ?? window).visualViewport;
+    if (vv) {
+      const onVV = () => this.popover === pop ? place() : vv.removeEventListener("resize", onVV);
+      vv.addEventListener("resize", onVV);
+    }
     pop.addEventListener("keydown", (ev) => {
       if (ev.key === "Escape") {
         ev.stopPropagation();
@@ -6996,6 +8257,66 @@ function gridFromClipboard(data, doc) {
 
 // src/obsidian/insert.ts
 var import_obsidian = require("obsidian");
+
+// src/core/text-table.ts
+function splitTextRows(text) {
+  const raw = text.replace(/\r\n?/g, "\n").trim();
+  if (!raw) return [];
+  if (raw.includes("	")) return fromTSV(raw);
+  const lines = raw.split("\n").filter((l) => l.trim());
+  if (lines.every((l) => l.includes("|"))) {
+    return lines.filter((l) => !/^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*$/.test(l)).map((l) => splitPipes(l.trim()));
+  }
+  const even = (rows) => rows.every((r) => r.length >= 2) && new Set(rows.map((r) => r.length)).size === 1;
+  const csv = lines.map(splitCSV);
+  if (even(csv)) return csv;
+  const wide = lines.map((l) => l.trim().split(/ {2,}|\u3000+/));
+  if (even(wide)) return wide;
+  const single = lines.map((l) => l.trim().split(/\s+/));
+  if (even(single)) return single;
+  return csv;
+}
+function splitPipes(line) {
+  const out = [];
+  let cur = "";
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === "\\" && line[i + 1] === "|") {
+      cur += "|";
+      i++;
+    } else if (ch === "|") {
+      out.push(cur);
+      cur = "";
+    } else cur += ch;
+  }
+  out.push(cur);
+  if (line.startsWith("|")) out.shift();
+  if (line.endsWith("|") && !line.endsWith("\\|")) out.pop();
+  return out;
+}
+function splitCSV(line) {
+  const out = [];
+  let cur = "";
+  let q = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (q) {
+      if (ch === '"' && line[i + 1] === '"') {
+        cur += '"';
+        i++;
+      } else if (ch === '"') q = false;
+      else cur += ch;
+    } else if (ch === '"' && !cur.trim()) q = true;
+    else if (ch === "," || ch === "\uFF0C") {
+      out.push(cur);
+      cur = "";
+    } else cur += ch;
+  }
+  out.push(cur);
+  return out;
+}
+
+// src/obsidian/insert.ts
 var MAX_R = 10;
 var MAX_C = 8;
 function insertTableText(editor, lines) {
@@ -7023,18 +8344,38 @@ var GridModal = class extends import_obsidian.Modal {
     const grid = this.contentEl.createDiv({ cls: "ggt-grid" });
     const hint = this.contentEl.createDiv({ cls: "ggt-grid-hint" });
     const cells = [];
+    let cur = { r: 2, c: 2 };
     const mark = (r, c) => {
+      cur = { r, c };
       cells.forEach((row, i) => row.forEach((el, j) => el.toggleClass("is-on", i <= r && j <= c)));
       hint.setText(t("gridHint").replace("{r}", String(r + 1)).replace("{c}", String(c + 1)));
     };
+    const insert = () => {
+      this.close();
+      this.pick(Math.max(2, cur.r + 1), cur.c + 1);
+    };
+    this.scope.register([], "Enter", (ev) => {
+      ev.preventDefault();
+      insert();
+      return false;
+    });
+    const step = (dr, dc) => (ev) => {
+      ev.preventDefault();
+      mark(Math.min(MAX_R - 1, Math.max(1, cur.r + dr)), Math.min(MAX_C - 1, Math.max(0, cur.c + dc)));
+      return false;
+    };
+    this.scope.register([], "ArrowUp", step(-1, 0));
+    this.scope.register([], "ArrowDown", step(1, 0));
+    this.scope.register([], "ArrowLeft", step(0, -1));
+    this.scope.register([], "ArrowRight", step(0, 1));
     for (let r = 0; r < MAX_R; r++) {
       const row = [];
       for (let c = 0; c < MAX_C; c++) {
         const el = grid.createDiv({ cls: "ggt-grid-cell" });
         el.addEventListener("pointerenter", () => mark(r, c));
         el.addEventListener("click", () => {
-          this.close();
-          this.pick(Math.max(2, r + 1), c + 1);
+          mark(r, c);
+          insert();
         });
         row.push(el);
       }
@@ -7047,35 +8388,12 @@ var GridModal = class extends import_obsidian.Modal {
   }
 };
 function textToTable(text) {
-  const raw = text.replace(/\r\n?/g, "\n").trim();
-  if (!raw) return null;
-  const rows = raw.includes("	") ? fromTSV(raw) : raw.split("\n").map(splitCSV);
+  const rows = splitTextRows(text);
   if (!rows.length) return null;
   const width2 = Math.max(...rows.map((r) => r.length));
   const t2 = emptyTable(Math.max(2, rows.length), width2);
   rows.forEach((row, i) => row.forEach((v, j) => t2.cells[i][j] = v.trim()));
   return t2;
-}
-function splitCSV(line) {
-  const out = [];
-  let cur = "";
-  let q = false;
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
-    if (q) {
-      if (ch === '"' && line[i + 1] === '"') {
-        cur += '"';
-        i++;
-      } else if (ch === '"') q = false;
-      else cur += ch;
-    } else if (ch === '"' && !cur.trim()) q = true;
-    else if (ch === "," || ch === "\uFF0C") {
-      out.push(cur);
-      cur = "";
-    } else cur += ch;
-  }
-  out.push(cur);
-  return out;
 }
 
 // src/obsidian/paste.ts
@@ -7168,6 +8486,13 @@ function findTables(lines) {
       while (k < lines.length && TBLFM_RE.test(at(k) ?? "")) tail.push(at(k++));
     }
     const blockIdNoBlank = tail.length === 1 && BLOCK_ID_RE.test(tail[0]);
+    if (!blockIdNoBlank && !(k < lines.length && parseMetaLine(at(k) ?? ""))) {
+      let j = k;
+      while (j < lines.length && lines[j].trim() === "") j++;
+      if (j > k && j < lines.length && parseMetaLine(at(j) ?? "")) {
+        for (; k < j; k++) tail.push("");
+      }
+    }
     const metaText = k < lines.length ? at(k) : null;
     const meta = !blockIdNoBlank && metaText !== null ? parseMetaLine(metaText) : null;
     const metaLine2 = meta ? k : null;
@@ -7277,7 +8602,7 @@ ${after}` : nextBlank ? "" : "\n";
 }
 
 // src/obsidian/host.ts
-var import_obsidian4 = require("obsidian");
+var import_obsidian5 = require("obsidian");
 
 // src/obsidian/keys.ts
 var import_obsidian2 = require("obsidian");
@@ -7362,6 +8687,397 @@ function dailyNote(app) {
   };
 }
 
+// src/obsidian/secret.ts
+var import_obsidian4 = require("obsidian");
+
+// src/core/secret-box.ts
+var CHECK_TEXT = "gogoga-table";
+var SecretBox = class {
+  constructor(io) {
+    this.io = io;
+    this.password = null;
+    /** 主 salt（校验密文的）：新加密的格子都用它 */
+    this.salt = null;
+    /** salt+迭代次数 → 密钥（当前主密码派生的） */
+    this.keys = /* @__PURE__ */ new Map();
+    /** 一段密文（base64）→ 明文；null 是这个主密码解不开 */
+    this.plain = /* @__PURE__ */ new Map();
+    /** 取消自动锁定的定时器 */
+    this.timer = null;
+    this.asking = null;
+    this.listeners = /* @__PURE__ */ new Set();
+  }
+  /**
+   * 锁上、解锁、换了主密码时通知（编辑器据此重画加密格子）。返回取消订阅的函数。
+   * 脑图里复制的表格编辑器也订阅这个（用表格插件的会话），所以不能靠编辑器模块里的全局变量
+   */
+  subscribe(fn) {
+    this.listeners.add(fn);
+    return () => this.listeners.delete(fn);
+  }
+  notify() {
+    this.io.changed?.();
+    for (const fn of [...this.listeners]) fn();
+  }
+  get unlocked() {
+    return this.password !== null;
+  }
+  /**
+   * 解锁（已经开着直接 true）。samples 是要解的格子：设置里没有校验密文时拿它核对密码。
+   * 同时好几处要解锁时只弹一次
+   */
+  unlock(samples = []) {
+    if (this.unlocked) {
+      this.touch();
+      return Promise.resolve(true);
+    }
+    this.asking ?? (this.asking = this.doUnlock(samples).finally(() => this.asking = null));
+    return this.asking;
+  }
+  async doUnlock(samples) {
+    const check = this.io.loadCheck();
+    const checkEnv = check ? envelopeOf(check) : null;
+    const sample = checkEnv ? null : samples.map(envelopeOf).find((e) => e);
+    const target = checkEnv ?? sample ?? null;
+    const verify = async (pw) => {
+      if (!target) return null;
+      const key = await deriveKey(pw, target.salt, target.iterations);
+      return await decryptData(key, target) !== null ? key : null;
+    };
+    let password = null;
+    let hint = "";
+    const kept = this.io.remembered?.();
+    if (kept && (!target || await verify(kept))) password = kept;
+    else if (!target) {
+      const r = await this.io.ask("setup", "", () => Promise.resolve(true));
+      if (!r) return false;
+      password = r.password;
+      hint = r.hint;
+    } else {
+      const shownHint = check ? parseSecret(check)?.hint ?? "" : samples.map(parseSecret).find((p) => p?.hint)?.hint ?? "";
+      const r = await this.io.ask("unlock", shownHint, async (pw) => await verify(pw) !== null, !!kept);
+      if (!r) return false;
+      password = r.password;
+      hint = shownHint;
+    }
+    this.password = password;
+    if (checkEnv) this.salt = checkEnv.salt;
+    else {
+      this.salt = newSalt();
+      const key = await this.keyFor(this.salt, ITERATIONS);
+      this.io.saveCheck(writeSecret(await encryptData(key, this.salt, ITERATIONS, CHECK_TEXT), hint));
+    }
+    this.touch();
+    this.notify();
+    return true;
+  }
+  /** 锁上：忘掉密码、密钥、明文 */
+  lock() {
+    this.timer?.();
+    this.timer = null;
+    const was = this.unlocked;
+    this.password = null;
+    this.salt = null;
+    this.keys.clear();
+    this.plain.clear();
+    if (was) this.notify();
+  }
+  /** 用了一下：自动锁定重新计时 */
+  touch() {
+    this.timer?.();
+    this.timer = null;
+    const ms = this.io.lockAfter();
+    if (this.unlocked && ms > 0) this.timer = this.io.later(() => this.lock(), ms);
+  }
+  keyFor(salt, iterations) {
+    const id = `${toBase64(salt)}:${iterations}`;
+    let k = this.keys.get(id);
+    if (!k) {
+      k = deriveKey(this.password ?? "", salt, iterations);
+      this.keys.set(id, k);
+    }
+    return k;
+  }
+  /**
+   * 已经解开的格子的明文（同步，画格子用）：undefined 是还没解过（或锁着）、null 是解不开（不是这个主密码），
+   * 空格子是 ""。几段密文（合并的格子）用换行连起来
+   */
+  peek(cell) {
+    const parts = secretParts(cell);
+    if (!parts) return void 0;
+    if (!parts.length) return "";
+    if (!this.unlocked) return void 0;
+    const out = [];
+    for (const p of parts) {
+      const v = this.plain.get(p.data);
+      if (v === void 0 || v === null) return v;
+      out.push(v);
+    }
+    return out.join("\n");
+  }
+  /** 解开一格（要先解锁）；解不开返回 null */
+  async open(cell) {
+    await this.openAll([cell]);
+    return this.peek(cell) ?? null;
+  }
+  /** 把这些格子都解开放进缓存；返回有没有新解开的（画格子的据此决定要不要重画） */
+  async openAll(cells) {
+    if (!this.unlocked) return false;
+    this.touch();
+    let fresh = false;
+    const jobs = [];
+    const seen = /* @__PURE__ */ new Set();
+    for (const cell of cells)
+      for (const p of secretParts(cell) ?? []) {
+        if (this.plain.has(p.data) || seen.has(p.data)) continue;
+        seen.add(p.data);
+        const e = openData(p.data, p.v);
+        const pw = this.password;
+        jobs.push(
+          (async () => {
+            const v = e ? await decryptData(await this.keyFor(e.salt, e.iterations), e) : null;
+            if (this.password !== pw) return;
+            this.plain.set(p.data, v);
+            fresh = true;
+          })()
+        );
+      }
+    await Promise.all(jobs);
+    return fresh;
+  }
+  /**
+   * 换主密码（要先解锁）：问新密码，返回换的工具。reseal 把一段旧密码的密文换成新密码的（写法、提示照旧；解不开的返回 null），
+   * 全部写好后 commit 才换成新密码、存新的校验密文。中途放弃就不调 commit，旧密码照常能用
+   */
+  async beginRekey() {
+    if (!this.unlocked) return null;
+    const r = await this.io.ask("change", "", () => Promise.resolve(true));
+    if (!r || !this.unlocked) return null;
+    const salt = newSalt();
+    const key = await deriveKey(r.password, salt, ITERATIONS);
+    const check = writeSecret(await encryptData(key, salt, ITERATIONS, CHECK_TEXT), r.hint);
+    return {
+      reseal: async (segment) => {
+        const p = parseSecret(segment);
+        const e = p && openData(p.data, p.v);
+        if (!p || !e || !this.unlocked) return null;
+        const plain = await decryptData(await this.keyFor(e.salt, e.iterations), e);
+        if (plain === null) return null;
+        const data = await encryptData(key, salt, ITERATIONS, plain);
+        const back = openData(data);
+        if (!back || await decryptData(key, back) !== plain) return null;
+        return writeSecret(data, p.hint, p.shown);
+      },
+      commit: () => {
+        this.password = r.password;
+        this.salt = salt;
+        this.keys.clear();
+        this.keys.set(`${toBase64(salt)}:${ITERATIONS}`, Promise.resolve(key));
+        this.plain.clear();
+        this.io.saveCheck(check);
+        this.touch();
+        this.notify();
+      }
+    };
+  }
+  /** 加密一格（要先解锁）：空的还是空的。顺手记下明文，画的时候不用再解 */
+  async seal(text) {
+    if (!text.trim()) return "";
+    if (!this.unlocked || !this.salt) throw new Error("locked");
+    this.touch();
+    const data = await encryptData(await this.keyFor(this.salt, ITERATIONS), this.salt, ITERATIONS, text);
+    this.plain.set(data, text);
+    return writeSecret(data);
+  }
+};
+
+// src/obsidian/secret.ts
+var PasswordModal = class extends import_obsidian4.Modal {
+  constructor(app, mode, hint, verify, done, keychainWrong = false) {
+    super(app);
+    this.mode = mode;
+    this.hint = hint;
+    this.verify = verify;
+    this.done = done;
+    this.keychainWrong = keychainWrong;
+    this.result = null;
+  }
+  onOpen() {
+    const setup = this.mode !== "unlock";
+    this.titleEl.setText(t(this.mode === "setup" ? "encSetupTitle" : this.mode === "change" ? "encRekeyTitle" : "encUnlockTitle"));
+    this.modalEl.addClass("ggt-secret-modal");
+    const { contentEl } = this;
+    if (setup) contentEl.createEl("p", { text: t("encSetupDesc"), cls: "setting-item-description" });
+    else if (this.hint) contentEl.createEl("p", { text: t("encHintIs").replace("{v}", this.hint), cls: "setting-item-description" });
+    if (!setup && this.keychainWrong) contentEl.createEl("p", { text: t("encKeychainWrong"), cls: "ggt-secret-keychain-wrong" });
+    const field = (label, type) => {
+      const input = contentEl.createEl("input", { type, cls: "ggt-secret-input" });
+      input.placeholder = label;
+      input.setAttribute("aria-label", label);
+      return input;
+    };
+    const pw = field(t("encPassword"), "password");
+    const pw2 = setup ? field(t("encPassword2"), "password") : null;
+    const hint = setup ? field(t("encHint"), "text") : null;
+    const error = contentEl.createDiv({ cls: "ggt-secret-error" });
+    let busy = false;
+    const submit = async () => {
+      if (busy) return;
+      error.setText("");
+      if (!pw.value) return error.setText(t("encEmpty"));
+      if (pw2 && pw2.value !== pw.value) return error.setText(t("encMismatch"));
+      busy = true;
+      const ok = await this.verify(pw.value);
+      busy = false;
+      if (!ok) {
+        error.setText(t("encWrong"));
+        pw.select();
+        return;
+      }
+      this.result = { password: pw.value, hint: hint?.value.trim() ?? "" };
+      this.close();
+    };
+    for (const el of [pw, pw2, hint])
+      el?.addEventListener("keydown", (ev) => {
+        if (ev.key !== "Enter" || ev.isComposing) return;
+        ev.preventDefault();
+        void submit();
+      });
+    new import_obsidian4.Setting(contentEl).addButton((b) => b.setButtonText(t("encCancel")).onClick(() => this.close())).addButton((b) => b.setButtonText(t("encOk")).setCta().onClick(() => void submit()));
+    window.setTimeout(() => pw.focus(), 0);
+  }
+  onClose() {
+    this.contentEl.empty();
+    this.done(this.result);
+  }
+};
+function confirmBox(app, message, ok) {
+  return new Promise((resolve) => {
+    let yes = false;
+    const m = new import_obsidian4.Modal(app);
+    m.contentEl.createEl("p", { text: message });
+    new import_obsidian4.Setting(m.contentEl).addButton((b) => b.setButtonText(t("encCancel")).onClick(() => m.close())).addButton((b) => {
+      b.setButtonText(ok).onClick(() => {
+        yes = true;
+        m.close();
+      });
+      const btn = b;
+      if (btn.setDestructive) btn.setDestructive();
+      else btn.setWarning();
+    });
+    m.onClose = () => resolve(yes);
+    m.open();
+  });
+}
+function keychain(app) {
+  const s = app.secretStorage;
+  return s && typeof s.getSecret === "function" ? s : null;
+}
+function makeSecretBox(app, settings, persist) {
+  return new SecretBox({
+    ask: (mode, hint, verify, keychainWrong) => new Promise((resolve) => new PasswordModal(app, mode, hint, verify, resolve, keychainWrong).open()),
+    loadCheck: () => settings().secretCheck ?? null,
+    saveCheck: (check) => {
+      settings().secretCheck = check;
+      persist();
+    },
+    remembered: () => {
+      const id = settings().secretKeychain;
+      if (!id) return null;
+      try {
+        return keychain(app)?.getSecret(id) || null;
+      } catch {
+        return null;
+      }
+    },
+    lockAfter: () => Math.max(0, settings().secretLock) * 6e4,
+    later: (fn, ms) => {
+      const id = window.setTimeout(fn, ms);
+      return () => window.clearTimeout(id);
+    }
+  });
+}
+async function changeMasterPassword(app, box, keychainUsed) {
+  await saveOpenNotes(app);
+  const scan2 = async () => {
+    const out = [];
+    for (const f of app.vault.getMarkdownFiles()) {
+      const text = await app.vault.read(f);
+      if (!text.includes("\u{1F510}")) continue;
+      const segs = [...new Set(findSecrets(text))];
+      if (segs.length) out.push({ path: f.path, text, segs });
+    }
+    return out;
+  };
+  const found = await scan2();
+  const all = found.flatMap((x) => x.segs);
+  if (!await box.unlock(all)) return;
+  await box.openAll(all);
+  const mineOf = (segs) => segs.filter((s) => typeof box.peek(s) === "string");
+  const mine = found.filter((x) => mineOf(x.segs).length);
+  const n = mine.reduce((a, x) => a + mineOf(x.segs).length, 0);
+  const other = all.length - n;
+  const msg = t("encRekeyConfirm").replace("{n}", String(n)).replace("{f}", String(mine.length)) + (other ? " " + t("encRekeyOther").replace("{n}", String(other)) : "");
+  if (!await confirmBox(app, msg, t("encRekeyGo"))) return;
+  const rk = await box.beginRekey();
+  if (!rk) return;
+  const resealAll = async (text) => {
+    const segs = [...new Set(findSecrets(text))];
+    await box.openAll(segs);
+    const pairs2 = [];
+    for (const seg of mineOf(segs)) {
+      const next = await rk.reseal(seg);
+      if (next === null) return null;
+      pairs2.push([seg, next]);
+    }
+    return pairs2;
+  };
+  const plan = [];
+  await saveOpenNotes(app);
+  for (const x of await scan2()) {
+    const pairs2 = await resealAll(x.text);
+    if (!pairs2) {
+      new import_obsidian4.Notice(t("encRekeyFailed"));
+      return;
+    }
+    if (pairs2.length) plan.push({ path: x.path, text: x.text, pairs: pairs2 });
+  }
+  const apply = (data, pairs2) => pairs2.reduce((out, [a, b]) => out.split(a).join(b), data);
+  let files = 0;
+  for (const x of plan) {
+    const f = app.vault.getFileByPath(x.path);
+    if (!f) continue;
+    let text = x.text;
+    let pairs2 = x.pairs;
+    for (let tries = 0; tries < 5; tries++) {
+      let stale = false;
+      await app.vault.process(f, (data) => {
+        if (data !== text) {
+          stale = true;
+          return data;
+        }
+        return apply(data, pairs2);
+      });
+      if (!stale) break;
+      text = await app.vault.read(f);
+      const again = await resealAll(text);
+      if (!again) break;
+      pairs2 = again;
+    }
+    files++;
+  }
+  rk.commit();
+  const done = plan.reduce((a, x) => a + x.pairs.length, 0);
+  new import_obsidian4.Notice(t("encRekeyDone").replace("{n}", String(done)).replace("{f}", String(files)) + (keychainUsed ? " " + t("encRekeyKeychain") : ""), 1e4);
+}
+async function saveOpenNotes(app) {
+  const jobs = [];
+  app.workspace.iterateAllLeaves((leaf) => {
+    if (leaf.view instanceof import_obsidian4.TextFileView && leaf.view.file) jobs.push(leaf.view.save());
+  });
+  await Promise.all(jobs);
+}
+
 // src/obsidian/host.ts
 var FORMAT_TEXT_COLORS = ["#e03e3e", "#2f80ed", "#27ae60"];
 var FORMAT_HIGHLIGHT_COLORS = ["#ffd43b99", "#69db7c99", "#ff8fab99"];
@@ -7373,11 +9089,17 @@ var DEFAULT_SETTINGS = {
   formatBar: false,
   richEdit: false,
   smartDate: true,
+  clickEdit: false,
   readingReadonly: true,
   fullWidth: false,
   fitCols: true,
+  center: false,
+  hideBlankAbove: false,
   strictStyle: true,
-  cellPadX: 10
+  cellPadX: 10,
+  whatsNew: true,
+  secretLock: 15,
+  secretKeychain: ""
 };
 function linkContextMenu(app, menu, linktext, sourcePath) {
   const ws = app.workspace;
@@ -7416,7 +9138,7 @@ async function copyImage(app, img, file) {
     let blob = null;
     if (file) blob = new Blob([await app.vault.readBinary(file)], { type: file.extension.toLowerCase() === "png" ? "image/png" : "" });
     else if (/^https?:/i.test(src)) {
-      const res = await (0, import_obsidian4.requestUrl)({ url: src });
+      const res = await (0, import_obsidian5.requestUrl)({ url: src });
       blob = new Blob([res.arrayBuffer], { type: res.headers["content-type"] ?? "" });
     }
     let png;
@@ -7431,7 +9153,7 @@ async function copyImage(app, img, file) {
     await win.navigator.clipboard.write([new win.ClipboardItem({ "image/png": png })]);
     return true;
   } catch (e) {
-    new import_obsidian4.Notice(e.message);
+    new import_obsidian5.Notice(e.message);
     return false;
   }
 }
@@ -7448,6 +9170,7 @@ function stamp(d = /* @__PURE__ */ new Date()) {
 }
 function makeFactory(app, settings, persist = () => {
 }) {
+  const secrets = makeSecretBox(app, settings, persist);
   const colorMemory = {
     last: (k) => settings().colorMemory?.last?.[k] ?? null,
     recent: (k) => settings().colorMemory?.recent?.[k] ?? [],
@@ -7460,19 +9183,20 @@ function makeFactory(app, settings, persist = () => {
     }
   };
   return {
+    secrets,
     enabled: () => settings().enabled,
     readingReadonly: () => settings().readingReadonly,
     host: (sourcePath, owner, own) => {
       const hoverParent = { hoverPopover: null };
       return {
         renderMarkdown: (el, md) => {
-          void import_obsidian4.MarkdownRenderer.render(app, md, el, sourcePath, owner);
+          void import_obsidian5.MarkdownRenderer.render(app, md, el, sourcePath, owner);
         },
-        setIcon: (el, name) => (0, import_obsidian4.setIcon)(el, name),
-        notice: (message) => new import_obsidian4.Notice(message),
+        setIcon: (el, name) => (0, import_obsidian5.setIcon)(el, name),
+        notice: (message) => new import_obsidian5.Notice(message),
         // 格子里的双链：照 Obsidian 的习惯，⌘/Ctrl 点在新标签打开，⌘⌥ 点在右侧分屏
         openLink: (href, ev) => {
-          void app.workspace.openLinkText(href, sourcePath, import_obsidian4.Keymap.isModEvent(ev));
+          void app.workspace.openLinkText(href, sourcePath, import_obsidian5.Keymap.isModEvent(ev));
         },
         // 悬停预览：和笔记里的链接一样（实时预览里要按住 ⌘/Ctrl，按「页面预览」设置）
         hoverLink: (event, linktext, targetEl) => {
@@ -7489,17 +9213,17 @@ function makeFactory(app, settings, persist = () => {
         // 用 Menu.forEvent：这次右键只有一个菜单，别的插件（比如 adjustable-media）往同一个右键事件里加的项也进这个菜单。
         // 自己 new Menu() 的话，别的插件会另弹一个菜单把这个顶掉，开着「原生菜单」时就什么都看不到（#9）。它会在下一刻自己弹出来
         linkMenu: (ev, href) => {
-          const menu = import_obsidian4.Menu.forEvent(ev);
+          const menu = import_obsidian5.Menu.forEvent(ev);
           keepMenu(menu);
           linkContextMenu(app, menu, href, sourcePath);
         },
         // 右键格子里的图片：复制图片 + 原生的文件菜单 + 删除图片（删文件前用 Obsidian 自己的确认框，删了再把格子里的嵌入去掉）
         imageMenu: (ev, img, link, remove) => {
-          const menu = import_obsidian4.Menu.forEvent(ev);
+          const menu = import_obsidian5.Menu.forEvent(ev);
           keepMenu(menu);
           const file = link ? app.metadataCache.getFirstLinkpathDest(link, sourcePath) : null;
           menu.addItem(
-            (item) => item.setSection("action").setTitle(t("copyImage")).setIcon("copy").onClick(() => void copyImage(app, img, file).then((ok) => ok && new import_obsidian4.Notice(t("copiedImage"))))
+            (item) => item.setSection("action").setTitle(t("copyImage")).setIcon("copy").onClick(() => void copyImage(app, img, file).then((ok) => ok && new import_obsidian5.Notice(t("copiedImage"))))
           );
           if (link && file) linkContextMenu(app, menu, link, sourcePath);
           if (file && remove)
@@ -7513,7 +9237,7 @@ function makeFactory(app, settings, persist = () => {
         // 右键普通格子：表格弹的是自己画的菜单。别的插件用 Menu.forEvent 往这次右键里加项，Obsidian 会另弹一个只有那几项的菜单
         // （开着「原生菜单」时还盖在表格菜单上面，#9）。这里先认领这次右键的菜单，不让它弹，把里面的项交给表格菜单
         eventMenuItems: (ev, take) => {
-          const menu = import_obsidian4.Menu.forEvent(ev);
+          const menu = import_obsidian5.Menu.forEvent(ev);
           menu.showAtMouseEvent = () => {
             take(foreignMenuItems(menu));
             return menu;
@@ -7528,13 +9252,17 @@ function makeFactory(app, settings, persist = () => {
             const saved = await app.vault.createBinary(path, await file.arrayBuffer());
             return `![[${app.metadataCache.fileToLinktext(saved, sourcePath)}]]`;
           } catch (e) {
-            new import_obsidian4.Notice(e.message);
+            new import_obsidian5.Notice(e.message);
             return null;
           }
         },
         richEdit: () => settings().richEdit,
         smartDate: () => settings().smartDate,
-        formatColors: () => settings().formatBar ? { text: FORMAT_TEXT_COLORS, highlight: FORMAT_HIGHLIGHT_COLORS } : null,
+        secrets: () => secrets,
+        confirm: (message, ok) => confirmBox(app, message, ok),
+        // 设置「编辑格子时选中文字显示格式栏」打开才出；在 gogoga Mind Map 的备注编辑框里不看设置，一直出：
+        // 那里正文选中文字一直有格式栏，表格里没有就像是坏了（群友反馈「备注表格里的高亮还是不行」）
+        formatColors: (root) => settings().formatBar || root?.closest(".mm-note-live") ? { text: FORMAT_TEXT_COLORS, highlight: FORMAT_HIGHLIGHT_COLORS } : null,
         colorMemory: () => colorMemory,
         dailyNote: () => dailyNote(app),
         // [[ 补全：笔记按名字找（名字开头的排前面），插的是 Obsidian 生成的最短链接
@@ -7564,9 +9292,13 @@ function makeFactory(app, settings, persist = () => {
       root.dataset.defPreset = settings().preset;
       root.dataset.defDensity = settings().density;
       root.dataset.cross = settings().crosshair;
+      root.dataset.clickEdit = settings().clickEdit ? "1" : "";
       root.dataset.defFull = settings().fullWidth ? "1" : "";
       root.dataset.defFit = settings().fitCols ? "1" : "";
       root.dataset.defStrict = settings().strictStyle ? "1" : "";
+      const holder = root.parentElement;
+      if (holder?.matches(".ggt-lp, .ggt-reading")) holder.toggleClass("ggt-center-host", settings().center);
+      if (holder?.matches(".ggt-lp")) holder.toggleClass("ggt-hide-blank-above", settings().hideBlankAbove);
       const pad2 = settings().cellPadX;
       if (pad2 !== 10 && [4, 6, 8].includes(pad2)) root.style.setProperty("--ggt-pad-user", `${pad2}px`);
       else root.style.removeProperty("--ggt-pad-user");
@@ -7579,7 +9311,7 @@ function makeFactory(app, settings, persist = () => {
 var import_state3 = require("@codemirror/state");
 var import_view3 = require("@codemirror/view");
 var import_commands2 = require("@codemirror/commands");
-var import_obsidian5 = require("obsidian");
+var import_obsidian6 = require("obsidian");
 
 // src/core/diff.ts
 var isHigh = (s, i) => {
@@ -7691,6 +9423,9 @@ function indentTable(lines, block, dir) {
   return rest;
 }
 
+// src/obsidian/diag-ref.ts
+var diagRef = { diag: null };
+
 // src/obsidian/live-preview.ts
 function docLines(doc) {
   const out = [];
@@ -7719,13 +9454,13 @@ var TableWidget = class extends import_view3.WidgetType {
     for (const type of ["pointerdown", "pointerup", "mousedown", "mouseup", "click", "dblclick", "contextmenu", "keydown", "keyup", "keypress", "beforeinput", "input", "compositionstart", "compositionupdate", "compositionend", "focusin", "focusout", "paste", "copy", "cut", "dragstart", "drop"]) {
       wrap.addEventListener(type, (ev) => ev.stopPropagation());
     }
-    const owner = new import_obsidian5.Component();
+    const owner = new import_obsidian6.Component();
     owner.load();
     wrap.ggtOwner = owner;
-    const editor = new TableEditor(wrap, this.table, this.factory.host(view.state.field(import_obsidian5.editorInfoField, false)?.file?.path ?? "", owner, {
+    const editor = new TableEditor(wrap, this.table, this.factory.host(view.state.field(import_obsidian6.editorInfoField, false)?.file?.path ?? "", owner, {
       onChange: (next) => writeBack(view, wrap, next),
-      undo: () => (0, import_commands2.undo)(view),
-      redo: () => (0, import_commands2.redo)(view),
+      undo: () => historyKeepingPlace(view, wrap, import_commands2.undo),
+      redo: () => historyKeepingPlace(view, wrap, import_commands2.redo),
       onLeave: (where) => leave(view, wrap, where),
       onDeleteTable: () => removeTable(view, wrap),
       indentTable: (dir) => indentAt(view, wrap, dir),
@@ -7822,6 +9557,11 @@ function findBarMatch(view, tables) {
   });
   return out;
 }
+function noteTableWrite(view, kind, changes) {
+  const d = diagRef.diag;
+  if (!d?.on) return;
+  d.log("table-write", { file: view.state.field(import_obsidian6.editorInfoField, false)?.file?.path, kind, changes, len: view.state.doc.length });
+}
 function blockAt(view, dom) {
   let pos;
   try {
@@ -7843,7 +9583,25 @@ function writeBack(view, dom, table) {
   const text = writeBlock(table, at.block).join("\n");
   const old = view.state.sliceDoc(at.from, at.to);
   if (old === text) return;
-  view.dispatch({ changes: diffText(old, text, at.from), userEvent: "input.table" });
+  cursorBesideTable(view, at);
+  const changes = diffText(old, text, at.from);
+  view.dispatch({ changes, userEvent: "input.table" });
+  noteTableWrite(view, "cell", changes.length);
+}
+function cursorBesideTable(view, at) {
+  const doc = view.state.doc;
+  const head = view.state.selection.main.head;
+  if (view.state.selection.ranges.length === 1 && head >= at.from - 1 && head <= at.to + 1) return;
+  const pos = at.to < doc.length ? at.to + 1 : at.from > 0 ? at.from - 1 : -1;
+  if (pos < 0) return;
+  view.dispatch({ selection: { anchor: pos }, annotations: import_state3.Transaction.addToHistory.of(false) });
+}
+function historyKeepingPlace(view, dom, cmd) {
+  const snap = typeof view.scrollSnapshot === "function" ? view.scrollSnapshot() : null;
+  if (!cmd(view) || !snap) return;
+  const at = blockAt(view, dom);
+  const head = view.state.selection.main.head;
+  if (at && head >= at.from - 1 && head <= at.to + 1) view.dispatch({ effects: snap });
 }
 function indentAt(view, dom, dir) {
   const at = blockAt(view, dom);
@@ -7851,7 +9609,10 @@ function indentAt(view, dom, dir) {
   const doc = view.state.doc;
   const next = indentTable(docLines(doc), at.block, dir);
   if (!next) return;
-  view.dispatch({ changes: diffText(doc.toString(), next.join("\n")), userEvent: "input.table" });
+  cursorBesideTable(view, at);
+  const changes = diffText(doc.toString(), next.join("\n"));
+  view.dispatch({ changes, userEvent: "input.table" });
+  noteTableWrite(view, dir > 0 ? "indent" : "outdent", changes.length);
 }
 function removeTable(view, dom) {
   const at = blockAt(view, dom);
@@ -7865,6 +9626,7 @@ function removeTable(view, dom) {
   const after = to < doc.length ? doc.lineAt(to) : null;
   if (before && after && before.text.trim() === "" && after.text.trim() === "") to = Math.min(doc.length, after.to + 1);
   view.dispatch({ changes: { from, to, insert: "" }, selection: { anchor: from }, userEvent: "delete.table" });
+  noteTableWrite(view, "remove", 1);
   view.focus();
 }
 function leave(view, dom, where) {
@@ -7881,7 +9643,7 @@ function depthOf(indent) {
   return Math.round(w / 4);
 }
 function build2(state, factory) {
-  if (!factory.enabled() || !state.field(import_obsidian5.editorLivePreviewField, false)) return import_view3.Decoration.none;
+  if (!factory.enabled() || !state.field(import_obsidian6.editorLivePreviewField, false)) return import_view3.Decoration.none;
   const doc = state.doc;
   const lines = docLines(doc);
   const builder = new import_state3.RangeSetBuilder();
@@ -7903,7 +9665,7 @@ function livePreviewTables(factory) {
   const field = import_state3.StateField.define({
     create: (state) => build2(state, factory),
     update(deco, tr) {
-      const lpChanged = tr.startState.field(import_obsidian5.editorLivePreviewField, false) !== tr.state.field(import_obsidian5.editorLivePreviewField, false);
+      const lpChanged = tr.startState.field(import_obsidian6.editorLivePreviewField, false) !== tr.state.field(import_obsidian6.editorLivePreviewField, false);
       if (tr.docChanged || lpChanged) return build2(tr.state, factory);
       return deco;
     },
@@ -8061,8 +9823,8 @@ function parseAt(doc, from, to) {
 }
 
 // src/obsidian/reading.ts
-var import_obsidian6 = require("obsidian");
-var TableChild = class extends import_obsidian6.MarkdownRenderChild {
+var import_obsidian7 = require("obsidian");
+var TableChild = class extends import_obsidian7.MarkdownRenderChild {
   constructor() {
     super(...arguments);
     this.editor = null;
@@ -8139,11 +9901,11 @@ async function sectionText(app, ctx, text) {
   if (text) return text;
   let found = "";
   app.workspace.iterateAllLeaves((leaf) => {
-    if (!found && leaf.view instanceof import_obsidian6.MarkdownView && leaf.view.file?.path === ctx.sourcePath) found = leaf.view.data;
+    if (!found && leaf.view instanceof import_obsidian7.MarkdownView && leaf.view.file?.path === ctx.sourcePath) found = leaf.view.data;
   });
   if (found) return found;
   const file = app.vault.getAbstractFileByPath(ctx.sourcePath);
-  return file instanceof import_obsidian6.TFile ? app.vault.cachedRead(file) : "";
+  return file instanceof import_obsidian7.TFile ? app.vault.cachedRead(file) : "";
 }
 function domSize(tableEl) {
   const rows = Array.from(tableEl.rows);
@@ -8151,7 +9913,7 @@ function domSize(tableEl) {
 }
 async function exportProcessor(app, factory, el, ctx, strict = false) {
   const file = app.vault.getAbstractFileByPath(ctx.sourcePath);
-  if (!(file instanceof import_obsidian6.TFile)) return;
+  if (!(file instanceof import_obsidian7.TFile)) return;
   const tables = Array.from(el.querySelectorAll("table")).filter(
     (t2) => !t2.closest(".ggt, blockquote, .callout, .internal-embed, .markdown-embed")
   );
@@ -8192,7 +9954,7 @@ async function exportProcessor(app, factory, el, ctx, strict = false) {
     }, readonly: true });
     if (host.renderMarkdown) {
       host.renderMarkdown = (cell, md) => {
-        const p = import_obsidian6.MarkdownRenderer.render(app, md, cell, ctx.sourcePath, child);
+        const p = import_obsidian7.MarkdownRenderer.render(app, md, cell, ctx.sourcePath, child);
         local.push(p);
         promises?.push(p);
       };
@@ -8241,21 +10003,95 @@ function headerLooksSame(tableEl, table) {
 }
 var pendingDetached = /* @__PURE__ */ new Map();
 var detachedTimer = 0;
+var detachedDone = null;
 function queueDetached(app, factory, el, ctx) {
   pendingDetached.set(el, ctx);
-  if (detachedTimer) return;
-  detachedTimer = window.setTimeout(() => {
-    detachedTimer = 0;
-    const roots = /* @__PURE__ */ new Map();
-    for (const [sec, c] of pendingDetached) {
-      let root = sec;
-      while (root.parentElement) root = root.parentElement;
-      if (root.isConnected || roots.has(root)) continue;
-      roots.set(root, c);
+  if (detachedTimer && detachedDone) return detachedDone;
+  detachedDone = new Promise((resolve) => {
+    detachedTimer = window.setTimeout(() => {
+      detachedTimer = 0;
+      const roots = /* @__PURE__ */ new Map();
+      const hosts = /* @__PURE__ */ new Map();
+      for (const [sec, c] of pendingDetached) {
+        let root = sec;
+        while (root.parentElement) root = root.parentElement;
+        if (!root.isConnected) {
+          if (!roots.has(root)) roots.set(root, c);
+          continue;
+        }
+        const host = offPageHost(sec);
+        if (host && !hosts.has(host)) hosts.set(host, c);
+      }
+      pendingDetached.clear();
+      const jobs = [];
+      for (const [root, c] of roots) jobs.push(exportProcessor(app, factory, root, c, true));
+      for (const [host, c] of hosts) jobs.push(patchOffPage(app, host, c));
+      void Promise.all(jobs).finally(() => resolve());
+    }, 0);
+  });
+  return detachedDone;
+}
+function offPageHost(el) {
+  const body = el.doc.body;
+  let top = el;
+  while (top.parentElement && top.parentElement !== body) top = top.parentElement;
+  if (top.parentElement !== body) return null;
+  if (top.matches(".app-container, .popover, .hover-popover, .modal-container, .menu, .print, .tooltip, .notice-container, .workspace")) return null;
+  return top;
+}
+var BG_ALPHA = { gray: 0.07, red: 0.14, orange: 0.15, yellow: 0.18, green: 0.14, blue: 0.13, purple: 0.13 };
+async function patchOffPage(app, host, ctx) {
+  const file = app.vault.getAbstractFileByPath(ctx.sourcePath);
+  if (!(file instanceof import_obsidian7.TFile)) return;
+  const tables = Array.from(host.querySelectorAll("table")).filter(
+    (t2) => !t2.closest(".ggt, blockquote, .callout, .internal-embed, .markdown-embed") && !t2.dataset.ggtPatched
+  );
+  if (!tables.length) return;
+  const lines = (await app.vault.cachedRead(file)).split("\n");
+  const blocks = findTables(lines).filter((b) => !b.indent || lines[b.start - 1]?.trim() === "");
+  const pairs2 = [];
+  let bi = 0;
+  for (const tableEl of tables) {
+    const [rows, cols] = domSize(tableEl);
+    let hit = -1;
+    for (let j = bi; j < blocks.length; j++) {
+      const t2 = blockTable(lines, blocks[j]);
+      if (t2 && t2.cells.length === rows && (t2.cells[0]?.length ?? 0) === cols && headerLooksSame(tableEl, t2)) {
+        hit = j;
+        break;
+      }
     }
-    pendingDetached.clear();
-    for (const [root, c] of roots) void exportProcessor(app, factory, root, c, true);
-  }, 0);
+    if (hit < 0) return;
+    bi = hit + 1;
+    pairs2.push([tableEl, blockTable(lines, blocks[hit])]);
+  }
+  const css = getComputedStyle(host.doc.body);
+  const v = (name) => css.getPropertyValue(name).trim();
+  for (const [tableEl, table] of pairs2) {
+    tableEl.dataset.ggtPatched = "1";
+    const grid = Array.from(tableEl.rows).map((row) => Array.from(row.cells));
+    const paint = (ref, color, kind) => {
+      const at = parseRef(ref);
+      const cell = at && grid[at.r]?.[at.c];
+      if (!cell) return;
+      if (kind === "bg") {
+        const rgb = color === "gray" ? v("--mono-rgb-100") : v(`--color-${color}-rgb`);
+        if (rgb) cell.style.setProperty("background-color", `rgba(${rgb}, ${BG_ALPHA[color] ?? 0.14})`);
+      } else {
+        const c = color === "gray" ? v("--text-muted") : v(`--color-${color}`);
+        if (c) cell.style.setProperty("color", c);
+      }
+    };
+    for (const [ref, color] of Object.entries(table.meta.bg ?? {})) paint(ref, color, "bg");
+    for (const [ref, color] of Object.entries(table.meta.fg ?? {})) paint(ref, color, "fg");
+    for (const m of merges(table)) {
+      const first = grid[m.r1]?.[m.c1];
+      if (!first) continue;
+      first.rowSpan = m.r2 - m.r1 + 1;
+      first.colSpan = m.c2 - m.c1 + 1;
+      for (let r = m.r1; r <= m.r2; r++) for (let c = m.c1; c <= m.c2; c++) if (r !== m.r1 || c !== m.c1) grid[r]?.[c]?.remove();
+    }
+  }
 }
 function fitStoredWidths(root, stored) {
   const tableEl = root.querySelector("table.ggt-table");
@@ -8273,7 +10109,11 @@ function readingProcessor(app, factory) {
     const info = ctx.getSectionInfo(el);
     if (!info) {
       if (el.closest(".print")) await exportProcessor(app, factory, el, ctx);
-      else if (!el.isConnected && el.querySelector("table")) queueDetached(app, factory, el, ctx);
+      else if (el.querySelector("table") && (!el.isConnected || offPageHost(el))) {
+        const p = queueDetached(app, factory, el, ctx);
+        ctx.promises?.push(p);
+        await p;
+      }
       return;
     }
     const text = info.text || await sectionText(app, ctx, info.text);
@@ -8324,7 +10164,7 @@ function readingProcessor(app, factory) {
         readonly: factory.readingReadonly(),
         onChange: (next, prev) => {
           const file = app.vault.getAbstractFileByPath(ctx.sourcePath);
-          if (!(file instanceof import_obsidian6.TFile)) return;
+          if (!(file instanceof import_obsidian7.TFile)) return;
           const near = ctx.getSectionInfo(el)?.lineStart ?? block.start;
           let written = false;
           void app.vault.process(file, (data) => {
@@ -8347,7 +10187,7 @@ function readingProcessor(app, factory) {
         // 往里缩 / 移出列表：按现在显示的这张在文件里找到，算出新文件
         indentTable: (dir) => {
           const file = app.vault.getAbstractFileByPath(ctx.sourcePath);
-          if (!(file instanceof import_obsidian6.TFile)) return;
+          if (!(file instanceof import_obsidian7.TFile)) return;
           const near = ctx.getSectionInfo(el)?.lineStart ?? block.start;
           const base = editor.getTable();
           void app.vault.process(file, (data) => {
@@ -8361,7 +10201,7 @@ function readingProcessor(app, factory) {
         // 删除整张表：按现在显示的这张在文件里找到，连同注释删掉；前后都是空行时多删一个
         onDeleteTable: () => {
           const file = app.vault.getAbstractFileByPath(ctx.sourcePath);
-          if (!(file instanceof import_obsidian6.TFile)) return;
+          if (!(file instanceof import_obsidian7.TFile)) return;
           const near = ctx.getSectionInfo(el)?.lineStart ?? block.start;
           const base = editor.getTable();
           void app.vault.process(file, (data) => {
@@ -8382,20 +10222,887 @@ function readingProcessor(app, factory) {
   };
 }
 
+// src/core/diag-host.ts
+var import_obsidian8 = require("obsidian");
+
+// src/core/diag.ts
+var DIAG_DEFAULTS = { blackbox: true, detailedUntil: 0, saveContent: true };
+var DETAILED_DAYS = 7;
+var RING = 500;
+var MAX_INCIDENTS = 30;
+var MAX_INCIDENT_BYTES = 20 * 1024 * 1024;
+var MAX_LOG_BYTES = 5 * 1024 * 1024;
+function hashText(s) {
+  let h1 = 3735928559;
+  let h2 = 1103547991;
+  for (let i = 0; i < s.length; i++) {
+    const c = s.charCodeAt(i);
+    h1 = Math.imul(h1 ^ c, 2654435761);
+    h2 = Math.imul(h2 ^ c, 1597334677);
+  }
+  h1 = Math.imul(h1 ^ h1 >>> 16, 2246822507) ^ Math.imul(h2 ^ h2 >>> 13, 3266489909);
+  h2 = Math.imul(h2 ^ h2 >>> 16, 2246822507) ^ Math.imul(h1 ^ h1 >>> 13, 3266489909);
+  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36).padStart(8, "0").slice(-8);
+}
+function damageScore(s) {
+  const n = (re) => s.match(re)?.length ?? 0;
+  return Math.abs(n(/<span\b/g) - n(/<\/span>/g)) + Math.abs(n(/<mark\b/g) - n(/<\/mark>/g)) + n(/[^\s]\t+- /g);
+}
+var TEMPLATER_RE = /<%[\s\S]*?%>/g;
+function anomalyOf(before, after) {
+  if (before === null || before === after) return null;
+  if (before.trim() !== "" && after.trim() === "") return "empty";
+  if (before.length >= 200 && after.length < before.length * 0.7) {
+    const tags = before.match(TEMPLATER_RE)?.length ?? 0;
+    const expanded = tags > (after.match(TEMPLATER_RE)?.length ?? 0);
+    const plain = before.replace(TEMPLATER_RE, "").length;
+    if (!expanded || after.length < plain * 0.7) return "shrink";
+  }
+  if (damageScore(after) - damageScore(before) >= 3) return "damage";
+  return null;
+}
+function lineDelta(before, after) {
+  const count = /* @__PURE__ */ new Map();
+  for (const l of before.split("\n")) count.set(l, (count.get(l) ?? 0) + 1);
+  let add = 0;
+  for (const l of after.split("\n")) {
+    const c = count.get(l) ?? 0;
+    if (c > 0) count.set(l, c - 1);
+    else add++;
+  }
+  let del = 0;
+  for (const c of count.values()) del += c;
+  return { add, del };
+}
+function nodeApi() {
+  try {
+    const req = window.require;
+    if (!req) return null;
+    const proc = window.process;
+    if (!proc) return null;
+    const os = req("os");
+    return { fs: req("fs"), path: req("path"), home: os.homedir(), platform: proc.platform, env: proc.env };
+  } catch {
+    return null;
+  }
+}
+function diagRoot(n) {
+  const { path, home, platform, env } = n;
+  const appData = platform === "darwin" ? path.join(home, "Library", "Application Support", "obsidian") : platform === "win32" ? path.join(env.APPDATA ?? path.join(home, "AppData", "Roaming"), "obsidian") : path.join(env.XDG_CONFIG_HOME ?? path.join(home, ".config"), "obsidian");
+  return path.join(appData, "gogoga-diagnostics");
+}
+var stamp2 = (t2) => {
+  const d = new Date(t2);
+  const p = (x, w = 2) => String(x).padStart(w, "0");
+  return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+};
+var Diag = class {
+  constructor(src, vaultKey, env, onIncident) {
+    this.src = src;
+    this.env = env;
+    this.onIncident = onIncident;
+    this.ring = [];
+    this.queue = [];
+    this.timer = null;
+    this.cfg = null;
+    /** 刚留过底的（文件 + 内容摘要）：同一次异常脑图和 Markdown 两边都会看到，只留一份 */
+    this.recent = /* @__PURE__ */ new Map();
+    this.n = nodeApi();
+    this.base = this.n ? this.n.path.join(diagRoot(this.n), vaultKey) : null;
+  }
+  config() {
+    const now = Date.now();
+    if (this.cfg && now - this.cfg.at < 2e3) return this.cfg.v;
+    let v = { ...DIAG_DEFAULTS };
+    try {
+      if (this.n && this.base) {
+        const p = this.n.path.join(this.base, "config.json");
+        if (this.n.fs.existsSync(p)) v = { ...v, ...JSON.parse(this.n.fs.readFileSync(p, "utf8")) };
+      }
+    } catch {
+    }
+    this.cfg = { at: now, v };
+    return v;
+  }
+  setConfig(patch) {
+    if (!this.n || !this.base) return;
+    const v = { ...this.config(), ...patch };
+    try {
+      this.n.fs.mkdirSync(this.base, { recursive: true });
+      this.n.fs.writeFileSync(this.n.path.join(this.base, "config.json"), JSON.stringify(v, null, 2));
+    } catch {
+    }
+    this.cfg = { at: Date.now(), v };
+    this.log("config", { ...v });
+  }
+  /** 黑匣子开着（电脑端、没关） */
+  get on() {
+    return !!this.base && this.config().blackbox;
+  }
+  detailed() {
+    if (!this.on) return false;
+    const until = this.config().detailedUntil;
+    return until > Date.now();
+  }
+  /** 最近的事件（导出时用） */
+  events() {
+    return this.ring.slice();
+  }
+  log(ev, data = {}) {
+    if (!this.on) return;
+    try {
+      const e = { t: Date.now(), src: this.src, ev, ...data };
+      this.ring.push(e);
+      if (this.ring.length > RING) this.ring.splice(0, this.ring.length - RING);
+      if (this.detailed()) {
+        this.queue.push(JSON.stringify(e));
+        if (this.timer === null) this.timer = window.setTimeout(() => this.flush(), 2e3);
+      }
+    } catch {
+    }
+  }
+  /**
+   * 一篇笔记的内容从 before 变成 after：记一条，异常就留底。
+   * origin：谁让它变的（脑图写盘、表格写回、Markdown 编辑器存盘、外部改了文件、脑图跟随编辑器）
+   */
+  change(file, before, after, origin, extra = {}) {
+    if (!this.on) return null;
+    try {
+      const d = before === null ? null : lineDelta(before, after);
+      this.log("change", { file, origin, len: after.length, h: hashText(after), prev: before === null ? null : hashText(before), prevLen: before?.length, add: d?.add, del: d?.del, ...extra });
+      const reason = anomalyOf(before, after);
+      if (reason && before !== null) return this.incident(file, reason, origin, before, after);
+    } catch {
+    }
+    return null;
+  }
+  /** 脑图按行合并时两边改到同一处：三份都留下 */
+  conflict(file, base, ours, theirs) {
+    if (!this.on) return null;
+    try {
+      this.log("conflict", { file, base: hashText(base), ours: hashText(ours), theirs: hashText(theirs) });
+      return this.incident(file, "conflict", "external", ours, theirs, { "base.md": base });
+    } catch {
+      return null;
+    }
+  }
+  incident(file, reason, origin, before, after, extra = {}) {
+    const n = this.n;
+    if (!n || !this.base) return null;
+    const now = Date.now();
+    const key = hashText(file + "\n" + after).slice(0, 6);
+    for (const [k, t2] of this.recent) if (now - t2 > 6e4) this.recent.delete(k);
+    if (this.recent.has(key)) return null;
+    this.recent.set(key, now);
+    const root = n.path.join(this.base, "incidents");
+    n.fs.mkdirSync(root, { recursive: true });
+    if (n.fs.readdirSync(root).some((d) => d.endsWith("-" + key))) return null;
+    const id = `${stamp2(now)}-${this.src}-${key}`;
+    const dir = n.path.join(root, id);
+    n.fs.mkdirSync(dir, { recursive: true });
+    const save = this.config().saveContent;
+    n.fs.writeFileSync(
+      n.path.join(dir, "info.json"),
+      JSON.stringify(
+        { id, time: new Date(now).toISOString(), src: this.src, file, reason, origin, before: { len: before.length, h: hashText(before), damage: damageScore(before) }, after: { len: after.length, h: hashText(after), damage: damageScore(after) }, content: save, env: this.env(), events: this.ring },
+        null,
+        1
+      )
+    );
+    if (save) {
+      n.fs.writeFileSync(n.path.join(dir, "before.md"), before);
+      n.fs.writeFileSync(n.path.join(dir, "after.md"), after);
+      for (const [name, text] of Object.entries(extra)) n.fs.writeFileSync(n.path.join(dir, name), text);
+    }
+    this.prune(root);
+    const inc = { id, dir, file, reason, origin, time: now };
+    this.log("incident", { file, reason, origin, id });
+    this.flush();
+    try {
+      this.onIncident?.(inc, before);
+    } catch {
+    }
+    return inc;
+  }
+  /** 事故最多留 30 份、20 MB，多了删最旧的 */
+  prune(root) {
+    const n = this.n;
+    const dirs = n.fs.readdirSync(root).sort();
+    const size = (d) => {
+      let s = 0;
+      for (const f of n.fs.readdirSync(n.path.join(root, d))) s += n.fs.statSync(n.path.join(root, d, f)).size;
+      return s;
+    };
+    let total = 0;
+    const sizes = dirs.map((d) => {
+      const s = size(d);
+      total += s;
+      return s;
+    });
+    for (let i = 0; i < dirs.length && (dirs.length - i > MAX_INCIDENTS || total > MAX_INCIDENT_BYTES); i++) {
+      n.fs.rmSync(n.path.join(root, dirs[i]), { recursive: true, force: true });
+      total -= sizes[i];
+    }
+  }
+  /** 详细诊断：攒着的事件追加进记录文件，满 5 MB 轮换一次 */
+  flush() {
+    if (this.timer !== null) {
+      window.clearTimeout(this.timer);
+      this.timer = null;
+    }
+    const n = this.n;
+    if (!n || !this.base || !this.queue.length) return;
+    const lines = this.queue.splice(0).join("\n") + "\n";
+    try {
+      n.fs.mkdirSync(this.base, { recursive: true });
+      const p = n.path.join(this.base, `${this.src}.jsonl`);
+      if (n.fs.existsSync(p) && n.fs.statSync(p).size > MAX_LOG_BYTES) n.fs.renameSync(p, n.path.join(this.base, `${this.src}.1.jsonl`));
+      n.fs.appendFileSync(p, lines);
+    } catch {
+    }
+  }
+  /** 已经存下的：事故份数、记录文件里的事件条数、占用空间 */
+  stats() {
+    const n = this.n;
+    const out = { incidents: 0, events: this.ring.length, bytes: 0 };
+    if (!n || !this.base || !n.fs.existsSync(this.base)) return out;
+    try {
+      const walk = (p) => {
+        for (const f of n.fs.readdirSync(p)) {
+          const q = n.path.join(p, f);
+          const st = n.fs.statSync(q);
+          if (st.isDirectory()) walk(q);
+          else out.bytes += st.size;
+        }
+      };
+      walk(this.base);
+      const inc = n.path.join(this.base, "incidents");
+      if (n.fs.existsSync(inc)) out.incidents = n.fs.readdirSync(inc).length;
+      for (const f of n.fs.readdirSync(this.base)) if (f.endsWith(".jsonl")) out.events += n.fs.readFileSync(n.path.join(this.base, f), "utf8").split("\n").filter(Boolean).length;
+    } catch {
+    }
+    return out;
+  }
+  /**
+   * 导出诊断包：环境、两个插件内存里的事件、记录文件、全部事故，合成一个 JSON 放进 exports/，返回路径。
+   * content=false 不带笔记全文；hideNames 把文件路径换成摘要
+   */
+  exportBundle(opts, others = []) {
+    const n = this.n;
+    if (!n || !this.base) return null;
+    this.flush();
+    const name = (p) => opts.hideNames && typeof p === "string" ? "f-" + hashText(p) : p;
+    const clean = (e) => "file" in e ? { ...e, file: name(e.file) } : e;
+    const events = [...this.ring, ...others].sort((a, b) => a.t - b.t).map(clean);
+    const logs = [];
+    const incidents = [];
+    try {
+      if (n.fs.existsSync(this.base)) {
+        for (const f of n.fs.readdirSync(this.base).filter((x) => x.endsWith(".jsonl")).sort())
+          for (const l of n.fs.readFileSync(n.path.join(this.base, f), "utf8").split("\n").filter(Boolean)) {
+            try {
+              logs.push(clean(JSON.parse(l)));
+            } catch {
+            }
+          }
+        const root = n.path.join(this.base, "incidents");
+        if (n.fs.existsSync(root))
+          for (const d of n.fs.readdirSync(root).sort()) {
+            const dir = n.path.join(root, d);
+            const info = JSON.parse(n.fs.readFileSync(n.path.join(dir, "info.json"), "utf8"));
+            const item = { ...info, file: name(info.file), events: (info.events ?? []).map(clean) };
+            if (opts.content) for (const f of n.fs.readdirSync(dir).filter((x) => x.endsWith(".md"))) item[f] = n.fs.readFileSync(n.path.join(dir, f), "utf8");
+            incidents.push(item);
+          }
+      }
+      const out = n.path.join(this.base, "exports");
+      n.fs.mkdirSync(out, { recursive: true });
+      const p = n.path.join(out, `gogoga-diagnostics-${stamp2(Date.now())}.json`);
+      n.fs.writeFileSync(p, JSON.stringify({ generated: (/* @__PURE__ */ new Date()).toISOString(), options: opts, config: this.config(), env: this.env(), events, logs, incidents }, null, 1));
+      return p;
+    } catch {
+      return null;
+    }
+  }
+  /** 清空记录和事故（开关设置留着） */
+  clear() {
+    const n = this.n;
+    this.ring = [];
+    this.queue = [];
+    this.recent.clear();
+    if (!n || !this.base || !n.fs.existsSync(this.base)) return;
+    try {
+      for (const f of n.fs.readdirSync(this.base)) if (f !== "config.json") n.fs.rmSync(n.path.join(this.base, f), { recursive: true, force: true });
+    } catch {
+    }
+  }
+};
+
+// src/core/diag-host.ts
+var zh2 = () => (0, import_obsidian8.getLanguage)().toLowerCase().startsWith("zh");
+var L = (c, e) => zh2() ? c : e;
+var REASON = {
+  empty: ["\u53D8\u6210\u4E86\u7A7A\u7684", "became empty"],
+  shrink: ["\u4E00\u6B21\u5C11\u4E86\u4E09\u6210\u4EE5\u4E0A", "lost over 30% at once"],
+  damage: ["\u7591\u4F3C\u88AB\u62FC\u574F\uFF08\u6807\u7B7E\u4E0D\u914D\u5BF9\u3001\u884C\u88AB\u62FC\u5728\u4E00\u8D77\uFF09", "looks garbled (unpaired tags, lines spliced together)"],
+  conflict: ["\u548C\u5916\u90E8\u7684\u6539\u52A8\u51B2\u7A81", "conflicted with an outside change"]
+};
+var pluginsOf = (app) => app.plugins;
+function peerDiags(app, self) {
+  const out = [];
+  for (const id of ["gogoga-mindmap", "gogoga-table"]) {
+    const d = pluginsOf(app).plugins[id]?.diag;
+    if (d && d !== self) out.push(d);
+  }
+  return out;
+}
+function createDiag(app, plugin, src) {
+  if (!import_obsidian8.Platform.isDesktopApp) return null;
+  const basePath = app.vault.adapter.basePath ?? app.vault.getName();
+  const key = `${app.vault.getName().replace(/[^\p{L}\p{N}_-]+/gu, "_").slice(0, 40)}-${hashText(basePath).slice(0, 6)}`;
+  const env = () => {
+    const ps = pluginsOf(app);
+    let installer;
+    try {
+      const req = window.require;
+      const v = req?.("electron")?.ipcRenderer?.sendSync("version");
+      installer = typeof v === "string" ? v : void 0;
+    } catch {
+      installer = void 0;
+    }
+    const sync = app.internalPlugins?.getPluginById?.("sync");
+    return {
+      plugin: src,
+      version: plugin.manifest.version,
+      obsidian: import_obsidian8.apiVersion,
+      installer,
+      platform: window.process?.platform,
+      obsidianSync: !!sync?.enabled,
+      plugins: [...ps?.enabledPlugins ?? []].sort().map((id) => `${id}@${ps.manifests[id]?.version ?? "?"}`)
+    };
+  };
+  let diag = null;
+  const shown = /* @__PURE__ */ new Map();
+  diag = new Diag(src, key, env, (inc, before) => {
+    const loud = inc.reason === "damage" || inc.reason === "conflict" || inc.origin === "external" && (inc.reason === "empty" || inc.reason === "shrink");
+    if (!loud) return;
+    const last = shown.get(inc.file) ?? 0;
+    if (Date.now() - last < 6e4) return;
+    shown.set(inc.file, Date.now());
+    incidentNotice(app, inc, before, diag);
+  });
+  const mine = (stack) => !!stack && stack.includes(`plugin:${plugin.manifest.id}`);
+  plugin.registerDomEvent(window, "error", (ev) => {
+    const err = ev.error;
+    if (mine(err?.stack)) diag?.log("error", { message: String(ev.message).slice(0, 300), stack: err?.stack?.slice(0, 1500) });
+  });
+  plugin.registerDomEvent(window, "unhandledrejection", (ev) => {
+    const err = ev.reason;
+    if (mine(err?.stack)) diag?.log("error", { message: String(err?.message ?? ev.reason).slice(0, 300), stack: err?.stack?.slice(0, 1500), rejection: true });
+  });
+  diag.log("session", env());
+  plugin.register(() => {
+    diag?.log("unload", { version: plugin.manifest.version });
+    diag?.flush();
+  });
+  return diag;
+}
+function incidentNotice(app, inc, before, diag) {
+  const name = inc.file.split("/").pop() ?? inc.file;
+  const frag = createFragment((f) => {
+    f.createDiv({ text: L(`\u300C${name}\u300D\u7684\u5185\u5BB9${REASON[inc.reason]?.[0] ?? inc.reason}\u3002\u5DF2\u5728\u672C\u673A\u4FDD\u5B58\u4E00\u4EFD\u53D8\u5316\u524D\u7684\u526F\u672C\u3002`, `"${name}" ${REASON[inc.reason]?.[1] ?? inc.reason}. A copy from before the change was saved on this computer.`) });
+    const row = f.createDiv({ cls: "gg-diag-notice-actions" });
+    if (diag.config().saveContent) {
+      const b = row.createEl("button", { text: L("\u6062\u590D\u4E3A\u65B0\u7B14\u8BB0", "Restore as a new note") });
+      b.addEventListener("click", () => void restoreAsNote(app, inc.file, before));
+    }
+    const o = row.createEl("button", { text: L("\u6253\u5F00\u8BCA\u65AD\u6587\u4EF6\u5939", "Open diagnostics folder") });
+    o.addEventListener("click", () => openFolder(inc.dir));
+  });
+  new import_obsidian8.Notice(frag, 0);
+}
+async function restoreAsNote(app, path, text) {
+  const dot = path.lastIndexOf(".");
+  const stem = dot > 0 ? path.slice(0, dot) : path;
+  const ext = dot > 0 ? path.slice(dot) : ".md";
+  const d = /* @__PURE__ */ new Date();
+  const p = (x) => String(x).padStart(2, "0");
+  let target = `${stem} (${L("\u6062\u590D", "restored")} ${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())})${ext}`;
+  for (let i = 2; app.vault.getAbstractFileByPath(target); i++) target = target.replace(/( \d+)?\)(\.[^.]+)$/, ` ${i})$2`);
+  const f = await app.vault.create(target, text);
+  await app.workspace.getLeaf("tab").openFile(f);
+}
+function openFolder(dir) {
+  if (!dir) return;
+  try {
+    const req = window.require;
+    const electron = req?.("electron");
+    void electron?.shell?.openPath(dir);
+  } catch {
+    new import_obsidian8.Notice(dir);
+  }
+}
+function watchMarkdown(app, plugin, diag, enabled) {
+  const last = /* @__PURE__ */ new Map();
+  const openPaths = () => {
+    const s = /* @__PURE__ */ new Set();
+    for (const l of app.workspace.getLeavesOfType("markdown")) {
+      const f = l.view.file;
+      if (f) s.add(f.path);
+    }
+    return s;
+  };
+  const refresh = () => {
+    if (!enabled() || !diag.on) {
+      last.clear();
+      return;
+    }
+    const open = openPaths();
+    for (const p of [...last.keys()]) if (!open.has(p)) last.delete(p);
+    for (const p of open) {
+      if (last.has(p)) continue;
+      const f = app.vault.getAbstractFileByPath(p);
+      if (!(f instanceof import_obsidian8.TFile)) continue;
+      last.set(p, "");
+      void app.vault.read(f).then((text) => {
+        if (last.get(p) === "") last.set(p, text);
+      });
+    }
+  };
+  plugin.registerEvent(app.workspace.on("layout-change", refresh));
+  plugin.registerEvent(app.workspace.on("file-open", refresh));
+  app.workspace.onLayoutReady(refresh);
+  plugin.registerEvent(
+    app.vault.on("rename", (f, old) => {
+      const t2 = last.get(old);
+      if (t2 === void 0) return;
+      last.delete(old);
+      last.set(f.path, t2);
+    })
+  );
+  plugin.registerEvent(
+    app.vault.on("modify", (f) => {
+      if (!(f instanceof import_obsidian8.TFile) || !last.has(f.path) || !enabled() || !diag.on) return;
+      const path = f.path;
+      void app.vault.read(f).then((now) => {
+        const prev = last.get(path) ?? null;
+        last.set(path, now);
+        if (prev === now) return;
+        diag.change(path, prev === "" ? null : prev, now, originOf(app, diag, path, now));
+      });
+    })
+  );
+}
+function originOf(app, diag, path, text) {
+  const h = hashText(text);
+  for (const d of [diag, ...peerDiags(app, diag)]) {
+    const ev = d.events().reverse().find((e) => e.ev === "change" && e.file === path && e.h === h && (e.origin === "mindmap" || e.origin === "table"));
+    if (ev) return ev.origin;
+  }
+  for (const l of app.workspace.getLeavesOfType("markdown")) {
+    const v = l.view;
+    if (v.file?.path === path && v.editor?.getValue() === text) return "editor";
+  }
+  return "external";
+}
+var ExportModal = class extends import_obsidian8.Modal {
+  constructor(app, diag) {
+    super(app);
+    this.diag = diag;
+    this.content = true;
+    this.hide = false;
+  }
+  onOpen() {
+    this.setTitle(L("\u5BFC\u51FA\u8BCA\u65AD\u5305", "Export diagnostics"));
+    this.contentEl.createEl("p", {
+      text: L(
+        "\u628A\u672C\u673A\u8BB0\u4E0B\u7684\u8BCA\u65AD\u4FE1\u606F\u5408\u6210\u4E00\u4E2A\u6587\u4EF6\uFF08\u5728\u8BCA\u65AD\u6587\u4EF6\u5939\u7684 exports \u91CC\uFF09\uFF0C\u53D1\u7ED9\u5F00\u53D1\u8005\u6392\u67E5\u3002\u91CC\u9762\u6709\u63D2\u4EF6\u7248\u672C\u3001\u542F\u7528\u7684\u63D2\u4EF6\u5217\u8868\u3001\u8BFB\u5199\u4E8B\u4EF6\uFF0C\u4EE5\u53CA\u51FA\u8FC7\u5F02\u5E38\u7684\u7B14\u8BB0\u526F\u672C\u3002\u53D1\u9001\u524D\u53EF\u4EE5\u81EA\u5DF1\u6253\u5F00\u770B\u3002",
+        "Bundles the diagnostics saved on this computer into one file (in the exports folder) to send to the developer. It contains plugin versions, the list of enabled plugins, read/write events and copies of notes that had a problem. You can open it to check before sending."
+      )
+    });
+    new import_obsidian8.Setting(this.contentEl).setName(L("\u5305\u542B\u7B14\u8BB0\u5185\u5BB9", "Include note content")).setDesc(L("\u51FA\u8FC7\u5F02\u5E38\u7684\u7B14\u8BB0\uFF0C\u53D8\u5316\u524D\u540E\u7684\u5168\u6587\u3002\u4E0D\u5E26\u7684\u8BDD\u53EA\u6709\u957F\u5EA6\u548C\u6458\u8981\uFF0C\u80FD\u770B\u51FA\u662F\u8C01\u6539\u7684\uFF0C\u4F46\u6CA1\u6CD5\u91CD\u653E\u3002", "Full text of affected notes before and after. Without it only lengths and hashes are included: enough to see who changed what, not to replay it.")).addToggle((t2) => t2.setValue(this.content).onChange((v) => this.content = v));
+    new import_obsidian8.Setting(this.contentEl).setName(L("\u9690\u85CF\u6587\u4EF6\u540D", "Hide file names")).setDesc(L("\u7B14\u8BB0\u8DEF\u5F84\u6362\u6210\u4E00\u4E32\u6458\u8981\u3002", "Replace note paths with hashes.")).addToggle((t2) => t2.setValue(this.hide).onChange((v) => this.hide = v));
+    new import_obsidian8.Setting(this.contentEl).addButton(
+      (b) => b.setButtonText(L("\u5BFC\u51FA\u5E76\u6253\u5F00\u6587\u4EF6\u5939", "Export and open folder")).setCta().onClick(() => {
+        const others = peerDiags(this.app, this.diag).flatMap((d) => d.events());
+        const p = this.diag.exportBundle({ content: this.content, hideNames: this.hide }, others);
+        this.close();
+        if (!p) {
+          new import_obsidian8.Notice(L("\u5BFC\u51FA\u5931\u8D25", "Export failed"));
+          return;
+        }
+        new import_obsidian8.Notice(L(`\u5DF2\u5BFC\u51FA\uFF1A${p}`, `Exported: ${p}`), 8e3);
+        openFolder(p.replace(/[\\/][^\\/]+$/, ""));
+      })
+    );
+  }
+  onClose() {
+    this.contentEl.empty();
+  }
+};
+function diagSettingDefinitions(app, diag) {
+  if (!diag) return [];
+  return diagRows(app, diag).map((r) => ({ name: r.name, desc: r.desc, render: (s) => r.render(s) }));
+}
+function renderDiagSettings(app, diag, el) {
+  if (!diag) return;
+  for (const r of diagRows(app, diag)) r.render(new import_obsidian8.Setting(el).setName(r.name).setDesc(r.desc));
+}
+function diagRows(app, diag) {
+  const day = 24 * 3600 * 1e3;
+  const untilText = () => {
+    const u = diag.config().detailedUntil;
+    return u > Date.now() ? L(`\u5F00\u7740\uFF0C${new Date(u).toLocaleDateString()} \u81EA\u52A8\u5173\u95ED`, `On until ${new Date(u).toLocaleDateString()}`) : "";
+  };
+  return [
+    {
+      name: L("\u8BB0\u5F55\u5F02\u5E38\u65F6\u7684\u8BCA\u65AD\u4FE1\u606F", "Keep diagnostics when a note goes wrong"),
+      desc: L(
+        "\u5728\u5185\u5B58\u91CC\u8BB0\u4E0B\u6700\u8FD1\u7684\u8BFB\u5199\u4E8B\u4EF6\uFF08\u4E0D\u542B\u7B14\u8BB0\u5185\u5BB9\uFF09\u3002\u7B14\u8BB0\u7A81\u7136\u53D8\u7A7A\u3001\u88AB\u5927\u91CF\u5220\u51CF\u6216\u7591\u4F3C\u88AB\u62FC\u574F\u65F6\uFF0C\u81EA\u52A8\u5728\u672C\u673A\u4FDD\u5B58\u53D8\u5316\u524D\u540E\u7684\u526F\u672C\u548C\u8FD9\u4E9B\u4E8B\u4EF6\uFF0C\u65B9\u4FBF\u6062\u590D\u548C\u6392\u67E5\u3002\u53EA\u5B58\u5728\u672C\u673A Obsidian \u7684\u5E94\u7528\u6570\u636E\u76EE\u5F55\u91CC\uFF0C\u4E0D\u5728\u5E93\u91CC\uFF0C\u4E0D\u4F1A\u4E0A\u4F20\uFF0C\u4E5F\u4E0D\u4F1A\u88AB git\u3001\u7F51\u76D8\u540C\u6B65\u3002",
+        "Keeps recent read/write events in memory (no note content). If a note suddenly becomes empty, loses a large part or looks garbled, a copy from before and after plus those events is saved on this computer, so you can recover it and we can find the cause. Stored only in Obsidian's app data folder outside your vault: never uploaded and not touched by git or cloud sync."
+      ),
+      render: (s) => {
+        s.addToggle(
+          (t2) => t2.setValue(diag.config().blackbox).onChange((v) => {
+            diag.setConfig({ blackbox: v });
+          })
+        );
+      }
+    },
+    {
+      name: L("\u8BE6\u7EC6\u8BCA\u65AD", "Detailed diagnostics"),
+      desc: L(`\u628A\u6240\u6709\u8BFB\u5199\u4E8B\u4EF6\u6301\u7EED\u5199\u8FDB\u672C\u673A\u7684\u8BB0\u5F55\u6587\u4EF6\uFF0C\u6392\u67E5\u95EE\u9898\u65F6\u6309\u5F00\u53D1\u8005\u7684\u8981\u6C42\u6253\u5F00\uFF0C${DETAILED_DAYS} \u5929\u540E\u81EA\u52A8\u5173\u95ED\u3002`, `Writes every read/write event to a log file on this computer. Turn on when the developer asks; it turns itself off after ${DETAILED_DAYS} days.`),
+      render: (s) => {
+        const info = s.descEl.createDiv({ text: untilText() });
+        s.addToggle(
+          (t2) => t2.setValue(diag.detailed()).onChange((v) => {
+            diag.setConfig({ detailedUntil: v ? Date.now() + DETAILED_DAYS * day : 0, ...v ? { blackbox: true } : {} });
+            info.setText(untilText());
+          })
+        );
+      }
+    },
+    {
+      name: L("\u526F\u672C\u91CC\u4FDD\u5B58\u7B14\u8BB0\u5168\u6587", "Save note text in copies"),
+      desc: L("\u5173\u6389\u540E\u53EA\u8BB0\u957F\u5EA6\u548C\u6458\u8981\uFF0C\u9690\u79C1\u66F4\u597D\uFF0C\u4F46\u51FA\u4E8B\u540E\u6CA1\u6CD5\u7528\u526F\u672C\u6062\u590D\u3002", "Off: only lengths and hashes are kept. More private, but the copies can't be used to recover a note."),
+      render: (s) => {
+        s.addToggle(
+          (t2) => t2.setValue(diag.config().saveContent).onChange((v) => {
+            diag.setConfig({ saveContent: v });
+          })
+        );
+      }
+    },
+    {
+      name: L("\u8BCA\u65AD\u8BB0\u5F55", "Diagnostics"),
+      desc: "",
+      render: (s) => {
+        const show = () => {
+          const st = diag.stats();
+          s.setDesc(L(`\u5DF2\u4FDD\u5B58 ${st.incidents} \u4EFD\u5F02\u5E38\u526F\u672C\uFF0C\u6700\u8FD1 ${st.events} \u6761\u4E8B\u4EF6\uFF0C\u5360\u7528 ${(st.bytes / 1024).toFixed(0)} KB\u3002`, `${st.incidents} saved copies, ${st.events} recent events, ${(st.bytes / 1024).toFixed(0)} KB used.`));
+        };
+        show();
+        s.addButton((b) => b.setButtonText(L("\u6253\u5F00\u6587\u4EF6\u5939", "Open folder")).onClick(() => openFolder(diag.base)));
+        s.addButton((b) => b.setButtonText(L("\u5BFC\u51FA\u8BCA\u65AD\u5305", "Export")).onClick(() => new ExportModal(app, diag).open()));
+        s.addButton((b) => {
+          b.buttonEl.addClass("mod-warning");
+          b.setButtonText(L("\u6E05\u7A7A", "Clear")).onClick(() => {
+            diag.clear();
+            show();
+          });
+        });
+      }
+    }
+  ];
+}
+
+// src/core/whatsnew.ts
+var import_obsidian9 = require("obsidian");
+
+// src/core/whatsnew-core.ts
+function cmpVersion(a, b) {
+  const pa = a.split(".").map((x) => Number.parseInt(x, 10) || 0);
+  const pb = b.split(".").map((x) => Number.parseInt(x, 10) || 0);
+  for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+    const d = (pa[i] ?? 0) - (pb[i] ?? 0);
+    if (d) return d;
+  }
+  return 0;
+}
+function pendingNotes(all, last, current, fresh) {
+  if (last === current) return [];
+  if (last === void 0) return fresh ? [] : all.filter((n) => n.version === current);
+  if (cmpVersion(current, last) <= 0) return [];
+  return all.filter((n) => cmpVersion(n.version, last) > 0 && cmpVersion(n.version, current) <= 0);
+}
+function highlights(notes, lang2) {
+  if (!notes.length) return "";
+  if (notes.length > 1) return lang2 === "zh" ? `\u5305\u542B ${notes.length} \u4E2A\u7248\u672C\u7684\u66F4\u65B0` : `${notes.length} versions of changes`;
+  const body = lang2 === "zh" ? notes[0].zh : notes[0].en;
+  const groups = /* @__PURE__ */ new Map();
+  let cur = "";
+  for (const line of body.split("\n")) {
+    const h = /^###\s+(.+?)\s*$/.exec(line);
+    if (h) {
+      cur = h[1];
+      groups.set(cur, []);
+    } else if (cur && /^- /.test(line)) groups.get(cur).push(line.slice(2));
+  }
+  const order = lang2 === "zh" ? ["\u65B0\u589E", "\u6539\u8FDB", "\u4FEE\u590D"] : ["Added", "Changed", "Fixed"];
+  const label = order.find((k) => groups.get(k)?.length);
+  if (!label) return "";
+  const max = lang2 === "zh" ? 14 : 30;
+  const leads = groups.get(label).slice(0, 3).map((item) => {
+    const cut = lang2 === "zh" ? item.indexOf("\uFF1A") : item.search(/:\s/);
+    let lead = (cut > 0 ? item.slice(0, cut) : item).replace(/（[^）]*）|\([^)]*\)/g, "").replace(/\*\*/g, "").trim();
+    if (lead.length > max) lead = lead.slice(0, max - 1).trimEnd() + "\u2026";
+    return lead;
+  }).filter(Boolean);
+  return lang2 === "zh" ? `${label}\uFF1A${leads.join("\u3001")}` : `${label}: ${leads.join(", ")}`;
+}
+
+// src/core/whatsnew.ts
+var zh3 = () => (0, import_obsidian9.getLanguage)().toLowerCase().startsWith("zh");
+var L2 = (c, e) => zh3() ? c : e;
+var WhatsNewModal = class extends import_obsidian9.Modal {
+  constructor(plugin, opts, notes) {
+    super(plugin.app);
+    this.opts = opts;
+    this.notes = notes;
+    this.comp = new import_obsidian9.Component();
+  }
+  onOpen() {
+    this.comp.load();
+    this.modalEl.addClass("gg-whatsnew-modal");
+    this.setTitle(L2(`${this.opts.name} \u66F4\u65B0\u5185\u5BB9`, `What's new in ${this.opts.name}`));
+    const body = this.contentEl.createDiv({ cls: "gg-whatsnew" });
+    for (const n of this.notes) {
+      const sec = body.createDiv({ cls: "gg-whatsnew-version" });
+      sec.createEl("h2", { text: n.version }).createSpan({ cls: "gg-whatsnew-date", text: n.date });
+      const md = sec.createDiv({ cls: "gg-whatsnew-body markdown-rendered" });
+      void import_obsidian9.MarkdownRenderer.render(this.app, zh3() ? n.zh : n.en, md, "", this.comp);
+    }
+    const foot = this.contentEl.createDiv({ cls: "gg-whatsnew-foot" });
+    const link = foot.createEl("a", { text: L2("\u5B8C\u6574\u66F4\u65B0\u65E5\u5FD7", "Full changelog"), href: zh3() ? this.opts.changelogUrl.zh : this.opts.changelogUrl.en });
+    link.setAttr("target", "_blank");
+    const fund = this.fundingUrl();
+    const support = this.contentEl.createDiv({ cls: "gg-whatsnew-support" });
+    if (fund) {
+      support.createDiv({
+        cls: "gg-whatsnew-support-text",
+        text: L2(`gogoga \u7CFB\u5217\u5168\u90E8\u514D\u8D39\u5F00\u6E90\u3002\u5982\u679C ${this.opts.name} \u5E2E\u5230\u4E86\u4F60\uFF0C\u6B22\u8FCE\u652F\u6301\u4E00\u4E0B\u3002`, `gogoga is free and open source. If ${this.opts.name} helps you, consider supporting its development.`)
+      });
+    }
+    const row = support.createDiv({ cls: "gg-whatsnew-support-actions" });
+    if (fund) {
+      const btn = row.createEl("button", { cls: "gg-whatsnew-fund" });
+      (0, import_obsidian9.setIcon)(btn.createSpan({ cls: "gg-whatsnew-fund-icon" }), "coffee");
+      btn.createSpan({ text: L2("\u8BF7\u6211\u559D\u676F\u5496\u5561", "Buy me a coffee") });
+      btn.addEventListener("click", () => window.open(fund));
+    }
+    const ok = row.createEl("button", { cls: "mod-cta", text: L2("\u597D\u7684", "Got it") });
+    ok.addEventListener("click", () => this.close());
+  }
+  fundingUrl() {
+    const f = this.opts.manifest.fundingUrl;
+    if (typeof f === "string") return f || void 0;
+    return f ? Object.values(f)[0] : void 0;
+  }
+  onClose() {
+    this.comp.unload();
+    this.contentEl.empty();
+  }
+};
+function initWhatsNew(plugin, opts) {
+  const current = plugin.manifest.version;
+  plugin.addCommand({
+    id: "show-whats-new",
+    name: L2("\u67E5\u770B\u66F4\u65B0\u5185\u5BB9", "Show what's new"),
+    callback: () => new WhatsNewModal(plugin, { ...opts, manifest: plugin.manifest }, opts.notes.slice(0, 5)).open()
+  });
+  plugin.app.workspace.onLayoutReady(() => {
+    const timer = window.setTimeout(() => void run(), 3e3);
+    plugin.register(() => window.clearTimeout(timer));
+  });
+  const run = async () => {
+    const last = opts.lastSeen();
+    if (last === current) return;
+    const notes = pendingNotes(opts.notes, last, current, opts.fresh);
+    await opts.setLastSeen(current);
+    if (!notes.length || !opts.enabled()) return;
+    showUpdateNotice(plugin, opts, current, notes);
+  };
+}
+var NOTICE_MS = 2e4;
+function showUpdateNotice(plugin, opts, version, notes) {
+  let notice = null;
+  const frag = createFragment((f) => {
+    const head = f.createDiv({ cls: "gg-update-notice-head" });
+    (0, import_obsidian9.setIcon)(head.createSpan({ cls: "gg-update-notice-icon" }), opts.icon);
+    head.createSpan({ cls: "gg-update-notice-name", text: opts.name });
+    head.createSpan({ cls: "gg-update-notice-version", text: version });
+    const line = highlights(notes, zh3() ? "zh" : "en");
+    f.createDiv({ cls: "gg-update-notice-text", text: line || L2(`\u5DF2\u66F4\u65B0\u5230 ${version}`, `Updated to ${version}`) });
+    const row = f.createDiv({ cls: "gg-update-notice-actions" });
+    const open = row.createEl("button", { cls: "mod-cta", text: L2("\u67E5\u770B\u66F4\u65B0\u5185\u5BB9", "What's new") });
+    open.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      notice?.hide();
+      new WhatsNewModal(plugin, { ...opts, manifest: plugin.manifest }, notes).open();
+    });
+    const close = row.createEl("button", { text: L2("\u5173\u95ED", "Close") });
+    close.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      notice?.hide();
+    });
+  });
+  notice = new import_obsidian9.Notice(frag, 0);
+  const el = notice.containerEl;
+  el.addClass("gg-update-notice");
+  let timer = window.setTimeout(() => notice?.hide(), NOTICE_MS);
+  el.addEventListener("mouseenter", () => window.clearTimeout(timer));
+  el.addEventListener("mouseleave", () => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(() => notice?.hide(), NOTICE_MS / 2);
+  });
+  plugin.register(() => window.clearTimeout(timer));
+}
+
+// src/whatsnew-data.ts
+var WHATS_NEW = [
+  {
+    "version": "0.29.0",
+    "date": "2026-11-26",
+    "zh": "### \u6539\u8FDB\n- \u8868\u683C\u83DC\u5355\u91CC\u4E0D\u80FD\u7528\u7684\u9879\u4E0D\u518D\u53EA\u662F\u7070\u7740\u3001\u4E0D\u8BF4\u539F\u56E0\uFF08B \u7AD9\u53CD\u9988\uFF0C\u4EE5\u4E3A\u662F\u6536\u8D39\u7248\u624D\u80FD\u7528\uFF09\u3002\u6CA1\u4E1C\u897F\u53EF\u6E05\u7684\u300C\u6240\u6709\u5217\u6062\u590D\u81EA\u52A8\u5BBD\u5EA6\u300D\u300C\u6E05\u9664\u6240\u6709\u989C\u8272\u300D\u300C\u81EA\u52A8\u5217\u5BBD\u300D\u300C\u6E05\u7A7A\u5185\u5BB9\u300D\u300C\u4E0D\u5408\u8BA1\u300D\u4E0D\u518D\u51FA\u73B0\uFF0C\u7B49\u8BBE\u8FC7\u5217\u5BBD\u3001\u4E0A\u8FC7\u8272\u3001\u5199\u8FC7\u5B57\u3001\u8BBE\u8FC7\u5408\u8BA1\u624D\u6709\uFF1B\u300C\u589E\u52A0\u7F29\u8FDB\u300D\u300C\u51CF\u5C11\u7F29\u8FDB\u300D\u53EA\u663E\u793A\u80FD\u7528\u7684\u90A3\u4E2A\u3002\u6761\u4EF6\u4E0D\u76F4\u89C2\u7684\uFF08\u8868\u5934\u884C\u6570\u3001\u6298\u53E0\u8868\u683C\u3001\u5408\u5E76\u5355\u5143\u683C\u3001\u6392\u5E8F\u3001\u590D\u5236\u8868\u5934\u884C\u3001\u591A\u9009\u65F6\u52A0\u52FE\u9009\u6846\uFF09\u8FD8\u662F\u7070\u7684\uFF0C\u4F46\u9F20\u6807\u505C\u4E0A\u53BB\u4F1A\u8BF4\u660E\u539F\u56E0\uFF0C\u70B9\u4E00\u4E0B\u4E5F\u4F1A\u5F39\u63D0\u793A\uFF0C\u624B\u673A\u4E0A\u540C\u6837\u80FD\u770B\u5230\u3002\n- \u300C\u66F4\u65B0\u5185\u5BB9\u300D\u7A97\u53E3\u5E95\u90E8\u52A0\u4E86\u4E00\u884C\u652F\u6301\u8BF4\u660E\u548C\u300C\u8BF7\u6211\u559D\u676F\u5496\u5561\u300D\u6309\u94AE\uFF08\u6253\u5F00\u7231\u53D1\u7535\uFF09\uFF0C\u65C1\u8FB9\u300C\u597D\u7684\u300D\u5173\u7A97\u3002\u53EA\u5728\u8FD9\u4E2A\u7A97\u53E3\u91CC\u51FA\u73B0\uFF0C\u4E0D\u53E6\u5916\u5F39\u3002\n\n### \u4FEE\u590D\n- \u7528\u6A21\u677F\u65B0\u5EFA\u7B14\u8BB0\uFF08Templater\u3001\u9996\u9875\u770B\u677F\u3001\u65E5\u8BB0\u63D2\u4EF6\uFF09\u65F6\uFF0C\u8BCA\u65AD\u4F1A\u8BEF\u62A5\u300C\u5185\u5BB9\u4E00\u6B21\u5C11\u4E86\u4E09\u6210\u4EE5\u4E0A\u300D\uFF1A\u6A21\u677F\u91CC\u7684 `<% \u2026 %>` \u6362\u6210\u65E5\u671F\u3001\u94FE\u63A5\u540E\u53D8\u77ED\u4E86\u3002\u73B0\u5728\u6A21\u677F\u5C55\u5F00\u4E0D\u7B97\u5220\u51CF\uFF1B\u540C\u65F6\u771F\u5220\u6389\u4E86\u6B63\u6587\u7684\u7167\u6837\u4F1A\u63D0\u793A\u3002",
+    "en": `### Changed
+- Menu items that can't be used no longer just sit there greyed out without a reason (reported on Bilibili: a user thought they were paid features). "Auto width for all columns", "Clear all colors", "Auto width", "Clear contents" and "No total" only appear when there's something to reset or clear; of "Indent" and "Outdent" only the one that applies is shown. Items whose conditions aren't obvious (header rows, fold table, merge cells, sort, duplicate the header row, checkbox with several cells selected) are still greyed out, but hovering shows why and clicking shows a notice, so it works on phones too.
+- The "What's new" window now ends with a short note and a "Buy me a coffee" button (opens afdian), next to "Got it" to close it. It only appears in that window, never as a separate popup.
+
+### Fixed
+- Creating a note from a template (Templater, a home dashboard, a daily-notes plugin) could trigger a false diagnostics warning that the note lost over 30% of its content, because \`<% \u2026 %>\` was replaced with shorter dates and links. Template expansion no longer counts as a loss; if real text disappears at the same time it still warns.`
+  },
+  {
+    "version": "0.28.0",
+    "date": "2026-11-25",
+    "zh": "### \u65B0\u589E\n- \u8BCA\u65AD\u8BB0\u5F55\uFF08\u53EA\u5728\u7535\u8111\u7AEF\uFF0C\u8BBE\u7F6E \u2192\u300C\u8BCA\u65AD\u300D\uFF09\uFF1A\u7B14\u8BB0\u7A81\u7136\u53D8\u7A7A\u3001\u88AB\u5927\u91CF\u5220\u51CF\u6216\u7591\u4F3C\u88AB\u62FC\u574F\u65F6\uFF0C\u81EA\u52A8\u5728\u672C\u673A\u4FDD\u5B58\u53D8\u5316\u524D\u540E\u7684\u526F\u672C\u548C\u6700\u8FD1\u7684\u8BFB\u5199\u4E8B\u4EF6\uFF0C\u770B\u8D77\u6765\u4E0D\u662F\u4F60\u81EA\u5DF1\u6539\u7684\u4F1A\u5F39\u63D0\u793A\uFF0C\u53EF\u4EE5\u4E00\u952E\u6062\u590D\u4E3A\u65B0\u7B14\u8BB0\u3002\u5E73\u65F6\u53EA\u5728\u5185\u5B58\u91CC\u8BB0\u4E8B\u4EF6\uFF0C\u4E0D\u542B\u7B14\u8BB0\u5185\u5BB9\uFF1B\u5168\u90E8\u5B58\u5728\u5E93\u5916\u7684 Obsidian \u5E94\u7528\u6570\u636E\u76EE\u5F55\uFF0C\u4E0D\u4E0A\u4F20\u3001\u4E0D\u88AB git \u6216\u7F51\u76D8\u540C\u6B65\u3002\u8868\u683C\u5199\u56DE\u4E5F\u4F1A\u8BB0\u4E00\u7B14\uFF08\u53EA\u8BB0\u6539\u4E86\u51E0\u5904\uFF0C\u4E0D\u8BB0\u5185\u5BB9\uFF09\u3002\u53E6\u6709\u300C\u8BE6\u7EC6\u8BCA\u65AD\u300D\u548C\u300C\u5BFC\u51FA\u8BCA\u65AD\u5305\u300D\uFF0C\u65B9\u4FBF\u628A\u95EE\u9898\u53D1\u7ED9\u5F00\u53D1\u8005\u6392\u67E5\uFF08\u7FA4\u53CB\u53CD\u9988\u7B14\u8BB0\u88AB\u5199\u574F\u3001\u6E05\u7A7A\uFF09\u3002\n- \u66F4\u65B0\u540E\u63D0\u793A\u66F4\u65B0\u5185\u5BB9\uFF1A\u63D2\u4EF6\u66F4\u65B0\u540E\u53F3\u4E0B\u89D2\u63D0\u793A\u4E00\u4E0B\u66F4\u65B0\u5230\u4E86\u54EA\u4E2A\u7248\u672C\uFF0C\u70B9\u300C\u67E5\u770B\u66F4\u65B0\u5185\u5BB9\u300D\u770B\u8FD9\u6B21\u6539\u4E86\u4EC0\u4E48\uFF1B\u9694\u4E86\u51E0\u7248\u624D\u6253\u5F00\u4E5F\u53EA\u63D0\u793A\u4E00\u6B21\uFF0C\u5217\u51FA\u8FD9\u671F\u95F4\u7684\u5168\u90E8\u7248\u672C\u3002\u4E0D\u60F3\u770B\u53EF\u4EE5\u5728\u8BBE\u7F6E\u91CC\u5173\u6389\uFF0C\u547D\u4EE4\u9762\u677F\u7684\u300C\u67E5\u770B\u66F4\u65B0\u5185\u5BB9\u300D\u968F\u65F6\u80FD\u770B\u3002",
+    "en": `### Added
+- Diagnostics (desktop only, Settings \u2192 "Diagnostics"): if a note suddenly becomes empty, loses a large part or looks garbled, copies from before and after plus recent read/write events are saved on this computer; if it doesn't look like your own edit, a notice offers to restore it as a new note. Day to day only events are kept in memory, never note content; everything stays in Obsidian's app data folder outside the vault, never uploaded and untouched by git or cloud sync. Table write-backs are noted too (how many changes, not the content). "Detailed diagnostics" and "Export diagnostics" help send a problem to the developer (reports of notes being garbled or emptied).
+- What's new after updating: after the plugin updates, a notice in the bottom right says which version it is now; click "What's new" to see what changed. If you skipped a few versions it shows once, listing all of them. Turn it off in settings, or run "Show what's new" from the command palette any time.`
+  },
+  {
+    "version": "0.27.1",
+    "date": "2026-11-24",
+    "zh": "### \u4FEE\u590D\n- \u7528 Minimal \u4E3B\u9898\u5E76\u5173\u6389\u300C\u8868\u683C\u6837\u5F0F\u4F18\u5148\u4E8E\u4E3B\u9898\u300D\u65F6\uFF0C\u7AD6\u7740\u5408\u5E76\u683C\u5B50\u540E\uFF0C\u540E\u9762\u4E00\u5217\u6709\u51E0\u884C\u591A\u7F29\u8FDB\u4E00\u622A\u3001\u5BF9\u4E0D\u9F50\uFF08\u7FA4\u53CB\u53CD\u9988\uFF09\u3002Minimal \u7ED9\u6BCF\u884C\u7B2C\u4E00\u4E2A\u683C\u5B50\u53BB\u6389\u4E86\u5DE6\u5185\u8FB9\u8DDD\uFF0C\u88AB\u5408\u5E76\u76D6\u4F4F\u7684\u90A3\u51E0\u884C\uFF0C\u7B2C\u4E00\u4E2A\u683C\u5B50\u6210\u4E86\u7B2C\u4E8C\u5217\u3002\u73B0\u5728\u683C\u5B50\u7684\u5185\u8FB9\u8DDD\u4E0D\u53D7\u4E3B\u9898\u5F71\u54CD\u3002\n- \u9009\u4E2D\u683C\u5B50\u540E\u70B9\u8868\u683C\u5916\u9762\u6216\u6309 Esc\uFF0C\u539F\u9009\u533A\u53F3\u4E0B\u89D2\u7684\u586B\u5145\u5C0F\u65B9\u5757\u4E0D\u6D88\u5931\uFF1B\u73B0\u5728\u8DDF\u7740\u9009\u533A\u4E00\u8D77\u6536\u8D77\u3002\n- \u624B\u673A\u3001\u5E73\u677F\u4E0A\u62D6\u8868\u683C\u7684\u628A\u624B\u548C\u8C03\u6574\u5927\u5C0F\u7684\u6A2A\u6761\u65F6\uFF0C\u4E0D\u4F1A\u518D\u88AB Obsidian \u6253\u5F00\u4FA7\u680F\u7684\u6ED1\u52A8\u624B\u52BF\u62A2\u8D70\u3002",
+    "en": `### Fixed
+- With the Minimal theme and "Table style over theme" turned off, merging cells down a column made some rows of the next column indented further, so the column didn't line up (feedback from the user group). Minimal removes the left padding of each row's first cell, and in the rows under a merged cell the first cell is the second column. Cell padding is no longer affected by the theme.
+- After selecting cells, clicking outside the table or pressing Esc left the small fill handle at the bottom right of the old selection; it now goes away with the selection.
+- On phones and tablets, dragging the table's handles and resize bar can no longer be taken over by Obsidian's swipe gesture that opens the sidebar.`
+  },
+  {
+    "version": "0.27.0",
+    "date": "2026-11-24",
+    "zh": "### \u65B0\u589E\n- \u8BBE\u7F6E\u300C\u5355\u51FB\u683C\u5B50\u76F4\u63A5\u7F16\u8F91\u300D\uFF08\u9ED8\u8BA4\u5173\uFF0CB \u7AD9\u53CD\u9988\uFF09\uFF1A\u7528\u9F20\u6807\u70B9\u4E00\u4E0B\u683C\u5B50\u5C31\u8FDB\u5165\u7F16\u8F91\uFF0C\u4E0D\u7528\u53CC\u51FB\u3002\u70B9\u94FE\u63A5\u3001\u52FE\u9009\u6846\u3001\u56FE\u7247\uFF0C\u62D6\u52A8\u6216\u6309\u4F4F Shift\u3001\u2318 \u70B9\u9009\u683C\u5B50\uFF0C\u90FD\u7167\u65E7\u3002\n- \u624B\u673A\u3001\u5E73\u677F\u4E0A\u957F\u6309\u683C\u5B50\u540E\u4E0D\u677E\u624B\u76F4\u63A5\u62D6\uFF0C\u5C31\u80FD\u6846\u9009\u591A\u4E2A\u683C\u5B50\uFF0C\u5F80\u54EA\u4E2A\u65B9\u5411\u90FD\u884C\uFF1B\u677E\u624B\u51FA\u83DC\u5355\uFF0C\u300C\u5408\u5E76\u5355\u5143\u683C\u300D\u5728\u6700\u4E0A\u9762\uFF08\u7FA4\u53CB\u5EFA\u8BAE\uFF1A\u53F3\u4E0B\u89D2\u7684\u5706\u70B9\u592A\u96BE\u6309\uFF09\u3002\u957F\u6309\u540E\u4E0D\u62D6\u5C31\u677E\u624B\uFF0C\u7167\u65E7\u662F\u8FD9\u4E00\u683C\u7684\u83DC\u5355\u3002\u62D6\u5230\u8868\u683C\u5DE6\u53F3\u8FB9\u7F18\u6216\u5C4F\u5E55\u4E0A\u4E0B\u8FB9\u7F18\u65F6\uFF0C\u8868\u683C\u548C\u7B14\u8BB0\u4F1A\u81EA\u52A8\u6EDA\u52A8\uFF0C\u9009\u533A\u8DDF\u7740\u6269\u5927\u3002\u62D6\u52A8\u65F6\u4E0D\u4F1A\u5192\u51FA\u7CFB\u7EDF\u7684\u9009\u5B57\u3002\u89E6\u5C4F\u4E0A\u4E0D\u518D\u663E\u793A\u53F3\u4E0B\u89D2\u90A3\u4E2A\u5C0F\u5706\u70B9\uFF1B\u7528\u9F20\u6807\u3001\u624B\u5199\u7B14\u65F6\u7167\u65E7\u6709\uFF08\u62D6\u5B83\u662F\u4E0B\u62C9\u586B\u5145\uFF09\u3002\n\n### \u4FEE\u590D\n- \u7528\u8F83\u65E9\u7684\u5B89\u88C5\u5668\u88C5\u7684 Obsidian\uFF08\u5E38\u89C1\u4E8E Windows\uFF0C\u5185\u6838\u662F Electron 25 \u8FD9\u7C7B\uFF09\uFF0C\u62D6\u5217\u5BBD\u7684\u89E6\u53D1\u70B9\u548C\u5341\u5B57\u9AD8\u4EAE\u4F1A\u5F80\u5DE6\u9519\u4F4D\uFF0C\u8D8A\u5F80\u53F3\u8D8A\u591A\uFF08#22\uFF09\u3002\u8FD9\u7C7B\u5185\u6838\u62A5\u544A\u7684\u5217\u4F4D\u7F6E\u4E0D\u5BF9\uFF0C\u73B0\u5728\u9047\u5230\u65F6\u6539\u6309\u683C\u5B50\u7684\u5B9E\u9645\u4F4D\u7F6E\u7B97\u3002",
+    "en": `### Added
+- "Edit a cell with a single click" setting (off by default, reported on Bilibili): clicking a cell with the mouse starts editing it, no double-click needed. Links, checkboxes and images, dragging, and Shift- or \u2318-clicking to select cells work as before.
+- On phones and tablets, press and hold a cell, then drag without lifting your finger to select a range of cells in any direction. Releasing opens the menu with Merge cells at the top (suggested in the user group: the corner dot was hard to hit). Releasing without dragging still opens the cell menu. Dragging to the left or right edge of the table, or the top or bottom of the screen, scrolls the table or note and keeps extending the selection. The system text selection no longer pops up while dragging. The small corner dot is no longer shown for touch; it's still there with a mouse or pencil (dragging it fills cells).
+
+### Fixed
+- On Obsidian installed with an older installer (common on Windows, with an engine like Electron 25), the column-resize hit area and the crosshair highlight were shifted left, more so for columns further right (#22). These engines report column positions incorrectly, so positions are now taken from the cells in that case.`
+  },
+  {
+    "version": "0.26.0",
+    "date": "2026-11-24",
+    "zh": "### \u65B0\u589E\n- \u8BBE\u7F6E\u9875\u52A0\u4E86\u300C\u66F4\u6539\u4E3B\u5BC6\u7801\u300D\uFF0C\u548C\u547D\u4EE4\u9762\u677F\u91CC\u7684\u540C\u540D\u547D\u4EE4\u4E00\u6837\uFF08\u7FA4\u53CB\u627E\u4E0D\u5230\u5165\u53E3\uFF09\u3002\u8FD8\u6CA1\u52A0\u5BC6\u8FC7\u4EFB\u4F55\u5185\u5BB9\u65F6\u4E0D\u80FD\u70B9\u3002\n\n### \u6539\u8FDB\n- \u94A5\u5319\u4E32\u91CC\u9009\u7684\u90A3\u9879\u5B58\u7684\u4E0D\u662F\u4E3B\u5BC6\u7801\u65F6\uFF0C\u8F93\u5165\u4E3B\u5BC6\u7801\u7684\u5F39\u6846\u91CC\u4F1A\u8BF4\u660E\u300C\u94A5\u5319\u4E32\u91CC\u5B58\u7684\u4E0D\u662F\u4E3B\u5BC6\u7801\uFF0C\u6CA1\u6709\u7528\u4E0A\u300D\u3002\u4EE5\u524D\u6084\u6084\u8DF3\u8FC7\uFF0C\u7FA4\u53CB\u4EE5\u4E3A\u94A5\u5319\u4E32\u91CC\u7684\u5C31\u662F\u4E3B\u5BC6\u7801\uFF0C\u8F93\u4E86\u5374\u63D0\u793A\u5BC6\u7801\u4E0D\u5BF9\u3002\n- \u8F93\u5165\u4E3B\u5BC6\u7801\u7684\u5F39\u6846\u6807\u9898\u4ECE\u300C\u89E3\u9501\u52A0\u5BC6\u5185\u5BB9\u300D\u6539\u6210\u300C\u8F93\u5165\u4E3B\u5BC6\u7801\u300D\uFF1A\u52A0\u5BC6\u4E00\u5217\u65F6\u4E5F\u5F39\u5B83\uFF0C\u539F\u6765\u7684\u6807\u9898\u8BA9\u4EBA\u4EE5\u4E3A\u662F\u5728\u89E3\u5BC6\u3002\n- \u300C\u4E3B\u5BC6\u7801\u5B58\u5728\u94A5\u5319\u4E32\u91CC\u300D\u7684\u8BF4\u660E\u6539\u6E05\u695A\u4E86\uFF1A\u94A5\u5319\u4E32\u53EA\u662F\u66FF\u4F60\u8BB0\u4F4F\u4E3B\u5BC6\u7801\uFF0C\u4E0D\u4F1A\u8BBE\u7F6E\u6216\u6539\u6389\u4E3B\u5BC6\u7801\uFF0C\u5B58\u7684\u5FC5\u987B\u548C\u7B2C\u4E00\u6B21\u52A0\u5BC6\u65F6\u8BBE\u7684\u4E00\u6837\u3002\n\n### \u4FEE\u590D\n- \u683C\u5B50\u91CC\u6362\u884C\u5199\u7684\u5217\u8868\u5F85\u529E\uFF08`- [ ]`\uFF09\uFF0C\u70B9\u52FE\u9009\u6846\u53EA\u5728\u5C4F\u5E55\u4E0A\u6253\u4E86\u52FE\uFF0C\u7B14\u8BB0\u539F\u6587\u6CA1\u6539\uFF0C\u4E0B\u6B21\u8FDB\u7F16\u8F91\u6216\u91CD\u65B0\u6253\u5F00\u53C8\u5168\u53D8\u56DE\u672A\u5B8C\u6210\uFF08\u7FA4\u53CB\u53CD\u9988\uFF09\u3002\u73B0\u5728\u70B9\u54EA\u4E00\u4E2A\u5C31\u6539\u539F\u6587\u91CC\u5BF9\u5E94\u7684\u90A3\u4E00\u6761\uFF0C\u80FD\u64A4\u9500\uFF1B\u5F00\u5934\u76F4\u63A5\u5199 `[ ]` \u7684\u7167\u65E7\u3002\n- \u5149\u6807\u5728\u5F69\u8272\u6587\u5B57\u7684\u5F00\u5934\u6216\u7ED3\u5C3E\u6309 Shift+Enter \u6362\u884C\uFF0C\u7F16\u8F91\u6846\u91CC\u4F1A\u9732\u51FA `</span>`\uFF08\u8111\u56FE\u7FA4\u53CB\u53CD\u9988\uFF0C\u683C\u5B50\u91CC\u4E5F\u4E00\u6837\uFF09\u3002\u73B0\u5728\u6362\u884C\u653E\u5728\u989C\u8272\u5916\u9762\uFF0C\u4E0D\u518D\u62C6\u51FA\u7A7A\u7684\u989C\u8272\u6807\u7B7E\u3002",
+    "en": '### Added\n- A "Change master password" item in settings, same as the command of that name (users couldn\'t find it). It\'s unavailable until something has been encrypted.\n\n### Changed\n- If the keychain entry you picked doesn\'t hold the master password, the password prompt now says it wasn\'t used. Before, it was skipped silently, so users thought the keychain password was the master password and got "Wrong password" when typing it.\n- The password prompt is now titled "Enter master password" instead of "Unlock encrypted content". It also appears when encrypting a column, and the old title made it look like decrypting.\n- Clearer description for "Master password from the keychain": the keychain only remembers your master password and doesn\'t set or change it, so the saved entry must match the password you set when you first encrypted something.\n\n### Fixed\n- Clicking a list task (`- [ ]`) inside a multi-line cell only ticked it on screen without changing the note, so it went back to unchecked the next time you edited the cell or reopened the note (reported in the user group). Clicking now updates that task in the note and can be undone. Cells that start with `[ ]` work as before.\n- Pressing Shift+Enter at the start or end of colored text showed a stray `</span>` in the editor (reported in the mind map user group; cells behaved the same). The line break now goes outside the color, without leaving an empty color tag behind.'
+  },
+  {
+    "version": "0.25.0",
+    "date": "2026-11-23",
+    "zh": "### \u65B0\u589E\n- \u8BBE\u7F6E\u300C\u9690\u85CF\u8868\u683C\u4E0A\u65B9\u7684\u7A7A\u884C\u300D\uFF08\u9ED8\u8BA4\u5173\uFF0CB \u7AD9\u5929\u5802\u9E1F0 \u7684\u5EFA\u8BAE\uFF09\uFF1AMarkdown \u89C4\u5B9A\u8868\u683C\u524D\u9762\u8981\u7A7A\u4E00\u884C\uFF0C\u5B9E\u65F6\u9884\u89C8\u91CC\u4F1A\u7559\u51FA\u4E00\u622A\u7A7A\u767D\uFF1B\u6253\u5F00\u540E\u85CF\u8D77\u6765\uFF0C\u8868\u683C\u7D27\u8D34\u7740\u4E0A\u9762\u7684\u6587\u5B57\uFF0C\u5149\u6807\u79FB\u5230\u8FD9\u4E00\u884C\u65F6\u7167\u5E38\u663E\u793A\u3002\u53EA\u6539\u663E\u793A\uFF0C\u7B14\u8BB0\u91CC\u7684\u7A7A\u884C\u8FD8\u5728\u3002\n- \u300C\u628A\u9009\u4E2D\u7684\u6587\u5B57\u8F6C\u6210\u8868\u683C\u300D\u80FD\u8BA4\u66F4\u591A\u5206\u5217\u65B9\u5F0F\uFF08\u5C0F\u7EA2\u4E66\u53CD\u9988\uFF09\uFF1A\u4E24\u4E2A\u4EE5\u4E0A\u7A7A\u683C\u3001\u5168\u89D2\u7A7A\u683C\uFF08AI \u5BF9\u8BDD\u3001\u7F51\u9875\u4E0A\u590D\u5236\u6765\u7684\u5BF9\u9F50\u6587\u5B57\uFF09\uFF0C\u6BCF\u884C\u5217\u6570\u4E00\u6837\u7684\u5355\u4E2A\u7A7A\u683C\uFF0C\u8FD8\u6709\u5E26\u7AD6\u7EBF\u7684 Markdown \u8868\u683C\u6837\u5B50\u7684\u6587\u5B57\u3002\u4EE5\u524D\u53EA\u8BA4\u5236\u8868\u7B26\u548C\u9017\u53F7\u3002\n- \u63D2\u4EF6\u7684\u6837\u5F0F\u6587\u4EF6 styles.css \u6CA1\u52A0\u8F7D\u65F6\uFF08\u624B\u52A8\u5B89\u88C5\u6F0F\u4E86\u8FD9\u4E2A\u6587\u4EF6\u3001\u540C\u6B65\u76D8\u6CA1\u540C\u6B65\u8FC7\u6765\uFF09\uFF0C\u542F\u52A8\u540E\u5F39\u51FA\u63D0\u793A\uFF0C\u8BF4\u660E\u53BB\u54EA\u91CC\u68C0\u67E5\u6216\u8005\u91CD\u65B0\u5B89\u88C5\u3002\u4EE5\u524D\u53EA\u4F1A\u770B\u5230\u8868\u683C\u4E0B\u9762\u591A\u51FA\u4E00\u6392\u6309\u94AE\u3001\u6BCF\u884C\u5F88\u9AD8\uFF08B \u7AD9\u53CD\u9988\uFF09\u3002",
+    "en": `### Added
+- "Hide the blank line above tables" setting (off by default, suggested on Bilibili): Markdown needs a blank line before a table, which leaves a gap in Live Preview. On: that line is hidden so the table sits right under the text above, and it shows again when the cursor is on it. Display only \u2014 the blank line stays in your notes.
+- "Convert selected text to table" understands more ways of splitting columns (requested on Xiaohongshu): two or more spaces or full-width spaces (aligned text copied from AI chats or web pages), single spaces when every line has the same number of columns, and text that looks like a Markdown table with pipes. Before, only tabs and commas worked.
+- If the plugin's styles.css didn't load (left out of a manual install, or not synced yet), a notice now says where to check or to reinstall. Before, tables just showed a row of buttons underneath and very tall rows (reported on Bilibili).`
+  },
+  {
+    "version": "0.24.1",
+    "date": "2026-11-22",
+    "zh": "### \u4FEE\u590D\n- \u6709\u7684\u4E3B\u9898\u6216 CSS \u7247\u6BB5\u628A\u8868\u683C\u683C\u5B50\u7EDF\u4E00\u8BBE\u6210\u5C45\u4E2D\uFF0C\u8FD9\u65F6\u9009\u4E2D\u683C\u5B50\u70B9\u300C\u5DE6\u5BF9\u9F50\u300D\u6CA1\u53CD\u5E94\uFF0C\u70B9\u300C\u5C45\u4E2D\u300D\u4E5F\u770B\u4E0D\u51FA\u53D8\u5316\uFF08B \u7AD9\u53CD\u9988\uFF09\u3002\u73B0\u5728\u5BF9\u9F50\u5199\u5728\u683C\u5B50\u91CC\u9762\u90A3\u5C42\uFF0C\u4E3B\u9898\u7684\u8BBE\u7F6E\u76D6\u4E0D\u6389\uFF0C\u7F16\u8F91\u683C\u5B50\u65F6\u4E5F\u4E00\u6837\u3002",
+    "en": '### Fixed\n- With themes or CSS snippets that center all table cells, "Align left" had no effect and "Align center" looked like it did nothing (reported on Bilibili). Alignment is now applied inside the cell, so the theme can no longer override it, including while editing.'
+  },
+  {
+    "version": "0.24.0",
+    "date": "2026-11-22",
+    "zh": "### \u65B0\u589E\n- \u624B\u673A\u3001\u5E73\u677F\u4E0A\u4E5F\u80FD\u5408\u5E76\u5355\u5143\u683C\u4E86\uFF08\u5C0F\u7EA2\u4E66\u53CD\u9988\uFF09\uFF1A\u957F\u6309\u683C\u5B50\uFF0C\u683C\u5B50\u53F3\u4E0B\u89D2\u9732\u51FA\u5706\u70B9\uFF0C\u6309\u4F4F\u5706\u70B9\u62D6\u5C31\u9009\u51FA\u4E00\u7247\uFF0C\u677E\u624B\u5F39\u51FA\u7684\u83DC\u5355\u7B2C\u4E00\u9879\u5C31\u662F\u300C\u5408\u5E76\u5355\u5143\u683C\u300D\u3002\u7535\u8111\u4E0A\u8FD9\u4E2A\u5706\u70B9\u7167\u65E7\u662F\u4E0B\u62C9\u586B\u5145\u3002\n- \u624B\u673A\u3001\u5E73\u677F\u4E0A\u7F16\u8F91\u6709\u5B57\u7684\u683C\u5B50\u65F6\uFF0C\u957F\u6309\u4EA4\u7ED9\u7CFB\u7EDF\uFF08\u632A\u5149\u6807\u3001\u9009\u5B57\u3001\u7C98\u8D34\uFF09\uFF0C\u8868\u683C\u83DC\u5355\u51FA\u4E0D\u6765\u3002\u952E\u76D8\u4E0A\u65B9\u7684\u8868\u683C\u5DE5\u5177\u6761\u52A0\u4E86\u300C\u8868\u683C\u83DC\u5355\u300D\u6309\u94AE\uFF08\u22EF\uFF09\uFF0C\u70B9\u5B83\u6536\u8D77\u952E\u76D8\u3001\u5F39\u51FA\u8FD9\u4E00\u683C\u7684\u83DC\u5355\u3002\n\n### \u4FEE\u590D\n- \u624B\u673A\u4E0A\u7F16\u8F91\u683C\u5B50\u65F6\uFF0C\u952E\u76D8\u4E0A\u65B9\u90A3\u6392\u8868\u683C\u5DE5\u5177\u6761\uFF08\u5B8C\u6210\u3001\u64A4\u9500\u3001\u52A0\u7C97\u3001\u53CC\u94FE\u3001\u4E0A\u4E00\u683C / \u4E0B\u4E00\u683C\u7B49\uFF09\u4E00\u76F4\u770B\u4E0D\u5230\uFF1AiPhone \u4E0A\u88AB\u952E\u76D8\u6321\u4F4F\uFF0C\u6CA1\u5F39\u952E\u76D8\u65F6\u88AB\u5E95\u90E8\u5BFC\u822A\u680F\u538B\u4F4F\uFF0CObsidian \u81EA\u5DF1\u7684\u7F16\u8F91\u5DE5\u5177\u6761\u8FD8\u53E0\u5728\u4E0A\u9762\u3002\u73B0\u5728\u5B83\u8D34\u5728\u952E\u76D8\u4E0A\u65B9\uFF0C\u7F16\u8F91\u683C\u5B50\u65F6 Obsidian \u90A3\u6761\u5148\u6536\u8D77\u6765\u3002\n- \u624B\u673A\u4E0A\u952E\u76D8\u5F39\u7740\u7684\u65F6\u5019\u957F\u6309\u683C\u5B50\uFF08\u5149\u6807\u5728\u683C\u5B50\u91CC\u6216\u8868\u683C\u5916\u7684\u6B63\u6587\u91CC\uFF09\uFF0C\u8868\u683C\u83DC\u5355\u88AB\u952E\u76D8\u6321\u4F4F\u3002\u73B0\u5728\u5148\u6536\u8D77\u952E\u76D8\u518D\u5F39\u83DC\u5355\u3002",
+    "en": `### Added
+- Merge cells on phones and tablets (requested on Xiaohongshu): long-press a cell and a dot appears at its bottom-right corner; drag the dot to select a block, and the menu that opens on release has "Merge cells" at the top. On desktop the dot still fills down.
+- On phones and tablets, long-pressing a cell that has text while editing it goes to the system (cursor, text selection, paste), so the table menu couldn't be reached. The table toolbar above the keyboard now has a Table menu button (\u22EF) that closes the keyboard and opens the menu for that cell.
+
+### Fixed
+- On phones, the table toolbar above the keyboard (Done, Undo, Bold, links, previous / next cell and so on) never showed: on iPhone it sat behind the keyboard, without a keyboard the bottom navigation bar covered it, and Obsidian's own editing toolbar sat on top of it. It now sits right above the keyboard, and Obsidian's toolbar is hidden while you edit a cell.
+- On phones, long-pressing a cell while the keyboard was up (cursor in a cell or in the note around the table) opened the table menu behind the keyboard. The keyboard now closes first.`
+  },
+  {
+    "version": "0.23.4",
+    "date": "2026-11-21",
+    "zh": "### \u4FEE\u590D\n- \u624B\u673A\u3001\u5E73\u677F\u4E0A\u8868\u683C\u5BBD\u65F6\u6574\u9875\u4E0D\u4F1A\u518D\u8DDF\u7740\u5DE6\u53F3\u6ED1\uFF1A\u52A0\u5217\u7684\u52A0\u53F7\u6536\u8FDB\u6B63\u6587\u91CC\uFF0C\u4E0D\u518D\u4F38\u51FA\u9875\u9762\u8FB9\u7F18\u3002\n- iPhone\u3001iPad \u4E0A\u8868\u683C\u83DC\u5355\uFF08\u957F\u6309\u683C\u5B50\u3001\u8868\u683C\u5DE6\u4E0A\u89D2\uFF09\u770B\u5F97\u89C1\u5374\u70B9\u4E0D\u52A8\uFF0C\u70B9\u4E0B\u53BB\u843D\u5230\u4E86\u540E\u9762\u7684\u683C\u5B50\u6216\u6B63\u6587\u4E0A\uFF0C\u53EA\u6709\u83DC\u5355\u521A\u597D\u76D6\u5728\u8868\u683C\u5916\u9762\u7684\u90A3\u51E0\u9879\u5076\u5C14\u80FD\u7528\uFF08\u5C0F\u7EA2\u4E66\u53CD\u9988\u300C\u5220\u9664\u884C\u5217\u53EA\u6709\u6700\u540E\u4E00\u884C\u4E00\u5217\u624D\u6709\u7528\u300D\uFF09\u3002\u73B0\u5728\u83DC\u5355\u3001\u683C\u5F0F\u680F\u3001\u8865\u5168\u5217\u8868\u3001\u65E5\u5386\u5728\u624B\u673A\u4E0A\u90FD\u80FD\u6B63\u5E38\u70B9\u3002\n- iPhone\u3001iPad \u4E0A\u8C03\u5217\u5BBD\u7684\u628A\u624B\u8DD1\u5230\u4E86\u8868\u683C\u6700\u5DE6\u8FB9\uFF0C\u4E00\u62D6\u5C31\u62C9\u51FA\u4E86 Obsidian \u7684\u5DE6\u4FA7\u680F\uFF0C\u5217\u5BBD\u5F88\u96BE\u6539\uFF08\u5C0F\u7EA2\u4E66\u53CD\u9988\uFF09\u3002\u73B0\u5728\u628A\u624B\u5728\u9009\u4E2D\u90A3\u4E00\u5217\u7684\u53F3\u8FB9\u7EBF\u4E0A\uFF0C\u62D6\u52A8\u65F6\u4E5F\u4E0D\u4F1A\u518D\u5E26\u51FA\u4FA7\u680F\u3002\n- \u624B\u673A\u3001\u5E73\u677F\u4E0A\u7F16\u8F91\u7740\u4E00\u4E2A\u7A7A\u683C\u5B50\u65F6\u957F\u6309\uFF0C\u53EA\u51FA\u7CFB\u7EDF\u7684\u300C\u7C98\u8D34\u3001\u9009\u62E9\u3001\u5168\u9009\u300D\uFF0C\u51FA\u4E0D\u6765\u8868\u683C\u83DC\u5355\uFF08\u5C0F\u7EA2\u4E66\u53CD\u9988\uFF09\u3002\u73B0\u5728\u7A7A\u683C\u5B50\u91CC\u957F\u6309\u51FA\u8868\u683C\u83DC\u5355\uFF1B\u6709\u5B57\u7684\u683C\u5B50\u7167\u65E7\u4EA4\u7ED9\u7CFB\u7EDF\uFF08\u653E\u5149\u6807\u3001\u9009\u5B57\uFF09\u3002",
+    "en": "### Fixed\n- On phones and tablets, a wide table no longer makes the whole page slide sideways: the add-column button now sits inside the page margin instead of poking past it.\n- On iPhone and iPad, table menus (long-pressing a cell, the table corner button) showed up but couldn't be tapped: taps went through to the cell or note behind them, so only items that happened to sit outside the table sometimes worked (reported on Xiaohongshu). Menus, the format bar, suggestions and the date picker now respond to taps on phones and tablets.\n- On iPhone and iPad, the column-width handle sat at the table's left edge, so dragging it opened Obsidian's left sidebar and resizing columns was hard (reported on Xiaohongshu). The handle now sits on the right edge of the selected column, and dragging it no longer pulls out the sidebar.\n- On phones and tablets, long-pressing an empty cell while editing it showed only the system's Paste / Select / Select All menu instead of the table menu (reported on Xiaohongshu). An empty cell now opens the table menu; cells with text still get the system long-press for placing the cursor and selecting text."
+  },
+  {
+    "version": "0.23.3",
+    "date": "2026-11-20",
+    "zh": "### \u4FEE\u590D\n- \u5F00\u7740\u300C\u7F16\u8F91\u683C\u5B50\u65F6\u76F4\u63A5\u663E\u793A\u683C\u5F0F\u300D\u65F6\uFF0C\u7F16\u8F91\u5C45\u4E2D\u3001\u53F3\u5BF9\u9F50\u7684\u683C\u5B50\uFF0C\u5B57\u4F1A\u5F80\u5DE6\u504F\u4E00\u622A\uFF0C\u770B\u8D77\u6765\u50CF\u5BF9\u9F50\u5931\u6548\u4E86\uFF08B\u7AD9\u53CD\u9988\uFF09\uFF1AObsidian \u7ED9\u7F16\u8F91\u5668\u7684\u6EDA\u52A8\u6761\u9884\u7559\u4E86\u4F4D\u7F6E\uFF0C\u683C\u5B50\u91CC\u7684\u7F16\u8F91\u6846\u53F3\u8FB9\u7A7A\u51FA 15px\u3002\u73B0\u5728\u7F16\u8F91\u6846\u6491\u6EE1\u6574\u683C\uFF0C\u7F16\u8F91\u65F6\u548C\u67E5\u770B\u65F6\u4F4D\u7F6E\u4E00\u6837\u3002",
+    "en": `### Fixed
+- With "Show formatting while editing a cell" on, text in centered and right-aligned cells shifted left while editing, so alignment looked broken (reported on Bilibili): Obsidian reserves room for the editor's scrollbar, which left 15px empty on the right of the cell editor. The editor now fills the cell, so text sits in the same place while editing as when viewing.`
+  }
+];
+
 // src/main.ts
-var TablePlugin = class extends import_obsidian7.Plugin {
+var TablePlugin = class extends import_obsidian10.Plugin {
   constructor() {
     super(...arguments);
     this.settings = { ...DEFAULT_SETTINGS };
+    /** 诊断记录（只在电脑端，见 core/diag.ts）；手机上为 null。gogoga Mind Map 会来看它在不在 */
+    this.diag = null;
     /** 注册给编辑器的扩展：关掉接管时清空，再 updateOptions，Obsidian 会整个重建（原生表格也回来） */
     this.extensions = [];
     this.livePreview = null;
     this.factory = null;
     this.persistTimer = null;
   }
+  /** 加密列的主密码会话：gogoga Mind Map 的节点表格也用这一个（两边共用主密码、一起锁定） */
+  get secrets() {
+    return this.factory?.secrets ?? null;
+  }
+  /** 更改主密码（命令和设置页共用） */
+  changeMasterPassword() {
+    if (this.factory) void changeMasterPassword(this.app, this.factory.secrets, !!this.settings.secretKeychain);
+  }
   async onload() {
-    setLanguage((0, import_obsidian7.getLanguage)());
-    this.settings = { ...DEFAULT_SETTINGS, ...await this.loadData() };
+    setLanguage((0, import_obsidian10.getLanguage)());
+    this.diag = createDiag(this.app, this, "table");
+    diagRef.diag = this.diag;
+    this.register(() => diagRef.diag = null);
+    if (this.diag) watchMarkdown(this.app, this, this.diag, () => true);
+    const saved = await this.loadData();
+    this.settings = { ...DEFAULT_SETTINGS, ...saved };
+    initWhatsNew(this, {
+      name: "gogoga Table",
+      icon: "table",
+      notes: WHATS_NEW,
+      changelogUrl: {
+        zh: "https://github.com/JackWeiGogoga/gogoga-table/blob/main/CHANGELOG.zh-CN.md",
+        en: "https://github.com/JackWeiGogoga/gogoga-table/blob/main/CHANGELOG.md"
+      },
+      enabled: () => this.settings.whatsNew,
+      lastSeen: () => this.settings.lastSeenVersion,
+      setLastSeen: async (v) => {
+        this.settings.lastSeenVersion = v;
+        await this.saveData(this.settings);
+      },
+      // 之前没存过设置 = 新装：只记版本不弹
+      fresh: saved == null
+    });
     const factory = makeFactory(this.app, () => this.settings, () => {
       if (this.persistTimer !== null) window.clearTimeout(this.persistTimer);
       this.persistTimer = window.setTimeout(() => {
@@ -8436,6 +11143,22 @@ var TablePlugin = class extends import_obsidian7.Plugin {
         insertTableAtSelection(editor, lines);
       })
     );
+    this.addCommand({
+      id: "lock-encrypted",
+      name: t("encLock"),
+      icon: "lock",
+      checkCallback: (checking) => {
+        if (!factory.secrets.unlocked) return false;
+        if (!checking) factory.secrets.lock();
+        return true;
+      }
+    });
+    this.addCommand({
+      id: "change-master-password",
+      name: t("encRekey"),
+      icon: "key-round",
+      callback: () => this.changeMasterPassword()
+    });
     for (const id of TABLE_COMMANDS) {
       this.addCommand({
         id,
@@ -8448,9 +11171,16 @@ var TablePlugin = class extends import_obsidian7.Plugin {
         }
       });
     }
-    this.app.workspace.onLayoutReady(() => this.refresh());
+    this.app.workspace.onLayoutReady(() => {
+      this.refresh();
+      const timer = window.setTimeout(() => {
+        if (!getComputedStyle(document.body).getPropertyValue("--ggt-styles-loaded").trim()) new import_obsidian10.Notice(t("stylesMissing").replace("{dir}", this.manifest.dir ?? ""), 0);
+      }, 3e3);
+      this.register(() => window.clearTimeout(timer));
+    });
   }
   onunload() {
+    this.factory?.secrets.lock();
     window.setTimeout(() => this.refresh(), 0);
   }
   async saveSettings() {
@@ -8463,102 +11193,156 @@ var TablePlugin = class extends import_obsidian7.Plugin {
     if (this.settings.enabled && this.livePreview) this.extensions.push(this.livePreview);
     this.app.workspace.updateOptions();
     this.app.workspace.iterateAllLeaves((leaf) => {
-      if (!(leaf.view instanceof import_obsidian7.MarkdownView)) return;
+      if (!(leaf.view instanceof import_obsidian10.MarkdownView)) return;
       leaf.view.containerEl.querySelectorAll(".ggt").forEach((root) => this.factory?.style(root));
       if (leaf.view.getMode() === "preview") leaf.view.previewMode.rerender(true);
     });
   }
 };
-function settingSpecs() {
-  const zh2 = (0, import_obsidian7.getLanguage)().startsWith("zh");
+function settingSpecs(hasKeychain) {
+  const zh4 = (0, import_obsidian10.getLanguage)().startsWith("zh");
   return [
     {
       key: "enabled",
-      name: zh2 ? "\u63A5\u7BA1 Markdown \u8868\u683C" : "Enhance Markdown tables",
-      desc: zh2 ? "\u5173\u6389\u540E\u5B8C\u5168\u6062\u590D Obsidian \u539F\u751F\u8868\u683C\uFF1B\u6587\u4EF6\u91CC\u7684\u6CE8\u91CA\u7559\u7740\uFF0C\u4E0D\u5F71\u54CD\u663E\u793A\u3002" : "Turn off to go back to Obsidian's own tables. Comments already in your notes stay and do no harm.",
+      name: zh4 ? "\u63A5\u7BA1 Markdown \u8868\u683C" : "Enhance Markdown tables",
+      desc: zh4 ? "\u5173\u6389\u540E\u5B8C\u5168\u6062\u590D Obsidian \u539F\u751F\u8868\u683C\uFF1B\u6587\u4EF6\u91CC\u7684\u6CE8\u91CA\u7559\u7740\uFF0C\u4E0D\u5F71\u54CD\u663E\u793A\u3002" : "Turn off to go back to Obsidian's own tables. Comments already in your notes stay and do no harm.",
       type: "toggle"
     },
     {
       key: "preset",
-      name: zh2 ? "\u6837\u5F0F" : "Style",
+      name: zh4 ? "\u6837\u5F0F" : "Style",
       type: "dropdown",
-      options: zh2 ? { default: "\u9ED8\u8BA4", zebra: "\u6591\u9A6C\u7EB9", minimal: "\u6781\u7B80\u7EBF", academic: "\u4E09\u7EBF\u8868" } : { default: "Default", zebra: "Zebra", minimal: "Minimal", academic: "Three-line" }
+      options: zh4 ? { default: "\u9ED8\u8BA4", zebra: "\u6591\u9A6C\u7EB9", minimal: "\u6781\u7B80\u7EBF", academic: "\u4E09\u7EBF\u8868" } : { default: "Default", zebra: "Zebra", minimal: "Minimal", academic: "Three-line" }
     },
     {
       key: "cellPadX",
-      name: zh2 ? "\u683C\u5B50\u5DE6\u53F3\u5185\u8FB9\u8DDD" : "Cell side padding",
-      desc: zh2 ? "\u683C\u5B50\u91CC\u6587\u5B57\u79BB\u5DE6\u53F3\u8FB9\u6846\u591A\u8FDC\u3002\u5ACC\u683C\u5B50\u4E24\u8FB9\u7A7A\u5F97\u591A\u53EF\u4EE5\u8C03\u5C0F\uFF1B\u884C\u8DDD\u9009\u300C\u7D27\u51D1\u300D\u7684\u8868\u683C\u6700\u591A 8\u3002" : "How far text sits from a cell's left and right borders. Lower it if cells feel too roomy; Compact tables use at most 8.",
+      name: zh4 ? "\u683C\u5B50\u5DE6\u53F3\u5185\u8FB9\u8DDD" : "Cell side padding",
+      desc: zh4 ? "\u683C\u5B50\u91CC\u6587\u5B57\u79BB\u5DE6\u53F3\u8FB9\u6846\u591A\u8FDC\u3002\u5ACC\u683C\u5B50\u4E24\u8FB9\u7A7A\u5F97\u591A\u53EF\u4EE5\u8C03\u5C0F\uFF1B\u884C\u8DDD\u9009\u300C\u7D27\u51D1\u300D\u7684\u8868\u683C\u6700\u591A 8\u3002" : "How far text sits from a cell's left and right borders. Lower it if cells feel too roomy; Compact tables use at most 8.",
       type: "dropdown",
-      options: zh2 ? { "4": "4\uFF08\u5F88\u7A84\uFF09", "6": "6", "8": "8", "10": "10\uFF08\u9ED8\u8BA4\uFF09" } : { "4": "4 (tight)", "6": "6", "8": "8", "10": "10 (default)" }
+      options: zh4 ? { "4": "4\uFF08\u5F88\u7A84\uFF09", "6": "6", "8": "8", "10": "10\uFF08\u9ED8\u8BA4\uFF09" } : { "4": "4 (tight)", "6": "6", "8": "8", "10": "10 (default)" }
     },
     {
       key: "density",
-      name: zh2 ? "\u884C\u8DDD" : "Row spacing",
+      name: zh4 ? "\u884C\u8DDD" : "Row spacing",
       type: "dropdown",
-      options: zh2 ? { comfortable: "\u8212\u9002", compact: "\u7D27\u51D1" } : { comfortable: "Comfortable", compact: "Compact" }
+      options: zh4 ? { comfortable: "\u8212\u9002", compact: "\u7D27\u51D1" } : { comfortable: "Comfortable", compact: "Compact" }
     },
     {
       key: "fullWidth",
-      name: zh2 ? "\u8868\u683C\u9ED8\u8BA4\u6491\u6EE1\u9875\u9762\u5BBD\u5EA6" : "Tables fill the page width",
-      desc: zh2 ? "\u6CA1\u62D6\u8FC7\u5217\u5BBD\u7684\u8868\u683C\u94FA\u6EE1\u6B63\u6587\u5BBD\u5EA6\uFF0C\u5404\u5217\u6309\u5185\u5BB9\u591A\u5C11\u5206\uFF1B\u62D6\u8FC7\u5217\u5BBD\u7684\u8868\u683C\u8FD8\u6309\u8BBE\u7684\u5BBD\u5EA6\u3002\u53EA\u6539\u663E\u793A\uFF0C\u4E0D\u5F80\u7B14\u8BB0\u91CC\u5199\u4E1C\u897F\u3002\u5355\u5F20\u8868\u4E5F\u53EF\u4EE5\u7528\u8868\u683C\u5DE6\u4E0A\u89D2\u83DC\u5355\u91CC\u7684\u300C\u6491\u6EE1\u9875\u9762\u5BBD\u5EA6\u300D\u3002" : "Tables whose column widths you haven't set stretch to the page width, with columns sized by their content; tables with set widths keep them. Display only \u2014 nothing is written to your notes. For a single table you can also use Fit to page width in its table menu.",
+      name: zh4 ? "\u8868\u683C\u9ED8\u8BA4\u6491\u6EE1\u9875\u9762\u5BBD\u5EA6" : "Tables fill the page width",
+      desc: zh4 ? "\u6CA1\u62D6\u8FC7\u5217\u5BBD\u7684\u8868\u683C\u94FA\u6EE1\u6B63\u6587\u5BBD\u5EA6\uFF0C\u5404\u5217\u6309\u5185\u5BB9\u591A\u5C11\u5206\uFF1B\u62D6\u8FC7\u5217\u5BBD\u7684\u8868\u683C\u8FD8\u6309\u8BBE\u7684\u5BBD\u5EA6\u3002\u53EA\u6539\u663E\u793A\uFF0C\u4E0D\u5F80\u7B14\u8BB0\u91CC\u5199\u4E1C\u897F\u3002\u5355\u5F20\u8868\u4E5F\u53EF\u4EE5\u7528\u8868\u683C\u5DE6\u4E0A\u89D2\u83DC\u5355\u91CC\u7684\u300C\u6491\u6EE1\u9875\u9762\u5BBD\u5EA6\u300D\u3002" : "Tables whose column widths you haven't set stretch to the page width, with columns sized by their content; tables with set widths keep them. Display only \u2014 nothing is written to your notes. For a single table you can also use Fit to page width in its table menu.",
+      type: "toggle"
+    },
+    {
+      key: "center",
+      name: zh4 ? "\u8868\u683C\u5C45\u4E2D" : "Center tables",
+      desc: zh4 ? "\u6BD4\u6B63\u6587\u7A84\u7684\u8868\u683C\u653E\u5728\u9875\u9762\u6B63\u4E2D\u95F4\uFF08\u9605\u8BFB\u89C6\u56FE\u548C\u5B9E\u65F6\u9884\u89C8\u90FD\u662F\uFF09\uFF0C\u9ED8\u8BA4\u9760\u5DE6\u3002\u6BD4\u6B63\u6587\u8FD8\u5BBD\u3001\u8981\u5DE6\u53F3\u6ED1\u52A8\u7684\u8868\u683C\u548C\u6491\u6EE1\u9875\u9762\u5BBD\u5EA6\u7684\u8868\u683C\u7167\u65E7\u3002\u53EA\u6539\u663E\u793A\uFF0C\u4E0D\u5F80\u7B14\u8BB0\u91CC\u5199\u4E1C\u897F\u3002" : "Tables narrower than the page sit in the middle of it, in Reading view and Live Preview, instead of on the left. Tables wider than the page (which scroll sideways) and tables that fill the page width stay as they are. Display only \u2014 nothing is written to your notes.",
+      type: "toggle"
+    },
+    {
+      key: "hideBlankAbove",
+      name: zh4 ? "\u9690\u85CF\u8868\u683C\u4E0A\u65B9\u7684\u7A7A\u884C" : "Hide the blank line above tables",
+      desc: zh4 ? "Markdown \u89C4\u5B9A\u8868\u683C\u524D\u9762\u8981\u7A7A\u4E00\u884C\uFF0C\u5B9E\u65F6\u9884\u89C8\u91CC\u8FD9\u4E00\u884C\u4F1A\u7559\u51FA\u4E00\u622A\u7A7A\u767D\u3002\u6253\u5F00\u540E\u85CF\u8D77\u6765\uFF0C\u8868\u683C\u7D27\u8D34\u7740\u4E0A\u9762\u7684\u6587\u5B57\uFF1B\u5149\u6807\u79FB\u5230\u8FD9\u4E00\u884C\u65F6\u7167\u5E38\u663E\u793A\u3002\u53EA\u6539\u663E\u793A\uFF0C\u7B14\u8BB0\u91CC\u7684\u7A7A\u884C\u8FD8\u5728\u3002" : "Markdown needs a blank line before a table, which leaves a gap in Live Preview. On: that line is hidden so the table sits right under the text above; it shows again when the cursor is on it. Display only \u2014 the blank line stays in your notes.",
       type: "toggle"
     },
     {
       key: "strictStyle",
-      name: zh2 ? "\u8868\u683C\u6837\u5F0F\u4F18\u5148\u4E8E\u4E3B\u9898" : "Table style over theme",
-      desc: zh2 ? "\u6709\u7684\u4E3B\u9898\uFF08OnePage\u3001Minimal\u3001Blue Topaz\u3001Border\u3001phycat \u7B49\uFF09\u4F1A\u7528 !important \u6539\u8868\u683C\u7684\u8FB9\u6846\u3001\u8868\u5934\u5E95\u8272\u548C\u6587\u5B57\u989C\u8272\uFF0C\u628A\u8868\u683C\u63D2\u4EF6\u7684\u6837\u5F0F\u76D6\u6389\u3002\u6253\u5F00\u540E\u8868\u683C\u6309\u63D2\u4EF6\u81EA\u5DF1\u7684\u6837\u5F0F\u753B\uFF08\u8FB9\u6846\u3001\u8868\u5934\u3001\u6781\u7B80\u7EBF\u548C\u4E09\u7EBF\u8868\u8FD9\u4E9B\u6837\u5F0F\uFF09\uFF0C\u5173\u6389\u5C31\u8BA9\u4E3B\u9898\u7684\u8868\u683C\u6837\u5F0F\u751F\u6548\u3002" : "Some themes (OnePage, Minimal, Blue Topaz, Border, phycat and others) restyle table borders, header backgrounds and text colors with !important, overriding this plugin. On: tables keep this plugin's look (borders, header, the Minimal and Three-line styles). Off: the theme's table style wins.",
+      name: zh4 ? "\u8868\u683C\u6837\u5F0F\u4F18\u5148\u4E8E\u4E3B\u9898" : "Table style over theme",
+      desc: zh4 ? "\u6709\u7684\u4E3B\u9898\uFF08OnePage\u3001Minimal\u3001Blue Topaz\u3001Border\u3001phycat \u7B49\uFF09\u4F1A\u7528 !important \u6539\u8868\u683C\u7684\u8FB9\u6846\u3001\u8868\u5934\u5E95\u8272\u548C\u6587\u5B57\u989C\u8272\uFF0C\u628A\u8868\u683C\u63D2\u4EF6\u7684\u6837\u5F0F\u76D6\u6389\u3002\u6253\u5F00\u540E\u8868\u683C\u6309\u63D2\u4EF6\u81EA\u5DF1\u7684\u6837\u5F0F\u753B\uFF08\u8FB9\u6846\u3001\u8868\u5934\u3001\u6781\u7B80\u7EBF\u548C\u4E09\u7EBF\u8868\u8FD9\u4E9B\u6837\u5F0F\uFF09\uFF0C\u5173\u6389\u5C31\u8BA9\u4E3B\u9898\u7684\u8868\u683C\u6837\u5F0F\u751F\u6548\u3002" : "Some themes (OnePage, Minimal, Blue Topaz, Border, phycat and others) restyle table borders, header backgrounds and text colors with !important, overriding this plugin. On: tables keep this plugin's look (borders, header, the Minimal and Three-line styles). Off: the theme's table style wins.",
       type: "toggle"
     },
     {
       key: "fitCols",
-      name: zh2 ? "\u5217\u5BBD\u6309\u6BD4\u4F8B\u7F29\u653E" : "Scale column widths to fit",
-      desc: zh2 ? "\u62D6\u8FC7\u5217\u5BBD\u7684\u8868\u683C\u6BD4\u6B63\u6587\u5BBD\u65F6\uFF08\u6BD4\u5982\u6253\u5F00\u4E86\u4FA7\u680F\uFF09\uFF0C\u5404\u5217\u6309\u6BD4\u4F8B\u7F29\u5C0F\u5230\u6B63\u597D\u653E\u4E0B\uFF0C\u4E0D\u51FA\u6A2A\u5411\u6EDA\u52A8\u6761\uFF1B\u6B63\u6587\u53D8\u5BBD\u540E\u6062\u590D\u539F\u6765\u7684\u5BBD\u5EA6\u3002\u53EA\u6539\u663E\u793A\uFF0C\u7B14\u8BB0\u91CC\u8FD8\u662F\u539F\u6765\u7684\u5217\u5BBD\u3002\u5217\u592A\u591A\u3001\u7F29\u5230\u5F88\u7A84\u65F6\u7167\u6837\u6A2A\u5411\u6EDA\u52A8\u3002" : "When a table with set column widths is wider than the page (say, with a sidebar open), its columns shrink proportionally to fit instead of scrolling sideways, and grow back when there's room. Display only \u2014 your notes keep the original widths. Tables with too many columns still scroll.",
+      name: zh4 ? "\u5217\u5BBD\u6309\u6BD4\u4F8B\u7F29\u653E" : "Scale column widths to fit",
+      desc: zh4 ? "\u62D6\u8FC7\u5217\u5BBD\u7684\u8868\u683C\u6BD4\u6B63\u6587\u5BBD\u65F6\uFF08\u6BD4\u5982\u6253\u5F00\u4E86\u4FA7\u680F\uFF09\uFF0C\u5404\u5217\u6309\u6BD4\u4F8B\u7F29\u5C0F\u5230\u6B63\u597D\u653E\u4E0B\uFF0C\u4E0D\u51FA\u6A2A\u5411\u6EDA\u52A8\u6761\uFF1B\u6B63\u6587\u53D8\u5BBD\u540E\u6062\u590D\u539F\u6765\u7684\u5BBD\u5EA6\u3002\u53EA\u6539\u663E\u793A\uFF0C\u7B14\u8BB0\u91CC\u8FD8\u662F\u539F\u6765\u7684\u5217\u5BBD\u3002\u5217\u592A\u591A\u3001\u7F29\u5230\u5F88\u7A84\u65F6\u7167\u6837\u6A2A\u5411\u6EDA\u52A8\u3002" : "When a table with set column widths is wider than the page (say, with a sidebar open), its columns shrink proportionally to fit instead of scrolling sideways, and grow back when there's room. Display only \u2014 your notes keep the original widths. Tables with too many columns still scroll.",
       type: "toggle"
     },
     {
       key: "readingReadonly",
-      name: zh2 ? "\u9605\u8BFB\u89C6\u56FE\u91CC\u8868\u683C\u53EA\u8BFB" : "Read-only tables in Reading view",
-      desc: zh2 ? "\u548C Obsidian \u7684\u9605\u8BFB\u89C6\u56FE\u4E00\u81F4\uFF1A\u8868\u683C\u53EA\u770B\u4E0D\u6539\uFF0C\u70B9\u683C\u5B50\u4E0D\u4F1A\u8FDB\u5165\u7F16\u8F91\uFF0C\u6CA1\u6709\u624B\u67C4\u548C\u52A0\u53F7\uFF0C\u94FE\u63A5\u7167\u5E38\u80FD\u70B9\u3002\u5173\u6389\u540E\u5728\u9605\u8BFB\u89C6\u56FE\u91CC\u4E5F\u80FD\u76F4\u63A5\u6539\u8868\u683C\u3002" : "Like the rest of Reading view: tables are view-only, clicking a cell doesn't start editing, and there are no handles or add buttons; links still work. Turn off to edit tables directly in Reading view.",
+      name: zh4 ? "\u9605\u8BFB\u89C6\u56FE\u91CC\u8868\u683C\u53EA\u8BFB" : "Read-only tables in Reading view",
+      desc: zh4 ? "\u548C Obsidian \u7684\u9605\u8BFB\u89C6\u56FE\u4E00\u81F4\uFF1A\u8868\u683C\u53EA\u770B\u4E0D\u6539\uFF0C\u70B9\u683C\u5B50\u4E0D\u4F1A\u8FDB\u5165\u7F16\u8F91\uFF0C\u6CA1\u6709\u624B\u67C4\u548C\u52A0\u53F7\uFF0C\u94FE\u63A5\u7167\u5E38\u80FD\u70B9\u3002\u5173\u6389\u540E\u5728\u9605\u8BFB\u89C6\u56FE\u91CC\u4E5F\u80FD\u76F4\u63A5\u6539\u8868\u683C\u3002" : "Like the rest of Reading view: tables are view-only, clicking a cell doesn't start editing, and there are no handles or add buttons; links still work. Turn off to edit tables directly in Reading view.",
+      type: "toggle"
+    },
+    {
+      key: "clickEdit",
+      name: zh4 ? "\u5355\u51FB\u683C\u5B50\u76F4\u63A5\u7F16\u8F91" : "Edit a cell with a single click",
+      desc: zh4 ? "\u7528\u9F20\u6807\u70B9\u4E00\u4E0B\u683C\u5B50\u5C31\u8FDB\u5165\u7F16\u8F91\uFF0C\u4E0D\u7528\u53CC\u51FB\u3002\u70B9\u94FE\u63A5\u3001\u52FE\u9009\u6846\u3001\u56FE\u7247\u7167\u5E38\uFF1B\u62D6\u52A8\u9009\u4E00\u7247\u3001\u6309\u4F4F Shift \u6216 \u2318 \u70B9\u7167\u5E38\u662F\u9009\u683C\u5B50\u3002\u624B\u673A\u3001\u5E73\u677F\u4E0A\u672C\u6765\u5C31\u662F\u8F7B\u70B9\u8FDB\u7F16\u8F91\u3002" : "Clicking a cell with the mouse starts editing it, no double-click needed. Links, checkboxes and images work as before; dragging, or clicking with Shift or \u2318 held, still selects cells. On phones and tablets a tap already starts editing.",
       type: "toggle"
     },
     {
       key: "crosshair",
-      name: zh2 ? "\u5341\u5B57\u9AD8\u4EAE" : "Crosshair highlight",
-      desc: zh2 ? "\u9009\u4E2D\u683C\u5B50\u65F6\uFF0C\u628A\u5B83\u6240\u5728\u7684\u6574\u884C\u548C\u6574\u5217\u94FA\u4E00\u5C42\u6DE1\u8272\uFF0C\u770B\u5927\u8868\u683C\u4E0D\u5BB9\u6613\u4E32\u884C\u3002\u300C\u60AC\u505C\u65F6\u300D\u8DDF\u7740\u9F20\u6807\u8D70\uFF0C\u9F20\u6807\u79BB\u5F00\u8868\u683C\u540E\u56DE\u5230\u9009\u4E2D\u7684\u683C\u5B50\u3002" : "Tint the whole row and column of the selected cell so large tables are easier to follow. On hover follows the mouse, falling back to the selected cell when the mouse leaves the table.",
+      name: zh4 ? "\u5341\u5B57\u9AD8\u4EAE" : "Crosshair highlight",
+      desc: zh4 ? "\u9009\u4E2D\u683C\u5B50\u65F6\uFF0C\u628A\u5B83\u6240\u5728\u7684\u6574\u884C\u548C\u6574\u5217\u94FA\u4E00\u5C42\u6DE1\u8272\uFF0C\u770B\u5927\u8868\u683C\u4E0D\u5BB9\u6613\u4E32\u884C\u3002\u300C\u60AC\u505C\u65F6\u300D\u8DDF\u7740\u9F20\u6807\u8D70\uFF0C\u9F20\u6807\u79BB\u5F00\u8868\u683C\u540E\u56DE\u5230\u9009\u4E2D\u7684\u683C\u5B50\u3002" : "Tint the whole row and column of the selected cell so large tables are easier to follow. On hover follows the mouse, falling back to the selected cell when the mouse leaves the table.",
       type: "dropdown",
-      options: zh2 ? { off: "\u5173", select: "\u9009\u4E2D\u683C\u5B50\u65F6", hover: "\u9009\u4E2D\u548C\u60AC\u505C\u65F6" } : { off: "Off", select: "On the selected cell", hover: "On selected and hovered cells" }
+      options: zh4 ? { off: "\u5173", select: "\u9009\u4E2D\u683C\u5B50\u65F6", hover: "\u9009\u4E2D\u548C\u60AC\u505C\u65F6" } : { off: "Off", select: "On the selected cell", hover: "On selected and hovered cells" }
     },
     {
       key: "richEdit",
-      name: zh2 ? "\u7F16\u8F91\u683C\u5B50\u65F6\u76F4\u63A5\u663E\u793A\u683C\u5F0F" : "Show formatting while editing a cell",
-      desc: zh2 ? "\u7F16\u8F91\u683C\u5B50\u65F6\uFF0C\u52A0\u7C97\u3001\u659C\u4F53\u3001\u6587\u5B57\u989C\u8272\u3001\u8367\u5149\u7B14\u3001\u4E0B\u5212\u7EBF\u76F4\u63A5\u663E\u793A\u6548\u679C\uFF0C<span style=\u2026> \u8FD9\u7C7B\u6807\u7B7E\u85CF\u8D77\u6765\uFF0C\u5220\u5B57\u65F6\u6807\u7B7E\u4FDD\u6301\u6210\u5BF9\uFF0C\u548C gogoga Mind Map \u7684\u8282\u70B9\u7F16\u8F91\u4E00\u6837\u3002\u5173\u6389\u65F6\u663E\u793A\u539F\u59CB\u7684 Markdown \u548C HTML\u3002" : "While editing a cell, bold, italic, text colors, highlighter colors and underline show as formatted, with tags like <span style=\u2026> hidden and kept paired when you delete text, as in gogoga Mind Map's node editor. When off, the raw Markdown and HTML are shown.",
+      name: zh4 ? "\u7F16\u8F91\u683C\u5B50\u65F6\u76F4\u63A5\u663E\u793A\u683C\u5F0F" : "Show formatting while editing a cell",
+      desc: zh4 ? "\u7F16\u8F91\u683C\u5B50\u65F6\uFF0C\u52A0\u7C97\u3001\u659C\u4F53\u3001\u6587\u5B57\u989C\u8272\u3001\u8367\u5149\u7B14\u3001\u4E0B\u5212\u7EBF\u76F4\u63A5\u663E\u793A\u6548\u679C\uFF0C<span style=\u2026> \u8FD9\u7C7B\u6807\u7B7E\u85CF\u8D77\u6765\uFF0C\u5220\u5B57\u65F6\u6807\u7B7E\u4FDD\u6301\u6210\u5BF9\uFF0C\u548C gogoga Mind Map \u7684\u8282\u70B9\u7F16\u8F91\u4E00\u6837\u3002\u5173\u6389\u65F6\u663E\u793A\u539F\u59CB\u7684 Markdown \u548C HTML\u3002" : "While editing a cell, bold, italic, text colors, highlighter colors and underline show as formatted, with tags like <span style=\u2026> hidden and kept paired when you delete text, as in gogoga Mind Map's node editor. When off, the raw Markdown and HTML are shown.",
       type: "toggle"
     },
     {
       key: "formatBar",
-      name: zh2 ? "\u7F16\u8F91\u683C\u5B50\u65F6\u9009\u4E2D\u6587\u5B57\u663E\u793A\u683C\u5F0F\u680F" : "Format bar when selecting text in a cell",
-      desc: zh2 ? "\u7F16\u8F91\u683C\u5B50\u65F6\u9009\u4E2D\u4E00\u6BB5\u6587\u5B57\uFF0C\u4E0A\u65B9\u6D6E\u51FA\u4E00\u6392\u6309\u94AE\uFF1A\u52A0\u7C97\u3001\u659C\u4F53\u3001\u5220\u9664\u7EBF\u3001\u4E0B\u5212\u7EBF\u3001\u9AD8\u4EAE\u3001\u6587\u5B57\u989C\u8272\u3001\u8367\u5149\u7B14\u548C\u6E05\u9664\uFF0C\u548C gogoga Mind Map \u7684\u683C\u5F0F\u680F\u4E00\u6837\u3002\u4E0D\u6253\u5F00\u4E5F\u80FD\u7528\u5FEB\u6377\u952E\uFF1A\u2318B\u3001\u2318I\u3001\u2318U\u3001\u2318\u21E7X\u3001\u2318\u21E7H\u3002" : "While editing a cell, selecting text shows a bar above it: bold, italic, strikethrough, underline, highlight, text colors, highlighter colors and clear, the same as in gogoga Mind Map. Without it, use the shortcuts: Mod+B, Mod+I, Mod+U, Mod+Shift+X, Mod+Shift+H.",
+      name: zh4 ? "\u7F16\u8F91\u683C\u5B50\u65F6\u9009\u4E2D\u6587\u5B57\u663E\u793A\u683C\u5F0F\u680F" : "Format bar when selecting text in a cell",
+      desc: zh4 ? "\u7F16\u8F91\u683C\u5B50\u65F6\u9009\u4E2D\u4E00\u6BB5\u6587\u5B57\uFF0C\u4E0A\u65B9\u6D6E\u51FA\u4E00\u6392\u6309\u94AE\uFF1A\u52A0\u7C97\u3001\u659C\u4F53\u3001\u5220\u9664\u7EBF\u3001\u4E0B\u5212\u7EBF\u3001\u9AD8\u4EAE\u3001\u6587\u5B57\u989C\u8272\u3001\u8367\u5149\u7B14\u548C\u6E05\u9664\uFF0C\u548C gogoga Mind Map \u7684\u683C\u5F0F\u680F\u4E00\u6837\u3002\u4E0D\u6253\u5F00\u4E5F\u80FD\u7528\u5FEB\u6377\u952E\uFF1A\u2318B\u3001\u2318I\u3001\u2318U\u3001\u2318\u21E7X\u3001\u2318\u21E7H\u3002" : "While editing a cell, selecting text shows a bar above it: bold, italic, strikethrough, underline, highlight, text colors, highlighter colors and clear, the same as in gogoga Mind Map. Without it, use the shortcuts: Mod+B, Mod+I, Mod+U, Mod+Shift+X, Mod+Shift+H.",
       type: "toggle"
     },
     {
       key: "smartDate",
-      name: zh2 ? "\u65E5\u671F\u5217\u81EA\u52A8\u8BC6\u522B\u65E5\u671F\u5199\u6CD5" : "Recognize dates typed in date columns",
-      desc: zh2 ? "\u5728\u65E5\u671F\u5217\u91CC\u6253 1/5\u300111-17\u30012026\u5E741\u67085\u65E5\u300120260105\u3001\u4ECA\u5929\u3001\u660E\u5929\u3001\u6628\u5929\uFF0C\u6309 Enter \u540E\u6362\u6210\u8FD9\u4E00\u5217\u7684\u5199\u6CD5\uFF08\u6BD4\u5982 2026-01-05\uFF0C\u6216\u65E5\u8BB0\u94FE\u63A5 [[2026-01-05]]\uFF09\uFF1B\u6CA1\u5199\u5E74\u7684\u7B97\u4ECA\u5E74\u3002\u5173\u6389\u65F6\u53EA\u7EDF\u4E00 2026-1-5 \u8FD9\u79CD\u5199\u6CD5\uFF0C\u522B\u7684\u539F\u6837\u4FDD\u5B58\u3002" : "In date columns, typing 1/5, 11-17, 2026\u5E741\u67085\u65E5, 20260105, today, tomorrow or yesterday becomes the column's date style when you press Enter (such as 2026-01-05, or a daily note link [[2026-01-05]]). Dates without a year use the current year. When off, only dates like 2026-1-5 are tidied and everything else is kept as typed.",
+      name: zh4 ? "\u65E5\u671F\u5217\u81EA\u52A8\u8BC6\u522B\u65E5\u671F\u5199\u6CD5" : "Recognize dates typed in date columns",
+      desc: zh4 ? "\u5728\u65E5\u671F\u5217\u91CC\u6253 1/5\u300111-17\u30012026\u5E741\u67085\u65E5\u300120260105\u3001\u4ECA\u5929\u3001\u660E\u5929\u3001\u6628\u5929\uFF0C\u6309 Enter \u540E\u6362\u6210\u8FD9\u4E00\u5217\u7684\u5199\u6CD5\uFF08\u6BD4\u5982 2026-01-05\uFF0C\u6216\u65E5\u8BB0\u94FE\u63A5 [[2026-01-05]]\uFF09\uFF1B\u6CA1\u5199\u5E74\u7684\u7B97\u4ECA\u5E74\u3002\u5173\u6389\u65F6\u53EA\u7EDF\u4E00 2026-1-5 \u8FD9\u79CD\u5199\u6CD5\uFF0C\u522B\u7684\u539F\u6837\u4FDD\u5B58\u3002" : "In date columns, typing 1/5, 11-17, 2026\u5E741\u67085\u65E5, 20260105, today, tomorrow or yesterday becomes the column's date style when you press Enter (such as 2026-01-05, or a daily note link [[2026-01-05]]). Dates without a year use the current year. When off, only dates like 2026-1-5 are tidied and everything else is kept as typed.",
       type: "toggle"
-    }
+    },
+    {
+      key: "whatsNew",
+      name: zh4 ? "\u66F4\u65B0\u540E\u663E\u793A\u66F4\u65B0\u5185\u5BB9" : "Show what's new after updating",
+      desc: zh4 ? "\u63D2\u4EF6\u66F4\u65B0\u540E\uFF0C\u53F3\u4E0B\u89D2\u63D0\u793A\u4E00\u4E0B\u66F4\u65B0\u5230\u4E86\u54EA\u4E2A\u7248\u672C\uFF0C\u5E26\u300C\u67E5\u770B\u66F4\u65B0\u5185\u5BB9\u300D\u6309\u94AE\uFF0C\u70B9\u4E86\u624D\u6253\u5F00\uFF0C\u4E0D\u6253\u65AD\u624B\u4E0A\u7684\u4E8B\u3002\u547D\u4EE4\u9762\u677F\u91CC\u7684\u300C\u67E5\u770B\u66F4\u65B0\u5185\u5BB9\u300D\u968F\u65F6\u80FD\u770B\u3002" : `After the plugin updates, a notice in the bottom right says which version it is now, with a button to see what changed. It won't interrupt you. You can also run "Show what's new" from the command palette at any time.`,
+      type: "toggle"
+    },
+    {
+      key: "secretLock",
+      name: zh4 ? "\u52A0\u5BC6\u5217\u81EA\u52A8\u9501\u5B9A" : "Lock encrypted columns after",
+      desc: zh4 ? "\u8F93\u5165\u4E3B\u5BC6\u7801\u540E\uFF0C\u591A\u4E45\u4E0D\u7528\u5C31\u81EA\u52A8\u9501\u4E0A\uFF0C\u5FD8\u6389\u4E3B\u5BC6\u7801\u548C\u89E3\u5F00\u7684\u5185\u5BB9\u3002\u4E5F\u53EF\u4EE5\u7528\u547D\u4EE4\u300C\u9501\u5B9A\u52A0\u5BC6\u5185\u5BB9\u300D\u9A6C\u4E0A\u9501\u3002" : "How long encrypted columns stay unlocked when not in use. Locking forgets the master password and anything decrypted. You can also lock right away with the Lock encrypted content command.",
+      type: "dropdown",
+      options: zh4 ? { "5": "5 \u5206\u949F", "15": "15 \u5206\u949F", "60": "1 \u5C0F\u65F6", "0": "\u4E0D\u81EA\u52A8\u9501\uFF08\u5173\u6389 Obsidian \u65F6\u5FD8\u6389\uFF09" } : { "5": "5 minutes", "15": "15 minutes", "60": "1 hour", "0": "Never (forgotten when Obsidian closes)" }
+    },
+    ...hasKeychain ? [
+      {
+        key: "secretKeychain",
+        name: zh4 ? "\u4E3B\u5BC6\u7801\u5B58\u5728\u94A5\u5319\u4E32\u91CC" : "Master password from the keychain",
+        desc: zh4 ? "\u94A5\u5319\u4E32\u53EA\u662F\u66FF\u4F60\u8BB0\u4F4F\u4E3B\u5BC6\u7801\uFF0C\u4E0D\u4F1A\u8BBE\u7F6E\u6216\u6539\u6389\u4E3B\u5BC6\u7801\uFF1A\u4E3B\u5BC6\u7801\u662F\u7B2C\u4E00\u6B21\u52A0\u5BC6\u65F6\u8BBE\u7684\u90A3\u4E2A\uFF0C\u6240\u6709\u8868\u683C\u5171\u7528\u4E00\u4E2A\u3002\u5728 Obsidian \u94A5\u5319\u4E32\u91CC\u5B58\u4E00\u9879\u548C\u5B83\u4E00\u6837\u7684\u5BC6\u7801\u518D\u9009\u4E0A\uFF0C\u52A0\u5BC6\u3001\u67E5\u770B\u65F6\u5C31\u4E0D\u7528\u518D\u8F93\uFF08\u6BCF\u53F0\u8BBE\u5907\u5404\u81EA\u8BBE\u7F6E\uFF09\uFF1B\u5B58\u7684\u4E0D\u4E00\u6837\u5C31\u7528\u4E0D\u4E0A\u3002\u548C Meld Encrypt \u9009\u540C\u4E00\u9879\uFF0C\u6574\u7BC7\u52A0\u5BC6\u3001\u884C\u5185\u52A0\u5BC6\u548C\u8868\u683C\u7684\u52A0\u5BC6\u5217\u5C31\u5171\u7528\u4E00\u4E2A\u4E3B\u5BC6\u7801\u3002\u4E0D\u9009\u5C31\u6BCF\u6B21\u624B\u52A8\u8F93\u5165\u3002" : "The keychain only remembers your master password; it doesn't set or change it. The master password is the one you set when you first encrypted something, shared by every table. Save the same password as an entry in the Obsidian keychain and pick it here, so encrypting and viewing don't ask for it (set this on each device). A different password won't be used. Pick the same entry in Meld Encrypt to share one master password between whole-note encryption, inline encryption and encrypted columns. Leave empty to type it each time.",
+        type: "secret"
+      }
+    ] : []
   ];
 }
-var TableSettingTab = class extends import_obsidian7.PluginSettingTab {
+var TableSettingTab = class extends import_obsidian10.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
     this.plugin = plugin;
   }
   getSettingDefinitions() {
-    return settingSpecs().map((x) => ({
+    const items = settingSpecs(!!keychain(this.app) && (0, import_obsidian10.requireApiVersion)("1.13.2")).map((x) => ({
       name: x.name,
       desc: x.desc,
-      control: x.type === "toggle" ? { type: "toggle", key: x.key } : { type: "dropdown", key: x.key, options: x.options ?? {} }
+      control: x.type === "toggle" ? { type: "toggle", key: x.key } : x.type === "secret" ? { type: "secret", key: x.key } : { type: "dropdown", key: x.key, options: x.options ?? {} }
     }));
+    const r = this.rekeyRow();
+    items.push({ name: r.name, desc: r.desc, action: () => r.run(), disabled: () => !r.ready() });
+    const diag = diagSettingDefinitions(this.app, this.plugin.diag);
+    if (diag.length) items.push({ type: "group", heading: (0, import_obsidian10.getLanguage)().toLowerCase().startsWith("zh") ? "\u8BCA\u65AD" : "Diagnostics", items: diag });
+    return items;
+  }
+  /** 「更改主密码」：命令面板里有，设置页也放一行（群友找不到）。还没设过主密码时不能点 */
+  rekeyRow() {
+    const zh4 = t("encRekey") !== "Change master password";
+    return {
+      name: t("encRekey"),
+      desc: zh4 ? "\u7528\u65B0\u7684\u4E3B\u5BC6\u7801\u91CD\u65B0\u52A0\u5BC6\u6240\u6709\u8868\u683C\u7684\u52A0\u5BC6\u683C\u5B50\uFF08\u548C Meld Encrypt \u7528\u540C\u4E00\u4E2A\u5BC6\u7801\u52A0\u5BC6\u7684\u884C\u5185\u5185\u5BB9\uFF09\u3002\u8981\u5148\u8F93\u4E00\u6B21\u73B0\u5728\u7684\u4E3B\u5BC6\u7801\u3002\u8FD8\u6CA1\u52A0\u5BC6\u8FC7\u4EFB\u4F55\u5185\u5BB9\u65F6\u4E0D\u80FD\u7528\u3002" : "Re-encrypt every encrypted table cell (and Meld Encrypt inline text using the same password) with a new master password. You'll be asked for the current one first. Not available until something has been encrypted.",
+      ready: () => !!this.plugin.settings.secretCheck,
+      run: () => this.plugin.changeMasterPassword()
+    };
   }
   getControlValue(key) {
     const v = this.plugin.settings[key];
@@ -8574,11 +11358,18 @@ var TableSettingTab = class extends import_obsidian7.PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    for (const x of settingSpecs()) {
-      const row = new import_obsidian7.Setting(containerEl).setName(x.name);
+    for (const x of settingSpecs(!!keychain(this.app))) {
+      const row = new import_obsidian10.Setting(containerEl).setName(x.name);
       if (x.desc) row.setDesc(x.desc);
-      if (x.type === "toggle") row.addToggle((tg) => tg.setValue(this.getControlValue(x.key)).onChange((v) => this.setControlValue(x.key, v)));
+      if (x.type === "secret") row.addText((tx) => tx.setValue(this.getControlValue(x.key)).onChange((v) => this.setControlValue(x.key, v.trim())));
+      else if (x.type === "toggle") row.addToggle((tg) => tg.setValue(this.getControlValue(x.key)).onChange((v) => this.setControlValue(x.key, v)));
       else row.addDropdown((dd) => dd.addOptions(x.options ?? {}).setValue(this.getControlValue(x.key)).onChange((v) => this.setControlValue(x.key, v)));
+    }
+    const r = this.rekeyRow();
+    new import_obsidian10.Setting(containerEl).setName(r.name).setDesc(r.desc).addButton((b) => b.setButtonText(r.name).setDisabled(!r.ready()).onClick(() => r.run()));
+    if (this.plugin.diag) {
+      new import_obsidian10.Setting(containerEl).setName((0, import_obsidian10.getLanguage)().toLowerCase().startsWith("zh") ? "\u8BCA\u65AD" : "Diagnostics").setHeading();
+      renderDiagSettings(this.app, this.plugin.diag, containerEl);
     }
   }
 };

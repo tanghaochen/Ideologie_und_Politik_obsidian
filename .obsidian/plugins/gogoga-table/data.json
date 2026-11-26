@@ -1,0 +1,21 @@
+{
+  "enabled": true,
+  "preset": "default",
+  "density": "comfortable",
+  "crosshair": "off",
+  "formatBar": false,
+  "richEdit": false,
+  "smartDate": true,
+  "clickEdit": false,
+  "readingReadonly": true,
+  "fullWidth": false,
+  "fitCols": true,
+  "center": false,
+  "hideBlankAbove": false,
+  "strictStyle": true,
+  "cellPadX": 10,
+  "whatsNew": true,
+  "secretLock": 15,
+  "secretKeychain": "",
+  "lastSeenVersion": "0.29.0"
+}

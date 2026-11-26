@@ -9,15 +9,15 @@
         "quote": "Einweihungs",
         "prefix": "m Samstag habe ich wegen deiner ",
         "suffix": "party schnell in der Altstadt ei",
-        "from": 31660,
-        "to": 31671
+        "from": 31703,
+        "to": 31714
       },
       "hits": [
         "2026-11-23T10:43:48.049Z"
       ],
       "body": null,
       "reviewed": [],
-      "updated": "2026-11-26T11:27:56.311Z"
+      "updated": "2026-11-26T11:58:22.700Z"
     },
     {
       "id": "l7ky9wto",
@@ -43,15 +43,15 @@
         "quote": "inweihungs",
         "prefix": " Samstag habe ich wegen deiner E",
         "suffix": "party ein Geschenk gekauft.\n> Lv",
-        "from": 31819,
-        "to": 31829
+        "from": 31862,
+        "to": 31872
       },
       "hits": [
         "2026-11-26T08:40:26.531Z"
       ],
       "body": null,
       "reviewed": [],
-      "updated": "2026-11-26T11:27:55.498Z"
+      "updated": "2026-11-26T11:58:21.876Z"
     }
   ]
 }

@@ -1,0 +1,593 @@
+/* gogoga-outline — Codex-style heading rail with a dock wave.
+   At rest: identical short dashes. On hover the JS drives a gaussian
+   wave (inline width/height per dash); the short transitions below
+   give the motion its liquid trailing feel. */
+
+.gg-outline {
+  /* 脚本读这个值判断样式已经加载，之前大纲先藏着（见 waitForStyles） */
+  --gg-outline-styled: 1;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 12;
+  display: flex;
+  max-height: 76%;
+  pointer-events: none;
+}
+
+.gg-outline[data-side="right"] {
+  right: 6px;
+  flex-direction: row-reverse;
+}
+
+.gg-outline[data-side="left"] {
+  left: 6px;
+}
+
+.gg-outline-empty {
+  display: none;
+}
+
+.gg-outline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 6px;
+  pointer-events: auto;
+}
+
+/* Dashes anchor to the content edge, growing inward like Codex */
+.gg-outline[data-side="right"] .gg-outline-list { align-items: flex-end; }
+.gg-outline[data-side="left"] .gg-outline-list { align-items: flex-start; }
+
+/* Kill Obsidian's default <button> chrome explicitly; `all: unset`
+   alone loses to core's button selectors. */
+.gg-outline .gg-outline-item,
+.gg-outline .gg-outline-item:hover,
+.gg-outline .gg-outline-item:focus {
+  all: unset;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 8px;
+  flex-shrink: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.gg-outline[data-side="right"] .gg-outline-item { justify-content: flex-end; }
+
+/* 标题太多、放不下时（#2）JS 算好每条的高度，挤密排满导轨 */
+.gg-outline-list.is-dense { gap: 0; }
+.gg-outline .gg-outline-list.is-dense .gg-outline-item { height: var(--gg-rail-pitch, 8px); }
+
+/* Uniform 12px dashes at rest; JS overrides width/height inline
+   while the wave is live. The transition is what makes the wave
+   feel liquid instead of jittery. */
+.gg-outline-tick {
+  flex: 0 0 auto;
+  width: var(--gg-tick-w, 12px);
+  height: 2px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--text-faint) 75%, transparent);
+  transition: width 140ms ease-out, height 140ms ease-out,
+    background-color 160ms ease;
+}
+
+/* 平时隐藏导轨（设置里）：看不见但还在原处，鼠标靠近那一侧边缘（JS 加 .gg-outline-near）或移到导轨上时浮出来；面板展开时照常 */
+.gg-outline-autohide .gg-outline-list { transition: opacity 180ms ease; }
+.gg-outline-autohide:not(.gg-outline-near):not(.gg-outline-is-expanded) .gg-outline-list:not(:hover) { opacity: 0; }
+
+/* Names the dash for screen readers without an aria-label, which
+   Obsidian would turn into a tooltip */
+.gg-outline-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Current section keeps its accent color at rest and in the wave */
+.gg-outline-item.is-active .gg-outline-tick {
+  background: var(--text-accent);
+}
+
+/* The crest — the dash nearest the cursor — goes dark */
+.gg-outline-item.is-crest .gg-outline-tick {
+  background: var(--text-normal);
+}
+
+.gg-outline-item.is-active.is-crest .gg-outline-tick {
+  background: var(--text-accent);
+}
+
+/* ---------------- Preview card ---------------- */
+.gg-outline-preview {
+  position: absolute;
+  width: 300px;
+  padding: 12px 14px;
+  border: 1px solid var(--gg-popover-border, var(--background-modifier-border));
+  border-radius: var(--radius-l, 10px);
+  background: var(--gg-popover-bg, var(--background-primary));
+  box-shadow: var(--shadow-l, 0 8px 24px rgba(0, 0, 0, 0.14));
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-50%);
+  /* `top` transitions too, so the card slides along with the crest */
+  transition: opacity 150ms ease, visibility 150ms,
+    top 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.gg-outline[data-side="right"] .gg-outline-preview {
+  right: calc(100% + 12px);
+}
+
+.gg-outline[data-side="left"] .gg-outline-preview {
+  left: calc(100% + 12px);
+}
+
+.gg-outline-has-preview .gg-outline-preview {
+  opacity: 1;
+  visibility: visible;
+}
+
+.gg-outline-preview-title {
+  margin-bottom: 5px;
+  color: var(--text-normal);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.gg-outline-preview-body {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+/* ---------------- Global outline panel ----------------
+   Resting on the rail unfolds this beside it. Deliberately a plain
+   flyout: the rail does not move, so nothing shifts out from under
+   the cursor and a 50-heading note behaves like a 5-heading one. */
+.gg-outline-panel {
+  position: absolute;
+  top: 50%;
+  width: var(--gg-panel-width, 240px);
+  padding: 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--gg-popover-border, var(--background-modifier-border));
+  border-radius: var(--radius-l, 10px);
+  background: var(--gg-popover-bg, var(--background-primary));
+  box-shadow: var(--shadow-l, 0 8px 24px rgba(0, 0, 0, 0.14));
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-50%) translateX(var(--gg-panel-slide, 8px));
+  transition: opacity 180ms ease, visibility 180ms,
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  outline: none;
+}
+
+/* Slides out of the rail toward the text, so the motion reads as the
+   panel coming from the dashes rather than arriving from off-screen */
+.gg-outline[data-side="right"] .gg-outline-panel {
+  right: calc(100% + 8px);
+  --gg-panel-slide: 8px;
+  --gg-row-slide: -4px;
+}
+
+.gg-outline[data-side="left"] .gg-outline-panel {
+  left: calc(100% + 8px);
+  --gg-panel-slide: -8px;
+  --gg-row-slide: 4px;
+}
+
+.gg-outline-is-expanded .gg-outline-panel {
+  opacity: 1;
+  visibility: visible;
+  /* --gg-panel-shift keeps a clicked row in place while branches fold */
+  transform: translateY(calc(-50% + var(--gg-panel-shift, 0px))) translateX(0);
+  pointer-events: auto;
+}
+
+/* Shifted to keep a clicked row in place: no slide, or it drifts under
+   the pointer between the two clicks of a double click */
+.gg-outline-panel.is-anchored { transition: opacity 180ms ease, visibility 180ms; }
+
+.gg-outline-panel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+/* Chrome reset only — the :hover/:focus copies are what beat core's
+   button selectors. Everything visual lives one notch more specific
+   below, so `all: unset` can never claw it back on hover. */
+.gg-outline-panel .gg-outline-row,
+.gg-outline-panel .gg-outline-row:hover,
+.gg-outline-panel .gg-outline-row:focus {
+  all: unset;
+}
+
+.gg-outline .gg-outline-panel .gg-outline-row {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 4px 8px;
+  border-radius: var(--radius-s, 4px);
+  color: var(--text-muted);
+  font-size: 12.5px;
+  line-height: 1.45;
+  text-align: start;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateX(var(--gg-row-slide, -4px));
+  transition: opacity 160ms ease, transform 160ms ease,
+    background-color 120ms ease, color 120ms ease;
+}
+
+/* Top-level headings read a shade stronger than their children —
+   the indent alone is thin evidence of hierarchy on one line */
+.gg-outline .gg-outline-panel .gg-outline-row[data-depth="0"] {
+  color: var(--text-normal);
+}
+
+/* Rows fade in from the top down; the cap keeps a long outline from
+   trailing off into a visibly slow reveal */
+.gg-outline-is-expanded .gg-outline-panel .gg-outline-row {
+  opacity: 1;
+  transform: none;
+  transition-delay: var(--gg-row-delay, 0ms);
+}
+
+/* Driven by JS, not :hover — the rail scrubs this same highlight
+   while the panel is open */
+.gg-outline .gg-outline-panel .gg-outline-row.is-focus {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.gg-outline .gg-outline-panel .gg-outline-row.is-active {
+  color: var(--text-accent);
+  font-weight: 500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gg-outline-tick,
+  .gg-outline-preview,
+  .gg-outline-panel,
+  .gg-outline .gg-outline-panel .gg-outline-row {
+    transition: none;
+  }
+  .gg-outline .gg-outline-panel .gg-outline-row {
+    transform: none;
+  }
+}
+
+/* ---------------- Branch folding, formulas, full titles ---------------- */
+
+/* Rows hold an arrow slot and the title. The arrow only shows with
+   "Expand only the current section" on; without it the slot collapses
+   to nothing, so the panel looks exactly as before. */
+.gg-outline .gg-outline-panel .gg-outline-row {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+.gg-outline-row-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.gg-outline-arrow {
+  display: none;
+  flex: none;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-inline-start: -6px;
+  border-radius: var(--radius-s, 4px);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.gg-outline-folding .gg-outline-arrow { display: inline-flex; }
+.gg-outline-arrow svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.25;
+  visibility: hidden;
+  transition: transform 120ms ease;
+}
+.gg-outline-folding .gg-outline-row.has-children .gg-outline-arrow svg { visibility: visible; }
+.gg-outline-folding .gg-outline-row.has-children.is-open .gg-outline-arrow svg { transform: rotate(90deg); }
+.gg-outline-folding .gg-outline-row.has-children .gg-outline-arrow:hover {
+  color: var(--text-normal);
+  background-color: var(--background-modifier-hover);
+}
+/* 没有子标题的行：箭头位置空着，不接点击，点到就是点这一行 */
+.gg-outline-folding .gg-outline-row:not(.has-children) .gg-outline-arrow { pointer-events: none; }
+.gg-outline .gg-outline-panel .gg-outline-row.is-folded-away { display: none; }
+
+/* "Show full titles": long headings wrap instead of trailing off */
+.gg-outline-wrap .gg-outline-panel .gg-outline-row-text {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.gg-outline.gg-outline-wrap .gg-outline-panel .gg-outline-row { white-space: normal; }
+
+/* 「按标题样式显示」（#2，默认关）：每行用主题给这一级标题定的颜色、粗细、字体，字号按级别放大一点（标题本身的 30%） */
+.gg-outline-hstyle .gg-outline-panel .gg-outline-row[data-h="1"] .gg-outline-row-text { color: var(--h1-color, inherit); font-weight: var(--h1-weight, 600); font-family: var(--h1-font, inherit); font-size: calc(1em + (var(--h1-size, 1em) - 1em) * 0.3); }
+.gg-outline-hstyle .gg-outline-panel .gg-outline-row[data-h="2"] .gg-outline-row-text { color: var(--h2-color, inherit); font-weight: var(--h2-weight, 600); font-family: var(--h2-font, inherit); font-size: calc(1em + (var(--h2-size, 1em) - 1em) * 0.3); }
+.gg-outline-hstyle .gg-outline-panel .gg-outline-row[data-h="3"] .gg-outline-row-text { color: var(--h3-color, inherit); font-weight: var(--h3-weight, 600); font-family: var(--h3-font, inherit); font-size: calc(1em + (var(--h3-size, 1em) - 1em) * 0.3); }
+.gg-outline-hstyle .gg-outline-panel .gg-outline-row[data-h="4"] .gg-outline-row-text { color: var(--h4-color, inherit); font-weight: var(--h4-weight, 600); font-family: var(--h4-font, inherit); font-size: calc(1em + (var(--h4-size, 1em) - 1em) * 0.3); }
+.gg-outline-hstyle .gg-outline-panel .gg-outline-row[data-h="5"] .gg-outline-row-text { color: var(--h5-color, inherit); font-weight: var(--h5-weight, 600); font-family: var(--h5-font, inherit); font-size: calc(1em + (var(--h5-size, 1em) - 1em) * 0.3); }
+.gg-outline-hstyle .gg-outline-panel .gg-outline-row[data-h="6"] .gg-outline-row-text { color: var(--h6-color, inherit); font-weight: var(--h6-weight, 600); font-family: var(--h6-font, inherit); font-size: calc(1em + (var(--h6-size, 1em) - 1em) * 0.3); }
+/* 正在看的那行还是强调色，好找到当前位置 */
+.gg-outline-hstyle .gg-outline-panel .gg-outline-row.is-active .gg-outline-row-text { color: var(--text-accent); }
+
+.gg-outline-row-text mjx-container,
+.gg-outline-preview-title mjx-container { font-size: 0.95em; }
+
+/* ---------------- 完整大纲常驻展开（设置里打开） ----------------
+   面板一直开着，贴在笔记边上占满高度，代替导轨；正文让出面板的宽度 */
+.gg-outline.gg-outline-docked {
+  /* 有的主题（gogoga）标题栏浮在正文上面：让开它 */
+  top: calc(var(--header-height, 40px) + 8px);
+  bottom: 12px;
+  transform: none;
+  max-height: none;
+  width: var(--gg-panel-width, 240px);
+}
+.gg-outline.gg-outline-docked[data-side="right"] { right: 8px; }
+.gg-outline.gg-outline-docked[data-side="left"] { left: 8px; }
+.gg-outline-docked .gg-outline-list,
+.gg-outline-docked .gg-outline-preview { display: none; }
+.gg-outline.gg-outline-docked .gg-outline-panel {
+  top: 0;
+  left: 0;
+  right: 0;
+  max-height: 100%;
+  border-color: transparent;
+  border-inline-start-color: var(--background-modifier-border);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+  transition: none;
+}
+.gg-outline-docked .gg-outline-panel .gg-outline-row { transition-delay: 0ms; }
+.gg-outline.gg-outline-docked[data-side="left"] .gg-outline-panel {
+  border-inline-start-color: transparent;
+  border-inline-end-color: var(--background-modifier-border);
+}
+.gg-outline-docked-host[data-gg-outline-side="right"] .markdown-source-view.mod-cm6 .cm-scroller,
+.gg-outline-docked-host[data-gg-outline-side="right"] .markdown-preview-view {
+  padding-right: calc(var(--gg-panel-width, 240px) + 24px);
+}
+.gg-outline-docked-host[data-gg-outline-side="left"] .markdown-source-view.mod-cm6 .cm-scroller,
+.gg-outline-docked-host[data-gg-outline-side="left"] .markdown-preview-view {
+  padding-left: calc(var(--gg-panel-width, 240px) + 24px);
+}
+
+/* 常驻时拖面板朝正文那边的边改宽度（群友建议，像 Obsidian 分屏的分隔条）；触屏上拖的范围宽一点 */
+.gg-outline-resizer { display: none; }
+.gg-outline.gg-outline-docked .gg-outline-resizer {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  z-index: 2;
+  cursor: col-resize;
+  touch-action: none;
+  pointer-events: auto;
+}
+.gg-outline.gg-outline-docked[data-side="right"] .gg-outline-resizer { left: -5px; }
+.gg-outline.gg-outline-docked[data-side="left"] .gg-outline-resizer { right: -5px; }
+.is-mobile .gg-outline.gg-outline-docked .gg-outline-resizer { width: 22px; }
+.is-mobile .gg-outline.gg-outline-docked[data-side="right"] .gg-outline-resizer { left: -11px; }
+.is-mobile .gg-outline.gg-outline-docked[data-side="left"] .gg-outline-resizer { right: -11px; }
+.gg-outline-resizer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: transparent;
+  transition: background-color 0.15s;
+}
+.gg-outline-resizer:hover::after,
+.gg-outline-resizing .gg-outline-resizer::after { background: var(--interactive-accent); }
+.gg-outline-resizing { user-select: none; }
+
+/* ---------------- 搜索标题（#2） ---------------- */
+
+/* 面板顶上的搜索框：面板往下滚时贴在顶端不动 */
+.gg-outline-search {
+  position: sticky;
+  top: -6px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: -6px -6px 6px;
+  padding: 6px;
+  background: var(--gg-popover-bg, var(--background-primary));
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+.gg-outline .gg-outline-search-input {
+  flex: 1;
+  min-width: 0;
+  height: 26px;
+  padding: 0 8px;
+  font-size: 12.5px;
+}
+.gg-outline-search-count {
+  flex: none;
+  color: var(--text-faint);
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+}
+.gg-outline-search-count:empty { display: none; }
+
+/* 有搜索词时：原来的列表藏起来，换成结果列表 */
+.gg-outline-results { display: none; flex-direction: column; gap: 1px; }
+.gg-outline-searching .gg-outline-results { display: flex; }
+.gg-outline-searching .gg-outline-panel-list { display: none; }
+.gg-outline .gg-outline-panel .gg-outline-row.is-context { color: var(--text-faint); }
+.gg-outline .gg-outline-panel .gg-outline-row.is-match { color: var(--text-normal); }
+.gg-outline-panel mark.gg-outline-hit {
+  padding: 0;
+  border-radius: 2px;
+  background: var(--text-highlight-bg, rgba(255, 208, 0, 0.4));
+  color: inherit;
+}
+.gg-outline-search-none {
+  padding: 10px 8px;
+  color: var(--text-faint);
+  font-size: 12.5px;
+}
+
+/* 导轨上匹配的短横：强调色 */
+.gg-outline-searching .gg-outline-item.is-match .gg-outline-tick {
+  background-color: var(--interactive-accent);
+  opacity: 1;
+}
+
+/* 导轨顶上的放大镜：鼠标移到导轨上才出来，悬停稍微放大 */
+/* 只去掉 Obsidian 按钮的底色、边框、阴影。不能用 all: unset：带 :hover 的那条更具体，鼠标一移上去就把定位也清掉，按钮跑开、点不中 */
+.gg-outline .gg-outline-search-btn,
+.gg-outline .gg-outline-search-btn:hover,
+.gg-outline .gg-outline-search-btn:focus {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+.gg-outline .gg-outline-search-btn {
+  position: absolute;
+  bottom: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-s, 4px);
+  color: var(--text-faint);
+  cursor: pointer;
+  /* 平时透明但接鼠标：要是平时不接，鼠标从导轨一下挪到它上面时导轨的悬停已经断了，它还没变成能点 */
+  opacity: 0;
+  pointer-events: auto;
+  transform: scale(1);
+  transition: opacity 120ms ease, transform 120ms ease, color 120ms ease;
+}
+.gg-outline[data-side="right"] .gg-outline-search-btn { right: 2px; }
+.gg-outline[data-side="left"] .gg-outline-search-btn { left: 2px; }
+.gg-outline .gg-outline-search-btn svg { width: 14px; height: 14px; }
+.gg-outline:hover .gg-outline-search-btn,
+.gg-outline-is-expanded .gg-outline-search-btn {
+  opacity: 1;
+}
+.gg-outline-empty .gg-outline-search-btn { display: none; }
+.gg-outline .gg-outline-search-btn:hover {
+  color: var(--text-normal);
+  transform: scale(1.2);
+}
+.gg-outline-docked .gg-outline-search-btn { display: none; }
+
+/* 每行前面的 H1、H2……（设置「显示标题级别」，默认关） */
+.gg-outline-ltag { display: none; }
+.gg-outline-ltags .gg-outline-ltag,
+.gg-outline-searching.gg-outline-ltags .gg-outline-ltag {
+  display: inline-block;
+  min-width: 20px;
+  margin-inline-end: 6px;
+  color: var(--text-faint);
+  font-size: 10.5px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------- 手机、平板（触屏） ----------------
+   面板不再按导轨竖向居中：顶在标题栏下面，底边让开底部导航栏和键盘（JS 量好写进
+   --gg-m-top / --gg-m-bottom），高度跟着可见区域缩，搜索框一直在最上面。展开时导轨藏起来 */
+.gg-outline.gg-outline-mobile.gg-outline-is-expanded {
+  top: var(--gg-m-top, calc(var(--header-height, 40px) + 8px));
+  bottom: var(--gg-m-bottom, 12px);
+  transform: none;
+  max-height: none;
+}
+.gg-outline-mobile.gg-outline-is-expanded .gg-outline-list,
+.gg-outline-mobile:not(.gg-outline-scrubbing) .gg-outline-preview { display: none; }
+/* 手指按得住：导轨左右多留点，长按不弹系统的选字、菜单 */
+.gg-outline.gg-outline-mobile .gg-outline-list { padding-inline: 10px; }
+.gg-outline-list {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.gg-outline.gg-outline-mobile .gg-outline-panel {
+  top: 0;
+  max-height: 100%;
+  width: min(var(--gg-panel-width, 240px), calc(100vw - 32px));
+  transform: translateX(var(--gg-panel-slide, 8px));
+}
+.gg-outline.gg-outline-mobile.gg-outline-is-expanded .gg-outline-panel {
+  transform: translateX(0);
+}
+/* 手指点的行高一点，好点中 */
+.gg-outline.gg-outline-mobile .gg-outline-panel .gg-outline-row { padding-block: 6px; }
+.gg-outline.gg-outline-mobile .gg-outline-search-input { height: 32px; font-size: 16px; }
+.gg-outline-mobile.gg-outline-is-expanded .gg-outline-search-btn { display: none; }
+
+/* 标题很多时（几百个），看不见的结果行先不排版：搜索换词时只排可见的那些。
+   只给搜索结果：面板列表折叠、展开时要按真实高度把被点的行留在原位，占位高度会让它偏几像素 */
+.gg-outline-panel .gg-outline-result {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 26px;
+}
+/* 搜索结果每打一个字都在换：不要淡入和变色过渡，几百行一起起过渡动画会卡 */
+.gg-outline .gg-outline-panel .gg-outline-result {
+  transition: none;
+  transition-delay: 0ms;
+}
+/* 手机上折叠箭头点的区域大一点 */
+.gg-outline-mobile.gg-outline-folding .gg-outline-arrow { width: 24px; height: 24px; margin-inline-start: -8px; }
+.gg-outline-mobile .gg-outline-arrow svg { width: 16px; height: 16px; }
+
+/* 触屏长按导轨拖动：旁边只浮出标题，紧跟手指 */
+.gg-outline.gg-outline-scrubbing .gg-outline-preview {
+  width: max-content;
+  max-width: min(260px, calc(100vw - 80px));
+  padding: 8px 12px;
+  transition: opacity 120ms ease, visibility 120ms, top 60ms linear;
+}
+.gg-outline-scrubbing .gg-outline-preview-title {
+  margin-bottom: 0;
+  font-size: 15px;
+}
+.gg-outline-scrubbing .gg-outline-search-btn { display: none; }

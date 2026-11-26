@@ -272,7 +272,7 @@ Kai Tang
 - 🚀【高级改写（冲刺版）】：Leider kann ich nicht von Anfang bis Ende bleiben, denn ich habe an diesem Tag noch viel Arbeit.（*denn* 是并列连词，后面用**正常主句语序**，与 weil 从句形成对比，B1 加分点）
 
 ---
-
+[[eine neue Wohnung Einladung#第 5 句|第 5 句]]
 #### 第 5 句
 
 ① 💬 本句原意
@@ -1174,7 +1174,7 @@ Ich <span style="color:#b8860b"><mark>will nicht weiter warten</mark>¹</span> u
 - 🚀【高级改写（冲刺版）】Ich kann es kaum abwarten, endlich bei dir vorbeizukommen – allerdings wird es bei mir leider etwas später.（vorbeikommen **bei** + Dativ 表"登门"，与 kommen **zu** 分工不同；allerdings 表转折的书面副词）
 
 ---
-
+[[eine neue Wohnung Einladung#第 5 句|第 5 句]]
 #### 第 5 句
 
 **① 💬 本句原意**

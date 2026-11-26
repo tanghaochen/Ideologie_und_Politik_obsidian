@@ -32,7 +32,7 @@
     "template"
   ],
   "announceUpdates": "major",
-  "version": "2.33.1",
+  "version": "2.33.3",
   "globalVariables": {},
   "onePageInputEnabled": false,
   "disableOnlineFeatures": true,

@@ -130,9 +130,11 @@
       "enabled": false,
       "environmentHash": "",
       "environmentVariables": "",
+      "installationMethodsByHost": {},
       "modelAliases": {},
       "preferredReasoningByModel": {},
       "visibleModels": [],
+      "wslDistroOverridesByHost": {},
       "selectedModelsByHost": {}
     }
   },
