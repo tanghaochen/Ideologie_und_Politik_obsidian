@@ -1,6 +1,10 @@
 {
   "recentFiles": [
     {
+      "basename": "视频字幕提取提示词",
+      "path": "file:E:/AI workpace/video_subtitle/视频字幕提取提示词.md"
+    },
+    {
       "basename": "26-9",
       "path": "语言学习/德语/单词/生词/26-9.md"
     },
@@ -195,10 +199,6 @@
     {
       "basename": "知识",
       "path": "思想思维心理哲学/个人问题处理/泡学/知识.md"
-    },
-    {
-      "basename": "打压 PUA",
-      "path": "思想思维心理哲学/个人问题处理/泡学/打压 PUA.md"
     }
   ],
   "omittedPaths": [],

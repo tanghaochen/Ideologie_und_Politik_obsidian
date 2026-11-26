@@ -20452,5 +20452,17 @@
         "ch": 0
       }
     }
+  },
+  "file:E:/AI workpace/video_subtitle/视频字幕提取提示词.md": {
+    "cursor": {
+      "from": {
+        "line": 0,
+        "ch": 0
+      },
+      "to": {
+        "line": 473,
+        "ch": 0
+      }
+    }
   }
 }
