@@ -72,7 +72,29 @@ graph TD
 ---
 
 ## 变格方式
-
+|变化类型|词|阳性：1/2/3/4|阴性：1/2/3/4|中性：1/2/3/4|复数：1/2/3/4|
+|---|---|---|---|---|---|
+|定冠词模型|**der/die/das**|der / des / dem / den|die / der / der / die|das / des / dem / das|die / der / den / die|
+|定冠词式|**dieser**|dieser / dieses / diesem / diesen|diese / dieser / dieser / diese|dieses / dieses / diesem / dieses|diese / dieser / diesen / diese|
+|定冠词式|**jeder**|jeder / jedes / jedem / jeden|jede / jeder / jeder / jede|jedes / jedes / jedem / jedes|—（无复数）|
+|定冠词式|**jener**|jener / jenes / jenem / jenen|jene / jener / jener / jene|jenes / jenes / jenem / jenes|jene / jener / jenen / jene|
+|定冠词式|**welcher**|welcher / welches / welchem / welchen|welche / welcher / welcher / welche|welches / welches / welchem / welches|welche / welcher / welchen / welche|
+|定冠词式|**mancher**|mancher / manches / manchem / manchen|manche / mancher / mancher / manche|manches / manches / manchem / manches|manche / mancher / manchen / manche|
+|定冠词式|**solcher**|solcher / solches / solchem / solchen|solche / solcher / solcher / solche|solches / solches / solchem / solches|solche / solcher / solchen / solche|
+|定冠词式，仅复数|**alle**|—|—|—|alle / aller / allen / alle|
+|定冠词式，仅复数|**beide**|—|—|—|beide / beider / beiden / beide|
+|定冠词短语，仅复数|**die beiden**|—|—|—|die beiden / der beiden / den beiden / die beiden|
+|定冠词式，仅复数|**sämtliche**|—|—|—|sämtliche / sämtlicher / sämtlichen / sämtliche|
+|ein 式|**ein**|ein / eines / einem / einen|eine / einer / einer / eine|ein / eines / einem / ein|—（ein 无复数）|
+|ein 式|**kein**|kein / keines / keinem / keinen|keine / keiner / keiner / keine|kein / keines / keinem / kein|keine / keiner / keinen / keine|
+|ein 式|**was für ein**|was für ein / was für eines / was für einem / was für einen|was für eine / was für einer / was für einer / was für eine|was für ein / was für eines / was für einem / was für ein|was für + 复数名词（was für 不变）|
+|ein 式|**irgendein**|irgendein / irgendeines / irgendeinem / irgendeinen|irgendeine / irgendeiner / irgendeiner / irgendeine|irgendein / irgendeines / irgendeinem / irgendein|—（用 irgendwelche）|
+|复数强变化|**viele**|—|—|—|viele / vieler / vielen / viele|
+|复数强变化|**wenige**|—|—|—|wenige / weniger / wenigen / wenige|
+|复数强变化|**einige**|—|—|—|einige / einiger / einigen / einige|
+|复数强变化|**mehrere**|—|—|—|mehrere / mehrerer / mehreren / mehrere|
+|复数强变化|**etliche**|—|—|—|etliche / etlicher / etlichen / etliche|
+|不变词尾|**lauter**|—|—|—|lauter / lauter / lauter / lauter|
 限定词和冠词（定冠词或不定冠词）通常不能同时存在。
 
 在德语语法中，这类词被称为“冠词类限定词”（Artikelwörter）。这意味着它们在名词短语中占据了冠词的语法位置，并起到了相同的功能（限定名词并提示性、数、格）。
