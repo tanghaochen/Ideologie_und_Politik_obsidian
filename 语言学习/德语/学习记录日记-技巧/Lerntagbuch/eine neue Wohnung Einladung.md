@@ -25,11 +25,16 @@ Was brauchst du etwa Sächen? Das is glück, habe hier einer brauchtmarkt, wenn 
 Möbel bauchst, die ich will mit dem auto shicken.
 
 170
-2026年11月26日16:40:08
+2026年11月26日16:40:08HH
 11307
 
 Liebe Nina,
-Ich viel gl
+Ich freude mich über deiner Einladung.Ich als deine Freund habe eine heizlichen Glückwunsch, dass du eine neue wohung gefunden hast! Für dich ist nicht nur eine neue Erfahrung des Anfang, sondern auch ist das bequemer Leben.
+Ich will nicht weiter warten und möchte bei dir jetzt komme, aber tüte mir leid，nächst jeder tage habe ich viel Arbeit zu machen, deshalb plane ich bei dir gegen 20 Uhr, weil ich bis 18 Uhr arbeite.
+Was für Möbel brauchst du? Neben bei mir habe eine flomarkt, ich möchte ein paar Möbel für dich wählen. Wenn du nicht Antworten schreibst, will ich etaw Tasse für dich mirbingen.
+
+Liebe Grüßen,
+Kai Tang
 
 11388
 # 📝 B1 写作批改报告 · Schreiben Teil 1（Informelle E-Mail）
@@ -926,3 +931,626 @@ Lv3（无提示）：你别客气，缺什么尽管跟我说。
 > 🔄 变式：Ich weiß noch nicht, ob ich am Samstag pünktlich kommen kann.
 > ✍️ 你来总结：＿＿＿
 > 🏷️ 结构｜间接问句（ob）+ 情态动词句末｜层 L1/L2/L3｜错码 S-05｜重测 D1/D3/D7/D21｜⏱️ 4 Min.
+
+
+# 第二次重写
+
+> **评分标准说明**：你要求按 **歌德 B1 标准** 评分，因此模块一采用 B1 官方三项标准（Erfüllung der Aufgabe / Kommunikative Gestaltung / Formale Richtigkeit）；模块二「🚀 高级改写」仍给你 B2 上升路径。
+> **脚注编号规则**：模块二里 ¹ ² ³ 每句重新计数；模块六沿用同一规则（第 N 句的 ¹ 只指第 N 句的第 1 处错误）。
+
+---
+
+## 模块一：考官短评与 B1 维度体检
+
+### 🟢 亮点先行
+
+- ✅ 你正确使用了 **zweiteilige Konnektoren（nicht nur … sondern auch）**：「nicht nur eine neue Erfahrung …, sondern auch…」——这是 B1 冲向 B2 的加分结构，说明你有"用复杂连接词"的意识。
+- ✅ 你正确使用了 **weil-Nebensatz 的尾语序**：「weil ich bis 18 Uhr **arbeite**」动词稳站句末，这是 B1 核心语法点，很多人在这里翻车，你没有。
+- ✅ 你正确使用了 **deshalb + 动词第二位**，而且「**Was für Möbel brauchst du?**」整句零错误——这是本卷第 7 句，可以当范文句子直接背下来。
+- ✅ 语气友好、有"帮忙"的心意（跳蚤市场帮你挑家具），比干巴巴交作业的作文更有交流感。
+
+### 整体印象
+
+文章**任务意识清楚、语气亲切**，三个 Bullet Points 都"碰到了"；但**动词位置（Satzklammer）、名词性数格、固定搭配**三处系统性漏洞，让考官需要"猜"你的意思。
+
+### 📊 错误类型分布（本卷共约 24 处标注）
+
+| 错误类型 | 数量 | 典型例子 |
+|---|---|---|
+| 🔴 动词形式/位置 | 6 | möchte … ~~komme~~、~~habe~~ eine Flohmarkt |
+| 🔴 名词性数格 | 5 | ~~eine~~ Glückwunsch、~~des Anfang~~、~~Tasse~~ |
+| 🔴 拼写/大小写 | 6 | ~~heizlichen~~、~~wohung~~、~~mirbingen~~、~~Grüßen~~ |
+| 🟡 搭配/中式表达 | 5 | ~~Ich als dein Freund~~、viel Arbeit ~~zu machen~~ |
+| 🔴 介词/句法结构 | 2 | ~~bei dir~~ kommen、~~Neben bei mir~~ |
+
+### 🎯 多维打分（B1 官方三维度）
+
+- **📋 任务完成度 (Erfüllung der Aufgabe)：Ausreichend（约 60%）**
+  - 已达标：三个 Bullet Points 均有涉及；Anrede 与 Gruß 都在。
+  - 下一步：**第 1 点只写了一半**。题目要求两件事——"感谢邀请" **＋** "说明为什么高兴"，你只写了感谢。另外第 3 点你写的是陈述句（"我要带杯子"），题目要求 **问句**（"Soll ich etwas mitbringen?"）。
+
+- **🔗 连贯性与逻辑 (Kommunikative Gestaltung)：Ausreichend（约 60%）**
+  - 已达标：有段落切分、有 deshalb / aber / weil 等基础连接词。
+  - 下一步：现在有三处"逻辑跳跃"——"问家具 → 跳蚤市场 → 送杯子"之间缺过渡；句子之间多用逗号硬拼（Kommaspleiß），缺少 deshalb / außerdem / übrigens 之类的"路标词"。
+
+- **📚 词汇多样性 (Wortschatz)：Ausreichend（约 55%）**
+  - 已达标：einladen, Erfahrung, Möbel, Flohmarkt, mitbringen 等主题词都在，词汇量够 B1 用。
+  - 下一步：大量"中译德"搭配（viel Arbeit machen、bei dir kommen、nicht weiter warten），需要换成德语固定搭配（viel zu tun haben、zu dir kommen、es kaum erwarten können）。
+
+- **🏗️ 句法与结构 (Formale Richtigkeit)：Ausreichend（约 55%）**
+  - 已达标：能够写出 weil-Satz、dass-Satz、Perfekt（gefunden hast）等三种从句/时态结构。
+  - 下一步：**情态动词后的不定式必须去句末**（möchte … kommen 不是 komme），**介词后的格必须背死**（über + Akk），**名词必须大写**。这三条练熟，你的分数会直接跳一档。
+
+### 🏁 总评：**60 / 100 · Ausreichend（及格线上，knapp bestanden）**
+
+> 按 B1 标准，60 分算过线，但考官读你的信要停下来"猜"两三次。**只要修掉上面那三条系统性问题（动词位置、介词格、名词大写），同样的内容可以稳定拿到 75–80 分（Befriedigend）。**
+
+---
+
+## 模块二：逐句精批
+
+#### 第 1 句
+
+**① 💬 本句原意**
+
+> 💬 本句原意：亲爱的 Nina，我非常感谢你的邀请。
+
+**② 📝 原文批注**
+
+Liebe Nina,（✅ 正确：B1 非正式邮件标准称呼）<span style="color:#c0392b">Ich <del>freude</del>¹</span> mich über <span style="color:#c0392b"><del>deiner</del>²</span> Einladung<span style="color:#c0392b"><del>.</del></span><span style="color:#c0392b">³</span>Ich
+
+**评分：5 / 10**
+
+逐处拆解：
+
+- ¹ freude → freue
+- ² über deiner → über deine
+- ³ 「Einladung.Ich」→ 「Einladung. Ich」（句号后缺空格）
+
+**③ 📋 本句问题一览（含错误原因解释）**
+
+- ¹ 🔴 动词变位错误：~~freude~~ → **freue**
+  - 🩺 原因：主语是 ich，动词 freuen 的规则变位是 ich freue（词干 freu- + 词尾 -e）；freude 是名词 **die Freude** 的拼法，不能当动词用。
+- ² 🔴 介词格错误：über ~~deiner~~ Einladung → über **deine** Einladung
+  - 🩺 原因：sich freuen **über** 是"固定介词 + 第四格（Akkusativ）"的搭配，deine Einladung 是阴性单数第四格。deiner 是第三格（Dativ），用错格 → 考官会判为 Kasus 错误。
+- ³ 🟡 标点/格式：句号后没有空格 → 必须空一格
+  - 🩺 原因：德语正字法规定 Satzzeichen 后面须跟一个 Leerzeichen，否则整段粘连在一起，在 Formale Richtigkeit 里会作为小错累计扣分。
+- ⁴ 🟡 内容缺口（任务点 1 未完成）：题目要求"感谢邀请 + 说明为什么高兴"，本句只有感谢
+  - 🩺 原因：B1 Teil 1 按 Bullet Points 逐点给分，"为什么高兴"是第 1 点里独立的一个评分成分，缺了它这一整点只能给半分。
+
+**④ 🔍 原文直译对照**
+
+🔍 本句直译（按你实际写的德语）：
+「亲爱的 Nina，我〔高兴名词〕我自己在你（第三格）的邀请上面。」
+
+⚠️ 注意：你写的部分地方与实际想表达的意思偏离，逐条说明如下：
+
+- "Ich freude mich" 实际读作"我（名词 Freude）我自己"——德语里没有这个动词形式；如果你想表达"我很高兴"，应该写 "Ich **freue** mich"。
+- "über deiner Einladung" 实际读作"在你（第三格）的邀请**上方**"；如果你想表达"因为你的邀请而高兴"，应该写 "über **deine** Einladung"。
+
+**⑤ 🔬 本句重写示范（同一原意 × 两种写法）**
+
+- 🛡️【最小化改写（保分版）】Liebe Nina, ich freue mich sehr über deine Einladung.
+- 🚀【高级改写（冲刺版）】Liebe Nina, vielen Dank für deine Einladung zu deiner Einweihungsparty – ich freue mich riesig für dich!（vielen Dank für + Akk；sich für jdn. freuen = "为某人高兴"，B2 常用）
+
+---
+
+#### 第 2 句
+
+**① 💬 本句原意**
+
+> 💬 本句原意：作为你的朋友，我要热烈祝贺你找到了新房子！
+
+**② 📝 原文批注**
+
+<span style="color:#b8860b"><mark>Ich als dein Freund</mark>¹</span> habe <span style="color:#c0392b"><del>eine</del></span><span style="color:#c0392b">²</span> <span style="color:#c0392b"><del>heizlichen</del></span><span style="color:#c0392b">³</span> Glückwunsch<span style="color:#c0392b">⁴</span>, <span style="color:#2e7d32">dass du eine neue <del>wohung</del> gefunden hast</span>（✅ dass-Satz 尾语序 + Perfekt 动词框全对，很好！）<span style="color:#c0392b">⁵</span>!
+
+**评分：5 / 10**
+
+逐处拆解：
+
+- ¹ Ich als dein Freund → Als dein Freund
+- ² eine → einen
+- ³ heizlichen → herzlichen
+- ⁴ einen Glückwunsch haben → dir herzlich gratulieren
+- ⁵ wohnung → Wohnung
+
+**③ 📋 本句问题一览（含错误原因解释）**
+
+- ¹ 🟡 表达冗赘（中式）：~~Ich als dein Freund~~ → **Als dein Freund**
+  - 🩺 原因：德语里 "als + 身份" 作状语直接放句首，后面接谓语即可，主语不必再用 ich 复述；这是把中文"我作为你的朋友"逐字搬过来的结构。
+- ² 🔴 性/格错误：~~eine~~ Glückwunsch → **einen** Glückwunsch
+  - 🩺 原因：**der Glückwunsch** 是阳性名词，作 haben 的第四格宾语，阳性单数第四格词尾是 -en → einen。
+- ³ 🔴 拼写错误：~~heizlichen~~ → **herzlichen**
+  - 🩺 原因：herzlich 由 **Herz**（心）派生，写 -rz-；写成 heiz- 会被读成 heizen（供暖），是完全另一个词根。
+- ⁴ 🟡 搭配错误：einen Glückwunsch ~~haben~~ → **jdm. (zu etw.) gratulieren / jdm. herzlichen Glückwunsch wünschen**
+  - 🩺 原因：德语固定搭配是 gratulieren **zu** + Dativ，或 jdm. Glückwunsch **wünschen**；haben 不能和 Glückwunsch 组合。中文"有祝福"不可直译。
+- ⁵ 🔴 名词大写：~~wohung~~ → **Wohnung**
+  - 🩺 原因：德语所有名词首字母必须大写，这是 Formale Richtigkeit 里最容易被扣分也最容易改对的一条。
+
+**④ 🔍 原文直译对照**
+
+🔍 本句直译（按你实际写的德语）：
+「我作为你的朋友有一个〔供暖的〕祝贺，你找到了一套新的〔住房〕！」
+
+⚠️ 注意：你写的部分地方与实际想表达的意思偏离，逐条说明如下：
+
+- "eine heizlichen Glückwunsch" 性（eine ↔ 阳性名词）和格（-en）互相冲突，德语读者会读到"一个（阴阳不明的）供暖的祝贺"；如果你想表达"一个衷心的祝贺"，应该写 "einen herzlichen Glückwunsch"。
+- "einen Glückwunsch haben" 在德语里不存在这个搭配；如果你想表达"我祝贺你"，应该写 "Ich gratuliere dir herzlich".
+
+**⑤ 🔬 本句重写示范（同一原意 × 两种写法）**
+
+- 🛡️【最小化改写（保分版）】Als dein Freund möchte ich dir herzlich dazu gratulieren, dass du eine neue Wohnung gefunden hast.
+- 🚀【高级改写（冲刺版）】Als dein Freund gratuliere ich dir von Herzen zu deiner neuen Wohnung – endlich hast du dein eigenes Zuhause!（von Herzen gratulieren **zu** + Dativ 是 Nomen-Verb-Verbindung 型高分搭配）
+
+---
+
+#### 第 3 句
+
+**① 💬 本句原意**
+
+> 💬 本句原意：这对你来说不仅是一个新的开始，而且（意味着）更舒适的生活。
+
+**② 📝 原文批注**
+
+Für dich ist <span style="color:#2e7d32">**nicht nur**</span>（✅ 双部连接词用对了）eine neue Erfahrung <span style="color:#c0392b"><del>des Anfang</del></span><span style="color:#c0392b">¹</span>, sondern auch ist das <span style="color:#b8860b"><mark>bequemer Leben</mark>²</span>.
+
+**评分：4 / 10**
+
+逐处拆解：
+
+- ¹ des Anfang → ein neuer Anfang / ein neuer Lebensabschnitt
+- ² bequemer Leben → ein bequemeres Leben（且 `sondern auch ist das …` 结构不成立）
+
+**③ 📋 本句问题一览（含错误原因解释）**
+
+- ¹ 🔴 名词搭配 + Genitiv 双重错误：~~eine neue Erfahrung des Anfang~~ → **ein neuer Anfang / ein neuer Lebensabschnitt**
+  - 🩺 原因（拆成三点看）：
+    - ① 搭配逻辑不通：Erfahrung（经验）不能与 Anfang（开始）构成 "Erfahrung des Anfang"；中文"开始的体验"不能逐字翻译。
+    - ② 形式错误：der Anfang 的第二格是 **des Anfang-s**，你写的 des Anfang 缺少 -s，格词尾不完整。
+    - ③ 这里根本不需要第二格：表达"一个新的开始"就是 **ein neuer Anfang**（阳性和 ein 后的形容词词尾 -er）。
+- ② 🔴 形容词词尾 + 冠词缺失：~~bequemer Leben~~ → **ein bequemeres Leben**
+  - 🩺 原因：Leben 是中性名词，前面没有定冠词时用不定冠词 ein；比较级 bequemer 后必须加中性词尾 -es → ein bequemeres Leben。少了冠词和词尾，形容词悬空，句子语法上接不住。
+- ③ 🟡 并列结构不对称：sondern auch **ist das** bequemer Leben → sondern auch **bedeutet das** ein bequemeres Leben
+  - 🩺 原因：nicht nur … sondern auch 连接的两部分必须结构平行（Parallelismus）。前半是"ist + 名词"，后半也该是"ist/bedeutet + 名词"，而不是把 ist 提前当动词占位。
+
+**④ 🔍 原文直译对照**
+
+🔍 本句直译（按你实际写的德语）：
+「对你来说这不只是"一个开端的新经验"，而且也是更舒适（词尾缺失）的生活。」
+
+⚠️ 注意：以下两点偏离了你原本想表达的意思：
+
+- "Erfahrung des Anfang" 实际读作"开端（第二格缺 -s）的经验"，德语里这个组合语义不成立；如果你想表达"新的开始"，应该写 "ein neuer Anfang"。
+- "bequemer Leben" 实际读作"更舒适…生活"（形容词悬空）；如果你想表达"更舒适的生活"，应该写 "ein bequemeres Leben"。
+
+**⑤ 🔬 本句重写示范（同一原意 × 两种写法）**
+
+- 🛡️【最小化改写（保分版）】Für dich ist das nicht nur ein neuer Anfang, sondern auch ein bequemeres Leben.
+- 🚀【高级改写（冲刺版）】Für dich bedeutet der Umzug nicht nur einen neuen Lebensabschnitt, sondern auch deutlich mehr Wohnkomfort.（bedeuten + Akkusativ；名词化 "Wohnkomfort" 比形容词句更书面）
+
+---
+
+#### 第 4 句
+
+**① 💬 本句原意**
+
+> 💬 本句原意：我等不及了，现在就想马上到你那儿去。
+
+**② 📝 原文批注**
+
+Ich <span style="color:#b8860b"><mark>will nicht weiter warten</mark>¹</span> und möchte <span style="color:#b8860b"><mark>bei dir jetzt</mark>²</span> <span style="color:#c0392b"><del>komme</del></span><span style="color:#c0392b">³</span>,
+
+**评分：5 / 10**
+
+逐处拆解：
+
+- ¹ will nicht weiter warten → kann es kaum erwarten
+- ² bei dir jetzt … kommen → jetzt zu dir kommen
+- ³ komme → kommen
+
+**③ 📋 本句问题一览（含错误原因解释）**
+
+- ¹ 🟡 表达不地道：~~Ich will nicht weiter warten~~ → **Ich kann es kaum erwarten**
+  - 🩺 原因：wollen + nicht 表达的是"我不愿意再等"，带抱怨/不耐烦的语气；德语固定说法 es kaum erwarten können 才是"迫不及待"，是 B1/B2 常用 Redemittel。
+- ² 🔴 介词错误（方向 vs 位置）：~~bei dir~~ … kommen → **zu dir** kommen
+  - 🩺 原因：**bei + Dativ** 表示静态的"在某人家/某处"；**kommen** 是方向动词，目的地的人必须用 **zu + Dativ**。写成 bei dir kommen，德语读者会理解成"在你家里来"这种矛盾画面。
+- ³ 🔴 情态动词后的动词形式：~~komme~~ → **kommen**
+  - 🩺 原因：情态动词 möchte 占第二位，实义动词必须以**不定式**放在**句末**（Satzklammer：möchte … kommen）。变位只能有一个，第二个动词不能再变位。
+
+**④ 🔍 原文直译对照**
+
+🔍 本句直译（按你实际写的德语）：
+「我不想再等了，并且想在你家现在来，」
+
+⚠️ 注意：以下两点偏离了你原本想表达的意思：
+
+- "bei dir … komme" 实际读作"在你家…来（形式错误）"；如果你想表达"到你那儿去"，应该写 "zu dir kommen"。
+- "möchte … komme" 两个动词都变位，句子没有合法的动词框；如果你想表达"我想来"，应该写 "möchte … kommen"。
+
+**⑤ 🔬 本句重写示范（同一原意 × 两种写法）**
+
+- 🛡️【最小化改写（保分版）】Ich kann es kaum erwarten und möchte jetzt zu dir kommen.
+- 🚀【高级改写（冲刺版）】Ich kann es kaum abwarten, endlich bei dir vorbeizukommen – allerdings wird es bei mir leider etwas später.（vorbeikommen **bei** + Dativ 表"登门"，与 kommen **zu** 分工不同；allerdings 表转折的书面副词）
+
+---
+
+#### 第 5 句
+
+**① 💬 本句原意**
+
+> 💬 本句原意：但很抱歉，这几天我有很多工作要做。
+
+**② 📝 原文批注**
+
+aber <span style="color:#c0392b"><del>tüte</del></span><span style="color:#c0392b">¹</span> mir leid<span style="color:#b8860b">²</span>，<span style="color:#b8860b"><mark>nächst jeder tage</mark>³</span> habe ich <span style="color:#b8860b"><mark>viel Arbeit zu machen</mark>⁴</span>,
+
+**评分：4 / 10**
+
+逐处拆解：
+
+- ¹ (es) ~~tüte~~ → (es) tut
+- ² 「，」→ 「, 」（全角 → 半角 + 空格）
+- ³ nächst jeder tage → in den nächsten Tagen
+- ⁴ viel Arbeit zu machen → viel zu tun
+
+**③ 📋 本句问题一览（含错误原因解释）**
+
+- ¹ 🔴 动词拼写/缺主语：~~tüte~~ mir leid → **es tut** mir leid
+  - 🩺 原因（拆成两点看）：
+    - ① 固定表达是 **es tut mir leid**，tun 的第三人称单数是 **tut**；tüte 是名词 **die Tüte**（袋子），德语读者会读成"袋子对我抱歉"。
+    - ② 这个表达必须带形式主语 **es**，你整句缺主语，句子结构不完整。
+- ² 🟡 标点：中文全角逗号「，」→ 德语半角逗号「,」+ 空格
+  - 🩺 原因：德语正字法只用半角标点，且标点后须空格；全角符号在 Formale Richtigkeit 里会被判为 Zeichensetzung 错误。
+- ³ 🔴 时间状语三处冲突：~~nächst jeder tage~~ → **in den nächsten Tagen**
+  - 🩺 原因（拆成三点看）：
+    - ① 缺介词：时间状语"在接下来的几天里"需要 **in + Dativ**。
+    - ② 形容词词尾：nächst- 要跟名词的性数格一致，Dativ Plural → **den nächsten** Tagen。
+    - ③ 数不一致：**jeder** 只修饰单数名词，tage 是复数 → 二者不能搭配；这里应直接用 nächsten Tagen，不需要 jeder。
+    - ④ 名词大写：~~tage~~ → **Tage**。
+- ⁴ 🟡 中译德搭配：~~viel Arbeit zu machen haben~~ → **viel zu tun haben**
+  - 🩺 原因：德语固定说法是 **viel zu tun haben**（忙）；"Arbeit machen" 是把中文"做工作"逐字翻译，德语里听起来像"制造工作"。
+
+**④ 🔍 原文直译对照**
+
+🔍 本句直译（按你实际写的德语）：
+「但是〔袋子〕对我抱歉，下一每个天我有很多工作要做，」
+
+⚠️ 注意：你写的部分地方与实际想表达的意思偏离，逐条说明如下：
+
+- "tüte mir leid" 在德语里根本不成立（名词 + 第三格代词 + 形容词）；如果你想表达"很抱歉"，应该写 "es tut mir leid"。
+- "nächst jeder tage" 三个词的数、格、大写互相矛盾，德语读者无法判断你说的是哪一段时间；如果你想表达"这几天"，应该写 "in den nächsten Tagen"。
+
+**⑤ 🔬 本句重写示范（同一原意 × 两种写法）**
+
+- 🛡️【最小化改写（保分版）】Aber es tut mir leid: In den nächsten Tagen habe ich viel zu tun.
+- 🚀【高级改写（冲刺版）】Leider schaffe ich es nicht früher, denn in den kommenden Tagen bin ich beruflich stark eingespannt.（eingespannt sein = 忙于工作，B2 职场高频；kommen 的替代 schaffen）
+
+---
+
+#### 第 6 句
+
+**① 💬 本句原意**
+
+> 💬 本句原意：所以我打算 20 点左右到你那儿，因为我工作到 18 点。
+
+**② 📝 原文批注**
+
+deshalb（✅ deshalb 后动词第二位，正确）<span style="color:#b8860b"><mark>plane ich bei dir gegen 20 Uhr</mark>¹</span>, <span style="color:#2e7d32">weil ich bis 18 Uhr arbeite</span>（✅ weil-Satz 动词尾语序，标准 B1 得分点！）
+
+**评分：6 / 10**
+
+逐处拆解：
+
+- ¹ plane ich bei dir gegen 20 Uhr → plane ich, gegen 20 Uhr bei dir zu sein / komme ich gegen 20 Uhr zu dir
+
+**③ 📋 本句问题一览（含错误原因解释）**
+
+- ¹ 🔴 动词搭配 + 介词错误：~~plane ich bei dir gegen 20 Uhr~~ → **plane ich, gegen 20 Uhr bei dir zu sein**
+  - 🩺 原因（拆成两点看）：
+    - ① **planen** 的用法是 etw. planen（接第四格）或 planen, **etw. zu tun**（接 zu-Infinitiv）；它不能直接吃 "bei dir + 时间" 这种地点/时间状语，谓语缺了真正的宾语。
+    - ② "到你那儿去"须 **zu + Dativ**（方向）；bei dir 只能表示"在你家（已在那儿）"。两个介词混用，会让考官无法判断你是"计划待在那儿"还是"计划出发"。
+- ² 🟢 表扬（不编号）：本句两个最容易错的位置反而都对了——**deshalb** 后动词第二位、**weil** 从句动词句末。这两条是 B1 的硬核得分点，说明你的语序意识是有的，问题主要出在"动词搭配"和"介词格"上。
+
+**④ 🔍 原文直译对照**
+
+🔍 本句直译（按你实际写的德语）：
+「所以我在你那儿大约 20 点计划，因为我工作到 18 点。」
+
+⚠️ 注意：以下一点偏离了你原本想表达的意思：
+
+- "plane ich bei dir gegen 20 Uhr" 实际读作"我在你家（里面）计划大约 20 点"；如果你想表达"我打算 20 点到你那儿"，应该写 "plane ich, gegen 20 Uhr zu dir zu kommen"。
+
+**⑤ 🔬 本句重写示范（同一原意 × 两种写法）**
+
+- 🛡️【最小化改写（保分版）】Deshalb komme ich erst gegen 20 Uhr zu dir, weil ich bis 18 Uhr arbeiten muss.
+- 🚀【高级改写（冲刺版）】Deshalb werde ich wohl erst gegen 20 Uhr bei dir eintreffen, da ich bis 18 Uhr im Büro bleiben muss.（da 替代 weil 更书面；eintreffen 是 kommen 的正式替换词）
+
+---
+
+#### 第 7 句
+
+**① 💬 本句原意**
+
+> 💬 本句原意：你需要什么样的家具？
+
+**② 📝 原文批注**
+
+<span style="color:#2e7d32">**Was für Möbel brauchst du?**</span>（✅ 整句零错误！Was für + Akkusativ Plural 是标准 B1 问法，动词第二位、复数第四格全对）
+
+**评分：10 / 10**
+
+**③ 📋 本句问题一览（含错误原因解释）**
+
+- 🎉 本句无错误——可以原样抄进任何一封给朋友的德语邮件。
+
+**④ 🔍 原文直译对照**
+
+🔍 本句直译（按你实际写的德语）：
+「什么种类的家具你需要？」—— 与你的中文原意**完全一致** ✓
+
+**⑤ 🔬 本句重写示范（同一原意 × 两种写法）**
+
+- 🚀【高级改写（冲刺版）】Sag mir einfach, was du noch brauchst – ich könnte dir ein paar Möbelstücke vom Flohmarkt mitbringen.（Sag mir…, was…：间接疑问句 + 委婉的 könnte 第二虚拟式，B2 加分）
+
+---
+
+#### 第 8 句
+
+**① 💬 本句原意**
+
+> 💬 本句原意：我家附近有个跳蚤市场，所以我想帮你挑几件家具。
+
+**② 📝 原文批注**
+
+<span style="color:#b8860b"><mark>Neben bei mir</mark>¹</span> <span style="color:#c0392b"><del>habe</del>²</span> <span style="color:#c0392b"><del>eine</del>³</span> <span style="color:#c0392b"><del>flomarkt</del>⁴</span>, <span style="color:#b8860b"><mark>ich möchte</mark>⁵</span> ein paar Möbel für dich <span style="color:#b8860b"><mark>wählen</mark>⁶</span>.
+
+**评分：3 / 10**
+
+逐处拆解：
+
+- ¹ Neben bei mir → Bei mir in der Nähe
+- ² habe → gibt es
+- ³ eine → einen
+- ⁴ flomarkt → Flohmarkt
+- ⁵ 「, ich möchte」→ 「, deshalb möchte」
+- ⁶ wählen → aussuchen
+
+**③ 📋 本句问题一览（含错误原因解释）**
+
+- ¹ 🔴 介词叠加（中式）：~~Neben bei mir~~ → **Bei mir in der Nähe / In der Nähe von mir**
+  - 🩺 原因：neben（在…旁边）后面必须跟具体的参照物（neben dem Bahnhof），不能和 bei mir 叠加使用；德语"附近"的固定说法是 **in der Nähe (von + Dativ)**。这是把中文"在我旁边/附近"两个方位词硬拼的结果。
+- ² 🔴 句子无主语/动词错误：~~habe~~ eine Flohmarkt → **gibt es einen Flohmarkt**
+  - 🩺 原因：表达"（某地）存在某物"必须用固定结构 **es gibt + Akkusativ**。你写的 habe 是"我（第）有"，但整句没有主语 ich，句子不成句。
+- ³ 🔴 性/格错误：~~eine~~ Flohmarkt → **einen** Flohmarkt
+  - 🩺 原因：**der Flohmarkt** 是阳性，es gibt 后面接第四格 → einen Flohmarkt。
+- ⁴ 🔴 拼写/复合词错误：~~flomarkt~~ → **Flohmarkt**
+  - 🩺 原因：der Flohmarkt = **Floh**（跳蚤）+ **Markt**（市场），中间必须有 h；复合名词整体作为一个名词大写。
+- ⁵ 🔴 逗号粘连（Kommaspleiß）：~~, ich möchte …~~ → **, deshalb möchte …**
+  - 🩺 原因：德语中两个完整主句**不能只用一个逗号连接**（中文可以），必须加连词（und / denn / aber / deshalb）或改成从句。否则整句在语法上被判为 Satzbau 错误。
+- ⁶ 🟡 词义偏差：~~wählen~~ → **aussuchen / kaufen**
+  - 🩺 原因：wählen 主要用于"选举、投票、二选一"（den Präsidenten wählen）；挑选具体物品用地道说法 **sich (Dativ) etwas aussuchen**。
+
+**④ 🔍 原文直译对照**
+
+🔍 本句直译（按你实际写的德语）：
+「旁边在我有一个跳蚤市场，我想几件家具为你挑选。」
+
+⚠️ 注意：你写的部分地方与实际想表达的意思偏离，逐条说明如下：
+
+- "Neben bei mir" 两个方位介词互相打架，德语读者读不出地点；如果你想表达"我家附近"，应该写 "bei mir in der Nähe"。
+- "habe eine flomarkt" 没有主语，也缺正确冠词；如果你想表达"有一个跳蚤市场"，应该写 "gibt es einen Flohmarkt"。
+
+**⑤ 🔬 本句重写示范（同一原意 × 两种写法）**
+
+- 🛡️【最小化改写（保分版）】Bei mir in der Nähe gibt es einen Flohmarkt, deshalb möchte ich ein paar Möbel für dich aussuchen.
+- 🚀【高级改写（冲刺版）】Ganz in meiner Nähe findet gerade ein Flohmarkt statt – dort könnte ich dir ein paar schöne Möbelstücke besorgen.（stattfinden = 举办；jdm. etw. besorgen = 帮某人弄到，B2 高频搭配）
+
+---
+
+#### 第 9 句
+
+**① 💬 本句原意**
+
+> 💬 本句原意：如果你不回复我，我就给你带几个杯子过去。
+
+**② 📝 原文批注**
+
+Wenn du nicht <span style="color:#b8860b"><mark>Antworten schreibst</mark>¹</span>, <span style="color:#b8860b"><mark>will</mark>²</span> ich <span style="color:#c0392b"><del>etaw</del>³</span> <span style="color:#c0392b"><del>Tasse</del>⁴</span> für dich <span style="color:#c0392b"><del>mirbingen</del>⁵</span>.
+
+**评分：3 / 10**
+
+逐处拆解：
+
+- ¹ Antworten schreibst → antwortest
+- ² will → werde / möchte
+- ³ etaw → ein paar / einige
+- ⁴ Tasse → Tassen
+- ⁵ mirbingen → mitbringen（主句中分离：bringe … mit）
+
+**③ 📋 本句问题一览（含错误原因解释）**
+
+- ¹ 🔴 词性错误：~~Antworten schreibst~~ → **antwortest**
+  - 🩺 原因：antworten 是**动词**，动词在句中不能大写当名词用；"eine Antwort schreiben" 才是名词搭配（必须带冠词 eine）。此处最简处理就是直接用动词 antworten → du antwortest。
+- ² 🟡 情态动词语气：~~will~~ ich → **werde / möchte** ich
+  - 🩺 原因：wollen 表达强烈意志（"我要！"），在写给朋友的邀请回复里听起来像命令或威胁；表"打算/将来"用 **werden + Infinitiv**，表客气提议用 **möchte**。
+- ³ 🔴 拼写 + 用法：~~etaw~~ → **etwas / ein paar**
+  - 🩺 原因：etwas 的正确拼写是 etw**as**；且 etwas 不能直接修饰可数的复数名词（不能说 etwas Tassen），应用 **ein paar / einige**。
+- ⁴ 🔴 单复数错误：~~Tasse~~ → **Tassen**
+  - 🩺 原因：ein paar 后面必须跟**复数名词**；Tasse 是单数，写成 ein paar Tasse 语法上不成立。
+- ⁵ 🔴 可分动词错误：~~mirbingen~~ → **mitbringen**
+  - 🩺 原因：可分前缀是 **mit-**（mit|bringen），不是 mir-；另外在主句中前缀要分离到句末：ich **bringe** … **mit**。
+- ⁶ 🟡 内容缺口（任务点 3 未完成）：题目要求 "**Fragen Sie, ob** Sie etwas mitbringen sollen"
+  - 🩺 原因：这里你写的是陈述句（"我要带杯子"），而不是**问句**。B1 评分按 Bullet Point 逐点核对，第 3 点必须是明确的提问，否则只能拿部分分。
+
+**④ 🔍 原文直译对照**
+
+🔍 本句直译（按你实际写的德语）：
+「如果你不写〔回答〕，我〔要〕〔?〕一个杯子为你〔?〕带来。」
+
+⚠️ 注意：你写的部分地方与实际想表达的意思偏离，逐条说明如下：
+
+- "etaw" 在德语里不存在这个拼写，考官无法识读；如果你想表达"几个"，应该写 "ein paar"。
+- "ein paar Tasse" 单数与复数冲突，实际读作"几个…一个杯子"；如果你想表达"几个杯子"，应该写 "ein paar Tassen"。
+- "mirbingen" 不是德语动词；如果你想表达"带来"，应该写 "mitbringen"。
+
+**⑤ 🔬 本句重写示范（同一原意 × 两种写法）**
+
+- 🛡️【最小化改写（保分版）】Wenn du mir nicht antwortest, bringe ich einfach ein paar Tassen mit.
+- 🚀【高级改写（冲刺版）】Falls du mir nicht rechtzeitig schreibst, bringe ich vorsichtshalber ein paar Gläser und Tassen mit.（falls = wenn 的书面变体，动词同样句末；vorsichtshalber 表"以防万一"，B2 副词）
+
+---
+
+#### 第 10 句
+
+**① 💬 本句原意**
+
+> 💬 本句原意：祝好，Kai Tang。
+
+**② 📝 原文批注**
+
+Liebe <span style="color:#c0392b"><del>Grüßen</del></span><span style="color:#c0392b">¹</span>, Kai Tang
+
+**评分：4 / 10**
+
+逐处拆解：
+
+- ¹ Grüßen → Grüße
+
+**③ 📋 本句问题一览（含错误原因解释）**
+
+- ¹ 🔴 格/数错误（固定告别语）：~~Liebe Grüßen~~ → **Liebe Grüße**
+  - 🩺 原因：der Gruß 的复数第一格是 **Grüße**；-n 是第三格复数形式（mit Grüßen an alle）。书信标准 Grußformel 是固定搭配 **Liebe Grüße / Herzliche Grüße**，这里不需要任何格词尾。
+- ² 🟢 表扬（不编号）：Grußformel 位置与签名格式都符合德语书信规范（Grußformel 后逗号 + 换行签名），任务要求的 "Anrede und Gruß" 你确实都写了。
+
+**④ 🔍 原文直译对照**
+
+🔍 本句直译（按你实际写的德语）：
+「亲爱的（复数第三格）问候们，Kai Tang」
+
+⚠️ 注意：以下一点偏离了你原本想表达的意思：
+
+- "Liebe Grüßen" 语法上是"第三格复数"，德国人一眼能看出是外语学习者写法；如果你想表达"祝好"，固定写法是 "Liebe Grüße"。
+
+**⑤ 🔬 本句重写示范（同一原意 × 两种写法）**
+
+- 🛡️【最小化改写（保分版）】Liebe Grüße, Kai Tang
+- 🚀【高级改写（冲刺版）】Ich freue mich schon auf Samstag! Liebe Grüße, Kai（在 Grußformel 前加一句"期待"，是德语信件的地道收尾，考官很喜欢这种闭合感）
+
+---
+
+## 模块三：写作思路升维
+
+- 💡 **Bullet Point 1 必须"感谢 + 理由"双保险**（你现在只有感谢）
+  - 缝合句式：*Ich freue mich sehr über deine Einladung, **weil** ich deine alte Wohnung schon kenne und gespannt bin, **wie** du die neue eingerichtet hast.*
+  - 德国考官喜欢这个角度：理由**具体、有画面**（eingerichtet / gespannt sein），比 "ich freue mich sehr" 这类空话更能证明你真的会用 B1 词汇。
+
+- 💡 **给"中国特色"的跳蚤市场加一句德国式环保理由**
+  - *Second-Hand-Möbel sind nicht nur günstig, sondern auch nachhaltig.*
+  - 德国考官喜欢这个角度：Nachhaltigkeit（可持续）是德国社会的关键词，一句话就能把你的小心意升级成"有价值观的表达"。
+
+- 💡 **逻辑断裂点修补（本卷最大内容问题）**
+  - 断裂在哪：第 7 句问"你要什么家具" → 第 8 句说"我家附近有跳蚤市场" → 第 9 句突然变成"带杯子"，三步之间没有过渡，读者会问"为什么突然是杯子？"。
+  - 原因诊断：**跳跃论证**——你脑子里有完整链条（挑家具 → 万一你不需要 → 那我就带餐具），但只写了头尾，中间那步没写出来。
+  - 缝合句式（直接用）：*Falls du schon alle Möbel hast, bringe ich einfach ein paar Gläser und Tassen mit.* —— 一个 **falls** 就把两个 bullet points 焊在了一起。
+
+---
+
+## 模块四：写作方法论指导
+
+> 本次只教一个核心方法：**动词框自检法（Satzklammer-Check）**
+
+- 💡 操作三步（每写完一句，5 秒钟过一遍）：
+  - **第 1 步 找"变位动词"**：句子里只有一个动词可以有人称词尾（ich möcht**e**、du brauch**st**）。
+  - **第 2 步 数位置**：这个变位动词必须在**第二位**（除从句外）。你本卷第 6 句的 deshalb / 第 7 句的 brauchst 都做到了。
+  - **第 3 步 其余动词全部赶去句末，用不定式或分词**：möchte … **kommen**（不是 komme）、bringe … **mit**、habe … **gefunden**。
+
+- 💡 对照你本卷的"翻车现场"：
+  - ❌ möchte … ~~komme~~ → ✅ möchte … **kommen**
+  - ❌ will … ~~mirbingen~~ → ✅ will … **mitbringen**
+  - ✅ weil ich bis 18 Uhr **arbeite**（你已经做对的那一句，就是标准模板）
+
+- 💡 写作时的小动作：**先用铅笔把每句的变位动词圈出来**，再检查"句末有没有该去那儿的动词"。这个动作能一次性消灭你全卷 6 处动词错误中的 5 处。
+
+---
+
+## 模块五：语法巩固练习
+
+✏️ **练习 1（改错题 · 动词框）** 下面这句犯了和你第 4 句一样的错误，请改正：
+„Ich möchte heute Abend bei dir komme."
+
+✏️ **练习 2（改错题 · 介词格）** 下面两句的介词格都有问题，请改正：
+a) „Ich freue mich sehr über deiner Einladung."
+b) „Wir warten auf deinem Anruf."
+
+✏️ **练习 3（填空题 · 形容词词尾 / es gibt）** 填入括号中词的正确形式：
+a) In den ________ (nächst) Tagen habe ich leider viel zu tun.
+b) Bei mir in der Nähe gibt es ________ (ein) ________ (Flohmarkt).
+
+✏️ **练习 4（句型转换 · weil → deshalb）** 请把下面的 weil-Satz 改写成用 deshalb 的句子：
+„Ich komme erst gegen 20 Uhr, weil ich bis 18 Uhr arbeite."
+
+✏️ **练习 5（中译德 · 任务点 3 的正确问法）**
+请把这句话译成德语（要求：必须是**问句**，并且用上可分动词 mitbringen）：
+「需要我带点什么吗？」
+
+> [!note]- ✅ Antworten（点开核对，先自己做！）
+> **练习 1**：Ich möchte heute Abend **zu dir kommen**.
+> 解析：möchte 占第二位，实义动词 kommen 必须以不定式放句末（Satzklammer）；"到某人那儿"用 **zu + Dativ**，不是 bei dir。
+>
+> **练习 2**：
+> a) Ich freue mich sehr über **deine** Einladung.
+> 解析：sich freuen **über** 固定支配**第四格**，阴性单数第四格是 deine（deiner 是第三格）。
+> b) Wir warten auf **deinen** Anruf.
+> 解析：warten **auf** 同样支配第四格，der Anruf 阳性单数第四格 → deinen。
+>
+> **练习 3**：
+> a) In den **nächsten** Tagen …
+> 解析：in + Dativ Plural，形容词词尾 -en（den nächsten Tagen）。
+> b) … gibt es **einen** **Flohmarkt**.
+> 解析：es gibt 后接第四格；der Flohmarkt 阳性 → einen；复合名词整体大写。
+>
+> **练习 4**：Ich arbeite bis 18 Uhr, **deshalb komme ich** erst gegen 20 Uhr.
+> 解析：deshalb 是副词，占第一位，因此变位动词 kommen 必须紧跟其后占第二位（不能写 deshalb ich komme）。
+>
+> **练习 5**：**Soll ich etwas mitbringen?**
+> 解析：题目要求"询问"→ 用 sollen 提建议最地道（Soll ich …?）；etwas 作第二格宾语位置在句中，可分前缀 **mit-** 留在句末。
+
+---
+
+## 模块六：全文汇总（脚注对照版）
+
+> 编号规则：**第 N 句的 ¹²³ 只在该句内计数**，与模块二完全一致，可直接对照。
+
+### 第一部分：推测你本来想表达的中文
+
+> ¹ 亲爱的 Nina，我非常感谢你的邀请。² 作为你的朋友，我要热烈祝贺你找到了新房子！³ 这对你来说不仅是一个新的开始，而且意味着更舒适的生活。
+> ⁴ 我等不及了，现在就想马上到你那儿去，⁵ 但很抱歉，这几天我有很多工作要做，⁶ 所以我打算 20 点左右到你那儿，因为我工作到 18 点。⁷ 你需要什么样的家具？⁸ 我家附近有个跳蚤市场，我想帮你挑几件家具。⁹ 如果你不回复我，我就给你带几个杯子过去。¹⁰ 祝好，Kai Tang。
+
+### 第二部分：你的原文
+
+> ¹ ⁴ Liebe Nina, ¹ Ich freude mich über deiner Einladung. ² Ich als dein Freund habe eine heizlichen Glückwunsch, dass du eine neue wohung gefunden hast! ³ Für dich ist nicht nur eine neue Erfahrung des Anfang, sondern auch ist das bequemer Leben.
+> ⁴ Ich will nicht weiter warten und möchte bei dir jetzt komme, ⁵ aber tüte mir leid，nächst jeder tage habe ich viel Arbeit zu machen, ⁶ deshalb plane ich bei dir gegen 20 Uhr, weil ich bis 18 Uhr arbeite. ⁷ Was für Möbel brauchst du? ⁸ Neben bei mir habe eine flomarkt, ich möchte ein paar Möbel für dich wählen. ⁹ Wenn du nicht Antworten schreibst, will ich etaw Tasse für dich mirbingen. ¹⁰ Liebe Grüßen, Kai Tang
+
+### 第三部分：最小改动版（🛡️ 保分版，全部改对即可 75+）
+
+> Liebe Nina,
+> ich freue mich sehr über deine Einladung. ¹ ² Als dein Freund möchte ich dir herzlich dazu gratulieren, dass du eine neue Wohnung gefunden hast! ³ Für dich ist das nicht nur ein neuer Anfang, sondern auch ein bequemeres Leben.
+> ⁴ Ich kann es kaum erwarten und möchte jetzt zu dir kommen, ⁵ aber es tut mir leid: In den nächsten Tagen habe ich viel zu tun. ⁶ Deshalb komme ich erst gegen 20 Uhr zu dir, weil ich bis 18 Uhr arbeiten muss. ⁷ Soll ich etwas mitbringen? ⁸ Bei mir in der Nähe gibt es einen Flohmarkt, deshalb möchte ich ein paar Möbel für dich aussuchen. ⁹ Wenn du mir nicht antwortest, bringe ich einfach ein paar Tassen mit. ¹⁰ Liebe Grüße, Kai Tang
+
+### 第四部分：精改高级版（🚀 冲刺版，B2 表达密度）
+
+> Liebe Nina,
+> vielen Dank für deine Einladung zu deiner Einweihungsparty – ich freue mich riesig für dich! ¹ Als dein Freund gratuliere ich dir von Herzen zu deiner neuen Wohnung – endlich hast du dein eigenes Zuhause! ² Für dich bedeutet der Umzug nicht nur einen neuen Lebensabschnitt, sondern auch deutlich mehr Wohnkomfort. ³
+> Ich kann es kaum abwarten, endlich bei dir vorbeizukommen – allerdings werde ich wohl erst gegen 20 Uhr bei dir eintreffen, da ich bis 18 Uhr im Büro bleiben muss. ⁴ ⁵ ⁶ Leider schaffe ich es nicht früher, denn in den kommenden Tagen bin ich beruflich stark eingespannt. ⁷ Sag mir einfach, was du noch brauchst – ich könnte dir ein paar Möbelstücke vom Flohmarkt mitbringen. ⁸ Falls du mir nicht rechtzeitig schreibst, bringe ich vorsichtshalber ein paar Gläser und Tassen mit. ⁹
+> Ich freue mich schon auf Samstag! Liebe Grüße, Kai ¹⁰
+
+---
+
+### 🎯 下一步只做三件事（优先级排序）
+
+1. **动词框自检**：每句圈出变位动词，其余动词一律去句末 → 消灭 6 处错误。
+2. **背死三组介词格**：sich freuen **über + Akk** / gratulieren **zu + Dat** / kommen **zu + Dat**。
+3. **补上两个"半截"任务点**：Bullet Point 1 加"为什么高兴"的理由；Bullet Point 3 改成问句 **Soll ich etwas mitbringen?**
+
+完成这三步后重写一遍，把新版发给我，我按同一套标准给你打分对比。
