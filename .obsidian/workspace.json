@@ -242,16 +242,6 @@
               "icon": "inbox",
               "title": "MN 卡片"
             }
-          },
-          {
-            "id": "3389fbe2cbe03848",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw-sidepanel",
-              "state": {},
-              "icon": "excalidraw-icon",
-              "title": "Excalidraw 侧边面板"
-            }
           }
         ]
       },

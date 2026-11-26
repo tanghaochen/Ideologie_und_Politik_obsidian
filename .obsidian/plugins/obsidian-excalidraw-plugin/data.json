@@ -1077,7 +1077,7 @@
   "pngExportScale": 1,
   "previewImageType": "SVG",
   "previewMatchObsidianTheme": false,
-  "previousRelease": "2.29.2",
+  "previousRelease": "2.29.4",
   "rank": "Bronze",
   "removeTransclusionQuoteSigns": true,
   "renderImageInHoverPreviewForMDNotes": false,
@@ -1278,7 +1278,7 @@
         "maxTokens": "",
         "selectedTaskId": "wireframe-to-code",
         "textModel": "",
-        "userPrompt": ""
+        "userPrompt": "test"
       }
     },
     "Downloaded/Mindmap Builder": {
@@ -1779,11 +1779,14 @@
   },
   "scriptFolderPath": "Excalidraw/Scripts",
   "showLinkBrackets": false,
+  "showNewDrawingInEmptyTab": true,
   "showNewVersionNotification": true,
   "showReleaseNotes": true,
+  "showRibbonIcon": true,
   "showSecondOrderLinks": true,
   "showSplashscreen": true,
   "showTabTitlebarButtons": true,
+  "sidepanelOpenInPopout": false,
   "sidepanelTabs": [
     "{\"script\":\"Downloaded/Mindmap Builder\",\"title\":\"MindMap Builder\"}"
   ],
@@ -1794,9 +1797,12 @@
   "syncExcalidraw": false,
   "tabletFooterSafeAreaPadding": false,
   "tabletUIMode": "full",
+  "taskboneAPIKeySecret": "",
+  "taskboneAPIKeySource": "settings",
   "taskboneAPIkey": "ex-obf:v1:AKMmqSyvMrU4uwCpJ4sBkhyEa6kT7lm6SJUCjwOFTYYiuWfoavRWvH//P17QEYpOtWPwH90OqQ==",
   "taskboneEnabled": true,
   "templateFilePath": "Excalidraw/Template.excalidraw",
+  "thumbnailRenamePolicy": "unset",
   "todo": "☐",
   "urlPrefix": "",
   "useDeclarativeSettings": true,
