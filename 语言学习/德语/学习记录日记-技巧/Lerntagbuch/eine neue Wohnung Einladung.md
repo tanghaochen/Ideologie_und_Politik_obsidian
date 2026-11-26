@@ -1522,6 +1522,10 @@ b) Bei mir in der Nähe gibt es ________ (ein) ________ (Flohmarkt).
 
 > 编号规则：**第 N 句的 ¹²³ 只在该句内计数**，与模块二完全一致，可直接对照。
 
+%% col-start %%
+
+%% col-break:b:primary %%
+
 ### 第一部分：推测你本来想表达的中文
 
 > ¹ 亲爱的 Nina，我非常感谢你的邀请。² 作为你的朋友，我要热烈祝贺你找到了新房子！³ 这对你来说不仅是一个新的开始，而且意味着更舒适的生活。
@@ -1531,6 +1535,9 @@ b) Bei mir in der Nähe gibt es ________ (ein) ________ (Flohmarkt).
 
 > ¹ ⁴ Liebe Nina, ¹ Ich freude mich über deiner Einladung. ² Ich als dein Freund habe eine heizlichen Glückwunsch, dass du eine neue wohung gefunden hast! ³ Für dich ist nicht nur eine neue Erfahrung des Anfang, sondern auch ist das bequemer Leben.
 > ⁴ Ich will nicht weiter warten und möchte bei dir jetzt komme, ⁵ aber tüte mir leid，nächst jeder tage habe ich viel Arbeit zu machen, ⁶ deshalb plane ich bei dir gegen 20 Uhr, weil ich bis 18 Uhr arbeite. ⁷ Was für Möbel brauchst du? ⁸ Neben bei mir habe eine flomarkt, ich möchte ein paar Möbel für dich wählen. ⁹ Wenn du nicht Antworten schreibst, will ich etaw Tasse für dich mirbingen. ¹⁰ Liebe Grüßen, Kai Tang
+
+%% col-break:b:primary %%
+
 
 ### 第三部分：最小改动版（🛡️ 保分版，全部改对即可 75+）
 
@@ -1545,6 +1552,9 @@ b) Bei mir in der Nähe gibt es ________ (ein) ________ (Flohmarkt).
 > Ich kann es kaum abwarten, endlich bei dir vorbeizukommen – allerdings werde ich wohl erst gegen 20 Uhr bei dir eintreffen, da ich bis 18 Uhr im Büro bleiben muss. ⁴ ⁵ ⁶ Leider schaffe ich es nicht früher, denn in den kommenden Tagen bin ich beruflich stark eingespannt. ⁷ Sag mir einfach, was du noch brauchst – ich könnte dir ein paar Möbelstücke vom Flohmarkt mitbringen. ⁸ Falls du mir nicht rechtzeitig schreibst, bringe ich vorsichtshalber ein paar Gläser und Tassen mit. ⁹
 > Ich freue mich schon auf Samstag! Liebe Grüße, Kai ¹⁰
 
+
+%% col-end %%
+
 ---
 
 ### 🎯 下一步只做三件事（优先级排序）
@@ -1554,3 +1564,13 @@ b) Bei mir in der Nähe gibt es ________ (ein) ________ (Flohmarkt).
 3. **补上两个"半截"任务点**：Bullet Point 1 加"为什么高兴"的理由；Bullet Point 3 改成问句 **Soll ich etwas mitbringen?**
 
 完成这三步后重写一遍，把新版发给我，我按同一套标准给你打分对比。
+
+## 个人总结
+
+包含了主要的一些错误，需要帮我纠正一下：
+1. 比如这几天写错了，正确的用法应该怎么用？
+2. 到你那里不应该用“by”，什么情况下用“by”，什么情况下用“zu”？比如“neben”和“在我附近”这种说法区别是什么？
+3. 怎么在不同的场景区分应用正式文件和非正式文件？
+4. 最后，“Gruß”加不加“n”还是加“en”？
+
+这些都写进 NK 卡片。另外，你也找几处值得记录的

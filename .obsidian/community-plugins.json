@@ -57,7 +57,6 @@
   "obsidian-image-toolkit",
   "periodic-notes",
   "excalidraw-extras",
-  "obsidian-excalidraw-plugin",
   "notebook-navigator",
   "realclaudian",
   "better-export-pdf",
@@ -75,5 +74,6 @@
   "video-player-ai",
   "media-transcript",
   "obsidian-hover-editor",
-  "gogoga-outline"
+  "gogoga-outline",
+  "obsidian-excalidraw-plugin"
 ]
