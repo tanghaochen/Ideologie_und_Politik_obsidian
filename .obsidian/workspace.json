@@ -48,9 +48,39 @@
               "icon": "excalidraw-icon",
               "title": "句子成分逻辑展示"
             }
+          },
+          {
+            "id": "a92a44a12a1ec6f3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "file:C:/Users/17741/Downloads/tecplot Linux 安装教程.md",
+                "mode": "source",
+                "source": true,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "tecplot Linux 安装教程"
+            }
+          },
+          {
+            "id": "b96598d48c61aa97",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "_AI-Diagrams/未命名 1.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "未命名 1"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -350,15 +380,27 @@
       "copilot:Open Copilot Chat": false
     }
   },
-  "active": "3509320abff097d6",
+  "active": "b96598d48c61aa97",
   "lastOpenFiles": [
-    "assets/Designer (26).png",
+    "assets/1736250996871-81932f8d-5cf2-4988-adbb-8ad970a0ac10.gif",
+    "assets/1746589600847-51db2b04-93ee-4311-9244-6115d9db8ff8.png",
+    "assets/1765095472792-c5510323-5f28-4254-bcc6-b31114426911.png",
+    "assets/1765095612831-cb1d0861-3487-4332-b1c9-96666dbbe1be.png",
+    "assets/1736250996787-929fa22e-ac9d-4dde-af26-8b2a57385ef0.webp",
+    "assets/1736250996723-f6a3f203-1f61-4af2-9f63-492036e4a142.webp",
+    "assets/1736250996432-898f3236-51a7-4b21-9a54-a9b526db5550.webp",
+    "assets/1736250996489-9628d721-327f-471c-a62e-937a1554f5ab.webp",
+    "assets/1736250996416-d71811d1-eb6b-401a-8956-a4849cb2274d.webp",
+    "assets/1736250996387-199ec119-cf11-4b6a-8b82-a6064f97257e.webp",
+    "assets/1736250996296-98de22d3-d4da-4e70-9794-ca3f944c3915.webp",
+    "file:C:/Users/17741/Downloads/tecplot Linux 安装教程.md",
+    "_AI-Diagrams/未命名 1.md",
+    "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
     "语言学习/德语/学习记录日记-技巧/Lerntagbuch/eine neue Wohnung Einladung.md",
     "Diary/2026/20261121.md",
     "语言学习/德语/公共知识语法/1名词/不定式.md",
     "语言学习/德语/公共知识语法/其他句式.md",
     "语言学习/德语/公共知识语法/语法对应的场景.md",
-    "语言学习/德语/公共知识语法/句子成分逻辑展示.md",
     "语言学习/德语/AI学习记录/2026-11-26 晚 四问纠错与出卡.md",
     "语言学习/德语/公共知识语法/2动词/情态动词.md",
     "语言学习/德语/公共知识语法/2动词/83 反身代词和动词 Reflexivpronomen；形容词变名词.md",
@@ -369,8 +411,6 @@
     "语言学习/德语/公共知识语法/10句型/被动态.md",
     "语言学习/德语/柏林广场视频笔记/A2/k18 58 被动态：分状态被动和过程被动.md",
     "思想思维心理哲学/阅读/简单逻辑学/DW简单逻辑学.md",
-    "assets/Designer (24).png",
-    "assets/file-20261126010546051.png",
     "语言学习/德语/AI学习记录/2026-11-26 训练摘要.md",
     "语言学习/德语/公共知识语法/2动词/werden所有变化合集.md",
     "Diary/2026/20261124.md",
@@ -379,22 +419,12 @@
     "语言学习/德语/单词/生词/2026-11.md",
     "Diary/2026/20261125.md",
     "语言学习/德语/单词/生词/26-8.md",
-    "语言学习/德语/AI学习记录/2026-11-25 训练摘要.md",
-    "assets/file-20261125003410866.png",
-    "assets/Gemini_Generated_Image_hosigchosigchosi (1).jpg",
-    "assets/“第七章 你这都是谬误,别想误导我”  (李万中, 2017, p. 126(zoteroselectlibraryitems3LHCMLIV)) (pdf(zoteroopen-.png",
-    "Diary/_backup/20261125-0023-v6/20261125.md",
     "Diary/_backup/20261125-0023-v6",
     "Diary/_backup/20261124-2322-1124-1125",
-    "assets/Designer (23).png",
-    "assets/Designer (22).png",
-    "assets/Mermaid-preview.png",
     "思想思维心理哲学/阅读/思维的利剑",
-    "assets/Designer (17).png",
     "Diary/_backup/20261123-2150",
     "Diary/_backup/20261123-obsetting-templater",
     "Diary/_backup/20261123-w48-static",
-    "assets/image-519.png",
     "Diary/_backup/_engine_src.js",
     "Diary/_backup/20261123-w47-test",
     "Diary/_backup/_engine_test.js",

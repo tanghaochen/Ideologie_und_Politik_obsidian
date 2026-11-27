@@ -5358,5 +5358,45 @@
         "line": 6
       }
     }
+  },
+  "file:C:/Users/17741/Downloads/tecplot Linux 安装教程.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 2083,
+      "height": 1522,
+      "width": 2095
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 0
+      },
+      "to": {
+        "ch": 0,
+        "line": 0
+      }
+    }
+  },
+  "_AI-Diagrams/未命名 1.md": {
+    "scrollState": {
+      "top": 1320,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 2083,
+      "height": 1522,
+      "width": 2095
+    },
+    "cursor": {
+      "from": {
+        "ch": 0,
+        "line": 18
+      },
+      "to": {
+        "ch": 0,
+        "line": 18
+      }
+    }
   }
 }
