@@ -5378,25 +5378,5 @@
         "line": 0
       }
     }
-  },
-  "_AI-Diagrams/未命名 1.md": {
-    "scrollState": {
-      "top": 1320,
-      "left": 0,
-      "clientHeight": 1522,
-      "clientWidth": 2083,
-      "height": 1522,
-      "width": 2095
-    },
-    "cursor": {
-      "from": {
-        "ch": 0,
-        "line": 18
-      },
-      "to": {
-        "ch": 0,
-        "line": 18
-      }
-    }
   }
 }
