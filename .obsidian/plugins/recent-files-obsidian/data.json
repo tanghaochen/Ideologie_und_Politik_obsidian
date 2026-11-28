@@ -5,6 +5,10 @@
       "path": "Diary/2026/20261128.md"
     },
     {
+      "basename": "2026年6月",
+      "path": "语言学习/德语/单词/生词/2026年6月.md"
+    },
+    {
       "basename": "ps-tang",
       "path": "电脑、软件、系统/ps-tang.md"
     },
@@ -195,10 +199,6 @@
     {
       "basename": "月报",
       "path": "OBSetting/templater/月报.md"
-    },
-    {
-      "basename": "日记-事件模板",
-      "path": "OBSetting/templater/日记-事件模板.md"
     }
   ],
   "omittedPaths": [],
