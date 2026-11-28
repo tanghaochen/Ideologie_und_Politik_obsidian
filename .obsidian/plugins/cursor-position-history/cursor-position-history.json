@@ -5378,5 +5378,25 @@
         "line": 0
       }
     }
+  },
+  "Diary/2026/20261128.md": {
+    "scrollState": {
+      "top": 0,
+      "left": 0,
+      "clientHeight": 1522,
+      "clientWidth": 2083,
+      "height": 1522,
+      "width": 2095
+    },
+    "cursor": {
+      "from": {
+        "ch": 28,
+        "line": 17
+      },
+      "to": {
+        "ch": 28,
+        "line": 17
+      }
+    }
   }
 }
