@@ -9734,6 +9734,18 @@
   ],
   "logs": [
     {
+      "id": "log-mx068lbf-b9282f989c26",
+      "level": "info",
+      "message": "plugin loaded",
+      "at": "2026-11-28T08:51:45.771Z"
+    },
+    {
+      "id": "log-mx068lb3-d50f560354cd",
+      "level": "info",
+      "message": "ws listening on ws://[::1]:27123",
+      "at": "2026-11-28T08:51:45.759Z"
+    },
+    {
       "id": "log-mwxf9svs-068f8ef0b5d4",
       "level": "info",
       "message": "plugin loaded",
@@ -10320,18 +10332,6 @@
       "level": "info",
       "message": "device approved: mn-client-mvfe444u-gbqbkq",
       "at": "2026-10-19T15:05:56.313Z"
-    },
-    {
-      "id": "log-mvfdz4kh-140e9d7b0957",
-      "level": "info",
-      "message": "plugin loaded",
-      "at": "2026-10-19T15:05:29.057Z"
-    },
-    {
-      "id": "log-mvfdz4kh-18be9bee4700",
-      "level": "info",
-      "message": "ws listening on ws://[::1]:27123",
-      "at": "2026-10-19T15:05:29.057Z"
     }
   ]
 }
